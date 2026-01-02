@@ -49,11 +49,16 @@ jobs:
           path: reports/report-*.md
           retention-days: 30
 
-      - name: Commit report
+      - name: Sync reports to docs
+        if: success() && hashFiles('reports/report-*.md') != ''
+        run: |
+          uv run python scripts/generate_report_index.py
+
+      - name: Commit report and docs
         if: success() && hashFiles('reports/report-*.md') != ''
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/*.md
+          git add reports/*.md docs/reports/*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push

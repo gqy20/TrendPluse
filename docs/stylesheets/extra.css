@@ -1,0 +1,88 @@
+/* 自定义样式 */
+
+/* 调整卡片样式 */
+.md-typeset .admonition {
+  border-radius: 8px;
+}
+
+/* 调整表格样式 */
+.md-typeset table:not([class]) {
+  font-size: 0.9rem;
+}
+
+/* 调整代码块样式 */
+.md-typeset pre {
+  border-radius: 8px;
+}
+
+/* 报告卡片样式 */
+.report-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.report-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* 统计卡片样式 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.stat-card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--md-primary-fg-color);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* 信号标签样式 */
+.signal-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.signal-tag.engineering {
+  background: var(--md-primary-fg-color--light);
+  color: white;
+}
+
+.signal-tag.research {
+  background: var(--md-accent-fg-color--light);
+  color: white;
+}
+
+/* 影响评分样式 */
+.impact-stars {
+  color: #ffa726;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,156 @@
+# MkDocs 配置文件 - TrendPulse 趋势报告站点
+
+site_name: TrendPulse GitHub 趋势报告
+site_description: 每日 GitHub 趋势分析报告 - 追踪 Anthropic Claude 生态最新动态
+site_author: TrendPulse
+copyright: Copyright &copy; 2026 TrendPulse
+
+# 仓库信息
+repo_url: https://github.com/gqy20/TrendPluse
+repo_name: gqy20/TrendPluse
+
+# 主题配置
+theme:
+  name: material
+  language: zh
+  palette:
+    # 自动切换亮/暗模式
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    # 导航功能
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    # 搜索功能
+    - search.suggest
+    - search.highlight
+    - search.share
+    # 其他功能
+    - toc.follow
+    - announce.dismiss
+    - content.code.copy
+    - content.tabs.link
+  # 图标
+  icon:
+    logo: material/trending-up
+    repo: fontawesome/brands/github
+    previous: fontawesome/solid/arrow-left
+    next: fontawesome/solid/arrow-right
+
+# 插件
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+      separator: '[\s\-\.]+'
+  - git-revision-date-localized:
+      type: datetime
+      timezone: Asia/Shanghai
+      locale: zh
+      enable_creation_date: true
+  - awesome-pages:
+      collapse_single_pages: false
+
+# Markdown 扩展
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+  # PyMdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# 额外 CSS/JS
+extra_javascript:
+  - javascripts/katex.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js
+
+extra_css:
+  - stylesheets/extra.css
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css
+
+# 额外配置
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/gqy20/TrendPluse
+  analytics:
+    feedback:
+      title: 这份报告对您有帮助吗？
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: 有帮助
+          data: 1
+          note: 感谢您的反馈！
+        - icon: material/emoticon-neutral-outline
+          name: 还可以
+          data: 2
+          note: 感谢您的反馈！
+        - icon: material/emoticon-sad-outline
+          name: 需要改进
+          data: 3
+          note: 感谢您的反馈！我们会继续改进。
+
+# 导航结构
+nav:
+  - 首页: index.md
+  - 趋势报告: reports/index.md
+  - 项目说明:
+      - 功能概述: features.md
+      - 快速开始: quickstart.md
+      - 配置指南: configuration.md
