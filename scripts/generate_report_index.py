@@ -97,34 +97,35 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         summary = report["summary"]
         published = report["published"]
 
-        index_lines.extend([
-            f"### [{date}](report-{date}.md)\n",
-            "\n",
-            f"{summary}\n",
-            "\n",
-            f"*发布时间: {published}*\n",
-            "\n",
-        ])
+        index_lines.extend(
+            [
+                f"### [{date}](report-{date}.md)\n",
+                "\n",
+                f"{summary}\n",
+                "\n",
+                f"*发布时间: {published}*\n",
+                "\n",
+            ]
+        )
 
     # 统计信息
-    total_signals = sum(
-        int(r["stats"].get("分析 PR 数", 0))
-        for r in reports
-    )
+    total_signals = sum(int(r["stats"].get("分析 PR 数", 0)) for r in reports)
 
     # 计算本月报告数
     current_month = datetime.now().strftime("%Y-%m")
     monthly_count = len([r for r in reports if r["date"][:7] == current_month])
 
-    index_lines.extend([
-        "## 统计信息\n",
-        "\n",
-        "| 指标 | 数值 |\n",
-        "|------|------|\n",
-        f"| 总报告数 | {len(reports)} |\n",
-        f"| 总分析 PR 数 | {total_signals} |\n",
-        f"| 本月报告数 | {monthly_count} |\n",
-    ])
+    index_lines.extend(
+        [
+            "## 统计信息\n",
+            "\n",
+            "| 指标 | 数值 |\n",
+            "|------|------|\n",
+            f"| 总报告数 | {len(reports)} |\n",
+            f"| 总分析 PR 数 | {total_signals} |\n",
+            f"| 本月报告数 | {monthly_count} |\n",
+        ]
+    )
 
     # 写入文件
     index_content = "\n".join(index_lines)
