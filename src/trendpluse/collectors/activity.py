@@ -109,6 +109,8 @@ class ActivityCollector:
             # 获取时间范围内的 commits
             # 注意：get_commits() 可能返回大量数据，需要限制
             commits = repo.get_commits(since=since)
+            # 转换为列表以便安全迭代
+            commits_list = list(commits)
 
             # 用于统计新贡献者
             # 策略：检查该时间之前的贡献者集合
@@ -118,8 +120,10 @@ class ActivityCollector:
             try:
                 past_since = since - timedelta(days=30)
                 past_commits = repo.get_commits(since=past_since, until=since)
-                for commit in past_commits[:100]:  # 采样 100 个
-                    if commit.author:
+                # 转换为列表并安全切片
+                past_commits_list = list(past_commits)
+                for commit in past_commits_list[:100]:  # 采样 100 个
+                    if commit and commit.author:
                         existing_contributors.add(commit.author.login)
             except GithubException:
                 pass  # 如果获取失败，existing_contributors 保持为空
@@ -128,7 +132,7 @@ class ActivityCollector:
             contributor_commits: dict[str, int] = {}
             new_contributors_set = set()
 
-            for commit in commits:
+            for commit in commits_list:
                 activity["commit_count"] += 1
 
                 # 记录最近的 commits（最多 5 个）
