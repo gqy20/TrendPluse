@@ -4,7 +4,7 @@
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![codecov](https://codecov.io/gh/gqy20/TrendPluse/branch/main/graph/badge.svg)](https://codecov.io/gh/gqy20/TrendPluse)
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-success?label=docs)](https://gqy20.github.io/TrendPluse/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-success?label=docs)](https://home.gqy20.top/TrendPluse/)
 
 ## 概述
 
@@ -206,7 +206,7 @@ TrendPluse/
 
 每日生成的报告会自动发布到 GitHub Pages：
 
-👉 **[查看在线报告](https://gqy20.github.io/TrendPluse/)**
+👉 **[查看在线报告](https://home.gqy20.top/TrendPluse/)**
 
 报告包含：
 - 📊 当日趋势总览
@@ -320,4 +320,4 @@ Copyright © 2026 gqy20
 
 ---
 
-**[项目文档](https://gqy20.github.io/TrendPluse/)** | **[在线报告](https://gqy20.github.io/TrendPluse/reports/)** | **[GitHub 仓库](https://github.com/gqy20/TrendPluse)**
+**[项目文档](https://home.gqy20.top/TrendPluse/)** | **[在线报告](https://home.gqy20.top/TrendPluse/reports/)** | **[GitHub 仓库](https://github.com/gqy20/TrendPluse)**
