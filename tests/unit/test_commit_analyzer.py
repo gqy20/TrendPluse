@@ -3,7 +3,7 @@
 测试 commit 分析器的核心功能。
 """
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -56,9 +56,7 @@ class TestCommitAnalyzer:
             },
         ]
 
-    def test_analyze_commits_returns_signals(
-        self, analyzer, sample_commit_data
-    ):
+    def test_analyze_commits_returns_signals(self, analyzer, sample_commit_data):
         """测试分析 commits - 应返回信号列表"""
         # Arrange
         expected_signal_count = 1  # Mock 响应只有 1 个信号

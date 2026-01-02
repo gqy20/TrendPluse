@@ -43,9 +43,7 @@ class TestActivityCollectorDetailedCommits:
         repo_name = "test/repo"
         since = datetime(2026, 1, 2, 0, 0, 0, tzinfo=UTC)
 
-        with patch.object(
-            collector, "client"
-        ) as mock_client:
+        with patch.object(collector, "client") as mock_client:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
@@ -59,17 +57,13 @@ class TestActivityCollectorDetailedCommits:
             assert activity["commit_count"] >= 0
             assert isinstance(detailed_commits, list)
 
-    def test_collect_activity_includes_detailed_commits(
-        self, collector, mock_repo
-    ):
+    def test_collect_activity_includes_detailed_commits(self, collector, mock_repo):
         """测试 collect_activity - 结果应包含详细 commits"""
         # Arrange
         repos = ["test/repo"]
         since = datetime(2026, 1, 2, 0, 0, 0, tzinfo=UTC)
 
-        with patch.object(
-            collector, "client"
-        ) as mock_client:
+        with patch.object(collector, "client") as mock_client:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
@@ -111,9 +105,7 @@ class TestActivityCollectorDetailedCommits:
         for field in required_fields:
             assert field in detailed_commit
 
-    def test_collect_activity_returns_detailed_commits_list(
-        self, collector, mock_repo
-    ):
+    def test_collect_activity_returns_detailed_commits_list(self, collector, mock_repo):
         """测试 collect_activity - 应返回详细 commits 列表供分析"""
         # Arrange
         repos = ["test/repo"]
@@ -130,9 +122,7 @@ class TestActivityCollectorDetailedCommits:
         commits_list = [mock_commit]
         mock_repo.get_commits.return_value = commits_list
 
-        with patch.object(
-            collector, "client"
-        ) as mock_client:
+        with patch.object(collector, "client") as mock_client:
             mock_client.get_repo.return_value = mock_repo
 
             # Act

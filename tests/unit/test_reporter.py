@@ -163,7 +163,9 @@ class TestMarkdownReporter:
                     category="engineering",
                     impact_score=4,
                     why_it_matters="提供了实时流式响应能力",
-                    sources=["https://github.com/anthropics/claude-sdk-python/commit/abc123"],
+                    sources=[
+                        "https://github.com/anthropics/claude-sdk-python/commit/abc123"
+                    ],
                     related_repos=["anthropics/claude-sdk-python"],
                 )
             ],

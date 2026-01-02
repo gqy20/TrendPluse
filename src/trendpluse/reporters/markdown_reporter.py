@@ -91,15 +91,15 @@ class MarkdownReporter:
         # 研究信号
         research_section = self.render_signals(report.research_signals, "研究")
 
-        # Commit 信号
+        # Commit 信号（仅在有内容时渲染）
         commit_section = ""
         if report.commit_signals:
-            commit_section = self._render_commit_signals(report.commit_signals)
+            commit_section = "\n" + self._render_commit_signals(report.commit_signals)
 
-        # 活跃度信息（如果有）
+        # 活跃度信息（仅在有内容时渲染）
         activity_section = ""
         if report.activity:
-            activity_section = self._render_activity(report.activity)
+            activity_section = "\n" + self._render_activity(report.activity)
 
         # 统计信息
         stats_section = self._render_stats(report.stats)
@@ -109,11 +109,8 @@ class MarkdownReporter:
             + engineering_section
             + "\n\n"
             + research_section
-            + "\n\n"
             + commit_section
-            + "\n\n"
             + activity_section
-            + "\n\n"
             + stats_section
         )
 
@@ -161,7 +158,7 @@ class MarkdownReporter:
         Returns:
             Markdown 格式的活跃度信息
         """
-        lines = ["---", "\n## 📈 仓库活跃度\n\n"]
+        lines = ["---\n", "## 📈 仓库活跃度\n\n"]
 
         # 总览指标
         lines.append("### 总览\n\n")
@@ -194,7 +191,7 @@ class MarkdownReporter:
                 )
                 lines.append(table_row)
 
-        return "\n".join(lines)
+        return "".join(lines)
 
     def _format_stat_label(self, key: str) -> str:
         """格式化统计标签
