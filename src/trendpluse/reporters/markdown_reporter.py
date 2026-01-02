@@ -91,6 +91,11 @@ class MarkdownReporter:
         # 研究信号
         research_section = self.render_signals(report.research_signals, "研究")
 
+        # 活跃度信息（如果有）
+        activity_section = ""
+        if report.activity:
+            activity_section = self._render_activity(report.activity)
+
         # 统计信息
         stats_section = self._render_stats(report.stats)
 
@@ -99,6 +104,8 @@ class MarkdownReporter:
             + engineering_section
             + "\n\n"
             + research_section
+            + "\n\n"
+            + activity_section
             + "\n\n"
             + stats_section
         )
@@ -119,6 +126,50 @@ class MarkdownReporter:
             lines.append(f"- **{label}**: {value}")
 
         return "\n".join(lines) + "\n"
+
+    def _render_activity(self, activity: dict) -> str:
+        """渲染活跃度信息
+
+        Args:
+            activity: 活跃度数据
+
+        Returns:
+            Markdown 格式的活跃度信息
+        """
+        lines = ["---", "\n## 📈 仓库活跃度\n\n"]
+
+        # 总览指标
+        lines.append("### 总览\n\n")
+        lines.append(f"- **总 Commit 数**: {activity['total_commits']}\n")
+        lines.append(f"- **活跃仓库数**: {activity['active_repos']}\n")
+        lines.append(f"- **新贡献者数**: {activity['new_contributors']}\n")
+
+        # 活跃仓库详情（最多 10 个）
+        if activity["repo_activity"]:
+            lines.append("\n### 活跃仓库 TOP 10\n\n")
+            lines.append("| 仓库 | Commits | 新贡献者 | Top 贡献者 |\n")
+            lines.append("|------|--------|---------|------------|\n")
+
+            for repo in activity["repo_activity"][:10]:
+                repo_name = repo["repo"].replace("_", "\\_")
+                commits = repo["commit_count"]
+                new_contribs = repo["new_contributors"]
+
+                # Top 贡献者（最多 3 个）
+                top_contribs = repo["top_contributors"][:3]
+                if top_contribs:
+                    contrib_list = ", ".join(
+                        f"{c['login']} ({c['commits']})" for c in top_contribs
+                    )
+                else:
+                    contrib_list = "-"
+
+                table_row = (
+                    f"| {repo_name} | {commits} | {new_contribs} | {contrib_list} |\n"
+                )
+                lines.append(table_row)
+
+        return "\n".join(lines)
 
     def _format_stat_label(self, key: str) -> str:
         """格式化统计标签

@@ -48,3 +48,7 @@ class DailyReport(BaseModel):
             "high_impact_signals": 0,
         }
     )
+    activity: dict | None = Field(
+        default=None,
+        description="仓库活跃度数据（可选）",
+    )
