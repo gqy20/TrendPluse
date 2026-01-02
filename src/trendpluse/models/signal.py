@@ -2,8 +2,9 @@
 
 定义趋势信号和日报的数据结构。
 """
+from typing import Literal
+
 from pydantic import BaseModel, Field
-from typing import List, Literal
 
 
 class Signal(BaseModel):
@@ -28,8 +29,8 @@ class Signal(BaseModel):
         description="影响评分 1-5",
     )
     why_it_matters: str = Field(description="1-2 句话说明重要性")
-    sources: List[str] = Field(description="PR/Release 链接")
-    related_repos: List[str] = Field(description="相关仓库名称")
+    sources: list[str] = Field(description="PR/Release 链接")
+    related_repos: list[str] = Field(description="相关仓库名称")
 
 
 class DailyReport(BaseModel):
@@ -37,8 +38,8 @@ class DailyReport(BaseModel):
 
     date: str
     summary_brief: str = Field(description="当日总览（2-3 句话）")
-    engineering_signals: List[Signal] = Field(default_factory=list)
-    research_signals: List[Signal] = Field(default_factory=list)
+    engineering_signals: list[Signal] = Field(default_factory=list)
+    research_signals: list[Signal] = Field(default_factory=list)
     stats: dict = Field(
         default_factory=lambda: {
             "total_prs_analyzed": 0,

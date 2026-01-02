@@ -2,8 +2,6 @@
 from datetime import datetime, timedelta
 from unittest.mock import Mock, patch
 
-import pytest
-
 from trendpluse.collectors.gh_archive import GHArchiveCollector
 
 

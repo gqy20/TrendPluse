@@ -1,7 +1,5 @@
 """事件筛选单元测试"""
-from datetime import datetime, timedelta
 
-import pytest
 
 from trendpluse.collectors.filter import EventFilter
 

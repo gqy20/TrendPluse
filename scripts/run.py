@@ -2,7 +2,6 @@
 
 执行每日 GitHub 趋势分析。
 """
-import asyncio
 import os
 import sys
 from datetime import datetime
@@ -15,8 +14,8 @@ from rich.panel import Panel
 # 添加 src 目录到路径
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from trendpluse.pipeline import TrendPulsePipeline
 from trendpluse.config import Settings
+from trendpluse.pipeline import TrendPulsePipeline
 
 console = Console()
 
@@ -34,7 +33,7 @@ def check_env_vars() -> bool:
     if missing:
         console.print(
             Panel(
-                f"[bold red]缺少必需的环境变量:[/bold red]\n"
+                "[bold red]缺少必需的环境变量:[/bold red]\n"
                 + "\n".join(f"  - {var}" for var in missing),
                 title="[bold red]配置错误[/bold red]",
                 border_style="red",
@@ -57,7 +56,8 @@ def main():
 
     console.print(
         Panel.fit(
-            "[bold cyan]TrendPulse[/bold cyan] - [bold green]GitHub 趋势分析[/bold green]",
+            "[bold cyan]TrendPulse[/bold cyan] - "
+            "[bold green]GitHub 趋势分析[/bold green]",
             border_style="cyan",
         )
     )

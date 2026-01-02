@@ -2,7 +2,6 @@
 
 从 GH Archive 事件中筛选出值得深入分析的候选事件。
 """
-from typing import Any
 
 
 class EventFilter:

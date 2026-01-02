@@ -1,6 +1,4 @@
 """配置管理单元测试"""
-import os
-from pathlib import Path
 
 import pytest
 from pydantic import ValidationError

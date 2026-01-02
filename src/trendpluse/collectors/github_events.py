@@ -2,7 +2,7 @@
 
 使用 PyGithub 直接从 GitHub API 获取事件。
 """
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from github import Github, GithubException
 
@@ -39,7 +39,7 @@ class GitHubEventsCollector:
 
         # 确保 since 有时区信息（用于与 GitHub API 返回的时间比较）
         if since.tzinfo is None:
-            since = since.replace(tzinfo=timezone.utc)
+            since = since.replace(tzinfo=UTC)
 
         for repo_name in repos:
             try:

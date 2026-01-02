@@ -1,10 +1,8 @@
 """AI 分析器单元测试"""
 from unittest.mock import Mock, patch
 
-import pytest
-
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
-from trendpluse.models.signal import Signal, DailyReport
+from trendpluse.models.signal import DailyReport, Signal
 
 
 class TestTrendAnalyzer:

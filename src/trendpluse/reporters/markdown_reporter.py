@@ -3,7 +3,8 @@
 将每日报告渲染为 Markdown 格式。
 """
 from pathlib import Path
-from trendpluse.models.signal import Signal, DailyReport
+
+from trendpluse.models.signal import DailyReport, Signal
 
 
 class MarkdownReporter:
@@ -38,7 +39,8 @@ class MarkdownReporter:
 
         return f"""### {type_emoji} {signal.title}
 
-**类型**: `{signal.type}` | **影响**: {impact_emoji} ({signal.impact_score}/5) | **分类**: `{signal.category}`
+**类型**: `{signal.type}` | **影响**: {impact_emoji} ({signal.impact_score}/5) | \
+**分类**: `{signal.category}`
 
 **为什么重要**: {signal.why_it_matters}
 

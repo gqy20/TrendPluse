@@ -4,7 +4,8 @@
 """
 import anthropic
 import instructor
-from trendpluse.models.signal import Signal, DailyReport
+
+from trendpluse.models.signal import DailyReport, Signal
 
 
 class TrendAnalyzer:
@@ -59,7 +60,10 @@ PR 描述: {pr_details.get('body', '')}
 
         # 确保 ID 格式
         if not signal.id:
-            signal.id = f"{pr_details.get('repo_name', 'unknown')}-{pr_details.get('number', 0)}"
+            signal.id = (
+                f"{pr_details.get('repo_name', 'unknown')}-"
+                f"{pr_details.get('number', 0)}"
+            )
 
         # 确保源包含 PR URL
         if not signal.sources:
@@ -87,7 +91,9 @@ PR 描述: {pr_details.get('body', '')}
                 signal = self.analyze_pr(pr)
                 signals.append(signal)
             except Exception as e:
-                print(f"分析 PR {pr.get('repo_name', 'unknown')}#{pr.get('number', 0)} 失败: {e}")
+                repo_name = pr.get('repo_name', 'unknown')
+                number = pr.get('number', 0)
+                print(f"分析 PR {repo_name}#{number} 失败: {e}")
                 continue
 
         return signals

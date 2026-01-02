@@ -1,5 +1,4 @@
 """GitHub Actions 配置测试"""
-import os
 
 import pytest
 

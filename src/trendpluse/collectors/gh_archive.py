@@ -3,7 +3,6 @@
 从 GH Archive 的 BigQuery 数据集获取 GitHub 事件。
 """
 from datetime import datetime
-from typing import Any
 
 from google.cloud import bigquery
 

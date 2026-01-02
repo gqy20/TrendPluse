@@ -5,13 +5,13 @@
 from datetime import datetime
 from pathlib import Path
 
-from trendpluse.config import Settings
-from trendpluse.collectors.github_events import GitHubEventsCollector
+from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
-from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
-from trendpluse.reporters.markdown_reporter import MarkdownReporter
+from trendpluse.collectors.github_events import GitHubEventsCollector
+from trendpluse.config import Settings
 from trendpluse.models.signal import DailyReport
+from trendpluse.reporters.markdown_reporter import MarkdownReporter
 
 
 class TrendPulsePipeline:
@@ -91,9 +91,10 @@ class TrendPulsePipeline:
         Returns:
             空的每日报告
         """
+        date_str = date.strftime("%Y-%m-%d")
         return DailyReport(
-            date=date.strftime("%Y-%m-%d"),
-            summary_brief=f"今日 ({date.strftime('%Y-%m-%d')}) 未发现符合条件的趋势信号。",
+            date=date_str,
+            summary_brief=f"今日 ({date_str}) 未发现符合条件的趋势信号。",
             engineering_signals=[],
             research_signals=[],
             stats={"total_prs_analyzed": 0, "high_impact_signals": 0},

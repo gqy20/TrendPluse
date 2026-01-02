@@ -1,8 +1,6 @@
 """GitHub Events 采集器单元测试"""
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from unittest.mock import Mock, patch
-
-import pytest
 
 from trendpluse.collectors.github_events import GitHubEventsCollector
 
@@ -37,7 +35,7 @@ class TestGitHubEventsCollector:
         mock_pr.number = 123
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
-        mock_pr.created_at = datetime.now(timezone.utc)
+        mock_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [mock_pr]
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -61,9 +59,9 @@ class TestGitHubEventsCollector:
         # Arrange
         mock_repo = Mock()
         old_pr = Mock()
-        old_pr.created_at = datetime.now(timezone.utc) - timedelta(days=10)
+        old_pr.created_at = datetime.now(UTC) - timedelta(days=10)
         recent_pr = Mock()
-        recent_pr.created_at = datetime.now(timezone.utc)
+        recent_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [recent_pr, old_pr]
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -102,7 +100,7 @@ class TestGitHubEventsCollector:
         # Arrange
         mock_repo = Mock()
         mock_pr = Mock()
-        mock_pr.created_at = datetime.now(timezone.utc)
+        mock_pr.created_at = datetime.now(UTC)
         mock_repo.get_pulls.return_value = [mock_pr]
 
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -128,7 +126,7 @@ class TestGitHubEventsCollector:
         mock_pr.number = 123
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
-        mock_pr.created_at = datetime.now(timezone.utc)
+        mock_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [mock_pr]
         mock_github.return_value.get_repo.return_value = mock_repo

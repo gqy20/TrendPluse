@@ -2,8 +2,6 @@
 from datetime import datetime
 from unittest.mock import Mock, patch
 
-import pytest
-
 from trendpluse.pipeline import TrendPulsePipeline
 
 
@@ -17,7 +15,13 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.Settings")
     def test_init_creates_components(
-        self, mock_settings, mock_reporter, mock_analyzer, mock_fetcher, mock_filter, mock_collector
+        self,
+        mock_settings,
+        mock_reporter,
+        mock_analyzer,
+        mock_fetcher,
+        mock_filter,
+        mock_collector,
     ):
         """测试：初始化创建所有组件"""
         # Arrange
@@ -52,7 +56,13 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.Settings")
     def test_run_daily(
-        self, mock_settings, mock_reporter, mock_analyzer, mock_fetcher, mock_filter, mock_collector
+        self,
+        mock_settings,
+        mock_reporter,
+        mock_analyzer,
+        mock_fetcher,
+        mock_filter,
+        mock_collector,
     ):
         """测试：运行每日分析流程"""
         # Arrange
@@ -66,13 +76,21 @@ class TestTrendPulsePipeline:
         # Mock 组件
         mock_collector_instance = Mock()
         mock_collector_instance.fetch_events.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "anthropics/skills"}, "payload": {"pull_request": {"number": 1}}}
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "anthropics/skills"},
+                "payload": {"pull_request": {"number": 1}},
+            }
         ]
         mock_collector.return_value = mock_collector_instance
 
         mock_filter_instance = Mock()
         mock_filter_instance.filter_candidates.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "anthropics/skills"}, "payload": {"pull_request": {"number": 1}}}
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "anthropics/skills"},
+                "payload": {"pull_request": {"number": 1}},
+            }
         ]
         mock_filter.return_value = mock_filter_instance
 
@@ -87,7 +105,6 @@ class TestTrendPulsePipeline:
         mock_signal.id = "test-1"
         mock_signal.title = "测试信号"
         mock_analyzer_instance.analyze_prs.return_value = [mock_signal]
-        mock_report_instance = Mock()
         mock_analyzer_instance.generate_report.return_value = Mock(
             date="2026-01-02",
             engineering_signals=[mock_signal],
@@ -120,7 +137,13 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.Settings")
     def test_run_daily_with_no_events(
-        self, mock_settings, mock_reporter, mock_analyzer, mock_fetcher, mock_filter, mock_collector
+        self,
+        mock_settings,
+        mock_reporter,
+        mock_analyzer,
+        mock_fetcher,
+        mock_filter,
+        mock_collector,
     ):
         """测试：没有事件时的处理"""
         # Arrange
