@@ -92,14 +92,27 @@ def main():
         report = pipeline.run_daily(date=date)
 
         # 显示结果
+        result_text = (
+            f"[bold green]分析完成！[/bold green]\n\n"
+            f"日期: {report.date}\n"
+            f"摘要: {report.summary_brief}\n"
+            f"工程信号: {len(report.engineering_signals)}\n"
+            f"研究信号: {len(report.research_signals)}\n"
+            f"分析 PR 数: {report.stats.get('total_prs_analyzed', 0)}"
+        )
+
+        # 添加活跃度数据（如果有）
+        if report.activity:
+            result_text += (
+                f"\n\n[bold cyan]仓库活跃度:[/bold cyan]\n"
+                f"  总 Commit 数: {report.activity.get('total_commits', 0)}\n"
+                f"  活跃仓库数: {report.activity.get('active_repos', 0)}\n"
+                f"  新贡献者数: {report.activity.get('new_contributors', 0)}"
+            )
+
         console.print(
             Panel(
-                f"[bold green]分析完成！[/bold green]\n\n"
-                f"日期: {report.date}\n"
-                f"摘要: {report.summary_brief}\n"
-                f"工程信号: {len(report.engineering_signals)}\n"
-                f"研究信号: {len(report.research_signals)}\n"
-                f"分析 PR 数: {report.stats.get('total_prs_analyzed', 0)}",
+                result_text,
                 title="[bold green]分析结果[/bold green]",
                 border_style="green",
             )
