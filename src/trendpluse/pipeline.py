@@ -68,19 +68,31 @@ class TrendPulsePipeline:
 
         # 如果没有候选事件，返回带活跃度的空报告
         if not candidates:
-            return self._generate_empty_report(date, activity_data)
+            report = self._generate_empty_report(date, activity_data)
+            # 保存空报告（包含活跃度数据）
+            output_path = self._get_output_path(date)
+            self.reporter.save_report(report, output_path)
+            return report
 
         # 3. 获取详细信息
         pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
 
         if not pr_details:
-            return self._generate_empty_report(date, activity_data)
+            report = self._generate_empty_report(date, activity_data)
+            # 保存空报告（包含活跃度数据）
+            output_path = self._get_output_path(date)
+            self.reporter.save_report(report, output_path)
+            return report
 
         # 4. AI 分析提取信号
         signals = self.analyzer.analyze_prs(pr_details)
 
         if not signals:
-            return self._generate_empty_report(date, activity_data)
+            report = self._generate_empty_report(date, activity_data)
+            # 保存空报告（包含活跃度数据）
+            output_path = self._get_output_path(date)
+            self.reporter.save_report(report, output_path)
+            return report
 
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
