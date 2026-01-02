@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from trendpluse.config import Settings
-from trendpluse.collectors.gh_archive import GHArchiveCollector
+from trendpluse.collectors.github_events import GitHubEventsCollector
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
@@ -26,7 +26,7 @@ class TrendPulsePipeline:
         self.settings = settings or Settings()
 
         # 初始化组件
-        self.collector = GHArchiveCollector()
+        self.collector = GitHubEventsCollector(token=self.settings.github_token)
         self.filter = EventFilter(max_count=self.settings.max_candidates)
         self.fetcher = GitHubDetailFetcher(token=self.settings.github_token)
         self.analyzer = TrendAnalyzer(

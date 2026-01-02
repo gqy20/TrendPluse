@@ -10,7 +10,7 @@ from trendpluse.pipeline import TrendPulsePipeline
 class TestTrendPulsePipeline:
     """测试 TrendPulse 主流程"""
 
-    @patch("trendpluse.pipeline.GHArchiveCollector")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.TrendAnalyzer")
@@ -35,7 +35,7 @@ class TestTrendPulsePipeline:
 
         # Assert
         assert pipeline is not None
-        mock_collector.assert_called_once()
+        mock_collector.assert_called_once_with(token="test_token")
         mock_filter.assert_called_once()
         mock_fetcher.assert_called_once_with(token="test_token")
         mock_analyzer.assert_called_once_with(
@@ -45,7 +45,7 @@ class TestTrendPulsePipeline:
         )
         mock_reporter.assert_called_once()
 
-    @patch("trendpluse.pipeline.GHArchiveCollector")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.TrendAnalyzer")
@@ -113,7 +113,7 @@ class TestTrendPulsePipeline:
         mock_analyzer_instance.generate_report.assert_called_once()
         mock_reporter_instance.save_report.assert_called_once()
 
-    @patch("trendpluse.pipeline.GHArchiveCollector")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.TrendAnalyzer")
