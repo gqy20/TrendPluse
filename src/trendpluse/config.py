@@ -43,6 +43,9 @@ class Settings(BaseSettings):
             "langgenius/dify",
             "run-llama/llama_index",
             "microsoft/autogen",
+            "google-gemini/gemini-cli",
+            "agentscope-ai/agentscope",
+            "agno-agi/agno",
         ],
         description="要追踪的仓库列表",
     )

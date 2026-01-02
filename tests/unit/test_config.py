@@ -36,12 +36,14 @@ class TestSettings:
 
         settings = Settings()
 
-        # Assert - 应该使用默认的 19 个仓库
-        assert len(settings.github_repos) == 19
+        # Assert - 应该使用默认的 22 个仓库
+        assert len(settings.github_repos) == 22
         assert "anthropics/skills" in settings.github_repos
         assert "anthropics/claude-quickstarts" in settings.github_repos
         assert "cline/cline" in settings.github_repos
-        assert "continuedev/continue" in settings.github_repos
+        assert "google-gemini/gemini-cli" in settings.github_repos
+        assert "agentscope-ai/agentscope" in settings.github_repos
+        assert "agno-agi/agno" in settings.github_repos
 
     def test_validate_invalid_repo_format(self, monkeypatch):
         """测试：无效的仓库格式应该抛出错误"""

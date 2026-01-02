@@ -278,6 +278,9 @@ git commit -m "feat: add new feature"
 - `TransformerOptimus/SuperAGI` - SuperAGI 框架
 - `Significant-Gravitas/AutoGPT` - AutoGPT
 - `OpenDevin/OpenDevin` - OpenDevin
+- `google-gemini/gemini-cli` - Gemini CLI 工具
+- `agentscope-ai/agentscope` - AgentScope 框架
+- `agno-agi/agno` - 多代理框架
 
 可在 `src/trendpluse/config.py` 中添加更多仓库。
 
