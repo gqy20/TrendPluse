@@ -143,6 +143,44 @@ class TestMarkdownReporter:
         assert reporter.get_type_emoji("eval") == "📊"
         assert reporter.get_type_emoji("safety") == "🛡️"
         assert reporter.get_type_emoji("performance") == "⚡"
+        assert reporter.get_type_emoji("commit") == "💾"
+
+    def test_render_report_with_commit_signals(self):
+        """测试：渲染包含 commit 信号的每日报告"""
+        # Arrange
+        reporter = MarkdownReporter()
+
+        report = DailyReport(
+            date="2026-01-02",
+            summary_brief="今日分析结果",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[
+                Signal(
+                    id="commit-1",
+                    title="新增流式 API 支持",
+                    type="commit",
+                    category="engineering",
+                    impact_score=4,
+                    why_it_matters="提供了实时流式响应能力",
+                    sources=["https://github.com/anthropics/claude-sdk-python/commit/abc123"],
+                    related_repos=["anthropics/claude-sdk-python"],
+                )
+            ],
+            stats={
+                "total_prs_analyzed": 0,
+                "total_commits_analyzed": 10,
+                "high_impact_signals": 1,
+            },
+        )
+
+        # Act
+        markdown = reporter.render_report(report)
+
+        # Assert
+        assert "💾 Commit 信号" in markdown
+        assert "新增流式 API 支持" in markdown
+        assert "total_commits_analyzed" in markdown or "10" in markdown
 
     def test_save_to_file(self, tmp_path):
         """测试：保存到文件"""

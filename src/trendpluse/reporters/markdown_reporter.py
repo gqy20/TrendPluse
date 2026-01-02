@@ -91,6 +91,11 @@ class MarkdownReporter:
         # 研究信号
         research_section = self.render_signals(report.research_signals, "研究")
 
+        # Commit 信号
+        commit_section = ""
+        if report.commit_signals:
+            commit_section = self._render_commit_signals(report.commit_signals)
+
         # 活跃度信息（如果有）
         activity_section = ""
         if report.activity:
@@ -105,10 +110,30 @@ class MarkdownReporter:
             + "\n\n"
             + research_section
             + "\n\n"
+            + commit_section
+            + "\n\n"
             + activity_section
             + "\n\n"
             + stats_section
         )
+
+    def _render_commit_signals(self, signals: list[Signal]) -> str:
+        """渲染 commit 信号
+
+        Args:
+            signals: commit 信号列表
+
+        Returns:
+            Markdown 格式的 commit 信号
+        """
+        header = "## 💾 Commit 信号\n\n"
+
+        if not signals:
+            return header + "暂无 commit 信号。\n"
+
+        signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
+
+        return header + signals_md
 
     def _render_stats(self, stats: dict) -> str:
         """渲染统计信息
@@ -184,6 +209,7 @@ class MarkdownReporter:
             "total_prs_analyzed": "分析 PR 数",
             "total_releases": "Release 数",
             "high_impact_signals": "高影响信号数",
+            "total_commits_analyzed": "分析 Commit 数",
         }
         return labels.get(key, key)
 
@@ -229,6 +255,7 @@ class MarkdownReporter:
             "eval": "📊",
             "safety": "🛡️",
             "performance": "⚡",
+            "commit": "💾",
         }
         return emojis.get(signal_type, "📌")
 
