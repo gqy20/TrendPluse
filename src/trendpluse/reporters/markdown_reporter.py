@@ -99,7 +99,7 @@ class MarkdownReporter:
         # 活跃度信息（仅在有内容时渲染）
         activity_section = ""
         if report.activity:
-            activity_section = "\n" + self._render_activity(report.activity)
+            activity_section = "\n\n" + self._render_activity(report.activity)
 
         # 统计信息
         stats_section = self._render_stats(report.stats)
@@ -141,7 +141,7 @@ class MarkdownReporter:
         Returns:
             Markdown 格式的统计信息
         """
-        lines = ["\n---\n", "## 📊 统计信息\n\n"]
+        lines = ["\n---\n", "\n## 📊 统计信息\n\n"]
 
         for key, value in stats.items():
             label = self._format_stat_label(key)
@@ -158,7 +158,7 @@ class MarkdownReporter:
         Returns:
             Markdown 格式的活跃度信息
         """
-        lines = ["---\n", "## 📈 仓库活跃度\n\n"]
+        lines = ["---\n", "\n## 📈 仓库活跃度\n\n"]
 
         # 总览指标
         lines.append("### 总览\n\n")
