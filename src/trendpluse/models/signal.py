@@ -20,6 +20,7 @@ class Signal(BaseModel):
         "eval",
         "safety",
         "performance",
+        "commit",
     ] = Field(description="信号类型")
     category: Literal["engineering", "research"] = Field(
         description="信号分类：工程或研究"
@@ -41,11 +42,13 @@ class DailyReport(BaseModel):
     summary_brief: str = Field(description="当日总览（2-3 句话）")
     engineering_signals: list[Signal] = Field(default_factory=list)
     research_signals: list[Signal] = Field(default_factory=list)
+    commit_signals: list[Signal] = Field(default_factory=list)
     stats: dict = Field(
         default_factory=lambda: {
             "total_prs_analyzed": 0,
             "total_releases": 0,
             "high_impact_signals": 0,
+            "total_commits_analyzed": 0,
         }
     )
     activity: dict | None = Field(
