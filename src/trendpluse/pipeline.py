@@ -6,6 +6,7 @@
 from datetime import datetime
 from pathlib import Path
 
+from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
@@ -30,6 +31,11 @@ class TrendPulsePipeline:
         # 初始化组件
         self.collector = GitHubEventsCollector(token=self.settings.github_token)
         self.activity_collector = ActivityCollector(token=self.settings.github_token)
+        self.commit_analyzer = CommitAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
         self.filter = EventFilter(max_count=self.settings.max_candidates)
         self.fetcher = GitHubDetailFetcher(token=self.settings.github_token)
         self.analyzer = TrendAnalyzer(
@@ -57,6 +63,12 @@ class TrendPulsePipeline:
             since=date,
         )
 
+        # 0.5. 分析 commits 提取信号
+        detailed_commits = activity_data.get("detailed_commits", [])
+        commit_signals = []
+        if detailed_commits:
+            commit_signals = self.commit_analyzer.analyze_commits(detailed_commits)
+
         # 1. 从 GH Archive 获取事件
         events = self.collector.fetch_events(
             repos=self.settings.github_repos,
@@ -66,10 +78,10 @@ class TrendPulsePipeline:
         # 2. 筛选候选事件
         candidates = self.filter.filter_candidates(events)
 
-        # 如果没有候选事件，返回带活跃度的空报告
+        # 如果没有候选事件，返回带活跃度和 commit 信号的空报告
         if not candidates:
-            report = self._generate_empty_report(date, activity_data)
-            # 保存空报告（包含活跃度数据）
+            report = self._generate_empty_report(date, activity_data, commit_signals)
+            # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
@@ -78,8 +90,8 @@ class TrendPulsePipeline:
         pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
 
         if not pr_details:
-            report = self._generate_empty_report(date, activity_data)
-            # 保存空报告（包含活跃度数据）
+            report = self._generate_empty_report(date, activity_data, commit_signals)
+            # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
@@ -88,8 +100,8 @@ class TrendPulsePipeline:
         signals = self.analyzer.analyze_prs(pr_details)
 
         if not signals:
-            report = self._generate_empty_report(date, activity_data)
-            # 保存空报告（包含活跃度数据）
+            report = self._generate_empty_report(date, activity_data, commit_signals)
+            # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
@@ -97,8 +109,10 @@ class TrendPulsePipeline:
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
 
-        # 6. 添加活跃度数据
+        # 6. 添加活跃度和 commit 信号数据
         report.activity = activity_data
+        report.commit_signals = commit_signals
+        report.stats["total_commits_analyzed"] = len(detailed_commits)
 
         # 7. 保存报告
         output_path = self._get_output_path(date)
@@ -107,13 +121,17 @@ class TrendPulsePipeline:
         return report
 
     def _generate_empty_report(
-        self, date: datetime, activity_data: dict | None = None
+        self,
+        date: datetime,
+        activity_data: dict | None = None,
+        commit_signals: list | None = None,
     ) -> DailyReport:
         """生成空报告
 
         Args:
             date: 日期
             activity_data: 活跃度数据（可选）
+            commit_signals: commit 信号列表（可选）
 
         Returns:
             空的每日报告
@@ -124,7 +142,14 @@ class TrendPulsePipeline:
             summary_brief=f"今日 ({date_str}) 未发现符合条件的趋势信号。",
             engineering_signals=[],
             research_signals=[],
-            stats={"total_prs_analyzed": 0, "high_impact_signals": 0},
+            commit_signals=commit_signals or [],
+            stats={
+                "total_prs_analyzed": 0,
+                "high_impact_signals": 0,
+                "total_commits_analyzed": len(activity_data.get("detailed_commits", []))
+                if activity_data
+                else 0,
+            },
         )
 
         # 添加活跃度数据（如果有）
