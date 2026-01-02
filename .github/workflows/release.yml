@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+        with:
+          version: "latest"
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv pip install -e ".[dev]"
+
+      - name: Run tests
+        run: uv run pytest --cov=src/trendpluse--cov-report=xml --cov-report=term-missing
+
+      - name: Extract tag name
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG_NAME#v}"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            CHANGELOG=$(git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          echo "$CHANGELOG" > changelog.txt
+
+      - name: Build distribution packages
+        run: uv build
+
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          ## What's Changed
+          $(cat changelog.txt)
+          ## Installation
+          ### Using pip
+          ```bash
+          pip install trendpluse==${{ steps.version.outputs.VERSION }}
+          ```
+          ### Using uv
+          ```bash
+          uv pip install trendpluse==${{ steps.version.outputs.VERSION }}
+          ```
+          ## Full Changelog
+          See all commits: https://github.com/${{ github.repository }}/compare/${{ steps.tag.outputs.TAG_NAME }}
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.TAG_NAME }}
+          name: Release ${{ steps.tag.outputs.TAG_NAME }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          files: |
+            dist/*.tar.gz
+            dist/*.whl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on related issues
+        if: success()
+        run: |
+          echo "Release ${{ steps.tag.outputs.TAG_NAME }} created successfully!"
+          echo "Distribution files:"
+          ls -lh dist/
+
