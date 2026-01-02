@@ -1,6 +1,5 @@
 """事件筛选单元测试"""
 
-
 from trendpluse.collectors.filter import EventFilter
 
 
@@ -19,7 +18,7 @@ class TestEventFilter:
                     "pull_request": {
                         "merged": True,
                         "number": 1,
-                    }
+                    },
                 },
             },
             {
@@ -30,7 +29,7 @@ class TestEventFilter:
                     "pull_request": {
                         "merged": False,  # 未合并
                         "number": 2,
-                    }
+                    },
                 },
             },
         ]
@@ -56,7 +55,7 @@ class TestEventFilter:
                         "merged": True,
                         "number": 1,
                         "labels": [{"name": "feature"}],
-                    }
+                    },
                 },
             },
             {
@@ -68,7 +67,7 @@ class TestEventFilter:
                         "merged": True,
                         "number": 2,
                         "labels": [{"name": "bug"}],  # 不在候选标签中
-                    }
+                    },
                 },
             },
         ]
@@ -94,7 +93,7 @@ class TestEventFilter:
                         "merged": True,
                         "number": i,
                         "labels": [{"name": "feature"}],
-                    }
+                    },
                 },
             }
             for i in range(10)
@@ -119,7 +118,7 @@ class TestEventFilter:
                     "release": {
                         "tag_name": "v1.0.0",
                         "name": "First release",
-                    }
+                    },
                 },
             },
         ]

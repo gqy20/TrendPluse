@@ -1,4 +1,5 @@
 """数据模型单元测试"""
+
 import pytest
 from pydantic import ValidationError
 

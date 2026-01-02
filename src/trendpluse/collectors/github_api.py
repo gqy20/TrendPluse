@@ -2,6 +2,7 @@
 
 使用 PyGithub 获取 PR/Release 的详细信息。
 """
+
 from github import Github, GithubException
 from tenacity import (
     retry,
@@ -113,17 +114,17 @@ class GitHubDetailFetcher:
 
         comments = []
         for comment in pr.get_comments():
-            comments.append({
-                "author": comment.user.login,
-                "body": comment.body,
-                "created_at": comment.created_at.isoformat(),
-            })
+            comments.append(
+                {
+                    "author": comment.user.login,
+                    "body": comment.body,
+                    "created_at": comment.created_at.isoformat(),
+                }
+            )
 
         return comments
 
-    def fetch_multiple_pr_details(
-        self, candidates: list[dict]
-    ) -> list[dict]:
+    def fetch_multiple_pr_details(self, candidates: list[dict]) -> list[dict]:
         """批量获取 PR 详情
 
         Args:

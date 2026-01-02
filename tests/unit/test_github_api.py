@@ -1,4 +1,5 @@
 """GitHub API 详情获取单元测试"""
+
 from unittest.mock import Mock, patch
 
 import pytest

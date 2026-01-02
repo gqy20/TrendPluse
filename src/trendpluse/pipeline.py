@@ -2,6 +2,7 @@
 
 协调各个组件完成每日趋势分析。
 """
+
 from datetime import datetime
 from pathlib import Path
 

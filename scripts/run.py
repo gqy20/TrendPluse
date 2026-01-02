@@ -2,6 +2,7 @@
 
 执行每日 GitHub 趋势分析。
 """
+
 import os
 import sys
 from datetime import datetime

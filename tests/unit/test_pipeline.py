@@ -1,4 +1,5 @@
 """Pipeline 主流程单元测试"""
+
 from datetime import datetime
 from unittest.mock import Mock, patch
 
@@ -29,7 +30,9 @@ class TestTrendPulsePipeline:
         mock_settings_instance.github_token = "test_token"
         mock_settings_instance.anthropic_api_key = "test_api_key"
         mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings.return_value = mock_settings_instance

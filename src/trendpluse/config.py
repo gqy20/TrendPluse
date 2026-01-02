@@ -2,6 +2,7 @@
 
 使用 pydantic-settings 管理配置，支持环境变量和 .env 文件。
 """
+
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -34,11 +35,10 @@ class Settings(BaseSettings):
     anthropic_api_key: str = Field(description="Anthropic/智谱 AI API Key")
     anthropic_base_url: str = Field(
         default="https://open.bigmodel.cn/api/anthropic",
-        description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)"
+        description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)",
     )
     anthropic_model: str = Field(
-        default="glm-4.7",
-        description="模型名称 (glm-4.7, claude-sonnet-4-20250514 等)"
+        default="glm-4.7", description="模型名称 (glm-4.7, claude-sonnet-4-20250514 等)"
     )
     anthropic_max_tokens: int = 8000
     anthropic_timeout: int = 120

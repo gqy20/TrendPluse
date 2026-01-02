@@ -2,6 +2,7 @@
 
 从 GH Archive 的 BigQuery 数据集获取 GitHub 事件。
 """
+
 from datetime import datetime
 
 from google.cloud import bigquery
@@ -52,9 +53,7 @@ class GHArchiveCollector:
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
                 bigquery.ScalarQueryParameter("repos", "array", repos),
-                bigquery.ScalarQueryParameter(
-                    "since", "timestamp", since.isoformat()
-                ),
+                bigquery.ScalarQueryParameter("since", "timestamp", since.isoformat()),
             ]
         )
 
@@ -67,11 +66,13 @@ class GHArchiveCollector:
         # 转换为统一格式
         events = []
         for row in results:
-            events.append({
-                "type": row.type,
-                "repo": {"name": row.repo_name},
-                "payload": dict(row.payload) if row.payload else {},
-                "created_at": row.created_at.isoformat(),
-            })
+            events.append(
+                {
+                    "type": row.type,
+                    "repo": {"name": row.repo_name},
+                    "payload": dict(row.payload) if row.payload else {},
+                    "created_at": row.created_at.isoformat(),
+                }
+            )
 
         return events

@@ -1,7 +1,5 @@
 """报告生成器单元测试"""
 
-
-
 from trendpluse.models.signal import DailyReport, Signal
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
 

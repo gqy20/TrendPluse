@@ -2,6 +2,7 @@
 
 使用 PyGithub 直接从 GitHub API 获取事件。
 """
+
 from datetime import UTC, datetime
 
 from github import Github, GithubException
@@ -57,18 +58,20 @@ class GitHubEventsCollector:
                     if pr.created_at < since:
                         break
 
-                    events.append({
-                        "type": "PullRequestEvent",
-                        "repo": {"name": repo_name},
-                        "payload": {
-                            "pull_request": {
-                                "number": pr.number,
-                                "title": pr.title,
-                                "body": pr.body,
-                            }
-                        },
-                        "created_at": pr.created_at.isoformat(),
-                    })
+                    events.append(
+                        {
+                            "type": "PullRequestEvent",
+                            "repo": {"name": repo_name},
+                            "payload": {
+                                "pull_request": {
+                                    "number": pr.number,
+                                    "title": pr.title,
+                                    "body": pr.body,
+                                }
+                            },
+                            "created_at": pr.created_at.isoformat(),
+                        }
+                    )
 
             except GithubException as e:
                 # 记录错误但继续处理其他仓库

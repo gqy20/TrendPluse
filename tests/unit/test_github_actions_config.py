@@ -14,6 +14,7 @@ class TestGitHubActionsConfig:
         # Act & Assert
         with pytest.raises(Exception) as exc_info:
             from trendpluse.config import Settings
+
             _ = Settings()
 
         assert "anthropic_api_key" in str(exc_info.value).lower()
@@ -26,6 +27,7 @@ class TestGitHubActionsConfig:
 
         # Act & Assert - 不应该抛出错误
         from trendpluse.config import Settings
+
         settings = Settings()
 
         assert settings.github_token == ""
@@ -38,6 +40,7 @@ class TestGitHubActionsConfig:
 
         # Act
         from trendpluse.config import Settings
+
         settings = Settings()
 
         # Assert

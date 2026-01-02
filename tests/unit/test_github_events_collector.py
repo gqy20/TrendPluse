@@ -1,4 +1,5 @@
 """GitHub Events 采集器单元测试"""
+
 from datetime import UTC, datetime, timedelta
 from unittest.mock import Mock, patch
 

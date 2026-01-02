@@ -2,6 +2,7 @@
 
 定义趋势信号和日报的数据结构。
 """
+
 from typing import Literal
 
 from pydantic import BaseModel, Field

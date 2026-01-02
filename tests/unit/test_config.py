@@ -16,6 +16,7 @@ class TestSettings:
 
         # Act - 导入并创建配置
         from trendpluse.config import Settings
+
         settings = Settings()
 
         # Assert - 验证配置
@@ -32,6 +33,7 @@ class TestSettings:
 
         # Act
         from trendpluse.config import Settings
+
         settings = Settings()
 
         # Assert - 应该使用默认的 5 个仓库
@@ -49,6 +51,7 @@ class TestSettings:
         # Act & Assert
         with pytest.raises(ValidationError) as exc_info:
             from trendpluse.config import Settings
+
             _ = Settings()
 
         assert "Invalid repo format" in str(exc_info.value)
@@ -62,6 +65,7 @@ class TestSettings:
         # Act & Assert
         with pytest.raises(ValidationError) as exc_info:
             from trendpluse.config import Settings
+
             _ = Settings()
 
         # 应该提示缺少必需字段（只有 anthropic_api_key）
@@ -77,6 +81,7 @@ class TestSettings:
 
         # Act
         from trendpluse.config import Settings
+
         settings = Settings()
 
         # Assert
@@ -90,6 +95,7 @@ class TestSettings:
 
         # Act
         from trendpluse.config import Settings
+
         settings = Settings()
 
         # Assert

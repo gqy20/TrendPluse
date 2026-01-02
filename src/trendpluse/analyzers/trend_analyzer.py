@@ -2,6 +2,7 @@
 
 支持 Anthropic Claude 和智谱 AI (GLM) + Instructor 提取结构化趋势信号。
 """
+
 import anthropic
 import instructor
 
@@ -42,11 +43,11 @@ class TrendAnalyzer:
         # 构建 Prompt
         prompt = f"""分析以下 GitHub PR，提取趋势信号。
 
-PR 标题: {pr_details.get('title', '')}
-PR 描述: {pr_details.get('body', '')}
-仓库: {pr_details.get('repo_name', '')}
-作者: {pr_details.get('author', '')}
-链接: {pr_details.get('url', '')}
+PR 标题: {pr_details.get("title", "")}
+PR 描述: {pr_details.get("body", "")}
+仓库: {pr_details.get("repo_name", "")}
+作者: {pr_details.get("author", "")}
+链接: {pr_details.get("url", "")}
 
 请提取关键信息并返回结构化信号。
 """
@@ -67,11 +68,11 @@ PR 描述: {pr_details.get('body', '')}
 
         # 确保源包含 PR URL
         if not signal.sources:
-            signal.sources = [pr_details.get('url', '')]
+            signal.sources = [pr_details.get("url", "")]
 
         # 确保相关仓库
-        if not signal.related_repos and pr_details.get('repo_name'):
-            signal.related_repos = [pr_details.get('repo_name')]
+        if not signal.related_repos and pr_details.get("repo_name"):
+            signal.related_repos = [pr_details.get("repo_name")]
 
         return signal
 
@@ -91,8 +92,8 @@ PR 描述: {pr_details.get('body', '')}
                 signal = self.analyze_pr(pr)
                 signals.append(signal)
             except Exception as e:
-                repo_name = pr.get('repo_name', 'unknown')
-                number = pr.get('number', 0)
+                repo_name = pr.get("repo_name", "unknown")
+                number = pr.get("number", 0)
                 print(f"分析 PR {repo_name}#{number} 失败: {e}")
                 continue
 
@@ -118,15 +119,15 @@ PR 描述: {pr_details.get('body', '')}
         prompt = f"""基于以下信号生成每日趋势报告。
 
 日期: {date}
-工程信号数量: {len(categorized['engineering'])}
-研究信号数量: {len(categorized['research'])}
+工程信号数量: {len(categorized["engineering"])}
+研究信号数量: {len(categorized["research"])}
 高影响信号数量: {high_impact_count}
 
 工程信号:
-{self._format_signals(categorized['engineering'])}
+{self._format_signals(categorized["engineering"])}
 
 研究信号:
-{self._format_signals(categorized['research'])}
+{self._format_signals(categorized["research"])}
 
 请生成一份简洁的每日报告。
 """

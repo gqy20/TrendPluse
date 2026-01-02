@@ -2,6 +2,7 @@
 
 将每日报告渲染为 Markdown 格式。
 """
+
 from pathlib import Path
 
 from trendpluse.models.signal import DailyReport, Signal
@@ -31,8 +32,7 @@ class MarkdownReporter:
         impact_emoji = self.get_impact_emoji(signal.impact_score)
 
         sources_md = "\n".join(
-            f"- [{self._extract_repo_name(url)}]({url})"
-            for url in signal.sources
+            f"- [{self._extract_repo_name(url)}]({url})" for url in signal.sources
         )
 
         repos_md = ", ".join(f"`{repo}`" for repo in signal.related_repos)
@@ -66,9 +66,7 @@ class MarkdownReporter:
         emoji = "🔧" if category == "工程" else "🔬"
         header = f"## {emoji} {category}信号\n\n"
 
-        signals_md = "\n\n".join(
-            self.render_signal(signal) for signal in signals
-        )
+        signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
 
         return header + signals_md
 
@@ -88,14 +86,10 @@ class MarkdownReporter:
 """
 
         # 工程信号
-        engineering_section = self.render_signals(
-            report.engineering_signals, "工程"
-        )
+        engineering_section = self.render_signals(report.engineering_signals, "工程")
 
         # 研究信号
-        research_section = self.render_signals(
-            report.research_signals, "研究"
-        )
+        research_section = self.render_signals(report.research_signals, "研究")
 
         # 统计信息
         stats_section = self._render_stats(report.stats)

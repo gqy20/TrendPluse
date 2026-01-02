@@ -1,4 +1,5 @@
 """AI 分析器单元测试"""
+
 from unittest.mock import Mock, patch
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
