@@ -61,7 +61,7 @@ class MarkdownReporter:
             Markdown 格式的信号列表
         """
         if not signals:
-            return f"## {category}信号\n\n暂无信号。\n"
+            return f"## {category}信号\n\n暂无信号。"
 
         emoji = "🔧" if category == "工程" else "🔬"
         header = f"## {emoji} {category}信号\n\n"
@@ -141,13 +141,13 @@ class MarkdownReporter:
         Returns:
             Markdown 格式的统计信息
         """
-        lines = ["---", "\n## 📊 统计信息\n\n"]
+        lines = ["\n---\n", "## 📊 统计信息\n\n"]
 
         for key, value in stats.items():
             label = self._format_stat_label(key)
-            lines.append(f"- **{label}**: {value}")
+            lines.append(f"- **{label}**: {value}\n")
 
-        return "\n".join(lines) + "\n"
+        return "".join(lines)
 
     def _render_activity(self, activity: dict) -> str:
         """渲染活跃度信息
