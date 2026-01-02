@@ -262,15 +262,13 @@ git commit -m "feat: add new feature"
 ### AI 编程助手
 - `cline/cline` - Autonomous coding agent
 - `paul-gauthier/aider` - AI pair programming tool
-- `ContinueToPay/continue` - AI code assistant
-- `getcursor/typescript-sdk` - Cursor TypeScript SDK
-- `Sxntkx/claude-engineer` - Claude Engineer
+- `continuedev/continue` - AI code assistant
 
-### Gemini / OpenAI
-- `google-gemini/gemini-cli` - Gemini CLI
-- `google-gemini/vertexai-sdk-python` - VertexAI Python SDK
+### AI 工具
 - `openai/openai-python` - OpenAI Python SDK
 - `openai/openai-quickstart-python` - OpenAI Quickstart
+- `danielmiessler/fabric` - AI 工作流工具
+- `ErikBjare/gptme` - AI 终端助手
 
 ### Agent 框架
 - `langchain-ai/langchain` - LangChain 框架
@@ -280,10 +278,6 @@ git commit -m "feat: add new feature"
 - `TransformerOptimus/SuperAGI` - SuperAGI 框架
 - `Significant-Gravitas/AutoGPT` - AutoGPT
 - `OpenDevin/OpenDevin` - OpenDevin
-
-### AI 工具
-- `danielmiessler/fabric` - AI 工作流工具
-- `ErikBjare/gptme` - AI 终端助手
 
 可在 `src/trendpluse/config.py` 中添加更多仓库。
 

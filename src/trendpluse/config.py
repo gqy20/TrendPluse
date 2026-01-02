@@ -30,23 +30,19 @@ class Settings(BaseSettings):
             # AI 编程助手
             "cline/cline",
             "paul-gauthier/aider",
-            "ContinueToPay/continue",
-            "getcursor/typescript-sdk",
-            "google-gemini/gemini-cli",
-            "google-gemini/vertexai-sdk-python",
+            "continuedev/continue",
             "openai/openai-python",
             "openai/openai-quickstart-python",
             "danielmiessler/fabric",
             "ErikBjare/gptme",
+            # Agent 框架
             "TransformerOptimus/SuperAGI",
             "Significant-Gravitas/AutoGPT",
             "OpenDevin/OpenDevin",
-            # Agent 框架
             "langchain-ai/langchain",
             "langgenius/dify",
             "run-llama/llama_index",
             "microsoft/autogen",
-            "Sxntkx/claude-engineer",
         ],
         description="要追踪的仓库列表",
     )

@@ -36,12 +36,12 @@ class TestSettings:
 
         settings = Settings()
 
-        # Assert - 应该使用默认的 23 个仓库
-        assert len(settings.github_repos) == 23
+        # Assert - 应该使用默认的 19 个仓库
+        assert len(settings.github_repos) == 19
         assert "anthropics/skills" in settings.github_repos
         assert "anthropics/claude-quickstarts" in settings.github_repos
         assert "cline/cline" in settings.github_repos
-        assert "langchain-ai/langchain" in settings.github_repos
+        assert "continuedev/continue" in settings.github_repos
 
     def test_validate_invalid_repo_format(self, monkeypatch):
         """测试：无效的仓库格式应该抛出错误"""
