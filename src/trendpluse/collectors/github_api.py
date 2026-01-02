@@ -14,13 +14,17 @@ from tenacity import (
 class GitHubDetailFetcher:
     """从 GitHub API 获取详细信息"""
 
-    def __init__(self, token: str):
+    def __init__(self, token: str = ""):
         """初始化 GitHub 客户端
 
         Args:
-            token: GitHub API token
+            token: GitHub API token（可选，无 token 时有严格的速率限制）
         """
-        self.client = Github(login_or_token=token)
+        if token:
+            self.client = Github(login_or_token=token)
+        else:
+            # 无 token 时仍然可以访问公开仓库，但有速率限制
+            self.client = Github()
         self._rate_limit_wait = wait_exponential(multiplier=1, min=4, max=60)
 
     @retry(
