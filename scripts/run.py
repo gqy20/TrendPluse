@@ -88,7 +88,7 @@ def main():
 
         # 运行每日分析
         console.print("\n[bold]开始分析...[/bold]")
-        date = datetime.now()
+        date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         report = pipeline.run_daily(date=date)
 
         # 显示结果
