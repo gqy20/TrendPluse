@@ -252,11 +252,40 @@ git commit -m "feat: add new feature"
 
 默认追踪以下仓库：
 
-- `anthropics/anthropic-sdk-python`
-- `anthropics/claude-quickstarts`
-- `anthropics/skills`
+### Anthropic 官方
+- `anthropics/anthropic-sdk-python` - Anthropic Python SDK
+- `anthropics/claude-quickstarts` - Claude 快速开始示例
+- `anthropics/skills` - Claude Agent 技能库
+- `anthropics/claude-agent-sdk-python` - Claude Agent SDK
+- `anthropics/claude-code-security-review` - Claude Code 安全审查
 
-可在配置文件中添加更多仓库。
+### AI 编程助手
+- `cline/cline` - Autonomous coding agent
+- `paul-gauthier/aider` - AI pair programming tool
+- `ContinueToPay/continue` - AI code assistant
+- `getcursor/typescript-sdk` - Cursor TypeScript SDK
+- `Sxntkx/claude-engineer` - Claude Engineer
+
+### Gemini / OpenAI
+- `google-gemini/gemini-cli` - Gemini CLI
+- `google-gemini/vertexai-sdk-python` - VertexAI Python SDK
+- `openai/openai-python` - OpenAI Python SDK
+- `openai/openai-quickstart-python` - OpenAI Quickstart
+
+### Agent 框架
+- `langchain-ai/langchain` - LangChain 框架
+- `langgenius/dify` - Dify LLM 应用开发平台
+- `run-llama/llama_index` - LlamaIndex 数据框架
+- `microsoft/autogen` - Microsoft AutoGen
+- `TransformerOptimus/SuperAGI` - SuperAGI 框架
+- `Significant-Gravitas/AutoGPT` - AutoGPT
+- `OpenDevin/OpenDevin` - OpenDevin
+
+### AI 工具
+- `danielmiessler/fabric` - AI 工作流工具
+- `ErikBjare/gptme` - AI 终端助手
+
+可在 `src/trendpluse/config.py` 中添加更多仓库。
 
 ## 故障排查
 

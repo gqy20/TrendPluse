@@ -21,11 +21,32 @@ class Settings(BaseSettings):
     github_token: str = Field(default="", description="GitHub Personal Access Token")
     github_repos: list[str] = Field(
         default=[
+            # Anthropic 官方仓库
             "anthropics/skills",
             "anthropics/claude-quickstarts",
             "anthropics/claude-agent-sdk-python",
             "anthropics/claude-code-security-review",
             "anthropics/anthropic-sdk-python",
+            # AI 编程助手
+            "cline/cline",
+            "paul-gauthier/aider",
+            "ContinueToPay/continue",
+            "getcursor/typescript-sdk",
+            "google-gemini/gemini-cli",
+            "google-gemini/vertexai-sdk-python",
+            "openai/openai-python",
+            "openai/openai-quickstart-python",
+            "danielmiessler/fabric",
+            "ErikBjare/gptme",
+            "TransformerOptimus/SuperAGI",
+            "Significant-Gravitas/AutoGPT",
+            "OpenDevin/OpenDevin",
+            # Agent 框架
+            "langchain-ai/langchain",
+            "langgenius/dify",
+            "run-llama/llama_index",
+            "microsoft/autogen",
+            "Sxntkx/claude-engineer",
         ],
         description="要追踪的仓库列表",
     )
