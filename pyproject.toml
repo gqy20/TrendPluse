@@ -31,6 +31,9 @@ dependencies = [
     "pydantic-settings>=2.6.0",
     "python-dotenv>=1.0.0",
 
+    # 数据采集
+    "google-cloud-bigquery>=3.0.0",
+
     # 模板和文档
     "jinja2>=3.1.0",
     "markdown-it-py>=3.0.0",
