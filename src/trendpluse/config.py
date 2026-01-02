@@ -30,9 +30,16 @@ class Settings(BaseSettings):
     )
     github_base_url: str = "https://api.github.com"
 
-    # Anthropic 配置
-    anthropic_api_key: str = Field(description="Anthropic API Key")
-    anthropic_model: str = "claude-sonnet-4-5"
+    # Anthropic/智谱 AI 配置
+    anthropic_api_key: str = Field(description="API Key (支持 Anthropic 或智谱 AI)")
+    anthropic_base_url: str = Field(
+        default="https://open.bigmodel.cn/api/anthropic",
+        description="API Base URL (智谱AI Anthropic兼容: https://open.bigmodel.cn/api/anthropic)"
+    )
+    anthropic_model: str = Field(
+        default="glm-4.7",
+        description="模型名称 (glm-4.7, claude-sonnet-4-20250514 等)"
+    )
     anthropic_max_tokens: int = 8000
     anthropic_timeout: int = 120
 

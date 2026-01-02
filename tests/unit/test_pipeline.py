@@ -24,6 +24,8 @@ class TestTrendPulsePipeline:
         mock_settings_instance = Mock()
         mock_settings_instance.github_token = "test_token"
         mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings.return_value = mock_settings_instance
@@ -36,7 +38,11 @@ class TestTrendPulsePipeline:
         mock_collector.assert_called_once()
         mock_filter.assert_called_once()
         mock_fetcher.assert_called_once_with(token="test_token")
-        mock_analyzer.assert_called_once_with(api_key="test_api_key")
+        mock_analyzer.assert_called_once_with(
+            api_key="test_api_key",
+            model="glm-4.7",
+            base_url="https://open.bigmodel.cn/api/anthropic",
+        )
         mock_reporter.assert_called_once()
 
     @patch("trendpluse.pipeline.GHArchiveCollector")

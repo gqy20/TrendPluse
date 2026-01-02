@@ -1,6 +1,6 @@
 """AI 趋势信号分析器
 
-使用 Anthropic Claude + Instructor 提取结构化趋势信号。
+支持 Anthropic Claude 和智谱 AI (GLM) + Instructor 提取结构化趋势信号。
 """
 import anthropic
 import instructor
@@ -10,14 +10,23 @@ from trendpluse.models.signal import Signal, DailyReport
 class TrendAnalyzer:
     """基于 AI 的趋势信号分析器"""
 
-    def __init__(self, api_key: str):
+    def __init__(
+        self,
+        api_key: str,
+        model: str = "glm-4.7",
+        base_url: str = "https://open.bigmodel.cn/api/anthropic",
+    ):
         """初始化分析器
 
         Args:
-            api_key: Anthropic API key
+            api_key: API Key (智谱AI 或 Anthropic)
+            model: 模型名称 (glm-4.7, claude-sonnet-4-20250514 等)
+            base_url: API Base URL
         """
+        self.model = model
+        # 使用 Anthropic 客户端 (支持智谱AI Anthropic兼容端点)
         self.client = instructor.from_anthropic(
-            anthropic.Anthropic(api_key=api_key)
+            anthropic.Anthropic(api_key=api_key, base_url=base_url)
         )
 
     def analyze_pr(self, pr_details: dict) -> Signal:
@@ -42,7 +51,7 @@ PR 描述: {pr_details.get('body', '')}
 """
 
         signal = self.client.chat.completions.create(
-            model="claude-3-7-sonnet-20250219",
+            model=self.model,
             response_model=Signal,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=1000,
@@ -117,7 +126,7 @@ PR 描述: {pr_details.get('body', '')}
 """
 
         report = self.client.chat.completions.create(
-            model="claude-3-7-sonnet-20250219",
+            model=self.model,
             response_model=DailyReport,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=2000,

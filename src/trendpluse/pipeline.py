@@ -29,7 +29,11 @@ class TrendPulsePipeline:
         self.collector = GHArchiveCollector()
         self.filter = EventFilter(max_count=self.settings.max_candidates)
         self.fetcher = GitHubDetailFetcher(token=self.settings.github_token)
-        self.analyzer = TrendAnalyzer(api_key=self.settings.anthropic_api_key)
+        self.analyzer = TrendAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
         self.reporter = MarkdownReporter()
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:
