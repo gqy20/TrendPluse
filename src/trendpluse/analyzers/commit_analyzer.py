@@ -104,7 +104,9 @@ class CommitAnalyzer:
         """
         commits_text = json.dumps(commits, ensure_ascii=False, indent=2)
 
-        return f"""你是一个技术趋势分析专家。请分析以下 GitHub commits，提取有价值的技术趋势和代码变更统计。
+        prompt = """\
+你是一个技术趋势分析专家。请分析以下 GitHub commits，提取有价值的\
+技术趋势和代码变更统计。
 
 ## Commit 数据
 
@@ -156,6 +158,8 @@ class CommitAnalyzer:
 - impact_score 基于影响范围和重要性
 - 如果没有有价值的趋势，返回空数组 []
 """
+
+        return prompt.format(commits_text=commits_text)
 
     def _parse_signals(
         self, llm_response: str, commits: list[dict[str, Any]]
