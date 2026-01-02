@@ -53,6 +53,7 @@ class ActivityCollector:
             "active_repos": 0,
             "new_contributors": 0,
             "repo_activity": [],
+            "detailed_commits": [],  # 新增：详细 commit 列表
             "period_start": since.isoformat(),
             "period_end": datetime.now(UTC).isoformat(),
         }
@@ -60,8 +61,11 @@ class ActivityCollector:
         for repo_name in repos:
             try:
                 repo = self.client.get_repo(repo_name)
-                repo_activity = self._collect_repo_activity(repo, since, repo_name)
+                repo_activity, repo_commits = self._collect_repo_activity(
+                    repo, since, repo_name
+                )
                 activity_data["repo_activity"].append(repo_activity)
+                activity_data["detailed_commits"].extend(repo_commits)
 
                 if repo_activity["commit_count"] > 0:
                     activity_data["active_repos"] += 1
@@ -86,7 +90,7 @@ class ActivityCollector:
         repo: Any,
         since: datetime,
         repo_name: str,
-    ) -> dict[str, Any]:
+    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         """收集单个仓库的活跃度
 
         Args:
@@ -95,7 +99,7 @@ class ActivityCollector:
             repo_name: 仓库名称
 
         Returns:
-            仓库活跃度数据
+            (仓库活跃度数据, 详细 commit 列表)
         """
         activity = {
             "repo": repo_name,
@@ -104,6 +108,8 @@ class ActivityCollector:
             "top_contributors": [],
             "recent_commits": [],
         }
+
+        detailed_commits = []  # 新增：详细 commit 列表
 
         try:
             # 获取时间范围内的 commits
@@ -134,6 +140,19 @@ class ActivityCollector:
 
             for commit in commits_list:
                 activity["commit_count"] += 1
+
+                # 构建详细 commit 信息
+                detailed_commit = {
+                    "repo": repo_name,
+                    "sha": commit.sha,
+                    "message": commit.commit.message.split("\n")[0][:200],  # 限制长度
+                    "author": commit.author.login if commit.author else "Unknown",
+                    "timestamp": commit.commit.author.date.isoformat(),
+                    "files_changed": [],  # PyGithub 不直接提供，留空
+                    "additions": 0,  # 需要额外 API 调用，暂时设为 0
+                    "deletions": 0,  # 需要额外 API 调用，暂时设为 0
+                }
+                detailed_commits.append(detailed_commit)
 
                 # 记录最近的 commits（最多 5 个）
                 if len(activity["recent_commits"]) < 5:
@@ -172,4 +191,4 @@ class ActivityCollector:
         except GithubException as e:
             print(f"处理仓库 {repo_name} commits 失败: {e}")
 
-        return activity
+        return activity, detailed_commits

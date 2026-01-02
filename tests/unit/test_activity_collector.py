@@ -49,7 +49,7 @@ class TestActivityCollectorDetailedCommits:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            activity = collector._collect_repo_activity(
+            activity, detailed_commits = collector._collect_repo_activity(
                 mock_repo, since, repo_name
             )
 
@@ -57,6 +57,7 @@ class TestActivityCollectorDetailedCommits:
             assert activity is not None
             assert activity["repo"] == repo_name
             assert activity["commit_count"] >= 0
+            assert isinstance(detailed_commits, list)
 
     def test_collect_activity_includes_detailed_commits(
         self, collector, mock_repo
