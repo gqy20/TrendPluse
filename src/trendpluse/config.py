@@ -12,12 +12,12 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        env_prefix="TRENDPULSE_",
+        env_prefix="",  # 移除前缀，直接使用变量名
         extra="ignore",
     )
 
     # GitHub 配置
-    github_token: str = Field(description="GitHub Personal Access Token")
+    github_token: str = Field(default="", description="GitHub Personal Access Token")
     github_repos: list[str] = Field(
         default=[
             "anthropics/skills",
@@ -31,10 +31,10 @@ class Settings(BaseSettings):
     github_base_url: str = "https://api.github.com"
 
     # Anthropic/智谱 AI 配置
-    anthropic_api_key: str = Field(description="API Key (支持 Anthropic 或智谱 AI)")
+    anthropic_api_key: str = Field(description="Anthropic/智谱 AI API Key")
     anthropic_base_url: str = Field(
         default="https://open.bigmodel.cn/api/anthropic",
-        description="API Base URL (智谱AI Anthropic兼容: https://open.bigmodel.cn/api/anthropic)"
+        description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)"
     )
     anthropic_model: str = Field(
         default="glm-4.7",
