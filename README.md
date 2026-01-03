@@ -99,36 +99,59 @@ ls reports/
 
 ```bash
 # 代码检查
-uv run ruff check .
+make check
+# 或: uv run ruff check .
 
 # 代码格式化
-uv run ruff format .
+make format
+# 或: uv run ruff format .
 
 # 类型检查
-uv run mypy src/trendpluse
+make typecheck
+# 或: uv run mypy src/trendpluse
+
+# 运行所有检查
+make all
 ```
 
 ### 测试
 
 ```bash
 # 运行测试
-uv run pytest
+make test
+# 或: uv run pytest
 
 # 运行测试并生成覆盖率报告
-uv run pytest --cov=src/trendpluse --cov-report=html
+make test-cov
+# 或: uv run pytest --cov=src/trendpluse --cov-report=html
+```
+
+### 运行主程序
+
+```bash
+# 运行每日趋势分析
+make run
+# 或: uv run python scripts/run.py
+
+# 生成报告索引
+make gen-index
+# 或: uv run python scripts/generate_report_index.py
+
+# 同步仓库列表到文档
+make sync-repos
+# 或: uv run python scripts/sync_repos_to_docs.py
 ```
 
 ### 文档
 
 ```bash
 # 构建文档
-uv run mkdocs build
+make docs
+# 或: uv run mkdocs build
 
 # 预览文档（本地）
-uv run mkdocs serve
-
-# 生成报告索引
-uv run python scripts/generate_report_index.py
+make docs-serve
+# 或: uv run mkdocs serve
 ```
 
 ## GitHub Actions
@@ -186,15 +209,23 @@ TrendPluse/
 │   └── report-*.md
 ├── scripts/                # 工具脚本
 │   ├── run.py              # 主程序入口
-│   └── generate_report_index.py  # 生成报告索引
+│   ├── generate_report_index.py  # 生成报告索引
+│   ├── sync_repos_to_docs.py     # 同步仓库列表到文档
+│   ├── repos_doc_generator.py    # 仓库文档生成器
+│   └── check.py            # 健康检查脚本
 ├── src/trendpluse/         # 源代码
 │   ├── analyzers/          # AI 分析器
 │   ├── collectors/         # 数据采集器
 │   ├── models/             # 数据模型
 │   ├── reporters/          # 报告生成器
-│   ├── config.py           # 配置管理
+│   ├── config/             # 配置模块
+│   ├── reports/            # 报告存储
+│   ├── config.py           # 配置管理（主入口）
 │   ├── pipeline.py         # 主流程
-│   └── logger.py           # 日志系统
+│   ├── logger.py           # 日志系统
+│   ├── core.py             # 核心基础函数
+│   ├── api.py              # API 接口定义
+│   └── main.py             # 命令行入口
 ├── tests/                  # 测试文件
 │   └── unit/
 ├── mkdocs.yml              # MkDocs 配置
@@ -231,17 +262,17 @@ TrendPluse/
 vim tests/unit/test_feature.py
 
 # 2. 运行测试（失败）
-uv run pytest tests/unit/test_feature.py
+make test tests/unit/test_feature.py
 
 # 3. 实现功能
 vim src/trendpluse/feature.py
 
 # 4. 运行测试（通过）
-uv run pytest tests/unit/test_feature.py
+make test tests/unit/test_feature.py
 
 # 5. 代码检查
-uv run ruff check .
-uv run ruff format .
+make check
+make format
 
 # 6. 提交
 git add .
@@ -253,11 +284,34 @@ git commit -m "feat: add new feature"
 默认追踪以下仓库：
 
 ### Anthropic 官方
-- `anthropics/anthropic-sdk-python` - Anthropic Python SDK
-- `anthropics/claude-quickstarts` - Claude 快速开始示例
+
+#### 核心产品
+- `anthropics/claude-code` - Claude Code 编程助手
 - `anthropics/skills` - Claude Agent 技能库
-- `anthropics/claude-agent-sdk-python` - Claude Agent SDK
+- `anthropics/claude-cookbooks` - Claude 食谱示例
+- `anthropics/claude-quickstarts` - Claude 快速开始示例
+- `anthropics/courses` - Claude 课程
+- `anthropics/prompt-eng-interactive-tutorial` - Prompt 工程交互教程
+
+#### SDK & Agent
+- `anthropics/claude-agent-sdk-python` - Claude Agent SDK (Python)
+- `anthropics/claude-agent-sdk-typescript` - Claude Agent SDK (TypeScript)
+- `anthropics/claude-agent-sdk-demos` - Claude Agent SDK 示例
+- `anthropics/anthropic-sdk-python` - Anthropic SDK (Python)
+- `anthropics/anthropic-sdk-typescript` - Anthropic SDK (TypeScript)
+- `anthropics/anthropic-sdk-go` - Anthropic SDK (Go)
+- `anthropics/anthropic-sdk-java` - Anthropic SDK (Java)
+
+#### 工具与集成
+- `anthropics/claude-code-action` - Claude Code GitHub Action
 - `anthropics/claude-code-security-review` - Claude Code 安全审查
+- `anthropics/claude-plugins-official` - Claude 官方插件
+- `anthropics/devcontainer-features` - DevContainer 特性
+
+#### 研究与评估
+- `anthropics/evals` - Anthropic 评估工具
+- `anthropics/political-neutrality-eval` - 政治中立性评估
+- `anthropics/hh-rlhf` - HH-RLHF 研究
 
 ### AI 编程助手
 - `cline/cline` - Autonomous coding agent
