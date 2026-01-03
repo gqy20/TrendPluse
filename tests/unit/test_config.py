@@ -25,7 +25,7 @@ class TestSettings:
         assert settings.github_repos == ["owner1/repo1", "owner2/repo2"]
 
     def test_init_with_default_repos(self, monkeypatch):
-        """测试：使用默认仓库列表"""
+        """测试：使用默认仓库列表（动态获取默认值，无需硬编码数量）"""
         # Arrange
         monkeypatch.setenv("GITHUB_TOKEN", "test_token")
         monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
@@ -36,14 +36,21 @@ class TestSettings:
 
         settings = Settings()
 
-        # Assert - 应该使用默认的 37 个仓库
-        assert len(settings.github_repos) == 37
-        assert "anthropics/skills" in settings.github_repos
-        assert "anthropics/claude-quickstarts" in settings.github_repos
-        assert "cline/cline" in settings.github_repos
-        assert "google-gemini/gemini-cli" in settings.github_repos
-        assert "agentscope-ai/agentscope" in settings.github_repos
-        assert "agno-agi/agno" in settings.github_repos
+        # Assert - 动态获取默认仓库数量
+        default_repos = Settings.model_fields["github_repos"].default
+        assert len(settings.github_repos) == len(default_repos)
+
+        # 验证核心仓库存在（这些是关键的代表性仓库）
+        core_repos = [
+            "anthropics/claude-code",  # Anthropic 核心
+            "anthropics/skills",
+            "cline/cline",  # AI 编程助手
+            "langchain-ai/langchain",  # Agent 框架
+            "openai/swarm",  # Agentic AI
+            "AndyMik90/Auto-Claude",  # 自主编程代理
+        ]
+        for repo in core_repos:
+            assert repo in settings.github_repos, f"核心仓库 {repo} 未找到"
 
     def test_validate_invalid_repo_format(self, monkeypatch):
         """测试：无效的仓库格式应该抛出错误"""
