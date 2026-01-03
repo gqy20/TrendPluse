@@ -156,37 +156,12 @@ make docs-serve
 
 ## GitHub Actions
 
-项目配置了两个自动化 workflow：
+项目配置了自动化工作流：
+- **CI** - 每次 PR/push 时运行测试和代码检查
+- **每日分析** - 每天 UTC 0:00 自动生成趋势报告
+- **文档部署** - 报告更新后自动部署到 GitHub Pages
 
-### 1. CI Workflow (`.github/workflows/ci.yml`)
-
-**触发条件：** Push 到 main/develop 分支、Pull Request
-
-**功能：**
-- 代码检查 (ruff)
-- 运行单元测试
-- 上传覆盖率报告
-
-### 2. Daily Analysis Workflow (`.github/workflows/daily-analysis.yml`)
-
-**触发条件：**
-- 每天 UTC 0:00（北京时间 8:00）自动运行
-- 支持手动触发
-
-**功能：**
-- 运行单元测试
-- 执行 GitHub 趋势分析
-- 生成 Markdown 报告
-- 同步报告到文档目录
-- 提交报告到仓库
-
-### 3. Deploy Pages Workflow (`.github/workflows/deploy-pages.yml`)
-
-**触发条件：** 报告或文档更新
-
-**功能：**
-- 构建 MkDocs 文档站点
-- 部署到 GitHub Pages
+详见 [`.github/workflows/`](./.github/workflows/)
 
 ## 项目结构
 
