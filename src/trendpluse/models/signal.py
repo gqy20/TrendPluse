@@ -61,3 +61,7 @@ class DailyReport(BaseModel):
         default=None,
         description="Release 发布数据（可选）",
     )
+    breaking_changes: list[dict] | None = Field(
+        default=None,
+        description="Breaking Changes 列表（可选）",
+    )

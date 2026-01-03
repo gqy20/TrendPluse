@@ -6,6 +6,9 @@
 from datetime import datetime
 from pathlib import Path
 
+from trendpluse.analyzers.breaking_changes_detector import (
+    BreakingChangesDetector,
+)
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
@@ -40,6 +43,11 @@ class TrendPulsePipeline:
             base_url=self.settings.anthropic_base_url,
         )
         self.release_analyzer = ReleaseAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
+        self.breaking_changes_detector = BreakingChangesDetector(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
@@ -89,6 +97,13 @@ class TrendPulsePipeline:
         if release_data and release_data.get("detailed_releases"):
             release_signals = self.release_analyzer.analyze_releases(release_data)
 
+        # 0.7. 检测 breaking changes
+        breaking_changes = []
+        if release_data and release_data.get("detailed_releases"):
+            breaking_changes = self.breaking_changes_detector.detect_breaking_changes(
+                release_data
+            )
+
         # 1. 从 GH Archive 获取事件
         events = self.collector.fetch_events(
             repos=self.settings.github_repos,
@@ -135,16 +150,18 @@ class TrendPulsePipeline:
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
 
-        # 6. 添加活跃度、commit 信号、release 信号和 release 数据
+        # 6. 添加活跃度、commit 信号、release 信号、release 数据和 breaking changes
         report.activity = activity_data
         report.commit_signals = commit_signals
         report.release_signals = release_signals
         report.releases = release_data
+        report.breaking_changes = breaking_changes if breaking_changes else None
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = release_data.get("total_releases", 0)
         report.stats["total_releases_analyzed"] = len(
             release_data.get("detailed_releases", [])
         )
+        report.stats["total_breaking_changes"] = len(breaking_changes)
 
         # 7. 保存报告
         output_path = self._get_output_path(date)

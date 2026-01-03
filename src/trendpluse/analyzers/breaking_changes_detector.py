@@ -56,7 +56,8 @@ class BreakingChangesDetector:
             return []
 
         print(
-            f"[DEBUG] BreakingChangesDetector: 开始分析 {len(detailed_releases)} 个 releases"
+            f"[DEBUG] BreakingChangesDetector: 开始分析 "
+            f"{len(detailed_releases)} 个 releases"
         )
 
         try:
@@ -64,13 +65,15 @@ class BreakingChangesDetector:
             print("[DEBUG] BreakingChangesDetector: 调用 LLM 分析...")
             llm_response = self._call_llm(detailed_releases)
             print(
-                f"[DEBUG] BreakingChangesDetector: LLM 响应长度: {len(llm_response)} 字符"
+                f"[DEBUG] BreakingChangesDetector: LLM 响应长度: "
+                f"{len(llm_response)} 字符"
             )
 
             # 解析响应
             breaking_changes = self._parse_response(llm_response)
             print(
-                f"[DEBUG] BreakingChangesDetector: 检测到 {len(breaking_changes)} 个 breaking changes"
+                f"[DEBUG] BreakingChangesDetector: 检测到 "
+                f"{len(breaking_changes)} 个 breaking changes"
             )
 
             return breaking_changes
@@ -120,7 +123,8 @@ class BreakingChangesDetector:
         """
         releases_text = json.dumps(releases, ensure_ascii=False, indent=2)
 
-        prompt = f"""你是一个技术分析专家。请分析以下 GitHub Releases，识别 breaking changes（不兼容更新）。
+        prompt = f"""你是一个技术分析专家。请分析以下 GitHub Releases，\
+识别 breaking changes（不兼容更新）。
 
 ## Release 数据
 

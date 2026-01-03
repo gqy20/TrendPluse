@@ -108,6 +108,13 @@ class MarkdownReporter:
         if report.releases:
             release_section = "\n\n" + self._render_releases(report.releases)
 
+        # Breaking Changes（仅在有内容时渲染）
+        breaking_changes_section = ""
+        if report.breaking_changes:
+            breaking_changes_section = "\n\n" + self._render_breaking_changes(
+                report.breaking_changes
+            )
+
         # 活跃度信息（仅在有内容时渲染）
         activity_section = ""
         if report.activity:
@@ -124,6 +131,7 @@ class MarkdownReporter:
             + commit_section
             + release_signals_section
             + release_section
+            + breaking_changes_section
             + activity_section
             + stats_section
         )
@@ -163,6 +171,43 @@ class MarkdownReporter:
         signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
 
         return header + signals_md
+
+    def _render_breaking_changes(self, breaking_changes: list[dict]) -> str:
+        """渲染 Breaking Changes
+
+        Args:
+            breaking_changes: breaking changes 列表
+
+        Returns:
+            Markdown 格式的 breaking changes
+        """
+        lines = ["---", "\n## ⚠️ Breaking Changes\n\n"]
+
+        for bc in breaking_changes:
+            repo_name = bc["repo"].replace("_", "\\_")
+            tag_name = bc["tag_name"]
+            repo_link = f"[{repo_name}](https://github.com/{bc['repo']})"
+
+            lines.append(f"### {repo_link} `{tag_name}`\n\n")
+
+            for change in bc.get("changes", []):
+                impact = change.get("impact", "unknown")
+                impact_emoji = {
+                    "high": "🔴",
+                    "medium": "🟡",
+                    "low": "🟢",
+                }.get(impact, "⚪")
+
+                category = change.get("category", "")
+                description = change.get("description", "")
+
+                lines.append(
+                    f"- {impact_emoji} **[{category}]** {description}\n"
+                )
+
+            lines.append("\n")
+
+        return "".join(lines)
 
     def _render_stats(self, stats: dict) -> str:
         """渲染统计信息
@@ -240,6 +285,8 @@ class MarkdownReporter:
             "total_releases": "Release 数",
             "high_impact_signals": "高影响信号数",
             "total_commits_analyzed": "分析 Commit 数",
+            "total_releases_analyzed": "分析 Release 数",
+            "total_breaking_changes": "Breaking Changes 数",
         }
         return labels.get(key, key)
 
