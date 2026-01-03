@@ -6,11 +6,14 @@
 from datetime import datetime
 from pathlib import Path
 
+from anthropic import Anthropic
+
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
 )
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
+from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
@@ -31,7 +34,15 @@ class TrendPulsePipeline:
         Args:
             settings: 配置对象，None 则从环境变量加载
         """
-        self.settings = settings or Settings()
+        self.settings = settings or Settings()  # type: ignore[call-arg]
+
+        # 初始化 LLM 客户端
+        client_kwargs: dict[str, str | None] = {
+            "api_key": self.settings.anthropic_api_key
+        }
+        if self.settings.anthropic_base_url:
+            client_kwargs["base_url"] = self.settings.anthropic_base_url
+        llm_client = Anthropic(**client_kwargs)  # type: ignore[arg-type]
 
         # 初始化组件
         self.collector = GitHubEventsCollector(token=self.settings.github_token)
@@ -58,6 +69,12 @@ class TrendPulsePipeline:
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+        )
+        # 初始化信号去重器
+        self.deduplicator = SignalDeduplicator(
+            llm_client=llm_client,
+            lookback_days=self.settings.days_to_lookback * 3,  # 使用 3 倍的时间窗口
+            history_path="data/signal_history.json",
         )
         self.reporter = MarkdownReporter()
 
@@ -146,6 +163,9 @@ class TrendPulsePipeline:
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
+
+        # 4.5. 信号去重
+        signals = self.deduplicator.deduplicate(signals)
 
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))

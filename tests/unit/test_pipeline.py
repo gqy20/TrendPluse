@@ -6,6 +6,16 @@ from unittest.mock import Mock, patch
 from trendpluse.pipeline import TrendPulsePipeline
 
 
+class MockSignalDeduplicator:
+    """Mock SignalDeduplicator for testing"""
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def deduplicate(self, signals):
+        return signals
+
+
 class TestTrendPulsePipeline:
     """测试 TrendPulse 主流程"""
 
@@ -17,6 +27,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.CommitAnalyzer")
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
@@ -44,6 +55,7 @@ class TestTrendPulsePipeline:
         )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
         mock_settings.return_value = mock_settings_instance
 
         # Act
@@ -80,6 +92,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.CommitAnalyzer")
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
@@ -107,6 +120,7 @@ class TestTrendPulsePipeline:
         )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
         mock_settings.return_value = mock_settings_instance
 
         # Mock 组件
@@ -218,6 +232,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.CommitAnalyzer")
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
@@ -245,6 +260,7 @@ class TestTrendPulsePipeline:
         )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
         mock_settings.return_value = mock_settings_instance
 
         mock_collector_instance = Mock()
