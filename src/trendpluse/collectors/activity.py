@@ -119,6 +119,8 @@ class ActivityCollector:
             # 转换为列表以便安全迭代
             commits_list = list(commits)
 
+            print(f"[DEBUG] {repo_name}: 获取到 {len(commits_list)} 个 commits")
+
             # 用于统计新贡献者
             # 策略：检查该时间之前的贡献者集合
             existing_contributors = set()

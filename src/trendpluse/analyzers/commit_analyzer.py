@@ -51,19 +51,27 @@ class CommitAnalyzer:
         """
         # 处理空列表
         if not commits:
+            print("[DEBUG] CommitAnalyzer: 收到空 commit 列表")
             return []
+
+        print(f"[DEBUG] CommitAnalyzer: 开始分析 {len(commits)} 个 commits")
 
         try:
             # 调用 LLM 分析
+            print("[DEBUG] CommitAnalyzer: 调用 LLM 分析...")
             llm_response = self._call_llm(commits)
+            print(f"[DEBUG] CommitAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
+            print(f"[DEBUG] CommitAnalyzer: LLM 响应预览: {llm_response[:500]}...")
 
             # 解析响应
             signals = self._parse_signals(llm_response, commits)
+            print(f"[DEBUG] CommitAnalyzer: 解析得到 {len(signals)} 个信号")
 
             return signals
 
-        except Exception:
+        except Exception as e:
             # 出错时返回空列表
+            print(f"[DEBUG] CommitAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
     def _call_llm(self, commits: list[dict[str, Any]]) -> str:
