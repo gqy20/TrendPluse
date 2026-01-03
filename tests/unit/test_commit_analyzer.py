@@ -3,6 +3,7 @@
 测试 commit 分析器的核心功能。
 """
 
+from typing import Any
 from unittest.mock import patch
 
 import pytest
@@ -75,7 +76,7 @@ class TestCommitAnalyzer:
     def test_analyze_commits_with_empty_list(self, analyzer):
         """测试分析空 commit 列表 - 应返回空列表"""
         # Arrange
-        empty_commits = []
+        empty_commits: list[dict[str, Any]] = []
 
         # Act
         signals = analyzer.analyze_commits(empty_commits)

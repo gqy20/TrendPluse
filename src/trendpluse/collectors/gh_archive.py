@@ -52,7 +52,7 @@ class GHArchiveCollector:
         # 配置查询参数
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
-                bigquery.ScalarQueryParameter("repos", "array", repos),
+                bigquery.ArrayQueryParameter("repos", "string", repos),
                 bigquery.ScalarQueryParameter("since", "timestamp", since.isoformat()),
             ]
         )

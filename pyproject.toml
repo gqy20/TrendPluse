@@ -119,6 +119,23 @@ warn_no_return = true
 follow_imports = "normal"
 strict_optional = true
 
+# 忽略没有 stubs 的第三方库
+[[tool.mypy.overrides]]
+module = [
+    "anthropic.*",
+    "instructor.*",
+    "google.cloud.*",
+    "dotenv.*",
+    "aiohttp.*",
+    "github.*",
+    "tenacity.*",
+    "dateutil.*",
+    "yaml.*",
+    "pytest.*",
+    "pydantic_settings.*",
+]
+ignore_missing_imports = true
+
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false

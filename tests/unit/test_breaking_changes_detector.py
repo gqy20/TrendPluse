@@ -1,5 +1,6 @@
 """Breaking Changes 检测器单元测试"""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.breaking_changes_detector import (
@@ -71,7 +72,7 @@ class TestBreakingChangesDetector:
         # Arrange
         mock_anthropic.return_value = MagicMock()
         detector = BreakingChangesDetector(api_key="test_key")
-        releases = {"detailed_releases": []}
+        releases: dict[str, Any] = {"detailed_releases": []}
 
         # Act
         results = detector.detect_breaking_changes(releases)

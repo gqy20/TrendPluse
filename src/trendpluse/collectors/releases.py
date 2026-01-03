@@ -51,7 +51,7 @@ class ReleaseCollector:
         if since.tzinfo is None:
             since = since.replace(tzinfo=UTC)
 
-        release_data = {
+        release_data: dict[str, Any] = {
             "total_releases": 0,
             "repos_with_releases": 0,
             "repo_releases": [],
@@ -110,7 +110,7 @@ class ReleaseCollector:
         repo_obj = self.client.get_repo(repo)
         all_releases = repo_obj.get_releases()
 
-        repo_data = {
+        repo_data: dict[str, Any] = {
             "repo": repo,
             "release_count": 0,
             "latest_release": None,

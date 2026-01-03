@@ -71,10 +71,12 @@ PR 描述: {pr_details.get("body", "")}
             signal.sources = [pr_details.get("url", "")]
 
         # 确保相关仓库
-        if not signal.related_repos and pr_details.get("repo_name"):
-            signal.related_repos = [pr_details.get("repo_name")]
+        if not signal.related_repos:
+            repo_name = pr_details.get("repo_name")
+            if repo_name:
+                signal.related_repos = [repo_name]
 
-        return signal
+        return signal  # type: ignore[no-any-return]
 
     def analyze_prs(self, pr_list: list[dict]) -> list[Signal]:
         """批量分析多个 PR
@@ -148,7 +150,7 @@ PR 描述: {pr_details.get("body", "")}
         report.stats["total_prs_analyzed"] = len(signals)
         report.stats["high_impact_signals"] = high_impact_count
 
-        return report
+        return report  # type: ignore[no-any-return]
 
     def filter_high_impact(
         self, signals: list[Signal], threshold: int = 4
@@ -173,7 +175,7 @@ PR 描述: {pr_details.get("body", "")}
         Returns:
             分类后的信号字典
         """
-        categorized = {
+        categorized: dict[str, list[Signal]] = {
             "engineering": [],
             "research": [],
         }

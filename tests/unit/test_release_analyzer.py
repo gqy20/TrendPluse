@@ -1,5 +1,6 @@
 """Release 分析器单元测试"""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
@@ -79,7 +80,7 @@ class TestReleaseAnalyzer:
         # Arrange
         mock_anthropic.return_value = MagicMock()
         analyzer = ReleaseAnalyzer(api_key="test_key")
-        releases = {"detailed_releases": []}
+        releases: dict[str, Any] = {"detailed_releases": []}
 
         # Act
         signals = analyzer.analyze_releases(releases)
@@ -93,7 +94,7 @@ class TestReleaseAnalyzer:
         # Arrange
         mock_anthropic.return_value = MagicMock()
         analyzer = ReleaseAnalyzer(api_key="test_key")
-        releases = {}
+        releases: dict[str, Any] = {}
 
         # Act
         signals = analyzer.analyze_releases(releases)

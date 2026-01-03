@@ -35,7 +35,7 @@ class ReleaseAnalyzer:
         self.base_url = base_url
 
         # 初始化 Anthropic 客户端
-        client_kwargs = {"api_key": api_key}
+        client_kwargs: dict[str, str] = {"api_key": api_key}
         if base_url:
             client_kwargs["base_url"] = base_url
         self.client = Anthropic(**client_kwargs)
@@ -102,7 +102,7 @@ class ReleaseAnalyzer:
             ],
         )
 
-        return message.content[0].text
+        return message.content[0].text  # type: ignore[no-any-return]
 
     def _build_prompt(self, releases: list[dict[str, Any]]) -> str:
         """构建分析 prompt

@@ -48,7 +48,7 @@ class ActivityCollector:
         if since.tzinfo is None:
             since = since.replace(tzinfo=UTC)
 
-        activity_data = {
+        activity_data: dict[str, Any] = {
             "total_commits": 0,
             "active_repos": 0,
             "new_contributors": 0,
@@ -101,7 +101,7 @@ class ActivityCollector:
         Returns:
             (仓库活跃度数据, 详细 commit 列表)
         """
-        activity = {
+        activity: dict[str, Any] = {
             "repo": repo_name,
             "commit_count": 0,
             "new_contributors": 0,

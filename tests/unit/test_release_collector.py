@@ -187,7 +187,8 @@ class TestReleaseCollector:
             "patch": 0,
             "is_prerelease": False,
         }
-        assert collector._parse_version("1.0.0-alpha")["is_prerelease"] is True
+        parsed = collector._parse_version("1.0.0-alpha")
+        assert parsed is not None and parsed["is_prerelease"] is True
         assert collector._parse_version("invalid") is None
 
     @patch("trendpluse.collectors.releases.Github")

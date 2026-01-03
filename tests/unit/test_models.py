@@ -71,7 +71,7 @@ class TestSignal:
             Signal(
                 id="test",
                 title="Test",
-                type="invalid_type",  # 无效
+                type="invalid_type",  # type: ignore[arg-type]  # 无效
                 category="engineering",
                 impact_score=3,
                 why_it_matters="Test",
@@ -89,7 +89,7 @@ class TestSignal:
                 id="test",
                 title="Test",
                 type="capability",
-                category="invalid_category",  # 无效
+                category="invalid_category",  # type: ignore[arg-type]  # 无效
                 impact_score=3,
                 why_it_matters="Test",
                 sources=["https://github.com/test/repo/pull/1"],
