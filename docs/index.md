@@ -1,12 +1,12 @@
 # TrendPulse GitHub 趋势报告
 
 ![GitHub trends](https://img.shields.io/badge/GitHub-趋势分析-blue)
-![Anthropic](https://img.shields.io/badge/Anthropic-Claude-orange)
+![AI Agents](https://img.shields.io/badge/AI-智能体-orange)
 ![Daily](https://img.shields.io/badge/更新-每日-green)
 
 ## 欢迎使用 TrendPulse
 
-TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **Anthropic Claude 生态系统**的最新动态。
+TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI 编程工具和智能体**的最新动态。
 
 ### 核心功能
 

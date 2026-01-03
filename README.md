@@ -8,7 +8,7 @@
 
 ## 概述
 
-**TrendPulse** 是一个智能的 GitHub 趋势分析工具，专注于追踪 **Anthropic Claude 生态系统**的最新动态。
+**TrendPulse** 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI 编程工具和智能体**的最新动态。
 
 它使用 AI 自动分析 GitHub 活动，提取重要的技术趋势和创新点，并以结构化的报告展示。
 
