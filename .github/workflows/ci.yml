@@ -47,6 +47,7 @@ jobs:
         uses: codecov/codecov-action@v5
         if: always()
         with:
-          file: ./coverage.xml
+          files: ./coverage.xml
           fail_ci_if_error: false  # 不要因为 codecov 失败而导致 CI 失败
           verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}  # 可选，私有仓库需要
