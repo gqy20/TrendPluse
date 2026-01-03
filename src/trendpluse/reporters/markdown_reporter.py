@@ -32,7 +32,7 @@ class MarkdownReporter:
         impact_emoji = self.get_impact_emoji(signal.impact_score)
 
         sources_md = "\n".join(
-            f"- [{self._extract_repo_name(url)}]({url})" for url in signal.sources
+            f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
         )
 
         repos_md = ", ".join(f"`{repo}`" for repo in signal.related_repos)
@@ -301,6 +301,42 @@ class MarkdownReporter:
             parts = url.split("github.com/")[1].split("/")
             if len(parts) >= 2:
                 return f"{parts[0]}/{parts[1]}"
+        return "链接"
+
+    def _format_source_url(self, url: str) -> str:
+        """格式化 source URL 显示文本
+
+        Args:
+            url: GitHub URL
+
+        Returns:
+            格式化的显示文本（包含 commit SHA 或 PR 号码）
+        """
+        if "github.com/" in url:
+            # 移除协议前缀
+            clean_url = url.replace("https://github.com/", "").replace("http://github.com/", "")
+
+            # 检测 commit 链接
+            if "/commit/" in clean_url:
+                parts = clean_url.split("/commit/")
+                repo = parts[0]
+                sha = parts[1].split("/")[0]  # 提取 SHA，可能后面有 ? 或 #
+                short_sha = sha[:7]  # 显示前 7 位
+                return f"{repo}@{short_sha}"
+
+            # 检测 PR 链接
+            elif "/pull/" in clean_url:
+                parts = clean_url.split("/pull/")
+                repo = parts[0]
+                pr_num = parts[1].split("/")[0]
+                return f"{repo}#{pr_num}"
+
+            # 默认：提取仓库名
+            else:
+                parts = clean_url.split("/")
+                if len(parts) >= 2:
+                    return f"{parts[0]}/{parts[1]}"
+
         return "链接"
 
     def get_impact_emoji(self, score: int) -> str:
