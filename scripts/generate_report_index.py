@@ -129,7 +129,7 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
     )
 
     # 写入文件
-    index_content = "\n".join(index_lines)
+    index_content = "".join(index_lines)  # 元素已包含 \n，直接拼接
     output_path.write_text(index_content, encoding="utf-8")
 
     print(f"索引已生成: {output_path}")
