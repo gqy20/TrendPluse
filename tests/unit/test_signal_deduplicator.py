@@ -23,12 +23,17 @@ class TestSignalDeduplicator:
     @pytest.fixture
     def deduplicator(self, mock_llm_client):
         """创建去重器实例"""
+        import uuid
+
         from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
+
+        # 使用唯一路径避免测试间互相干扰
+        unique_path = f"/tmp/test_signal_history_{uuid.uuid4().hex[:8]}.json"
 
         return SignalDeduplicator(
             llm_client=mock_llm_client,
             lookback_days=7,
-            history_path="/tmp/test_signal_history.json",
+            history_path=unique_path,
         )
 
     @pytest.fixture
@@ -71,7 +76,9 @@ class TestSignalDeduplicator:
         """测试：正确初始化去重器"""
         # Assert
         assert deduplicator.lookback_days == 7
-        assert deduplicator.history_path == "/tmp/test_signal_history.json"
+        # history_path_str 应该以 /tmp/test_signal_history_ 开头
+        assert deduplicator.history_path_str.startswith("/tmp/test_signal_history_")
+        assert deduplicator.history_path_str.endswith(".json")
 
     def test_compute_fingerprint_same_signal(self, deduplicator, sample_signals):
         """测试：相同信号应产生相同指纹"""
@@ -185,11 +192,13 @@ class TestSignalDeduplicator:
         """测试：去重后应保存到历史文件"""
         # Arrange
         import tempfile
+        from pathlib import Path
 
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             history_path = f.name
 
-        deduplicator.history_path = history_path
+        deduplicator.history_path_str = history_path
+        deduplicator.history_path = Path(history_path)
 
         # Mock LLM 返回非重复
         mock_llm_client.messages.create.return_value = MagicMock(
@@ -205,7 +214,8 @@ class TestSignalDeduplicator:
         with open(history_path) as f:
             saved_data = json.load(f)
 
-        assert len(saved_data["signals"]) == 3
+        # signal-1 和 signal-3 是重复的，deduplicate 只保存了 2 个
+        assert len(saved_data["signals"]) == 2
         assert saved_data["signals"][0]["title"] == "Agent 上下文感知"
 
     def test_load_history_returns_signals(self, deduplicator, sample_signals, tmp_path):
@@ -213,6 +223,7 @@ class TestSignalDeduplicator:
         # Arrange
         import json
         import tempfile
+        from pathlib import Path
 
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             history_path = f.name
@@ -239,7 +250,8 @@ class TestSignalDeduplicator:
                 f,
             )
 
-        deduplicator.history_path = history_path
+        deduplicator.history_path_str = history_path
+        deduplicator.history_path = Path(history_path)
 
         # Act
         history = deduplicator._load_history()
@@ -264,10 +276,12 @@ class TestSignalDeduplicator:
             related_repos=["test/repo"],
         )
 
-        # 添加时间戳属性（用于测试）
-        old_signal.timestamp = (base_time - timedelta(days=10)).isoformat()
+        # 使用 object.__setattr__ 设置 _timestamp 属性（用于测试）
+        object.__setattr__(
+            old_signal, "_timestamp", (base_time - timedelta(days=10)).isoformat()
+        )
 
-        recent_signals = sample_signals  # 默认没有 timestamp，视为最近
+        recent_signals = sample_signals  # 默认没有 _timestamp，视为最近
 
         all_signals = [old_signal] + recent_signals
 
