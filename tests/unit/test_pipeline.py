@@ -13,7 +13,9 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
     @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
@@ -24,7 +26,9 @@ class TestTrendPulsePipeline:
         mock_filter,
         mock_fetcher,
         mock_analyzer,
+        mock_release_analyzer,
         mock_commit_analyzer,
+        mock_release_collector,
         mock_activity_collector,
         mock_reporter,
         mock_settings,
@@ -49,9 +53,15 @@ class TestTrendPulsePipeline:
         assert pipeline is not None
         mock_collector.assert_called_once_with(token="test_token")
         mock_activity_collector.assert_called_once_with(token="test_token")
+        mock_release_collector.assert_called_once_with(token="test_token")
         mock_filter.assert_called_once()
         mock_fetcher.assert_called_once_with(token="test_token")
         mock_commit_analyzer.assert_called_once_with(
+            api_key="test_api_key",
+            model="glm-4.7",
+            base_url="https://open.bigmodel.cn/api/anthropic",
+        )
+        mock_release_analyzer.assert_called_once_with(
             api_key="test_api_key",
             model="glm-4.7",
             base_url="https://open.bigmodel.cn/api/anthropic",
@@ -66,7 +76,9 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
     @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
@@ -77,7 +89,9 @@ class TestTrendPulsePipeline:
         mock_filter,
         mock_fetcher,
         mock_analyzer,
+        mock_release_analyzer,
         mock_commit_analyzer,
+        mock_release_collector,
         mock_activity_collector,
         mock_reporter,
         mock_settings,
@@ -87,6 +101,10 @@ class TestTrendPulsePipeline:
         mock_settings_instance = Mock()
         mock_settings_instance.github_token = "test_token"
         mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings.return_value = mock_settings_instance
@@ -121,9 +139,25 @@ class TestTrendPulsePipeline:
             "period_end": "2026-01-02T23:59:59Z",
         }
         mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_release_collector_instance.collect_releases.return_value = {
+            "total_releases": 0,
+            "repos_with_releases": 0,
+            "repo_releases": [],
+            "detailed_releases": [],
+            "period_start": "2026-01-02T00:00:00Z",
+            "period_end": "2026-01-02T23:59:59Z",
+        }
+        mock_release_collector.return_value = mock_release_collector_instance
+
         mock_commit_analyzer_instance = Mock()
         mock_commit_analyzer_instance.analyze_commits.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()
         mock_filter_instance.filter_candidates.return_value = [
@@ -180,7 +214,9 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
     @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.GitHubDetailFetcher")
     @patch("trendpluse.pipeline.EventFilter")
@@ -191,7 +227,9 @@ class TestTrendPulsePipeline:
         mock_filter,
         mock_fetcher,
         mock_analyzer,
+        mock_release_analyzer,
         mock_commit_analyzer,
+        mock_release_collector,
         mock_activity_collector,
         mock_reporter,
         mock_settings,
@@ -201,6 +239,10 @@ class TestTrendPulsePipeline:
         mock_settings_instance = Mock()
         mock_settings_instance.github_token = "test_token"
         mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings.return_value = mock_settings_instance
@@ -228,9 +270,25 @@ class TestTrendPulsePipeline:
             "period_end": "2026-01-02T23:59:59Z",
         }
         mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_release_collector_instance.collect_releases.return_value = {
+            "total_releases": 0,
+            "repos_with_releases": 0,
+            "repo_releases": [],
+            "detailed_releases": [],
+            "period_start": "2026-01-02T00:00:00Z",
+            "period_end": "2026-01-02T23:59:59Z",
+        }
+        mock_release_collector.return_value = mock_release_collector_instance
+
         mock_commit_analyzer_instance = Mock()
         mock_commit_analyzer_instance.analyze_commits.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()
         mock_filter_instance.filter_candidates.return_value = []

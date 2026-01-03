@@ -39,7 +39,14 @@ class TestReleaseAnalyzer:
         # Arrange
         mock_client = MagicMock()
         mock_message = MagicMock()
-        mock_message.content = [MagicMock(text='[{"title": "新版本发布", "type": "capability", "category": "engineering", "impact_score": 4, "why_it_matters": "重要功能更新", "related_repos": ["test/repo"], "sources": ["https://github.com/test/repo/releases/v1.0.0"]}]')]
+        response_json = (
+            '[{"title": "新版本发布", "type": "capability", '
+            '"category": "engineering", "impact_score": 4, '
+            '"why_it_matters": "重要功能更新", '
+            '"related_repos": ["test/repo"], '
+            '"sources": ["https://github.com/test/repo/releases/v1.0.0"]}]'
+        )
+        mock_message.content = [MagicMock(text=response_json)]
         mock_client.messages.create.return_value = mock_message
         mock_anthropic.return_value = mock_client
 
@@ -125,11 +132,14 @@ class TestReleaseAnalyzer:
         # Arrange
         mock_client = MagicMock()
         mock_message = MagicMock()
-        mock_message.content = [
-            MagicMock(
-                text='```json\n[{"title": "测试", "type": "capability", "category": "engineering", "impact_score": 3, "why_it_matters": "测试", "related_repos": ["test/repo"], "sources": ["https://github.com/test/repo/releases/v1.0.0"]}]\n```'
-            )
-        ]
+        response_text = (
+            '```json\n[{"title": "测试", "type": "capability", '
+            '"category": "engineering", "impact_score": 3, '
+            '"why_it_matters": "测试", '
+            '"related_repos": ["test/repo"], '
+            '"sources": ["https://github.com/test/repo/releases/v1.0.0"]}]\n```'
+        )
+        mock_message.content = [MagicMock(text=response_text)]
         mock_client.messages.create.return_value = mock_message
         mock_anthropic.return_value = mock_client
 
@@ -181,12 +191,21 @@ class TestReleaseAnalyzer:
         assert signals == []
 
     @patch("trendpluse.analyzers.release_analyzer.Anthropic")
-    def test_analyze_releases_identifies_major_version_upgrade(self, mock_anthropic):
+    def test_analyze_releases_identifies_major_version_upgrade(
+        self, mock_anthropic
+    ):
         """测试：应识别主版本升级"""
         # Arrange
         mock_client = MagicMock()
         mock_message = MagicMock()
-        mock_message.content = [MagicMock(text='[{"title": "重大版本升级 2.0", "type": "capability", "category": "engineering", "impact_score": 5, "why_it_matters": "重大架构改进", "related_repos": ["test/repo"], "sources": ["https://github.com/test/repo/releases/v2.0.0"]}]')]
+        response_json = (
+            '[{"title": "重大版本升级 2.0", "type": "capability", '
+            '"category": "engineering", "impact_score": 5, '
+            '"why_it_matters": "重大架构改进", '
+            '"related_repos": ["test/repo"], '
+            '"sources": ["https://github.com/test/repo/releases/v2.0.0"]}]'
+        )
+        mock_message.content = [MagicMock(text=response_json)]
         mock_client.messages.create.return_value = mock_message
         mock_anthropic.return_value = mock_client
 

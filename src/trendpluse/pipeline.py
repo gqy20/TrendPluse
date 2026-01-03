@@ -7,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
+from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
@@ -34,6 +35,11 @@ class TrendPulsePipeline:
         self.activity_collector = ActivityCollector(token=self.settings.github_token)
         self.release_collector = ReleaseCollector(token=self.settings.github_token)
         self.commit_analyzer = CommitAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
+        self.release_analyzer = ReleaseAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
@@ -77,6 +83,11 @@ class TrendPulsePipeline:
         commit_signals = []
         if detailed_commits:
             commit_signals = self.commit_analyzer.analyze_commits(detailed_commits)
+
+        # 0.6. 分析 releases 提取信号
+        release_signals = []
+        if release_data and release_data.get("detailed_releases"):
+            release_signals = self.release_analyzer.analyze_releases(release_data)
 
         # 1. 从 GH Archive 获取事件
         events = self.collector.fetch_events(
@@ -124,12 +135,16 @@ class TrendPulsePipeline:
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
 
-        # 6. 添加活跃度、commit 信号和 release 数据
+        # 6. 添加活跃度、commit 信号、release 信号和 release 数据
         report.activity = activity_data
         report.commit_signals = commit_signals
+        report.release_signals = release_signals
         report.releases = release_data
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = release_data.get("total_releases", 0)
+        report.stats["total_releases_analyzed"] = len(
+            release_data.get("detailed_releases", [])
+        )
 
         # 7. 保存报告
         output_path = self._get_output_path(date)

@@ -21,6 +21,7 @@ class Signal(BaseModel):
         "safety",
         "performance",
         "commit",
+        "release",
     ] = Field(description="信号类型")
     category: Literal["engineering", "research"] = Field(
         description="信号分类：工程或研究"
@@ -43,6 +44,7 @@ class DailyReport(BaseModel):
     engineering_signals: list[Signal] = Field(default_factory=list)
     research_signals: list[Signal] = Field(default_factory=list)
     commit_signals: list[Signal] = Field(default_factory=list)
+    release_signals: list[Signal] = Field(default_factory=list)
     stats: dict = Field(
         default_factory=lambda: {
             "total_prs_analyzed": 0,

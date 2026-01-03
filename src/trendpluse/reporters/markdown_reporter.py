@@ -96,6 +96,13 @@ class MarkdownReporter:
         if report.commit_signals:
             commit_section = "\n" + self._render_commit_signals(report.commit_signals)
 
+        # Release 信号（仅在有内容时渲染）
+        release_signals_section = ""
+        if report.release_signals:
+            release_signals_section = (
+                "\n" + self._render_release_signals(report.release_signals)
+            )
+
         # Release 信息（仅在有内容时渲染）
         release_section = ""
         if report.releases:
@@ -115,6 +122,7 @@ class MarkdownReporter:
             + "\n\n"
             + research_section
             + commit_section
+            + release_signals_section
             + release_section
             + activity_section
             + stats_section
@@ -133,6 +141,24 @@ class MarkdownReporter:
 
         if not signals:
             return header + "暂无 commit 信号。\n"
+
+        signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
+
+        return header + signals_md
+
+    def _render_release_signals(self, signals: list[Signal]) -> str:
+        """渲染 release 信号
+
+        Args:
+            signals: release 信号列表
+
+        Returns:
+            Markdown 格式的 release 信号
+        """
+        header = "## 🎯 Release 信号\n\n"
+
+        if not signals:
+            return header + "暂无 release 信号。\n"
 
         signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
 
@@ -260,6 +286,7 @@ class MarkdownReporter:
             "safety": "🛡️",
             "performance": "⚡",
             "commit": "💾",
+            "release": "🎯",
         }
         return emojis.get(signal_type, "📌")
 
