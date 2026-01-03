@@ -1,0 +1,59 @@
+name: 添加监控仓库
+description: 提交新的 GitHub 仓库到 TrendPluse 监控列表
+title: "[添加仓库] 仓库名称"
+labels: ["add-repo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢贡献！请填写以下信息，我们会自动验证并创建 PR。
+
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub 仓库
+      description: 完整路径，格式：owner/repo（例如：anthropics/claude-code）
+      placeholder: anthropics/claude-code
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分类
+      description: 选择仓库所属分类
+      options:
+        - Anthropic 核心产品
+        - Anthropic SDK & Agent
+        - Anthropic 工具与集成
+        - Anthropic 研究与评估
+        - AI 编程助手
+        - Agent 框架
+        - Agentic AI 核心框架
+        - 自主 AI 编程代理
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 添加理由
+      description: 为什么应该监控这个仓库？它有什么特点？
+      placeholder: |
+        这是一个 Agentic AI 框架，主要特点：
+        - 多代理协作系统
+        - 支持自定义工具
+        - ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认检查
+      options:
+        - label: 我已确认该仓库在 GitHub 上存在且可访问
+          required: true
+        - label: 我已确认该仓库未被监控（可查看 README.md）
+          required: true

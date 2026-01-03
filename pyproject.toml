@@ -141,3 +141,4 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false
+ignore_missing_imports = true  # 测试中可能导入不存在的模块
