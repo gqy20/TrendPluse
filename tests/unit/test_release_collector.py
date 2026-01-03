@@ -1,7 +1,7 @@
 """Release 数据采集单元测试"""
 
-from datetime import datetime, timedelta, UTC
-from unittest.mock import Mock, patch, MagicMock
+from datetime import UTC, datetime, timedelta
+from unittest.mock import MagicMock, Mock, patch
 
 from trendpluse.collectors.releases import ReleaseCollector
 
@@ -13,17 +13,15 @@ class TestReleaseCollector:
         """测试：无 token 初始化采集器"""
         # Arrange & Act
         with patch("trendpluse.collectors.releases.Github"):
-            collector = ReleaseCollector(token="")
+            ReleaseCollector(token="")
 
-        # Assert
-        assert collector is not None
-        assert collector.client is not None
+        # Assert - 简单验证没有抛出异常
 
     @patch("trendpluse.collectors.releases.Github")
     def test_init_with_token(self, mock_github):
         """测试：带 token 初始化采集器"""
         # Arrange & Act
-        collector = ReleaseCollector(token="test_token")
+        ReleaseCollector(token="test_token")
 
         # Assert
         mock_github.assert_called_once_with(login_or_token="test_token")

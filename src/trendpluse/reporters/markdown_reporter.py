@@ -295,20 +295,22 @@ class MarkdownReporter:
                 # 版本类型标记
                 version_info = release.get("version_info", {})
                 if version_info:
-                    major = version_info.get("major", 0)
-                    is_major = version_info.get("minor", 0) == 0 and version_info.get(
-                        "patch", 0
-                    ) == 0
+                    is_major = (
+                        version_info.get("minor", 0) == 0
+                        and version_info.get("patch", 0) == 0
+                    )
                     type_emoji = "🚀" if is_major else "⚡"
                 else:
                     type_emoji = "📦"
 
                 prerelease_tag = " `[预发布]` " if prerelease else ""
 
-                lines.append(
-                    f"#### {type_emoji} [{repo_name}](https://github.com/{release['repo']}) "
+                release_header = (
+                    f"#### {type_emoji} "
+                    f"[{repo_name}](https://github.com/{release['repo']}) "
                     f"{tag_name}{prerelease_tag}\n\n"
                 )
+                lines.append(release_header)
                 if name and name != tag_name:
                     lines.append(f"**{name}**\n\n")
                 lines.append(
