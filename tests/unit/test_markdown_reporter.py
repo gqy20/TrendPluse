@@ -99,9 +99,7 @@ class TestMarkdownReporter:
         # Assert
         assert result == "链接"
 
-    def test_render_signal_includes_commit_sha(
-        self, reporter, sample_signal
-    ):
+    def test_render_signal_includes_commit_sha(self, reporter, sample_signal):
         """测试渲染信号 - commit 链接应包含短 SHA"""
         # Act
         rendered = reporter.render_signal(sample_signal)
