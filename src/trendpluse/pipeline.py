@@ -3,7 +3,7 @@
 协调各个组件完成每日趋势分析。
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from anthropic import Anthropic
@@ -34,7 +34,7 @@ class TrendPulsePipeline:
         Args:
             settings: 配置对象，None 则从环境变量加载
         """
-        self.settings = settings or Settings()  # type: ignore[call-arg]
+        self.settings = settings or Settings()
 
         # 初始化 LLM 客户端
         client_kwargs: dict[str, str | None] = {
@@ -42,7 +42,7 @@ class TrendPulsePipeline:
         }
         if self.settings.anthropic_base_url:
             client_kwargs["base_url"] = self.settings.anthropic_base_url
-        llm_client = Anthropic(**client_kwargs)  # type: ignore[arg-type]
+        llm_client = Anthropic(**client_kwargs)
 
         # 初始化组件
         self.collector = GitHubEventsCollector(token=self.settings.github_token)
@@ -73,7 +73,7 @@ class TrendPulsePipeline:
         # 初始化信号去重器
         self.deduplicator = SignalDeduplicator(
             llm_client=llm_client,
-            lookback_days=self.settings.days_to_lookback * 3,  # 使用 3 倍的时间窗口
+            lookback_days=self.settings.days_to_lookback,  # 与 PR 回溯天数一致
             history_path="data/signal_history.json",
         )
         self.reporter = MarkdownReporter()
@@ -96,10 +96,11 @@ class TrendPulsePipeline:
             since=date,
         )
 
-        # 0.3. 收集 Releases 数据
+        # 0.3. 收集 Releases 数据（回溯 7 天）
+        release_since = date - timedelta(days=self.settings.days_to_lookback)
         release_data = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
-            since=date,
+            since=release_since,
             include_prereleases=getattr(self.settings, "include_prereleases", False),
         )
 
@@ -121,10 +122,11 @@ class TrendPulsePipeline:
                 release_data
             )
 
-        # 1. 从 GH Archive 获取事件
+        # 1. 从 GitHub API 获取 PR（回溯 7 天）
+        pr_since = date - timedelta(days=self.settings.days_to_lookback)
         events = self.collector.fetch_events(
             repos=self.settings.github_repos,
-            since=date,
+            since=pr_since,
         )
 
         # 2. 筛选候选事件

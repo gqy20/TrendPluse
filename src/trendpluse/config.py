@@ -92,7 +92,7 @@ class Settings(BaseSettings):
         "safety",
     ]
     max_candidates: int = 20
-    days_to_lookback: int = 1
+    days_to_lookback: int = 7  # PR 和 Release 回溯天数
 
     # Release 监控配置
     monitor_releases: bool = Field(default=True, description="是否监控 Releases")
