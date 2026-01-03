@@ -17,62 +17,62 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **Anth
 
 ### 📋 监控项目
 
-我们监控以下 **67 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
+我们监控以下 **37 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
 
 #### Anthropic 核心产品
 
-- **[anthropics/claude-code](https://github.com/anthropics/claude-code)** - Claude 代码编辑器
-- **[anthropics/skills](https://github.com/anthropics/skills)** - Claude 技能包
-- **[anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks)** - Claude 示例
-- **[anthropics/claude-quickstarts](https://github.com/anthropics/claude-quickstarts)** - Claude 快速开始
-- **[anthropics/courses](https://github.com/anthropics/courses)** - Claude 课程
-- **[anthropics/prompt-eng-interactive-tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)** - 提示词教程
+- **[anthropics/claude-code](https://github.com/anthropics/claude-code)**
+- **[anthropics/skills](https://github.com/anthropics/skills)**
+- **[anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks)**
+- **[anthropics/claude-quickstarts](https://github.com/anthropics/claude-quickstarts)**
+- **[anthropics/courses](https://github.com/anthropics/courses)**
+- **[anthropics/prompt-eng-interactive-tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)**
 
 #### Anthropic SDK & Agent
 
-- **[anthropics/claude-agent-sdk-python](https://github.com/anthropics/claude-agent-sdk-python)** - Python Agent SDK
-- **[anthropics/claude-agent-sdk-typescript](https://github.com/anthropics/claude-agent-sdk-typescript)** - TypeScript Agent SDK
-- **[anthropics/claude-agent-sdk-demos](https://github.com/anthropics/claude-agent-sdk-demos)** - Agent SDK 示例
-- **[anthropics/anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-python)** - Python SDK
-- **[anthropics/anthropic-sdk-typescript](https://github.com/anthropics/anthropic-sdk-typescript)** - TypeScript SDK
-- **[anthropics/anthropic-sdk-go](https://github.com/anthropics/anthropic-sdk-go)** - Go SDK
-- **[anthropics/anthropic-sdk-java](https://github.com/anthropics/anthropic-sdk-java)** - Java SDK
+- **[anthropics/claude-agent-sdk-python](https://github.com/anthropics/claude-agent-sdk-python)**
+- **[anthropics/claude-agent-sdk-typescript](https://github.com/anthropics/claude-agent-sdk-typescript)**
+- **[anthropics/claude-agent-sdk-demos](https://github.com/anthropics/claude-agent-sdk-demos)**
+- **[anthropics/anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-python)**
+- **[anthropics/anthropic-sdk-typescript](https://github.com/anthropics/anthropic-sdk-typescript)**
+- **[anthropics/anthropic-sdk-go](https://github.com/anthropics/anthropic-sdk-go)**
+- **[anthropics/anthropic-sdk-java](https://github.com/anthropics/anthropic-sdk-java)**
 
 #### Anthropic 工具与集成
 
-- **[anthropics/claude-code-action](https://github.com/anthropics/claude-code-action)** - GitHub Action
-- **[anthropics/claude-code-security-review](https://github.com/anthropics/claude-code-security-review)** - 安全审查
-- **[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)** - 官方插件
-- **[anthropics/devcontainer-features](https://github.com/anthropics/devcontainer-features)** - DevContainer 特性
+- **[anthropics/claude-code-action](https://github.com/anthropics/claude-code-action)**
+- **[anthropics/claude-code-security-review](https://github.com/anthropics/claude-code-security-review)**
+- **[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)**
+- **[anthropics/devcontainer-features](https://github.com/anthropics/devcontainer-features)**
 
 #### Anthropic 研究与评估
 
-- **[anthropics/evals](https://github.com/anthropics/evals)** - 模型评估
-- **[anthropics/political-neutrality-eval](https://github.com/anthropics/political-neutrality-eval)** - 政治中立性评估
-- **[anthropics/hh-rlhf](https://github.com/anthropics/hh-rlhf)** - HH-RLHF
+- **[anthropics/evals](https://github.com/anthropics/evals)**
+- **[anthropics/political-neutrality-eval](https://github.com/anthropics/political-neutrality-eval)**
+- **[anthropics/hh-rlhf](https://github.com/anthropics/hh-rlhf)**
 
 #### AI 编程助手
 
-- **[cline/cline](https://github.com/cline/cline)** - Claude AI 编程助手
-- **[paul-gauthier/aider](https://github.com/paul-gauthier/aider)** - AI Pair Programming
-- **[continuedev/continue](https://github.com/continuedev/continue)** - Continue 开发助手
-- **[openai/openai-python](https://github.com/openai/openai-python)** - OpenAI Python SDK
-- **[danielmiessler/fabric](https://github.com/danielmiessler/fabric)** - Fabric AI 工具
-- **[ErikBjare/gptme](https://github.com/ErikBjare/gptme)** - GPT Me
+- **[cline/cline](https://github.com/cline/cline)**
+- **[paul-gauthier/aider](https://github.com/paul-gauthier/aider)**
+- **[continuedev/continue](https://github.com/continuedev/continue)**
+- **[openai/openai-python](https://github.com/openai/openai-python)**
+- **[openai/openai-quickstart-python](https://github.com/openai/openai-quickstart-python)**
+- **[danielmiessler/fabric](https://github.com/danielmiessler/fabric)**
+- **[ErikBjare/gptme](https://github.com/ErikBjare/gptme)**
 
 #### Agent 框架
 
-- **[TransformerOptimus/SuperAGI](https://github.com/TransformerOptimus/SuperAGI)** - SuperAGI
-- **[Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)** - AutoGPT
-- **[OpenDevin/OpenDevin](https://github.com/OpenDevin/OpenDevin)** - OpenDevin
-- **[langchain-ai/langchain](https://github.com/langchain-ai/langchain)** - LangChain
-- **[langgenius/dify](https://github.com/langgenius/dify)** - Dify
-- **[run-llama/llama_index](https://github.com/run-llama/llama_index)** - LlamaIndex
-- **[microsoft/autogen](https://github.com/microsoft/autogen)** - AutoGen
-- **[google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)** - Gemini CLI
-- **[agentscope-ai/agentscope](https://github.com/agentscope-ai/agentscope)** - AgentScope
-- **[agno-agi/agno](https://github.com/agno-agi/agno)** - Agno
-
+- **[TransformerOptimus/SuperAGI](https://github.com/TransformerOptimus/SuperAGI)**
+- **[Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)**
+- **[OpenDevin/OpenDevin](https://github.com/OpenDevin/OpenDevin)**
+- **[langchain-ai/langchain](https://github.com/langchain-ai/langchain)**
+- **[langgenius/dify](https://github.com/langgenius/dify)**
+- **[run-llama/llama\_index](https://github.com/run-llama/llama_index)**
+- **[microsoft/autogen](https://github.com/microsoft/autogen)**
+- **[google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)**
+- **[agentscope-ai/agentscope](https://github.com/agentscope-ai/agentscope)**
+- **[agno-agi/agno](https://github.com/agno-agi/agno)**
 ### 最新报告
 
 !!! info "最新报告"
