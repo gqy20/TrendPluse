@@ -314,7 +314,9 @@ class MarkdownReporter:
         """
         if "github.com/" in url:
             # 移除协议前缀
-            clean_url = url.replace("https://github.com/", "").replace("http://github.com/", "")
+            clean_url = url.replace("https://github.com/", "").replace(
+                "http://github.com/", ""
+            )
 
             # 检测 commit 链接
             if "/commit/" in clean_url:
