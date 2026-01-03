@@ -182,8 +182,18 @@ class CommitAnalyzer:
             信号列表
         """
         try:
+            # 移除可能的 markdown 代码块标记
+            response_text = llm_response.strip()
+            if response_text.startswith("```json"):
+                response_text = response_text[7:]  # 移除 ```json
+            elif response_text.startswith("```"):
+                response_text = response_text[3:]  # 移除 ```
+            if response_text.endswith("```"):
+                response_text = response_text[:-3]  # 移除结尾的 ```
+            response_text = response_text.strip()
+
             # 解析 JSON
-            data = json.loads(llm_response)
+            data = json.loads(response_text)
 
             # 处理空数组
             if not data:
