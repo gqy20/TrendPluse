@@ -208,8 +208,13 @@ class CommitAnalyzer:
                     repo = commits[idx].get("repo", "")
                     commit_url = f"https://github.com/{repo}/commit/{commit_sha}"
                     sources = [commit_url]
+
+                    # 确保 commit 所在仓库始终在 related_repos 中
+                    ai_related_repos = item.get("related_repos", [])
+                    related_repos = list(set([repo] + ai_related_repos))
                 else:
                     sources = item.get("sources", [])
+                    related_repos = item.get("related_repos", [])
 
                 signal = Signal(
                     id=f"commit-{idx}",
@@ -219,7 +224,7 @@ class CommitAnalyzer:
                     impact_score=item["impact_score"],
                     why_it_matters=item["why_it_matters"],
                     sources=sources,
-                    related_repos=item["related_repos"],
+                    related_repos=related_repos,
                 )
                 signals.append(signal)
 
