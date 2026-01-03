@@ -150,3 +150,66 @@ class TestCommitAnalyzer:
 
             # Assert - 应该优雅地处理错误
             assert signals == []
+
+    def test_parse_signals_includes_commit_repo_in_related_repos(
+        self, analyzer
+    ):
+        """测试解析信号 - commit 所在仓库必须始终在 related_repos 中"""
+        # Arrange
+        commits = [
+            {
+                "repo": "cline/cline",
+                "sha": "abc123",
+                "message": "feat: add context awareness",
+            },
+            {
+                "repo": "anthropics/claude-code-action",
+                "sha": "def456",
+                "message": "fix: update integration",
+            },
+        ]
+
+        # AI 返回的 related_repos 不包含 commit 所在仓库
+        llm_response = """[
+            {
+                "title": "Agent 上下文感知",
+                "type": "capability",
+                "category": "engineering",
+                "impact_score": 5,
+                "why_it_matters": "AI Agent 从被动执行向主动感知演进",
+                "related_repos": ["google-gemini/gemini-cli"],
+                "trends": ["上下文感知"],
+                "tech_details": {"feature_type": "Agent", "complexity": "高"}
+            },
+            {
+                "title": "GitHub Action 集成优化",
+                "type": "workflow",
+                "category": "engineering",
+                "impact_score": 3,
+                "why_it_matters": "改进 CI/CD 集成体验",
+                "related_repos": ["continuedev/continue"],
+                "trends": ["DevOps"],
+                "tech_details": {"feature_type": "集成", "complexity": "低"}
+            }
+        ]"""
+
+        # Act
+        signals = analyzer._parse_signals(llm_response, commits)
+
+        # Assert - commit 所在仓库必须被添加到 related_repos
+        assert len(signals) == 2
+
+        # 第一个信号：commit 来自 cline/cline，必须出现在 related_repos 中
+        assert "cline/cline" in signals[0].related_repos
+        assert "google-gemini/gemini-cli" in signals[0].related_repos
+        assert signals[0].sources[0] == "https://github.com/cline/cline/commit/abc123"
+
+        # 第二个信号：commit 来自 anthropics/claude-code-action
+        assert (
+            "anthropics/claude-code-action" in signals[1].related_repos
+        )
+        assert "continuedev/continue" in signals[1].related_repos
+        assert (
+            signals[1].sources[0]
+            == "https://github.com/anthropics/claude-code-action/commit/def456"
+        )
