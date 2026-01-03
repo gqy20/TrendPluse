@@ -36,8 +36,8 @@ class TestSettings:
 
         settings = Settings()
 
-        # Assert - 应该使用默认的 22 个仓库
-        assert len(settings.github_repos) == 22
+        # Assert - 应该使用默认的 37 个仓库
+        assert len(settings.github_repos) == 37
         assert "anthropics/skills" in settings.github_repos
         assert "anthropics/claude-quickstarts" in settings.github_repos
         assert "cline/cline" in settings.github_repos
