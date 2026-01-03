@@ -1,0 +1,148 @@
+name: 处理仓库添加请求
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  process:
+    if: |
+      contains(github.event.issue.labels.*.name, 'add-repo') &&
+      github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 解析 Issue
+        id: parse
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          # 解析 GitHub 仓库
+          REPO=$(echo "$ISSUE_BODY" | grep -oP '(?<=### GitHub 仓库\s*\n\s*)[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+' || echo "")
+
+          # 解析分类
+          CATEGORY=$(echo "$ISSUE_BODY" | grep -oP '(?<=### 分类\s*\n\s*).+?(?=\n)' | head -1 || echo "")
+
+          # 解添加理由
+          REASON=$(echo "$ISSUE_BODY" | sed -n '/### 添加理由/,/###/p' | tail -n +2 | head -n -1 | sed 's/^\s*-\s*\[x\]\s*//' | head -c 200 || echo "")
+
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
+          echo "category=$CATEGORY" >> $GITHUB_OUTPUT
+          echo "reason=$REASON" >> $GITHUB_OUTPUT
+
+          echo "仓库: $REPO"
+          echo "分类: $CATEGORY"
+
+      - name: 验证仓库格式
+        id: validate_format
+        run: |
+          REPO="${{ steps.parse.outputs.repo }}"
+
+          # 验证格式
+          if [[ ! "$REPO" =~ ^[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+$ ]]; then
+            echo "❌ 仓库格式错误: $REPO"
+            echo "format_error=true" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          echo "✅ 格式验证通过"
+
+      - name: 验证仓库存在
+        id: validate_exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          REPO="${{ steps.parse.outputs.repo }}"
+
+          # 验证仓库存在
+          if ! gh api repos/$REPO --silent 2>/dev/null; then
+            echo "❌ 仓库不存在: $REPO"
+            echo "not_found=true" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          echo "✅ 仓库验证通过"
+
+      - name: 检查仓库是否已监控
+        id: check_duplicate
+        run: |
+          REPO="${{ steps.parse.outputs.repo }}"
+
+          if grep -q "\"${REPO}\"" src/trendpluse/config.py; then
+            echo "❌ 仓库已在监控列表中: $REPO"
+            echo "duplicate=true" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          echo "✅ 仓库未被监控"
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 安装 uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: 添加仓库到配置
+        run: |
+          uv run python scripts/add_repo.py \
+            --repo "${{ steps.parse.outputs.repo }}" \
+            --category "${{ steps.parse.outputs.category }}"
+
+      - name: 创建 PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
+          body: |
+            ## 变更说明
+
+            通过 Issue 自动添加新监控仓库。
+
+            - **仓库**: \`${{ steps.parse.outputs.repo }}\`
+            - **分类**: ${{ steps.parse.outputs.category }}
+            - **理由**: ${{ steps.parse.outputs.reason }}
+
+            ## 来源
+
+            Closes #${{ github.event.issue.number }}
+          branch: add-repo-${{ github.event.issue.number }}
+          delete-branch: true
+          draft: false
+
+      - name: 评论验证失败
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let errorMsg = '❌ 添加仓库失败：\n\n';
+
+            if ('${{ steps.validate_format.outputs.format_error }}' === 'true') {
+              errorMsg += '- 仓库格式错误，请检查是否为 `owner/repo` 格式\n';
+            }
+            if ('${{ steps.validate_exists.outputs.not_found }}' === 'true') {
+              errorMsg += '- 仓库不存在或无法访问\n';
+            }
+            if ('${{ steps.check_duplicate.outputs.duplicate }}' === 'true') {
+              errorMsg += '- 仓库已在监控列表中\n';
+            }
+
+            if (errorMsg === '❌ 添加仓库失败：\n\n') {
+              errorMsg += '未知错误，请查看 Action 日志';
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: errorMsg
+            });
