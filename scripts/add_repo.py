@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # 分类到注释标记的映射
-CATEGORY_MARKERS = {
+CATEGORY_MARKERS: dict[str, dict[str, str | None]] = {
     "Anthropic 核心产品": {
         "start": "# Anthropic 核心产品",
         "end": "# Anthropic SDK & Agent",
@@ -142,11 +142,11 @@ def add_repo_to_config(config_file: str, repo: str, category: str) -> bool:
 
     # 找到插入位置
     lines = content.split("\n")
-    start_idx = None
-    end_idx = None
+    start_idx: int | None = None
+    end_idx: int | None = None
 
     for i, line in enumerate(lines):
-        if start_marker in line:
+        if start_marker and start_marker in line:
             start_idx = i
         if end_marker and end_marker in line:
             end_idx = i

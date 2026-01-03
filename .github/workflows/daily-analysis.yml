@@ -2,8 +2,8 @@ name: Daily Trend Analysis
 
 on:
   schedule:
-    # 每天 UTC 0:00 运行 (北京时间 8:00)
-    - cron: '0 0 * * *'
+    # 每天 UTC 20:00 运行 (北京时间次日 4:00)
+    - cron: '0 20 * * *'
   workflow_dispatch:  # 允许手动触发
 
 permissions:
