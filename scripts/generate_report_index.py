@@ -28,7 +28,8 @@ def extract_report_info(report_path: Path) -> dict | None:
         date_str = date_match.group(1)
 
         # 提取摘要（第一行引用块）
-        summary_match = re.search(r"> (.+)", content.split("\n")[3])
+        # 摘要在标题后的空行之后，通常是第 3 行（索引 2）
+        summary_match = re.search(r"> (.+)", content.split("\n")[2])
         summary = summary_match.group(1) if summary_match else "暂无摘要"
 
         # 提取统计信息
