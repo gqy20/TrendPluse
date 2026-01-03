@@ -85,13 +85,6 @@ class MarkdownReporter:
 
 """
 
-        # 监控仓库列表（仅在有内容时渲染）
-        monitored_repos_section = ""
-        if report.monitored_repos:
-            monitored_repos_section = "\n" + self._render_monitored_repos(
-                report.monitored_repos
-            )
-
         # 工程信号
         engineering_section = self.render_signals(report.engineering_signals, "工程")
 
@@ -132,7 +125,6 @@ class MarkdownReporter:
 
         return (
             header
-            + monitored_repos_section
             + engineering_section
             + "\n\n"
             + research_section
