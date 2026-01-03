@@ -32,3 +32,12 @@ repos:
           - pyproject.toml
           - rich>=13.0.0
         args: [--config-file=pyproject.toml]
+
+  - repo: local
+    hooks:
+      - id: sync-repos-to-docs
+        name: 同步监控仓库列表到文档
+        entry: uv run python scripts/sync_repos_to_docs.py --check
+        language: system
+        pass_filenames: false
+        always_run: true
