@@ -149,8 +149,8 @@ class CommitAnalyzer:
     "category": "分类（engineering/research）",
     "impact_score": 影响评分（1-5）,
     "why_it_matters": "为什么重要（1-2句话）",
-    "related_repos": ["相关仓库名"],
-    "sources": ["commit链接"],
+    "related_repos": ["受此趋势影响或相关的仓库（可选，系统会自动添加当前commit仓库）"],
+    "sources": ["commit链接（可选，系统会自动生成）"],
     "trends": ["趋势关键词"],
     "tech_details": {{
       "feature_type": "特性类型",
@@ -164,6 +164,7 @@ class CommitAnalyzer:
 注意：
 - 只返回真正有价值的趋势（避免琐碎修复）
 - impact_score 基于影响范围和重要性
+- related_repos 可选：列出除当前仓库外，其他相关或影响的仓库
 - 如果没有有价值的趋势，返回空数组 []
 """
 
