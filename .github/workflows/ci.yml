@@ -34,11 +34,19 @@ jobs:
       - name: Run ruff format check
         run: uv run ruff format --check .
 
-      - name: Run tests
-        run: uv run pytest tests/unit/ -v --cov=src/trendpluse --cov-report=xml
+      - name: Run tests with coverage
+        run: |
+          uv run pytest tests/ -v --cov=src/trendpluse --cov-report=xml --cov-report=term
 
-      - name: Upload coverage
+      - name: Verify coverage file exists
+        run: |
+          ls -la coverage.xml
+          echo "Coverage file generated successfully"
+
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         if: always()
         with:
           file: ./coverage.xml
+          fail_ci_if_error: false  # 不要因为 codecov 失败而导致 CI 失败
+          verbose: true
