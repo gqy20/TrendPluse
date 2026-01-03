@@ -292,6 +292,11 @@ git commit -m "feat: add new feature"
 - `cline/cline` - Autonomous coding agent
 - `paul-gauthier/aider` - AI pair programming tool
 - `continuedev/continue` - AI code assistant
+- `AndyMik90/Auto-Claude` - 自主多会话 AI 编程
+- `anomalyco/opencode` - 开源 Claude Code 替代
+- `openinterpreter/open-interpreter` - 代码解释器
+- `TabbyML/tabby` - 自托管代码补全
+- `zed-industries/zed` - AI 原生编辑器
 
 ### AI 工具
 - `openai/openai-python` - OpenAI Python SDK
@@ -301,15 +306,26 @@ git commit -m "feat: add new feature"
 
 ### Agent 框架
 - `langchain-ai/langchain` - LangChain 框架
+- `langchain-ai/langgraph` - 图状态多代理系统
 - `langgenius/dify` - Dify LLM 应用开发平台
 - `run-llama/llama_index` - LlamaIndex 数据框架
 - `microsoft/autogen` - Microsoft AutoGen
+- `microsoft/semantic-kernel` - 企业级 SDK
 - `TransformerOptimus/SuperAGI` - SuperAGI 框架
 - `Significant-Gravitas/AutoGPT` - AutoGPT
 - `OpenDevin/OpenDevin` - OpenDevin
 - `google-gemini/gemini-cli` - Gemini CLI 工具
 - `agentscope-ai/agentscope` - AgentScope 框架
 - `agno-agi/agno` - 多代理框架
+
+#### Agentic AI 核心框架
+- `openai/swarm` - OpenAI 多代理编排
+- `openai/codex` - 终端编程代理
+- `crewAIInc/crewAI` - 角色扮演多代理框架
+- `huggingface/smolagents` - 代码驱动代理
+- `ruvnet/claude-flow` - Claude Agent 平台
+- `bytedance/deer-flow` - 深度研究框架
+- `langchain-ai/deepagents` - 深度代理
 
 可在 `src/trendpluse/config.py` 中添加更多仓库。
 
