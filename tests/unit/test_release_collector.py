@@ -108,10 +108,26 @@ class TestReleaseCollector:
         stable_release = Mock()
         stable_release.created_at = datetime.now(UTC)
         stable_release.prerelease = False
+        stable_release.tag_name = "v1.0.0"
+        stable_release.title = "Stable Release"
+        stable_release.body = "Stable"
+        stable_release.html_url = "https://github.com/test/test/releases/v1.0.0"
+        stable_release.assets = []
+        stable_release.author = Mock()
+        stable_release.author.login = "testuser"
+        stable_release.published_at = datetime.now(UTC)
 
         pre_release = Mock()
         pre_release.created_at = datetime.now(UTC)
         pre_release.prerelease = True
+        pre_release.tag_name = "v1.0.0-beta"
+        pre_release.title = "Pre-release"
+        pre_release.body = "Beta"
+        pre_release.html_url = "https://github.com/test/test/releases/v1.0.0-beta"
+        pre_release.assets = []
+        pre_release.author = Mock()
+        pre_release.author.login = "testuser"
+        pre_release.published_at = datetime.now(UTC)
 
         mock_repo = MagicMock()
         mock_repo.get_releases.return_value = [stable_release, pre_release]
