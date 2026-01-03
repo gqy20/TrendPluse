@@ -12,6 +12,7 @@ from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.collectors.github_events import GitHubEventsCollector
+from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import Settings
 from trendpluse.models.signal import DailyReport
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
@@ -31,6 +32,7 @@ class TrendPulsePipeline:
         # 初始化组件
         self.collector = GitHubEventsCollector(token=self.settings.github_token)
         self.activity_collector = ActivityCollector(token=self.settings.github_token)
+        self.release_collector = ReleaseCollector(token=self.settings.github_token)
         self.commit_analyzer = CommitAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
@@ -63,6 +65,13 @@ class TrendPulsePipeline:
             since=date,
         )
 
+        # 0.3. 收集 Releases 数据
+        release_data = self.release_collector.collect_releases(
+            repos=self.settings.github_repos,
+            since=date,
+            include_prereleases=getattr(self.settings, "include_prereleases", False),
+        )
+
         # 0.5. 分析 commits 提取信号
         detailed_commits = activity_data.get("detailed_commits", [])
         commit_signals = []
@@ -78,10 +87,12 @@ class TrendPulsePipeline:
         # 2. 筛选候选事件
         candidates = self.filter.filter_candidates(events)
 
-        # 如果没有候选事件，返回带活跃度和 commit 信号的空报告
+        # 如果没有候选事件，返回带活跃度、commit 和 release 信号的空报告
         if not candidates:
-            report = self._generate_empty_report(date, activity_data, commit_signals)
-            # 保存空报告（包含活跃度和 commit 数据）
+            report = self._generate_empty_report(
+                date, activity_data, commit_signals, release_data
+            )
+            # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
@@ -90,8 +101,10 @@ class TrendPulsePipeline:
         pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
 
         if not pr_details:
-            report = self._generate_empty_report(date, activity_data, commit_signals)
-            # 保存空报告（包含活跃度和 commit 数据）
+            report = self._generate_empty_report(
+                date, activity_data, commit_signals, release_data
+            )
+            # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
             return report
@@ -100,7 +113,9 @@ class TrendPulsePipeline:
         signals = self.analyzer.analyze_prs(pr_details)
 
         if not signals:
-            report = self._generate_empty_report(date, activity_data, commit_signals)
+            report = self._generate_empty_report(
+                date, activity_data, commit_signals, release_data
+            )
             # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
@@ -109,10 +124,12 @@ class TrendPulsePipeline:
         # 5. 生成每日报告
         report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
 
-        # 6. 添加活跃度和 commit 信号数据
+        # 6. 添加活跃度、commit 信号和 release 数据
         report.activity = activity_data
         report.commit_signals = commit_signals
+        report.releases = release_data
         report.stats["total_commits_analyzed"] = len(detailed_commits)
+        report.stats["total_releases"] = release_data.get("total_releases", 0)
 
         # 7. 保存报告
         output_path = self._get_output_path(date)
@@ -125,6 +142,7 @@ class TrendPulsePipeline:
         date: datetime,
         activity_data: dict | None = None,
         commit_signals: list | None = None,
+        release_data: dict | None = None,
     ) -> DailyReport:
         """生成空报告
 
@@ -132,6 +150,7 @@ class TrendPulsePipeline:
             date: 日期
             activity_data: 活跃度数据（可选）
             commit_signals: commit 信号列表（可选）
+            release_data: Release 数据（可选）
 
         Returns:
             空的每日报告
@@ -149,12 +168,17 @@ class TrendPulsePipeline:
                 "total_commits_analyzed": len(activity_data.get("detailed_commits", []))
                 if activity_data
                 else 0,
+                "total_releases": release_data.get("total_releases", 0)
+                if release_data
+                else 0,
             },
         )
 
-        # 添加活跃度数据（如果有）
+        # 添加活跃度和 release 数据（如果有）
         if activity_data:
             report.activity = activity_data
+        if release_data:
+            report.releases = release_data
 
         return report
 

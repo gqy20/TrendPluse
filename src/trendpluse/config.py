@@ -76,6 +76,12 @@ class Settings(BaseSettings):
     max_candidates: int = 20
     days_to_lookback: int = 1
 
+    # Release 监控配置
+    monitor_releases: bool = Field(default=True, description="是否监控 Releases")
+    include_prereleases: bool = Field(
+        default=False, description="是否包含预发布版本（alpha/beta/rc）"
+    )
+
     # 成本控制
     daily_token_budget: int = 100_000
     max_retries: int = 3

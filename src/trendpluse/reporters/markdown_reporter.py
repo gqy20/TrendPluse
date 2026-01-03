@@ -96,6 +96,11 @@ class MarkdownReporter:
         if report.commit_signals:
             commit_section = "\n" + self._render_commit_signals(report.commit_signals)
 
+        # Release 信息（仅在有内容时渲染）
+        release_section = ""
+        if report.releases:
+            release_section = "\n\n" + self._render_releases(report.releases)
+
         # 活跃度信息（仅在有内容时渲染）
         activity_section = ""
         if report.activity:
@@ -110,6 +115,7 @@ class MarkdownReporter:
             + "\n\n"
             + research_section
             + commit_section
+            + release_section
             + activity_section
             + stats_section
         )
@@ -256,6 +262,76 @@ class MarkdownReporter:
             "commit": "💾",
         }
         return emojis.get(signal_type, "📌")
+
+    def _render_releases(self, releases: dict) -> str:
+        """渲染 Release 信息
+
+        Args:
+            releases: Release 数据字典
+
+        Returns:
+            Markdown 格式的 Release 信息
+        """
+        lines = ["---", "\n## 🎯 版本发布动态\n\n"]
+
+        # 总览
+        lines.append("### 总览\n\n")
+        lines.append(f"- **新发布版本**: {releases.get('total_releases', 0)} 个\n")
+        lines.append(f"- **涉及仓库**: {releases.get('repos_with_releases', 0)} 个\n")
+
+        # 详细 Release 列表（最多 10 个）
+        detailed_releases = releases.get("detailed_releases", [])[:10]
+        if detailed_releases:
+            lines.append("\n### 最新发布\n\n")
+
+            for release in detailed_releases:
+                repo_name = release["repo"].replace("_", "\\_")
+                tag_name = release["tag_name"]
+                name = release.get("name", "")
+                prerelease = release.get("prerelease", False)
+                author = release.get("author", "Unknown")
+                created_at = release.get("created_at", "")[:10]
+
+                # 版本类型标记
+                version_info = release.get("version_info", {})
+                if version_info:
+                    major = version_info.get("major", 0)
+                    is_major = version_info.get("minor", 0) == 0 and version_info.get(
+                        "patch", 0
+                    ) == 0
+                    type_emoji = "🚀" if is_major else "⚡"
+                else:
+                    type_emoji = "📦"
+
+                prerelease_tag = " `[预发布]` " if prerelease else ""
+
+                lines.append(
+                    f"#### {type_emoji} [{repo_name}](https://github.com/{release['repo']}) "
+                    f"{tag_name}{prerelease_tag}\n\n"
+                )
+                if name and name != tag_name:
+                    lines.append(f"**{name}**\n\n")
+                lines.append(
+                    f"**发布者**: `{author}` | **时间**: {created_at}\n\n"
+                )
+
+                # Release Notes 摘要
+                body = release.get("body", "")
+                if body:
+                    # 取前 200 字符
+                    summary = body[:200].replace("\n", " ")
+                    if len(body) > 200:
+                        summary += "..."
+                    lines.append(f"**摘要**: {summary}\n\n")
+
+                # Assets
+                assets = release.get("assets", [])
+                if assets:
+                    lines.append(f"**资产**: {len(assets)} 个文件\n\n")
+
+                lines.append(f"**链接**: [查看详情]({release['html_url']})\n\n")
+
+        return "".join(lines)
 
     def save_report(self, report: DailyReport, output_path: str) -> None:
         """保存报告到文件

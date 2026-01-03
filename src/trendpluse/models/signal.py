@@ -55,3 +55,7 @@ class DailyReport(BaseModel):
         default=None,
         description="仓库活跃度数据（可选）",
     )
+    releases: dict | None = Field(
+        default=None,
+        description="Release 发布数据（可选）",
+    )
