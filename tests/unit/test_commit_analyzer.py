@@ -151,9 +151,7 @@ class TestCommitAnalyzer:
             # Assert - 应该优雅地处理错误
             assert signals == []
 
-    def test_parse_signals_includes_commit_repo_in_related_repos(
-        self, analyzer
-    ):
+    def test_parse_signals_includes_commit_repo_in_related_repos(self, analyzer):
         """测试解析信号 - commit 所在仓库必须始终在 related_repos 中"""
         # Arrange
         commits = [
@@ -205,9 +203,7 @@ class TestCommitAnalyzer:
         assert signals[0].sources[0] == "https://github.com/cline/cline/commit/abc123"
 
         # 第二个信号：commit 来自 anthropics/claude-code-action
-        assert (
-            "anthropics/claude-code-action" in signals[1].related_repos
-        )
+        assert "anthropics/claude-code-action" in signals[1].related_repos
         assert "continuedev/continue" in signals[1].related_repos
         assert (
             signals[1].sources[0]

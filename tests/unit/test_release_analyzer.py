@@ -191,9 +191,7 @@ class TestReleaseAnalyzer:
         assert signals == []
 
     @patch("trendpluse.analyzers.release_analyzer.Anthropic")
-    def test_analyze_releases_identifies_major_version_upgrade(
-        self, mock_anthropic
-    ):
+    def test_analyze_releases_identifies_major_version_upgrade(self, mock_anthropic):
         """测试：应识别主版本升级"""
         # Arrange
         mock_client = MagicMock()

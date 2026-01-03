@@ -99,8 +99,8 @@ class MarkdownReporter:
         # Release 信号（仅在有内容时渲染）
         release_signals_section = ""
         if report.release_signals:
-            release_signals_section = (
-                "\n" + self._render_release_signals(report.release_signals)
+            release_signals_section = "\n" + self._render_release_signals(
+                report.release_signals
             )
 
         # Release 信息（仅在有内容时渲染）
@@ -201,9 +201,7 @@ class MarkdownReporter:
                 category = change.get("category", "")
                 description = change.get("description", "")
 
-                lines.append(
-                    f"- {impact_emoji} **[{category}]** {description}\n"
-                )
+                lines.append(f"- {impact_emoji} **[{category}]** {description}\n")
 
             lines.append("\n")
 
@@ -387,9 +385,7 @@ class MarkdownReporter:
                 lines.append(release_header)
                 if name and name != tag_name:
                     lines.append(f"**{name}**\n\n")
-                lines.append(
-                    f"**发布者**: `{author}` | **时间**: {created_at}\n\n"
-                )
+                lines.append(f"**发布者**: `{author}` | **时间**: {created_at}\n\n")
 
                 # Release Notes 摘要
                 body = release.get("body", "")

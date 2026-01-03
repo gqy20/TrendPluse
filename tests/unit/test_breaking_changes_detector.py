@@ -137,9 +137,7 @@ class TestBreakingChangesDetector:
         assert results == []
 
     @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
-    def test_detect_identifies_multiple_breaking_changes(
-        self, mock_anthropic
-    ):
+    def test_detect_identifies_multiple_breaking_changes(self, mock_anthropic):
         """测试：应识别多个 breaking changes"""
         # Arrange
         mock_client = MagicMock()
