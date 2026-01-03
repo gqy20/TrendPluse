@@ -174,6 +174,7 @@ class MarkdownReporter:
 
             for repo in activity["repo_activity"][:10]:
                 repo_name = repo["repo"].replace("_", "\\_")
+                repo_link = f"[{repo_name}](https://github.com/{repo['repo']})"
                 commits = repo["commit_count"]
                 new_contribs = repo["new_contributors"]
 
@@ -187,7 +188,7 @@ class MarkdownReporter:
                     contrib_list = "-"
 
                 table_row = (
-                    f"| {repo_name} | {commits} | {new_contribs} | {contrib_list} |\n"
+                    f"| {repo_link} | {commits} | {new_contribs} | {contrib_list} |\n"
                 )
                 lines.append(table_row)
 
