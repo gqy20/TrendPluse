@@ -104,11 +104,10 @@ class SignalDeduplicator:
         Returns:
             True 如果重复，False 否则
         """
-        fingerprint = self.compute_fingerprint(signal)
-
         # 阶段 1: 快速指纹匹配
+        signal_fingerprint = self.compute_fingerprint(signal)
         for existing in history:
-            if self.compute_fingerprint(existing) == fingerprint:
+            if self.compute_fingerprint(existing) == signal_fingerprint:
                 return True
 
         # 阶段 2: 查找相似标题（编辑距离 <= 2）
