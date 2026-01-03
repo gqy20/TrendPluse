@@ -176,6 +176,7 @@ class TrendPulsePipeline:
         report.release_signals = release_signals
         report.releases = release_data
         report.breaking_changes = breaking_changes if breaking_changes else None
+        report.monitored_repos = self.settings.github_repos
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = release_data.get("total_releases", 0)
         report.stats["total_releases_analyzed"] = len(
@@ -231,6 +232,9 @@ class TrendPulsePipeline:
             report.activity = activity_data
         if release_data:
             report.releases = release_data
+
+        # 添加监控的仓库列表
+        report.monitored_repos = self.settings.github_repos
 
         return report
 

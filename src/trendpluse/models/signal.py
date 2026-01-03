@@ -65,3 +65,7 @@ class DailyReport(BaseModel):
         default=None,
         description="Breaking Changes 列表（可选）",
     )
+    monitored_repos: list[str] | None = Field(
+        default=None,
+        description="监控的仓库列表（可选）",
+    )

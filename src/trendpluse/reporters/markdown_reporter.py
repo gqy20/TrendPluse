@@ -85,6 +85,13 @@ class MarkdownReporter:
 
 """
 
+        # 监控仓库列表（仅在有内容时渲染）
+        monitored_repos_section = ""
+        if report.monitored_repos:
+            monitored_repos_section = "\n" + self._render_monitored_repos(
+                report.monitored_repos
+            )
+
         # 工程信号
         engineering_section = self.render_signals(report.engineering_signals, "工程")
 
@@ -125,6 +132,7 @@ class MarkdownReporter:
 
         return (
             header
+            + monitored_repos_section
             + engineering_section
             + "\n\n"
             + research_section
@@ -135,6 +143,39 @@ class MarkdownReporter:
             + activity_section
             + stats_section
         )
+
+    def _render_monitored_repos(self, repos: list[str]) -> str:
+        """渲染监控仓库列表
+
+        Args:
+            repos: 仓库列表
+
+        Returns:
+            Markdown 格式的监控仓库列表
+        """
+        lines = ["## 📋 监控仓库\n\n"]
+
+        # 按组织分组
+        repos_by_org: dict[str, list[str]] = {}
+        for repo in repos:
+            org = repo.split("/")[0]
+            if org not in repos_by_org:
+                repos_by_org[org] = []
+            repos_by_org[org].append(repo)
+
+        # 排序组织名称
+        sorted_orgs = sorted(repos_by_org.keys())
+
+        for org in sorted_orgs:
+            org_repos = sorted(repos_by_org[org])
+            lines.append(f"### {org}\n\n")
+            for repo in org_repos:
+                repo_name = repo.replace("_", "\\_")
+                repo_link = f"[{repo_name}](https://github.com/{repo})"
+                lines.append(f"- {repo_link}\n")
+            lines.append("\n")
+
+        return "".join(lines)
 
     def _render_commit_signals(self, signals: list[Signal]) -> str:
         """渲染 commit 信号
