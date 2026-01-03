@@ -21,12 +21,30 @@ class Settings(BaseSettings):
     github_token: str = Field(default="", description="GitHub Personal Access Token")
     github_repos: list[str] = Field(
         default=[
-            # Anthropic 官方仓库
+            # Anthropic 核心产品
+            "anthropics/claude-code",
             "anthropics/skills",
+            "anthropics/claude-cookbooks",
             "anthropics/claude-quickstarts",
+            "anthropics/courses",
+            "anthropics/prompt-eng-interactive-tutorial",
+            # Anthropic SDK & Agent
             "anthropics/claude-agent-sdk-python",
-            "anthropics/claude-code-security-review",
+            "anthropics/claude-agent-sdk-typescript",
+            "anthropics/claude-agent-sdk-demos",
             "anthropics/anthropic-sdk-python",
+            "anthropics/anthropic-sdk-typescript",
+            "anthropics/anthropic-sdk-go",
+            "anthropics/anthropic-sdk-java",
+            # Anthropic 工具与集成
+            "anthropics/claude-code-action",
+            "anthropics/claude-code-security-review",
+            "anthropics/claude-plugins-official",
+            "anthropics/devcontainer-features",
+            # Anthropic 研究与评估
+            "anthropics/evals",
+            "anthropics/political-neutrality-eval",
+            "anthropics/hh-rlhf",
             # AI 编程助手
             "cline/cline",
             "paul-gauthier/aider",
