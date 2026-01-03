@@ -112,9 +112,10 @@ class ActivityCollector:
         detailed_commits = []  # 新增：详细 commit 列表
 
         try:
-            # 获取时间范围内的 commits
+            # 获取时间范围内的 commits（过去一天）
             # 注意：get_commits() 可能返回大量数据，需要限制
-            commits = repo.get_commits(since=since)
+            since_date = since - timedelta(days=1)
+            commits = repo.get_commits(since=since_date, until=since)
             # 转换为列表以便安全迭代
             commits_list = list(commits)
 
