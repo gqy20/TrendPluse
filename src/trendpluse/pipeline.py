@@ -111,11 +111,12 @@ class TrendPulsePipeline:
             since=date,
         )
 
-        # 0.3. 收集 Releases 数据（回溯 7 天）
-        release_since = date - timedelta(days=self.settings.days_to_lookback)
+        # 0.3. 收集 Releases 数据（只分析最近 24 小时）
+        # 从当前时间往前推 24 小时
+        day_ago = date - timedelta(days=1)
         releases_data, detailed_releases = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
-            since=release_since,
+            since=day_ago,
             include_prereleases=getattr(self.settings, "include_prereleases", False),
         )
 
@@ -141,11 +142,11 @@ class TrendPulsePipeline:
                 release_analysis_data
             )
 
-        # 1. 从 GitHub API 获取 PR（回溯 7 天）
-        pr_since = date - timedelta(days=self.settings.days_to_lookback)
+        # 1. 从 GitHub API 获取 PR（只分析最近 24 小时）
+        # 从当前时间往前推 24 小时
         events = self.collector.fetch_events(
             repos=self.settings.github_repos,
-            since=pr_since,
+            since=day_ago,
         )
 
         # 2. 筛选候选事件
