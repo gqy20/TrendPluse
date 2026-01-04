@@ -22,6 +22,7 @@ from trendpluse.collectors.github_events import GitHubEventsCollector
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import Settings
 from trendpluse.models.signal import DailyReport
+from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
 
 
@@ -77,6 +78,15 @@ class TrendPulsePipeline:
             history_path="data/signal_history.json",
         )
         self.reporter = MarkdownReporter()
+
+        # 初始化飞书通知器（如果配置了 webhook URL）
+        self.notifier: FeishuNotifier | None = None
+        if self.settings.feishu_webhook_url:
+            self.notifier = FeishuNotifier(
+                webhook_url=self.settings.feishu_webhook_url,
+                at_mobiles=getattr(self.settings, "feishu_at_mobiles", []),
+                max_signals=getattr(self.settings, "feishu_max_signals", 5),
+            )
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:
         """运行每日分析流程
@@ -140,6 +150,7 @@ class TrendPulsePipeline:
             # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
+            self._send_notification(report)
             return report
 
         # 3. 获取详细信息
@@ -152,6 +163,7 @@ class TrendPulsePipeline:
             # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
+            self._send_notification(report)
             return report
 
         # 4. AI 分析提取信号
@@ -164,6 +176,7 @@ class TrendPulsePipeline:
             # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
             self.reporter.save_report(report, output_path)
+            self._send_notification(report)
             return report
 
         # 4.5. 信号去重
@@ -189,6 +202,7 @@ class TrendPulsePipeline:
         # 7. 保存报告
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
+        self._send_notification(report)
 
         return report
 
@@ -239,6 +253,19 @@ class TrendPulsePipeline:
         report.monitored_repos = self.settings.github_repos
 
         return report
+
+    def _send_notification(self, report: DailyReport) -> None:
+        """发送飞书通知
+
+        Args:
+            report: 每日报告
+        """
+        if self.notifier:
+            try:
+                self.notifier.send_report(report)
+            except Exception:
+                # 通知失败不影响主流程
+                pass
 
     def _get_output_path(self, date: datetime) -> str:
         """获取报告输出路径
