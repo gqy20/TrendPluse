@@ -133,9 +133,9 @@ class Settings(BaseSettings):
         default="",
         description="飞书机器人签名验证密钥（可选）",
     )
-    feishu_at_mobiles: list[str] = Field(
-        default=[],
-        description="飞书通知 @ 提醒的用户手机号列表",
+    feishu_at_mobiles: str = Field(
+        default="",
+        description="飞书通知 @ 提醒的用户手机号列表（逗号分隔）",
     )
     feishu_max_signals: int = Field(
         default=5,
@@ -143,6 +143,13 @@ class Settings(BaseSettings):
         le=10,
         description="飞书卡片中显示的信号数量",
     )
+
+    @property
+    def feishu_at_mobiles_list(self) -> list[str]:
+        """获取解析后的手机号列表"""
+        if not self.feishu_at_mobiles or not self.feishu_at_mobiles.strip():
+            return []
+        return [m.strip() for m in self.feishu_at_mobiles.split(",") if m.strip()]
 
     @field_validator("github_repos")
     @classmethod

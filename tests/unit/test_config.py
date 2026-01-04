@@ -111,3 +111,51 @@ class TestSettings:
 
         # Assert
         assert settings.daily_token_budget == 100_000
+
+    def test_feishu_at_mobiles_empty_string(self, monkeypatch):
+        """测试：空字符串应该返回空列表"""
+        # Arrange
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+        monkeypatch.setenv("FEISHU_AT_MOBILES", "")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.feishu_at_mobiles == ""
+        assert settings.feishu_at_mobiles_list == []
+
+    def test_feishu_at_mobiles_comma_separated(self, monkeypatch):
+        """测试：逗号分隔格式应该正确解析"""
+        # Arrange
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+        monkeypatch.setenv("FEISHU_AT_MOBILES", "13800138000,13900139000")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.feishu_at_mobiles == "13800138000,13900139000"
+        assert settings.feishu_at_mobiles_list == ["13800138000", "13900139000"]
+
+    def test_feishu_at_mobiles_default(self, monkeypatch):
+        """测试：未设置时应该使用默认值（空列表）"""
+        # Arrange
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+        monkeypatch.delenv("FEISHU_AT_MOBILES", raising=False)
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.feishu_at_mobiles == ""
+        assert settings.feishu_at_mobiles_list == []
