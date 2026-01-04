@@ -1,0 +1,297 @@
+"""通知模块测试
+
+测试通知器基类、飞书通知器和报告摘要生成器。
+"""
+
+from unittest.mock import Mock, patch
+
+import httpx  # type: ignore[import-not-found]
+import pytest
+from trendpluse.notifiers.base import BaseNotifier  # type: ignore[import-not-found]
+from trendpluse.notifiers.feishu import FeishuNotifier  # type: ignore[import-not-found]
+from trendpluse.notifiers.summary import (  # type: ignore[import-not-found]
+    ReportSummarizer,
+)
+
+from trendpluse.models.signal import DailyReport, Signal
+
+
+class TestBaseNotifier:
+    """测试 BaseNotifier 抽象基类"""
+
+    def test_base_notifier_is_abstract(self):
+        """BaseNotifier 不能直接实例化"""
+        with pytest.raises(TypeError):
+            BaseNotifier()
+
+    def test_base_notifier_requires_send_method(self):
+        """子类必须实现 send 方法"""
+
+        class IncompleteNotifier(BaseNotifier):
+            pass
+
+        with pytest.raises(TypeError):
+            IncompleteNotifier()
+
+
+class TestReportSummarizer:
+    """测试 ReportSummarizer 报告摘要生成器"""
+
+    def test_summarize_generates_title(self, sample_report: DailyReport):
+        """摘要应包含报告标题"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "title" in result
+        assert "2026-01-04" in result["title"]
+        assert "TrendPulse" in result["title"]
+
+    def test_summarize_generates_summary(self, sample_report: DailyReport):
+        """摘要应包含报告摘要"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "summary" in result
+        assert len(result["summary"]) > 0
+
+    def test_summarize_filters_high_impact_signals(self, sample_report: DailyReport):
+        """摘要应包含高影响信号（评分 >= 4）"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "highlights" in result
+        # 验证所有高亮信号的评分都 >= 4
+        for signal in result["highlights"]:
+            assert signal["impact_score"] >= 4
+
+    def test_summarize_limits_highlights_to_five(self, sample_report: DailyReport):
+        """高影响信号最多返回 5 个"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert len(result["highlights"]) <= 5
+
+    def test_summarize_includes_stats(self, sample_report: DailyReport):
+        """摘要应包含统计信息"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "stats" in result
+        assert "total_prs_analyzed" in result["stats"]
+
+    def test_summarize_includes_top_repos(self, sample_report: DailyReport):
+        """摘要应包含活跃仓库 TOP 3"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "top_repos" in result
+        assert len(result["top_repos"]) <= 3
+
+    def test_summarize_includes_report_url(self, sample_report: DailyReport):
+        """摘要应包含报告链接"""
+        summarizer = ReportSummarizer()
+        result = summarizer.summarize(sample_report)
+
+        assert "report_url" in result
+        assert result["report_url"] != ""
+
+
+class TestFeishuNotifier:
+    """测试 FeishuNotifier 飞书通知器"""
+
+    def test_init_requires_webhook_url(self):
+        """初始化需要 webhook_url"""
+        with pytest.raises(ValueError):
+            FeishuNotifier(webhook_url="")
+
+    def test_build_card_generates_valid_structure(self, sample_report: DailyReport):
+        """构建的卡片应符合飞书格式"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        card = notifier._build_card(sample_report)
+
+        # 验证基本结构
+        assert card["msg_type"] == "interactive"
+        assert "card" in card
+        assert "header" in card["card"]
+        assert "elements" in card["card"]
+
+        # 验证 header
+        header = card["card"]["header"]
+        assert "title" in header
+        assert header["title"]["tag"] == "plain_text"
+
+        # 验证至少有元素
+        assert len(card["card"]["elements"]) > 0
+
+    def test_build_card_includes_highlights_section(self, sample_report: DailyReport):
+        """卡片应包含高影响信号部分"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        card = notifier._build_card(sample_report)
+
+        elements = card["card"]["elements"]
+        # 查找高影响信号部分（包含 "高影响信号" 或 "🔥"）
+        has_highlights = any(
+            "高影响信号" in str(el.get("text", {})) or "🔥" in str(el)
+            for el in elements
+        )
+        assert has_highlights
+
+    def test_build_card_includes_stats_section(self, sample_report: DailyReport):
+        """卡片应包含统计信息部分"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        card = notifier._build_card(sample_report)
+
+        elements = card["card"]["elements"]
+        has_stats = any("统计信息" in str(el) or "📊" in str(el) for el in elements)
+        assert has_stats
+
+    def test_build_card_includes_action_buttons(self, sample_report: DailyReport):
+        """卡片应包含操作按钮"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        card = notifier._build_card(sample_report)
+
+        elements = card["card"]["elements"]
+        # 查找 action 元素
+        has_action = any(el.get("tag") == "action" for el in elements)
+        assert has_action
+
+    @patch("httpx.post")
+    def test_send_report_success(self, mock_post: Mock, sample_report: DailyReport):
+        """成功发送报告通知"""
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"StatusCode": 0, "StatusMessage": "success"}
+        mock_post.return_value = mock_response
+
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        result = notifier.send_report(sample_report)
+
+        assert result is True
+        mock_post.assert_called_once()
+
+    @patch("httpx.post")
+    def test_send_report_network_failure(
+        self, mock_post: Mock, sample_report: DailyReport
+    ):
+        """网络失败时返回 False"""
+        mock_post.side_effect = httpx.HTTPError("Network error")
+
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        result = notifier.send_report(sample_report)
+
+        assert result is False
+
+    @patch("httpx.post")
+    def test_send_report_api_error(self, mock_post: Mock, sample_report: DailyReport):
+        """API 返回错误时返回 False"""
+        mock_response = Mock()
+        mock_response.status_code = 500
+        mock_post.return_value = mock_response
+
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+        result = notifier.send_report(sample_report)
+
+        assert result is False
+
+    def test_send_with_custom_at_mobiles(self, sample_report: DailyReport):
+        """支持自定义 @ 提醒用户"""
+        notifier = FeishuNotifier(
+            webhook_url="https://example.com/webhook", at_mobiles=["13800138000"]
+        )
+        card = notifier._build_card(sample_report)
+
+        # 验证卡片包含 @ 信息
+        elements = card["card"]["elements"]
+        # 查找包含手机号的元素
+        has_at = any("13800138000" in str(el) for el in elements)
+        assert has_at
+
+
+# ========== Fixtures ==========
+
+
+@pytest.fixture
+def sample_signal() -> Signal:
+    """创建示例信号"""
+    return Signal(
+        id="test-signal-1",
+        title="测试信号：新功能发布",
+        type="capability",
+        category="engineering",
+        impact_score=5,
+        why_it_matters="这是一个非常重要的功能更新",
+        sources=["https://github.com/test/repo/pull/123"],
+        related_repos=["test/repo"],
+    )
+
+
+@pytest.fixture
+def sample_report() -> DailyReport:
+    """创建示例日报"""
+    # 创建不同评分的信号
+    high_impact_signals = [
+        Signal(
+            id=f"high-{i}",
+            title=f"高影响信号 {i}",
+            type="capability",
+            category="engineering",
+            impact_score=5,
+            why_it_matters=f"重要原因 {i}",
+            sources=[f"https://github.com/test/repo/pull/{i}"],
+            related_repos=[f"test/repo-{i}"],
+        )
+        for i in range(6)  # 6 个高影响信号，测试限制为 5 个
+    ]
+
+    medium_impact_signals = [
+        Signal(
+            id=f"medium-{i}",
+            title=f"中等影响信号 {i}",
+            type="workflow",
+            category="engineering",
+            impact_score=3,
+            why_it_matters=f"原因 {i}",
+            sources=[f"https://github.com/test/repo/pull/{i + 10}"],
+            related_repos=[f"test/repo-{i}"],
+        )
+        for i in range(3)
+    ]
+
+    return DailyReport(
+        date="2026-01-04",
+        summary_brief=(
+            "今日发现 9 个重要信号，涵盖 AI 编程工具、Agent 框架等多个领域的更新。"
+        ),
+        engineering_signals=high_impact_signals + medium_impact_signals,
+        research_signals=[],
+        commit_signals=[],
+        release_signals=[],
+        stats={
+            "total_prs_analyzed": 45,
+            "total_releases": 8,
+            "high_impact_signals": 6,
+            "total_commits_analyzed": 120,
+        },
+        activity={
+            "total_commits": 500,
+            "active_repos": 23,
+            "new_contributors": 5,
+            "repo_activity": [
+                {
+                    "repo": "anthropics/claude-code",
+                    "commit_count": 127,
+                    "new_contributors": 3,
+                },
+                {"repo": "cline/cline", "commit_count": 45, "new_contributors": 1},
+                {"repo": "openai/swarm", "commit_count": 32, "new_contributors": 0},
+                {
+                    "repo": "significant-gravitas/autogpt",
+                    "commit_count": 20,
+                    "new_contributors": 2,
+                },
+            ],
+        },
+        releases=None,
+        breaking_changes=None,
+        monitored_repos=None,
+    )
