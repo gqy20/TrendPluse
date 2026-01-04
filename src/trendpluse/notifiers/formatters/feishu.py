@@ -124,9 +124,20 @@ class FeishuFormatter:
             impact_stars = "⭐" * signal.impact_score
             repos = ", ".join(f"`{r}`" for r in signal.related_repos)
 
-            content += f"{type_emoji} **{signal.title}**\n"
-            content += f"{impact_stars} | {repos}\n"
-            content += f"{signal.why_it_matters}\n\n"
+            # 来源链接（格式化显示）
+            sources_md = "\n".join(
+                f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
+            )
+
+            # 完整显示所有信息（与 Markdown 报告保持一致）
+            content += f"{type_emoji} **{signal.title}**\n\n"
+            content += (
+                f"**类型**: `{signal.type}` | **影响**: {impact_stars} "
+                f"({signal.impact_score}/5) | **分类**: `{signal.category}`\n\n"
+            )
+            content += f"**为什么重要**: {signal.why_it_matters}\n\n"
+            content += f"**相关仓库**: {repos}\n\n"
+            content += f"**来源**:\n{sources_md}\n\n"
 
         return {
             "tag": "div",
@@ -135,6 +146,44 @@ class FeishuFormatter:
                 "content": content,
             },
         }
+
+    def _format_source_url(self, url: str) -> str:
+        """格式化 source URL 显示文本
+
+        Args:
+            url: GitHub URL
+
+        Returns:
+            格式化的显示文本（包含 commit SHA 或 PR 号码）
+        """
+        if "github.com/" in url:
+            # 移除协议前缀
+            clean_url = url.replace("https://github.com/", "").replace(
+                "http://github.com/", ""
+            )
+
+            # 检测 commit 链接
+            if "/commit/" in clean_url:
+                parts = clean_url.split("/commit/")
+                repo = parts[0]
+                sha = parts[1].split("/")[0]  # 提取 SHA，可能后面有 ? 或 #
+                short_sha = sha[:7]  # 显示前 7 位
+                return f"{repo}@{short_sha}"
+
+            # 检测 PR 链接
+            elif "/pull/" in clean_url:
+                parts = clean_url.split("/pull/")
+                repo = parts[0]
+                pr_num = parts[1].split("/")[0]
+                return f"{repo}#{pr_num}"
+
+            # 默认：提取仓库名
+            else:
+                parts = clean_url.split("/")
+                if len(parts) >= 2:
+                    return f"{parts[0]}/{parts[1]}"
+
+        return "链接"
 
     def _create_releases_section(self, releases) -> dict:
         """创建版本发布部分

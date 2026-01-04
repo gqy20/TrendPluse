@@ -58,11 +58,15 @@ class FeishuNotifier(BaseNotifier):
         Args:
             title: 通知标题
             content: 通知内容（支持 Markdown）
-            url: 可选的跳转链接
+            url: 可选的跳转链接（会作为链接添加到内容末尾）
 
         Returns:
             是否发送成功
         """
+        # 如果提供了 URL，将其作为链接添加到内容末尾
+        if url:
+            content += f"\n\n🔗 **[查看详情]({url})**"
+
         card: dict = {
             "msg_type": "interactive",
             "card": {
@@ -83,23 +87,6 @@ class FeishuNotifier(BaseNotifier):
                 ],
             },
         }
-
-        if url:
-            card_elements = card["card"]["elements"]
-            if isinstance(card_elements, list):
-                card_elements.append(
-                    {
-                        "tag": "action",
-                        "actions": [
-                            {
-                                "tag": "button",
-                                "text": {"tag": "plain_text", "content": "查看详情"},
-                                "url": url,
-                                "type": "default",
-                            }
-                        ],
-                    }
-                )
 
         return self._send_webhook(card)
 
