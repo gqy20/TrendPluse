@@ -203,19 +203,42 @@ class CommitAnalyzer:
             # 转换为 Signal 对象
             signals = []
             for idx, item in enumerate(data):
-                # 构建来源链接
-                if idx < len(commits):
-                    commit_sha = commits[idx].get("sha", "")
-                    repo = commits[idx].get("repo", "")
-                    commit_url = f"https://github.com/{repo}/commit/{commit_sha}"
-                    sources = [commit_url]
+                # 优先使用 LLM 返回的 commit_sha 进行匹配
+                commit_sha = item.get("commit_sha")
 
-                    # 确保 commit 所在仓库始终在 related_repos 中
-                    ai_related_repos = item.get("related_repos", [])
-                    related_repos = list(set([repo] + ai_related_repos))
+                if commit_sha:
+                    # 通过 SHA 查找对应的 commit
+                    matching_commit = next(
+                        (c for c in commits if c.get("sha") == commit_sha), None
+                    )
+                    if matching_commit:
+                        repo = matching_commit.get("repo", "")
+                        commit_url = f"https://github.com/{repo}/commit/{commit_sha}"
+                        sources = [commit_url]
+
+                        # 确保 commit 所在仓库始终在 related_repos 中
+                        ai_related_repos = item.get("related_repos", [])
+                        related_repos = list(set([repo] + ai_related_repos))
+                    else:
+                        # SHA 没找到，使用空列表
+                        sources = []
+                        related_repos = item.get("related_repos", [])
                 else:
-                    sources = item.get("sources", [])
-                    related_repos = item.get("related_repos", [])
+                    # 回退到索引匹配（向后兼容）
+                    if idx < len(commits):
+                        commit_sha_fallback = commits[idx].get("sha", "")
+                        repo = commits[idx].get("repo", "")
+                        commit_url = (
+                            f"https://github.com/{repo}/commit/{commit_sha_fallback}"
+                        )
+                        sources = [commit_url]
+
+                        # 确保 commit 所在仓库始终在 related_repos 中
+                        ai_related_repos = item.get("related_repos", [])
+                        related_repos = list(set([repo] + ai_related_repos))
+                    else:
+                        sources = item.get("sources", [])
+                        related_repos = item.get("related_repos", [])
 
                 signal = Signal(
                     id=f"commit-{idx}",
