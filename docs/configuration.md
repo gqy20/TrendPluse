@@ -16,6 +16,11 @@
 | `GITHUB_TOKEN` | GitHub 访问令牌 | 无（匿名访问） |
 | `ANTHROPIC_MODEL` | 使用的模型 | `glm-4.7` |
 | `GITHUB_REPOS` | 追踪的仓库列表 | 见下方默认值 |
+| `FEISHU_WEBHOOK_URL` | 飞书机器人 Webhook URL | 无（不发送通知） |
+| `FEISHU_SECRET` | 飞书签名验证密钥 | 无 |
+| `FEISHU_AT_MOBILES` | 飞书 @ 提醒手机号（逗号分隔） | 无 |
+| `FEISHU_MAX_SIGNALS` | 飞书卡片显示信号数量 | 5 |
+| `INCLUDE_PRERELEASES` | 是否包含预发布版本 | false |
 
 ## 默认追踪仓库
 
@@ -35,9 +40,21 @@ DEFAULT_REPOS = [
 
 ```bash
 # .env
+# 必需配置
 ANTHROPIC_API_KEY=your_api_key_here
 ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic
+
+# 可选配置
 GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+
+# 飞书通知（可选）
+FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/...
+FEISHU_SECRET=your_secret_here
+FEISHU_AT_MOBILES=13800138000,13900139000
+FEISHU_MAX_SIGNALS=5
+
+# Release 监控（可选）
+INCLUDE_PRERELEASES=false
 ```
 
 ### 方式 2: 使用系统环境变量
@@ -60,9 +77,12 @@ $env:ANTHROPIC_BASE_URL="https://open.bigmodel.cn/api/anthropic"
 2. 选择 Secrets and variables → Actions
 3. 点击 New repository secret
 4. 添加以下 secrets：
-   - `ANTHROPIC_API_KEY`
+   - `ANTHROPIC_API_KEY`（必需）
    - `ANTHROPIC_BASE_URL`（可选）
    - `GITHUB_TOKEN`（可选）
+   - `FEISHU_WEBHOOK_URL`（可选，用于飞书通知）
+   - `FEISHU_SECRET`（可选，飞书签名验证）
+   - `FEISHU_AT_MOBILES`（可选，逗号分隔的手机号）
 
 ## 高级配置
 
