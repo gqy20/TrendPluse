@@ -196,9 +196,10 @@ class TrendPulsePipeline:
         report.stats["total_releases_analyzed"] = len(detailed_releases)
         report.stats["total_breaking_changes"] = len(breaking_changes)
 
-        # 7. 保存报告
+        # 7. 保存报告（同时保存 Markdown 和 JSON）
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
+        self._save_report_json(report, output_path)
         self._send_notification(report)
 
         return report
@@ -303,3 +304,18 @@ class TrendPulsePipeline:
         reports_dir = Path("reports")
         filename = f"report-{date.strftime('%Y-%m-%d')}.md"
         return str(reports_dir / filename)
+
+    def _save_report_json(self, report: DailyReport, output_path: str) -> None:
+        """保存报告 JSON 数据
+
+        Args:
+            report: 每日报告对象
+            output_path: Markdown 输出路径（用于推断 JSON 路径）
+        """
+        # 将 .md 替换为 .json
+        json_path = str(Path(output_path).with_suffix(".json"))
+
+        # Pydantic 模型支持 .model_dump_json() 直接序列化为 JSON
+        json_data = report.model_dump_json(indent=2, ensure_ascii=False)
+
+        Path(json_path).write_text(json_data, encoding="utf-8")

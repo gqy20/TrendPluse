@@ -193,3 +193,12 @@ jobs:
             exit 0
           fi
           uv run python scripts/send_feishu_notification.py
+
+      - name: Upload Feishu card artifact
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: feishu-card-${{ needs.analyze.outputs.report_date }}
+          path: feishu_card.json
+          retention-days: 30
+          if-no-files-found: ignore
