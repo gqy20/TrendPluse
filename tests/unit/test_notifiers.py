@@ -295,3 +295,96 @@ def sample_report() -> DailyReport:
         breaking_changes=None,
         monitored_repos=None,
     )
+
+
+class TestFeishuNotifierJsonV2:
+    """测试 FeishuNotifier 飞书卡片 JSON 2.0 结构"""
+
+    def test_build_card_uses_json_v2_structure(self, sample_report: DailyReport):
+        """测试：卡片使用 JSON 2.0 结构"""
+        # Arrange
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        # Act
+        card = notifier._build_card(sample_report)
+
+        # Assert - JSON 2.0 结构验证
+        assert card["msg_type"] == "interactive"
+        card_data = card["card"]
+
+        # 必须包含 schema 字段且值为 "2.0"
+        assert "schema" in card_data, "卡片必须包含 schema 字段"
+        assert card_data["schema"] == "2.0", "schema 必须为 2.0"
+
+        # 必须包含 config 字段
+        assert "config" in card_data, "卡片必须包含 config 字段"
+
+        # update_multi 必须为 true（JSON 2.0 要求）
+        assert card_data["config"]["update_multi"] is True, (
+            "JSON 2.0 要求 update_multi 为 true"
+        )
+
+        # elements 必须在 body 层级下
+        assert "body" in card_data, "JSON 2.0 要求包含 body 字段"
+        assert "elements" in card_data["body"], "elements 必须在 body 下"
+
+        # 不应该在根级别有 elements
+        assert "elements" not in card_data or card_data.get("elements") is None, (
+            "JSON 2.0 不支持根级别的 elements"
+        )
+
+    def test_json_v2_preserves_header(self, sample_report: DailyReport):
+        """测试：JSON 2.0 保持 header 结构"""
+        # Arrange
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        # Act
+        card = notifier._build_card(sample_report)
+
+        # Assert
+        card_data = card["card"]
+        assert "header" in card_data, "JSON 2.0 保持 header 字段"
+        assert "title" in card_data["header"]
+        assert card_data["header"]["title"]["tag"] == "plain_text"
+
+    def test_json_v2_body_elements_are_valid(self, sample_report: DailyReport):
+        """测试：JSON 2.0 body.elements 包含有效内容"""
+        # Arrange
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        # Act
+        card = notifier._build_card(sample_report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        assert len(elements) > 0, "body.elements 必须包含内容"
+
+        # 验证包含预期的元素类型
+        element_tags = {el.get("tag") for el in elements}
+        assert "div" in element_tags or "markdown" in element_tags
+        assert "hr" in element_tags or {"tag": "hr"} in elements
+
+    def test_json_v2_content_includes_heading_syntax(self, sample_report: DailyReport):
+        """测试：JSON 2.0 支持标题语法（###）"""
+        # Arrange
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        # Act
+        card = notifier._build_card(sample_report)
+
+        # Assert - 验证 content 中包含 ### 标题语法
+        elements = card["card"]["body"]["elements"]
+
+        # 收集所有 markdown content
+        contents = []
+        for el in elements:
+            if el.get("tag") in ("div", "markdown"):
+                text_obj = el.get("text", {})
+                if text_obj.get("tag") == "lark_md":
+                    contents.append(text_obj.get("content", ""))
+
+        combined_content = " ".join(contents)
+
+        # 验证包含 ### 标题语法（在 JSON 2.0 中应该被支持）
+        # 注意：这个测试会在升级前失败，因为当前代码使用的是粗体而非标题
+        assert "###" in combined_content, "JSON 2.0 应该支持 ### 标题语法"
