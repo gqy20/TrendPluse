@@ -86,6 +86,7 @@ class TrendPulsePipeline:
                 webhook_url=self.settings.feishu_webhook_url,
                 at_mobiles=getattr(self.settings, "feishu_at_mobiles", []),
                 max_signals=getattr(self.settings, "feishu_max_signals", 5),
+                secret=getattr(self.settings, "feishu_secret", "") or None,
             )
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:

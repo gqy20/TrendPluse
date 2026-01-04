@@ -129,6 +129,10 @@ class Settings(BaseSettings):
         default="",
         description="飞书机器人 Webhook URL（留空则不发送通知）",
     )
+    feishu_secret: str = Field(
+        default="",
+        description="飞书机器人签名验证密钥（可选）",
+    )
     feishu_at_mobiles: list[str] = Field(
         default=[],
         description="飞书通知 @ 提醒的用户手机号列表",

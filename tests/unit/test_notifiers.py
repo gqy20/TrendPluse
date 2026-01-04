@@ -5,15 +5,15 @@
 
 from unittest.mock import Mock, patch
 
-import httpx  # type: ignore[import-not-found]
+import httpx
 import pytest
-from trendpluse.notifiers.base import BaseNotifier  # type: ignore[import-not-found]
-from trendpluse.notifiers.feishu import FeishuNotifier  # type: ignore[import-not-found]
-from trendpluse.notifiers.summary import (  # type: ignore[import-not-found]
-    ReportSummarizer,
-)
 
 from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.notifiers.base import BaseNotifier
+from trendpluse.notifiers.feishu import FeishuNotifier
+from trendpluse.notifiers.summary import (
+    ReportSummarizer,
+)
 
 
 class TestBaseNotifier:
@@ -205,6 +205,54 @@ class TestFeishuNotifier:
         # 查找包含手机号的元素
         has_at = any("13800138000" in str(el) for el in elements)
         assert has_at
+
+    @patch("httpx.post")
+    def test_send_with_signature(self, mock_post: Mock, sample_report: DailyReport):
+        """支持签名验证"""
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_post.return_value = mock_response
+
+        notifier = FeishuNotifier(
+            webhook_url="https://example.com/webhook",
+            secret="test_secret_123",
+        )
+        result = notifier.send_report(sample_report)
+
+        assert result is True
+        # 验证发送时包含了 timestamp 和 sign
+        call_args = mock_post.call_args
+        card = call_args.kwargs["json"]
+        assert "timestamp" in card
+        assert "sign" in card
+        assert int(card["timestamp"]) > 0
+
+    def test_gen_sign(self):
+        """签名生成正确性"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        # 测试固定值
+        timestamp = "1704067200"
+        secret = "test_secret"
+        sign = notifier._gen_sign(timestamp, secret)
+
+        # 验证签名格式（base64）
+        assert len(sign) > 0
+        # 验证签名一致性
+        sign2 = notifier._gen_sign(timestamp, secret)
+        assert sign == sign2
+
+    def test_gen_sign_different_inputs(self):
+        """不同输入生成不同签名"""
+        notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
+
+        sign1 = notifier._gen_sign("1704067200", "secret1")
+        sign2 = notifier._gen_sign("1704067201", "secret1")
+        sign3 = notifier._gen_sign("1704067200", "secret2")
+
+        # 不同 timestamp 或 secret 应该产生不同签名
+        assert sign1 != sign2
+        assert sign1 != sign3
 
 
 # ========== Fixtures ==========

@@ -3,6 +3,11 @@
 通过飞书自定义机器人 Webhook 发送卡片消息。
 """
 
+import base64
+import hashlib
+import hmac
+import time
+
 import httpx
 from tenacity import (
     retry,
@@ -26,6 +31,7 @@ class FeishuNotifier(BaseNotifier):
         webhook_url: str,
         at_mobiles: list[str] | None = None,
         max_signals: int = 5,
+        secret: str | None = None,
     ):
         """初始化飞书通知器
 
@@ -33,6 +39,7 @@ class FeishuNotifier(BaseNotifier):
             webhook_url: 飞书机器人 Webhook URL
             at_mobiles: @ 提醒的用户手机号列表
             max_signals: 卡片中显示的信号数量
+            secret: 飞书机器人签名验证密钥（可选）
 
         Raises:
             ValueError: webhook_url 为空
@@ -42,6 +49,7 @@ class FeishuNotifier(BaseNotifier):
         self.webhook_url = webhook_url
         self.at_mobiles = at_mobiles or []
         self.max_signals = max_signals
+        self.secret = secret
         self.summarizer = ReportSummarizer()
 
     def send(self, title: str, content: str, url: str | None = None) -> bool:
@@ -93,7 +101,7 @@ class FeishuNotifier(BaseNotifier):
                     }
                 )
 
-        return self._send_webhook(card)  # type: ignore[no-any-return]
+        return self._send_webhook(card)
 
     def send_report(self, report: DailyReport) -> bool:
         """发送日报通知
@@ -105,7 +113,7 @@ class FeishuNotifier(BaseNotifier):
             是否发送成功
         """
         card = self._build_card(report)
-        return self._send_webhook(card)  # type: ignore[no-any-return]
+        return self._send_webhook(card)
 
     def _build_card(self, report: DailyReport) -> dict:
         """构建飞书卡片
@@ -268,6 +276,13 @@ class FeishuNotifier(BaseNotifier):
             是否发送成功
         """
         try:
+            # 如果配置了 secret，添加签名
+            if self.secret:
+                timestamp = str(int(time.time()))
+                sign = self._gen_sign(timestamp, self.secret)
+                card["timestamp"] = timestamp
+                card["sign"] = sign
+
             response = httpx.post(
                 self.webhook_url,
                 json=card,
@@ -280,6 +295,26 @@ class FeishuNotifier(BaseNotifier):
             return True
         except httpx.HTTPError:
             return False
+
+    def _gen_sign(self, timestamp: str, secret: str) -> str:
+        """生成飞书 webhook 签名
+
+        Args:
+            timestamp: 时间戳字符串
+            secret: 签名密钥
+
+        Returns:
+            base64 编码的签名
+        """
+        # 拼接 timestamp 和 secret
+        string_to_sign = f"{timestamp}\n{secret}"
+        hmac_code = hmac.new(
+            string_to_sign.encode("utf-8"), digestmod=hashlib.sha256
+        ).digest()
+
+        # 对结果进行 base64 处理
+        sign = base64.b64encode(hmac_code).decode("utf-8")
+        return sign
 
     def _get_type_emoji(self, signal_type: str) -> str:
         """获取信号类型的表情

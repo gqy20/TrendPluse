@@ -143,3 +143,4 @@ ignore_missing_imports = true
 module = "tests.*"
 disallow_untyped_defs = false
 ignore_missing_imports = true  # 测试中可能导入不存在的模块
+disable_error_code = ["abstract"]  # 测试中故意实例化抽象类
