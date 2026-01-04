@@ -149,8 +149,8 @@ class CommitAnalyzer:
     "category": "分类（engineering/research）",
     "impact_score": 影响评分（1-5）,
     "why_it_matters": "为什么重要（1-2句话）",
+    "commit_sha": "从输入 commit 数据中精确复制对应的 sha 字段值",
     "related_repos": ["受此趋势影响或相关的仓库（可选，系统会自动添加当前commit仓库）"],
-    "sources": ["commit链接（可选，系统会自动生成）"],
     "trends": ["趋势关键词"],
     "tech_details": {{
       "feature_type": "特性类型",
@@ -162,6 +162,8 @@ class CommitAnalyzer:
 ```
 
 注意：
+- **commit_sha 必需**：必须从输入的 commit 数据中精确复制对应的 `sha` 字段值
+- 精确匹配：确保信号与正确的 commit 关联，避免索引错位
 - 只返回真正有价值的趋势（避免琐碎修复）
 - impact_score 基于影响范围和重要性
 - related_repos 可选：列出除当前仓库外，其他相关或影响的仓库

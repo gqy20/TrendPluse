@@ -280,7 +280,7 @@ class TestCommitAnalyzer:
             },
             {
                 "title": "代码重构",
-                "type": "refactor",
+                "type": "abstraction",
                 "category": "engineering",
                 "impact_score": 3,
                 "why_it_matters": "提升可维护性",
