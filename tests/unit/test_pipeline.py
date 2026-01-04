@@ -86,6 +86,7 @@ class TestTrendPulsePipeline:
         )
         mock_reporter.assert_called_once()
 
+    @patch("pathlib.Path.write_text")
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
@@ -109,6 +110,7 @@ class TestTrendPulsePipeline:
         mock_activity_collector,
         mock_reporter,
         mock_settings,
+        mock_write_text,
     ):
         """测试：运行每日分析流程"""
         # Arrange
@@ -210,6 +212,10 @@ class TestTrendPulsePipeline:
         mock_report_obj.commit_signals = []
         mock_report_obj.activity = {}
         mock_report_obj.stats = {"total_prs_analyzed": 1}
+        # 添加 model_dump_json 方法返回 JSON 字符串
+        mock_report_obj.model_dump_json = Mock(
+            return_value='{"date": "2026-01-02", "engineering_signals": []}'
+        )
         # 为新方法添加 mock
         mock_analyzer_instance.aggregate_and_generate_report.return_value = (
             mock_report_obj
@@ -236,6 +242,7 @@ class TestTrendPulsePipeline:
         # 验证 commit 分析被调用
         mock_commit_analyzer_instance.analyze_commits.assert_called_once()
 
+    @patch("pathlib.Path.write_text")
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
@@ -259,6 +266,7 @@ class TestTrendPulsePipeline:
         mock_activity_collector,
         mock_reporter,
         mock_settings,
+        mock_write_text,
     ):
         """测试：没有事件时的处理"""
         # Arrange
@@ -341,6 +349,10 @@ class TestTrendPulsePipeline:
         mock_report_obj.commit_signals = []
         mock_report_obj.activity = {}
         mock_report_obj.stats = {}
+        # 添加 model_dump_json 方法返回 JSON 字符串
+        mock_report_obj.model_dump_json = Mock(
+            return_value='{"date": "2026-01-02", "engineering_signals": []}'
+        )
         # 为新方法添加 mock
         mock_analyzer_instance.aggregate_and_generate_report.return_value = (
             mock_report_obj
