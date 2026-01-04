@@ -105,9 +105,9 @@ def main():
         if report.activity:
             result_text += (
                 f"\n\n[bold cyan]仓库活跃度:[/bold cyan]\n"
-                f"  总 Commit 数: {report.activity.get('total_commits', 0)}\n"
-                f"  活跃仓库数: {report.activity.get('active_repos', 0)}\n"
-                f"  新贡献者数: {report.activity.get('new_contributors', 0)}"
+                f"  总 Commit 数: {report.activity.total_commits}\n"
+                f"  活跃仓库数: {report.activity.active_repos_count}\n"
+                f"  新贡献者数: {report.activity.new_contributors}"
             )
 
         console.print(
