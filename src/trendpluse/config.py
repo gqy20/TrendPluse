@@ -124,6 +124,22 @@ class Settings(BaseSettings):
     output_dir: str = "reports/daily"
     snapshot_dir: str = "data/snapshots"
 
+    # 飞书通知配置
+    feishu_webhook_url: str = Field(
+        default="",
+        description="飞书机器人 Webhook URL（留空则不发送通知）",
+    )
+    feishu_at_mobiles: list[str] = Field(
+        default=[],
+        description="飞书通知 @ 提醒的用户手机号列表",
+    )
+    feishu_max_signals: int = Field(
+        default=5,
+        ge=1,
+        le=10,
+        description="飞书卡片中显示的信号数量",
+    )
+
     @field_validator("github_repos")
     @classmethod
     def validate_repos(cls, v: list[str]) -> list[str]:
