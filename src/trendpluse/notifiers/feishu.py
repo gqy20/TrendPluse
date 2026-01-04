@@ -129,7 +129,8 @@ class FeishuNotifier(BaseNotifier):
 
         # 添加 @ 提醒（如果配置）
         if self.at_mobiles:
-            elements = card["card"]["elements"]
+            # JSON 2.0 结构：elements 在 body 下
+            elements = card["card"]["body"]["elements"]
             at_list = " ".join(
                 f'<at user_id="{mobile}"></at>' for mobile in self.at_mobiles
             )

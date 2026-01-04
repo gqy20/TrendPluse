@@ -76,13 +76,19 @@ class FeishuFormatter:
         return {
             "msg_type": "interactive",
             "card": {
+                "schema": "2.0",
+                "config": {
+                    "update_multi": True,
+                },
                 "header": {
                     "title": {
                         "tag": "plain_text",
                         "content": f"📊 TrendPulse 每日报告 - {report.date}",
                     },
                 },
-                "elements": elements,
+                "body": {
+                    "elements": elements,
+                },
             },
         }
 

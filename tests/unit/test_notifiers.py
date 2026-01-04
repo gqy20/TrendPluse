@@ -53,7 +53,9 @@ class TestFeishuNotifier:
         assert card["msg_type"] == "interactive"
         assert "card" in card
         assert "header" in card["card"]
-        assert "elements" in card["card"]
+        # JSON 2.0: elements 在 body 下
+        assert "body" in card["card"]
+        assert "elements" in card["card"]["body"]
 
         # 验证 header
         header = card["card"]["header"]
@@ -61,14 +63,15 @@ class TestFeishuNotifier:
         assert header["title"]["tag"] == "plain_text"
 
         # 验证至少有元素
-        assert len(card["card"]["elements"]) > 0
+        assert len(card["card"]["body"]["elements"]) > 0
 
     def test_build_card_includes_highlights_section(self, sample_report: DailyReport):
         """卡片应包含高影响信号部分"""
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
         card = notifier._build_card(sample_report)
 
-        elements = card["card"]["elements"]
+        # JSON 2.0: elements 在 body 下
+        elements = card["card"]["body"]["elements"]
         # 查找高影响信号部分（包含 "高影响信号" 或 "🔥"）
         has_highlights = any(
             "高影响信号" in str(el.get("text", {})) or "🔥" in str(el)
@@ -81,7 +84,8 @@ class TestFeishuNotifier:
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
         card = notifier._build_card(sample_report)
 
-        elements = card["card"]["elements"]
+        # JSON 2.0: elements 在 body 下
+        elements = card["card"]["body"]["elements"]
         has_stats = any("统计信息" in str(el) or "📊" in str(el) for el in elements)
         assert has_stats
 
@@ -90,7 +94,8 @@ class TestFeishuNotifier:
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
         card = notifier._build_card(sample_report)
 
-        elements = card["card"]["elements"]
+        # JSON 2.0: elements 在 body 下
+        elements = card["card"]["body"]["elements"]
         # 查找 action 元素
         has_action = any(el.get("tag") == "action" for el in elements)
         assert has_action
@@ -141,7 +146,8 @@ class TestFeishuNotifier:
         card = notifier._build_card(sample_report)
 
         # 验证卡片包含 @ 信息
-        elements = card["card"]["elements"]
+        # JSON 2.0: elements 在 body 下
+        elements = card["card"]["body"]["elements"]
         # 查找包含手机号的元素
         has_at = any("13800138000" in str(el) for el in elements)
         assert has_at

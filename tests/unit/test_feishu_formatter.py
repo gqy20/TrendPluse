@@ -119,7 +119,9 @@ class TestFeishuFormatter:
         assert card["msg_type"] == "interactive"
         assert "card" in card
         assert "header" in card["card"]
-        assert "elements" in card["card"]
+        # JSON 2.0: elements 在 body 下
+        assert "body" in card["card"]
+        assert "elements" in card["card"]["body"]
 
         # 验证标题
         assert (
@@ -128,7 +130,7 @@ class TestFeishuFormatter:
         )
 
         # 验证摘要元素
-        elements = card["card"]["elements"]
+        elements = card["card"]["body"]["elements"]
         assert any(
             "今日发现了 2 个高影响趋势信号" in el.get("text", {}).get("content", "")
             for el in elements
@@ -176,7 +178,8 @@ class TestFeishuFormatter:
         # Assert
         assert card["msg_type"] == "interactive"
         assert "card" in card
-        assert len(card["card"]["elements"]) > 0
+        # JSON 2.0: elements 在 body 下
+        assert len(card["card"]["body"]["elements"]) > 0
 
     def test_format_card_includes_top_repos(self):
         """测试：卡片包含 TOP 3 活跃仓库"""
@@ -231,7 +234,8 @@ class TestFeishuFormatter:
         card = formatter.format_card(report)
 
         # Assert
-        elements = card["card"]["elements"]
+        # JSON 2.0: elements 在 body 下
+        elements = card["card"]["body"]["elements"]
         content_parts = [
             el.get("text", {}).get("content", "")
             for el in elements
