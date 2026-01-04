@@ -56,20 +56,15 @@ class FeishuFormatter:
         elements.append({"tag": "hr"})
         elements.append(self._create_stats_section(report.stats))
 
-        # 6. 查看详情按钮
+        # 6. 查看详情按钮（JSON V2 格式：按钮直接在 elements 中）
         report_url = self.report_url_template.format(date=report.date)
         elements.append({"tag": "hr"})
         elements.append(
             {
-                "tag": "action",
-                "actions": [
-                    {
-                        "tag": "button",
-                        "text": {"tag": "plain_text", "content": "📖 查看完整报告"},
-                        "url": report_url,
-                        "type": "primary",
-                    }
-                ],
+                "tag": "button",
+                "text": {"tag": "plain_text", "content": "📖 查看完整报告"},
+                "url": report_url,
+                "type": "primary",
             }
         )
 

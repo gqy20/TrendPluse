@@ -94,11 +94,11 @@ class TestFeishuNotifier:
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
         card = notifier._build_card(sample_report)
 
-        # JSON 2.0: elements 在 body 下
+        # JSON 2.0: 按钮直接在 elements 中，不使用 action 容器
         elements = card["card"]["body"]["elements"]
-        # 查找 action 元素
-        has_action = any(el.get("tag") == "action" for el in elements)
-        assert has_action
+        # 查找 button 元素
+        has_button = any(el.get("tag") == "button" for el in elements)
+        assert has_button
 
     @patch("httpx.post")
     def test_send_report_success(self, mock_post: Mock, sample_report: DailyReport):
