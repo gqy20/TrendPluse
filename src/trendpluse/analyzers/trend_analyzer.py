@@ -101,6 +101,90 @@ PR 描述: {pr_details.get("body", "")}
 
         return signals
 
+    def aggregate_and_generate_report(
+        self,
+        pr_signals: list[Signal],
+        commit_signals: list[Signal],
+        release_signals: list[Signal],
+        date: str,
+    ) -> DailyReport:
+        """跨类型聚合信号并生成高层次趋势报告
+
+        Args:
+            pr_signals: PR 信号列表
+            commit_signals: Commit 技术点信号列表
+            release_signals: Release 信号列表
+            date: 日期
+
+        Returns:
+            每日报告，包含聚合后的高层次趋势
+        """
+        # 构建 Prompt，要求 LLM 识别跨类型的模式
+        prompt = f"""分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
+
+日期: {date}
+
+## 数据统计
+- PR 信号: {len(pr_signals)} 个
+- Commit 技术点: {len(commit_signals)} 个
+- Release 信号: {len(release_signals)} 个
+
+## PR 信号
+{self._format_signals(pr_signals) if pr_signals else "无"}
+
+## Commit 技术点
+{self._format_signals(commit_signals) if commit_signals else "无"}
+
+## Release 信号
+{self._format_signals(release_signals) if release_signals else "无"}
+
+## 分析要求
+
+请识别**跨类型的模式和趋势**，例如：
+- 多个项目同时推出相似功能（可能同时出现在 PR 和 Commit 中）
+- 技术方向的集体演进（多个相关变更指向同一趋势）
+- 重要版本发布与相关 PR/Commit 的关联
+
+## 输出要求
+
+返回一份 DailyReport，其中：
+1. engineering_signals 包含**聚合后的高层次趋势**（每个趋势应包含多个 sources）
+2. summary_brief 提供整体概览
+3. stats 包含统计信息
+
+注意：
+- 每个趋势的 sources 应包含所有支持该趋势的 PR/Commit/Release 链接
+- 只返回真正有价值的跨类型趋势
+- 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
+"""
+
+        report = self.client.chat.completions.create(
+            model=self.model,
+            response_model=DailyReport,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=3000,
+        )
+
+        # 确保日期正确
+        report.date = date
+
+        # 确保统计数据正确
+        if not report.stats:
+            report.stats = {}
+        report.stats["total_prs_analyzed"] = len(pr_signals)
+        report.stats["total_commits_analyzed"] = len(commit_signals)
+        report.stats["total_releases"] = len(release_signals)
+        report.stats["high_impact_signals"] = len(
+            self.filter_high_impact(report.engineering_signals, threshold=4)
+        )
+
+        # 清空低层次信号（已被聚合到高层次趋势中）
+        report.commit_signals = []
+        if hasattr(report, "release_signals"):
+            report.release_signals = []
+
+        return report  # type: ignore[no-any-return]
+
     def generate_report(self, signals: list[Signal], date: str) -> DailyReport:
         """生成每日报告
 
