@@ -189,19 +189,23 @@ class TrendPulsePipeline:
             self._send_notification(report)
             return report
 
-        # 4.5. 信号去重
-        signals = self.deduplicator.deduplicate(signals)
+        # 4.5. 信号去重（只对 PR 信号去重）
+        pr_signals = self.deduplicator.deduplicate(signals)
 
-        # 5. 生成每日报告
-        report = self.analyzer.generate_report(signals, date=date.strftime("%Y-%m-%d"))
+        # 5. 使用跨类型聚合生成高层次趋势报告
+        report = self.analyzer.aggregate_and_generate_report(
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+            date=date.strftime("%Y-%m-%d"),
+        )
 
-        # 6. 添加活跃度、commit 信号、release 信号、release 数据和 breaking changes
+        # 6. 添加活跃度、release 数据和 breaking changes
         report.activity = activity_data
-        report.commit_signals = commit_signals
-        report.release_signals = release_signals
         report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
+        # 更新统计信息（聚合时已包含部分统计）
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = releases_data.total_count
         report.stats["total_releases_analyzed"] = len(detailed_releases)

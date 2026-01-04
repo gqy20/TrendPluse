@@ -210,6 +210,10 @@ class TestTrendPulsePipeline:
         mock_report_obj.commit_signals = []
         mock_report_obj.activity = {}
         mock_report_obj.stats = {"total_prs_analyzed": 1}
+        # 为新方法添加 mock
+        mock_analyzer_instance.aggregate_and_generate_report.return_value = (
+            mock_report_obj
+        )
         mock_analyzer_instance.generate_report.return_value = mock_report_obj
         mock_analyzer.return_value = mock_analyzer_instance
 
@@ -227,7 +231,7 @@ class TestTrendPulsePipeline:
         mock_filter_instance.filter_candidates.assert_called_once()
         mock_fetcher_instance.fetch_multiple_pr_details.assert_called_once()
         mock_analyzer_instance.analyze_prs.assert_called_once()
-        mock_analyzer_instance.generate_report.assert_called_once()
+        mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
         mock_reporter_instance.save_report.assert_called_once()
         # 验证 commit 分析被调用
         mock_commit_analyzer_instance.analyze_commits.assert_called_once()
@@ -337,6 +341,10 @@ class TestTrendPulsePipeline:
         mock_report_obj.commit_signals = []
         mock_report_obj.activity = {}
         mock_report_obj.stats = {}
+        # 为新方法添加 mock
+        mock_analyzer_instance.aggregate_and_generate_report.return_value = (
+            mock_report_obj
+        )
         mock_analyzer_instance.generate_report.return_value = mock_report_obj
         mock_analyzer.return_value = mock_analyzer_instance
 
