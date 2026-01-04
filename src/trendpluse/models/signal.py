@@ -7,6 +7,20 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+# 信号类型到 Emoji 的映射常量
+SIGNAL_TYPE_EMOJIS: dict[str, str] = {
+    "capability": "🚀",
+    "abstraction": "🎨",
+    "workflow": "⚙️",
+    "eval": "📊",
+    "safety": "🛡️",
+    "performance": "⚡",
+    "commit": "💾",
+    "release": "🎯",
+}
+
+DEFAULT_EMOJI: str = "📌"
+
 
 class Signal(BaseModel):
     """单条趋势信号"""
@@ -34,6 +48,18 @@ class Signal(BaseModel):
     why_it_matters: str = Field(description="1-2 句话说明重要性")
     sources: list[str] = Field(description="PR/Release 链接")
     related_repos: list[str] = Field(description="相关仓库名称")
+
+    @classmethod
+    def get_type_emoji(cls, signal_type: str) -> str:
+        """获取信号类型的表情
+
+        Args:
+            signal_type: 信号类型
+
+        Returns:
+            类型表情，未知类型返回默认值 📌
+        """
+        return SIGNAL_TYPE_EMOJIS.get(signal_type, DEFAULT_EMOJI)
 
 
 class RepoActivity(BaseModel):

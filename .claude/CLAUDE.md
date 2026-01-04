@@ -168,5 +168,39 @@ scripts/
 ├── run.py                    # 主程序入口
 ├── generate_report_index.py  # 生成报告索引
 ├── sync_repos_to_docs.py     # 同步仓库列表到文档
-└── send_feishu_notification.py  # 飞书通知脚本
+├── send_feishu_notification.py  # 飞书通知脚本
+├── add_repo.py               # 添加监控仓库
+└── repos_doc_generator.py    # 仓库文档生成器
 ```
+
+## 关键实现细节
+
+### 跨类型信号聚合
+`TrendAnalyzer.aggregate_and_generate_report()` 使用 LLM 识别跨 PR、Commit、Release 的高层次趋势模式，而不仅仅是分类汇总。
+
+### SHA 精确匹配
+`CommitAnalyzer` 支持通过 commit SHA 精确匹配 LLM 返回的信号与原始 commit，避免索引错位问题。使用 `search_commits_by_sha()` 方法。
+
+### 信号去重机制
+`SignalDeduplicator` 使用 LLM + 历史记录（`data/signal_history.json`）智能去重，可配置 `days_to_lookback` 参数控制回溯天数。
+
+### 容错设计
+Pipeline 在各环节失败时优雅降级，确保至少生成包含活跃度数据的报告。AI 分析失败不会阻断整个流程。
+
+## 扩展开发
+
+### 添加新 Collector
+1. 在 `collectors/` 下创建新文件
+2. 继承或实现统一接口，返回 `(StructuredData, detailed_list)` 元组
+3. 在 `pipeline.py` 中集成调用
+
+### 添加新 Analyzer
+1. 在 `analyzers/` 下创建新文件
+2. 使用 `instructor` + Pydantic 模型实现结构化输出
+3. 支持 `anthropic_model` 参数配置
+4. 在 `pipeline.py` 中集成调用
+
+### 添加新 Notifier
+1. 继承 `BaseNotifier` (在 `notifiers/base.py`)
+2. 实现 `send_report()` 方法
+3. 在 `pipeline.py` 中注册
