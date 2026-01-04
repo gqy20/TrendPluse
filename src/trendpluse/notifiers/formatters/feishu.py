@@ -237,14 +237,4 @@ class FeishuFormatter:
         Returns:
             类型表情
         """
-        emojis = {
-            "capability": "🚀",
-            "abstraction": "🎨",
-            "workflow": "⚙️",
-            "eval": "📊",
-            "safety": "🛡️",
-            "performance": "⚡",
-            "commit": "💾",
-            "release": "🎯",
-        }
-        return emojis.get(signal_type, "📌")
+        return Signal.get_type_emoji(signal_type)
