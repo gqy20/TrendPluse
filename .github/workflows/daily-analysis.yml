@@ -2,8 +2,8 @@ name: Daily Trend Analysis
 
 on:
   schedule:
-    # 每天 UTC 20:00 运行 (北京时间次日 4:00)
-    - cron: '0 20 * * *'
+    # 每天 UTC 0:10 运行 (北京时间 8:10)
+    - cron: '10 0 * * *'
   workflow_dispatch:  # 允许手动触发
 
 permissions:
@@ -39,6 +39,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 飞书通知配置
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+          FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
         run: uv run python scripts/run.py
 
       - name: Upload report
