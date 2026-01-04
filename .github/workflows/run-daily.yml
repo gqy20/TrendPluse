@@ -91,13 +91,10 @@ jobs:
           git push
 
   deploy:
-    name: Deploy to GitHub Pages
+    name: Build documentation
     needs: analyze
     runs-on: ubuntu-latest
     if: needs.analyze.outputs.has_report == 'true'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -125,6 +122,20 @@ jobs:
       - name: Build site
         run: uv run mkdocs build
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./site
+
+  deploy_pages:
+    name: Deploy to GitHub Pages
+    needs: [analyze, deploy]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -138,10 +149,11 @@ jobs:
 
     outputs:
       deployment_url: ${{ steps.deployment_url.outputs.url }}
+      report_date: ${{ needs.analyze.outputs.report_date }}
 
   notify:
     name: Send Feishu Notification
-    needs: [analyze, deploy]
+    needs: [analyze, deploy_pages]
     runs-on: ubuntu-latest
     if: |
       inputs.send_notification == true &&
@@ -150,7 +162,7 @@ jobs:
       FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
       FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
       FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
-      DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
+      DEPLOYMENT_URL: ${{ needs.deploy_pages.outputs.deployment_url }}
       REPORT_DATE: ${{ needs.analyze.outputs.report_date }}
 
     steps:
