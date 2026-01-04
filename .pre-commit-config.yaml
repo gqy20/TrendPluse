@@ -38,7 +38,7 @@ repos:
     hooks:
       - id: sync-repos-to-docs
         name: 同步监控仓库列表到文档
-        entry: uv run python scripts/sync_repos_to_docs.py --check
+        entry: bash -c 'uv run python scripts/sync_repos_to_docs.py && git add docs/index.md'
         language: system
         pass_filenames: false
         always_run: true
