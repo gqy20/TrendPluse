@@ -154,40 +154,25 @@ class TrendPulsePipeline:
 
         # 如果没有候选事件，返回带活跃度、commit 和 release 信号的空报告
         if not candidates:
-            report = self._generate_empty_report(
+            return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
-            # 保存空报告（包含活跃度、commit 和 release 数据）
-            output_path = self._get_output_path(date)
-            self.reporter.save_report(report, output_path)
-            self._send_notification(report)
-            return report
 
         # 3. 获取详细信息
         pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
 
         if not pr_details:
-            report = self._generate_empty_report(
+            return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
-            # 保存空报告（包含活跃度、commit 和 release 数据）
-            output_path = self._get_output_path(date)
-            self.reporter.save_report(report, output_path)
-            self._send_notification(report)
-            return report
 
         # 4. AI 分析提取信号
         signals = self.analyzer.analyze_prs(pr_details)
 
         if not signals:
-            report = self._generate_empty_report(
+            return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
-            # 保存空报告（包含活跃度和 commit 数据）
-            output_path = self._get_output_path(date)
-            self.reporter.save_report(report, output_path)
-            self._send_notification(report)
-            return report
 
         # 4.5. 信号去重（只对 PR 信号去重）
         pr_signals = self.deduplicator.deduplicate(signals)
@@ -262,6 +247,34 @@ class TrendPulsePipeline:
         # 添加监控的仓库列表
         report.monitored_repos = self.settings.github_repos
 
+        return report
+
+    def _handle_empty_report(
+        self,
+        date: datetime,
+        activity_data: ActivityData | None = None,
+        commit_signals: list | None = None,
+        releases_data: ReleasesData | None = None,
+    ) -> DailyReport:
+        """处理空报告场景
+
+        统一处理无候选事件、无 PR 详情、无信号等情况。
+
+        Args:
+            date: 日期
+            activity_data: 活跃度数据
+            commit_signals: commit 信号列表
+            releases_data: Release 数据
+
+        Returns:
+            保存并发送后的空报告
+        """
+        report = self._generate_empty_report(
+            date, activity_data, commit_signals, releases_data
+        )
+        output_path = self._get_output_path(date)
+        self.reporter.save_report(report, output_path)
+        self._send_notification(report)
         return report
 
     def _send_notification(self, report: DailyReport) -> None:

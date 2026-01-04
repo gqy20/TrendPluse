@@ -365,3 +365,311 @@ class TestTrendPulsePipeline:
         mock_analyzer_instance.analyze_prs.assert_not_called()
         # commit 分析仍应被调用
         mock_commit_analyzer_instance.analyze_commits.assert_called_once()
+
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_handle_empty_report_saves_and_notifies(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_fetcher,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+    ):
+        """测试：空报告会保存和通知
+
+        验证当没有候选事件时，pipeline 会：
+        1. 生成空报告
+        2. 保存报告到文件
+        3. 发送通知（如果配置了）
+        """
+        # Arrange
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["anthropics/skills"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.feishu_webhook_url = None  # 不配置通知
+        mock_settings.return_value = mock_settings_instance
+
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = []
+        mock_collector.return_value = mock_collector_instance
+
+        mock_activity_collector_instance = Mock()
+        mock_activity_data = ActivityData(
+            total_commits=5,
+            active_repos_count=1,
+            new_contributors=2,
+            top_repos=[],
+        )
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            [],
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            [],
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = []
+        mock_filter.return_value = mock_filter_instance
+
+        mock_reporter_instance = Mock()
+        mock_reporter.return_value = mock_reporter_instance
+
+        pipeline = TrendPulsePipeline()
+
+        # Act
+        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+
+        # Assert - 验证报告被保存
+        mock_reporter_instance.save_report.assert_called_once()
+        assert report is not None
+
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_handle_empty_report_with_pr_details(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_fetcher,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+    ):
+        """测试：没有 PR 详情时的空报告处理
+
+        验证当筛选后有候选事件但没有 PR 详情时，也会生成空报告。
+        """
+        # Arrange
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["anthropics/skills"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.feishu_webhook_url = None
+        mock_settings.return_value = mock_settings_instance
+
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_collector.return_value = mock_collector_instance
+
+        mock_activity_collector_instance = Mock()
+        mock_activity_data = ActivityData(
+            total_commits=0,
+            active_repos_count=0,
+            new_contributors=0,
+            top_repos=[],
+        )
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            [],
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            [],
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        # 有候选事件但筛选后为空
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = []
+        mock_filter.return_value = mock_filter_instance
+
+        mock_reporter_instance = Mock()
+        mock_reporter.return_value = mock_reporter_instance
+
+        pipeline = TrendPulsePipeline()
+
+        # Act
+        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+
+        # Assert
+        mock_reporter_instance.save_report.assert_called_once()
+        assert report is not None
+
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_handle_empty_report_with_no_signals(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_fetcher,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+    ):
+        """测试：有 PR 详情但没有分析出信号时的空报告处理
+
+        验证当 AI 分析没有产生信号时，也会生成空报告。
+        """
+        # Arrange
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["anthropics/skills"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.feishu_webhook_url = None
+        mock_settings.return_value = mock_settings_instance
+
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_collector.return_value = mock_collector_instance
+
+        mock_activity_collector_instance = Mock()
+        mock_activity_data = ActivityData(
+            total_commits=0,
+            active_repos_count=0,
+            new_contributors=0,
+            top_repos=[],
+        )
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            [],
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            [],
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_filter.return_value = mock_filter_instance
+
+        mock_fetcher_instance = Mock()
+        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
+            {"number": 1, "title": "PR 1", "repo_name": "test/repo"}
+        ]
+        mock_fetcher.return_value = mock_fetcher_instance
+
+        # AI 分析没有产生信号
+        mock_analyzer_instance = Mock()
+        mock_analyzer_instance.analyze_prs.return_value = []
+        mock_analyzer.return_value = mock_analyzer_instance
+
+        mock_reporter_instance = Mock()
+        mock_reporter.return_value = mock_reporter_instance
+
+        pipeline = TrendPulsePipeline()
+
+        # Act
+        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+
+        # Assert
+        mock_reporter_instance.save_report.assert_called_once()
+        assert report is not None
+        # 验证 AI 分析被调用了
+        mock_analyzer_instance.analyze_prs.assert_called_once()
