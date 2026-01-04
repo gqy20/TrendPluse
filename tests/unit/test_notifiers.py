@@ -105,7 +105,7 @@ class TestFeishuNotifier:
         """成功发送报告通知"""
         mock_response = Mock()
         mock_response.status_code = 200
-        mock_response.json.return_value = {"StatusCode": 0, "StatusMessage": "success"}
+        mock_response.json.return_value = {"code": 0, "msg": "success"}
         mock_post.return_value = mock_response
 
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
@@ -157,6 +157,7 @@ class TestFeishuNotifier:
         """支持签名验证"""
         mock_response = Mock()
         mock_response.status_code = 200
+        mock_response.json.return_value = {"code": 0, "msg": "success"}
         mock_post.return_value = mock_response
 
         notifier = FeishuNotifier(

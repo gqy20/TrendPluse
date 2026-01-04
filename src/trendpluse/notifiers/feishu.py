@@ -167,11 +167,19 @@ class FeishuNotifier(BaseNotifier):
                 timeout=3.0,
             )
             response.raise_for_status()
-            # 检查状态码是否为 2xx
-            if not (200 <= response.status_code < 300):
+
+            # 检查飞书响应体的错误码
+            # 飞书成功响应: {"code": 0, "msg": "success"}
+            # 飞书错误响应: {"code": 99999, "msg": "错误信息"}
+            data = response.json()
+            code = data.get("code", -1)
+            if code != 0:
+                print(f"[DEBUG] 飞书返回错误: code={code}, msg={data.get('msg')}")
                 return False
+
             return True
-        except httpx.HTTPError:
+        except httpx.HTTPError as e:
+            print(f"[DEBUG] HTTP 请求失败: {e}")
             return False
 
     def _gen_sign(self, timestamp: str, secret: str) -> str:

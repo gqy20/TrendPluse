@@ -383,6 +383,8 @@ def main():
         # 解析报告并重建 DailyReport 对象
         report = parse_daily_report_from_markdown(str(report_path), report_date)
 
+        console.print(f"  解析到 {len(report.commit_signals)} 个 commit 信号")
+
         # 初始化通知器
         notifier = FeishuNotifier(
             webhook_url=webhook_url,
@@ -390,7 +392,11 @@ def main():
             secret=secret or None,
         )
 
+        console.print(f"  Webhook URL: {webhook_url[:30]}...{webhook_url[-10:]}")
+        console.print(f"  使用签名: {'是' if secret else '否'}")
+
         # 发送通知（使用 send_report 发送完整格式）
+        console.print("  正在发送...")
         success = notifier.send_report(report)
 
         if success:
