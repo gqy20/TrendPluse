@@ -135,6 +135,7 @@ module = [
     "yaml.*",
     "pytest.*",
     "pydantic_settings.*",
+    "httpx.*",
 ]
 ignore_missing_imports = true
 
