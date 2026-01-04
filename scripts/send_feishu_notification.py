@@ -27,7 +27,7 @@ def extract_summary_from_markdown(report_path: str) -> dict:
         report_path: 报告文件路径
 
     Returns:
-        包含标题和摘要的字典
+        包含标题、摘要、Commit 信号、版本发布、活跃度等的字典
     """
     content = Path(report_path).read_text(encoding="utf-8")
 
@@ -51,10 +51,93 @@ def extract_summary_from_markdown(report_path: str) -> dict:
                 if match:
                     stats[match.group(1)] = match.group(2)
 
+    # 提取 Commit 信号
+    commit_signals = []
+    commit_section = re.search(
+        r"## 💾 Commit 信号\n\n(.*?)(?=##\s|\n\n---|\n*$)", content, re.DOTALL
+    )
+    if commit_section:
+        # 每个信号以 ### 开头
+        signal_blocks = re.findall(
+            r"###\s+([^\n]+)\n\n(\*\*类型\*\*:.+?)(?=\n\n###\s|\n\n##|\n\n---|\Z)",
+            commit_section.group(1),
+            re.DOTALL,
+        )
+        for signal_title, block in signal_blocks:
+            # 提取类型和影响
+            type_match = re.search(r"\*\*类型\*\*:\s*`([^`]+)`", block)
+            impact_match = re.search(r"\*\*影响\*\*:\s*([⭐]+)\s*\((\d+)/5\)", block)
+
+            if type_match and impact_match:
+                commit_signals.append(
+                    {
+                        "title": signal_title.strip(),
+                        "type": type_match.group(1),
+                        "impact": impact_match.group(1),
+                        "score": int(impact_match.group(2)),
+                    }
+                )
+
+    # 提取版本发布（最新 5 个）
+    releases = []
+    release_section = re.search(
+        r"## 🎯 版本发布动态\n\n.*?### 最新发布\n\n(.*?)(?=##\s|\n\n---|\n*$)",
+        content,
+        re.DOTALL,
+    )
+    if release_section:
+        # 每个发布以 #### 开头
+        release_blocks = re.findall(
+            r"####\s+[^\n]+\n\n((?:(?!####).)+?)", release_section.group(1), re.DOTALL
+        )
+        for block in release_blocks[:5]:
+            # 提取仓库名和版本号 - 匹配 [repo](url) version 格式
+            repo_match = re.search(
+                r"\[([^\]]+)\]\(https://github\.com/[^/]+/[^)]+\)\s+([^\n]+)", block
+            )
+
+            # 提取发布者
+            author_match = re.search(r"\*\*发布者\*\*:\s*`([^`]+)`", block)
+            # 提取时间
+            time_match = re.search(r"\*\*时间\*\*:\s*(\d{4}-\d{2}-\d{2})", block)
+
+            if repo_match:
+                releases.append(
+                    {
+                        "repo": repo_match.group(1),
+                        "version": repo_match.group(2).strip(),
+                        "author": author_match.group(1) if author_match else "Unknown",
+                        "date": time_match.group(1) if time_match else "",
+                    }
+                )
+
+    # 提取活跃仓库 TOP 3
+    top_repos = []
+    activity_section = re.search(
+        r"### 活跃仓库 TOP 10\n\n(.*?)(?=##\s|\n\n---|\n*$)", content, re.DOTALL
+    )
+    if activity_section:
+        # 跳过表头，提取前 3 行数据
+        table_lines = activity_section.group(1).split("\n")
+        data_lines = [
+            line
+            for line in table_lines
+            if line.startswith("|") and not line.startswith("| 仓库|")
+        ]
+        for line in data_lines[:3]:
+            parts = [p.strip() for p in line.split("|")[1:-1]]  # 去掉首尾空元素
+            if len(parts) >= 2:
+                # parts[0] 是仓库名（带链接），parts[1] 是 commit 数
+                repo_name = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", parts[0])
+                top_repos.append({"repo": repo_name, "commits": parts[1]})
+
     return {
         "title": title,
         "summary": summary,
         "stats": stats,
+        "commit_signals": commit_signals,
+        "releases": releases,
+        "top_repos": top_repos,
     }
 
 
@@ -107,9 +190,40 @@ def main():
         # 构建通知内容
         content = info["summary"]
 
+        # 添加 Commit 信号（如果有）
+        if info.get("commit_signals"):
+            content += "\n\n━━━━━━━━━━━━━━━━━━\n"
+            content += f"**💾 Commit 信号 ({len(info['commit_signals'])}个)**"
+            content += "\n━━━━━━━━━━━━━━━━━━"
+            for sig in info["commit_signals"]:
+                title = sig["title"]
+                # 简化标题，移除 emoji 重复
+                title = re.sub(r"^[\U0001F300-\U0001F9FF]+\s+", "", title)
+                content += f"\n\n{sig['impact']} **{title}**"
+
+        # 添加版本发布（如果有）
+        if info.get("releases"):
+            content += "\n\n━━━━━━━━━━━━━━━━━━\n"
+            content += f"**🎯 版本发布 ({len(info['releases'])}个)**"
+            content += "\n━━━━━━━━━━━━━━━━━━"
+            for rel in info["releases"][:5]:
+                content += f"\n• **{rel['repo']}** {rel['version']}"
+                if rel.get("date"):
+                    content += f" ({rel['date']})"
+
+        # 添加活跃仓库 TOP 3（如果有）
+        if info.get("top_repos"):
+            content += "\n\n━━━━━━━━━━━━━━━━━━\n"
+            content += "**📈 仓库活跃度 TOP 3**"
+            content += "\n━━━━━━━━━━━━━━━━━━"
+            for i, repo in enumerate(info["top_repos"], 1):
+                content += f"\n{i}. **{repo['repo']}** ({repo['commits']} commits)"
+
         # 添加统计信息
         if info["stats"]:
-            content += "\n\n**📊 统计信息**\n"
+            content += "\n\n━━━━━━━━━━━━━━━━━━\n"
+            content += "**📊 统计信息**"
+            content += "\n━━━━━━━━━━━━━━━━━━"
             for key, value in info["stats"].items():
                 content += f"\n• {key}: {value}"
 
