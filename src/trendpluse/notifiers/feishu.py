@@ -57,7 +57,7 @@ class FeishuNotifier(BaseNotifier):
 
         Args:
             title: 通知标题
-            content: 通知内容
+            content: 通知内容（支持 Markdown）
             url: 可选的跳转链接
 
         Returns:
@@ -76,7 +76,7 @@ class FeishuNotifier(BaseNotifier):
                     {
                         "tag": "div",
                         "text": {
-                            "tag": "plain_text",
+                            "tag": "lark_md",
                             "content": content,
                         },
                     },

@@ -53,83 +53,128 @@ def extract_summary_from_markdown(report_path: str) -> dict:
 
     # 提取 Commit 信号
     commit_signals = []
-    commit_section = re.search(
-        r"## 💾 Commit 信号\n\n(.*?)(?=##\s|\n\n---|\n*$)", content, re.DOTALL
-    )
-    if commit_section:
-        # 每个信号以 ### 开头
-        signal_blocks = re.findall(
-            r"###\s+([^\n]+)\n\n(\*\*类型\*\*:.+?)(?=\n\n###\s|\n\n##|\n\n---|\Z)",
-            commit_section.group(1),
-            re.DOTALL,
-        )
-        for signal_title, block in signal_blocks:
-            # 提取类型和影响
-            type_match = re.search(r"\*\*类型\*\*:\s*`([^`]+)`", block)
-            impact_match = re.search(r"\*\*影响\*\*:\s*([⭐]+)\s*\((\d+)/5\)", block)
+    # 找到 Commit 信号标题的结束位置
+    commit_start = content.find("## 💾 Commit 信号")
+    if commit_start != -1:
+        commit_header_end = commit_start + len("## 💾 Commit 信号")
+        # 用正则找下一个真正的 ## 标题（后面不是 #）
+        # 注意：使用 \n##[^#] 而不是 \n\n##[^#]，因为有些分隔使用 --- 而不是空行
+        next_heading_match = re.search(r"\n##[^#]", content[commit_header_end:])
+        if next_heading_match:
+            commit_end = commit_header_end + next_heading_match.start()
+        else:
+            commit_end = len(content)
+        commit_text = content[commit_header_end:commit_end]
 
-            if type_match and impact_match:
+        # 按 ### 分割每个信号（跳过第一个空元素）
+        parts = commit_text.split("\n### ")
+        for sig_text in parts[1:]:  # 跳过第一个空元素
+            if not sig_text.strip():
+                continue
+            lines = sig_text.strip().split("\n")
+            signal_title = lines[0].strip()
+
+            # 查找类型和影响
+            sig_type = None
+            impact = None
+            score = 0
+            for line in lines:
+                type_match = re.search(r"\*\*类型\*\*:\s*`([^`]+)`", line)
+                impact_match = re.search(r"\*\*影响\*\*:\s*([⭐]+)\s*\((\d+)/5\)", line)
+                if type_match:
+                    sig_type = type_match.group(1)
+                if impact_match:
+                    impact = impact_match.group(1)
+                    score = int(impact_match.group(2))
+                if sig_type and impact:
+                    break
+
+            if sig_type and impact:
                 commit_signals.append(
                     {
-                        "title": signal_title.strip(),
-                        "type": type_match.group(1),
-                        "impact": impact_match.group(1),
-                        "score": int(impact_match.group(2)),
+                        "title": signal_title,
+                        "type": sig_type,
+                        "impact": impact,
+                        "score": score,
                     }
                 )
 
     # 提取版本发布（最新 5 个）
-    releases = []
-    release_section = re.search(
-        r"## 🎯 版本发布动态\n\n.*?### 最新发布\n\n(.*?)(?=##\s|\n\n---|\n*$)",
-        content,
-        re.DOTALL,
-    )
-    if release_section:
-        # 每个发布以 #### 开头
-        release_blocks = re.findall(
-            r"####\s+[^\n]+\n\n((?:(?!####).)+?)", release_section.group(1), re.DOTALL
-        )
-        for block in release_blocks[:5]:
-            # 提取仓库名和版本号 - 匹配 [repo](url) version 格式
-            repo_match = re.search(
-                r"\[([^\]]+)\]\(https://github\.com/[^/]+/[^)]+\)\s+([^\n]+)", block
-            )
+    releases: list[dict[str, str]] = []
+    # 找到版本发布部分
+    release_section_start = content.find("### 最新发布")
+    if release_section_start != -1:
+        # 从这里开始找 #### 开头的版本块
+        release_text = content[release_section_start:]
+        for match in re.finditer(r"####\s+([^\n]+)\n\n", release_text):
+            if len(releases) >= 5:
+                break
+            # 标题行包含仓库链接和版本，例如: ⚡ [danielmiessler/fabric](...) v1.4.367
+            header = match.group(1)
 
-            # 提取发布者
+            # 从标题行提取仓库和版本
+            repo_match = re.search(
+                r"\[([\w-]+/[\w.-]+)\]\(https://github\.com/[\w-]+/[\w.-]+\)", header
+            )
+            # 版本是 URL 链接后的文本，可能是 v1.4.367 或 langchain-core==1.2.6 格式
+            # 匹配 URL 的结束括号 ) 后面跟空格和版本号
+            version_match = re.search(r"\)\s+(\S+)", header)
+
+            if not repo_match or not version_match:
+                continue
+
+            # 获取这个块的内容（用于提取作者和日期）
+            block_start = match.end()
+            # 找下一个 #### 或部分结束
+            next_match = re.search(r"\n\n####", release_text[block_start:])
+            if next_match:
+                block_end = block_start + next_match.start()
+            else:
+                # 找下一个 ## 标题或文件末尾
+                end_match = re.search(r"\n\n##", release_text[block_start:])
+                if end_match:
+                    block_end = block_start + end_match.start()
+                else:
+                    block_end = len(release_text)
+
+            block = release_text[block_start:block_end]
+
+            # 从块中提取作者和日期
             author_match = re.search(r"\*\*发布者\*\*:\s*`([^`]+)`", block)
-            # 提取时间
             time_match = re.search(r"\*\*时间\*\*:\s*(\d{4}-\d{2}-\d{2})", block)
 
-            if repo_match:
-                releases.append(
-                    {
-                        "repo": repo_match.group(1),
-                        "version": repo_match.group(2).strip(),
-                        "author": author_match.group(1) if author_match else "Unknown",
-                        "date": time_match.group(1) if time_match else "",
-                    }
-                )
+            releases.append(
+                {
+                    "repo": repo_match.group(1),
+                    "version": version_match.group(1).strip(),
+                    "author": author_match.group(1) if author_match else "Unknown",
+                    "date": time_match.group(1) if time_match else "",
+                }
+            )
 
     # 提取活跃仓库 TOP 3
     top_repos = []
-    activity_section = re.search(
-        r"### 活跃仓库 TOP 10\n\n(.*?)(?=##\s|\n\n---|\n*$)", content, re.DOTALL
-    )
-    if activity_section:
-        # 跳过表头，提取前 3 行数据
-        table_lines = activity_section.group(1).split("\n")
-        data_lines = [
-            line
-            for line in table_lines
-            if line.startswith("|") and not line.startswith("| 仓库|")
-        ]
-        for line in data_lines[:3]:
-            parts = [p.strip() for p in line.split("|")[1:-1]]  # 去掉首尾空元素
-            if len(parts) >= 2:
-                # parts[0] 是仓库名（带链接），parts[1] 是 commit 数
+    activity_start = content.find("### 活跃仓库 TOP 10")
+    if activity_start != -1:
+        activity_text = content[activity_start : activity_start + 2000]
+        # 提取表格行
+        for line in activity_text.split("\n"):
+            # 跳过表头和分隔行（包含 --- 或全是 | 和空格）
+            if not line.strip() or not line.startswith("|"):
+                continue
+            # 跳过表头 | 仓库 | 和分隔行 |------|
+            if "| 仓库 |" in line or "|------" in line or line.count("---") > 0:
+                continue
+            # 必须包含链接格式 [name](url)
+            if "](" not in line:
+                continue
+
+            parts = [p.strip() for p in line.split("|")[1:-1]]
+            if len(parts) >= 2 and parts[0] and parts[1].isdigit():
                 repo_name = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", parts[0])
                 top_repos.append({"repo": repo_name, "commits": parts[1]})
+                if len(top_repos) >= 3:
+                    break
 
     return {
         "title": title,
