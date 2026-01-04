@@ -9,6 +9,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from trendpluse.collectors.activity import ActivityCollector
+from trendpluse.models.signal import ActivityData, RepoActivity
 
 
 class TestActivityCollectorDetailedCommits:
@@ -53,8 +54,8 @@ class TestActivityCollectorDetailedCommits:
 
             # Assert
             assert activity is not None
-            assert activity["repo"] == repo_name
-            assert activity["commit_count"] >= 0
+            assert activity.repo == repo_name
+            assert activity.commits >= 0
             assert isinstance(detailed_commits, list)
 
     def test_collect_activity_includes_detailed_commits(self, collector, mock_repo):
@@ -67,12 +68,12 @@ class TestActivityCollectorDetailedCommits:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            activity_data = collector.collect_activity(repos, since)
+            activity_data, detailed_commits = collector.collect_activity(repos, since)
 
             # Assert
             assert activity_data is not None
-            assert "repo_activity" in activity_data
-            assert isinstance(activity_data["repo_activity"], list)
+            assert isinstance(activity_data.top_repos, list)
+            assert isinstance(detailed_commits, list)
 
     def test_detailed_commits_structure(self, collector):
         """测试详细 commit 数据结构"""
@@ -126,15 +127,14 @@ class TestActivityCollectorDetailedCommits:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            activity_data = collector.collect_activity(repos, since)
+            activity_data, detailed_commits = collector.collect_activity(repos, since)
 
-            # Assert - 应该包含 detailed_commits 字段
-            assert "detailed_commits" in activity_data
-            assert isinstance(activity_data["detailed_commits"], list)
+            # Assert - 应该返回 detailed_commits 列表
+            assert isinstance(detailed_commits, list)
 
             # 验证详细 commit 包含必需字段
-            if activity_data["detailed_commits"]:
-                commit = activity_data["detailed_commits"][0]
+            if detailed_commits:
+                commit = detailed_commits[0]
                 required_fields = [
                     "repo",
                     "sha",
@@ -144,3 +144,76 @@ class TestActivityCollectorDetailedCommits:
                 ]
                 for field in required_fields:
                     assert field in commit
+
+
+class TestActivityCollectorStructuredData:
+    """ActivityCollector 结构化数据返回测试"""
+
+    @pytest.fixture
+    def collector(self):
+        """创建 ActivityCollector 实例"""
+        return ActivityCollector(token="test-token")
+
+    @pytest.fixture
+    def mock_repo(self):
+        """创建 mock Repository 对象"""
+        repo = MagicMock()
+
+        # Mock commit 对象
+        mock_commit = MagicMock()
+        mock_commit.sha = "abc123def456"
+        mock_commit.author.login = "testuser"
+        mock_commit.commit.message = "feat: add new feature"
+        mock_commit.commit.author.date = datetime(2026, 1, 2, 10, 0, 0, tzinfo=UTC)
+
+        repo.get_commits.return_value = [mock_commit]
+        return repo
+
+    def test_collect_activity_returns_structured_data(self, collector, mock_repo):
+        """测试：collect_activity 返回 ActivityData 和 detailed_commits"""
+        # Arrange
+        repos = ["test/repo"]
+        since = datetime(2026, 1, 2, 0, 0, 0, tzinfo=UTC)
+
+        with patch.object(collector, "client") as mock_client:
+            mock_client.get_repo.return_value = mock_repo
+
+            # Act
+            result = collector.collect_activity(repos, since)
+
+            # Assert - 返回值应该是元组 (ActivityData, list)
+            assert isinstance(result, tuple)
+            assert len(result) == 2
+
+            activity_data, detailed_commits = result
+
+            # 验证 ActivityData 结构
+            assert isinstance(activity_data, ActivityData)
+            assert hasattr(activity_data, "total_commits")
+            assert hasattr(activity_data, "active_repos_count")
+            assert hasattr(activity_data, "new_contributors")
+            assert hasattr(activity_data, "top_repos")
+
+            # 验证 detailed_commits
+            assert isinstance(detailed_commits, list)
+
+    def test_activity_data_contains_repo_activities(self, collector, mock_repo):
+        """测试：ActivityData 包含 RepoActivity 列表"""
+        # Arrange
+        repos = ["test/repo"]
+        since = datetime(2026, 1, 2, 0, 0, 0, tzinfo=UTC)
+
+        with patch.object(collector, "client") as mock_client:
+            mock_client.get_repo.return_value = mock_repo
+
+            # Act
+            activity_data, _ = collector.collect_activity(repos, since)
+
+            # Assert
+            assert len(activity_data.top_repos) > 0
+            repo_activity = activity_data.top_repos[0]
+            assert isinstance(repo_activity, RepoActivity)
+            assert repo_activity.repo == "test/repo"
+            assert hasattr(repo_activity, "commits")
+            assert hasattr(repo_activity, "new_contributors")
+            assert hasattr(repo_activity, "top_contributors")

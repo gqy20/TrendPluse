@@ -4,6 +4,7 @@ from datetime import UTC, datetime, timedelta
 from unittest.mock import MagicMock, Mock, patch
 
 from trendpluse.collectors.releases import ReleaseCollector
+from trendpluse.models.signal import ReleaseInfo, ReleasesData
 
 
 class TestReleaseCollector:
@@ -42,16 +43,16 @@ class TestReleaseCollector:
         since = datetime.now(UTC)
 
         # Act
-        result = collector.collect_releases(repos=repos, since=since)
+        releases_data, detailed_releases = collector.collect_releases(
+            repos=repos, since=since
+        )
 
         # Assert
-        assert isinstance(result, dict)
-        assert "total_releases" in result
-        assert "repos_with_releases" in result
-        assert "repo_releases" in result
-        assert "detailed_releases" in result
-        assert "period_start" in result
-        assert "period_end" in result
+        assert isinstance(releases_data, ReleasesData)
+        assert hasattr(releases_data, "total_count")
+        assert hasattr(releases_data, "unique_repos_count")
+        assert hasattr(releases_data, "releases")
+        assert isinstance(detailed_releases, list)
 
     @patch("trendpluse.collectors.releases.Github")
     def test_collect_releases_filters_by_date(self, mock_github):
@@ -92,12 +93,14 @@ class TestReleaseCollector:
         since = datetime.now(UTC) - timedelta(hours=1)
 
         # Act
-        result = collector.collect_releases(repos=repos, since=since)
+        releases_data, detailed_releases = collector.collect_releases(
+            repos=repos, since=since
+        )
 
         # Assert - 应该只返回新 release
-        assert result["total_releases"] == 1
-        assert len(result["detailed_releases"]) == 1
-        assert result["detailed_releases"][0]["tag_name"] == "v2.0.0"
+        assert releases_data.total_count == 1
+        assert len(detailed_releases) == 1
+        assert detailed_releases[0]["tag_name"] == "v2.0.0"
 
     @patch("trendpluse.collectors.releases.Github")
     def test_collect_releases_excludes_prerelease_when_configured(self, mock_github):
@@ -139,13 +142,13 @@ class TestReleaseCollector:
         since = datetime.now(UTC) - timedelta(hours=1)
 
         # Act
-        result = collector.collect_releases(
+        releases_data, detailed_releases = collector.collect_releases(
             repos=repos, since=since, include_prereleases=False
         )
 
         # Assert
-        assert result["total_releases"] == 1
-        assert result["detailed_releases"][0]["prerelease"] is False
+        assert releases_data.total_count == 1
+        assert detailed_releases[0]["prerelease"] is False
 
     @patch("trendpluse.collectors.releases.Github")
     def test_collect_releases_handles_api_errors_gracefully(self, mock_github):
@@ -160,11 +163,13 @@ class TestReleaseCollector:
         since = datetime.now(UTC)
 
         # Act - 不应该抛出异常
-        result = collector.collect_releases(repos=repos, since=since)
+        releases_data, detailed_releases = collector.collect_releases(
+            repos=repos, since=since
+        )
 
         # Assert
-        assert isinstance(result, dict)
-        assert result["total_releases"] == 0
+        assert isinstance(releases_data, ReleasesData)
+        assert releases_data.total_count == 0
 
     @patch("trendpluse.collectors.releases.Github")
     def test_parse_version_extract_major_minor_patch(self, mock_github):
@@ -221,10 +226,99 @@ class TestReleaseCollector:
         since = datetime.now(UTC) - timedelta(days=1)
 
         # Act
-        result = collector.collect_releases(repos=repos, since=since)
+        releases_data, _ = collector.collect_releases(repos=repos, since=since)
 
         # Assert - 应该按日期降序（最新的在前）
-        detailed_releases = result["detailed_releases"]
-        assert len(detailed_releases) == 3
-        assert detailed_releases[0]["tag_name"] == "v1.0.0"  # 最新的
-        assert detailed_releases[2]["tag_name"] == "v1.0.2"  # 最旧的
+        assert len(releases_data.releases) == 3
+        assert releases_data.releases[0].version == "v1.0.0"  # 最新的
+        assert releases_data.releases[2].version == "v1.0.2"  # 最旧的
+
+
+class TestReleaseCollectorStructuredData:
+    """ReleaseCollector 结构化数据返回测试"""
+
+    @patch("trendpluse.collectors.releases.Github")
+    def test_collect_releases_returns_structured_data(self, mock_github):
+        """测试：collect_releases 返回 ReleasesData 和 detailed_releases"""
+        # Arrange
+        mock_release = Mock()
+        mock_release.created_at = datetime.now(UTC)
+        mock_release.prerelease = False
+        mock_release.tag_name = "v1.0.0"
+        mock_release.title = "Test Release"
+        mock_release.body = "Test release body"
+        mock_release.html_url = "https://github.com/test/repo/releases/v1.0.0"
+        mock_release.assets = []
+        mock_release.author = Mock()
+        mock_release.author.login = "testuser"
+        mock_release.published_at = datetime.now(UTC)
+
+        mock_repo = MagicMock()
+        mock_repo.get_releases.return_value = [mock_release]
+
+        mock_client = MagicMock()
+        mock_client.get_repo.return_value = mock_repo
+        mock_github.return_value = mock_client
+
+        collector = ReleaseCollector(token="test_token")
+        repos = ["test/repo"]
+        since = datetime.now(UTC) - timedelta(hours=1)
+
+        # Act
+        result = collector.collect_releases(repos=repos, since=since)
+
+        # Assert - 返回值应该是元组 (ReleasesData, list)
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+
+        releases_data, detailed_releases = result
+
+        # 验证 ReleasesData 结构
+        assert isinstance(releases_data, ReleasesData)
+        assert hasattr(releases_data, "total_count")
+        assert hasattr(releases_data, "unique_repos_count")
+        assert hasattr(releases_data, "releases")
+
+        # 验证 detailed_releases
+        assert isinstance(detailed_releases, list)
+
+    @patch("trendpluse.collectors.releases.Github")
+    def test_releases_data_contains_release_infos(self, mock_github):
+        """测试：ReleasesData 包含 ReleaseInfo 列表"""
+        # Arrange
+        mock_release = Mock()
+        mock_release.created_at = datetime.now(UTC)
+        mock_release.prerelease = False
+        mock_release.tag_name = "v1.0.0"
+        mock_release.title = "Test Release"
+        mock_release.body = "Test release body"
+        mock_release.html_url = "https://github.com/test/repo/releases/v1.0.0"
+        mock_release.assets = []
+        mock_release.author = Mock()
+        mock_release.author.login = "testuser"
+        mock_release.published_at = datetime.now(UTC)
+
+        mock_repo = MagicMock()
+        mock_repo.get_releases.return_value = [mock_release]
+
+        mock_client = MagicMock()
+        mock_client.get_repo.return_value = mock_repo
+        mock_github.return_value = mock_client
+
+        collector = ReleaseCollector(token="test_token")
+        repos = ["test/repo"]
+        since = datetime.now(UTC) - timedelta(hours=1)
+
+        # Act
+        releases_data, _ = collector.collect_releases(repos=repos, since=since)
+
+        # Assert
+        assert len(releases_data.releases) > 0
+        release_info = releases_data.releases[0]
+        assert isinstance(release_info, ReleaseInfo)
+        assert release_info.repo == "test/repo"
+        assert hasattr(release_info, "version")
+        assert hasattr(release_info, "author")
+        assert hasattr(release_info, "date")
+        assert hasattr(release_info, "summary")
+        assert hasattr(release_info, "url")

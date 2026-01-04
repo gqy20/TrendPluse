@@ -3,6 +3,7 @@
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+from trendpluse.models.signal import ActivityData, ReleasesData
 from trendpluse.pipeline import TrendPulsePipeline
 
 
@@ -135,34 +136,40 @@ class TestTrendPulsePipeline:
         mock_collector.return_value = mock_collector_instance
 
         mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity.return_value = {
-            "total_commits": 5,
-            "active_repos": 1,
-            "new_contributors": 2,
-            "repo_activity": [],
-            "detailed_commits": [
-                {
-                    "repo": "anthropics/skills",
-                    "sha": "abc123",
-                    "message": "feat: add new feature",
-                    "author": "testuser",
-                    "timestamp": "2026-01-02T10:00:00Z",
-                }
-            ],
-            "period_start": "2026-01-02T00:00:00Z",
-            "period_end": "2026-01-02T23:59:59Z",
-        }
+        # 构造 ActivityData
+        mock_activity_data = ActivityData(
+            total_commits=5,
+            active_repos_count=1,
+            new_contributors=2,
+            top_repos=[],
+        )
+        detailed_commits = [
+            {
+                "repo": "anthropics/skills",
+                "sha": "abc123",
+                "message": "feat: add new feature",
+                "author": "testuser",
+                "timestamp": "2026-01-02T10:00:00Z",
+            }
+        ]
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            detailed_commits,
+        )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
         mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = {
-            "total_releases": 0,
-            "repos_with_releases": 0,
-            "repo_releases": [],
-            "detailed_releases": [],
-            "period_start": "2026-01-02T00:00:00Z",
-            "period_end": "2026-01-02T23:59:59Z",
-        }
+        # 构造 ReleasesData
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        detailed_releases: list[dict] = []
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            detailed_releases,
+        )
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
@@ -268,34 +275,40 @@ class TestTrendPulsePipeline:
         mock_collector.return_value = mock_collector_instance
 
         mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity.return_value = {
-            "total_commits": 5,
-            "active_repos": 1,
-            "new_contributors": 2,
-            "repo_activity": [],
-            "detailed_commits": [
-                {
-                    "repo": "anthropics/skills",
-                    "sha": "abc123",
-                    "message": "feat: add new feature",
-                    "author": "testuser",
-                    "timestamp": "2026-01-02T10:00:00Z",
-                }
-            ],
-            "period_start": "2026-01-02T00:00:00Z",
-            "period_end": "2026-01-02T23:59:59Z",
-        }
+        # 构造 ActivityData
+        mock_activity_data = ActivityData(
+            total_commits=5,
+            active_repos_count=1,
+            new_contributors=2,
+            top_repos=[],
+        )
+        detailed_commits = [
+            {
+                "repo": "anthropics/skills",
+                "sha": "abc123",
+                "message": "feat: add new feature",
+                "author": "testuser",
+                "timestamp": "2026-01-02T10:00:00Z",
+            }
+        ]
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            detailed_commits,
+        )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
         mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = {
-            "total_releases": 0,
-            "repos_with_releases": 0,
-            "repo_releases": [],
-            "detailed_releases": [],
-            "period_start": "2026-01-02T00:00:00Z",
-            "period_end": "2026-01-02T23:59:59Z",
-        }
+        # 构造 ReleasesData
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        detailed_releases: list[dict] = []
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            detailed_releases,
+        )
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()

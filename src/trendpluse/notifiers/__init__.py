@@ -5,6 +5,5 @@
 
 from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.feishu import FeishuNotifier
-from trendpluse.notifiers.summary import ReportSummarizer
 
-__all__ = ["BaseNotifier", "FeishuNotifier", "ReportSummarizer"]
+__all__ = ["BaseNotifier", "FeishuNotifier"]

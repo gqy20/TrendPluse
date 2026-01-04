@@ -17,7 +17,7 @@ from tenacity import (
 
 from trendpluse.models.signal import DailyReport
 from trendpluse.notifiers.base import BaseNotifier
-from trendpluse.notifiers.summary import ReportSummarizer
+from trendpluse.notifiers.formatters import FeishuFormatter
 
 
 class FeishuNotifier(BaseNotifier):
@@ -50,7 +50,7 @@ class FeishuNotifier(BaseNotifier):
         self.at_mobiles = at_mobiles or []
         self.max_signals = max_signals
         self.secret = secret
-        self.summarizer = ReportSummarizer()
+        self.formatter = FeishuFormatter()
 
     def send(self, title: str, content: str, url: str | None = None) -> bool:
         """发送简单文本通知
@@ -124,143 +124,33 @@ class FeishuNotifier(BaseNotifier):
         Returns:
             飞书卡片字典
         """
-        summary = self.summarizer.summarize(report)
+        # 使用 FeishuFormatter 构建基础卡片
+        card = self.formatter.format_card(report)
 
-        elements: list[dict] = []
-
-        # 1. 摘要
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": summary["summary"],
-                },
-            }
-        )
-
-        # 2. 高影响信号
-        if summary["highlights"]:
-            elements.append({"tag": "hr"})
-            elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "### 🔥 高影响信号",
-                    },
-                }
-            )
-
-            for signal in summary["highlights"][: self.max_signals]:
-                type_emoji = self._get_type_emoji(signal["type"])
-                impact_stars = "⭐" * signal["impact_score"]
-                repos = ", ".join(f"`{r}`" for r in signal["related_repos"])
-
-                content = (
-                    f"**{type_emoji} {signal['title']}**\n"
-                    f"{impact_stars} | {repos}\n"
-                    f"{signal['why_it_matters']}"
-                )
-
-                elements.append(
-                    {
-                        "tag": "div",
-                        "text": {
-                            "tag": "lark_md",
-                            "content": content,
-                        },
-                    }
-                )
-
-        # 3. 统计信息
-        elements.append({"tag": "hr"})
-        stats = summary["stats"]
-        stats_content = (
-            "### 📊 统计信息\n"
-            f"• 分析 PR 数: {stats['total_prs_analyzed']}\n"
-            f"• 高影响信号: {stats['high_impact_signals']}\n"
-            f"• 新发布版本: {stats['total_releases']}\n"
-            f"• 分析 Commit 数: {stats['total_commits_analyzed']}"
-        )
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": stats_content,
-                },
-            }
-        )
-
-        # 4. 活跃仓库 TOP 3
-        if summary["top_repos"]:
-            elements.append({"tag": "hr"})
-            elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "### 🔥 活跃仓库 TOP 3",
-                    },
-                }
-            )
-
-            for i, repo in enumerate(summary["top_repos"], 1):
-                repo_content = f"{i}. **{repo['repo']}** ({repo['commits']} commits)\n"
-                elements.append(
-                    {
-                        "tag": "div",
-                        "text": {
-                            "tag": "lark_md",
-                            "content": repo_content,
-                        },
-                    }
-                )
-
-        # 5. @ 提醒
+        # 添加 @ 提醒（如果配置）
         if self.at_mobiles:
+            elements = card["card"]["elements"]
             at_list = " ".join(
                 f'<at user_id="{mobile}"></at>' for mobile in self.at_mobiles
             )
-            elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": at_list,
-                    },
-                }
-            )
 
-        # 6. 操作按钮
-        elements.append({"tag": "hr"})
-        elements.append(
-            {
-                "tag": "action",
-                "actions": [
-                    {
-                        "tag": "button",
-                        "text": {"tag": "plain_text", "content": "📖 查看完整报告"},
-                        "url": summary["report_url"],
-                        "type": "primary",
-                    }
-                ],
-            }
-        )
+            # 在按钮之前插入 @ 提醒
+            # 找到最后一个 hr 元素（在按钮前）
+            for i in range(len(elements) - 1, -1, -1):
+                if elements[i].get("tag") == "hr":
+                    elements.insert(
+                        i + 1,
+                        {
+                            "tag": "div",
+                            "text": {
+                                "tag": "lark_md",
+                                "content": at_list,
+                            },
+                        },
+                    )
+                    break
 
-        return {
-            "msg_type": "interactive",
-            "card": {
-                "header": {
-                    "title": {
-                        "tag": "plain_text",
-                        "content": summary["title"],
-                    },
-                },
-                "elements": elements,
-            },
-        }
+        return card
 
     @retry(
         stop=stop_after_attempt(3),
@@ -315,24 +205,3 @@ class FeishuNotifier(BaseNotifier):
         # 对结果进行 base64 处理
         sign = base64.b64encode(hmac_code).decode("utf-8")
         return sign
-
-    def _get_type_emoji(self, signal_type: str) -> str:
-        """获取信号类型的表情
-
-        Args:
-            signal_type: 信号类型
-
-        Returns:
-            类型表情
-        """
-        emojis = {
-            "capability": "🚀",
-            "abstraction": "🎨",
-            "workflow": "⚙️",
-            "eval": "📊",
-            "safety": "🛡️",
-            "performance": "⚡",
-            "commit": "💾",
-            "release": "🎯",
-        }
-        return emojis.get(signal_type, "📌")

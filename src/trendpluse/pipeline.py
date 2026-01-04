@@ -21,7 +21,11 @@ from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.collectors.github_events import GitHubEventsCollector
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import Settings
-from trendpluse.models.signal import DailyReport
+from trendpluse.models.signal import (
+    ActivityData,
+    DailyReport,
+    ReleasesData,
+)
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
 
@@ -102,35 +106,39 @@ class TrendPulsePipeline:
             date = datetime.now()
 
         # 0. 收集仓库活跃度数据（独立于 PR 分析）
-        activity_data = self.activity_collector.collect_activity(
+        activity_data, detailed_commits = self.activity_collector.collect_activity(
             repos=self.settings.github_repos,
             since=date,
         )
 
         # 0.3. 收集 Releases 数据（回溯 7 天）
         release_since = date - timedelta(days=self.settings.days_to_lookback)
-        release_data = self.release_collector.collect_releases(
+        releases_data, detailed_releases = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
             since=release_since,
             include_prereleases=getattr(self.settings, "include_prereleases", False),
         )
 
         # 0.5. 分析 commits 提取信号
-        detailed_commits = activity_data.get("detailed_commits", [])
         commit_signals = []
         if detailed_commits:
             commit_signals = self.commit_analyzer.analyze_commits(detailed_commits)
 
         # 0.6. 分析 releases 提取信号
         release_signals = []
-        if release_data and release_data.get("detailed_releases"):
-            release_signals = self.release_analyzer.analyze_releases(release_data)
+        if detailed_releases:
+            # 构造分析器需要的格式
+            release_analysis_data = {"detailed_releases": detailed_releases}
+            release_signals = self.release_analyzer.analyze_releases(
+                release_analysis_data
+            )
 
         # 0.7. 检测 breaking changes
         breaking_changes = []
-        if release_data and release_data.get("detailed_releases"):
+        if detailed_releases:
+            release_analysis_data = {"detailed_releases": detailed_releases}
             breaking_changes = self.breaking_changes_detector.detect_breaking_changes(
-                release_data
+                release_analysis_data
             )
 
         # 1. 从 GitHub API 获取 PR（回溯 7 天）
@@ -146,7 +154,7 @@ class TrendPulsePipeline:
         # 如果没有候选事件，返回带活跃度、commit 和 release 信号的空报告
         if not candidates:
             report = self._generate_empty_report(
-                date, activity_data, commit_signals, release_data
+                date, activity_data, commit_signals, releases_data
             )
             # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
@@ -159,7 +167,7 @@ class TrendPulsePipeline:
 
         if not pr_details:
             report = self._generate_empty_report(
-                date, activity_data, commit_signals, release_data
+                date, activity_data, commit_signals, releases_data
             )
             # 保存空报告（包含活跃度、commit 和 release 数据）
             output_path = self._get_output_path(date)
@@ -172,7 +180,7 @@ class TrendPulsePipeline:
 
         if not signals:
             report = self._generate_empty_report(
-                date, activity_data, commit_signals, release_data
+                date, activity_data, commit_signals, releases_data
             )
             # 保存空报告（包含活跃度和 commit 数据）
             output_path = self._get_output_path(date)
@@ -190,14 +198,12 @@ class TrendPulsePipeline:
         report.activity = activity_data
         report.commit_signals = commit_signals
         report.release_signals = release_signals
-        report.releases = release_data
+        report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
         report.stats["total_commits_analyzed"] = len(detailed_commits)
-        report.stats["total_releases"] = release_data.get("total_releases", 0)
-        report.stats["total_releases_analyzed"] = len(
-            release_data.get("detailed_releases", [])
-        )
+        report.stats["total_releases"] = releases_data.total_count
+        report.stats["total_releases_analyzed"] = len(detailed_releases)
         report.stats["total_breaking_changes"] = len(breaking_changes)
 
         # 7. 保存报告
@@ -210,9 +216,9 @@ class TrendPulsePipeline:
     def _generate_empty_report(
         self,
         date: datetime,
-        activity_data: dict | None = None,
+        activity_data: ActivityData | None = None,
         commit_signals: list | None = None,
-        release_data: dict | None = None,
+        releases_data: ReleasesData | None = None,
     ) -> DailyReport:
         """生成空报告
 
@@ -220,7 +226,7 @@ class TrendPulsePipeline:
             date: 日期
             activity_data: 活跃度数据（可选）
             commit_signals: commit 信号列表（可选）
-            release_data: Release 数据（可选）
+            releases_data: Release 数据（可选）
 
         Returns:
             空的每日报告
@@ -235,20 +241,18 @@ class TrendPulsePipeline:
             stats={
                 "total_prs_analyzed": 0,
                 "high_impact_signals": 0,
-                "total_commits_analyzed": len(activity_data.get("detailed_commits", []))
+                "total_commits_analyzed": activity_data.total_commits
                 if activity_data
                 else 0,
-                "total_releases": release_data.get("total_releases", 0)
-                if release_data
-                else 0,
+                "total_releases": releases_data.total_count if releases_data else 0,
             },
         )
 
         # 添加活跃度和 release 数据（如果有）
         if activity_data:
             report.activity = activity_data
-        if release_data:
-            report.releases = release_data
+        if releases_data:
+            report.releases = releases_data
 
         # 添加监控的仓库列表
         report.monitored_repos = self.settings.github_repos

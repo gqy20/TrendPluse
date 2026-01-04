@@ -158,3 +158,110 @@ class TestDailyReport:
         assert report.stats["total_prs_analyzed"] == 0
         assert report.stats["total_releases"] == 0
         assert report.stats["high_impact_signals"] == 0
+
+
+class TestRepoActivity:
+    """测试 RepoActivity 模型"""
+
+    def test_valid_repo_activity(self):
+        """测试：创建有效的仓库活跃度数据"""
+        # Arrange & Act & Assert
+        # 这个测试会失败，因为 RepoActivity 模型还不存在
+        from trendpluse.models.signal import RepoActivity
+
+        activity = RepoActivity(
+            repo="test/repo",
+            commits=10,
+            new_contributors=0,
+            top_contributors=["user1", "user2"],
+        )
+
+        assert activity.repo == "test/repo"
+        assert activity.commits == 10
+        assert activity.new_contributors == 0
+        assert len(activity.top_contributors) == 2
+
+
+class TestReleaseInfo:
+    """测试 ReleaseInfo 模型"""
+
+    def test_valid_release_info(self):
+        """测试：创建有效的版本发布信息"""
+        # Arrange & Act & Assert
+        # 这个测试会失败，因为 ReleaseInfo 模型还不存在
+        from trendpluse.models.signal import ReleaseInfo
+
+        release = ReleaseInfo(
+            repo="test/repo",
+            version="v1.0.0",
+            author="test-user",
+            date="2026-01-04",
+            summary="Test release",
+            assets_count=5,
+            url="https://github.com/test/repo/releases/tag/v1.0.0",
+        )
+
+        assert release.repo == "test/repo"
+        assert release.version == "v1.0.0"
+        assert release.author == "test-user"
+        assert release.date == "2026-01-04"
+
+
+class TestActivityData:
+    """测试 ActivityData 模型"""
+
+    def test_valid_activity_data(self):
+        """测试：创建有效的活跃度汇总数据"""
+        # Arrange & Act & Assert
+        # 这个测试会失败，因为 ActivityData 模型还不存在
+        from trendpluse.models.signal import ActivityData, RepoActivity
+
+        activities = [
+            RepoActivity(
+                repo="repo1", commits=10, new_contributors=0, top_contributors=[]
+            ),
+            RepoActivity(
+                repo="repo2", commits=5, new_contributors=1, top_contributors=[]
+            ),
+        ]
+
+        activity_data = ActivityData(
+            total_commits=15,
+            active_repos_count=2,
+            new_contributors=1,
+            top_repos=activities,
+        )
+
+        assert activity_data.total_commits == 15
+        assert len(activity_data.top_repos) == 2
+
+
+class TestReleasesData:
+    """测试 ReleasesData 模型"""
+
+    def test_valid_releases_data(self):
+        """测试：创建有效的版本发布汇总数据"""
+        # Arrange & Act & Assert
+        # 这个测试会失败，因为 ReleasesData 模型还不存在
+        from trendpluse.models.signal import ReleaseInfo, ReleasesData
+
+        releases = [
+            ReleaseInfo(
+                repo="repo1",
+                version="v1.0.0",
+                author="user1",
+                date="2026-01-04",
+                summary="Test",
+                assets_count=1,
+                url="https://github.com/repo1/releases/tag/v1.0.0",
+            ),
+        ]
+
+        releases_data = ReleasesData(
+            total_count=1,
+            unique_repos_count=1,
+            releases=releases,
+        )
+
+        assert releases_data.total_count == 1
+        assert len(releases_data.releases) == 1

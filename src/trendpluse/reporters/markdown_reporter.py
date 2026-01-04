@@ -5,7 +5,12 @@
 
 from pathlib import Path
 
-from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.models.signal import (
+    ActivityData,
+    DailyReport,
+    ReleasesData,
+    Signal,
+)
 
 
 class MarkdownReporter:
@@ -257,7 +262,7 @@ class MarkdownReporter:
 
         return "".join(lines)
 
-    def _render_activity(self, activity: dict) -> str:
+    def _render_activity(self, activity: ActivityData) -> str:
         """渲染活跃度信息
 
         Args:
@@ -270,28 +275,26 @@ class MarkdownReporter:
 
         # 总览指标
         lines.append("### 总览\n\n")
-        lines.append(f"- **总 Commit 数**: {activity['total_commits']}\n")
-        lines.append(f"- **活跃仓库数**: {activity['active_repos']}\n")
-        lines.append(f"- **新贡献者数**: {activity['new_contributors']}\n")
+        lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
+        lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
+        lines.append(f"- **新贡献者数**: {activity.new_contributors}\n")
 
         # 活跃仓库详情（最多 10 个）
-        if activity["repo_activity"]:
+        if activity.top_repos:
             lines.append("\n### 活跃仓库 TOP 10\n\n")
             lines.append("| 仓库 | Commits | 新贡献者 | Top 贡献者 |\n")
             lines.append("|------|--------|---------|------------|\n")
 
-            for repo in activity["repo_activity"][:10]:
-                repo_name = repo["repo"].replace("_", "\\_")
-                repo_link = f"[{repo_name}](https://github.com/{repo['repo']})"
-                commits = repo["commit_count"]
-                new_contribs = repo["new_contributors"]
+            for repo in activity.top_repos[:10]:
+                repo_name = repo.repo.replace("_", "\\_")
+                repo_link = f"[{repo_name}](https://github.com/{repo.repo})"
+                commits = repo.commits
+                new_contribs = repo.new_contributors
 
                 # Top 贡献者（最多 3 个）
-                top_contribs = repo["top_contributors"][:3]
+                top_contribs = repo.top_contributors[:3]
                 if top_contribs:
-                    contrib_list = ", ".join(
-                        f"{c['login']} ({c['commits']})" for c in top_contribs
-                    )
+                    contrib_list = ", ".join(top_contribs)
                 else:
                     contrib_list = "-"
 
@@ -406,11 +409,11 @@ class MarkdownReporter:
         }
         return emojis.get(signal_type, "📌")
 
-    def _render_releases(self, releases: dict) -> str:
+    def _render_releases(self, releases: ReleasesData) -> str:
         """渲染 Release 信息
 
         Args:
-            releases: Release 数据字典
+            releases: Release 数据
 
         Returns:
             Markdown 格式的 Release 信息
@@ -419,60 +422,49 @@ class MarkdownReporter:
 
         # 总览
         lines.append("### 总览\n\n")
-        lines.append(f"- **新发布版本**: {releases.get('total_releases', 0)} 个\n")
-        lines.append(f"- **涉及仓库**: {releases.get('repos_with_releases', 0)} 个\n")
+        lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
+        lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
 
         # 详细 Release 列表（最多 10 个）
-        detailed_releases = releases.get("detailed_releases", [])[:10]
-        if detailed_releases:
+        if releases.releases:
             lines.append("\n### 最新发布\n\n")
 
-            for release in detailed_releases:
-                repo_name = release["repo"].replace("_", "\\_")
-                tag_name = release["tag_name"]
-                name = release.get("name", "")
-                prerelease = release.get("prerelease", False)
-                author = release.get("author", "Unknown")
-                created_at = release.get("created_at", "")[:10]
+            for release in releases.releases[:10]:
+                repo_name = release.repo.replace("_", "\\_")
+                version = release.version
+                author = release.author
+                date = release.date
+                summary = release.summary
+                assets_count = release.assets_count
+                url = release.url
 
-                # 版本类型标记
-                version_info = release.get("version_info", {})
-                if version_info:
-                    is_major = (
-                        version_info.get("minor", 0) == 0
-                        and version_info.get("patch", 0) == 0
-                    )
-                    type_emoji = "🚀" if is_major else "⚡"
+                # 简单的版本类型判断（可以根据需要扩展）
+                if version.startswith("v") and ".0.0" in version:
+                    type_emoji = "🚀"
                 else:
-                    type_emoji = "📦"
-
-                prerelease_tag = " `[预发布]` " if prerelease else ""
+                    type_emoji = "⚡" if assets_count > 0 else "📦"
 
                 release_header = (
                     f"#### {type_emoji} "
-                    f"[{repo_name}](https://github.com/{release['repo']}) "
-                    f"{tag_name}{prerelease_tag}\n\n"
+                    f"[{repo_name}](https://github.com/{release.repo}) "
+                    f"{version}\n\n"
                 )
                 lines.append(release_header)
-                if name and name != tag_name:
-                    lines.append(f"**{name}**\n\n")
-                lines.append(f"**发布者**: `{author}` | **时间**: {created_at}\n\n")
+                lines.append(f"**发布者**: `{author}` | **时间**: {date}\n\n")
 
                 # Release Notes 摘要
-                body = release.get("body", "")
-                if body:
+                if summary:
                     # 取前 200 字符
-                    summary = body[:200].replace("\n", " ")
-                    if len(body) > 200:
-                        summary += "..."
-                    lines.append(f"**摘要**: {summary}\n\n")
+                    summary_text = summary[:200].replace("\n", " ")
+                    if len(summary) > 200:
+                        summary_text += "..."
+                    lines.append(f"**摘要**: {summary_text}\n\n")
 
                 # Assets
-                assets = release.get("assets", [])
-                if assets:
-                    lines.append(f"**资产**: {len(assets)} 个文件\n\n")
+                if assets_count > 0:
+                    lines.append(f"**资产**: {assets_count} 个文件\n\n")
 
-                lines.append(f"**链接**: [查看详情]({release['html_url']})\n\n")
+                lines.append(f"**链接**: [查看详情]({url})\n\n")
 
         return "".join(lines)
 

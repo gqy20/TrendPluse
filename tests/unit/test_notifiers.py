@@ -1,6 +1,6 @@
 """通知模块测试
 
-测试通知器基类、飞书通知器和报告摘要生成器。
+测试通知器基类和飞书通知器。
 """
 
 from unittest.mock import Mock, patch
@@ -8,12 +8,14 @@ from unittest.mock import Mock, patch
 import httpx
 import pytest
 
-from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.models.signal import (
+    ActivityData,
+    DailyReport,
+    RepoActivity,
+    Signal,
+)
 from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.feishu import FeishuNotifier
-from trendpluse.notifiers.summary import (
-    ReportSummarizer,
-)
 
 
 class TestBaseNotifier:
@@ -32,68 +34,6 @@ class TestBaseNotifier:
 
         with pytest.raises(TypeError):
             IncompleteNotifier()
-
-
-class TestReportSummarizer:
-    """测试 ReportSummarizer 报告摘要生成器"""
-
-    def test_summarize_generates_title(self, sample_report: DailyReport):
-        """摘要应包含报告标题"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "title" in result
-        assert "2026-01-04" in result["title"]
-        assert "TrendPulse" in result["title"]
-
-    def test_summarize_generates_summary(self, sample_report: DailyReport):
-        """摘要应包含报告摘要"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "summary" in result
-        assert len(result["summary"]) > 0
-
-    def test_summarize_filters_high_impact_signals(self, sample_report: DailyReport):
-        """摘要应包含高影响信号（评分 >= 4）"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "highlights" in result
-        # 验证所有高亮信号的评分都 >= 4
-        for signal in result["highlights"]:
-            assert signal["impact_score"] >= 4
-
-    def test_summarize_limits_highlights_to_five(self, sample_report: DailyReport):
-        """高影响信号最多返回 5 个"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert len(result["highlights"]) <= 5
-
-    def test_summarize_includes_stats(self, sample_report: DailyReport):
-        """摘要应包含统计信息"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "stats" in result
-        assert "total_prs_analyzed" in result["stats"]
-
-    def test_summarize_includes_top_repos(self, sample_report: DailyReport):
-        """摘要应包含活跃仓库 TOP 3"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "top_repos" in result
-        assert len(result["top_repos"]) <= 3
-
-    def test_summarize_includes_report_url(self, sample_report: DailyReport):
-        """摘要应包含报告链接"""
-        summarizer = ReportSummarizer()
-        result = summarizer.summarize(sample_report)
-
-        assert "report_url" in result
-        assert result["report_url"] != ""
 
 
 class TestFeishuNotifier:
@@ -320,25 +260,37 @@ def sample_report() -> DailyReport:
             "high_impact_signals": 6,
             "total_commits_analyzed": 120,
         },
-        activity={
-            "total_commits": 500,
-            "active_repos": 23,
-            "new_contributors": 5,
-            "repo_activity": [
-                {
-                    "repo": "anthropics/claude-code",
-                    "commit_count": 127,
-                    "new_contributors": 3,
-                },
-                {"repo": "cline/cline", "commit_count": 45, "new_contributors": 1},
-                {"repo": "openai/swarm", "commit_count": 32, "new_contributors": 0},
-                {
-                    "repo": "significant-gravitas/autogpt",
-                    "commit_count": 20,
-                    "new_contributors": 2,
-                },
+        activity=ActivityData(
+            total_commits=500,
+            active_repos_count=23,
+            new_contributors=5,
+            top_repos=[
+                RepoActivity(
+                    repo="anthropics/claude-code",
+                    commits=127,
+                    new_contributors=3,
+                    top_contributors=["user1", "user2", "user3"],
+                ),
+                RepoActivity(
+                    repo="cline/cline",
+                    commits=45,
+                    new_contributors=1,
+                    top_contributors=["user4"],
+                ),
+                RepoActivity(
+                    repo="openai/swarm",
+                    commits=32,
+                    new_contributors=0,
+                    top_contributors=[],
+                ),
+                RepoActivity(
+                    repo="significant-gravitas/autogpt",
+                    commits=20,
+                    new_contributors=2,
+                    top_contributors=["user5", "user6"],
+                ),
             ],
-        },
+        ),
         releases=None,
         breaking_changes=None,
         monitored_repos=None,
