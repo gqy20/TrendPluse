@@ -210,3 +210,97 @@ class TestCommitAnalyzer:
             signals[1].sources[0]
             == "https://github.com/anthropics/claude-code-action/commit/def456"
         )
+
+    def test_build_prompt_requires_commit_sha_field(self, analyzer):
+        """测试 Prompt 模板必须要求 LLM 返回 commit_sha 字段
+
+        这是解决 commit 分析结果与链接不匹配问题的关键：
+        - LLM 必须返回 commit_sha 字段
+        - commit_sha 必须精确匹配输入数据中的 SHA
+        - 这样才能避免索引错位问题
+        """
+        # Arrange
+        commits = [
+            {
+                "repo": "anthropics/claude-sdk-python",
+                "sha": "abc123def456",
+                "message": "feat: add streaming API",
+                "author": "developer",
+                "timestamp": "2026-01-02T10:00:00Z",
+            },
+        ]
+
+        # Act
+        prompt = analyzer._build_prompt(commits)
+
+        # Assert - Prompt 必须明确要求 commit_sha 字段
+        assert "commit_sha" in prompt.lower(), (
+            "Prompt 必须要求 LLM 返回 commit_sha 字段，以便精确匹配信号与对应的 commit"
+        )
+
+        # Assert - Prompt 必须说明如何使用 commit_sha
+        assert (
+            "精确" in prompt
+            or "复制" in prompt
+            or ("exact" in prompt.lower() or "copy" in prompt.lower())
+        ), "Prompt 必须指导 LLM 精确复制 commit 的 SHA"
+
+        # Assert - 输出格式示例中应包含 commit_sha
+        assert '"commit_sha"' in prompt or "`commit_sha`" in prompt, (
+            "输出格式示例中应包含 commit_sha 字段，让 LLM 明确知道需要返回此字段"
+        )
+
+    def test_parse_signals_with_commit_sha_matches_correctly(self, analyzer):
+        """测试当 LLM 返回 commit_sha 时，应精确匹配对应的 commit
+
+        场景：LLM 跳过某些 commit，导致索引错位
+        - 输入 5 个 commits
+        - LLM 只分析第 2、4 个（索引 1、3）
+        - 返回的 commit_sha 应精确匹配，而非按索引匹配
+        """
+        # Arrange
+        commits = [
+            {"repo": "test/repo1", "sha": "aaa111", "message": "chore: update readme"},
+            {"repo": "test/repo2", "sha": "bbb222", "message": "feat: add feature"},
+            {"repo": "test/repo3", "sha": "ccc333", "message": "fix: typo"},
+            {"repo": "test/repo4", "sha": "ddd444", "message": "refactor: code"},
+            {"repo": "test/repo5", "sha": "eee555", "message": "docs: update"},
+        ]
+
+        # LLM 跳过不重要的 commits，只返回 bbb222 和 ddd444 的信号
+        llm_response = """[
+            {
+                "title": "新功能添加",
+                "type": "capability",
+                "category": "engineering",
+                "impact_score": 4,
+                "why_it_matters": "重要功能",
+                "commit_sha": "bbb222",
+                "related_repos": []
+            },
+            {
+                "title": "代码重构",
+                "type": "refactor",
+                "category": "engineering",
+                "impact_score": 3,
+                "why_it_matters": "提升可维护性",
+                "commit_sha": "ddd444",
+                "related_repos": []
+            }
+        ]"""
+
+        # Act
+        signals = analyzer._parse_signals(llm_response, commits)
+
+        # Assert - 应返回 2 个信号
+        assert len(signals) == 2
+
+        # Assert - 第一个信号应匹配 bbb222（commit 索引 1），而非 aaa111（索引 0）
+        assert "bbb222" in signals[0].sources[0]
+        assert "test/repo2" in signals[0].related_repos
+        assert signals[0].sources[0] == "https://github.com/test/repo2/commit/bbb222"
+
+        # Assert - 第二个信号应匹配 ddd444（commit 索引 3），而非 ccc333（索引 2）
+        assert "ddd444" in signals[1].sources[0]
+        assert "test/repo4" in signals[1].related_repos
+        assert signals[1].sources[0] == "https://github.com/test/repo4/commit/ddd444"
