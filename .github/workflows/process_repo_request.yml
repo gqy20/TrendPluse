@@ -24,11 +24,11 @@ jobs:
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          # 解析 GitHub 仓库
-          REPO=$(echo "$ISSUE_BODY" | grep -oP '(?<=### GitHub 仓库\s*\n\s*)[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+' || echo "")
+          # 解析 GitHub 仓库 - 使用 sed 避免变长后顾断言
+          REPO=$(echo "$ISSUE_BODY" | sed -n '/### GitHub 仓库/,/###/p' | grep -oP '^[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+$' | head -1 || echo "")
 
-          # 解析分类
-          CATEGORY=$(echo "$ISSUE_BODY" | grep -oP '(?<=### 分类\s*\n\s*).+?(?=\n)' | head -1 || echo "")
+          # 解析分类 - 使用 sed 避免变长后顾断言
+          CATEGORY=$(echo "$ISSUE_BODY" | sed -n '/### 分类/,/###/p' | tail -n +2 | head -1 | grep -oP '.+' || echo "")
 
           # 解添加理由
           REASON=$(echo "$ISSUE_BODY" | sed -n '/### 添加理由/,/###/p' | tail -n +2 | head -n -1 | sed 's/^\s*-\s*\[x\]\s*//' | head -c 200 || echo "")
