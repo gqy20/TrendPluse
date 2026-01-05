@@ -188,7 +188,7 @@ class FeishuFormatter:
             # 构建单个信号内容，使用 ##### 五级标题
             content = f"##### {type_emoji} {signal.title}\n\n"
             content += (
-                f"**类型**: `{signal.type}` | **影响**: {impact_stars} "
+                f"\n**类型**: `{signal.type}` | **影响**: {impact_stars} "
                 f"({signal.impact_score}/5) | **分类**: `{signal.category}`\n\n"
             )
             content += f"**为什么重要**: {signal.why_it_matters}\n\n"
