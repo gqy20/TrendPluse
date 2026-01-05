@@ -91,12 +91,6 @@ class FeishuFormatter:
                 "config": {
                     "update_multi": True,
                 },
-                "header": {
-                    "title": {
-                        "tag": "plain_text",
-                        "content": "📊",
-                    },
-                },
                 "body": {
                     "elements": elements,
                 },

@@ -118,13 +118,10 @@ class TestFeishuFormatter:
         # Assert
         assert card["msg_type"] == "interactive"
         assert "card" in card
-        assert "header" in card["card"]
+        # header 是可选的，不再强制检查
         # JSON 2.0: elements 在 body 下
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
-
-        # 验证 header 只包含 emoji
-        assert card["card"]["header"]["title"]["content"] == "📊"
 
         # 验证 body 中的醒目主标题和日期标题（使用 # 和 ### Markdown 标题）
         elements = card["card"]["body"]["elements"]
