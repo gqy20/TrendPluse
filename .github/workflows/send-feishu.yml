@@ -1,0 +1,51 @@
+name: Send Feishu Notification Only
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_date:
+        description: '报告日期 (YYYY-MM-DD)，默认今天'
+        required: false
+        type: string
+        default: ''
+      send_notification:
+        description: '是否发送飞书通知'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  send_notification:
+    name: Send Feishu Notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Send Feishu notification
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+          FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
+          REPORT_DATE: ${{ inputs.report_date || github.event.schedule.run_time }}
+        run: uv run python scripts/send_feishu_notification.py
