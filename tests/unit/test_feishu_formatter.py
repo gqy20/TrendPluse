@@ -247,3 +247,150 @@ class TestFeishuFormatter:
         assert "owner/repo1" in combined_content
         assert "owner/repo2" in combined_content
         assert "owner/repo3" in combined_content
+
+    def test_format_releases_deduplicates_same_repo(self):
+        """测试：同一仓库的多个版本只显示一次（显示最新版本）"""
+        # Arrange
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        # 同一仓库有 3 个版本，应该只显示最新的 v1.2.0
+        releases = ReleasesData(
+            total_count=3,
+            unique_repos_count=1,
+            releases=[
+                ReleaseInfo(
+                    repo="owner/repo",
+                    version="v1.0.0",
+                    author="user1",
+                    date="2026-01-03",
+                    summary="First release",
+                    assets_count=1,
+                    url="https://github.com/owner/repo/releases/tag/v1.0.0",
+                ),
+                ReleaseInfo(
+                    repo="owner/repo",
+                    version="v1.1.0",
+                    author="user2",
+                    date="2026-01-04",
+                    summary="Second release",
+                    assets_count=2,
+                    url="https://github.com/owner/repo/releases/tag/v1.1.0",
+                ),
+                ReleaseInfo(
+                    repo="owner/repo",
+                    version="v1.2.0",
+                    author="user3",
+                    date="2026-01-05",
+                    summary="Third release",
+                    assets_count=3,
+                    url="https://github.com/owner/repo/releases/tag/v1.2.0",
+                ),
+            ],
+        )
+
+        report = DailyReport(
+            date="2026-01-05",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            releases=releases,
+            stats={
+                "total_prs_analyzed": 0,
+                "total_releases": 3,
+                "high_impact_signals": 0,
+            },
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 应该只显示一次 owner/repo（最新版本 v1.2.0）
+        assert combined_content.count("owner/repo") == 1
+        assert "v1.2.0" in combined_content
+        # 不应该显示旧版本
+        assert "v1.0.0" not in combined_content
+        assert "v1.1.0" not in combined_content
+        # 统计应该显示 "1个仓库" 而不是 "3个"
+        assert "1个仓库" in combined_content
+
+    def test_format_releases_includes_links(self):
+        """测试：版本发布包含可点击链接"""
+        # Arrange
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        releases = ReleasesData(
+            total_count=2,
+            unique_repos_count=2,
+            releases=[
+                ReleaseInfo(
+                    repo="owner/repo1",
+                    version="v2.0.0",
+                    author="user1",
+                    date="2026-01-04",
+                    summary="Test release",
+                    assets_count=1,
+                    url="https://github.com/owner/repo1/releases/tag/v2.0.0",
+                ),
+                ReleaseInfo(
+                    repo="owner/repo2",
+                    version="v1.5.0",
+                    author="user2",
+                    date="2026-01-04",
+                    summary="Test release",
+                    assets_count=1,
+                    url="https://github.com/owner/repo2/releases/tag/v1.5.0",
+                ),
+            ],
+        )
+
+        report = DailyReport(
+            date="2026-01-04",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            releases=releases,
+            stats={
+                "total_prs_analyzed": 0,
+                "total_releases": 2,
+                "high_impact_signals": 0,
+            },
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 飞书 Markdown 链接语法：[text](url)
+        assert (
+            "[owner/repo1](https://github.com/owner/repo1/releases/tag/v2.0.0)"
+            in combined_content
+        )
+        assert (
+            "[owner/repo2](https://github.com/owner/repo2/releases/tag/v1.5.0)"
+            in combined_content
+        )
