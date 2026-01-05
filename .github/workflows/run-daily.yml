@@ -88,7 +88,8 @@ jobs:
           git stash
           git pull --rebase origin main
           git stash pop || true
-          git add reports/*.md docs/reports/*.md
+          # 添加报告文件（包括 JSON 数据）
+          git add reports/*.md reports/*.json docs/reports/*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push
 
@@ -175,7 +176,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: trend-report-${{ needs.analyze.outputs.report_date }}
-          path: reports/
+          path: .  # 下载到工作目录根目录，保留原始目录结构
 
       - name: Set up Python
         uses: actions/setup-python@v6
