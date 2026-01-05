@@ -38,6 +38,17 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
+        # 0. 添加醒目的日期标题
+        elements.append(
+            {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": f"# 📅 {report.date}",
+                },
+            }
+        )
+
         # 1. 摘要
         elements.append(self._create_summary_element(report.summary_brief))
 
