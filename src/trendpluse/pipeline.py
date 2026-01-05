@@ -275,6 +275,7 @@ class TrendPulsePipeline:
         )
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
+        self._save_report_json(report, output_path)
         self._send_notification(report)
         return report
 
