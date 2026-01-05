@@ -139,8 +139,8 @@ class TestFeishuFormatter:
         # 验证高影响信号
         assert any("🚀" in el.get("text", {}).get("content", "") for el in elements)
 
-        # 验证版本发布
-        assert any("v1.0.0" in el.get("text", {}).get("content", "") for el in elements)
+        # 验证版本发布（去重后只显示最新版本 v1.1.0）
+        assert any("v1.1.0" in el.get("text", {}).get("content", "") for el in elements)
 
         # 验证活跃仓库
         assert any(
@@ -317,14 +317,25 @@ class TestFeishuFormatter:
         ]
         combined_content = " ".join(content_parts)
 
-        # 应该只显示一次 owner/repo（最新版本 v1.2.0）
-        assert combined_content.count("owner/repo") == 1
-        assert "v1.2.0" in combined_content
+        # 应该只显示最新版本 v1.2.0
+        # 提取版本发布部分进行验证
+        import re
+
+        release_section_match = re.search(
+            r"### 🎯 版本发布.*?(?=###|\Z)", combined_content, re.DOTALL
+        )
+        assert release_section_match is not None
+        release_section = release_section_match.group(0)
+
+        # 只显示最新版本 v1.2.0
+        assert "v1.2.0" in release_section
         # 不应该显示旧版本
-        assert "v1.0.0" not in combined_content
-        assert "v1.1.0" not in combined_content
+        assert "v1.0.0" not in release_section
+        assert "v1.1.0" not in release_section
         # 统计应该显示 "1个仓库" 而不是 "3个"
-        assert "1个仓库" in combined_content
+        assert "1个仓库" in release_section
+        # 应该包含链接
+        assert "](https://github.com/owner/repo/releases/tag/v1.2.0)" in release_section
 
     def test_format_releases_includes_links(self):
         """测试：版本发布包含可点击链接"""

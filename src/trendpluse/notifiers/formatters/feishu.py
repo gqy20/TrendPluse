@@ -3,7 +3,12 @@
 将 DailyReport 转换为飞书卡片格式。
 """
 
-from trendpluse.models.signal import ActivityData, DailyReport, Signal
+from trendpluse.models.signal import (
+    ActivityData,
+    DailyReport,
+    ReleaseInfo,
+    Signal,
+)
 
 
 class FeishuFormatter:
@@ -189,9 +194,20 @@ class FeishuFormatter:
         Returns:
             版本发布部分元素
         """
-        content = f"### 🎯 版本发布 ({releases.total_count}个)\n\n"
-        for release in releases.releases[:5]:
-            content += f"• **{release.repo}** {release.version}"
+        # 按仓库去重，保留日期最新的版本
+        latest_by_repo: dict[str, ReleaseInfo] = {}
+        for r in releases.releases:
+            repo = r.repo
+            # 如果该仓库还没记录，或者当前版本日期更新，则替换
+            if repo not in latest_by_repo or r.date > latest_by_repo[repo].date:
+                latest_by_repo[repo] = r
+
+        unique_releases = list(latest_by_repo.values())[:5]
+
+        content = f"### 🎯 版本发布 ({len(unique_releases)}个仓库)\n\n"
+        for release in unique_releases:
+            # 飞书 Markdown 链接语法：[text](url)
+            content += f"• [{release.repo}]({release.url}) {release.version}"
             if release.date:
                 content += f" ({release.date})"
             content += "\n"
