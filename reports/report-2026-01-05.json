@@ -1,0 +1,634 @@
+{
+  "date": "2026-01-05",
+  "summary_brief": "今日 (2026-01-05) 未发现符合条件的趋势信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [
+    {
+      "id": "commit-0",
+      "title": "MCP 资源协议集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 实现了 MCP (Model Context Protocol) 资源支持，标志着 AI 代理工具从简单的文件操作向标准化资源管理接口演进，增强了代理与外部数据源的交互能力。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/21dc3c24d9243d81fdc1c3b23aa1f160df213a50"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "anthropics/claude-code",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "运行时变量动态更新",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 引入了在运行时更新工作流变量的命令，解决了复杂工作流中状态动态调整的痛点，提升了 AI 应用的灵活性和可控性。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/a9e2c05a100413426392d71a5d243950d7a50f8c"
+      ],
+      "related_repos": [
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "权限系统规则化重构",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 将权限评估从通配符模式迁移到基于规则的匹配系统，显著提高了 AI 代理在执行文件操作时的安全性和精确性，降低了误操作风险。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/9f38af44db91966e331ce95f1d50194e8403be1e"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "Rust 依赖注入模式应用",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Dify 和 OpenCode 均采用了依赖注入 (DI) 模式重构核心节点，反映了 AI 基础设施代码正向传统软件工程的成熟架构模式演进，提升了代码的可测试性和可维护性。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/06ba40f01610d5e2488fef59539516677da45ffe"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "Agent Hooks 机制增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 引入了细粒度的停止和阻断行为，允许开发者更精确地控制 Agent 执行流程，这对于构建可靠且可中断的 AI 代理系统至关重要。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/dd84c2fb837ac6d84b90416b5388341b8d83ab87"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "技能管理与插件化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 和 OpenCode 同时在加强技能/插件的 CLI 管理能力，显示 AI 编程工具正从单一脚本转向可扩展的插件生态系统，以支持更复杂的自动化任务。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/d3563e2f0eb1f2e6f4e11bd28b04f1ac36bc589b"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "TUI 会话搜索与过滤",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 在 TUI 中添加了服务端支持的会话搜索功能，改善了用户在处理大量 AI 对话历史时的交互体验，是提升终端工具可用性的关键改进。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/7304ba616e813861869f5102d7262f60724b76c8"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "Rerank 性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Dify 实现了在仅检索单个数据集时跳过 Rerank 步骤的逻辑，这种条件式优化能有效减少不必要的模型调用开销和延迟。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/473f8ef29ca63a5ccf837ed66e33a164c8dde120"
+      ],
+      "related_repos": [
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-8",
+      "title": "Zed 编辑器预测编辑修复",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 修复了 Copilot 编辑预测中的锚点/快照不匹配导致的崩溃问题，显示了 AI 辅助编码功能在深度集成到编辑器时面临的复杂状态管理挑战。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/5505e63a0df191aeed2988e5cd8073f2761f4303"
+      ],
+      "related_repos": [
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-9",
+      "title": "多模态预览支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "OpenCode 添加了 SVG 预览支持，表明 AI 编程工具正逐步增强对非代码文件（如图形、配置文件）的视觉化处理能力。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/52ad134d554bef8a4e017f7dc4c5002fcf12a785"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    }
+  ],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 174,
+    "total_releases": 6
+  },
+  "activity": {
+    "total_commits": 174,
+    "active_repos_count": 14,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 62,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rekram1-node",
+          "actions-user",
+          "thdxr",
+          "adamdotdevin",
+          "dbpolito"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 31,
+        "new_contributors": 0,
+        "top_contributors": [
+          "laipz8200",
+          "fatelei",
+          "hsiong",
+          "hyoban",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 29,
+        "new_contributors": 0,
+        "top_contributors": [
+          "maxdeviant",
+          "danilo-leal",
+          "marcocondrache",
+          "Veykril",
+          "cole-miller"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 20,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 9,
+        "new_contributors": 0,
+        "top_contributors": [
+          "abhipatel12",
+          "NTaylorMullen",
+          "SandyTao520"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dependabot[bot]",
+          "joshka-oai"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "MikeeBuilds",
+          "AndyMik90",
+          "andydataguy"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "paul-gauthier",
+          "claui"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl",
+          "shanemort1982"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "amorriscode"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "amorriscode"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "arafatkatze"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "zhijianma"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 6,
+    "unique_repos_count": 2,
+    "releases": [
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.2",
+        "author": "thdxr",
+        "date": "2026-01-05",
+        "summary": "## Core\n- Fix permission rule matching to use permission field instead of pattern field\n- Fix permission evaluation to use rule-based matching instead of wildcard patterns\n- Handle skill scan failures for .claude files gracefully\n- Handle case where big-pickle is unavailable as a fallback\n- Prevent main model thinking variant from applying to small model (@melihmucuk)\n- Increase default timeout to 30 seconds based on user feedback\n- Add session search functionality with debounced input and server-side filtering\n- Improve Rust formatter detection and add cargo fmt support\n## TUI\n- Allow exit when viewing child session in TUI (@rmk40)\n- Fix symmetric padding in TUI input field\n- Prevent session list rows from wrapping to two lines (@rgodha24)\n- Fix optional session access to prevent runtime errors in TUI\n## Desktop\n- Implement auto-scroll for active command in slash popover (@OpeOginni)\n- Fix responsive menu in desktop application (@dbpolito)\n- Optimize model dialog visibility lookups (@shkumbinhasani)\n- Add home icon to responsive menu in desktop app (@dbpolito)\n- Add SVG preview support in session viewer (@shuv1337)\n- Add AppStream MetaInfo file for desktop application (@NN708)\n- Fix mobile screen size issues (@carterworks)\n- Fix custom slash commands not showing on initial / (@Raviguntakala)\n- Improved prompt input handling in the application\n\n**Thank you to 11 community contributors:**\n- @melihmucuk:\n  - fix: prevent main model thinking variant from applying to small model (#6839)\n- @rgodha24:\n  - fix: prevent session list rows from wrapping to 2 lines (#6812)\n- @albingroen:\n  - fix(ui): fix select chevron alignment (#6690)\n- @Raviguntakala:\n  - fix(app): fix custom slash commands not showing on initial / (#6829)\n- @carterworks:\n  - Fix a few mobile screen size issues (#6808)\n- @NN708:\n  - feat(desktop): add AppStream MetaInfo file (#6030)\n- @shuv1337:\n  - feat(app): add SVG preview support in session viewer (#6868)\n- @dbpolito:\n  - Desktop: Improve Big Session Navigation - Scrollable (#6837)\n  - Desktop: Adding Home Icon on Responsive Menu (#6794)\n  - Desktop: Fix Responsive Menu (#6789)\n- @shkumbinhasani:\n  - perf: optimize model dialog visibility lookups (#6791)\n- @OpeOginni:\n  - feat(desktop): implement auto-scroll for active command in slash popover (#6797)\n- @rmk40:\n  - fix(tui): allow exit when viewing child session (#6898)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.2"
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.373",
+        "author": "github-actions[bot]",
+        "date": "2026-01-04",
+        "summary": "## Changes\n\n### PR [#1914](https://github.com/danielmiessler/Fabric/pull/1914) by [majiayu000](https://github.com/majiayu000): feat(code_helper): add stdin support for piping file lists\n\n- Added stdin support for piping file lists to code_helper, enabling commands like `find . -name '*.go' | code_helper \"instructions\"` and `git ls-files '*.py' | code_helper \"Add type hints\"`\n- Implemented automatic detection of stdin pipe mode with single argument (instructions) support\n- Enhanced tool to read file paths from stdin line by line while maintaining backward compatibility with existing directory scanning functionality\n\n### PR [#1915](https://github.com/danielmiessler/Fabric/pull/1915) by [majiayu000](https://github.com/majiayu000): feat: parallelize audio chunk transcription for improved performance\n\n- Parallelize audio chunk transcription using goroutines for improved performance\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.373"
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.372",
+        "author": "github-actions[bot]",
+        "date": "2026-01-04",
+        "summary": "## Changes\n\n### PR [#1913](https://github.com/danielmiessler/Fabric/pull/1913) by [majiayu000](https://github.com/majiayu000): fix: REST API /chat endpoint doesn't pass 'search' parameter to ChatOptions\n\n- Fix: REST API /chat endpoint now properly passes Search and SearchLocation parameters to ChatOptions\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.372"
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.371",
+        "author": "github-actions[bot]",
+        "date": "2026-01-04",
+        "summary": "## Changes\n\n### PR [#1923](https://github.com/danielmiessler/Fabric/pull/1923) by [ksylvan](https://github.com/ksylvan): ChangeLog Generation stability\n\n- Fix: improve date parsing and prevent early return when PR numbers exist\n- Add SQLite datetime formats to version date parsing logic\n- Loop through multiple date formats until one succeeds\n- Include SQLite fractional seconds format support\n- Prevent early return when version has PR numbers to output\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.371"
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.370",
+        "author": "github-actions[bot]",
+        "date": "2026-01-04",
+        "summary": "## Changes\n\n### PR [#1921](https://github.com/danielmiessler/Fabric/pull/1921) by [ksylvan](https://github.com/ksylvan): chore: remove redundant `--sync-db` step from changelog workflow\n\n- Remove redundant `--sync-db` step from changelog workflow\n- Remove duplicate database sync command from version workflow\n- Simplify changelog generation to single process-prs step\n- Clean up `heal_person` pattern by removing duplicate content sections\n- Remove duplicate IDENTITY, PURPOSE, STEPS, and OUTPUT INSTRUCTIONS from pattern file\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.370"
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.1",
+        "author": "thdxr",
+        "date": "2026-01-04",
+        "summary": "This is a **major change** that overhauls the permissions system in OpenCode.\r\n\r\n### Tools Merged into Permission\r\n\r\nThe `tools` configuration has been deprecated and merged into the `permission` field. Previously, you could enable/disable tools like this:\r\n\r\n```json\r\n{\r\n  \"tools\": {\r\n    \"bash\": true,\r\n    \"edit\": false\r\n  }\r\n}\r\n```\r\n\r\nNow, this should be configured using `permission`:\r\n\r\n```json\r\n{\r\n  \"permission\": {\r\n    \"bash\": \"allow\",\r\n    \"edit\": \"deny\"\r\n  }\r\n}\r\n```\r\n\r\nThe old `tools` config is still supported for backwards compatibility and will be automatically migrated to the permission system.\r\n\r\n### Granular Permissions with Object Syntax\r\n\r\nPermissions now support granular control using an object syntax with pattern matching. When you specify a permission as an object, you can set different rules for different patterns:\r\n\r\n```json\r\n{\r\n  \"permission\": {\r\n    \"bash\": {\r\n      \"npm *\": \"allow\",\r\n      \"git *\": \"allow\",\r\n      \"rm *\": \"deny\",\r\n      \"*\": \"ask\"\r\n    },\r\n    \"edit\": {\r\n      \"*.md\": \"allow\",\r\n      \"*.ts\": \"ask\",\r\n      \"*\": \"deny\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nEach key in the object is a glob pattern that matches against the tool's input, and the value is the action to take:\r\n- `\"allow\"` - automatically approve\r\n- `\"deny\"` - automatically reject\r\n- `\"ask\"` - prompt the user for approval\r\n\r\nYou can also set a blanket permission using a simple string:\r\n\r\n```json\r\n{\r\n  \"permission\": {\r\n    \"bash\": \"allow\",\r\n    \"edit\": \"ask\"\r\n  }\r\n}\r\n```\r\n\r\nOr set all permissions at once:\r\n\r\n```json\r\n{\r\n  \"permission\": \"allow\"\r\n}\r\n```\r\n### Breaking Changes for SDK Users\r\n\r\nThe permission events have changed significantly. The new `PermissionNext` module (`permission/next.ts`) has a different event structure compared to the old `Permission` module (`permission/index.ts`):\r\n\r\n**Old Event Structure (`Permission.Event`):**\r\n- `Updated`: `{ id, type, pattern, sessionID, messageID, callID, message, metadata, time }`\r\n- `Replied`: `{ sessionID, permissionID, response }`\r\n\r\n**New Event Structure (`PermissionNext.Event`):**\r\n- `Asked`: `{ id, sessionID, permission, patterns, metadata, always, tool: { messageID, callID } }`\r\n- `Replied`: `{ sessionID, requestID, reply }`\r\n\r\nKey differences:\r\n- Event name changed from `permission.updated` to `permission.asked`\r\n- `type` renamed to `permission`\r\n- `pattern` is now `patterns` (array of strings)\r\n- `message` field removed\r\n- `response` renamed to `reply`\r\n- `permissionID` renamed to `requestID`\r\n- New `always` field contains patterns that would be approved for future requests if user selects \"always\"\r\n\r\nThe reply values are the same: `\"once\"`, `\"always\"`, or `\"reject\"`\r\n\r\n### Server Changes\r\n\r\n- New endpoint: `POST /permission/:requestID/reply` for responding to permission requests\r\n- Old endpoint `POST /session/:sessionID/permissions/:permissionID` is now deprecated\r\n- `GET /permission` now returns `PermissionNext.Request[]` instead of `Permission.Info[]`\r\n- Added CORS whitelist support via `server.cors` config option\r\n- Added Content-Type headers for proxied static assets\r\n- mDNS service name now includes port for uniqueness\r\n\r\n### Other Changes\r\n\r\n- Agent `tools` field is deprecated - use `permission` instead\r\n- Agent `maxSteps` is deprecated - use `steps` instead\r\n- Unknown agent properties are now collected into `options`\r\n- Mode and plugin globs no longer search subdirectories (simplified to top-level only)\r\n\r\n## Core\r\n- Add development scripts for better debugging workflow in TUI\r\n- Ensure @opencode-ai/plugin exists only on first run\r\n- Add MCP resources support (@paoloricciuti)\r\n- Initialize config in worktree\r\n- Prioritize free GPT-5-mini for small model in GitHub Copilot\r\n- Remove hardcoded .env read block and use new permissions model instead\r\n- Prevent duplicate plugin function initialization (@ShpetimA)\r\n- Update GitHub Copilot model priority list\r\n- Add variant field to chat message input\r\n- Update AGENTS.md documentation (@aryasaatvik)\r\n- Fixed dependency installation and git worktree branch creation\r\n- Fixed an issue in the codebase\r\n- Add sandbox support for git worktrees to allow working in multiple directories per project\r\n- Add timeout to MCP client connection calls (@RhysSullivan)\r\n- Add per-project MCP config overrides (@jknlsn)\r\n- Improve root detection for Gradle multi-project builds in Kotlin language server (@JBou)\r\n- Improve plugin loading to handle builtin plugin failures gracefully\r\n- Add reject message support to permission dialogs for better user feedback\r\n- Wrap queued user messages with reminder to stay on track\r\n- Add managed git worktrees\r\n- Upgrade OpenTUI to v0.1.68 using GPA\r\n- Add escape key handling to permission dialogs for better keyboard navigation\r\n- Add TUI session selection API endpoint for navigation (@code-yeongyu)\r\n- Add Kotlin LSP integration (@tjg184)\r\n- Merge instructions arrays across config files instead of overriding them (@elithrar)\r\n- Add variant support for minimal mode\r\n- Fix Cloudflare AI Gateway SDK chat undefined error (@englishm)\r\n- Handle NotFoundError for non-shared sessions in sync (@Hona)\r\n- Improve plugin loading to handle builtin plugin failures gracefully\r\n- Update CI configuration\r\n- Add reload functionality and improve lazy utility with reset capability\r\n- Remove memory leak fixes documentation after implementation\r\n- Fix memory leaks in session management and improve permission error handling\r\n- Fix TUI permission tests for new evaluate function signature\r\n- Improve permission error handling and evaluation logic in TUI\r\n- Ignore\r\n- Add assistant metadata to session export (@dmmulroy)\r\n- Ensure new permissions changes work for special case bash commands like rm, cd, etc\r\n- Rework permission system\r\n- Remove outdated Haiku filter for GitHub Copilot (@alcpereira)\r\n- Make install dependencies non-blocking\r\n- Use --no-cache flag when behind proxy to prevent connection hangs\r\n- Check for context overflow mid-turn in finish-step (@aryasaatvik)\r\n- Display error if invalid agent is used in a command (@Leka74)\r\n- Add Content-Type headers for proxied static assets (@monotykamary)\r\n## TUI\r\n- Add missing theme list keybind in TUI (@aspiers)\r\n- Handle duplicate PR creation when agent creates PR (@elithrar)\r\n- Fix system theme diff highlighting in TUI\r\n- Add --variant flag to run command (@shuv1337)\r\n- Remove OpenRouter provider from priority list\r\n- Make LSP status icon muted when no LSPs are active (@itsrainingmani)\r\n- Make MCP status icon muted when no MCP servers are enabled (@itsrainingmani)\r\n- Pass attach directory to SDK client in TUI (@shuv1337)\r\n- Handle actions/checkout v6 credential storage change (@elithrar)\r\n- Use Bun.sleep instead of Promise with setTimeout (@edlsh)\r\n- Add Osaka Jade theme (@st-eez)\r\n- Add heap snapshot option to system menu for debugging memory usage\r\n- Fixed Windows fallback for \"less\" command in session list (@itsrainingmani)\r\n- Fix import command regex to properly handle file paths\r\n- Fix stats command day calculation and time filtering\r\n## Desktop\r\n- Fix scroll position restoration in app\r\n- Don't override Ctrl+A on Windows\r\n- Improve auto-scroll behaviors in the application\r\n- Fixed editing projects in desktop application (@dbpolito)\r\n- Update server URL normalization to retain path (@OpeOginni)\r\n- Add image preview support in session viewer (@shuv1337)\r\n- Add /compact session command to compress conversation history\r\n- Adjust window drag region layout for desktop application\r\n- Relax request timeouts\r\n- Properly decode session ID for permission context in desktop app (@OpeOginni)\r\n- Work in progress on application features\r\n- Improve application startup time\r\n- Add work in progress desktop functionality\r\n- Add file context feature to app\r\n- Improve desktop window resize handle (@dbpolito)\r\n\r\n**Thank you to 30 community contributors:**\r\n- @monotykamary:\r\n  - fix(server): add Content-Type headers for proxied static assets (#6587)\r\n- @Leka74:\r\n  - fix: display error if invalid agent is used in a command (#6578)\r\n- @aryasaatvik:\r\n  - fix(session): check for context overflow mid-turn in finish-step (#6480)\r\n  - docs: update AGENTS.md (#6800)\r\n- @alcpereira:\r\n  - fix: remove outdated Haiku filter for GitHub Copilot (#6593)\r\n- @dbpolito:\r\n  - Desktop: Improve Resize Handle (#6608)\r\n  - Desktop: Edit Project Fix (#6757)\r\n- @itsrainingmani:\r\n  - fix: windows fallback for \"less\" cmd in `session list` (#6515)\r\n  - fix(tui): make mcp status icon muted when no mcp servers are enabled (#6745)\r\n  - fix(tui): make lsp status icon muted when no lsps are active (#6773)\r\n- @dmmulroy:\r\n  - feat: add assistant metadata to session export (#6611)\r\n- @Hona:\r\n  - fix(share): handle NotFoundError for non-shared sessions in sync (#6634)\r\n- @OpeOginni:\r\n  - fix(desktop): Properly decode session id for permission context (#6580)\r\n  - fix(server): update server URL normalization to retain path (#6647)\r\n- @albingroen:\r\n  - fix(ui): fix slight vertical overflow in project selector (#6589)\r\n- @st-eez:\r\n  - feat(theme): add Osaka Jade theme (#6609)\r\n- @edlsh:\r\n  - refactor: use Bun.sleep instead of Promise setTimeout (#6620)\r\n- @englishm:\r\n  - fix: cloudflare-ai-gateway sdk.chat undefined error (#6407)\r\n- @elithrar:\r\n  - fix: handle actions/checkout v6 credential storage change (#6667)\r\n  - fix: merge instructions arrays across config files (#6663)\r\n  - github: handle duplicate PR creation when agent creates PR (#6777)\r\n  - docs: add logging best practices for plugin authors (#6833)\r\n- @spoons-and-mirrors:\r\n  - docs: add subtask2 to ecosystem page (#6704)\r\n- @tjg184:\r\n  - feat: Add kotlin lsp integration (#6601)\r\n- @code-yeongyu:\r\n  - feat(plugin): add tui.session.select API endpoint for TUI navigation (#6565)\r\n- @shuv1337:\r\n  - fix(tui): pass attach directory to sdk client (#6715)\r\n  - feat(app): add image preview support in session viewer (#6678)\r\n  - feat: add --variant flag to run command  (#6805)\r\n- @JBou:\r\n  - fix(kotlin-ls): improve root detection for Gradle multi-project builds (#6717)\r\n- @jknlsn:\r\n  - feat: add per-project MCP config overrides (#5406)\r\n- @sin4ch:\r\n  - docs: enhance MCP servers documentation with a tip (#6713)\r\n- @RhysSullivan:\r\n  - fix(mcp): add timeout to client.connect() calls (#6760)\r\n- @jerilynzheng:\r\n  - docs: Add Vercel AI Gateway to provider docs (#6790)\r\n- @benjaminshafii:\r\n  - docs: Add opencode-scheduler plugin to ecosystem (#6804)\r\n- @ShpetimA:\r\n  - fix(plugin): prevent duplicate plugin function initialization (#6787)\r\n- @johnconnor-sec:\r\n  - docs: typo in subtask documentation (#6821)\r\n- @felipeorlando:\r\n  - Remove opencode-skills entry from ecosystem.mdx (#6817)\r\n- @jerome-benoit:\r\n  - feat(nix): preliminary desktop app flake integration (#6135)\r\n- @paoloricciuti:\r\n  - feat: mcp resources (#6542)\r\n- @aspiers:\r\n  - fix(tui): add missing `theme_list` keybind (#6779)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.1"
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
