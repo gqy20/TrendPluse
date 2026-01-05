@@ -65,12 +65,14 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Upload report artifact
+      - name: Upload report artifacts
         if: steps.check_report.outputs.exists == 'true'
         uses: actions/upload-artifact@v6
         with:
-          name: trend-report
-          path: reports/report-*.md
+          name: trend-report-${{ steps.report_date.outputs.date }}
+          path: |
+            reports/report-*.md
+            reports/report-*.json
           retention-days: 30
 
       - name: Sync reports to docs
@@ -168,6 +170,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+
+      - name: Download report artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: trend-report-${{ needs.analyze.outputs.report_date }}
+          path: reports/
 
       - name: Set up Python
         uses: actions/setup-python@v6
