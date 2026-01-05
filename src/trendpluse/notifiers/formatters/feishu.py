@@ -45,7 +45,7 @@ class FeishuFormatter:
         high_impact_signals = self._get_high_impact_signals(report)
         if high_impact_signals:
             elements.append({"tag": "hr"})
-            elements.append(self._create_signals_section(high_impact_signals))
+            elements.extend(self._create_signals_section(high_impact_signals))
 
         # 3. 版本发布（如果有）
         if report.releases and report.releases.releases:
@@ -109,16 +109,28 @@ class FeishuFormatter:
             },
         }
 
-    def _create_signals_section(self, signals: list[Signal]) -> dict:
+    def _create_signals_section(self, signals: list[Signal]) -> list[dict]:
         """创建高影响信号部分
 
         Args:
             signals: 信号列表
 
         Returns:
-            信号部分元素
+            信号元素列表（每个信号一个 div，之间用 hr 分隔）
         """
-        content = "### 🔥 高影响信号\n\n"
+        elements: list[dict] = []
+
+        # 添加标题
+        elements.append(
+            {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "### 🔥 高影响信号\n\n",
+                },
+            }
+        )
+
         for i, signal in enumerate(signals):
             type_emoji = self._get_type_emoji(signal.type)
             impact_stars = "⭐" * signal.impact_score
@@ -129,8 +141,8 @@ class FeishuFormatter:
                 f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
             )
 
-            # 完整显示所有信息（与 Markdown 报告保持一致）
-            content += f"{type_emoji} **{signal.title}**\n\n"
+            # 构建单个信号内容
+            content = f"{type_emoji} **{signal.title}**\n\n"
             content += (
                 f"**类型**: `{signal.type}` | **影响**: {impact_stars} "
                 f"({signal.impact_score}/5) | **分类**: `{signal.category}`\n\n"
@@ -139,17 +151,22 @@ class FeishuFormatter:
             content += f"**相关仓库**: {repos}\n\n"
             content += f"**来源**:\n{sources_md}\n\n"
 
+            # 添加信号 div
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": content,
+                    },
+                }
+            )
+
             # 信号之间添加分割线（最后一个信号除外）
             if i < len(signals) - 1:
-                content += "---\n\n"
+                elements.append({"tag": "hr"})
 
-        return {
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": content,
-            },
-        }
+        return elements
 
     def _format_source_url(self, url: str) -> str:
         """格式化 source URL 显示文本
