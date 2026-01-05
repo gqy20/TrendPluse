@@ -123,8 +123,8 @@ class TestFeishuFormatter:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证 header 简化标题
-        assert card["card"]["header"]["title"]["content"] == "每日趋势"
+        # 验证 header 只包含 emoji
+        assert card["card"]["header"]["title"]["content"] == "📊"
 
         # 验证 body 中的醒目主标题和日期标题（使用 # 和 ### Markdown 标题）
         elements = card["card"]["body"]["elements"]

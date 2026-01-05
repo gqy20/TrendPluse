@@ -94,7 +94,7 @@ class FeishuFormatter:
                 "header": {
                     "title": {
                         "tag": "plain_text",
-                        "content": "每日趋势",
+                        "content": "📊",
                     },
                 },
                 "body": {
