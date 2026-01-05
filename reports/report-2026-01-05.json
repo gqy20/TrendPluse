@@ -6,136 +6,106 @@
   "commit_signals": [
     {
       "id": "commit-0",
-      "title": "MCP 资源协议支持",
+      "title": "MCP 资源协议集成",
       "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "OpenCode 添加对 MCP (Model Context Protocol) 资源的支持，标志着 AI 工具正从简单的文件访问向标准化的资源管理协议演进，增强了 AI 与外部数据交互的能力。",
+      "why_it_matters": "OpenCode 集成 MCP 资源协议，标志着 AI 编程工具正从单纯的文件操作向标准化的资源管理接口演进，增强了工具与外部数据源的互操作性。",
       "sources": [
         "https://github.com/anomalyco/opencode/commit/21dc3c24d9243d81fdc1c3b23aa1f160df213a50"
       ],
       "related_repos": [
-        "anthropics/claude-code",
         "anomalyco/opencode",
         "modelcontextprotocol/servers"
       ]
     },
     {
       "id": "commit-1",
-      "title": "运行时变量动态更新",
+      "title": "Rust 格式化器检测",
       "type": "capability",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Dify 引入在运行时动态更新工作流变量的能力，打破了传统工作流执行后不可变的限制，为构建更灵活的自适应 AI Agent 提供了基础。",
+      "impact_score": 3,
+      "why_it_matters": "改进了对 Rust 生态的支持，通过自动检测 cargo fmt，提升了 AI 工具在处理 Rust 项目时的代码生成和格式化能力。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/a9e2c05a100413426392d71a5d243950d7a50f8c"
+        "https://github.com/anomalyco/opencode/commit/cdd6ea514b94d8ce71770bb02f33ab979e9ee0f6"
       ],
       "related_repos": [
-        "n8n-io/n8n",
-        "langgenius/dify",
-        "langflow-ai/langflow"
-      ]
-    },
-    {
-      "id": "commit-2",
-      "title": "Agent Hooks 机制",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Gemini CLI 实现了细粒度的 Agent Hooks（停止和阻塞行为），这为控制 AI Agent 执行流程提供了标准化的拦截器模式，是构建可观测、可控 Agent 系统的关键抽象。",
-      "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/dd84c2fb837ac6d84b90416b5388341b8d83ab87"
-      ],
-      "related_repos": [
-        "openai/openai-swarm",
-        "google-gemini/gemini-cli",
-        "langchain-ai/langchain"
-      ]
-    },
-    {
-      "id": "commit-3",
-      "title": "权限系统重构",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "OpenCode 将权限匹配从通配符模式迁移到基于规则的匹配系统，并修复了字段引用错误。这反映了 AI 编码工具在安全性上的成熟，从简单的模式匹配转向更严谨、可审计的权限控制。",
-      "sources": [
-        "https://github.com/anomalyco/opencode/commit/2f5b2b23d5aa4bcc80f5172339732d1f2d5b626c"
-      ],
-      "related_repos": [
-        "anthropics/claude-code",
         "anomalyco/opencode"
       ]
     },
     {
-      "id": "commit-4",
-      "title": "依赖注入模式应用",
-      "type": "abstraction",
+      "id": "commit-2",
+      "title": "TUI 会话搜索功能",
+      "type": "workflow",
       "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Dify 对代码节点和模板渲染器实施依赖注入，这是传统软件工程中用于解耦和测试的最佳实践，正逐渐被迁移到 AI 工作流引擎中以提升代码的可维护性。",
+      "impact_score": 4,
+      "why_it_matters": "在终端界面中引入防抖搜索和服务端过滤，显著改善了用户在处理大量历史会话时的交互效率和体验。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/06ba40f01610d5e2488fef59539516677da45ffe"
+        "https://github.com/anomalyco/opencode/commit/7304ba616e813861869f5102d7262f60724b76c8"
       ],
       "related_repos": [
-        "langgenius/dify",
-        "OpenDevin/OpenDevin"
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "权限模型重构",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 将权限匹配逻辑从通配符模式迁移到基于规则的匹配系统，大幅提升了 AI 代理操作的安全性和可控性。",
+      "sources": [],
+      "related_repos": []
+    },
+    {
+      "id": "commit-4",
+      "title": "工作流变量运行时更新",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 引入在运行时更新工作流变量的命令，增强了 AI 工作流的动态适应能力和调试灵活性。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/a9e2c05a100413426392d71a5d243950d7a50f8c"
+      ],
+      "related_repos": [
+        "langgenius/dify"
       ]
     },
     {
       "id": "commit-5",
-      "title": "Rerank 性能优化",
-      "type": "performance",
+      "title": "Jinja2 渲染抽象层",
+      "type": "abstraction",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Dify 添加了在仅检索到一个数据集时跳过 Rerank 的逻辑。这种针对性的性能优化减少了不必要的模型调用，降低了延迟和成本，体现了 RAG 系统向精细化方向发展的趋势。",
+      "why_it_matters": "Dify 为工作流模板转换引入 Jinja2 渲染器抽象，提升了模板处理的模块化程度和可维护性。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/473f8ef29ca63a5ccf837ed66e33a164c8dde120"
+        "https://github.com/langgenius/dify/commit/95edbad1c72625b506b7b3accf19fc0b8d2ee560"
       ],
       "related_repos": [
-        "quivrhq/quivr",
-        "anythingllm/anything-llm",
         "langgenius/dify"
       ]
     },
     {
       "id": "commit-6",
-      "title": "TUI 会话搜索",
-      "type": "workflow",
+      "title": "Agent Hooks 细粒度控制",
+      "type": "capability",
       "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "OpenCode 在 TUI（终端用户界面）中实现了带防抖输入和服务端过滤的会话搜索功能。随着 AI 工具生成的历史记录增多，高效的信息检索能力成为提升用户体验的关键。",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 实现了 Agent Hooks 的停止和阻塞行为，为 AI 代理的执行流程提供了更精细的控制机制。",
       "sources": [
-        "https://github.com/anomalyco/opencode/commit/7304ba616e813861869f5102d7262f60724b76c8"
+        "https://github.com/google-gemini/gemini-cli/commit/dd84c2fb837ac6d84b90416b5388341b8d83ab87"
       ],
       "related_repos": [
-        "paul-gauthier/aider",
-        "anomalyco/opencode"
+        "google-gemini/gemini-cli"
       ]
     },
     {
       "id": "commit-7",
-      "title": "环境隔离与清洗",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Auto-Claude 修复了 Python 环境污染问题，防止 `PYTHONHOME` 影响子进程。这突显了 AI 编码工具在调用本地解释器时面临的复杂环境管理挑战，以及确保执行环境隔离的重要性。",
-      "sources": [
-        "https://github.com/AndyMik90/Auto-Claude/commit/65f608986b595cb4a925426923f34fbea6ff2900"
-      ],
-      "related_repos": [
-        "ErikBjare/gptme",
-        "AndyMik90/Auto-Claude",
-        "OpenDevin/OpenDevin"
-      ]
-    },
-    {
-      "id": "commit-8",
       "title": "MessageBus 强制迁移",
       "type": "abstraction",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Gemini CLI 强制执行 MessageBus 注入，完成了从可选到强制依赖的迁移。这种内部通信机制的标准化是构建复杂、可扩展 AI 系统架构的必经之路。",
+      "why_it_matters": "Gemini CLI 强制注入 MessageBus（硬迁移阶段），表明该项目正在构建更严格的内部通信架构以支持复杂代理交互。",
       "sources": [
         "https://github.com/google-gemini/gemini-cli/commit/12c7c9cc426bc02ab8b8a39fa5cbe3a071c155f6"
       ],
@@ -144,18 +114,97 @@
       ]
     },
     {
+      "id": "commit-8",
+      "title": "Zed 协作功能清理",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Zed 移除了未使用的协作字段和 Supermaven API 密钥发放功能，体现了代码库瘦身和简化依赖的趋势。",
+      "sources": [],
+      "related_repos": []
+    },
+    {
       "id": "commit-9",
-      "title": "远程沙箱配置",
-      "type": "capability",
+      "title": "Zed 差异计算优化",
+      "type": "performance",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "OpenDevin 增加了可配置的沙箱主机端口和容器 URL 模式，支持远程访问。这表明 AI Agent 的执行环境正从本地向云端/远程容器演进，以支持更强大的资源隔离和弹性计算。",
+      "why_it_matters": "修复了差异重算时产生过大编辑的问题，并确保基础文本解析完成后再更新，提升了大型文件编辑的性能。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/88a153cd186b32551f9bc369836d563906d97b3a"
+      ],
+      "related_repos": [
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-10",
+      "title": "OpenDevin 远程沙箱配置",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenDevin 增加了可配置的沙箱主机端口和容器 URL 模式，增强了其在远程开发和云环境中的部署灵活性。",
       "sources": [
         "https://github.com/OpenDevin/OpenDevin/commit/5bd8695ab894b1b618ded27a5b60dbf7b393d031"
       ],
       "related_repos": [
-        "openai/codex",
         "OpenDevin/OpenDevin"
+      ]
+    },
+    {
+      "id": "commit-11",
+      "title": "Aider LiteLLM 异常修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "修复了 LiteLLM 异常列表处理的回归问题，确保了 AI 编程工具在使用多模型后端时的稳定性。",
+      "sources": [
+        "https://github.com/paul-gauthier/aider/commit/fb05748ace65bea780e0766b14b0904fbaac5f7f"
+      ],
+      "related_repos": [
+        "paul-gauthier/aider"
+      ]
+    },
+    {
+      "id": "commit-12",
+      "title": "Cline 模型支持扩展",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 添加了对 MiniMax 模型的支持，并通过 OpenRouter 和 Vercel AI Gateway 集成，展示了 AI 工具对多元化模型生态的持续适配。",
+      "sources": [
+        "https://github.com/cline/cline/commit/f7e76f9bee69742f33a33eb807ef832e94c55f4c"
+      ],
+      "related_repos": [
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "commit-13",
+      "title": "OpenCode 技能扫描容错",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 增加了对 .claude 技能扫描失败的优雅处理，防止因插件或配置问题导致整个应用崩溃。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/f2e65e40ea55e993cdbccaedb76e79d782175402"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-14",
+      "title": "Zed Tailwind CSS 支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Zed 添加了对 Tailwind CSS 模式的支持，紧跟前端开发工具链的流行趋势。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/67fc92db055b5fb84ab9d207be152ccb068d301e"
+      ],
+      "related_repos": [
+        "zed-industries/zed"
       ]
     }
   ],
@@ -163,29 +212,41 @@
   "stats": {
     "total_prs_analyzed": 0,
     "high_impact_signals": 0,
-    "total_commits_analyzed": 174,
+    "total_commits_analyzed": 186,
     "total_releases": 6
   },
   "activity": {
-    "total_commits": 174,
-    "active_repos_count": 14,
+    "total_commits": 186,
+    "active_repos_count": 16,
     "new_contributors": 0,
     "top_repos": [
       {
         "repo": "anomalyco/opencode",
-        "commits": 61,
+        "commits": 62,
         "new_contributors": 0,
         "top_contributors": [
           "rekram1-node",
           "actions-user",
           "thdxr",
-          "adamdotdevin",
+          "fwang",
           "dbpolito"
         ]
       },
       {
+        "repo": "zed-industries/zed",
+        "commits": 36,
+        "new_contributors": 0,
+        "top_contributors": [
+          "maxdeviant",
+          "danilo-leal",
+          "Veykril",
+          "marcocondrache",
+          "gaauwe"
+        ]
+      },
+      {
         "repo": "langgenius/dify",
-        "commits": 31,
+        "commits": 30,
         "new_contributors": 0,
         "top_contributors": [
           "laipz8200",
@@ -193,18 +254,6 @@
           "hsiong",
           "hyoban",
           "dependabot[bot]"
-        ]
-      },
-      {
-        "repo": "zed-industries/zed",
-        "commits": 30,
-        "new_contributors": 0,
-        "top_contributors": [
-          "maxdeviant",
-          "danilo-leal",
-          "Veykril",
-          "marcocondrache",
-          "cole-miller"
         ]
       },
       {
@@ -227,30 +276,24 @@
         ]
       },
       {
-        "repo": "openai/codex",
-        "commits": 6,
-        "new_contributors": 0,
-        "top_contributors": [
-          "dependabot[bot]",
-          "joshka-oai"
-        ]
-      },
-      {
         "repo": "AndyMik90/Auto-Claude",
-        "commits": 6,
+        "commits": 8,
         "new_contributors": 0,
         "top_contributors": [
           "MikeeBuilds",
+          "StillKnotKnown",
           "AndyMik90",
           "andydataguy"
         ]
       },
       {
-        "repo": "ErikBjare/gptme",
-        "commits": 3,
+        "repo": "openai/codex",
+        "commits": 7,
         "new_contributors": 0,
         "top_contributors": [
-          "TimeToBuildBob"
+          "dependabot[bot]",
+          "joshka-oai",
+          "jif-oai"
         ]
       },
       {
@@ -263,6 +306,14 @@
         ]
       },
       {
+        "repo": "ErikBjare/gptme",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
         "repo": "OpenDevin/OpenDevin",
         "commits": 2,
         "new_contributors": 0,
@@ -272,11 +323,37 @@
         ]
       },
       {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "qbc2016",
+          "zhijianma"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "pengwk",
+          "manuhortet"
+        ]
+      },
+      {
         "repo": "anthropics/claude-code",
         "commits": 1,
         "new_contributors": 0,
         "top_contributors": [
           "amorriscode"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "gor-st"
         ]
       },
       {
@@ -293,14 +370,6 @@
         "new_contributors": 0,
         "top_contributors": [
           "arafatkatze"
-        ]
-      },
-      {
-        "repo": "agentscope-ai/agentscope",
-        "commits": 1,
-        "new_contributors": 0,
-        "top_contributors": [
-          "zhijianma"
         ]
       },
       {
@@ -371,12 +440,6 @@
       },
       {
         "repo": "anthropics/anthropic-sdk-java",
-        "commits": 0,
-        "new_contributors": 0,
-        "top_contributors": []
-      },
-      {
-        "repo": "anthropics/claude-code-action",
         "commits": 0,
         "new_contributors": 0,
         "top_contributors": []
@@ -467,12 +530,6 @@
       },
       {
         "repo": "microsoft/semantic-kernel",
-        "commits": 0,
-        "new_contributors": 0,
-        "top_contributors": []
-      },
-      {
-        "repo": "agno-agi/agno",
         "commits": 0,
         "new_contributors": 0,
         "top_contributors": []
