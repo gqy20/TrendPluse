@@ -38,13 +38,13 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 0. 添加醒目的日期标题（使用加粗，因为飞书 lark_md 不支持 # 标题）
+        # 0. 添加醒目的主标题（使用 # 一级标题）和日期（使用 ### 三级标题）
         elements.append(
             {
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": f"**📈 {report.date} 每日趋势**",
+                    "content": f"# 📊 TrendPulse 每日报告\n\n### 📅 {report.date}",
                 },
             }
         )
@@ -94,7 +94,7 @@ class FeishuFormatter:
                 "header": {
                     "title": {
                         "tag": "plain_text",
-                        "content": "📊 TrendPulse 每日报告",
+                        "content": "每日趋势",
                     },
                 },
                 "body": {
