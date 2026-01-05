@@ -119,7 +119,7 @@ class FeishuFormatter:
             信号部分元素
         """
         content = "### 🔥 高影响信号\n\n"
-        for signal in signals:
+        for i, signal in enumerate(signals):
             type_emoji = self._get_type_emoji(signal.type)
             impact_stars = "⭐" * signal.impact_score
             repos = ", ".join(f"`{r}`" for r in signal.related_repos)
@@ -138,6 +138,10 @@ class FeishuFormatter:
             content += f"**为什么重要**: {signal.why_it_matters}\n\n"
             content += f"**相关仓库**: {repos}\n\n"
             content += f"**来源**:\n{sources_md}\n\n"
+
+            # 信号之间添加分割线（最后一个信号除外）
+            if i < len(signals) - 1:
+                content += "---\n\n"
 
         return {
             "tag": "div",
