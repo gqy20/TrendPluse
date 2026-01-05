@@ -52,15 +52,14 @@ class TestFeishuNotifier:
         # 验证基本结构
         assert card["msg_type"] == "interactive"
         assert "card" in card
-        assert "header" in card["card"]
         # JSON 2.0: elements 在 body 下
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证 header
-        header = card["card"]["header"]
-        assert "title" in header
-        assert header["title"]["tag"] == "plain_text"
+        # 验证标题在 body.elements 的第一个元素中
+        first_element = card["card"]["body"]["elements"][0]
+        assert first_element["tag"] == "div"
+        assert "TrendPulse 每日报告" in first_element["text"]["content"]
 
         # 验证至少有元素
         assert len(card["card"]["body"]["elements"]) > 0
@@ -341,18 +340,27 @@ class TestFeishuNotifierJsonV2:
         )
 
     def test_json_v2_preserves_header(self, sample_report: DailyReport):
-        """测试：JSON 2.0 保持 header 结构"""
+        """测试：JSON 2.0 标题在 body.elements 第一个元素中"""
         # Arrange
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
 
         # Act
         card = notifier._build_card(sample_report)
 
-        # Assert
+        # Assert - JSON 2.0 格式不使用 header，标题在 body.elements 中
         card_data = card["card"]
-        assert "header" in card_data, "JSON 2.0 保持 header 字段"
-        assert "title" in card_data["header"]
-        assert card_data["header"]["title"]["tag"] == "plain_text"
+        assert "body" in card_data, "JSON 2.0 要求包含 body 字段"
+        assert "elements" in card_data["body"], "elements 必须在 body 下"
+
+        # 验证标题在第一个元素中（使用 Markdown 一级标题）
+        first_element = card_data["body"]["elements"][0]
+        assert first_element["tag"] == "div"
+        assert "text" in first_element
+        assert "content" in first_element["text"]
+        # 标题包含 # 和日期
+        assert "# " in first_element["text"]["content"]
+        assert "TrendPulse 每日报告" in first_element["text"]["content"]
+        assert sample_report.date in first_element["text"]["content"]
 
     def test_json_v2_body_elements_are_valid(self, sample_report: DailyReport):
         """测试：JSON 2.0 body.elements 包含有效内容"""
