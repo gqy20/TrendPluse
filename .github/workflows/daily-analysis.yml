@@ -5,6 +5,12 @@ on:
     # 每天 UTC 0:10 运行 (北京时间 8:10)
     - cron: '10 0 * * *'
   workflow_dispatch:  # 允许手动触发
+    inputs:
+      send_notification:
+        description: '是否发送飞书通知'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -39,8 +45,8 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # 飞书通知配置
-          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          # 飞书通知配置（根据 send_notification 参数控制，定时触发时默认发送）
+          FEISHU_WEBHOOK_URL: ${{ inputs.send_notification != false && secrets.FEISHU_WEBHOOK_URL || '' }}
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
           FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
         run: uv run python scripts/run.py
