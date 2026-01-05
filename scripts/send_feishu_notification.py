@@ -23,6 +23,32 @@ from trendpluse.notifiers.feishu import FeishuNotifier
 console = Console()
 
 
+def find_report_json(report_date: str) -> Path | None:
+    """查找报告 JSON 文件
+
+    支持多个路径，适配不同的部署场景：
+    1. reports/report-{date}.json - 本地运行或完整目录结构
+    2. report-{date}.json - GitHub Actions artifact 下载后的场景（去掉路径前缀）
+
+    Args:
+        report_date: 报告日期 (YYYY-MM-DD)
+
+    Returns:
+        找到的文件路径（绝对路径），未找到返回 None
+    """
+    # 优先在 reports/ 目录查找（标准位置）
+    reports_path = Path(f"reports/report-{report_date}.json").resolve()
+    if reports_path.exists():
+        return reports_path
+
+    # 回退到当前目录（GitHub Actions artifact 下载后的场景）
+    current_path = Path(f"report-{report_date}.json").resolve()
+    if current_path.exists():
+        return current_path
+
+    return None
+
+
 def load_report_from_json(json_path: str) -> DailyReport:
     """从 JSON 文件加载 DailyReport 对象
 
@@ -66,10 +92,10 @@ def main():
     console.print(f"  @ 提醒: {len(at_mobiles)} 个")
 
     # 查找 JSON 报告文件
-    json_path = Path(f"reports/report-{report_date}.json")
+    json_path = find_report_json(report_date)
 
-    if not json_path.exists():
-        console.print(f"[yellow]报告文件不存在: {json_path}[/yellow]")
+    if not json_path:
+        console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
         return
     else:
         # 直接读取 JSON
