@@ -53,10 +53,7 @@ class FeishuFormatter:
         elements.append(self._create_summary_element(report.summary_brief))
 
         # 2. 高影响信号（如果有）
-        high_impact_signals = self._get_high_impact_signals(report)
-        if high_impact_signals:
-            elements.append({"tag": "hr"})
-            elements.extend(self._create_signals_section(high_impact_signals))
+        elements.extend(self._create_signals_section(report))
 
         # 3. 版本发布（如果有）
         if report.releases and report.releases.releases:
@@ -114,8 +111,61 @@ class FeishuFormatter:
             },
         }
 
-    def _create_signals_section(self, signals: list[Signal]) -> list[dict]:
-        """创建高影响信号部分
+    def _create_signals_section(self, report: DailyReport) -> list[dict]:
+        """创建高影响信号部分，区分 PR 信号和 Commit 信号
+
+        Args:
+            report: 日报对象
+
+        Returns:
+            信号元素列表
+        """
+        elements: list[dict] = []
+
+        # 获取 PR 高影响信号（engineering, research, release）
+        pr_signals = self._get_high_impact_signals(
+            [
+                report.engineering_signals,
+                report.research_signals,
+                report.release_signals,
+            ]
+        )
+
+        # 获取 Commit 高影响信号
+        commit_signals = self._get_high_impact_signals([report.commit_signals])
+
+        # 添加 PR 信号部分
+        if pr_signals:
+            elements.append({"tag": "hr"})
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": "### 🔥 PR 信号\n\n",
+                    },
+                }
+            )
+            elements.extend(self._create_signal_items(pr_signals))
+
+        # 添加 Commit 信号部分
+        if commit_signals:
+            elements.append({"tag": "hr"})
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": "### 🔥 Commit 信号\n\n",
+                    },
+                }
+            )
+            elements.extend(self._create_signal_items(commit_signals))
+
+        return elements
+
+    def _create_signal_items(self, signals: list[Signal]) -> list[dict]:
+        """创建单个信号列表的元素
 
         Args:
             signals: 信号列表
@@ -124,17 +174,6 @@ class FeishuFormatter:
             信号元素列表（每个信号一个 div，之间用 hr 分隔）
         """
         elements: list[dict] = []
-
-        # 添加标题
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": "### 🔥 高影响信号\n\n",
-                },
-            }
-        )
 
         for i, signal in enumerate(signals):
             type_emoji = self._get_type_emoji(signal.type)
@@ -146,8 +185,8 @@ class FeishuFormatter:
                 f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
             )
 
-            # 构建单个信号内容
-            content = f"{type_emoji} **{signal.title}**\n\n"
+            # 构建单个信号内容，使用 ##### 五级标题
+            content = f"{type_emoji} ##### {signal.title}\n\n"
             content += (
                 f"**类型**: `{signal.type}` | **影响**: {impact_stars} "
                 f"({signal.impact_score}/5) | **分类**: `{signal.category}`\n\n"
@@ -290,22 +329,19 @@ class FeishuFormatter:
             },
         }
 
-    def _get_high_impact_signals(self, report: DailyReport) -> list[Signal]:
+    def _get_high_impact_signals(
+        self, signal_lists: list[list[Signal]]
+    ) -> list[Signal]:
         """获取高影响信号
 
         Args:
-            report: 日报对象
+            signal_lists: 信号列表的列表
 
         Returns:
             高影响信号列表（按评分降序）
         """
         all_signals = []
-        for signals in [
-            report.engineering_signals,
-            report.research_signals,
-            report.commit_signals,
-            report.release_signals,
-        ]:
+        for signals in signal_lists:
             all_signals.extend(signals)
 
         # 筛选高影响信号（评分 >= 4），按评分降序，最多 5 个
