@@ -10,14 +10,13 @@
       "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "OpenCode 添加对 Model Context Protocol (MCP) 资源的支持，标志着 AI 编程工具正从单纯的文件访问向标准化的资源接口协议演进，增强了工具与外部数据源的互操作性。",
+      "why_it_matters": "OpenCode 集成了 MCP (Model Context Protocol) 的资源接口，标志着 AI 工具从单纯的文件操作向系统级资源管理的标准化迈进，增强了 Agent 与外部环境交互的能力。",
       "sources": [
         "https://github.com/anomalyco/opencode/commit/21dc3c24d9243d81fdc1c3b23aa1f160df213a50"
       ],
       "related_repos": [
-        "anthropics/claude-code",
         "anomalyco/opencode",
-        "langgenius/dify"
+        "modelcontextprotocol/servers"
       ]
     },
     {
@@ -26,131 +25,133 @@
       "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "Dify 引入在运行时更新工作流变量的命令，解决了动态工作流场景中配置调整需要重启服务的痛点，提升了 AI 应用的灵活性和运维效率。",
+      "why_it_matters": "Dify 引入了在运行时动态更新工作流变量的能力，消除了重启服务或重新部署的痛点，显著提升了 AI 应用在动态环境下的灵活性和可维护性。",
       "sources": [
         "https://github.com/langgenius/dify/commit/a9e2c05a100413426392d71a5d243950d7a50f8c"
       ],
       "related_repos": [
-        "langflow/langflow",
-        "langgenius/dify"
+        "langgenius/dify",
+        "langchain-ai/langchain"
       ]
     },
     {
       "id": "commit-2",
-      "title": "权限模型规则化重构",
-      "type": "safety",
+      "title": "Agent 消息队列机制",
+      "type": "capability",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "OpenCode 将权限评估从通配符模式迁移到基于规则的匹配系统，大幅提升了 AI 代理在执行文件操作时的安全性和可控性，是自主代理落地生产的关键安全基建。",
+      "impact_score": 4,
+      "why_it_matters": "Zed 编辑器为 Agent UI 添加了消息队列功能，解决了 Agent 在处理复杂任务时的流控和顺序问题，提升了多步骤编程任务的稳定性和用户体验。",
       "sources": [
-        "https://github.com/anomalyco/opencode/commit/9f38af44db91966e331ce95f1d50194e8403be1e"
+        "https://github.com/zed-industries/zed/commit/69ecd31b02cb587b1b627702e7deeb8a0709fe49"
       ],
       "related_repos": [
-        "OpenDevin/OpenDevin",
-        "anomalyco/opencode"
+        "zed-industries/zed",
+        "anthropics/claude-code"
       ]
     },
     {
       "id": "commit-3",
-      "title": "Agent 消息总线强制迁移",
-      "type": "abstraction",
+      "title": "权限系统规则化重构",
+      "type": "safety",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Google Gemini CLI 强制执行 MessageBus 注入（硬迁移阶段），表明大型 AI 框架正在通过标准化事件总线架构来解决 Agent 通信的可观测性和状态管理问题。",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 将权限匹配逻辑从通配符模式重构为基于规则的精确匹配系统，大幅降低了 AI 自主操作时的安全风险和误判率，是 AI 安全工程的关键一步。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/12c7c9cc426bc02ab8b8a39fa5cbe3a071c155f6"
+        "https://github.com/anomalyco/opencode/commit/9f38af44db91966e331ce95f1d50194e8403be1e"
       ],
       "related_repos": [
-        "openai/codex",
-        "google-gemini/gemini-cli"
+        "anomalyco/opencode",
+        "openai/openai-python"
       ]
     },
     {
       "id": "commit-4",
-      "title": "技能 CLI 管理系统",
-      "type": "workflow",
+      "title": "工具执行器抽象层",
+      "type": "abstraction",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Gemini CLI 引入技能管理命令，确立了 AI 编程助手从单一功能向可扩展技能生态发展的方向，允许用户通过 CLI 动态管理 Agent 能力。",
+      "why_it_matters": "Google Gemini CLI 提取并集成了 ToolExecutor，统一了不同工具的调用接口。这种抽象层简化了新工具的接入流程，促进了代码复用和模块解耦。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/d3563e2f0eb1f2e6f4e11bd28b04f1ac36bc589b"
+        "https://github.com/google-gemini/gemini-cli/commit/b4b49e7029d3afb602557599e7b85137d9c0dc61"
       ],
       "related_repos": [
-        "cline/cline",
-        "google-gemini/gemini-cli"
+        "google-gemini/gemini-cli",
+        "langchain-ai/langchain"
       ]
     },
     {
       "id": "commit-5",
-      "title": "Rerank 性能优化",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Dify 实现在仅检索单一数据集时跳过 Rerank 步骤，这种细粒度的性能优化对于降低 RAG 应用的延迟和成本至关重要，体现了工程化落地的成熟度。",
-      "sources": [
-        "https://github.com/langgenius/dify/commit/473f8ef29ca63a5ccf837ed66e33a164c8dde120"
-      ],
-      "related_repos": [
-        "langgenius/dify",
-        "anythingllm/anything-llm"
-      ]
-    },
-    {
-      "id": "commit-6",
-      "title": "依赖注入模式应用",
+      "title": "工作流模板渲染抽象",
       "type": "abstraction",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Dify 对代码节点实施依赖注入（DI），反映了 AI 工作流引擎正在借鉴传统软件工程的最佳实践，以提高代码的可测试性和模块解耦程度。",
-      "sources": [
-        "https://github.com/langgenius/dify/commit/06ba40f01610d5e2488fef59539516677da45ffe"
-      ],
-      "related_repos": [
-        "langgenius/dify"
-      ]
-    },
-    {
-      "id": "commit-7",
-      "title": "远程沙箱配置支持",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "OpenDevin 允许配置远程沙箱主机和容器 URL 模式，解决了 AI 代理在远程开发环境或云原生场景下的部署难题，扩展了其应用边界。",
-      "sources": [
-        "https://github.com/OpenDevin/OpenDevin/commit/5bd8695ab894b1b618ded27a5b60dbf7b393d031"
-      ],
-      "related_repos": [
-        "openai/codex",
-        "OpenDevin/OpenDevin"
-      ]
-    },
-    {
-      "id": "commit-8",
-      "title": "TUI 会话搜索功能",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "OpenCode 在终端界面（TUI）中增加带防抖的服务端会话搜索，显著改善了在拥有大量历史会话时的用户体验，是提升 CLI 工具可用性的关键功能。",
-      "sources": [
-        "https://github.com/anomalyco/opencode/commit/7304ba616e813861869f5102d7262f60724b76c8"
-      ],
-      "related_repos": [
-        "openai/codex",
-        "anomalyco/opencode"
-      ]
-    },
-    {
-      "id": "commit-9",
-      "title": "Jinja2 渲染器抽象",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Dify 添加 Jinja2 渲染器抽象层，统一了工作流中的模板转换逻辑，这种抽象有助于未来支持更多模板引擎或增强渲染安全性。",
+      "why_it_matters": "Dify 为工作流中的模板转换引入了 Jinja2 渲染器抽象，分离了渲染逻辑与业务逻辑，使得工作流引擎更易于扩展和维护。",
       "sources": [
         "https://github.com/langgenius/dify/commit/95edbad1c72625b506b7b3accf19fc0b8d2ee560"
       ],
       "related_repos": [
+        "langgenius/dify",
+        "pallets/jinja"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "会话搜索与过滤",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 在 TUI 中增加了服务端支持的会话搜索功能，解决了长期对话历史难以检索的问题，显著改善了用户在大量会话中的导航效率。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/7304ba616e813861869f5102d7262f60724b76c8"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "charmbracelet/gum"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "单数据集重排优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Dify 优化了 RAG 流程，当仅检索到一个数据集时跳过重排步骤。这种针对性的优化减少了不必要的模型调用和延迟，降低了推理成本。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/473f8ef29ca63a5ccf837ed66e33a164c8dde120"
+      ],
+      "related_repos": [
+        "deepset-ai/haystack",
         "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-8",
+      "title": "大文件解码流式处理",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 编辑器修复了文件解码时将整个内容加载到内存的问题，改为流式处理。这使得编辑器在处理大型二进制文件时更加流畅，避免了内存溢出和 UI 卡顿。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/cda9eabafc5a0ab37730600d23d18fa8434dcf49"
+      ],
+      "related_repos": [
+        "microsoft/vscode",
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-9",
+      "title": "Agent Hooks 细粒度控制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Google Gemini CLI 实现了 Agent Hooks 的细粒度停止和阻断行为，允许开发者在 Agent 执行的特定阶段进行干预或审计，增强了对 AI 行为的可控性。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/dd84c2fb837ac6d84b90416b5388341b8d83ab87"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "langchain-ai/langchain"
       ]
     }
   ],
@@ -158,11 +159,11 @@
   "stats": {
     "total_prs_analyzed": 0,
     "high_impact_signals": 0,
-    "total_commits_analyzed": 177,
+    "total_commits_analyzed": 174,
     "total_releases": 6
   },
   "activity": {
-    "total_commits": 177,
+    "total_commits": 174,
     "active_repos_count": 14,
     "new_contributors": 0,
     "top_repos": [
@@ -180,7 +181,7 @@
       },
       {
         "repo": "langgenius/dify",
-        "commits": 35,
+        "commits": 32,
         "new_contributors": 0,
         "top_contributors": [
           "laipz8200",
