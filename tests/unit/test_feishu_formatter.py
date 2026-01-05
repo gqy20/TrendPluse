@@ -123,14 +123,17 @@ class TestFeishuFormatter:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证标题
-        assert (
-            card["card"]["header"]["title"]["content"]
-            == "📊 TrendPulse 每日报告 - 2026-01-04"
+        # 验证标题（header 不包含日期）
+        assert card["card"]["header"]["title"]["content"] == "📊 TrendPulse 每日报告"
+
+        # 验证 body 中的醒目日期标题
+        elements = card["card"]["body"]["elements"]
+        assert any(
+            "📈 2026-01-04 每日趋势" in el.get("text", {}).get("content", "")
+            for el in elements
         )
 
         # 验证摘要元素
-        elements = card["card"]["body"]["elements"]
         assert any(
             "今日发现了 2 个高影响趋势信号" in el.get("text", {}).get("content", "")
             for el in elements
