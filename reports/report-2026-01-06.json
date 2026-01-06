@@ -1,0 +1,673 @@
+{
+  "date": "2026-01-06",
+  "summary_brief": "今日 (2026-01-06) 未发现符合条件的趋势信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [
+    {
+      "id": "commit-0",
+      "title": "Agent Hooks 机制",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Gemini CLI 和 OpenCode 引入/完善了 Hooks 机制，允许在 Agent 生命周期的关键节点（如 SessionStart、PreAction）注入自定义逻辑，显著提升了 Agent 编排的灵活性和可扩展性。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/dd84c2fb837ac6d84b90416b5388341b8d83ab87"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "流式工具调用事件",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "CrewAI 引入流式工具调用事件，允许客户端在工具执行过程中实时接收状态更新，解决了长时间运行工具导致的 UI 阻塞问题，改善了交互体验。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/commit/f8deb0fd18409714d1f943991e29e3c4a9e34775"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "crewAIInc/crewAI",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "分布式数据摄取",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "LlamaIndex 集成了 RayIngestionPipeline，利用 Ray 实现分布式数据处理。这标志着 RAG 系统正从单机处理向大规模分布式架构演进，以应对海量数据索引需求。",
+      "sources": [
+        "https://github.com/run-llama/llama_index/commit/7670ed13bd2928557d8047fef5ef11188f2d8477"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "run-llama/llama_index"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "MCP 工具标准化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 和 OpenAI Codex 均在优化 MCP (Model Context Protocol) 工具的集成与名称清洗，表明 MCP 正成为 AI 工具调用的标准协议，促进了不同 Agent 生态的互操作性。",
+      "sources": [
+        "https://github.com/openai/codex/commit/468ee8a75c72d49cd1bfc879b7ad699b3126ccef"
+      ],
+      "related_repos": [
+        "modelcontextprotocol",
+        "anomalyco/opencode",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "推理 Token 计费",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "LangChain 修复了 xAI (Grok) 推理 Token 的计数问题。随着 DeepSeek-R1 和 OpenAI o1 等推理模型的普及，正确区分和计费推理 Token 与生成 Token 变得至关重要。",
+      "sources": [
+        "https://github.com/langchain-ai/langchain/commit/944b43dd257b1fc22e7ac74bd7816a2c4fe0a328"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "openai/codex",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "终端 UI 性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 和 Zed 都在优化终端/编辑器 UI 的渲染性能（如事件批处理、图像缓存）。随着 AI Agent 在 TUI 环境中的应用加深，解决高负载下的渲染卡顿成为提升用户体验的关键。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/001b48635602470ab1bac21b6af9fe207ccd5a17"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "google-gemini/gemini-cli",
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "安全漏洞修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "LangChain 修复了 CVE-2025-68664 漏洞。在 AI 应用日益深入企业核心系统的背景下，依赖库的安全性直接关系到整个 AI 栈的稳定性。",
+      "sources": [
+        "https://github.com/langchain-ai/langchain/commit/f021e899dc414a7d08594b18cd7ddd7e615e72e1"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "continuedev/continue",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "工作流运行时变量",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Dify 引入了在运行时更新工作流变量的命令，增强了 Agent 工作流的动态适应性。这使得工作流不再仅仅是静态图，而是可以根据执行过程中的状态变化进行调整。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/a9e2c05a100413426392d71a5d243950d7a50f8c"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "OpenDevin/OpenDevin",
+        "langchain-ai/langgraph"
+      ]
+    }
+  ],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 255,
+    "total_releases": 7
+  },
+  "activity": {
+    "total_commits": 255,
+    "active_repos_count": 25,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 55,
+        "new_contributors": 0,
+        "top_contributors": [
+          "adamdotdevin",
+          "fwang",
+          "actions-user",
+          "rekram1-node",
+          "thdxr"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 38,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Veykril",
+          "cole-miller",
+          "MrSubidubi",
+          "marcocondrache",
+          "hokein"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 31,
+        "new_contributors": 0,
+        "top_contributors": [
+          "laipz8200",
+          "fatelei",
+          "asukaminato0721",
+          "hsiong",
+          "hyoban"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 25,
+        "new_contributors": 0,
+        "top_contributors": [
+          "joshka-oai",
+          "dependabot[bot]",
+          "iceweasel-oai",
+          "tibo-openai",
+          "jif-oai"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 19,
+        "new_contributors": 0,
+        "top_contributors": [
+          "cbornet",
+          "ccurme",
+          "ademicho123",
+          "loganaden",
+          "lwtaiyty"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 17,
+        "new_contributors": 0,
+        "top_contributors": [
+          "scidomino",
+          "NTaylorMullen",
+          "gundermanc",
+          "abhipatel12",
+          "ManojINaik"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 16,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown",
+          "MikeeBuilds",
+          "aaronson2012",
+          "Pdzly"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "RomneyDa",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "xingyaoww",
+          "tofarr",
+          "amanape",
+          "naaa760",
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "yuvalman",
+          "BarreiroT",
+          "abeatrix",
+          "valquaint",
+          "wenwolf"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ashwin-ant",
+          "gor-st"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "harshsinha03",
+          "pengwk",
+          "manuhortet"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "loftybuilder",
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Florian-BACHO",
+          "chengjue-2445"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "qbc2016",
+          "zhijianma"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "lorenzejay",
+          "greysonlalonde"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dependabot[bot]",
+          "WillemJiang"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "amorriscode"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "noble-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ashwin-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "vippelina"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "amorriscode"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 7,
+    "unique_repos_count": 5,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.28",
+        "author": "github-actions[bot]",
+        "date": "2026-01-05",
+        "summary": "## What's Changed\n* fix: update broken link in cloud-providers.md by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/758\n* chore: remove unused ci yaml file by @kiwamizamurai in https://github.com/anthropics/claude-code-action/pull/763\n* feat: add instant \"Fix this\" links to PR code reviews by @aiddun in https://github.com/anthropics/claude-code-action/pull/773\n* feat: add ssh_signing_key input for SSH commit signing by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/784\n* feat: send user request as separate content block for slash command support by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/785\n* feat: support local plugin marketplace paths by @gor-st in https://github.com/anthropics/claude-code-action/pull/761\n* fix: prevent orphaned installer processes from blocking retries by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/790\n* fix: set CLAUDE_CODE_ENTRYPOINT for SDK path to match CLI path by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/791\n\n## New Contributors\n* @kiwamizamurai made their first contribution in https://github.com/anthropics/claude-code-action/pull/763\n* @aiddun made their first contribution in https://github.com/anthropics/claude-code-action/pull/773\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.28",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.28"
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.374",
+        "author": "github-actions[bot]",
+        "date": "2026-01-05",
+        "summary": "## Changes\n\n### PR [#1924](https://github.com/danielmiessler/Fabric/pull/1924) by [ksylvan](https://github.com/ksylvan): Rename `code_helper` to `code2context` across documentation and CLI\n\n- Rename `code_helper` command to `code2context` throughout codebase\n- Update README.md table of contents and references\n- Update installation instructions with new binary name\n- Update all usage examples in main.go help text\n- Update create_coding_feature pattern documentation\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.374"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-xai==1.2.1",
+        "author": "github-actions[bot]",
+        "date": "2026-01-05",
+        "summary": "Changes since langchain-xai==1.2.0\n\nrelease(xai): 1.2.1 (#34604)\nfix(xai): count reasoning tokens in output total (#34603)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-xai%3D%3D1.2.1"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-anthropic==1.3.1",
+        "author": "github-actions[bot]",
+        "date": "2026-01-05",
+        "summary": "Changes since langchain-anthropic==1.3.0\n\nfix(anthropic): fix version (#34606)\nrelease(anthropic): 1.3.1 (#34605)\nfix(anthropic): CVE-2025-68664 (#34563)\nfix(anthropic): skip cache_control for code_execution blocks (#34579)\nfix(core): serialization patch (#34455)\nrelease(anthropic): 1.3.1 (#34337)\nfix(anthropic): prevent crash with cache_control and empty message content (#34025)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-anthropic%3D%3D1.3.1"
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.3",
+        "author": "thdxr",
+        "date": "2026-01-05",
+        "summary": "## Core\n- Fixed terminal long-running processes in app\n- Preserve permission config key order to maintain user-defined permission precedence\n- Pass image parts to custom commands (@melihmucuk)\n- Add support for jp. prefix in Amazon Bedrock cross-region inference profiles (@ikeda-tomoya-swx)\n- Add configuration options and authentication precedence for Bedrock (@wnkz)\n- Transform agent improvements and optimizations\n- Filter out empty messages and reasoning for Anthropic API compatibility\n## TUI\n- Expand directory on Tab, select on Enter in TUI autocomplete (@yuguorui)\n- Update GitHub Actions examples to use actions/checkout@v6 (@joshuadavidthomas)\n- Fix Lucent Orange background transparency for slash commands (@roerohan)\n- Add description for MCP command in documentation (@cravenceiling)\n- Add system theme resolution and event handling to TUI\n- Improve experience when operations are interrupted\n## Desktop\n- Store image attachments in the app\n- Fix bottom padding in app interface\n- Fixed terminal flakiness issues in the app\n- Performance improvements through event batching in app\n- Fix prompt input covering content in app\n- Worktree selection now correctly navigates to the selected worktree\n- Avoid unintended submits during IME composition (@MogamiTsuchikawa)\n- Highlight collapsed active project in sidebar (@albingroen)\n- Fix flicker and navigation issues when collapsing or expanding projects in the app (@albingroen)\n- Add CLI installation to desktop application (@dbpolito)\n- Fix image dragging in project edit dialog (@albingroen)\n\n**Thank you to 10 community contributors:**\n- @albingroen:\n  - fix(app): fix image dragging in project edit dialog (#6700)\n  - fix(app): fix flicker and navigation when collapsing/expanding projects (#6658)\n  - feat(app): highlight collapsed active project in sidebar (#6958)\n- @dbpolito:\n  - Desktop: Install CLI (#6526)\n- @MogamiTsuchikawa:\n  - fix(app): avoid unintended submits during IME composition (#6952)\n- @wnkz:\n  - feat(bedrock): config options and authentication precedence (#6377)\n- @cravenceiling:\n  - docs: add description for MCP command (#6944)\n- @roerohan:\n  - fix: lucent-orng bg transparency for slash commands (#6938)\n- @joshuadavidthomas:\n  - docs: update GHA examples to use `actions/checkout@v6` (#6969)\n- @ikeda-tomoya-swx:\n  - fix(provider): add support for jp. prefix in Amazon Bedrock cross-region inference profiles (#6916)\n- @melihmucuk:\n  - fix: pass image parts to custom commands (#6525)\n- @yuguorui:\n  - tui: autocomplete: expand directory on Tab, select on Enter (#6975)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.3"
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.2",
+        "author": "thdxr",
+        "date": "2026-01-05",
+        "summary": "## Core\n- Fix permission rule matching to use permission field instead of pattern field\n- Fix permission evaluation to use rule-based matching instead of wildcard patterns\n- Handle skill scan failures for .claude files gracefully\n- Handle case where big-pickle is unavailable as a fallback\n- Prevent main model thinking variant from applying to small model (@melihmucuk)\n- Increase default timeout to 30 seconds based on user feedback\n- Add session search functionality with debounced input and server-side filtering\n- Improve Rust formatter detection and add cargo fmt support\n## TUI\n- Allow exit when viewing child session in TUI (@rmk40)\n- Fix symmetric padding in TUI input field\n- Prevent session list rows from wrapping to two lines (@rgodha24)\n- Fix optional session access to prevent runtime errors in TUI\n## Desktop\n- Implement auto-scroll for active command in slash popover (@OpeOginni)\n- Fix responsive menu in desktop application (@dbpolito)\n- Optimize model dialog visibility lookups (@shkumbinhasani)\n- Add home icon to responsive menu in desktop app (@dbpolito)\n- Add SVG preview support in session viewer (@shuv1337)\n- Add AppStream MetaInfo file for desktop application (@NN708)\n- Fix mobile screen size issues (@carterworks)\n- Fix custom slash commands not showing on initial / (@Raviguntakala)\n- Improved prompt input handling in the application\n\n**Thank you to 11 community contributors:**\n- @melihmucuk:\n  - fix: prevent main model thinking variant from applying to small model (#6839)\n- @rgodha24:\n  - fix: prevent session list rows from wrapping to 2 lines (#6812)\n- @albingroen:\n  - fix(ui): fix select chevron alignment (#6690)\n- @Raviguntakala:\n  - fix(app): fix custom slash commands not showing on initial / (#6829)\n- @carterworks:\n  - Fix a few mobile screen size issues (#6808)\n- @NN708:\n  - feat(desktop): add AppStream MetaInfo file (#6030)\n- @shuv1337:\n  - feat(app): add SVG preview support in session viewer (#6868)\n- @dbpolito:\n  - Desktop: Improve Big Session Navigation - Scrollable (#6837)\n  - Desktop: Adding Home Icon on Responsive Menu (#6794)\n  - Desktop: Fix Responsive Menu (#6789)\n- @shkumbinhasani:\n  - perf: optimize model dialog visibility lookups (#6791)\n- @OpeOginni:\n  - feat(desktop): implement auto-scroll for active command in slash popover (#6797)\n- @rmk40:\n  - fix(tui): allow exit when viewing child session (#6898)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.2"
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.217.4",
+        "author": "github-actions[bot]",
+        "date": "2026-01-05",
+        "summary": "- Fixed a case where an incorrect match could be generated in label_for_completion ([#44925](https://github.com/zed-industries/zed/pull/44925))\r\n\r\n",
+        "assets_count": 10,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.217.4"
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
