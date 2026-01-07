@@ -1,6 +1,9 @@
 name: Run Daily Analysis
 
 on:
+  schedule:
+    # 每天 UTC 0:10 运行 (北京时间 8:10)
+    - cron: '10 0 * * *'
   workflow_dispatch:
     inputs:
       send_notification:
@@ -159,7 +162,7 @@ jobs:
     needs: [analyze, deploy_pages]
     runs-on: ubuntu-latest
     if: |
-      inputs.send_notification == true &&
+      inputs.send_notification != false &&
       needs.analyze.outputs.has_report == 'true'
     env:
       FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
