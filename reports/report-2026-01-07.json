@@ -6,87 +6,86 @@
   "commit_signals": [
     {
       "id": "commit-0",
-      "title": "Agent Hooks可视化",
-      "type": "workflow",
+      "title": "Agent Skills 机制普及",
+      "type": "capability",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "在CLI和UI中增加Hooks执行的视觉反馈，显著提升了Agent工作流的透明度和可调试性，标志着Agent编排从黑盒向可观测系统演进。",
+      "impact_score": 5,
+      "why_it_matters": "Google Gemini CLI 和 Agno 同时引入 'Skills' 概念，标志着 AI 编程工具从单一 Agent 向模块化、可组合的技能系统演进，提升了工具的复用性和专业化能力。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/61dbab03e0d512a681d32b0db432c585b9530fef"
+        "https://github.com/google-gemini/gemini-cli/commit/59a18e710daaaab7435c34f517e7dfa4406bce0c"
       ],
       "related_repos": [
-        "google-gemini/gemini-cli",
-        "cline/cline"
+        "agno-agi/agno",
+        "google-gemini/gemini-cli"
       ]
     },
     {
       "id": "commit-1",
-      "title": "远程Agent与技能架构",
+      "title": "远程 Agent 与 A2A 通信",
       "type": "capability",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "引入远程Agent支持和动态技能激活机制，打破了单体Agent的局限，使得AI助手能够模块化、分布式地部署和扩展复杂能力。",
+      "impact_score": 4,
+      "why_it_matters": "Agno 引入 A2AClient 支持 Agent 到 Agent 的远程调用，Gemini CLI 添加远程 Agent 支持，表明分布式多 Agent 协作正在成为解决复杂任务的关键架构。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/96b9be3ec43937dae2f31bdfbd88a4ecfd48a0f4"
+        "https://github.com/agno-agi/agno/commit/b0575cbc9c8afa524ddbf5de243ed1f93feb15e0"
       ],
       "related_repos": [
-        "google-gemini/gemini-cli",
-        "openai/codex",
-        "agno-agi/agno"
+        "agno-agi/agno",
+        "google-gemini/gemini-cli"
       ]
     },
     {
       "id": "commit-2",
-      "title": "后台编辑与并行处理",
+      "title": "Agent 线程持久化与共享",
       "type": "workflow",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "通过后台编辑和并行编辑能力，解决了AI编码工具阻塞用户工作流的问题，大幅提升了多文件重构场景下的开发效率和用户体验。",
+      "why_it_matters": "Zed 和 OpenDevin 分别实现了 Agent 线程的持久化和基于 GCS 的存储，解决了 Agent 任务中断恢复和协作审查的痛点，使 Agent 工作流更具连续性和可审计性。",
       "sources": [
-        "https://github.com/cline/cline/commit/0da6ddc001ebba9df612f65f76ec310ed5b0d6ab"
+        "https://github.com/zed-industries/zed/commit/3da926981cddb4993fd88202c83831f317254304"
       ],
       "related_repos": [
-        "continuedev/continue",
-        "cline/cline",
+        "OpenDevin/OpenDevin",
         "zed-industries/zed"
       ]
     },
     {
       "id": "commit-3",
-      "title": "统一执行与缓冲管理",
+      "title": "统一执行流与缓冲优化",
       "type": "performance",
       "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "引入头尾缓冲机制来处理终端输出，防止长命令输出导致内存溢出或UI卡顿，优化了Agent执行长时间任务的稳定性。",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 引入 `unified_exec` 和 head-tail buffer，OpenDevin 调整 condenser 默认值，显示项目正致力于优化终端输出和长上下文处理的性能与可读性。",
       "sources": [
         "https://github.com/openai/codex/commit/32db8ea5cae5ce0cbca02afb46abb3d666e5c07b"
       ],
       "related_repos": [
+        "OpenDevin/OpenDevin",
         "openai/codex"
       ]
     },
     {
       "id": "commit-4",
-      "title": "安全模式与信任默认值",
+      "title": "安全策略与权限细化",
       "type": "safety",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "将文件夹信任默认值改为“不信任”，并引入安全模式设置，体现了AI编码工具在获得强大文件系统权限后，向“默认安全”设计的重大范式转变。",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 引入 'secureMode' 和策略配置，Auto-Claude 修复白名单问题，表明随着 Agent 能力增强，对文件系统访问和工具调用的精细化权限控制变得至关重要。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/6f4b2ad0b95a3c7db26a3475105d3c8d74dcadb4"
+        "https://github.com/google-gemini/gemini-cli/commit/2fe45834dde6dac5a1bff2d4df4926b28755eaf0"
       ],
       "related_repos": [
-        "google-gemini/gemini-cli",
-        "AndyMik90/Auto-Claude"
+        "AndyMik90/Auto-Claude",
+        "google-gemini/gemini-cli"
       ]
     },
     {
       "id": "commit-5",
-      "title": "多模态Agent线程渲染",
+      "title": "多模态与视觉能力集成",
       "type": "capability",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "在Agent对话线程中支持图像渲染，结合多模态上下文压缩，增强了AI处理视觉内容和复杂文档的能力，为下一代多模态编程助手奠定基础。",
+      "impact_score": 3,
+      "why_it_matters": "Zed 添加在 Agent 线程中渲染图片的功能，LlamaIndex 添加多模态上下文压缩，显示 AI 编程工具正从纯文本交互向图文并茂的多模态交互演进。",
       "sources": [
         "https://github.com/zed-industries/zed/commit/b5ac0f9bc6dc390a1348cb906ff9fd4af429ac02"
       ],
@@ -97,13 +96,13 @@
     },
     {
       "id": "commit-6",
-      "title": "RAG与数据集预览重构",
-      "type": "abstraction",
+      "title": "RAG 与数据集创建工作流",
+      "type": "workflow",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "对RAG管道调用命名进行澄清并重构数据集组件，虽然属于内部清理，但反映了RAG应用框架在API设计上追求更清晰的语义和更好的可维护性。",
+      "why_it_matters": "Dify 实现了带预览的数据集创建步骤和 RAG 管道重构，Langchain 修复了消息摘要，表明构建高质量 RAG 应用的工具链正在变得更加成熟和用户友好。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/55de731f9c702ea109cd0b119392021ce679e721"
+        "https://github.com/langgenius/dify/commit/64bfcbc4a98b612244ee96ac1ac1c62874fd3191"
       ],
       "related_repos": [
         "langgenius/dify",
@@ -112,45 +111,17 @@
     },
     {
       "id": "commit-7",
-      "title": "MCP与流式传输支持",
-      "type": "capability",
+      "title": "MCP 协议与工具集成标准化",
+      "type": "abstraction",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "为MCP工具添加动态Header和默认流式HTTP传输支持，加速了Model Context Protocol生态的标准化和互操作性，使Agent能更灵活地调用外部工具。",
+      "impact_score": 3,
+      "why_it_matters": "Agno 和 Gemini CLI 均在优化 MCP (Model Context Protocol) 工具的集成，包括动态 Header 和流式传输，显示 MCP 正成为连接 AI Agent 与外部工具的标准接口。",
       "sources": [
         "https://github.com/agno-agi/agno/commit/d84bdeb08377c42daf0c99d3d1a165d80d9e36f2"
       ],
       "related_repos": [
-        "google-gemini/gemini-cli",
-        "agno-agi/agno"
-      ]
-    },
-    {
-      "id": "commit-8",
-      "title": "Agent控制器与状态管理",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "通过引入Agent控制器并移除Agent Bus，将状态管理内聚化，简化了复杂Agent系统的状态同步逻辑，提升了系统的鲁棒性和可扩展性。",
-      "sources": [
-        "https://github.com/openai/codex/commit/188f79afeedf95f100aeaaf0b665255edaac74d9"
-      ],
-      "related_repos": [
-        "openai/codex"
-      ]
-    },
-    {
-      "id": "commit-9",
-      "title": "基于云存储的事件服务",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "添加基于Google Cloud Storage的EventService实现，支持Agent在无状态或分布式环境下的持久化，为云端部署和远程Agent协作提供了基础设施支持。",
-      "sources": [
-        "https://github.com/OpenDevin/OpenDevin/commit/fa974f810695295df1c88d82fe0755eecb623ff7"
-      ],
-      "related_repos": [
-        "OpenDevin/OpenDevin"
+        "agno-agi/agno",
+        "google-gemini/gemini-cli"
       ]
     }
   ],
@@ -158,11 +129,11 @@
   "stats": {
     "total_prs_analyzed": 0,
     "high_impact_signals": 0,
-    "total_commits_analyzed": 248,
-    "total_releases": 6
+    "total_commits_analyzed": 243,
+    "total_releases": 7
   },
   "activity": {
-    "total_commits": 248,
+    "total_commits": 243,
     "active_repos_count": 16,
     "new_contributors": 0,
     "top_repos": [
@@ -173,8 +144,8 @@
         "top_contributors": [
           "agu-z",
           "Veykril",
-          "ozacod",
           "maxbrunsfeld",
+          "mikayla-maki",
           "rtfeldman"
         ]
       },
@@ -192,26 +163,26 @@
       },
       {
         "repo": "google-gemini/gemini-cli",
-        "commits": 28,
+        "commits": 29,
         "new_contributors": 0,
         "top_contributors": [
           "bdmorgan",
           "NTaylorMullen",
+          "gundermanc",
           "jerop",
-          "joshualitt",
-          "scidomino"
+          "joshualitt"
         ]
       },
       {
         "repo": "langgenius/dify",
-        "commits": 27,
+        "commits": 22,
         "new_contributors": 0,
         "top_contributors": [
-          "asukaminato0721",
-          "laipz8200",
-          "lyzno1",
           "fatelei",
-          "CodingOnStar"
+          "lyzno1",
+          "laipz8200",
+          "CodingOnStar",
+          "fghpdf"
         ]
       },
       {
@@ -249,7 +220,7 @@
       },
       {
         "repo": "cline/cline",
-        "commits": 11,
+        "commits": 10,
         "new_contributors": 0,
         "top_contributors": [
           "BarreiroT",
@@ -551,8 +522,8 @@
     ]
   },
   "releases": {
-    "total_count": 6,
-    "unique_repos_count": 5,
+    "total_count": 7,
+    "unique_repos_count": 6,
     "releases": [
       {
         "repo": "langchain-ai/langchain",
@@ -562,6 +533,15 @@
         "summary": "Changes since langchain==1.2.0\n\nrelease(langchain): 1.2.1 (#34622)\nfix(core,langchain): use `get_buffer_string` for message summarization (#34607)\nchore(langchain): fix types in test_model_fallback (#34615)\nchore(langchain): fix types in test_pii (#34617)\nchore(langchain): add admonition around redaction_rules (#34618)\nchore(langchain): fix types in test_composition (#34580)\nchore(langchain): fix types in test_decorators (#34583)\nchore(langchain): fix types in test_wrap_tool_call (#34600)\nchore(langchain): fix types in test_model_call_limit_types (#34601)\nchore(langchain): fix types in test_file_search and test_human_in_the_loop (#34602)\nfix(core): exclude injected args from tool schema (#34582)\nchore(langchain): fix types in test_diagram and test_sync_async_wrappers (#34591)\nstyle(langchain): add ruff rule PLC0415 (#34559)\nfix(langchain): resolve race condition in `ShellSession.execute()` (#34535)\nfix(infra): use `langchain_v1` for dev container deps (#34534)\nchore(deps): bump mypy to v1.19 and ruff to v1.14 (#34521)\nfix(langchain-classic): pass default to `config.getoption` (#34034)\nstyle(langchain): add ruff rule RUF012 (#34497)\nrefactor(langchain): refactor optional imports logic (#32813)\nstyle: add ruff ISC001 rule (#34493)\nstyle(langchain): add TC ruff rules (#34496)\nstyle(langchain): fix some ruff preview rules (#34504)\nstyle(langchain): fix some PLC0415 rules (#34475)\nstyle(langchain): add ruff rules PT (#34434)\nfeat(langchain): enhance `init_chat_model` with improved validation (#34226)\ndocs(langchain): Docstring improved to show `Streaming custom events` (#34353)\nfeat(langchain): Add support to `google_genai` provider in `init_embeddings` (#34388)\nrelease(core): 1.2.3 (#34421)\nrelease(openai): 1.1.6: update max input tokens for gpt-5 series (#34419)\nrelease(openai): 1.1.5 (#34409)\nfeat(infra): add CI check for out of date lockfiles (#34397)",
         "assets_count": 0,
         "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain%3D%3D1.2.1"
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.23.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-07",
+        "summary": "## What's Changed\n* Code assist service metrics. by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15024\n* chore/release: bump version to 0.21.0-nightly.20251216.bb0c0d8ee by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15121\n* Docs by @Roaimkhan in https://github.com/google-gemini/gemini-cli/pull/15103\n* Use official ACP SDK and support HTTP/SSE based MCP servers by @SteffenDE in https://github.com/google-gemini/gemini-cli/pull/13856\n* Remove foreground for themes other than shades of purple and holiday. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/14606\n* chore: remove repo specific tips by @jackwotherspoon in https://github.com/google-gemini/gemini-cli/pull/15164\n* chore: remove user query from footer in debug mode by @jackwotherspoon in https://github.com/google-gemini/gemini-cli/pull/15169\n* Disallow unnecessary awaits. by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15172\n* Add one to the padding in settings dialog to avoid flicker. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15173\n* feat(core): introduce remote agent infrastructure and rename local executor by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15110\n* feat(cli): Add `/auth logout` command to clear credentials and auth state by @CN-Scars in https://github.com/google-gemini/gemini-cli/pull/13383\n* (fix) Automated pr labeller by @DaanVersavel in https://github.com/google-gemini/gemini-cli/pull/14885\n* feat: launch Gemini 3 Flash in Gemini CLI ⚡️⚡️⚡️ by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15196\n* Refactor: Migrate console.error in ripGrep.ts to debugLogger by @Adib234 in https://github.com/google-gemini/gemini-cli/pull/15201\n* chore: update a2a-js to 0.3.7 by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15197\n* chore(core): remove redundant isModelAvailabilityServiceEnabled toggle and clean up dead code by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15207\n* feat(core): Late resolve `GenerateContentConfig`s and reduce mutation. by @joshualitt in https://github.com/google-gemini/gemini-cli/pull/14920\n* Respect previewFeatures value from the remote flag if undefined by @sehoon38 in https://github.com/google-gemini/gemini-cli/pull/15214\n* feat(ui): add Windows clipboard image support and Alt+V paste workaround by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15218\n* chore(core): remove legacy fallback flags and migrate loop detection by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15213\n* fix(ui): Prevent eager slash command completion hiding sibling commands by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15224\n* Docs: Update Changelog for Dec 17, 2025 by @jkcinouye in https://github.com/google-gemini/gemini-cli/pull/15204\n* Code Assist backend telemetry for user accept/reject of suggestions by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15206\n* fix(cli): correct initial history length handling for chat commands by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15223\n* chore/release: bump version to 0.21.0-nightly.20251218.739c02bd6 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15231\n* Change detailed model stats to use a new shared Table class to resolve robustness issues. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15208\n* feat: add agent toml parser by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15112\n* Add core tool that adds all context from the core package. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15238\n* (docs): Add reference section to hooks documentation by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15159\n* feat(hooks): add support for friendly names and descriptions by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15174\n* feat: Detect background color by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15132\n* add 3.0 to allowed sensitive keywords by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15276\n* feat: Pass additional environment variables to shell execution by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15160\n* Remove unused code by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15290\n* Handle all 429 as retryableQuotaError by @sehoon38 in https://github.com/google-gemini/gemini-cli/pull/15288\n* Remove unnecessary dependencies by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15291\n* fix: prevent infinite loop in prompt completion on error by @galz10 in https://github.com/google-gemini/gemini-cli/pull/14548\n* fix(ui): show command suggestions even on perfect match and sort them by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15287\n* feat(hooks): reduce log verbosity and improve error reporting in UI by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15297\n* feat: simplify tool confirmation labels for better UX by @NTaylorMullen in https://github.com/google-gemini/gemini-cli/pull/15296\n* chore/release: bump version to 0.21.0-nightly.20251219.70696e364 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15301\n* feat(core): Implement JIT context memory loading and UI sync by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/14469\n* feat(ui): Put \"Allow for all future sessions\" behind a setting off by default. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15322\n* fix(cli):change the placeholder of input during the shell mode by @JayadityaGit in https://github.com/google-gemini/gemini-cli/pull/15135\n* Validate OAuth resource parameter matches MCP server URL by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15289\n* docs(cli): add System Prompt Override (GEMINI_SYSTEM_MD) by @ashmod in https://github.com/google-gemini/gemini-cli/pull/9515\n* more robust command parsing logs by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15339\n* Introspection agent demo by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15232\n* fix(core): sanitize hook command expansion and prevent injection by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15343\n* fix(folder trust): add validation for trusted folder level by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/12215\n* fix(cli): fix right border overflow in trust dialogs by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15350\n* fix(policy): fix bug where accepting-edits continued after it was turned off by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15351\n* fix: prevent infinite relaunch loop when --resume fails (#14941) by @Ying-xi in https://github.com/google-gemini/gemini-cli/pull/14951\n* chore/release: bump version to 0.21.0-nightly.20251220.41a1a3eed by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15352\n* feat(telemetry): add clearcut logging for hooks by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15405\n* fix(core): Add `.geminiignore` support to SearchText tool by @xyrolle in https://github.com/google-gemini/gemini-cli/pull/13763\n* fix(patch): cherry-pick 0843d9a to release/v0.23.0-preview.0-pr-15443 to patch version v0.23.0-preview.0 and create version 0.23.0-preview.1 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15445\n* fix(patch): cherry-pick 9cdb267 to release/v0.23.0-preview.1-pr-15494 to patch version v0.23.0-preview.1 and create version 0.23.0-preview.2 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15592\n* fix(patch): cherry-pick 37be162 to release/v0.23.0-preview.2-pr-15601 to patch version v0.23.0-preview.2 and create version 0.23.0-preview.3 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15603\n* fix(patch): cherry-pick 07e597d to release/v0.23.0-preview.3-pr-15684 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15734\n* fix(patch): cherry-pick c31f053 to release/v0.23.0-preview.4-pr-16004 to patch version v0.23.0-preview.4 and create version 0.23.0-preview.5 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/16027\n* fix(patch): cherry-pick 788bb04 to release/v0.23.0-preview.5-pr-15817 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/16038\n\n## New Contributors\n* @Roaimkhan made their first contribution in https://github.com/google-gemini/gemini-cli/pull/15103\n* @SteffenDE made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13856\n* @CN-Scars made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13383\n* @Ying-xi made their first contribution in https://github.com/google-gemini/gemini-cli/pull/14951\n* @xyrolle made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13763\n\n**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.22.5...v0.23.0",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.23.0"
       },
       {
         "repo": "openai/codex",
