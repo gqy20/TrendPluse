@@ -49,12 +49,32 @@ REPO_CATEGORIES: dict[str, list[str]] = {
         "Significant-Gravitas/AutoGPT",
         "OpenDevin/OpenDevin",
         "langchain-ai/langchain",
+        "langchain-ai/langgraph",
+        "langchain-ai/deepagents",
         "langgenius/dify",
         "run-llama/llama_index",
         "microsoft/autogen",
+        "microsoft/semantic-kernel",
         "google-gemini/gemini-cli",
         "agentscope-ai/agentscope",
         "agno-agi/agno",
+        "crewAIInc/crewAI",
+        "huggingface/smolagents",
+        "openai/swarm",
+    ],
+    "自主 AI 编程": [
+        "anomalyco/opencode",
+        "zed-industries/zed",
+        "AndyMik90/Auto-Claude",
+    ],
+    "AI 编程模型": [
+        "openai/codex",
+        "TabbyML/tabby",
+    ],
+    "其他工具": [
+        "openinterpreter/open-interpreter",
+        "ruvnet/claude-flow",
+        "bytedance/deer-flow",
     ],
 }
 

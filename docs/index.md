@@ -17,7 +17,7 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 
 ### 📋 监控项目
 
-我们监控以下 **37 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
+我们监控以下 **51 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
 
 #### Anthropic 核心产品
 
@@ -67,12 +67,35 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 - **[Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)**
 - **[OpenDevin/OpenDevin](https://github.com/OpenDevin/OpenDevin)**
 - **[langchain-ai/langchain](https://github.com/langchain-ai/langchain)**
+- **[langchain-ai/langgraph](https://github.com/langchain-ai/langgraph)**
 - **[langgenius/dify](https://github.com/langgenius/dify)**
 - **[run-llama/llama\_index](https://github.com/run-llama/llama_index)**
 - **[microsoft/autogen](https://github.com/microsoft/autogen)**
+- **[microsoft/semantic-kernel](https://github.com/microsoft/semantic-kernel)**
 - **[google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)**
 - **[agentscope-ai/agentscope](https://github.com/agentscope-ai/agentscope)**
 - **[agno-agi/agno](https://github.com/agno-agi/agno)**
+- **[openai/swarm](https://github.com/openai/swarm)**
+- **[crewAIInc/crewAI](https://github.com/crewAIInc/crewAI)**
+- **[huggingface/smolagents](https://github.com/huggingface/smolagents)**
+- **[langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)**
+
+#### 自主 AI 编程
+
+- **[AndyMik90/Auto-Claude](https://github.com/AndyMik90/Auto-Claude)**
+- **[anomalyco/opencode](https://github.com/anomalyco/opencode)**
+- **[zed-industries/zed](https://github.com/zed-industries/zed)**
+
+#### AI 编程模型
+
+- **[openai/codex](https://github.com/openai/codex)**
+- **[TabbyML/tabby](https://github.com/TabbyML/tabby)**
+
+#### 其他工具
+
+- **[ruvnet/claude-flow](https://github.com/ruvnet/claude-flow)**
+- **[bytedance/deer-flow](https://github.com/bytedance/deer-flow)**
+- **[openinterpreter/open-interpreter](https://github.com/openinterpreter/open-interpreter)**
 ### 最新报告
 
 !!! info "最新报告"
