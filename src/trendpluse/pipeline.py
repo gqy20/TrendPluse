@@ -223,15 +223,36 @@ class TrendPulsePipeline:
             空的每日报告
         """
         date_str = date.strftime("%Y-%m-%d")
+
+        # 计算信号数量
+        commit_count = len(commit_signals) if commit_signals else 0
+        release_count = releases_data.total_count if releases_data else 0
+
+        # 动态生成摘要
+        if commit_count == 0 and release_count == 0:
+            summary_brief = f"今日 ({date_str}) 未发现符合条件的趋势信号。"
+        else:
+            summary_brief = (
+                f"今日 ({date_str}) 发现 {commit_count} 个 Commit 信号，"
+                f"{release_count} 个 Release 信号。"
+            )
+
+        # 统计高影响信号（impact_score >= 4）
+        high_impact_count = 0
+        if commit_signals:
+            high_impact_count = sum(
+                1 for s in commit_signals if getattr(s, "impact_score", 0) >= 4
+            )
+
         report = DailyReport(
             date=date_str,
-            summary_brief=f"今日 ({date_str}) 未发现符合条件的趋势信号。",
+            summary_brief=summary_brief,
             engineering_signals=[],
             research_signals=[],
             commit_signals=commit_signals or [],
             stats={
                 "total_prs_analyzed": 0,
-                "high_impact_signals": 0,
+                "high_impact_signals": high_impact_count,
                 "total_commits_analyzed": activity_data.total_commits
                 if activity_data
                 else 0,

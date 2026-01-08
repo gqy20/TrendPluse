@@ -75,6 +75,18 @@ class TestEmptyReportSummary:
             total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
         )
 
+        # Mock 详细 commits 数据（用于 commit 分析）
+        mock_detailed_commits = [
+            {
+                "sha": f"abc{i}",
+                "repo": "test/repo",
+                "message": f"Test commit {i}",
+                "author": "test",
+                "date": "2026-01-02",
+            }
+            for i in range(3)  # 3 个 commits
+        ]
+
         # Mock release 数据
         mock_releases_data = ReleasesData(
             total_count=0, unique_repos_count=0, releases=[]
@@ -88,7 +100,7 @@ class TestEmptyReportSummary:
         mock_activity_collector_instance = Mock()
         mock_activity_collector_instance.collect_activity.return_value = (
             mock_activity_data,
-            [],
+            mock_detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
@@ -204,6 +216,18 @@ class TestEmptyReportSummary:
             total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
         )
 
+        # Mock 详细 commits 数据（用于 commit 分析）
+        mock_detailed_commits = [
+            {
+                "sha": f"abc{i}",
+                "repo": "test/repo",
+                "message": f"Test commit {i}",
+                "author": "test",
+                "date": "2026-01-02",
+            }
+            for i in range(3)  # 3 个 commits
+        ]
+
         # Mock release 数据
         mock_releases_data = ReleasesData(
             total_count=0, unique_repos_count=0, releases=[]
@@ -217,7 +241,7 @@ class TestEmptyReportSummary:
         mock_activity_collector_instance = Mock()
         mock_activity_collector_instance.collect_activity.return_value = (
             mock_activity_data,
-            [],
+            mock_detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
@@ -325,6 +349,18 @@ class TestEmptyReportSummary:
             total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
         )
 
+        # Mock 详细 commits 数据（用于 commit 分析）
+        mock_detailed_commits = [
+            {
+                "sha": f"abc{i}",
+                "repo": "test/repo",
+                "message": f"Test commit {i}",
+                "author": "test",
+                "date": "2026-01-02",
+            }
+            for i in range(3)  # 3 个 commits
+        ]
+
         # Mock release 数据
         mock_releases_data = ReleasesData(
             total_count=2, unique_repos_count=1, releases=[]
@@ -338,7 +374,7 @@ class TestEmptyReportSummary:
         mock_activity_collector_instance = Mock()
         mock_activity_collector_instance.collect_activity.return_value = (
             mock_activity_data,
-            [],
+            mock_detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
@@ -448,6 +484,18 @@ class TestEmptyReportSummary:
             total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
         )
 
+        # Mock 详细 commits 数据（用于 commit 分析）
+        mock_detailed_commits = [
+            {
+                "sha": f"abc{i}",
+                "repo": "test/repo",
+                "message": f"Test commit {i}",
+                "author": "test",
+                "date": "2026-01-02",
+            }
+            for i in range(3)  # 3 个 commits
+        ]
+
         # Mock release 数据
         mock_releases_data = ReleasesData(
             total_count=1, unique_repos_count=1, releases=[]
@@ -461,7 +509,7 @@ class TestEmptyReportSummary:
         mock_activity_collector_instance = Mock()
         mock_activity_collector_instance.collect_activity.return_value = (
             mock_activity_data,
-            [],
+            mock_detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
@@ -576,6 +624,18 @@ class TestEmptyReportSummary:
             total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
         )
 
+        # Mock 详细 commits 数据（用于 commit 分析）
+        mock_detailed_commits = [
+            {
+                "sha": f"abc{i}",
+                "repo": "test/repo",
+                "message": f"Test commit {i}",
+                "author": "test",
+                "date": "2026-01-02",
+            }
+            for i in range(3)  # 3 个 commits
+        ]
+
         # Mock release 数据
         mock_releases_data = ReleasesData(
             total_count=0, unique_repos_count=0, releases=[]
@@ -589,7 +649,7 @@ class TestEmptyReportSummary:
         mock_activity_collector_instance = Mock()
         mock_activity_collector_instance.collect_activity.return_value = (
             mock_activity_data,
-            [],
+            mock_detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
 
