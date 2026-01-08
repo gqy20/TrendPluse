@@ -38,14 +38,16 @@ def extract_report_info(report_path: Path) -> dict | None:
         for match in re.finditer(stats_pattern, content):
             stats[match.group(1)] = match.group(2)
 
-        # 获取文件修改时间
-        mtime = datetime.fromtimestamp(report_path.stat().st_mtime)
+        # 使用报告日期作为发布时间（而非文件修改时间，避免 CI 环境时间戳问题）
+        # 从文件名中提取的日期已经足够准确
+        published_date = datetime.strptime(date_str, "%Y-%m-%d")
+        published = published_date.strftime("%Y-%m-%d")
 
         return {
             "date": date_str,
             "summary": summary,
             "stats": stats,
-            "published": mtime.strftime("%Y-%m-%d %H:%M"),
+            "published": published,
             "path": report_path,
         }
     except Exception as e:
