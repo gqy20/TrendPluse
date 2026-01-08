@@ -1,0 +1,750 @@
+{
+  "date": "2026-01-08",
+  "summary_brief": "今日 (2026-01-08) 未发现符合条件的趋势信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [
+    {
+      "id": "commit-0",
+      "title": "Agent SDK V2 API 重构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic 官方 Agent SDK 将核心方法从 `receive` 重命名为 `stream`，标志着 V2 Session API 的稳定化和标准化，影响所有基于该生态的开发者。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-demos/commit/c48f7db74d32b8db748dabda2d0423ddd05c4d1f"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-agent-sdk-demos",
+        "anthropics/claude-code"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "GitHub Actions 集成自定义分支",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "允许开发者通过模板自定义 AI 生成的分支名称，解决了 AI 编码工具在复杂 CI/CD 流程中的集成痛点，提升了自动化工作流的灵活性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/commit/c247cb152da5acb093afa92a383a8a10c0e27deb"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "多模态输入权限管理",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "在桌面端应用中显式添加音频和摄像头权限，反映了 AI Agent 从纯文本向多模态交互（语音、视觉）演进的趋势，同时也加强了对敏感硬件调用的控制。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/24c933ae605b8637482b0f63b8a2555954c9a86a"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "Agent 技能系统中心化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Google Gemini CLI 和 OpenAI Codex 同时在重构技能发现与管理逻辑，表明 Agent 架构正从单一脚本向可扩展、可插拔的技能系统演进，以支持更复杂的任务。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/a26463b056dbf66d5a2744109ee7319c434ab4a0"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "工具输出截断与文件转储",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "针对 Agent 执行工具时产生大量输出导致上下文溢出的问题，引入了截断并写入文件的机制。这是解决长上下文窗口限制和 Token 成本问题的实用工程方案。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/1b82511fbd50c7ebb1540eb5fc31c8310a12bb26"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "结构化输出拒绝错误处理",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "LangChain 引入特定的 `OpenAIRefusalError` 来处理模型拒绝生成结构化输出的情况。这提升了应用在处理敏感内容或安全拒绝时的鲁棒性。",
+      "sources": [
+        "https://github.com/langchain-ai/langchain/commit/92afcaae6033298b3b348a028be8f9f7e46aa979"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "子代理模型路由机制",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 引入子代理模型路由的初步变更，暗示了未来 Agent 架构将根据任务类型动态分配不同规模或能力的模型，以平衡性能与成本。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/a1dd19738e3a15a9bc78cefc194e8ea6920e0dc4"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "异步工具调用支持",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Agno 框架增加异步工具使用支持，显著提高了 Agent 并行处理多个工具或 API 请求的能力，减少了等待延迟，提升了响应速度。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/ac4aa2c5394f9c8ee7b8f086475fb20d9f5df9fc"
+      ],
+      "related_repos": [
+        "agno-agi/agno"
+      ]
+    },
+    {
+      "id": "commit-8",
+      "title": "人机交互全局配置",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "CrewAI 引入全局流配置来管理人在回路反馈，使得在复杂的 Agent 工作流中统一干预和审核策略成为可能，增强了可控性。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/commit/0ccc155457500278e5287dbdd7ba5ae80bbe08f4"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI"
+      ]
+    },
+    {
+      "id": "commit-9",
+      "title": "Kotlin 语言支持插件化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "通过 LSP 插件形式添加 Kotlin 支持，展示了 AI 编码助手通过标准化协议快速扩展对新语言支持的能力，降低了对特定语言深度集成的依赖。",
+      "sources": [
+        "https://github.com/anthropics/claude-plugins-official/commit/2fee5cd9bf90207d7641b872e5d4de19dd9e330d"
+      ],
+      "related_repos": [
+        "anthropics/claude-plugins-official"
+      ]
+    }
+  ],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 311,
+    "total_releases": 12
+  },
+  "activity": {
+    "total_commits": 311,
+    "active_repos_count": 24,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 72,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user",
+          "Brendonovich",
+          "rekram1-node",
+          "adamdotdevin",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 44,
+        "new_contributors": 0,
+        "top_contributors": [
+          "agu-z",
+          "osyvokon",
+          "zelenenka",
+          "probably-neb",
+          "cole-miller"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 29,
+        "new_contributors": 0,
+        "top_contributors": [
+          "NTaylorMullen",
+          "scidomino",
+          "chrstnb",
+          "jacob314",
+          "sehoon38"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 28,
+        "new_contributors": 0,
+        "top_contributors": [
+          "aibrahim-oai",
+          "jif-oai",
+          "tibo-openai",
+          "bolinfest",
+          "pakrym-oai"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 17,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown",
+          "Ashwinhegde19",
+          "czerewacz",
+          "bbopen"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 14,
+        "new_contributors": 0,
+        "top_contributors": [
+          "tofarr",
+          "hieptl",
+          "neubig",
+          "abhayymishraa",
+          "adithya-naik"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 14,
+        "new_contributors": 0,
+        "top_contributors": [
+          "lyzno1",
+          "fghpdf",
+          "fatelei",
+          "JunIce",
+          "laipz8200"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Garoth",
+          "maxpaulus43",
+          "arafatkatze",
+          "cryptoque",
+          "robinnewhouse"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "eyurtsev",
+          "Manaskarthik28",
+          "hwchase17",
+          "keenborder786",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dirkbrnd",
+          "kausmeows",
+          "manuhortet",
+          "harshsinha03",
+          "aayush598"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user",
+          "bcherny",
+          "ThariqS",
+          "ddworken"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ashwin-ant",
+          "actions-user",
+          "dylancdavis",
+          "ddworken",
+          "orbisai0security"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Swiftyos",
+          "Bentlybro",
+          "0ubbe",
+          "Abhi1992002",
+          "majdyz"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "greysonlalonde",
+          "lorenzejay",
+          "Vidit-Ostwal",
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "eyurtsev",
+          "vtrivedy",
+          "Yo-sure",
+          "hwchase17"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "lucievomelova",
+          "anatomybook",
+          "wmatecki97",
+          "selvamanigovindaraj"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dhollman",
+          "clackbib",
+          "noahzweben"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dltn"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "BekahHW",
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "wangype"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "WillemJiang"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 12,
+    "unique_repos_count": 9,
+    "releases": [
+      {
+        "repo": "crewAIInc/crewAI",
+        "version": "1.8.0",
+        "author": "lorenzejay",
+        "date": "2026-01-08",
+        "summary": "## What's Changed\n\n### Features\n- Add native async chain for a2a\n- Add a2a update mechanisms (poll/stream/push) with handlers and config\n- Introduce global flow configuration for human-in-the-loop feedback\n- Add streaming tool call events and fix provider ID tracking\n- Introduce production-ready Flows and Crews architecture\n- Add HITL for Flows\n- Improve EventListener and TraceCollectionListener for enhanced event handling\n\n### Bug Fixes\n- Handle missing a2a dependency as optional\n- Correct error fetching for WorkOS login polling\n- Fix wrong trigger name in sample documentation\n\n### Documentation\n- Update webhook-streaming documentation\n- Adjust AOP to AMP documentation language\n\n## Contributors\n\n@Vidit-Ostwal, @greysonlalonde, @heitorado, @joaomdmoura, @lorenzejay, @lucasgomide, @mplachta",
+        "assets_count": 0,
+        "url": "https://github.com/crewAIInc/crewAI/releases/tag/1.8.0"
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.1",
+        "author": "ashwin-ant",
+        "date": "2026-01-07",
+        "summary": "\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.1"
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.0.76",
+        "author": "ashwin-ant",
+        "date": "2026-01-07",
+        "summary": "## What's changed\n\n- Fixed issue with macOS code-sign warning when using Claude in Chrome integration\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.0.76"
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.1",
+        "author": "ashwin-ant",
+        "date": "2026-01-07",
+        "summary": "\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.1"
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.1.76",
+        "author": "ashwin-ant",
+        "date": "2026-01-07",
+        "summary": "\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.1.76"
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "version": "autogpt-platform-beta-v0.6.41",
+        "author": "Bentlybro",
+        "date": "2026-01-07",
+        "summary": "# 🚀 Release `autogpt-platform-beta-v0.6.41`\r\n\r\n**Date:** January 2026\r\n\r\n---\r\n\r\n## 🔥 What's New?\r\n\r\n### New Features\r\n\r\n- **#11547** - Add agent mode support to SmartDecisionMakerBlock with autonomous tool execution loops (by @majdyz)\r\n- **#11617** - OAuth API & Single Sign-On (by @Pwuts)\r\n- **#11529** - Implement HITL UI redesign with improved review flow (by @majdyz)\r\n- **#11630** - Marketplace update notifications with enhanced publishing workflow (by @majdyz)\r\n- **#11672** - Deduplicate insufficient funds Discord + email notifications (by @ntindle)\r\n- **#11658** - Add auto-save Draft Recovery feature with IndexedDB persistence (by @Abhi1992002)\r\n- **#11693** - Add delete key bindings to ReactFlow editor (by @Abhi1992002)\r\n- **#11608** - Add Google Docs integration blocks (by @ntindle)\r\n- **#11677** - Upgrade RJSF to v6 and implement new FormRenderer system (by @Abhi1992002)\r\n\r\n### Enhancements\r\n\r\n- **#11621** - Improve agent inputs read-only (by @0ubbe)\r\n- **#11596** - Add nice scrollable tabs on Selected Run view (by @0ubbe)\r\n- **#11627** - Human in The Loop Block restructure (by @majdyz)\r\n- **#11595** - Add special handling for AGENT block type in form and output handlers (by @Abhi1992002)\r\n- **#11634** - Increase file upload size limit to 256MB (by @Bentlybro)\r\n- **#11601** - Add hover state to edge delete button in FlowEditor (by @Abhi1992002)\r\n- **#11652** - Add `GPT-5.2` and update default models (by @kcze)\r\n- **#11702** - Use Google Drive Picker on new builder (by @0ubbe)\r\n\r\n### UI/UX Improvements\r\n\r\n- **#11669** - Fix duplicate publish button and improve BuilderActionButton styling (by @Abhi1992002)\r\n- **#11696** - Fix new builder buttons (by @0ubbe)\r\n- **#11626** - Small library/mobile improvements (by @0ubbe)\r\n- **#11640** - Automatically frame agent when opening in builder (by @Bentlybro)\r\n\r\n### Bug Fixes\r\n\r\n- **#11612** - Update next (by @kcze)\r\n- **#11619** - Force light mode for now (by @0ubbe)\r\n- **#11636** - Fix onboarding run card (by @0ubbe)\r\n- **#11639** - Chat should be disabled by default (by @0ubbe)\r\n- **#11642** - Fix modal hidden overflow (by @0ubbe)\r\n- **#11641** - Convert generic exceptions to appropriate typed exceptions (by @majdyz)\r\n- **#10989** - Handle missing or null 'items' key in DataForSEO Related Keywords block (by @seer-by-sentry[bot])\r\n- **#11681** - Fix favico colour override issue (by @0ubbe)\r\n- **#11643** - Use DS Dialog on old builder (by @0ubbe)\r\n- **#11648** - Hide better chat link if not enabled (by @0ubbe)\r\n- **#11661** - Allow empty values in number inputs and fix AnyOfField toggle (by @majiayu000)\r\n- **#11659** - Add YouTube Shorts URL support (by @majiayu000)\r\n- **#11517** - XMLParserBlock list object error (by @ntindle)\r\n\r\n### Documentation\r\n\r\n- **#11709** - Sync documentation updates with dev branch (by @majdyz)\r\n\r\n### Dependencies & Maintenance\r\n\r\n- **#10868** - Bump actions/labeler from 5 to 6 (by @dependabot[bot])\r\n- **#10871** - Bump actions/stale from 9 to 10 (by @dependabot[bot])\r\n- **#11355** - Bump eslint-config-next from 15.5.2 to 15.5.6 in /autogpt_platform/frontend (by @dependabot[bot])\r\n- **#11357** - Bump import-in-the-middle from 1.14.2 to 2.0.0 in /autogpt_platform/frontend (by @dependabot[bot])\r\n- **#11629** - Clean up API file structure (by @Pwuts)\r\n- **#11604** - Clean up React Query-related code (by @Pwuts)\r\n- **#11695** - Move NodeInput files (by @0ubbe)\r\n\r\n---\r\n\r\n## 🎉 Thanks to Our Contributors!\r\n\r\nA huge shoutout to everyone who contributed to this release. Special thanks to our new contributor:\r\n\r\n- @majiayu000\r\n\r\nAs well as our returning contributors:\r\n- @majdyz\r\n- @0ubbe\r\n- @Abhi1992002\r\n- @Pwuts\r\n- @ntindle\r\n- @kcze\r\n- @Bentlybro\r\n- @dependabot[bot]\r\n- @seer-by-sentry[bot]\r\n\r\n---\r\n\r\n## 📥 How to Get This Update\r\n\r\nTo update to this version, run:\r\n\r\n```bash\r\ngit pull origin autogpt-platform-beta-v0.6.41\r\n```\r\n\r\nOr download it directly from the  \r\n[Releases page](https://github.com/Significant-Gravitas/AutoGPT/releases).\r\n\r\nFor a complete list of changes, see the [Full Changelog](https://github.com/Significant-Gravitas/AutoGPT/compare/autogpt-platform-beta-v0.6.40...autogpt-platform-beta-v0.6.41).\r\n\r\n---\r\n\r\n## 📝 **Feedback and Issues**\r\nIf you encounter any issues or have suggestions, please [join our Discord](https://discord.gg/autogpt) and let us know!",
+        "assets_count": 0,
+        "url": "https://github.com/Significant-Gravitas/AutoGPT/releases/tag/autogpt-platform-beta-v0.6.41"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain==1.2.2",
+        "author": "github-actions[bot]",
+        "date": "2026-01-07",
+        "summary": "Changes since langchain==1.2.1\n\nfix(langchain): add test to verify version (#34644)\nrelease(langchain): release 1.2.2 (#34643)\nfix(langchain): handle parallel usage of the todo tool in planning middleware (#34637)\nchore(langchain): fix types in test_wrap_model_call (#34573)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain%3D%3D1.2.2"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-openai==1.1.7",
+        "author": "github-actions[bot]",
+        "date": "2026-01-07",
+        "summary": "Changes since langchain-openai==1.1.6\n\nrelease(openai): 1.1.7 (#34640)\nfix(openai): raise proper exception `OpenAIRefusalError` on structured output refusal (#34619)\nfix: handle empty assistant content in Responses API (#34272) (#34296)\nfix(core): serialization patch (#34455)\nfix(openai): handle function_call content in token counting (#34379)\nfix(openai): filter function_call blocks in token counting (#34396)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-openai%3D%3D1.1.7"
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.23.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-07",
+        "summary": "## What's Changed\n* Code assist service metrics. by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15024\n* chore/release: bump version to 0.21.0-nightly.20251216.bb0c0d8ee by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15121\n* Docs by @Roaimkhan in https://github.com/google-gemini/gemini-cli/pull/15103\n* Use official ACP SDK and support HTTP/SSE based MCP servers by @SteffenDE in https://github.com/google-gemini/gemini-cli/pull/13856\n* Remove foreground for themes other than shades of purple and holiday. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/14606\n* chore: remove repo specific tips by @jackwotherspoon in https://github.com/google-gemini/gemini-cli/pull/15164\n* chore: remove user query from footer in debug mode by @jackwotherspoon in https://github.com/google-gemini/gemini-cli/pull/15169\n* Disallow unnecessary awaits. by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15172\n* Add one to the padding in settings dialog to avoid flicker. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15173\n* feat(core): introduce remote agent infrastructure and rename local executor by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15110\n* feat(cli): Add `/auth logout` command to clear credentials and auth state by @CN-Scars in https://github.com/google-gemini/gemini-cli/pull/13383\n* (fix) Automated pr labeller by @DaanVersavel in https://github.com/google-gemini/gemini-cli/pull/14885\n* feat: launch Gemini 3 Flash in Gemini CLI ⚡️⚡️⚡️ by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15196\n* Refactor: Migrate console.error in ripGrep.ts to debugLogger by @Adib234 in https://github.com/google-gemini/gemini-cli/pull/15201\n* chore: update a2a-js to 0.3.7 by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15197\n* chore(core): remove redundant isModelAvailabilityServiceEnabled toggle and clean up dead code by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15207\n* feat(core): Late resolve `GenerateContentConfig`s and reduce mutation. by @joshualitt in https://github.com/google-gemini/gemini-cli/pull/14920\n* Respect previewFeatures value from the remote flag if undefined by @sehoon38 in https://github.com/google-gemini/gemini-cli/pull/15214\n* feat(ui): add Windows clipboard image support and Alt+V paste workaround by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15218\n* chore(core): remove legacy fallback flags and migrate loop detection by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/15213\n* fix(ui): Prevent eager slash command completion hiding sibling commands by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15224\n* Docs: Update Changelog for Dec 17, 2025 by @jkcinouye in https://github.com/google-gemini/gemini-cli/pull/15204\n* Code Assist backend telemetry for user accept/reject of suggestions by @gundermanc in https://github.com/google-gemini/gemini-cli/pull/15206\n* fix(cli): correct initial history length handling for chat commands by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15223\n* chore/release: bump version to 0.21.0-nightly.20251218.739c02bd6 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15231\n* Change detailed model stats to use a new shared Table class to resolve robustness issues. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15208\n* feat: add agent toml parser by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15112\n* Add core tool that adds all context from the core package. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15238\n* (docs): Add reference section to hooks documentation by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15159\n* feat(hooks): add support for friendly names and descriptions by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15174\n* feat: Detect background color by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15132\n* add 3.0 to allowed sensitive keywords by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15276\n* feat: Pass additional environment variables to shell execution by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15160\n* Remove unused code by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15290\n* Handle all 429 as retryableQuotaError by @sehoon38 in https://github.com/google-gemini/gemini-cli/pull/15288\n* Remove unnecessary dependencies by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15291\n* fix: prevent infinite loop in prompt completion on error by @galz10 in https://github.com/google-gemini/gemini-cli/pull/14548\n* fix(ui): show command suggestions even on perfect match and sort them by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15287\n* feat(hooks): reduce log verbosity and improve error reporting in UI by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15297\n* feat: simplify tool confirmation labels for better UX by @NTaylorMullen in https://github.com/google-gemini/gemini-cli/pull/15296\n* chore/release: bump version to 0.21.0-nightly.20251219.70696e364 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15301\n* feat(core): Implement JIT context memory loading and UI sync by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/14469\n* feat(ui): Put \"Allow for all future sessions\" behind a setting off by default. by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15322\n* fix(cli):change the placeholder of input during the shell mode by @JayadityaGit in https://github.com/google-gemini/gemini-cli/pull/15135\n* Validate OAuth resource parameter matches MCP server URL by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15289\n* docs(cli): add System Prompt Override (GEMINI_SYSTEM_MD) by @ashmod in https://github.com/google-gemini/gemini-cli/pull/9515\n* more robust command parsing logs by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15339\n* Introspection agent demo by @scidomino in https://github.com/google-gemini/gemini-cli/pull/15232\n* fix(core): sanitize hook command expansion and prevent injection by @SandyTao520 in https://github.com/google-gemini/gemini-cli/pull/15343\n* fix(folder trust): add validation for trusted folder level by @adamfweidman in https://github.com/google-gemini/gemini-cli/pull/12215\n* fix(cli): fix right border overflow in trust dialogs by @galz10 in https://github.com/google-gemini/gemini-cli/pull/15350\n* fix(policy): fix bug where accepting-edits continued after it was turned off by @jacob314 in https://github.com/google-gemini/gemini-cli/pull/15351\n* fix: prevent infinite relaunch loop when --resume fails (#14941) by @Ying-xi in https://github.com/google-gemini/gemini-cli/pull/14951\n* chore/release: bump version to 0.21.0-nightly.20251220.41a1a3eed by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15352\n* feat(telemetry): add clearcut logging for hooks by @abhipatel12 in https://github.com/google-gemini/gemini-cli/pull/15405\n* fix(core): Add `.geminiignore` support to SearchText tool by @xyrolle in https://github.com/google-gemini/gemini-cli/pull/13763\n* fix(patch): cherry-pick 0843d9a to release/v0.23.0-preview.0-pr-15443 to patch version v0.23.0-preview.0 and create version 0.23.0-preview.1 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15445\n* fix(patch): cherry-pick 9cdb267 to release/v0.23.0-preview.1-pr-15494 to patch version v0.23.0-preview.1 and create version 0.23.0-preview.2 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15592\n* fix(patch): cherry-pick 37be162 to release/v0.23.0-preview.2-pr-15601 to patch version v0.23.0-preview.2 and create version 0.23.0-preview.3 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15603\n* fix(patch): cherry-pick 07e597d to release/v0.23.0-preview.3-pr-15684 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/15734\n* fix(patch): cherry-pick c31f053 to release/v0.23.0-preview.4-pr-16004 to patch version v0.23.0-preview.4 and create version 0.23.0-preview.5 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/16027\n* fix(patch): cherry-pick 788bb04 to release/v0.23.0-preview.5-pr-15817 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/16038\n\n## New Contributors\n* @Roaimkhan made their first contribution in https://github.com/google-gemini/gemini-cli/pull/15103\n* @SteffenDE made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13856\n* @CN-Scars made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13383\n* @Ying-xi made their first contribution in https://github.com/google-gemini/gemini-cli/pull/14951\n* @xyrolle made their first contribution in https://github.com/google-gemini/gemini-cli/pull/13763\n\n**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.22.5...v0.23.0",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.23.0"
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.3.23",
+        "author": "dirkbrnd",
+        "date": "2026-01-07",
+        "summary": "# Changelog\r\n\r\n## Improvements:\r\n\r\n- **Async Tool Support**: Toolkit now supports async tool functions, which are automatically selected when the agent runs in an async context.\r\n\r\n## Bug Fixes:\r\n\r\n- **`header_provider`** : Fix for check on `MCPTools`.\r\n- **Team Run Cancellation**: Fixed issue on async team runs where cancellation was not handled correctly.\r\n\r\n## What's Changed\r\n* fix: handle foreign key ref for custom traces table name by @kausmeows in https://github.com/agno-agi/agno/pull/5888\r\n* [fix] Add response_usage propagation to model response by @tyook in https://github.com/agno-agi/agno/pull/5872\r\n* Fix: team run cancellation by @dirkbrnd in https://github.com/agno-agi/agno/pull/5932\r\n* chore: async tool usage by @kausmeows in https://github.com/agno-agi/agno/pull/5889\r\n* chore: Release 2.3.23 by @dirkbrnd in https://github.com/agno-agi/agno/pull/5934\r\n\r\n## New Contributors\r\n* @tyook made their first contribution in https://github.com/agno-agi/agno/pull/5872\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.3.22...v2.3.23",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.3.23"
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.6",
+        "author": "thdxr",
+        "date": "2026-01-07",
+        "summary": "## Core\n- Encode non-ASCII directory paths in HTTP headers (@jwaterwater)\n- Add truncation for all tools\n- Make General SubAgent visible in agent list (@dbpolito)\n- Improve handling of unserializable errors\n- Added ability to hide subagents from primary agent's system prompt (@Sewer56)\n- Add --use-system-ca flag in execArgv to support system certificate authorities\n- Ensure commands listing subagent work\n## TUI\n- Add theme functionality\n- Reload theme when configuration changes\n- Clear palette cache\n- Add agent color to inline task tool ASCII character and highlight agent name (@spoons-and-mirrors)\n- Escape backticks when passing commands to PowerShell (@NSPC911)\n- Restore attach session lookup behavior in TUI (@rmk40)\n## Desktop\n- Fix pasting images when input is empty in desktop app (@dbpolito)\n- Bundle media framework in desktop application (@Brendonovich)\n- Fixed macOS application entitlements configuration (@Brendonovich)\n- Add audio input and camera permissions to entitlements (@saeedvaziry)\n- Bundle media framework in AppImage for desktop application (@Brendonovich)\n- Use Show instead of Suspense in desktop application (@Brendonovich)\n- Add UI package to desktop application (@Brendonovich)\n- Show window immediately during desktop startup (@usvimal)\n- Rework storage approach in app\n- Fix session navigation with keyboard shortcuts\n- Permission auto-accept should hide when not needed\n- Improve terminal text selection visibility with better color contrast\n\n**Thank you to 11 community contributors:**\n- @rmk40:\n  - fix(tui): restore attach session lookup behavior (#7150)\n- @NSPC911:\n  - fix: escape backticks when passing to powershell (#7157)\n- @Sewer56:\n  - Added: Ability to hide subagents from primary agents system prompt. (#4773)\n- @Brendonovich:\n  - use custom tauri-cli on linux\n  - desktop: use regular tauri cli again\n  - desktop: use correct tauri-cli branch\n  - try using forked tauri-cli again\n  - add ui package to desktop\n  - desktop: use Show instead of Suspense\n  - desktop: appimage bundleMediaFramework\n  - fix entitlements\n  - desktop: go back to regular tauri cli\n  - desktop: bundleMediaFramework\n- @spoons-and-mirrors:\n  - add agent color to  inline task tool ascii char and highlight agent name (#7142)\n- @usvimal:\n  - perf: show window immediately during desktop startup (#6734)\n- @dbpolito:\n  - Make General SubAgent not hidden (#6752)\n  - Desktop: Fix Paste image on empty input (#7130)\n- @saeedvaziry:\n  - Add audio input and camera permissions to entitlements (#7117)\n- @shuv1337:\n  - feat: add Night Owl theme (desktop) (#7151)\n- @jwaterwater:\n  - fix: encode non-ASCII directory paths in HTTP headers (#7145)\n- @athal7:\n  - fix(ui): prevent iOS Safari auto-zoom on input focus (#7214)",
+        "assets_count": 30,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.6"
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.218.5",
+        "author": "github-actions[bot]",
+        "date": "2026-01-07",
+        "summary": "This week's release includes initial support for [Dev Containers](https://zed.dev/blog/dev-containers), a new [worktree trust mechanism](https://zed.dev/blog/secure-by-default), a new Tree view for the Git panel, SQL syntax highlighting in Python files, AI-generated commit messages that respect rules files (e.g. `AGENTS.md`), improved terminal scrolling and link detection, and a set of Helix mode keymap improvements.\r\n\r\n## Features\r\n\r\n### AI\r\n\r\n- Agent: Added `save_file` and `restore_file_from_disk` agent tools to handle dirty buffers when editing files. ([#45005](https://github.com/zed-industries/zed/pull/45005))\r\n- Agent: Added a button to the agent thread view that scrolls to the most recent prompt. ([#44961](https://github.com/zed-industries/zed/pull/44961))\r\n- Agent: Added the ability to use `shift-tab` to cycle through profiles for the built-in Zed agent. ([#44979](https://github.com/zed-industries/zed/pull/44979))\r\n- Agent: Added the ability to delete a profile through the \"Manage Profiles\" modal. ([#44977](https://github.com/zed-industries/zed/pull/44977))\r\n- Agent: Improved agent panel performance when rendering large diffs. ([#44995](https://github.com/zed-industries/zed/pull/44995))\r\n- Agent: Improved the model search quality in the model picker. ([#44984](https://github.com/zed-industries/zed/pull/44984))\r\n- Agent: Added optional `timeout_ms` parameter to the terminal tool, allowing the agent to bound command runtime and prevent indefinite hangs. ([#44895](https://github.com/zed-industries/zed/pull/44895))\r\n- Edit Prediction: Improved self-hosted zeta UX. Users no longer have to log into Zed to use custom or self-hosted zeta backends. ([#43236](https://github.com/zed-industries/zed/pull/43236); thanks [DominicBurkart](https://github.com/DominicBurkart))\r\n- Copilot: Improved GitHub Enterprise Copilot sign-in. ([#44085](https://github.com/zed-industries/zed/pull/44085); thanks [madmo](https://github.com/madmo))\r\n- Ollama: Added `auto_discover` setting to optionally limit visible models to only those manually configured in `available_models`. ([#42207](https://github.com/zed-industries/zed/pull/42207); thanks [xfbs](https://github.com/xfbs))\r\n\r\n### Git\r\n\r\n⭐ = Shipped via Let's Git Together\r\n\r\n---\r\n\r\n- ⭐Added a tree view for the Git panel. Users are able to switch between Flat and Tree view in the Git panel. ([#44089](https://github.com/zed-industries/zed/pull/44089); thanks [xipeng-jin](https://github.com/xipeng-jin))\r\n- ⭐Improved the file history view by making it keyboard navigable. ([#44328](https://github.com/zed-industries/zed/pull/44328); thanks [feeiyu](https://github.com/feeiyu))\r\n- Improved stability of excerpts when editing in the project diff. ([#44312](https://github.com/zed-industries/zed/pull/44312))\r\n- AI-generated commit messages now respect rules files (e.g. `AGENTS.md`) if present. ([#44921](https://github.com/zed-industries/zed/pull/44921))\r\n- The branch name in the title bar now includes the name of the current repository when needed to disambiguate. ([#44793](https://github.com/zed-industries/zed/pull/44793))\r\n- ⭐Changed clicking the `changes` button in the Git panel to reset the project diff to the beginning. ([#43579](https://github.com/zed-industries/zed/pull/43579); thanks [marcocondrache](https://github.com/marcocondrache))\r\n- ⭐Improved permalinks to account for current diffs. ([#41915](https://github.com/zed-industries/zed/pull/41915); thanks [siame](https://github.com/siame))\r\n- ⭐Fixed Git panel color for staged new files. ([#44071](https://github.com/zed-industries/zed/pull/44071); thanks [cppcoffee](https://github.com/cppcoffee))\r\n- ⭐Fixed double slash in commit URLs. ([#44996](https://github.com/zed-industries/zed/pull/44996); thanks [cppcoffee](https://github.com/cppcoffee))\r\n- Fixed partially-staged files not being represented accurately in the Git panel. ([#44837](https://github.com/zed-industries/zed/pull/44837))\r\n\r\n### Languages\r\n\r\n- Improved Markdown Preview with scrolling actions: `markdown::ScrollUp`, `markdown::ScrollDown`, `markdown::ScrollUpByItem`, and `markdown::ScrollDownByItem`. ([#44585](https://github.com/zed-industries/zed/pull/44585); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Rust: Changed cwd of tasks that spawn a binary target to the root of a current package (which used to be a directory of the current source file). ([#44672](https://github.com/zed-industries/zed/pull/44672))\r\n- Added rainbow bracket coloring for C++ angle brackets (`<` / `>`). ([#44735](https://github.com/zed-industries/zed/pull/44735); thanks [hokein](https://github.com/hokein))\r\n- Added language injections for string and tagged template literals in JS/TS(X). ([#44180](https://github.com/zed-industries/zed/pull/44180); thanks [vitallium](https://github.com/vitallium))\r\n- Improved JavaScript and TypeScript syntax highlighting to better distinguish types, parameters, punctuation, and JSDoc elements. ([#44532](https://github.com/zed-industries/zed/pull/44532))\r\n- Added SQL syntax highlighting support in Python files. ([#43756](https://github.com/zed-industries/zed/pull/43756); thanks [jeffbrennan](https://github.com/jeffbrennan))\r\n- Improved Proto support to work better out of the box. ([#44440](https://github.com/zed-industries/zed/pull/44440))\r\n\r\n### Terminal\r\n\r\n- Improved scroll performance. ([#44714](https://github.com/zed-industries/zed/pull/44714); thanks [davewa](https://github.com/davewa))\r\n- Improved URL link detection in terminals. ([#43559](https://github.com/zed-industries/zed/pull/43559); thanks [marcocondrache](https://github.com/marcocondrache))\r\n- Improved performance of terminal link matching even more. ([#44679](https://github.com/zed-industries/zed/pull/44679))\r\n\r\n### Vim / Helix\r\n\r\n- Added Helix's `space /` keybinding to open a global search menu to Zed's Helix mode. ([#43363](https://github.com/zed-industries/zed/pull/43363); thanks [godalming123](https://github.com/godalming123))\r\n- Changed Helix keybinds to use visual line movement for `j`, `Down`, `k`, and `Up`, and textual line movement for `g j`, `g Down`, `g k`, and `g Up`. ([#42676](https://github.com/zed-industries/zed/pull/42676); thanks [probablykasper](https://github.com/probablykasper))\r\n- Added custom mappings for Zed-specific diff and git-related actions to Helix's goto mode. ([#45006](https://github.com/zed-industries/zed/pull/45006))\r\n * `g o` - toggle selected diff hunks\r\n * `g O` - toggle staged\r\n * `g R` - restore change\r\n * `g u` - stage and goto next diff hunk\r\n * `g U` - unstage and goto next diff hunk\r\n- Improved Helix mode keymaps by adding a Search category and clarifying non-Helix bindings. ([#43735](https://github.com/zed-industries/zed/pull/43735); thanks [atahrijouti](https://github.com/atahrijouti))\r\n\r\n### Other\r\n\r\n- Added ability to open a project in a DevContainer, provided a `.devcontainer/devcontainer.json` is present. ([#44442](https://github.com/zed-industries/zed/pull/44442); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Introduced worktree trust mechanism, can be turned off with \"session\": `{ \"session\": { \"trust_all_worktrees\": true }}`.\r\n  - Read the [Secure by Default](https://zed.dev/blog/secure-by-default) blog post.\r\n- Improved link parsing for cases when a link is embedded in parentheses, e.g. Markdown. ([#44733](https://github.com/zed-industries/zed/pull/44733); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Improved path and rendering performance. ([#44655](https://github.com/zed-industries/zed/pull/44655); thanks [marcocondrache](https://github.com/marcocondrache))\r\n- Settings UI: Added an \"Open Keymap Editor\" item under the Keymap section. ([#44914](https://github.com/zed-industries/zed/pull/44914))\r\n- Settings UI: Added a section for configuring edit prediction providers under AI > Edit Predictions, including Codestral and GitHub Copilot. Once you've updated you can use the following link to open it: zed://settings/edit_predictions.providers. ([#44505](https://github.com/zed-industries/zed/pull/44505))\r\n- Added support for on-type formatting with newlines. ([#44882](https://github.com/zed-industries/zed/pull/44882))\r\n- Implemented the `zed --wait` flag so that it works when opening a directory. The command will block until the window is closed. ([#44936](https://github.com/zed-industries/zed/pull/44936))\r\n- Added scroll keybindings for the OutlinePanel. ([#42438](https://github.com/zed-industries/zed/pull/42438); thanks [0x2CA](https://github.com/0x2CA))\r\n- Added the actions: `workspace::ZoomIn` and `workspace::ZoomOut` that complement the existing `workspace::ToggleZoom` action. ([#44587](https://github.com/zed-industries/zed/pull/44587); thanks [pedroni](https://github.com/pedroni))\r\n- Added a `connection_timeout` setting to specify the SSH connection timeout. ([#44823](https://github.com/zed-industries/zed/pull/44823); thanks [marcocondrache](https://github.com/marcocondrache))\r\n- Standardized `cmd-o` = open file, `cmd-k, cmd-o` = open folder across operating systems. ([#44598](https://github.com/zed-industries/zed/pull/44598); thanks [Zachiah](https://github.com/Zachiah))\r\n- Added a `show_user_menu` setting (defaulting to true) which shows or hides the user menu (the one with the user avatar) in the title bar. ([#44466](https://github.com/zed-industries/zed/pull/44466); thanks [notnotjake](https://github.com/notnotjake))\r\n- macOS: Added Force Touch support for go-to-definition. ([#40399](https://github.com/zed-industries/zed/pull/40399); thanks [aarol](https://github.com/aarol))\r\n- Improved the UI for keymap error messages. ([#42037](https://github.com/zed-industries/zed/pull/42037); thanks [johnklucinec](https://github.com/johnklucinec))\r\n- Improved LSP notification messages by adding Markdown rendering with clickable URLs, inline code, etc. ([#44215](https://github.com/zed-industries/zed/pull/44215); thanks [errmayank](https://github.com/errmayank))\r\n- Improved new windows spawned from maximized or fullscreen windows by preserving maximized and fullscreen state. ([#44605](https://github.com/zed-industries/zed/pull/44605))\r\n- Improved minimap performance when using custom fonts. ([#46024](https://github.com/zed-industries/zed/pull/46024))\r\n- Suppressed warnings for trailing commas in built-in JSON files (`settings.json`, `keymap.json`, etc.). ([#43854](https://github.com/zed-industries/zed/pull/43854); thanks [ian-h-chamberlain](https://github.com/ian-h-chamberlain))\r\n- Added a new value to the `restore_on_startup` setting called `launchpad`. This value makes Zed open with a variant of the welcome screen (\"the launchpad\") upon startup. Additionally, this same page variant is now also what is displayed if you close all tabs in an existing window that doesn't contain any folders open. The launchpad page shows you up to 5 recent projects, making it easy to open something you were working on recently. ([#44048](https://github.com/zed-industries/zed/pull/44048); thanks [simonpham](https://github.com/simonpham))\r\n\r\n## Bug Fixes\r\n\r\n- Windows: Fixed the folder picker inserting wrong slashes when remoting from Windows to WSL. ([#44886](https://github.com/zed-industries/zed/pull/44886))\r\n- Windows: Fixed terminal hyperlinking not working for `file://` schemes with Windows drive letters. ([#44847](https://github.com/zed-industries/zed/pull/44847))\r\n- Windows: Fixed double hover state. ([#44711](https://github.com/zed-industries/zed/pull/44711))\r\n- Windows: Fixed SendKeystrokes mapping. ([#44707](https://github.com/zed-industries/zed/pull/44707))\r\n- Windows: Fixed shell environment fetching on Windows discarding specified arguments in settings. ([#44615](https://github.com/zed-industries/zed/pull/44615))\r\n- Windows: Fixed a bug where custom MCP and ACP servers installed through did not launch correctly. ([#42382](https://github.com/zed-industries/zed/pull/42382))\r\n- Windows: Fixed new windows underflowing the taskbar. ([#44605](https://github.com/zed-industries/zed/pull/44605))\r\n- Windows: Fixed terminal not switching to project directory when opening remote project. ([#45390](https://github.com/zed-industries/zed/pull/45390))\r\n- Linux: Fixed a race condition where the macros containing modifier + key would sometimes be processed without the modifier. ([#44234](https://github.com/zed-industries/zed/pull/44234); thanks [AndreRoelofs](https://github.com/AndreRoelofs))\r\n- Terminal: Fixed an issue where `ctrl|cmd+click` on links was very sensitive to mouse movement. Clicking links now tolerates mouse movement within the same clickable element, making link navigation more reliable. ([#42526](https://github.com/zed-industries/zed/pull/42526); thanks [nihalxkumar](https://github.com/nihalxkumar))\r\n- Vim: Fixed bug where overwriting global Vim marks was inconsistent. ([#44765](https://github.com/zed-industries/zed/pull/44765); thanks [AidanV](https://github.com/AidanV))\r\n- Git: Fixed a bug where not all branches were being shown in the branch selector when the search field was empty. ([#44742](https://github.com/zed-industries/zed/pull/44742))\r\n- Git: Fixed a bug where the `git: amend` command would not load the latest head commit message, and any previously entered text in the commit message editor would be lost after the amend completed. ([#44553](https://github.com/zed-industries/zed/pull/44553))\r\n- Fixed a case where an incorrect match could be generated in label_for_completion. ([#44925](https://github.com/zed-industries/zed/pull/44925); thanks [Nereuxofficial](https://github.com/Nereuxofficial))\r\n- Fixed an issue where Markdown tables would sometimes show double borders. ([#44991](https://github.com/zed-industries/zed/pull/44991))\r\n- Fixed an issue where Markdown tables wouldn't render in the hover popover. ([#44712](https://github.com/zed-industries/zed/pull/44712))\r\n- Fixed percent-encoded filenames appearing in agent message file mentions. ([#44983](https://github.com/zed-industries/zed/pull/44983); thanks [Suzushiro-radish](https://github.com/Suzushiro-radish))\r\n- Fixed tab preview not showing up on initial `ctrl-shift-tab` press. ([#44959](https://github.com/zed-industries/zed/pull/44959); thanks [errmayank](https://github.com/errmayank))\r\n- Fixed editor context menu triggering format on save. ([#44073](https://github.com/zed-industries/zed/pull/44073); thanks [flappyBug](https://github.com/flappyBug))\r\n- Fixed `file_finder::Toggle` action sometimes not working in JetBrains keymap. ([#44951](https://github.com/zed-industries/zed/pull/44951))\r\n- Fixed a bug where screen-share tabs would persist after the sender (or receiver) had left the call. ([#44945](https://github.com/zed-industries/zed/pull/44945))\r\n- Fixed a bug when expanding a diff hunk at the beginning of a file, where the deleted portion of the hunk would remain outside of the viewport. ([#44932](https://github.com/zed-industries/zed/pull/44932))\r\n- Fixed `-or-` divider rendering incorrectly in the project panel of an empty workspace. ([#44920](https://github.com/zed-industries/zed/pull/44920); thanks [ti0ma](https://github.com/ti0ma))\r\n- Fixed quote autoclose incorrectly counting quotes inside strings. ([#44281](https://github.com/zed-industries/zed/pull/44281); thanks [errmayank](https://github.com/errmayank))\r\n- Fixed a bug where git pager configurations could cause agent and terminal git commands to hang by forcing `PAGER` and `GIT_PAGER` environment variables off. ([#43277](https://github.com/zed-industries/zed/pull/43277); thanks [odvcencio](https://github.com/odvcencio))\r\n- Fixed a bug where double- and triple-click selection would not correctly expand by word and by line within Markdown elements (diagnostics, agent panel, etc.), instead requiring manual adjustment. ([#43813](https://github.com/zed-industries/zed/pull/43813); thanks [RMcGhee](https://github.com/RMcGhee))\r\n- Fixed a bug where adjacent selections were being merged together. ([#44811](https://github.com/zed-industries/zed/pull/44811); thanks [marcocondrache](https://github.com/marcocondrache))\r\n- Fixed vitest test running and debugging for projects using vitest v4. ([#43241](https://github.com/zed-industries/zed/pull/43241); thanks [freddyfallon](https://github.com/freddyfallon))\r\n- Fixed incorrect provider shown in \"view on remote\" button. ([#44738](https://github.com/zed-industries/zed/pull/44738); thanks [errmayank](https://github.com/errmayank))\r\n- Fixed comment injections not working with C and C++. ([#44883](https://github.com/zed-industries/zed/pull/44883))\r\n- Fixed block and hollow cursor being offset when selecting text. ([#42837](https://github.com/zed-industries/zed/pull/42837); thanks [lennartkloock](https://github.com/lennartkloock))\r\n- Fixed search bars losing their replace state if you re-focus on them via actions or keybinds. ([#44862](https://github.com/zed-industries/zed/pull/44862))\r\n- Fixed ANSI colors definitions in the Gruvbox theme. ([#38536](https://github.com/zed-industries/zed/pull/38536); thanks [dangooddd](https://github.com/dangooddd))\r\n- Fixed external agents that hung on \"Loading…\" when shell startup output broke JSON-RPC initialization. ([#44826](https://github.com/zed-industries/zed/pull/44826); thanks [xipeng-jin](https://github.com/xipeng-jin))\r\n- Fixed terminal `$SHLVL` starting at 2 instead of 1. ([#44835](https://github.com/zed-industries/zed/pull/44835); thanks [edlsh](https://github.com/edlsh))\r\n- Fixed hover boxes for inlays blinking in and out without movement when cursor blinking was enabled. ([#44822](https://github.com/zed-industries/zed/pull/44822))\r\n- Fixed tab jitter from oversized scrolling. ([#42434](https://github.com/zed-industries/zed/pull/42434); thanks [cppcoffee](https://github.com/cppcoffee))\r\n- Fixed remoting not working on some Linux and macOS systems. ([#44697](https://github.com/zed-industries/zed/pull/44697))\r\n- Fixed wrong font features in Blame UI, Hover Popover and Markdown Preview. ([#44657](https://github.com/zed-industries/zed/pull/44657))\r\n- Fixed an issue where commit and amend actions wouldn't trigger when using keybinds in the commit modal. ([#44690](https://github.com/zed-industries/zed/pull/44690))\r\n- Fixed an issue in Markdown where new list items weren't respecting the expected indentation on type. ([#44616](https://github.com/zed-industries/zed/pull/44616))\r\n- Fixed micromamba environments failing to activate by initializing micromamba using the active shell's init script. ([#44646](https://github.com/zed-industries/zed/pull/44646); thanks [cvanelteren](https://github.com/cvanelteren))\r\n- Fixed a bug where `cmd+click` would still trigger if you pressed `cmd` after starting the click, instead of requiring `cmd` to be held before the click began. ([#44579](https://github.com/zed-industries/zed/pull/44579); thanks [Zachiah](https://github.com/Zachiah))\r\n- Fixed the diagnostics panel always showing breadcrumbs, ignoring the `toolbar.breadcrumbs` setting. ([#44974](https://github.com/zed-industries/zed/pull/44974); thanks [majiayu000](https://github.com/majiayu000))\r\n- Fixed `editor::OpenUrl` not working for `https://zed.dev` links. ([#44910](https://github.com/zed-industries/zed/pull/44910))\r\n- Fixed in-editor clicks on Zed channel and channel-note links redirecting via the web. ([#44910](https://github.com/zed-industries/zed/pull/44910))\r\n- Fixed slash command file collection showing incorrect folded directory paths (e.g. `.github/.zed` instead of `.zed`). ([#41880](https://github.com/zed-industries/zed/pull/41880); thanks [CLoaKY233](https://github.com/CLoaKY233))\r\n- Fixed Zed out-of-memory error when macOS file descriptors become invalid. ([#45700](https://github.com/zed-industries/zed/pull/45700))\r\n- Fixed a memory leak when opening images. ([#45970](https://github.com/zed-industries/zed/pull/45970))\r\n- Fixed issue with Deepseek API that was causing the token limit to be reached sooner than necessary. ([#45250](https://github.com/zed-industries/zed/pull/45250))\r\n- Fixed workspace incorrectly automatically switching Git repository/branch context in multi-repository projects when repo/branch switched manually from the Git panel. ([#45354](https://github.com/zed-industries/zed/pull/45354))\r\n\r\n## Breaking Changes and Notices\r\n\r\n- Disabled word completions in plaintext and markdown files. To re-enable, add the following to your settings: `\"languages\": { \"Plain Text\": { \"completions\": { \"words\": \"enabled\" } }, \"Markdown\": { \"completions\": { \"words\": \"enabled\" } } }`. ([#44654](https://github.com/zed-industries/zed/pull/44654))\r\n- Removed `editor::AcceptPartialEditPrediction` and replaced it with `editor::AcceptNextLineEditPrediction` and `editor::AcceptNextWordEditPrediction`. ([#44411](https://github.com/zed-industries/zed/pull/44411); thanks [teleoflexuous](https://github.com/teleoflexuous))\r\n- Changed Markdown Preview commands `markdown::MovePageUp` and `markdown::MovePageDown` to `markdown::ScrollPageUp` and `markdown::ScrollPageDown`. ([#44585](https://github.com/zed-industries/zed/pull/44585); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Vim: Removed a keybinding conflict between the default macOS bindings for `pane::ActivateItem` and the `ctrl-6` alias for `pane::AlternateFile` which is primarily bound to `ctrl-^`. `ctrl-6` is no longer treated as an alias for `ctrl-^` in vim mode. If you'd like to restore `ctrl-6` as a binding for `pane::AlternateFile`, paste the following into your `keymap.json` file. ([#44560](https://github.com/zed-industries/zed/pull/44560))\r\n",
+        "assets_count": 10,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.218.5"
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
