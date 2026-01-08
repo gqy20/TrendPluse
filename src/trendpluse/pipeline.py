@@ -244,11 +244,21 @@ class TrendPulsePipeline:
                 1 for s in commit_signals if getattr(s, "impact_score", 0) >= 4
             )
 
+        # 分类 commit_signals 到 engineering/research
+        engineering_signals: list = []
+        research_signals: list = []
+        if commit_signals:
+            for signal in commit_signals:
+                if signal.category == "engineering":
+                    engineering_signals.append(signal)
+                elif signal.category == "research":
+                    research_signals.append(signal)
+
         report = DailyReport(
             date=date_str,
             summary_brief=summary_brief,
-            engineering_signals=[],
-            research_signals=[],
+            engineering_signals=engineering_signals,
+            research_signals=research_signals,
             commit_signals=commit_signals or [],
             stats={
                 "total_prs_analyzed": 0,
