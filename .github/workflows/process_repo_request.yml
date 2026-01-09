@@ -100,7 +100,7 @@ jobs:
             --category "${{ steps.parse.outputs.category }}"
 
       - name: 创建 PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
           body: |
