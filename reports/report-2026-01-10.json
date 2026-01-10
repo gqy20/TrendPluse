@@ -1,0 +1,808 @@
+{
+  "date": "2026-01-10",
+  "summary_brief": "今日 (2026-01-10) 发现 8 个 Commit 信号，10 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "commit-0",
+      "title": "MCP协议深度集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Model Context Protocol (MCP) 正成为 AI 编程工具的标准互操作性层，Cline 和 OpenCodex 的更新显示行业正加速统一工具调用和资源访问的接口标准。",
+      "sources": [
+        "https://github.com/cline/cline/commit/bf87887501d52f0d56bac42293992022dffdbd21"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline",
+        "bytedance/deer-flow"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "OpenAI Responses API集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI 推出的 Responses API 旨在简化结构化输出和复杂任务编排，Zed 和 OpenCodex 的快速跟进表明该接口正成为替代传统 Function Calling 的新范式。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/451bf25d1c4efd4209483483d570972c6b4368f3"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex",
+        "openai/openai-python"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "Agent子任务与权限系统",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Zed 引入子任务和工具权限评估逻辑，标志着 AI Agent 从单一执行者向具备层级规划和安全控制的复杂系统演进，解决了 Agent 不可控性的核心痛点。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/acbb32d19fd2cbdcc3cd6fe6af11ae1eab534209"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "CLI工具链Hook系统重构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI 和 OpenCodex 正在重构内部架构以支持 Hook 系统，这表明 AI 编程工具正趋向平台化，允许用户和插件在关键生命周期节点注入自定义逻辑。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/9d187e041c8f8c8e6e464fe0711504c6c37d7ead"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "可观测性与遥测增强",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCodex 和 Cline 大幅增强 OTEL (OpenTelemetry) 支持和运行时配置能力，反映出随着 AI 系统复杂度提升，对调试、追踪和性能监控的需求已从可选变为刚需。",
+      "sources": [
+        "https://github.com/cline/cline/commit/58d9c0af18b2657af6b4e45b0fba5ad2e321ac3b"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "LLM模型推理性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI 通过缓存 ignore 实例来优化性能，这类针对 LLM 特性的底层优化（如减少 Token 消耗、降低延迟）对于提升终端用户体验至关重要。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/e04a5f0cb0ee6f659278260ca559a89b54ed9ed1"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "Agent安全沙箱与验证",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "GPTme 集中修复了服务器端的安全漏洞（参数校验、错误信息清理、断言替换），凸显了 AI Agent 在处理不可信输入时面临的严峻安全挑战，特别是具备 Shell 执行能力的 Agent。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/bcd5f38507b95c924b3f742f3a34d83fbbf5829e"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "OpenDevin/OpenDevin"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "多模态与流式响应处理",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCodex 和 OpenDevin 修复了流式事件（SSE）处理和前端显示的问题，确保 AI 生成内容的实时性和准确性，这是提升用户感知响应速度的关键。",
+      "sources": [
+        "https://github.com/openai/codex/commit/cabf85aa1846ceb8841b269d93cf0b039316b217"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [
+    {
+      "id": "commit-0",
+      "title": "MCP协议深度集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Model Context Protocol (MCP) 正成为 AI 编程工具的标准互操作性层，Cline 和 OpenCodex 的更新显示行业正加速统一工具调用和资源访问的接口标准。",
+      "sources": [
+        "https://github.com/cline/cline/commit/bf87887501d52f0d56bac42293992022dffdbd21"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline",
+        "bytedance/deer-flow"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "OpenAI Responses API集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI 推出的 Responses API 旨在简化结构化输出和复杂任务编排，Zed 和 OpenCodex 的快速跟进表明该接口正成为替代传统 Function Calling 的新范式。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/451bf25d1c4efd4209483483d570972c6b4368f3"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex",
+        "openai/openai-python"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "Agent子任务与权限系统",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Zed 引入子任务和工具权限评估逻辑，标志着 AI Agent 从单一执行者向具备层级规划和安全控制的复杂系统演进，解决了 Agent 不可控性的核心痛点。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/acbb32d19fd2cbdcc3cd6fe6af11ae1eab534209"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "CLI工具链Hook系统重构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI 和 OpenCodex 正在重构内部架构以支持 Hook 系统，这表明 AI 编程工具正趋向平台化，允许用户和插件在关键生命周期节点注入自定义逻辑。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/9d187e041c8f8c8e6e464fe0711504c6c37d7ead"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "可观测性与遥测增强",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCodex 和 Cline 大幅增强 OTEL (OpenTelemetry) 支持和运行时配置能力，反映出随着 AI 系统复杂度提升，对调试、追踪和性能监控的需求已从可选变为刚需。",
+      "sources": [
+        "https://github.com/cline/cline/commit/58d9c0af18b2657af6b4e45b0fba5ad2e321ac3b"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "LLM模型推理性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI 通过缓存 ignore 实例来优化性能，这类针对 LLM 特性的底层优化（如减少 Token 消耗、降低延迟）对于提升终端用户体验至关重要。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/e04a5f0cb0ee6f659278260ca559a89b54ed9ed1"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "Agent安全沙箱与验证",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "GPTme 集中修复了服务器端的安全漏洞（参数校验、错误信息清理、断言替换），凸显了 AI Agent 在处理不可信输入时面临的严峻安全挑战，特别是具备 Shell 执行能力的 Agent。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/bcd5f38507b95c924b3f742f3a34d83fbbf5829e"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "OpenDevin/OpenDevin"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "多模态与流式响应处理",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCodex 和 OpenDevin 修复了流式事件（SSE）处理和前端显示的问题，确保 AI 生成内容的实时性和准确性，这是提升用户感知响应速度的关键。",
+      "sources": [
+        "https://github.com/openai/codex/commit/cabf85aa1846ceb8841b269d93cf0b039316b217"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex"
+      ]
+    }
+  ],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 5,
+    "total_commits_analyzed": 233,
+    "total_releases": 10
+  },
+  "activity": {
+    "total_commits": 233,
+    "active_repos_count": 24,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 44,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rekram1-node",
+          "fwang",
+          "actions-user",
+          "adamdotdevin",
+          "kommander"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 39,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rtfeldman",
+          "maxdeviant",
+          "osiewicz",
+          "benbrandt",
+          "maxbrunsfeld"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 31,
+        "new_contributors": 0,
+        "top_contributors": [
+          "jif-oai",
+          "bolinfest",
+          "gt-oai",
+          "pakrym-oai",
+          "aibrahim-oai"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 23,
+        "new_contributors": 0,
+        "top_contributors": [
+          "cbornet",
+          "sydney-runkle",
+          "mdrxy",
+          "ccurme",
+          "T1mn"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 22,
+        "new_contributors": 0,
+        "top_contributors": [
+          "NTaylorMullen",
+          "jacob314",
+          "scidomino",
+          "ved015",
+          "gundermanc"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 10,
+        "new_contributors": 0,
+        "top_contributors": [
+          "BarreiroT",
+          "sjf",
+          "cryptoque",
+          "celestial-vault",
+          "juanpflores"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 10,
+        "new_contributors": 0,
+        "top_contributors": [
+          "tofarr",
+          "neubig",
+          "all-hands-bot",
+          "amanape",
+          "zxkane"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 9,
+        "new_contributors": 0,
+        "top_contributors": [
+          "loftybuilder"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 9,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dependabot[bot]",
+          "mdrxy",
+          "cwlbraa",
+          "sydney-runkle"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "fatelei",
+          "CodingOnStar",
+          "QuantumGhost",
+          "hyoban",
+          "majiayu000"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "eyurtsev",
+          "vtrivedy",
+          "hwchase17"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "WillemJiang",
+          "Mirza-Samad-Ahmed-Baig"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "g1331"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "bcherny"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "danielmiessler"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "kristol07"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "manuhortet"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "lorenzejay"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 10,
+    "unique_repos_count": 9,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.3",
+        "author": "ashwin-ant",
+        "date": "2026-01-09",
+        "summary": "## What's changed\n\n- Merged slash commands and skills, simplifying the mental model with no change in behavior\n- Added release channel (`stable` or `latest`) toggle to `/config`\n- Added detection and warnings for unreachable permission rules, with warnings in `/doctor` and after saving rules that include the source of each rule and actionable fix guidance\n- Fixed plan files persisting across `/clear` commands, now ensuring a fresh plan file is used after clearing a conversation\n- Fixed false skill duplicate detection on filesystems with large inodes (e.g., ExFAT) by using 64-bit precision for inode values\n- Fixed mismatch between background task count in status bar and items shown in tasks dialog\n- Fixed sub-agents using the wrong model during conversation compaction\n- Fixed web search in sub-agents using incorrect model\n- Fixed trust dialog acceptance when running from the home directory not enabling trust-requiring features like hooks during the session\n- Improved terminal rendering stability by preventing uncontrolled writes from corrupting cursor state\n- Improved slash command suggestion readability by truncating long descriptions to 2 lines\n- Changed tool hook execution timeout from 60 seconds to 10 minutes\n- [VSCode] Added clickable destination selector for permission requests, allowing you to choose where settings are saved (this project, all projects, shared with team, or session only)\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.3"
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.3",
+        "author": "ashwin-ant",
+        "date": "2026-01-09",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.3\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.3\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.3\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.3\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.3\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.3"
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.48.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "\n### Added\n\n- Add Skills system for reusable, on-demand agent instructions\n- Add new websearch tooling in Cline provider\n- Add zai-glm-4.7 to Cerebras model list\n- Add model refresh and improve reasoning support for Vercel AI Gateway\n\n### Fixed\n\n- Revert #8341 due to regressions in diff view/document truncation (see #8423, #8429)\n- Fixed extension crash when using context menu selector\n\n**Full Changelog**: https://github.com/cline/cline/compare/v3.47.0...v3.48.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.48.0"
+      },
+      {
+        "repo": "openai/openai-python",
+        "version": "v2.15.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-01-09",
+        "summary": "## 2.15.0 (2026-01-09)\n\nFull Changelog: [v2.14.0...v2.15.0](https://github.com/openai/openai-python/compare/v2.14.0...v2.15.0)\n\n### Features\n\n* **api:** add new Response completed_at prop ([f077752](https://github.com/openai/openai-python/commit/f077752f4a8364a74f784f8fb1cbe31277e1762b))\n\n\n### Chores\n\n* **internal:** codegen related update ([e7daba6](https://github.com/openai/openai-python/commit/e7daba6662a3c30f73d991e96cb19d2b54d772e0))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v2.15.0"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-core==1.2.7",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "Changes since langchain-core==1.2.6\n\nrelease: langchain-core 1.2.7 (#34678)\nfix: don't trace injected args only found in signature (#34670)\nfeat(core): add more file extensions to ignore in HTML link extraction (#34552)\nrefactor(core): improve docstrings for HTML link extraction utilities (#34550)\ntest(core): add edge case for empty examples in LengthBasedExampleSelector (#34641)\nfix(core): fix strict schema generation for functions with optional args (#34599)\nfeat(core): support custom message separator in get_buffer_string() (#34569)\nrefactor(core): add warning for fallback GPT-2 tokenizer usage (#34621)\nfix(core,langchain): use `get_buffer_string` for message summarization (#34607)\ntest(core): add tests for formatting utils and merge functions (#34511)\nfix(core): strip message IDs from cache keys using `model_copy` (#33915)\nfix(core): exclude injected args from tool schema (#34582)\nrefactor(core): select chunk_id via ranking and remove extra allocation (#34588)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.7"
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-core==0.3.82",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "Changes since langchain-core==0.3.81\n\nrelease(core): 0.3.82 (#34688)\nfix(core): defer persisting traces for iterator inputs (#34687)\nfeat(core): add `usage_metadata` to metadata in `LangChainTracer` (#34686)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D0.3.82"
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "sdk==0.3.2",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "Changes since sdk==0.3.1\n\n* feat(sdk-py): cron.on_run_completed support (#6662)\n* chore: delete docs (#6488)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/sdk%3D%3D0.3.2"
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.80.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "## New Features\r\n- Add conversation/thread fork endpoints in the protocol and app server so clients can branch a session into a new thread. (#8866)\r\n- Expose requirements via `requirement/list` so clients can read `requirements.toml` and adjust agent-mode UX. (#8800)\r\n- Introduce metrics capabilities with additional counters for observability. (#8318, #8910)\r\n- Add elevated sandbox onboarding with prompts for upgrade/degraded mode plus the `/elevate-sandbox` command. (#8789)\r\n- Allow explicit skill invocations through v2 API user input. (#8864)\r\n\r\n## Bug Fixes\r\n- Codex CLI subprocesses again inherit env vars like `LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to avoid runtime issues. As explained in #8945, failure to pass along these environment variables to subprocesses that expect them (notably GPU-related ones), was causing 10x+ performance regressions! Special thanks to @johnzfitch for the detailed investigation and write-up in #8945. (#8951)\r\n- `/review <instructions>` in TUI/TUI2 now launches the review flow instead of sending plain text. (#8823)\r\n- Patch approval “allow this session” now sticks for previously approved files. (#8451)\r\n- Model upgrade prompt now appears even if the current model is hidden from the picker. (#8802)\r\n- Windows paste handling now supports non-ASCII multiline input reliably. Special thanks to @occurrent laying the groundwork for this fix in #8021! (#8774)\r\n- Git apply path parsing now handles quoted/escaped paths and `/dev/null` correctly to avoid misclassified changes. (#8824)\r\n\r\n## Documentation\r\n- App-server README now documents skills support and usage. (#8853)\r\n- Skill-creator docs clarify YAML frontmatter formatting and quoting rules. (#8610)\r\n\r\n## Changelog\r\n\r\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.79.0...rust-v0.80.0\r\n\r\n- #8734 fix: do not propose to add multiline commands to execpolicy @tibo-openai\r\n- #8802 Enable model upgrade popup even when selected model is no longer in picker @charley-oai\r\n- #8805 chore: stabilize core tool parallelism test @tibo-openai\r\n- #8820 chore: silent just fmt @jif-oai\r\n- #8824 fix: parse git apply paths correctly @tibo-openai\r\n- #8823 fix: handle /review arguments in TUI @tibo-openai\r\n- #8822 chore: rename unified exec sessions @jif-oai\r\n- #8825 fix: handle early codex exec exit @tibo-openai\r\n- #8830 chore: unify conversation with thread name @jif-oai\r\n- #8840 Move tests below auth manager @pakrym-oai\r\n- #8845 fix: upgrade lru crate to 0.16.3 @bolinfest\r\n- #8763 Merge Modelfamily into modelinfo @aibrahim-oai\r\n- #8842 remove unnecessary todos @aibrahim-oai\r\n- #8846 Stop using AuthManager as the source of codex_home @pakrym-oai\r\n- #8844 Fix app-server `write_models_cache` to treat models with less priority number as higher priority.  @aibrahim-oai\r\n- #8850 chore: drop useless feature flags @jif-oai\r\n- #8848 chore: drop some deprecated @jif-oai\r\n- #8853 [chore] update app server doc with skills @celia-oai\r\n- #8451 fix: implement 'Allow this session' for apply_patch approvals @owenlin0\r\n- #8856 Override truncation policy at model info level @aibrahim-oai\r\n- #8849 Simplify error managment in `run_turn` @aibrahim-oai\r\n- #8767 Add feature for optional request compression @cconger\r\n- #8610 Clarify YAML frontmatter formatting in skill-creator @darlingm\r\n- #8847 Warn in /model if BASE_URL set @gt-oai\r\n- #8801 Support symlink for skills discovery. @xl-openai\r\n- #8800 Feat: appServer.requirementList for requirement.toml @shijie-oai\r\n- #8861 fix: update resource path resolution logic so it works with Bazel @bolinfest\r\n- #8868 fix: use tokio for I/O in an async function @bolinfest\r\n- #8867 add \ffooter note to TUI @iceweasel-oai\r\n- #8879 feat: introduce find_resource! macro that works with Cargo or Bazel @bolinfest\r\n- #8864 Support UserInput::Skill in V2 API. @xl-openai\r\n- #8876 add ability to disable input temporarily in the TUI. @iceweasel-oai\r\n- #8884 fix: make the find_resource! macro responsible for the absolutize() call @bolinfest\r\n- #8774 fix: windows can now paste non-ascii multiline text @dylan-hurd-oai, @occurrent\r\n- #8855 chore: add list thread ids on manager @jif-oai\r\n- #8318 feat: metrics capabilities @jif-oai\r\n- #8826 fix: stabilize list_dir pagination order @tibo-openai\r\n- #8892 chore: drop metrics exporter config @jif-oai\r\n- #8896 chore: align error limit comment @tibo-openai\r\n- #8899 fix: include project instructions in /review subagent @tibo-openai\r\n- #8894 chore: add small debug client @jif-oai\r\n- #8888 fix: leverage find_resource! macro in load_sse_fixture_with_id @bolinfest\r\n- #8691 Avoid setpgid for inherited stdio on macOS @seeekr\r\n- #8887 fix: leverage codex_utils_cargo_bin() in codex-rs/core/tests/suite @bolinfest\r\n- #8907 chore: drop useless interaction_input @jif-oai\r\n- #8903 nit: drop unused function call error @jif-oai\r\n- #8910 feat: add a few metrics @jif-oai\r\n- #8911 gitignore bazel-* @zbarsky-openai\r\n- #8843 config requirements: improve requirement error messages @gt-oai\r\n- #8914 fix: reduce duplicate include_str!() calls @bolinfest\r\n- #8902 feat: add list loaded threads to app server @jif-oai\r\n- #8870 [fix] app server flaky thread/resume tests @celia-oai\r\n- #8916 clean: all history cloning @jif-oai\r\n- #8915 otel test: retry WouldBlock errors @gt-oai\r\n- #8792 Update models.json @github-actions\r\n- #8897 fix: preserve core env vars on Windows @tibo-openai\r\n- #8913 Add `read-only` when backfilling requirements from managed_config @gt-oai\r\n- #8926 add tooltip hint for shell commands (!) @fps7806\r\n- #8857 Immutable CodexAuth @pakrym-oai\r\n- #8927 nit: parse_arguments @jif-oai\r\n- #8932 fix: increase timeout for tests that have been flaking with timeout issues @bolinfest\r\n- #8931 fix: correct login shell mismatch in the accept_elicitation_for_prompt_rule() test @bolinfest\r\n- #8874 [fix] app server flaky send_messages test @celia-oai\r\n- #8866 feat: fork conversation/thread @apanasenko-oai\r\n- #8858 remove `get_responses_requests` and `get_responses_request_bodies` to use in-place matcher @aibrahim-oai\r\n- #8939 [chore] move app server tests from chat completion to responses @celia-oai\r\n- #8880 Attempt to reload auth as a step in 401 recovery @pakrym-oai\r\n- #8946 fix: increase timeout for wait_for_event() for Bazel @bolinfest\r\n- #8789 Elevated sandbox NUX @iceweasel-oai\r\n- #8917 fix: treat null MCP resource args as empty @tibo-openai\r\n- #8942 Add 5s timeout to models list call + integration test @aibrahim-oai\r\n- #8951 fix: remove existing process hardening from Codex CLI @bolinfest\r\n\r\n\r\n",
+        "assets_count": 74,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.80.0"
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.3.5",
+        "author": "github-actions[bot]",
+        "date": "2026-01-09",
+        "summary": "Changes since deepagents==0.3.4\n\nminor release(deepagents): bump version to 0.3.5 (#695)\nPort SDK Memory to CLI (#691)\nchore(deepagents): turn on strict linting and add ratchet (#690)\nchore(deepagents): add tests for todos middleware (#667)\nfix(deepagents):  fix content block handling in filesystem middleware tool result eviction (#674)",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.3.5"
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.10",
+        "author": "thdxr",
+        "date": "2026-01-09",
+        "summary": "## Core\n- Disable server unless explicitly opted in\n- Report config errors instead of silent termination (@ariane-emory)\n- Upgrade OpenTUI to v0.1.72\n- Resolve broken forked sessions with compactions due to missing parent-child message references (@ryanwyler)\n- Upgrade OpenTUI to v0.1.71, fixing capability detection and Kitty keyboard support\n- Deduplicate plugins by name with priority-based resolution (@devxoul)\n- Bump Copilot plugin version\n- Fix model dialog search issues in favorites/recents list and prevent deprecated models from appearing\n## TUI\n- Enable API key prompt for Bedrock in auth login (@Raviguntakala)\n## Desktop\n- Remove inline JavaScript from the app\n- Remove custom URL parameter from app\n- Prevent model picker overflow with Zen mode in new sessions (@0xajka)\n- Complete symlink support implementation and enable CI for PRs in desktop app (@jerome-benoit)\n- Store terminal and review pane visibility per session\n- Change terminal cursor to bar and stop blinking when not focused (@dbpolito)\n\n**Thank you to 8 community contributors:**\n- @RD201:\n  - docs: Add Scaleway to provider docs (#7389)\n- @dbpolito:\n  - feat(desktop): Change Terminal's Cursor to Bar and Stop Blinking when not focused (#7402)\n- @devxoul:\n  - feat(config): deduplicate plugins by name with priority-based resolution (#5957)\n- @jerome-benoit:\n  - fix(desktop): complete symlink support implementation and enable CI for PRs (#7113)\n- @0xajka:\n  - fix: prevent model picker overflow with Zen in new sessions (#7495)\n- @ryanwyler:\n  - fix: resolve broken forked sessions with compactions due to missing parent-child message references (#6445)\n- @Raviguntakala:\n  - fix(cli): enable API key prompt for Bedrock in auth login (#7332)\n- @ariane-emory:\n  - fix: report config errors instead of silent termination (#7522)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.10"
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
