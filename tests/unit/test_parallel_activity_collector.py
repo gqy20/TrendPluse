@@ -42,7 +42,7 @@ class TestParallelActivityCollector:
 
         return _make_repo
 
-    def test_collect_activity_parallel_should_be_faster_than_sequential(
+    def test_collect_activity_should_be_faster_than_sequential(
         self, collector, mock_repo_factory
     ):
         """测试：并行采集应该比串行更快"""
@@ -56,7 +56,7 @@ class TestParallelActivityCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act - 使用并行方法
-            activity_data, detailed_commits = collector.collect_activity_parallel(
+            activity_data, detailed_commits = collector.collect_activity(
                 repos, since, max_workers=3
             )
 
@@ -64,9 +64,7 @@ class TestParallelActivityCollector:
         assert isinstance(activity_data, ActivityData)
         assert activity_data.total_commits == 50  # 5 repos * 10 commits
 
-    def test_collect_activity_parallel_handles_empty_repos(
-        self, collector, mock_repo_factory
-    ):
+    def test_collect_activity_handles_empty_repos(self, collector, mock_repo_factory):
         """测试：并行采集应正确处理空仓库"""
         # Arrange
         repos = ["test/empty", "test/active"]
@@ -81,17 +79,13 @@ class TestParallelActivityCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act
-            activity_data, detailed_commits = collector.collect_activity_parallel(
-                repos, since
-            )
+            activity_data, detailed_commits = collector.collect_activity(repos, since)
 
         # Assert
         assert activity_data.total_commits == 5
         assert activity_data.active_repos_count == 1
 
-    def test_collect_activity_parallel_handles_api_errors(
-        self, collector, mock_repo_factory
-    ):
+    def test_collect_activity_handles_api_errors(self, collector, mock_repo_factory):
         """测试：并行采集应优雅处理 API 错误"""
         # Arrange
         repos = ["test/good", "test/bad", "test/also-good"]
@@ -114,14 +108,12 @@ class TestParallelActivityCollector:
             mock_client.get_repo.side_effect = side_effect
 
             # Act - 不应该抛出异常
-            activity_data, detailed_commits = collector.collect_activity_parallel(
-                repos, since
-            )
+            activity_data, detailed_commits = collector.collect_activity(repos, since)
 
         # Assert
         assert activity_data.total_commits == 5  # 只有两个成功的仓库
 
-    def test_collect_activity_parallel_returns_same_structure_as_sequential(
+    def test_collect_activity_returns_same_structure_as_sequential(
         self, collector, mock_repo_factory
     ):
         """测试：并行采集应返回与串行相同的数据结构"""
@@ -138,9 +130,7 @@ class TestParallelActivityCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act
-            activity_data, detailed_commits = collector.collect_activity_parallel(
-                repos, since
-            )
+            activity_data, detailed_commits = collector.collect_activity(repos, since)
 
         # Assert - 验证返回结构与串行版本一致
         assert isinstance(activity_data, ActivityData)

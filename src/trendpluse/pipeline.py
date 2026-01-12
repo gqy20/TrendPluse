@@ -113,42 +113,21 @@ class TrendPulsePipeline:
             date = datetime.now()
 
         # 0. 收集仓库活跃度数据（独立于 PR 分析）
-        if self.settings.enable_parallel_collection:
-            activity_data, detailed_commits = (
-                self.activity_collector.collect_activity_parallel(
-                    repos=self.settings.github_repos,
-                    since=date,
-                    max_workers=self.settings.max_parallel_workers,
-                )
-            )
-        else:
-            activity_data, detailed_commits = self.activity_collector.collect_activity(
-                repos=self.settings.github_repos,
-                since=date,
-            )
+        activity_data, detailed_commits = self.activity_collector.collect_activity(
+            repos=self.settings.github_repos,
+            since=date,
+            max_workers=self.settings.max_parallel_workers,
+        )
 
         # 0.3. 收集 Releases 数据（只分析最近 24 小时）
         # 从当前时间往前推 24 小时
         day_ago = date - timedelta(days=1)
-        if self.settings.enable_parallel_collection:
-            releases_data, detailed_releases = (
-                self.release_collector.collect_releases_parallel(
-                    repos=self.settings.github_repos,
-                    since=day_ago,
-                    include_prereleases=getattr(
-                        self.settings, "include_prereleases", False
-                    ),
-                    max_workers=self.settings.max_parallel_workers,
-                )
-            )
-        else:
-            releases_data, detailed_releases = self.release_collector.collect_releases(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                include_prereleases=getattr(
-                    self.settings, "include_prereleases", False
-                ),
-            )
+        releases_data, detailed_releases = self.release_collector.collect_releases(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            include_prereleases=getattr(self.settings, "include_prereleases", False),
+            max_workers=self.settings.max_parallel_workers,
+        )
 
         # 0.4. 为 Releases 生成 AI 总结
         if detailed_releases:
@@ -183,17 +162,11 @@ class TrendPulsePipeline:
 
         # 1. 从 GitHub API 获取 PR（只分析最近 24 小时）
         # 从当前时间往前推 24 小时
-        if self.settings.enable_parallel_collection:
-            events = self.collector.fetch_events_parallel(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        else:
-            events = self.collector.fetch_events(
-                repos=self.settings.github_repos,
-                since=day_ago,
-            )
+        events = self.collector.fetch_events(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            max_workers=self.settings.max_parallel_workers,
+        )
 
         # 2. 筛选候选事件
         candidates = self.filter.filter_candidates(events)

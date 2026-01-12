@@ -54,7 +54,7 @@ class TestParallelReleaseCollector:
 
         return _make_repo
 
-    def test_collect_releases_parallel_handles_multiple_repos(
+    def test_collect_releases_handles_multiple_repos(
         self, collector, mock_repo_factory
     ):
         """测试：并行采集应正确处理多个仓库"""
@@ -68,18 +68,14 @@ class TestParallelReleaseCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act
-            releases_data, detailed_releases = collector.collect_releases_parallel(
-                repos, since
-            )
+            releases_data, detailed_releases = collector.collect_releases(repos, since)
 
         # Assert
         assert isinstance(releases_data, ReleasesData)
         assert releases_data.total_count == 9  # 3 repos * 3 releases
         assert releases_data.unique_repos_count == 3
 
-    def test_collect_releases_parallel_filters_by_date(
-        self, collector, mock_release_factory
-    ):
+    def test_collect_releases_filters_by_date(self, collector, mock_release_factory):
         """测试：并行采集应按日期过滤"""
         # Arrange
         repos = ["test/repo"]
@@ -96,17 +92,13 @@ class TestParallelReleaseCollector:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            releases_data, detailed_releases = collector.collect_releases_parallel(
-                repos, since
-            )
+            releases_data, detailed_releases = collector.collect_releases(repos, since)
 
         # Assert - 只应该返回新的 release
         assert releases_data.total_count == 1
         assert detailed_releases[0]["tag_name"] == "v1.0.0"
 
-    def test_collect_releases_parallel_handles_api_errors(
-        self, collector, mock_repo_factory
-    ):
+    def test_collect_releases_handles_api_errors(self, collector, mock_repo_factory):
         """测试：并行采集应优雅处理 API 错误"""
         # Arrange
         repos = ["test/good", "test/bad", "test/also-good"]
@@ -126,14 +118,12 @@ class TestParallelReleaseCollector:
             mock_client.get_repo.side_effect = side_effect
 
             # Act - 不应该抛出异常
-            releases_data, detailed_releases = collector.collect_releases_parallel(
-                repos, since
-            )
+            releases_data, detailed_releases = collector.collect_releases(repos, since)
 
         # Assert - 只有两个成功的仓库
         assert releases_data.total_count == 3  # 2 + 1 releases
 
-    def test_collect_releases_parallel_excludes_prerelease_when_configured(
+    def test_collect_releases_excludes_prerelease_when_configured(
         self, collector, mock_release_factory
     ):
         """测试：当配置时应排除预发布版本"""
@@ -154,7 +144,7 @@ class TestParallelReleaseCollector:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            releases_data, detailed_releases = collector.collect_releases_parallel(
+            releases_data, detailed_releases = collector.collect_releases(
                 repos, since, include_prereleases=False
             )
 

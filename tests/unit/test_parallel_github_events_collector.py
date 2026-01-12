@@ -45,9 +45,7 @@ class TestParallelGitHubEventsCollector:
 
         return _make_repo
 
-    def test_fetch_events_parallel_handles_multiple_repos(
-        self, collector, mock_repo_factory
-    ):
+    def test_fetch_events_handles_multiple_repos(self, collector, mock_repo_factory):
         """测试：并行获取应正确处理多个仓库"""
         # Arrange
         repos = [f"test/repo{i}" for i in range(3)]
@@ -59,12 +57,12 @@ class TestParallelGitHubEventsCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act
-            events = collector.fetch_events_parallel(repos, since)
+            events = collector.fetch_events(repos, since)
 
         # Assert
         assert len(events) == 9  # 3 repos * 3 PRs
 
-    def test_fetch_events_parallel_filters_by_date(self, collector, mock_pr_factory):
+    def test_fetch_events_filters_by_date(self, collector, mock_pr_factory):
         """测试：并行获取应按日期过滤"""
         # Arrange - 使用固定时间避免竞态条件
         base_time = datetime(2026, 1, 12, 12, 0, 0, tzinfo=UTC)
@@ -93,15 +91,13 @@ class TestParallelGitHubEventsCollector:
             mock_client.get_repo.return_value = mock_repo
 
             # Act
-            events = collector.fetch_events_parallel(repos, since)
+            events = collector.fetch_events(repos, since)
 
         # Assert - 只应该返回新的 PR
         assert len(events) == 1
         assert events[0]["payload"]["pull_request"]["number"] == 2
 
-    def test_fetch_events_parallel_handles_api_errors(
-        self, collector, mock_repo_factory
-    ):
+    def test_fetch_events_handles_api_errors(self, collector, mock_repo_factory):
         """测试：并行获取应优雅处理 API 错误"""
         # Arrange
         repos = ["test/good", "test/bad", "test/also-good"]
@@ -121,12 +117,12 @@ class TestParallelGitHubEventsCollector:
             mock_client.get_repo.side_effect = side_effect
 
             # Act - 不应该抛出异常
-            events = collector.fetch_events_parallel(repos, since)
+            events = collector.fetch_events(repos, since)
 
         # Assert - 只有两个成功的仓库
         assert len(events) == 3  # 2 + 1 PRs
 
-    def test_fetch_events_parallel_returns_same_structure_as_sequential(
+    def test_fetch_events_returns_same_structure_as_sequential(
         self, collector, mock_repo_factory
     ):
         """测试：并行获取应返回与串行相同的数据结构"""
@@ -143,7 +139,7 @@ class TestParallelGitHubEventsCollector:
             mock_client.get_repo.side_effect = lambda name: mock_repos[name]
 
             # Act
-            events = collector.fetch_events_parallel(repos, since)
+            events = collector.fetch_events(repos, since)
 
         # Assert - 验证返回结构与串行版本一致
         assert isinstance(events, list)

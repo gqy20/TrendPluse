@@ -118,9 +118,6 @@ class Settings(BaseSettings):
     )
 
     # 并行采集配置
-    enable_parallel_collection: bool = Field(
-        default=True, description="是否启用并行数据采集（多仓库场景推荐）"
-    )
     max_parallel_workers: int = Field(
         default=8,
         ge=1,

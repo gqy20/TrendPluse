@@ -37,63 +37,6 @@ class ActivityCollector:
         self,
         repos: list[str],
         since: datetime,
-    ) -> tuple[ActivityData, list[dict]]:
-        """收集仓库活跃度数据
-
-        Args:
-            repos: 仓库列表
-            since: 起始时间
-
-        Returns:
-            (ActivityData 对象, 详细 commit 列表)
-        """
-        # 确保 since 有时区信息
-        if since.tzinfo is None:
-            since = since.replace(tzinfo=UTC)
-
-        # 收集所有仓库的活跃度数据
-        top_repos: list[RepoActivity] = []
-        all_detailed_commits: list[dict] = []
-
-        total_commits = 0
-        active_repos_count = 0
-        total_new_contributors = 0
-
-        for repo_name in repos:
-            try:
-                repo = self.client.get_repo(repo_name)
-                repo_activity, repo_commits = self._collect_repo_activity(
-                    repo, since, repo_name
-                )
-                top_repos.append(repo_activity)
-                all_detailed_commits.extend(repo_commits)
-
-                if repo_activity.commits > 0:
-                    active_repos_count += 1
-                    total_commits += repo_activity.commits
-                    total_new_contributors += repo_activity.new_contributors
-
-            except GithubException as e:
-                print(f"获取仓库 {repo_name} 活跃度失败: {e}")
-                continue
-
-        # 按活跃度排序
-        top_repos.sort(key=lambda x: -x.commits)
-
-        # 构建 ActivityData
-        activity_data = ActivityData(
-            total_commits=total_commits,
-            active_repos_count=active_repos_count,
-            new_contributors=total_new_contributors,
-            top_repos=top_repos,
-        )
-
-        return activity_data, all_detailed_commits
-
-    def collect_activity_parallel(
-        self,
-        repos: list[str],
-        since: datetime,
         max_workers: int | None = None,
     ) -> tuple[ActivityData, list[dict]]:
         """并行收集仓库活跃度数据

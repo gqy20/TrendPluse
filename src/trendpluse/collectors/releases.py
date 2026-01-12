@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 from re import match
 from typing import Any
 
-from github import Github, GithubException
+from github import Github
 
 from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ReleaseInfo, ReleasesData
@@ -35,66 +35,6 @@ class ReleaseCollector:
             self.client = Github()
 
     def collect_releases(
-        self,
-        repos: list[str],
-        since: datetime,
-        include_prereleases: bool = False,
-    ) -> tuple[ReleasesData, list[dict]]:
-        """收集 Release 数据
-
-        Args:
-            repos: 仓库列表
-            since: 起始时间
-            include_prereleases: 是否包含预发布版本
-
-        Returns:
-            (ReleasesData 对象, 详细 Release 列表)
-        """
-        # 确保 since 有时区信息
-        if since.tzinfo is None:
-            since = since.replace(tzinfo=UTC)
-
-        # 收集所有 Release
-        all_releases: list[ReleaseInfo] = []
-        all_detailed_releases: list[dict] = []
-
-        total_count = 0
-        unique_repos_count = 0
-
-        for repo_name in repos:
-            try:
-                repo_releases, detailed = self._collect_repo_releases(
-                    repo=repo_name,
-                    since=since,
-                    include_prereleases=include_prereleases,
-                )
-
-                if repo_releases:
-                    all_releases.extend(repo_releases)
-                    all_detailed_releases.extend(detailed)
-                    unique_repos_count += 1
-                    total_count += len(repo_releases)
-
-            except GithubException as e:
-                print(f"获取仓库 {repo_name} releases 失败: {e}")
-                continue
-            except Exception as e:
-                print(f"处理仓库 {repo_name} 时发生错误: {e}")
-                continue
-
-        # 按 created_at 降序排列
-        all_releases.sort(key=lambda x: x.date, reverse=True)
-
-        # 构建 ReleasesData
-        releases_data = ReleasesData(
-            total_count=total_count,
-            unique_repos_count=unique_repos_count,
-            releases=all_releases,
-        )
-
-        return releases_data, all_detailed_releases
-
-    def collect_releases_parallel(
         self,
         repos: list[str],
         since: datetime,
