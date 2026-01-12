@@ -47,6 +47,9 @@ make gen-index
 # 同步仓库列表到文档
 make sync-repos
 
+# 添加监控仓库
+uv run python scripts/add_repo.py owner/repo
+
 # 构建文档
 make docs
 
@@ -121,7 +124,7 @@ GitHub API → Collectors → Analyzers (AI) → Pipeline → Reporters → Mark
 
 ### 配置管理 (`config.py`)
 
-使用 `pydantic-settings` 从环境变量加载配置：
+使用 `pydantic-settings` 从环境变量加载配置。参考 `.env.example` 文件获取完整配置示例。
 
 **必需配置**:
 - `ANTHROPIC_API_KEY`: 智谱 AI API 密钥（获取: https://open.bigmodel.cn/usercenter/apikeys）
@@ -218,7 +221,7 @@ docs/                        # MkDocs 文档源
 │   └── index.md
 └── stylesheets/
 
-reports/                     # 生成的趋势报告
+reports/                     # 生成的趋势报告（保存为 report-YYYY-MM-DD.md）
 data/                        # 数据文件
 ├── signal_history.json      # 信号历史记录
 └── snapshots/               # 数据快照

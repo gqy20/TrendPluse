@@ -59,7 +59,10 @@ class SignalDeduplicator:
         return hashlib.md5(fingerprint_data.encode()).hexdigest()
 
     def deduplicate(self, signals: list[Signal]) -> list[Signal]:
-        """对信号列表去重
+        """对信号列表去重（支持跨类型聚合）
+
+        将相同趋势的信号（无论来自 PR、Commit 还是 Release）合并为一个，
+        聚合所有来源，保留影响评分最高的信号内容。
 
         Args:
             signals: 原始信号列表
@@ -69,30 +72,78 @@ class SignalDeduplicator:
         """
         # 加载历史信号
         history = self._load_history()
-
-        # 过滤旧信号
         recent_history = self._filter_old_signals(history)
 
-        # 去重
-        unique_signals = []
-        seen_signals = set()  # 记录已处理的信号指纹
-
+        # 步骤 1：按精确指纹分组（完全相同的标题和类型）
+        fingerprint_groups: dict[str, list[Signal]] = {}
         for signal in signals:
-            fingerprint = self.compute_fingerprint(signal)
+            fp = self.compute_fingerprint(signal)
+            if fp not in fingerprint_groups:
+                fingerprint_groups[fp] = []
+            fingerprint_groups[fp].append(signal)
 
-            # 检查是否在当前批次中已存在
-            if fingerprint in seen_signals:
+        # 步骤 2：合并每个精确组
+        merged_signals = []
+        for group in fingerprint_groups.values():
+            if len(group) == 1:
+                merged_signals.append(group[0])
+            else:
+                merged_signals.append(self._merge_signals_by_score(group))
+
+        # 步骤 3：对合并后的信号进行跨组去重（通过 LLM 判断相似性）
+        final_signals = []
+        used_indices = set()
+
+        for i, signal in enumerate(merged_signals):
+            if i in used_indices:
                 continue
 
-            # 检查是否与历史重复
-            if not self._is_duplicate(signal, recent_history):
-                unique_signals.append(signal)
-                seen_signals.add(fingerprint)
+            # 查找与当前信号相似的其他信号
+            similar_indices = []
+            for j, other in enumerate(merged_signals):
+                if j <= i or j in used_indices:
+                    continue
+                # 检查标题相似性（编辑距离 <= 4）
+                if self._edit_distance(signal.title, other.title) <= 4:
+                    # 使用 LLM 判断是否重复
+                    if self._llm_check_duplicate(signal, [other]):
+                        similar_indices.append(j)
+                        used_indices.add(j)
+
+            # 合并所有相似的信号
+            all_to_merge = [signal] + [merged_signals[idx] for idx in similar_indices]
+            if len(all_to_merge) > 1:
+                final_signals.append(self._merge_signals_by_score(all_to_merge))
+                used_indices.update(similar_indices)
+            else:
+                # 只检查是否与历史重复
+                if not self._is_duplicate(signal, recent_history):
+                    final_signals.append(signal)
 
         # 保存到历史
-        self._save_history(unique_signals)
+        self._save_history(final_signals)
 
-        return unique_signals
+        return final_signals
+
+    def _merge_signals_by_score(self, signals: list[Signal]) -> Signal:
+        """合并一组信号，选择影响评分最高的作为基础
+
+        Args:
+            signals: 待合并的信号列表
+
+        Returns:
+            合并后的信号（保留最高评分，聚合所有来源）
+        """
+        # 选择影响评分最高的信号作为基础
+        best = max(signals, key=lambda s: s.impact_score)
+
+        # 聚合所有来源
+        all_sources = set()
+        for s in signals:
+            all_sources.update(s.sources)
+
+        # 返回合并后的信号
+        return best.model_copy(update={"sources": list(all_sources)})
 
     def _is_duplicate(self, signal: Signal, history: list[Signal]) -> bool:
         """判断信号是否重复
