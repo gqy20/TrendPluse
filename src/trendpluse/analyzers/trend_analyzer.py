@@ -3,6 +3,8 @@
 支持 Anthropic Claude 和智谱 AI (GLM) + Instructor 提取结构化趋势信号。
 """
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import anthropic
 import instructor
 
@@ -78,26 +80,52 @@ PR 描述: {pr_details.get("body", "")}
 
         return signal  # type: ignore[no-any-return]
 
-    def analyze_prs(self, pr_list: list[dict]) -> list[Signal]:
-        """批量分析多个 PR
+    def analyze_prs(self, pr_list: list[dict], max_workers: int = 3) -> list[Signal]:
+        """批量分析多个 PR（并行处理）
 
         Args:
             pr_list: PR 详情列表
+            max_workers: 最大并行线程数（默认 3）
 
         Returns:
             信号列表
         """
-        signals = []
+        # 处理空列表
+        if not pr_list:
+            return []
 
-        for pr in pr_list:
+        # 单个 PR 时直接调用，避免线程池开销
+        if len(pr_list) == 1:
+            pr = pr_list[0]
             try:
-                signal = self.analyze_pr(pr)
-                signals.append(signal)
+                return [self.analyze_pr(pr)]
             except Exception as e:
                 repo_name = pr.get("repo_name", "unknown")
                 number = pr.get("number", 0)
                 print(f"分析 PR {repo_name}#{number} 失败: {e}")
-                continue
+                return []
+
+        # 并行处理多个 PRs
+        signals = []
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # 提交所有任务
+            future_to_pr: dict = {}
+            for pr in pr_list:
+                future = executor.submit(self.analyze_pr, pr)
+                future_to_pr[future] = pr
+
+            # 收集结果
+            for future in as_completed(future_to_pr):
+                pr = future_to_pr[future]
+                try:
+                    signal = future.result()
+                    signals.append(signal)
+                except Exception as e:
+                    # 单个失败不影响其他 PRs
+                    repo_name = pr.get("repo_name", "unknown")
+                    number = pr.get("number", 0)
+                    print(f"分析 PR {repo_name}#{number} 失败: {e}")
 
         return signals
 
