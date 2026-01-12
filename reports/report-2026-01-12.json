@@ -1,1 +1,598 @@
-{"date": "2026-01-12"}
+{
+  "date": "2026-01-12",
+  "summary_brief": "今日 (2026-01-12) 发现 8 个 Commit 信号，2 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "commit-0",
+      "title": "Claude Code 工作流集成",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多个顶级 AI 项目（Dify, Agno）正在集成 Claude Code 的 GitHub Actions 工作流，表明 AI 编程助手正从本地工具向 CI/CD 流程深度集成，自动化代码审查和修复成为新标准。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/f9a21b56abda5ea77c6cdcd4006ff922fbee1b59"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "agno-agi/agno"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "MCP 资源类型支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 添加对 MCP 工具输出中 `resource` 内容类型的支持，标志着 Model Context Protocol 正在从简单的工具调用向更复杂的资源互操作演进，增强了 AI 代理与系统资源交互的能力。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/8b9a85b7e7278813cd6be733d7cd67ef3ea24972"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "Token 优化策略",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "GPTme 通过截断冗余评论体来减少 Token 使用，反映了在 LLM 应用成本优化方面的持续关注。开发者正从单纯的算法优化转向数据层面的精细化控制。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "流式响应时序修复",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 修复了流式响应在变量更新前的过早发送问题。这解决了 AI 应用中常见的用户体验痛点，确保了数据一致性与交互流畅性的平衡。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/b63dfbf654ed2191aa94aa4bcf8d09c09cc90759"
+      ],
+      "related_repos": [
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "子代理静默委托机制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 引入本地子代理静默委托机制，同时保留远程确认。这展示了多代理系统在提升自动化效率的同时，如何通过“人在回路”机制保持安全边界。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/d315f4d3dad7d6be1f51a0c0ce54b72958b1de09"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "TUI 鼠标交互增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 和 Zed 都在增强终端用户界面（TUI）的鼠标支持（悬停、点击）。这表明 CLI 工具正通过更直观的交互方式降低门槛，吸引更广泛的用户群体。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "多分支代码索引",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Tabby 添加了对多分支索引的支持。这意味着 AI 编程助手的上下文感知能力不再局限于当前分支，能更好地理解大型代码库的全貌和历史变更。",
+      "sources": [
+        "https://github.com/TabbyML/tabby/commit/b409924ffebd3dbfa50ec9bf91e0ef934eceb067"
+      ],
+      "related_repos": [
+        "TabbyML/tabby"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "刷新令牌死锁修复",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 修复了刷新令牌的死锁问题。在高并发认证场景下，此类并发控制缺陷往往是系统不稳定的根源，修复它直接提升了系统的鲁棒性和可用性。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/0c2729d9b30cda8ae596b0ece3783124fb4cd232"
+      ],
+      "related_repos": [
+        "langgenius/dify"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 5,
+    "total_commits_analyzed": 69,
+    "total_releases": 2
+  },
+  "activity": {
+    "total_commits": 69,
+    "active_repos_count": 14,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 25,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user",
+          "Brendonovich",
+          "rekram1-node",
+          "zeke",
+          "thdxr"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "QuantumGhost",
+          "hyoban",
+          "dependabot[bot]",
+          "hjlarry",
+          "lyzno1"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "zelenenka",
+          "koh-sh",
+          "MrSubidubi",
+          "amtoaer",
+          "xaviduds"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "adamfweidman",
+          "AbdulTawabJuly",
+          "NTaylorMullen",
+          "abhipatel12",
+          "SandyTao520"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "StillKnotKnown",
+          "MikeeBuilds",
+          "g1331"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "kausmeows",
+          "Mustafa-Esoofally"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "GininDenis",
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "majdyz"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "cuiyuebing"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "zwpaper"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 2,
+    "unique_repos_count": 2,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.376",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "## Changes\n\n### PR [#1928](https://github.com/danielmiessler/Fabric/pull/1928) by [ksylvan](https://github.com/ksylvan): Eliminate repetitive boilerplate across eight vendor implementations\n\n- Refactor: add NewVendorPluginBase factory function to reduce duplication\n- Update 8 vendor files (anthropic, bedrock, gemini, lmstudio, ollama, openai, perplexity, vertexai) to use the factory function\n- Add 3 test cases for the new factory function\n- Add centralized factory function for AI vendor plugin initialization\n- Chore: exempt json files from VSCode format-on-save\n\n### Direct commits\n\n- Docs: Add GitHub sponsor section to README\nI spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor me here.\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.376",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "重构：添加 NewVendorPluginBase 工厂函数以减少代码重复",
+            "更新 8 个 AI 厂商实现使用统一的工厂函数（anthropic、bedrock、gemini 等）",
+            "文档：在 README 中添加 GitHub 赞助部分",
+            "为新的工厂函数添加 3 个测试用例"
+          ],
+          "summary_cn": "这是一个代码重构优化版本，主要改进了 AI 厂商插件的架构。通过引入统一的工厂函数，消除了 8 个不同 AI 厂商实现中的重复样板代码，提高了代码的可维护性。同时文档更新添加了项目赞助说明。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.14",
+        "author": "thdxr",
+        "date": "2026-01-12",
+        "summary": "## Core\n- Support resource content type in MCP tool output (@antigremlin)\n- Check worktree for external_directory permission in subdirectories (@dmmulroy)\n- Bump Copilot plugin version\n## TUI\n- Add clickable navigation to subagent header\n- Add mouse hover and click support to questions tool (@indeep99)\n- Fix prompt ref initialization to prevent undefined reference errors\n- Refactor event streaming in TUI to use SDK instead of manual RPC subscription\n- Fix cursor position when pasting single-line text in TUI (@Octane0411)\n- Add mouse hover and click support to autocomplete (@kitlangton)\n- Copy OAuth URL when device code is unavailable (@itskingori)\n- Fix slash command autocomplete highlighted row jumping (@kitlangton)\n## Desktop\n- Add image preview support for image attachments in desktop (@dbpolito)\n\n**Thank you to 10 community contributors:**\n- @kitlangton:\n  - fix(tui): slash command autocomplete highlighted row jumping (#7815)\n  - feat(tui): add mouse hover and click support to autocomplete (#7820)\n- @itskingori:\n  - fix(tui): copy oauth url when no device code (#7812)\n- @zeke:\n  - docs: fix typos on the providers page (#7829)\n  - docs: fix typos in settings doc (#7892)\n- @dbpolito:\n  - feat(desktop): Image Preview support for Image Attachments (#7841)\n  - feat(desktop): User Message Badges on Hover (#7835)\n- @jacobwgillespie:\n  - chore(lander): fix spacing in desktop app banner (#7822)\n- @dmmulroy:\n  - fix: check worktree for external_directory permission in subdirs (#7811)\n- @Octane0411:\n  - Fix: TUI single-line paste cursor position (#7277)\n- @indeep99:\n  - feat(tui): add mouse hover and click support to questions tool (#7905)\n- @antigremlin:\n  - fix(mcp): support `resource` content type in MCP tool output (#7879)\n- @eyalch:\n  - docs: fix scroll_speed default value (#7867)",
+        "assets_count": 20,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.14",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "TUI 新增多项鼠标交互支持：自动完成、问题工具、子代理导航栏支持悬停和点击",
+            "桌面端新增图片附件预览功能",
+            "修复 TUI 多个问题：单行粘贴光标位置、斜杠命令自动完成高亮跳动、提示词引用初始化",
+            "MCP 工具输出支持 resource 内容类型，worktree 权限检查增强"
+          ],
+          "summary_cn": "这是一个以用户交互体验提升为主的版本，主要增强了 TUI（终端界面）和桌面端的交互功能。TUI 新增了多处鼠标悬停和点击支持，桌面端增加了图片预览能力，同时修复了多个影响体验的 bug。此外还包含了 MCP 资源类型支持和多项权限检查的改进。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
