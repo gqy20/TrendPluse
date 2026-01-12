@@ -3,28 +3,17 @@
 使用 PyGithub 获取 PR/Release 的详细信息。
 """
 
-from github import Github, GithubException
+from github import GithubException
 
+from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.utils.retry import create_github_retry_decorator
 
 # 创建重试装饰器（统一配置）
 _github_retry = create_github_retry_decorator()
 
 
-class GitHubDetailFetcher:
+class GitHubDetailFetcher(BaseGitHubCollector):
     """从 GitHub API 获取详细信息"""
-
-    def __init__(self, token: str = ""):
-        """初始化 GitHub 客户端
-
-        Args:
-            token: GitHub API token（可选，无 token 时有严格的速率限制）
-        """
-        if token:
-            self.client = Github(login_or_token=token)
-        else:
-            # 无 token 时仍然可以访问公开仓库，但有速率限制
-            self.client = Github()
 
     @_github_retry
     def fetch_pr_details(self, repo_name: str, pr_number: int) -> dict:

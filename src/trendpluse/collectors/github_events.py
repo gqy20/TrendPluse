@@ -3,26 +3,16 @@
 使用 PyGithub 直接从 GitHub API 获取事件。
 """
 
-from datetime import UTC, datetime
+from datetime import datetime
 
-from github import Github, GithubException
+from github import GithubException
 
+from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.collectors.parallel import parallel_execute
 
 
-class GitHubEventsCollector:
+class GitHubEventsCollector(BaseGitHubCollector):
     """从 GitHub API 直接获取事件"""
-
-    def __init__(self, token: str = ""):
-        """初始化 GitHub 客户端
-
-        Args:
-            token: GitHub Personal Access Token（可选）
-        """
-        if token:
-            self.client = Github(login_or_token=token)
-        else:
-            self.client = Github()
 
     def fetch_events(
         self,
@@ -41,8 +31,7 @@ class GitHubEventsCollector:
             事件列表
         """
         # 确保 since 有时区信息
-        if since.tzinfo is None:
-            since = since.replace(tzinfo=UTC)
+        since = self.ensure_timezone_aware(since)
 
         # 定义获取单个仓库事件的函数
         def _fetch_one(repo_name: str) -> list[dict]:

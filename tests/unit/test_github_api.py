@@ -10,7 +10,7 @@ from trendpluse.collectors.github_api import GitHubDetailFetcher
 class TestGitHubDetailFetcher:
     """测试 GitHub 详情获取器"""
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_init_with_token(self, mock_github):
         """测试：使用 token 初始化"""
         # Arrange & Act
@@ -20,7 +20,7 @@ class TestGitHubDetailFetcher:
         assert fetcher is not None
         mock_github.assert_called_once_with(login_or_token="test_token")
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_pr_details(self, mock_github_class):
         """测试：获取 PR 详情"""
         # Arrange
@@ -59,7 +59,7 @@ class TestGitHubDetailFetcher:
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_pull.assert_called_once_with(123)
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_release_details(self, mock_github_class):
         """测试：获取 Release 详情"""
         # Arrange
@@ -91,7 +91,7 @@ class TestGitHubDetailFetcher:
         mock_github.get_repo.assert_called_once_with("owner/repo")
         mock_repo.get_release.assert_called_once_with("v1.0.0")
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_pr_comments(self, mock_github_class):
         """测试：获取 PR 评论"""
         # Arrange
@@ -120,7 +120,7 @@ class TestGitHubDetailFetcher:
         assert comments[0]["author"] == "charlie"
         assert comments[0]["body"] == "Looks good!"
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_multiple_pr_details(self, mock_github_class):
         """测试：批量获取 PR 详情"""
         # Arrange
@@ -184,7 +184,7 @@ class TestGitHubDetailFetcher:
         assert details_list[0]["number"] == 1
         assert details_list[1]["number"] == 2
 
-    @patch("trendpluse.collectors.github_api.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_rate_limit_handling(self, mock_github_class):
         """测试：处理 API 速率限制"""
         # Arrange

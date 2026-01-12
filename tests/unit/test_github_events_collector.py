@@ -12,7 +12,7 @@ class TestGitHubEventsCollector:
     def test_init_with_token(self):
         """测试：使用 token 初始化"""
         # Arrange & Act
-        with patch("trendpluse.collectors.github_events.Github"):
+        with patch("trendpluse.collectors.base.Github"):
             collector = GitHubEventsCollector(token="test_token")
 
         # Assert
@@ -21,13 +21,13 @@ class TestGitHubEventsCollector:
     def test_init_without_token(self):
         """测试：不使用 token 初始化"""
         # Arrange & Act
-        with patch("trendpluse.collectors.github_events.Github"):
+        with patch("trendpluse.collectors.base.Github"):
             collector = GitHubEventsCollector()
 
         # Assert
         assert collector is not None
 
-    @patch("trendpluse.collectors.github_events.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_events_returns_list(self, mock_github):
         """测试：fetch_events 应该返回事件列表"""
         # Arrange
@@ -54,7 +54,7 @@ class TestGitHubEventsCollector:
         assert events[0]["type"] == "PullRequestEvent"
         assert events[0]["repo"]["name"] == "anthropics/skills"
 
-    @patch("trendpluse.collectors.github_events.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_events_filters_by_date(self, mock_github):
         """测试：应该按日期过滤"""
         # Arrange
@@ -77,7 +77,7 @@ class TestGitHubEventsCollector:
         # Assert - 应该只返回最近的 PR
         assert len(events) == 1
 
-    @patch("trendpluse.collectors.github_events.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_events_empty_result(self, mock_github):
         """测试：没有事件时应该返回空列表"""
         # Arrange
@@ -95,7 +95,7 @@ class TestGitHubEventsCollector:
         # Assert
         assert events == []
 
-    @patch("trendpluse.collectors.github_events.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_events_handles_multiple_repos(self, mock_github):
         """测试：应该处理多个仓库"""
         # Arrange
@@ -118,7 +118,7 @@ class TestGitHubEventsCollector:
         assert events[0]["repo"]["name"] == "anthropics/skills"
         assert events[1]["repo"]["name"] == "anthropics/claude-quickstarts"
 
-    @patch("trendpluse.collectors.github_events.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_fetch_event_format_compatible_with_filter(self, mock_github):
         """测试：事件格式应与 EventFilter 兼容"""
         # Arrange

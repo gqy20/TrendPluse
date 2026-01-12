@@ -3,17 +3,16 @@
 收集 GitHub Releases 数据，包括版本号、发布时间、发布说明等。
 """
 
-from datetime import UTC, datetime
+from datetime import datetime
 from re import match
 from typing import Any
 
-from github import Github
-
+from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ReleaseInfo, ReleasesData
 
 
-class ReleaseCollector:
+class ReleaseCollector(BaseGitHubCollector):
     """Release 数据采集器
 
     收集以下信息：
@@ -22,17 +21,6 @@ class ReleaseCollector:
     - 各仓库的 Release 详情
     - 版本号解析（major.minor.patch）
     """
-
-    def __init__(self, token: str = ""):
-        """初始化采集器
-
-        Args:
-            token: GitHub Personal Access Token（可选）
-        """
-        if token:
-            self.client = Github(login_or_token=token)
-        else:
-            self.client = Github()
 
     def collect_releases(
         self,
@@ -53,8 +41,7 @@ class ReleaseCollector:
             (ReleasesData 对象, 详细 Release 列表)
         """
         # 确保 since 有时区信息
-        if since.tzinfo is None:
-            since = since.replace(tzinfo=UTC)
+        since = self.ensure_timezone_aware(since)
 
         # 定义采集单个仓库的函数
         def _collect_one(repo_name: str) -> tuple[list[ReleaseInfo], list[dict]]:

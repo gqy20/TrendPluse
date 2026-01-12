@@ -13,12 +13,12 @@ class TestReleaseCollector:
     def test_init_without_token(self):
         """测试：无 token 初始化采集器"""
         # Arrange & Act
-        with patch("trendpluse.collectors.releases.Github"):
+        with patch("trendpluse.collectors.base.Github"):
             ReleaseCollector(token="")
 
         # Assert - 简单验证没有抛出异常
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_init_with_token(self, mock_github):
         """测试：带 token 初始化采集器"""
         # Arrange & Act
@@ -27,7 +27,7 @@ class TestReleaseCollector:
         # Assert
         mock_github.assert_called_once_with(login_or_token="test_token")
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_returns_dict_with_expected_keys(self, mock_github):
         """测试：collect_releases 应返回包含预期键的字典"""
         # Arrange
@@ -54,7 +54,7 @@ class TestReleaseCollector:
         assert hasattr(releases_data, "releases")
         assert isinstance(detailed_releases, list)
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_filters_by_date(self, mock_github):
         """测试：应该按日期过滤 releases"""
         # Arrange
@@ -102,7 +102,7 @@ class TestReleaseCollector:
         assert len(detailed_releases) == 1
         assert detailed_releases[0]["tag_name"] == "v2.0.0"
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_excludes_prerelease_when_configured(self, mock_github):
         """测试：当配置时应该排除预发布版本"""
         # Arrange
@@ -150,7 +150,7 @@ class TestReleaseCollector:
         assert releases_data.total_count == 1
         assert detailed_releases[0]["prerelease"] is False
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_handles_api_errors_gracefully(self, mock_github):
         """测试：应该优雅处理 API 错误"""
         # Arrange
@@ -171,7 +171,7 @@ class TestReleaseCollector:
         assert isinstance(releases_data, ReleasesData)
         assert releases_data.total_count == 0
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_parse_version_extract_major_minor_patch(self, mock_github):
         """测试：应该正确解析版本号"""
         # Arrange
@@ -196,7 +196,7 @@ class TestReleaseCollector:
         assert parsed is not None and parsed["is_prerelease"] is True
         assert collector._parse_version("invalid") is None
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_sorts_by_date_descending(self, mock_github):
         """测试：结果应该按日期降序排列"""
         # Arrange
@@ -237,7 +237,7 @@ class TestReleaseCollector:
 class TestReleaseCollectorStructuredData:
     """ReleaseCollector 结构化数据返回测试"""
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_returns_structured_data(self, mock_github):
         """测试：collect_releases 返回 ReleasesData 和 detailed_releases"""
         # Arrange
@@ -282,7 +282,7 @@ class TestReleaseCollectorStructuredData:
         # 验证 detailed_releases
         assert isinstance(detailed_releases, list)
 
-    @patch("trendpluse.collectors.releases.Github")
+    @patch("trendpluse.collectors.base.Github")
     def test_releases_data_contains_release_infos(self, mock_github):
         """测试：ReleasesData 包含 ReleaseInfo 列表"""
         # Arrange

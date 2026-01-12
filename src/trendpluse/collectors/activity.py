@@ -3,16 +3,17 @@
 统计仓库的活跃度指标，包括 commit 数量、活跃仓库数、新贡献者等。
 """
 
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
-from github import Github, GithubException
+from github import GithubException
 
+from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ActivityData, RepoActivity
 
 
-class ActivityCollector:
+class ActivityCollector(BaseGitHubCollector):
     """仓库活跃度采集器
 
     统计以下指标：
@@ -21,17 +22,6 @@ class ActivityCollector:
     - 新贡献者数量（首次提交）
     - 各仓库的活跃度详情
     """
-
-    def __init__(self, token: str = ""):
-        """初始化采集器
-
-        Args:
-            token: GitHub Personal Access Token（可选）
-        """
-        if token:
-            self.client = Github(login_or_token=token)
-        else:
-            self.client = Github()
 
     def collect_activity(
         self,
@@ -50,8 +40,7 @@ class ActivityCollector:
             (ActivityData 对象, 详细 commit 列表)
         """
         # 确保 since 有时区信息
-        if since.tzinfo is None:
-            since = since.replace(tzinfo=UTC)
+        since = self.ensure_timezone_aware(since)
 
         # 定义采集单个仓库的函数
         def _collect_one(repo_name: str) -> tuple[RepoActivity, list[dict]]:
