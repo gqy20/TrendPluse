@@ -4,55 +4,54 @@
   "engineering_signals": [
     {
       "id": "commit-0",
-      "title": "Claude Code 工作流集成",
+      "title": "Claude Code工作流集成",
       "type": "workflow",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "Agno 和 Dify 同时集成 Claude Code 工作流，标志着 AI 编程助手正从独立工具向 CI/CD 流程和自动化流水线的核心组件转变。",
+      "why_it_matters": "Anthropic的Claude Code正迅速成为AI辅助编程的标准工具，多个头部项目（Dify, Agno）正在将其集成到CI/CD流程中，标志着AI编程助手从本地工具向基础设施组件演进。",
       "sources": [
-        "https://github.com/agno-agi/agno/commit/7e7ebc46c37be9ccd09da7f8898f4d86289dc8ba"
+        "https://github.com/langgenius/dify/commit/f9a21b56abda5ea77c6cdcd4006ff922fbee1b59"
       ],
       "related_repos": [
-        "langgenius/dify",
-        "agno-agi/agno"
+        "agno-agi/agno",
+        "langgenius/dify"
       ]
     },
     {
       "id": "commit-1",
-      "title": "MCP 协议资源支持",
+      "title": "MCP协议资源支持",
       "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "OpenCode 添加对 MCP 'resource' 内容类型的支持，扩展了 Model Context Protocol 的数据交互能力，使 AI 能更深层地访问项目资源。",
+      "why_it_matters": "OpenCode添加对MCP协议中`resource`内容类型的支持，表明Model Context Protocol正在从单纯的工具调用扩展到更广泛的资源互操作，增强了AI代理的数据访问能力。",
       "sources": [
-        "https://github.com/anomalyco/opencode/commit/8b9a85b7e7278813cd6be733d7cd67ef3ea24972"
+        "https://github.com/danielmiessler/fabric/commit/014985c40785249b5d4193db5652ac5f085d4c88"
       ],
       "related_repos": [
-        "anomalyco/opencode",
-        "modelcontextprotocol"
+        "danielmiessler/fabric"
       ]
     },
     {
       "id": "commit-2",
-      "title": "Token 优化策略",
-      "type": "performance",
+      "title": "多分支代码索引",
+      "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "gptme 截断冗余评论以减少 Token 消耗，反映了在 LLM 应用中成本控制和效率优化的持续关注，尤其是在处理长上下文时。",
+      "why_it_matters": "TabbyML支持索引多个Git分支，解决了代码补全工具在复杂开发工作流（如并行开发、长期支持分支）中的上下文缺失问题，提升了企业级场景的实用性。",
       "sources": [
-        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+        "https://github.com/TabbyML/tabby/commit/b409924ffebd3dbfa50ec9bf91e0ef934eceb067"
       ],
       "related_repos": [
-        "ErikBjare/gptme"
+        "TabbyML/tabby"
       ]
     },
     {
       "id": "commit-3",
-      "title": "流式响应状态同步",
-      "type": "safety",
+      "title": "流式响应变量同步",
+      "type": "performance",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "Dify 修复了流式响应中变量更新不同步的问题，解决了 AI 应用中常见的幻觉或数据不一致风险，确保输出基于最新的上下文状态。",
+      "why_it_matters": "Dify修复了流式响应中引用变量未更新的问题，确保了AI应用在输出时的数据一致性，这对于构建高可靠性的生成式AI应用至关重要。",
       "sources": [
         "https://github.com/langgenius/dify/commit/b63dfbf654ed2191aa94aa4bcf8d09c09cc90759"
       ],
@@ -62,42 +61,11 @@
     },
     {
       "id": "commit-4",
-      "title": "TUI 交互体验升级",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "OpenCode 和 Zed 专注于终端用户界面 (TUI) 的鼠标支持、粘贴修复和 IME 兼容性，表明开发者工具正致力于提升非图形化环境下的可访问性和易用性。",
-      "sources": [
-        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
-      ],
-      "related_repos": [
-        "anomalyco/opencode",
-        "zed-industries/zed"
-      ]
-    },
-    {
-      "id": "commit-6",
-      "title": "供应链安全加固",
+      "title": "子代理静默委托机制",
       "type": "safety",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Dify 限制 esbuild 和 Docker 基础版本以避免 CVE，体现了开源 AI 项目对供应链安全和依赖管理的重视。",
-      "sources": [
-        "https://github.com/langgenius/dify/commit/00698e41b7c6bbded6869dbfaa05bf35350039e3"
-      ],
-      "related_repos": [
-        "langgenius/dify"
-      ]
-    }
-  ],
-  "research_signals": [
-    {
-      "id": "commit-5",
-      "title": "子代理静默委托机制",
-      "type": "workflow",
-      "category": "research",
-      "impact_score": 3,
-      "why_it_matters": "Gemini CLI 引入的静默本地子代理委托机制，优化了多代理系统的协作流程，减少了用户在处理复杂任务时的认知负荷。",
+      "why_it_matters": "Gemini CLI引入了本地子代理静默委托机制，在保持远程确认安全性的同时减少了不必要的交互噪音，优化了多代理系统的用户体验。",
       "sources": [
         "https://github.com/google-gemini/gemini-cli/commit/d315f4d3dad7d6be1f51a0c0ce54b72958b1de09"
       ],
@@ -106,20 +74,49 @@
       ]
     },
     {
-      "id": "commit-7",
-      "title": "跨规格共享记忆",
-      "type": "capability",
-      "category": "research",
+      "id": "commit-5",
+      "title": "Token使用优化",
+      "type": "performance",
+      "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Auto-Claude 引入跨规格共享记忆，解决了 AI Agent 在长期任务中的上下文遗忘问题，提升了连续学习和知识复用的能力。",
+      "why_it_matters": "gptme通过截断冗长的评论体来减少Token消耗，反映了在AI应用成本优化方面的持续关注，尤其是在处理大量GitHub数据时的成本控制。",
       "sources": [
-        "https://github.com/AndyMik90/Auto-Claude/commit/0c139add1e258868d84e628cf70007f16a1b1e22"
+        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
       ],
       "related_repos": [
-        "AndyMik90/Auto-Claude"
+        "ErikBjare/gptme"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "TUI鼠标交互增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode为TUI（终端用户界面）添加了鼠标悬停和点击支持，打破了传统终端工具仅限键盘操作的局限，提升了非技术用户的可访问性。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-7",
+      "title": "Node.js版本升级",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Dify将Node.js升级至22.12.0，利用最新版本的性能提升和安全补丁，体现了AI基础设施对底层运行环境时效性的高要求。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/9161936f4146e488e33c14b08d2f578eff4ce1b0"
+      ],
+      "related_repos": [
+        "langgenius/dify"
       ]
     }
   ],
+  "research_signals": [],
   "commit_signals": [],
   "release_signals": [],
   "stats": {
@@ -511,12 +508,12 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "新增 NewVendorPluginBase 工厂函数，减少跨 8 个 vendor 实现的重复样板代码",
-            "重构 anthropic、bedrock、gemini 等 8 个 AI vendor 文件，统一使用工厂函数初始化",
+            "重构：新增 NewVendorPluginBase 工厂函数，减少 8 个 AI 供应商实现的重复代码",
+            "更新 8 个供应商文件（anthropic、bedrock、gemini、lmstudio、ollama、openai、perplexity、vertexai）统一使用工厂函数",
             "为新的工厂函数添加了 3 个测试用例",
-            "文档更新：在 README 中添加 GitHub 赞助支持板块"
+            "文档：在 README 中添加 GitHub 赞助支持部分"
           ],
-          "summary_cn": "本次版本主要是代码质量改进，通过引入统一的工厂函数重构了 8 个 AI vendor 插件的初始化逻辑，有效消除了重复代码。同时新增了相关测试用例以确保重构质量，并在文档中添加了赞助支持信息。",
+          "summary_cn": "本次发布主要进行代码重构，通过引入统一的工厂函数 NewVendorPluginBase，消除了 8 个 AI 供应商实现中的重复样板代码，显著提升了代码可维护性。同时更新了 README 添加赞助支持信息，并补充了相关测试用例。",
           "impact_level": 2
         }
       },
@@ -531,13 +528,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "MCP 工具输出新增资源内容类型支持",
-            "TUI 全面增强鼠标交互（导航、自动完成、问题工具支持悬停和点击）",
-            "Desktop 版本新增图片附件预览功能",
-            "修复 TUI 多项问题（单行粘贴光标位置、OAuth URL 复制、命令自动完成）",
-            "改进外部目录权限检查，支持子目录 worktree"
+            "TUI 增强：添加鼠标悬停和点击支持（自动完成、问题工具、子代理头部导航）",
+            "桌面应用新增：图片附件预览支持",
+            "核心功能：MCP 工具输出支持资源内容类型",
+            "TUI 修复：解决光标位置、提示词引用初始化、斜杠命令自动完成等问题",
+            "权限检查增强：在子目录中检查 worktree 的 external_directory 权限"
           ],
-          "summary_cn": "OpenCode v1.1.14 版本主要增强了用户交互体验，TUI 和 Desktop 界面新增多处鼠标悬停和点击支持，并新增了图片预览功能。同时包含多项核心功能改进，如 MCP 工具输出支持资源内容类型，以及修复了光标定位、OAuth 处理等多个问题。",
+          "summary_cn": "v1.1.14 版本主要增强了 TUI 和桌面应用的交互体验，新增了鼠标悬停和点击支持以及图片预览功能。同时修复了多个 TUI 相关的 bug，并改进了 MCP 工具输出和权限检查等核心功能。此次更新包含 10 位社区贡献者的 18+ 个 PR，是用户体验显著提升的一次功能增强版本。",
           "impact_level": 2
         }
       }
