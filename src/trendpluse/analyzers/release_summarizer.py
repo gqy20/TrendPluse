@@ -3,7 +3,8 @@
 使用 AI 分析 Release Notes，生成结构化的中文总结。
 """
 
-from openai import OpenAI  # type: ignore[import-not-found]
+import anthropic
+import instructor
 
 from trendpluse.models.signal import ReleaseSummary
 
@@ -27,11 +28,11 @@ class ReleaseSummarizer:
             model: 模型名称
             base_url: API 基础 URL
         """
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url=base_url,
-        )
         self.model = model
+        # 使用 instructor.from_anthropic 模式（与 TrendAnalyzer 一致）
+        self.client = instructor.from_anthropic(
+            anthropic.Anthropic(api_key=api_key, base_url=base_url)
+        )
 
     def summarize_releases(
         self, detailed_releases: list[dict]
@@ -99,10 +100,7 @@ Release Notes:
 
         # 使用 instructor 获取结构化输出
         try:
-            from instructor import Mode, from_openai
-
-            client = from_openai(self.client)
-            summary = client.chat.completions.create(
+            summary = self.client.chat.completions.create(
                 model=self.model,
                 response_model=ReleaseSummary,
                 messages=[
@@ -113,10 +111,14 @@ Release Notes:
                     },
                     {"role": "user", "content": prompt},
                 ],
-                mode=Mode.JSON,
+                max_tokens=1000,
             )
             return summary  # type: ignore[no-any-return]
-        except Exception:
+        except Exception as e:
+            # 记录错误详情以便调试
+            print(f"[ERROR] ReleaseSummarizer: 分析失败 - {type(e).__name__}: {e}")
+            print(f"[DEBUG] Release: {repo}@{tag_name}")
+            print(f"[DEBUG] Body 长度: {len(body)} 字符")
             # 如果 AI 调用失败，返回默认总结
             return ReleaseSummary(
                 change_type="other",
