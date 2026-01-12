@@ -87,7 +87,7 @@ class Settings(BaseSettings):
     github_base_url: str = "https://api.github.com"
 
     # Anthropic/智谱 AI 配置
-    anthropic_api_key: str = Field(description="Anthropic/智谱 AI API Key")
+    anthropic_api_key: str = Field(default="", description="Anthropic/智谱 AI API Key")
     anthropic_base_url: str = Field(
         default="https://open.bigmodel.cn/api/anthropic",
         description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)",

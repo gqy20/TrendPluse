@@ -43,12 +43,13 @@ class TrendPulsePipeline:
         self.settings = settings or Settings()
 
         # 初始化 LLM 客户端
-        client_kwargs: dict[str, str | None] = {
-            "api_key": self.settings.anthropic_api_key
-        }
         if self.settings.anthropic_base_url:
-            client_kwargs["base_url"] = self.settings.anthropic_base_url
-        llm_client = Anthropic(**client_kwargs)
+            llm_client = Anthropic(
+                api_key=self.settings.anthropic_api_key,
+                base_url=self.settings.anthropic_base_url,
+            )
+        else:
+            llm_client = Anthropic(api_key=self.settings.anthropic_api_key)
 
         # 初始化组件
         self.collector = GitHubEventsCollector(token=self.settings.github_token)

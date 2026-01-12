@@ -7,6 +7,7 @@ import json
 from typing import Any
 
 from anthropic import Anthropic
+from anthropic.types import TextBlock
 
 from trendpluse.models.signal import Signal
 
@@ -35,10 +36,10 @@ class ReleaseAnalyzer:
         self.base_url = base_url
 
         # 初始化 Anthropic 客户端
-        client_kwargs: dict[str, str] = {"api_key": api_key}
         if base_url:
-            client_kwargs["base_url"] = base_url
-        self.client = Anthropic(**client_kwargs)
+            self.client = Anthropic(api_key=api_key, base_url=base_url)
+        else:
+            self.client = Anthropic(api_key=api_key)
 
     def analyze_releases(self, releases: dict[str, Any]) -> list[Signal]:
         """分析 release 列表
@@ -102,7 +103,15 @@ class ReleaseAnalyzer:
             ],
         )
 
-        return message.content[0].text  # type: ignore[no-any-return]
+        # 提取 TextBlock 的 text 内容
+        for block in message.content:
+            if isinstance(block, TextBlock):
+                return block.text  # type: ignore[no-any-return]
+            # 兼容测试中的 MagicMock 对象
+            if hasattr(block, "text"):
+                return block.text  # type: ignore[no-any-return]
+        # 如果没有找到 TextBlock，返回空字符串
+        return ""
 
     def _build_prompt(self, releases: list[dict[str, Any]]) -> str:
         """构建分析 prompt

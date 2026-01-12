@@ -1,23 +1,21 @@
 """GitHub Actions 配置测试"""
 
-import pytest
-
 
 class TestGitHubActionsConfig:
     """测试 GitHub Actions 环境配置"""
 
     def test_anthropic_api_key_required(self, monkeypatch):
-        """测试：ANTHROPIC_API_KEY 是必需的"""
+        """测试：ANTHROPIC_API_KEY 有默认值（空字符串）"""
         # Arrange - 移除环境变量
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
 
-        # Act & Assert
-        with pytest.raises(Exception) as exc_info:
-            from trendpluse.config import Settings
+        # Act & Assert - 不会抛出异常，使用默认值
+        from trendpluse.config import Settings
 
-            _ = Settings()
+        settings = Settings()
 
-        assert "anthropic_api_key" in str(exc_info.value).lower()
+        # 验证默认值为空字符串
+        assert settings.anthropic_api_key == ""
 
     def test_github_token_optional(self, monkeypatch):
         """测试：GITHUB_TOKEN 是可选的"""

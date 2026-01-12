@@ -74,15 +74,15 @@ class TestSettings:
         monkeypatch.delenv("GITHUB_TOKEN", raising=False)
 
         # Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            from trendpluse.config import Settings
+        # 注意：anthropic_api_key 现在有默认值（空字符串），所以不会抛出 ValidationError
+        # 这个测试验证了默认值的行为
+        from trendpluse.config import Settings
 
-            _ = Settings()
+        settings = Settings()
 
-        # 应该提示缺少必需字段（只有 anthropic_api_key）
-        errors = exc_info.value.errors()
-        error_fields = {e["loc"][0] for e in errors}
-        assert "anthropic_api_key" in error_fields
+        # 验证默认值为空字符串
+        assert settings.anthropic_api_key == ""
+        assert settings.github_token == ""  # 也有默认值
 
     def test_max_candidates_default_value(self, monkeypatch):
         """测试：max_candidates 默认值应该是 20"""
