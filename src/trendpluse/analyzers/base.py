@@ -1,11 +1,12 @@
 """LLM 分析器基类
 
-提供 Anthropic 客户端初始化和响应文本提取的共享功能。
+提供统一的 LLM 客户端初始化，支持 instructor 和 Anthropic 两种模式。
 """
 
 from abc import ABC
 from typing import Any
 
+import instructor
 from anthropic import Anthropic
 from anthropic.types import TextBlock
 
@@ -13,13 +14,17 @@ from trendpluse.models.signal import Signal
 
 
 class BaseLLMAnalyzer(ABC):
-    """LLM 分析器基类"""
+    """LLM 分析器基类
+
+    默认使用 instructor 模式，提供更好的类型安全和结构化输出。
+    """
 
     def __init__(
         self,
         api_key: str,
         model: str,
         base_url: str | None = None,
+        use_instructor: bool = True,
     ):
         """初始化分析器
 
@@ -27,16 +32,24 @@ class BaseLLMAnalyzer(ABC):
             api_key: Anthropic API Key
             model: 使用的模型
             base_url: API 基础 URL（可选）
+            use_instructor: 是否使用 instructor 模式（默认 True）
         """
         self.api_key = api_key
         self.model = model
         self.base_url = base_url
+        self.use_instructor = use_instructor
 
-        # 初始化 Anthropic 客户端
-        if base_url:
-            self.client = Anthropic(api_key=api_key, base_url=base_url)
+        # 初始化客户端
+        if use_instructor:
+            # instructor 模式：支持结构化输出（直接返回 Pydantic 模型）
+            anthropic_client = Anthropic(api_key=api_key, base_url=base_url)
+            self.client = instructor.from_anthropic(anthropic_client)
         else:
-            self.client = Anthropic(api_key=api_key)
+            # Anthropic 模式：返回文本需要手动解析（向后兼容）
+            if base_url:
+                self.client = Anthropic(api_key=api_key, base_url=base_url)
+            else:
+                self.client = Anthropic(api_key=api_key)
 
     def _extract_text_from_response(self, message) -> str:
         """从 Anthropic 消息响应中提取文本内容

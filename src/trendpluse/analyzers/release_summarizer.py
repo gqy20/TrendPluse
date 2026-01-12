@@ -6,8 +6,8 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
-import instructor
 
+from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.models.signal import ReleaseSummary
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
@@ -18,10 +18,11 @@ _llm_retry = create_anthropic_retry_decorator()
 RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
 
 
-class ReleaseSummarizer:
+class ReleaseSummarizer(BaseLLMAnalyzer):
     """Release 总结器
 
     使用 AI 分析 Release Notes，提取关键变更信息并生成中文总结。
+    使用 instructor 模式，支持结构化输出（直接返回 Pydantic 模型）。
     """
 
     def __init__(
@@ -37,10 +38,9 @@ class ReleaseSummarizer:
             model: 模型名称
             base_url: API 基础 URL
         """
-        self.model = model
-        # 使用 instructor.from_anthropic 模式（与 TrendAnalyzer 一致）
-        self.client = instructor.from_anthropic(
-            anthropic.Anthropic(api_key=api_key, base_url=base_url)
+        # 使用 instructor 模式（默认）
+        super().__init__(
+            api_key=api_key, model=model, base_url=base_url, use_instructor=True
         )
 
     def summarize_releases(

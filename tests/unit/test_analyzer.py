@@ -9,7 +9,7 @@ from trendpluse.models.signal import DailyReport, Signal
 class TestTrendAnalyzer:
     """测试趋势信号分析器"""
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_init_with_api_key(self, mock_from_anthropic):
         """测试：使用 API key 初始化"""
         # Arrange & Act
@@ -19,7 +19,7 @@ class TestTrendAnalyzer:
         assert analyzer is not None
         mock_from_anthropic.assert_called_once()
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_analyze_single_pr(self, mock_from_anthropic):
         """测试：分析单个 PR 提取信号"""
         # Arrange
@@ -57,7 +57,7 @@ class TestTrendAnalyzer:
         assert signal.type == "capability"
         assert signal.impact_score == 4
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_analyze_multiple_prs(self, mock_from_anthropic):
         """测试：批量分析多个 PR"""
         # Arrange
@@ -115,7 +115,7 @@ class TestTrendAnalyzer:
         assert signals[0].title == "功能 A"
         assert signals[1].title == "功能 B"
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_generate_daily_report(self, mock_from_anthropic):
         """测试：生成每日报告"""
         # Arrange
@@ -171,7 +171,7 @@ class TestTrendAnalyzer:
         assert report.stats["total_prs_analyzed"] == 1  # 传入的 signals 数量
         assert report.stats["high_impact_signals"] == 1  # impact_score >= 4 的信号数量
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_filter_high_impact_signals(self, mock_from_anthropic):
         """测试：筛选高影响信号"""
         # Arrange
@@ -210,7 +210,7 @@ class TestTrendAnalyzer:
         assert len(high_impact) == 1
         assert high_impact[0].id == "high"
 
-    @patch("trendpluse.analyzers.trend_analyzer.instructor.from_anthropic")
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_categorize_signals(self, mock_from_anthropic):
         """测试：按类型分类信号"""
         # Arrange

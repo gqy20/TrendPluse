@@ -13,6 +13,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
     """Breaking Changes 检测器
 
     分析 release notes，检测 breaking changes 和不兼容更新。
+    使用 Anthropic 模式（手动解析 JSON），因为需要处理多个 release 的批量分析。
     """
 
     def __init__(
@@ -28,7 +29,10 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             model: 使用的模型
             base_url: API 基础 URL（可选）
         """
-        super().__init__(api_key=api_key, model=model, base_url=base_url)
+        # 使用 Anthropic 模式（手动解析 JSON）
+        super().__init__(
+            api_key=api_key, model=model, base_url=base_url, use_instructor=False
+        )
 
     def detect_breaking_changes(self, releases: dict[str, Any]) -> list[dict]:
         """检测 breaking changes

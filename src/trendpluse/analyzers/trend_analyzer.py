@@ -5,9 +5,7 @@
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import anthropic
-import instructor
-
+from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.models.signal import DailyReport, Signal
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
@@ -15,8 +13,11 @@ from trendpluse.utils.retry import create_anthropic_retry_decorator
 _llm_retry = create_anthropic_retry_decorator()
 
 
-class TrendAnalyzer:
-    """基于 AI 的趋势信号分析器"""
+class TrendAnalyzer(BaseLLMAnalyzer):
+    """基于 AI 的趋势信号分析器
+
+    使用 instructor 模式，支持结构化输出（直接返回 Pydantic 模型）。
+    """
 
     def __init__(
         self,
@@ -31,10 +32,9 @@ class TrendAnalyzer:
             model: 模型名称 (glm-4.7, claude-sonnet-4-20250514 等)
             base_url: API Base URL
         """
-        self.model = model
-        # 使用 Anthropic 客户端 (支持智谱AI Anthropic兼容端点)
-        self.client = instructor.from_anthropic(
-            anthropic.Anthropic(api_key=api_key, base_url=base_url)
+        # 使用 instructor 模式（默认）
+        super().__init__(
+            api_key=api_key, model=model, base_url=base_url, use_instructor=True
         )
 
     def analyze_pr(self, pr_details: dict) -> Signal:
