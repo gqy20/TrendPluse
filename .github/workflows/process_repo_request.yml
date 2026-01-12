@@ -18,6 +18,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 创建分支
+        run: |
+          git checkout -b add-repo-${{ github.event.issue.number }}
 
       - name: 解析 Issue
         id: parse
@@ -99,25 +105,36 @@ jobs:
             --repo "${{ steps.parse.outputs.repo }}" \
             --category "${{ steps.parse.outputs.category }}"
 
+      - name: 提交并推送更改
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/trendpluse/config.py
+          git diff --quiet && git diff --staged --quiet || git commit -m "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
+          git push origin add-repo-${{ github.event.issue.number }}
+
       - name: 创建 PR
-        uses: peter-evans/create-pull-request@v8
-        with:
-          title: "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
-          body: |
-            ## 变更说明
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_BODY="## 变更说明
 
-            通过 Issue 自动添加新监控仓库。
+          通过 Issue 自动添加新监控仓库。
 
-            - **仓库**: \`${{ steps.parse.outputs.repo }}\`
-            - **分类**: ${{ steps.parse.outputs.category }}
-            - **理由**: ${{ steps.parse.outputs.reason }}
+          - **仓库**: \`${{ steps.parse.outputs.repo }}\`
+          - **分类**: ${{ steps.parse.outputs.category }}
+          - **理由**: ${{ steps.parse.outputs.reason }}
 
-            ## 来源
+          ## 来源
 
-            Closes #${{ github.event.issue.number }}
-          branch: add-repo-${{ github.event.issue.number }}
-          delete-branch: true
-          draft: false
+          Closes #${{ github.event.issue.number }}"
+
+          gh pr create \
+            --title "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}" \
+            --body "$PR_BODY" \
+            --base main \
+            --head add-repo-${{ github.event.issue.number }} \
+            --label "enhancement" || echo "PR 已存在或创建失败"
 
       - name: 评论验证失败
         if: failure()
