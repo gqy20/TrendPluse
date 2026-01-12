@@ -13,6 +13,7 @@ from trendpluse.analyzers.breaking_changes_detector import (
 )
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
+from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.collectors.activity import ActivityCollector
@@ -59,6 +60,11 @@ class TrendPulsePipeline:
             base_url=self.settings.anthropic_base_url,
         )
         self.release_analyzer = ReleaseAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
+        self.release_summarizer = ReleaseSummarizer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
@@ -119,6 +125,15 @@ class TrendPulsePipeline:
             since=day_ago,
             include_prereleases=getattr(self.settings, "include_prereleases", False),
         )
+
+        # 0.4. 为 Releases 生成 AI 总结
+        if detailed_releases:
+            summaries = self.release_summarizer.summarize_releases(detailed_releases)
+            # 将 AI 总结附加到对应的 ReleaseInfo
+            for release in releases_data.releases:
+                key = f"{release.repo}@{release.version}"
+                if key in summaries:
+                    release.ai_summary = summaries[key]
 
         # 0.5. 分析 commits 提取信号
         commit_signals = []

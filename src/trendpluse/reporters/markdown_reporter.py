@@ -9,6 +9,7 @@ from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
     ReleasesData,
+    ReleaseSummary,
     Signal,
 )
 
@@ -427,6 +428,7 @@ class MarkdownReporter:
                 summary = release.summary
                 assets_count = release.assets_count
                 url = release.url
+                ai_summary = release.ai_summary
 
                 # 简单的版本类型判断（可以根据需要扩展）
                 if version.startswith("v") and ".0.0" in version:
@@ -442,9 +444,25 @@ class MarkdownReporter:
                 lines.append(release_header)
                 lines.append(f"**发布者**: `{author}` | **时间**: {date}\n\n")
 
-                # Release Notes 摘要
-                if summary:
-                    # 取前 200 字符
+                # 优先使用 AI 总结，否则使用原始摘要
+                if ai_summary:
+                    # AI 生成的结构化总结
+                    change_emoji = ReleaseSummary.get_change_type_emoji(
+                        ai_summary.change_type
+                    )
+                    lines.append(
+                        f"**变更类型**: {change_emoji} {ai_summary.change_type}\n\n"
+                    )
+                    lines.append("**变更摘要**:\n")
+
+                    for change in ai_summary.key_changes:
+                        lines.append(f"- {change}\n")
+                    lines.append("\n")
+
+                    if ai_summary.summary_cn:
+                        lines.append(f"{ai_summary.summary_cn}\n\n")
+                elif summary:
+                    # 回退到原始摘要（截取前 200 字符）
                     summary_text = summary[:200].replace("\n", " ")
                     if len(summary) > 200:
                         summary_text += "..."

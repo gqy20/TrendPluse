@@ -127,6 +127,9 @@ class ReleaseInfo(BaseModel):
     summary: str = Field(description="发布摘要")
     assets_count: int = Field(description="资产文件数量", ge=0, default=0)
     url: str = Field(description="发布链接 URL")
+    ai_summary: ReleaseSummary | None = Field(
+        default=None, description="AI 生成的变更总结（可选）"
+    )
 
 
 class ReleasesData(BaseModel):
