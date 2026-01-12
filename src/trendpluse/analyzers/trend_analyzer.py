@@ -7,8 +7,17 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 import instructor
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from trendpluse.models.signal import DailyReport, Signal
+
+# 可重试的临时错误类型
+RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
 
 
 class TrendAnalyzer:
@@ -54,12 +63,8 @@ PR 描述: {pr_details.get("body", "")}
 请提取关键信息并返回结构化信号。
 """
 
-        signal = self.client.chat.completions.create(
-            model=self.model,
-            response_model=Signal,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,
-        )
+        # 使用带重试机制的 LLM 调用
+        signal = self._call_llm_for_signal(prompt)
 
         # 确保 ID 格式
         if not signal.id:
@@ -78,6 +83,33 @@ PR 描述: {pr_details.get("body", "")}
             if repo_name:
                 signal.related_repos = [repo_name]
 
+        return signal  # type: ignore[no-any-return]
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=1, max=10),
+        retry=retry_if_exception_type(RETRYABLE_ERRORS),
+        reraise=True,
+    )
+    def _call_llm_for_signal(self, prompt: str) -> Signal:
+        """调用 LLM 提取 PR 信号（带重试机制）
+
+        Args:
+            prompt: 分析提示词
+
+        Returns:
+            提取的信号
+
+        Raises:
+            RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
+            Exception: 其他错误向上传播
+        """
+        signal = self.client.chat.completions.create(
+            model=self.model,
+            response_model=Signal,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=1000,
+        )
         return signal  # type: ignore[no-any-return]
 
     def analyze_prs(self, pr_list: list[dict], max_workers: int = 3) -> list[Signal]:

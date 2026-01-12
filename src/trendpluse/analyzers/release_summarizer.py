@@ -7,8 +7,17 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 import instructor
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from trendpluse.models.signal import ReleaseSummary
+
+# 可重试的临时错误类型
+RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
 
 
 class ReleaseSummarizer:
@@ -90,6 +99,40 @@ class ReleaseSummarizer:
 
         return summaries
 
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=1, max=10),
+        retry=retry_if_exception_type(RETRYABLE_ERRORS),
+        reraise=True,
+    )
+    def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
+        """调用 LLM 生成 Release 总结（带重试机制）
+
+        Args:
+            prompt: 分析提示词
+
+        Returns:
+            ReleaseSummary 对象
+
+        Raises:
+            RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
+            Exception: 其他错误向上传播
+        """
+        summary = self.client.chat.completions.create(
+            model=self.model,
+            response_model=ReleaseSummary,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "你是一个专业的软件变更分析专家，"
+                    "擅长分析 Release Notes 并提取关键信息。",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=1000,
+        )
+        return summary  # type: ignore[no-any-return]
+
     def _summarize_single_release(self, release: dict) -> ReleaseSummary:
         """总结单个 Release
 
@@ -133,28 +176,27 @@ Release Notes:
 - 新功能优先于修复，修复优先于改进
 """
 
-        # 使用 instructor 获取结构化输出
+        # 使用 instructor 获取结构化输出（带重试机制）
         try:
-            summary = self.client.chat.completions.create(
-                model=self.model,
-                response_model=ReleaseSummary,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "你是一个专业的软件变更分析专家，"
-                        "擅长分析 Release Notes 并提取关键信息。",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                max_tokens=1000,
+            return self._call_llm_for_summary(prompt)
+        except RETRYABLE_ERRORS as e:
+            # 重试耗尽后的可重试错误
+            print(f"[ERROR] ReleaseSummarizer: 重试耗尽 - {type(e).__name__}: {e}")
+            print(f"[DEBUG] Release: {repo}@{tag_name}")
+            print(f"[DEBUG] Body 长度: {len(body)} 字符")
+            # 返回默认总结
+            return ReleaseSummary(
+                change_type="other",
+                key_changes=[],
+                summary_cn=f"{repo} {tag_name} 发布（重试失败）",
+                impact_level=1,
             )
-            return summary  # type: ignore[no-any-return]
         except Exception as e:
-            # 记录错误详情以便调试
+            # 其他错误（如认证错误，不重试）
             print(f"[ERROR] ReleaseSummarizer: 分析失败 - {type(e).__name__}: {e}")
             print(f"[DEBUG] Release: {repo}@{tag_name}")
             print(f"[DEBUG] Body 长度: {len(body)} 字符")
-            # 如果 AI 调用失败，返回默认总结
+            # 返回默认总结
             return ReleaseSummary(
                 change_type="other",
                 key_changes=[],
