@@ -400,13 +400,13 @@ class TestFeishuNotifierJsonV2:
         assert "body" in card_data, "JSON 2.0 要求包含 body 字段"
         assert "elements" in card_data["body"], "elements 必须在 body 下"
 
-        # 验证标题在第一个元素中（使用 Markdown 一级标题）
+        # 验证标题在第一个元素中（使用粗体而非 Markdown 标题）
         first_element = card_data["body"]["elements"][0]
         assert first_element["tag"] == "div"
         assert "text" in first_element
         assert "content" in first_element["text"]
-        # 标题包含 # 和日期
-        assert "# " in first_element["text"]["content"]
+        # 标题使用粗体格式和日期
+        assert "**" in first_element["text"]["content"]
         assert "TrendPulse 每日报告" in first_element["text"]["content"]
         assert sample_report.date in first_element["text"]["content"]
 
@@ -449,7 +449,7 @@ class TestFeishuNotifierJsonV2:
         combined_content = " ".join(contents)
 
         # 验证包含 Markdown 格式
-        # 主标题使用 #，日期使用普通文本，折叠面板标题使用纯文本（不含标题标记）
-        assert "#" in combined_content  # 主标题存在
-        # 注意：sample_report 没有信号，所以不会生成折叠面板和粗体格式
-        # 实际有信号时会使用粗体格式
+        # 主标题使用粗体 **，日期使用普通文本，折叠面板标题使用纯文本（不含标题标记）
+        assert "**" in combined_content  # 主标题存在（使用粗体）
+        # 注意：sample_report 没有信号，所以不会生成折叠面板和信号格式
+        # 实际有信号时会使用更多粗体格式

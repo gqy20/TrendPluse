@@ -175,10 +175,10 @@ class TestFeishuFormatter:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证 body 中的醒目主标题和日期（主标题使用 #，日期使用普通文本）
+        # 验证 body 中的醒目主标题和日期（主标题使用粗体，日期使用普通文本）
         elements = card["card"]["body"]["elements"]
         assert any(
-            "# 📊 TrendPulse 每日报告" in el.get("text", {}).get("content", "")
+            "**📊 TrendPulse 每日报告**" in el.get("text", {}).get("content", "")
             for el in elements
         )
         assert any(

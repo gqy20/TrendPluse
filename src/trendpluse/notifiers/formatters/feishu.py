@@ -45,13 +45,13 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 0. 添加醒目的主标题和日期（标题用一级，日期用普通文本）
+        # 0. 添加醒目的主标题和日期（使用粗体而非标题，减小字体）
         elements.append(
             {
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": f"# 📊 TrendPulse 每日报告\n\n📅 {report.date}",
+                    "content": f"**📊 TrendPulse 每日报告**\n\n📅 {report.date}",
                 },
             }
         )
@@ -181,7 +181,7 @@ class FeishuFormatter:
         def get_high_impact(signals: list[Signal]) -> list[Signal]:
             return [s for s in signals if s.impact_score >= 4]
 
-        # 工程信号（使用折叠面板）
+        # 工程信号（使用折叠面板，默认折叠与其他面板一致）
         engineering_signals = get_high_impact(report.engineering_signals)
         if engineering_signals:
             elements.append({"tag": "hr"})
@@ -190,7 +190,7 @@ class FeishuFormatter:
                 self._create_collapsible_panel(
                     title=f"🔧 工程信号 ({len(engineering_signals)}个)",
                     content=content,
-                    expanded=True,  # 工程信号默认展开
+                    expanded=False,  # 默认折叠，与其他面板保持一致
                 )
             )
         else:
