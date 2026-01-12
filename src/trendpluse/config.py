@@ -53,6 +53,7 @@ class Settings(BaseSettings):
             "openai/openai-quickstart-python",
             "danielmiessler/fabric",
             "ErikBjare/gptme",
+            "RooCodeInc/Roo-Code",
             # Agent 框架
             "TransformerOptimus/SuperAGI",
             "Significant-Gravitas/AutoGPT",
