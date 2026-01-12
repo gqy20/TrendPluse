@@ -409,3 +409,208 @@ class TestFeishuFormatter:
             "[owner/repo2](https://github.com/owner/repo2/releases/tag/v1.5.0)"
             in combined_content
         )
+
+    def test_format_card_includes_release_signals(self):
+        """测试：卡片包含 Release 信号部分（与 Markdown 一致）"""
+        # Arrange
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        release_signals = [
+            Signal(
+                id="release-sig-1",
+                title="Major Version Update",
+                type="capability",
+                category="engineering",
+                impact_score=5,
+                why_it_matters="重要版本更新",
+                sources=["https://github.com/test/repo/releases/tag/v2.0.0"],
+                related_repos=["test/repo"],
+            ),
+        ]
+
+        report = DailyReport(
+            date="2026-01-05",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=release_signals,
+            stats={"total_prs_analyzed": 0, "high_impact_signals": 1},
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 应该包含 Release 信号标题（与 MarkdownReporter 一致）
+        assert "### 🎯 Release 信号" in combined_content
+
+    def test_format_card_includes_breaking_changes(self):
+        """测试：卡片包含 Breaking Changes 部分（与 Markdown 一致）"""
+        # Arrange
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        breaking_changes = [
+            {
+                "repo": "test/repo",
+                "tag_name": "v2.0.0",
+                "changes": [
+                    {"category": "API", "description": "移除旧 API", "impact": "high"},
+                    {
+                        "category": "Config",
+                        "description": "配置格式变更",
+                        "impact": "medium",
+                    },
+                ],
+            }
+        ]
+
+        report = DailyReport(
+            date="2026-01-05",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            breaking_changes=breaking_changes,
+            stats={"total_prs_analyzed": 0},
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 应该包含 Breaking Changes 标题（与 MarkdownReporter 一致）
+        assert "### ⚠️ Breaking Changes" in combined_content
+        # 应该包含变更内容
+        assert "移除旧 API" in combined_content
+        # 应该包含影响级别表情
+        assert "🔴" in combined_content or "🟡" in combined_content
+
+    def test_format_activity_includes_overview(self):
+        """测试：活跃度部分包含总览指标（与 Markdown 一致）"""
+        # Arrange
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        activity = ActivityData(
+            total_commits=150,
+            active_repos_count=3,
+            new_contributors=1,
+            top_repos=[
+                RepoActivity(
+                    repo="owner/repo1",
+                    commits=80,
+                    new_contributors=1,
+                    top_contributors=[],
+                ),
+            ],
+        )
+
+        report = DailyReport(
+            date="2026-01-05",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            activity=activity,
+            stats={"total_prs_analyzed": 0},
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 应该包含总览指标（与 MarkdownReporter 一致）
+        assert "**总 Commit 数**: 150" in combined_content
+        assert "**活跃仓库数**: 3" in combined_content
+        assert "**新贡献者数**: 1" in combined_content
+
+    def test_format_releases_includes_ai_summary(self):
+        """测试：版本发布包含 AI 总结（与 Markdown 一致）"""
+        # Arrange
+        from trendpluse.models.signal import ReleaseSummary
+        from trendpluse.notifiers.formatters import FeishuFormatter
+
+        formatter = FeishuFormatter()
+
+        releases = ReleasesData(
+            total_count=1,
+            unique_repos_count=1,
+            releases=[
+                ReleaseInfo(
+                    repo="owner/repo",
+                    version="v2.0.0",
+                    author="user1",
+                    date="2026-01-05",
+                    summary="Original summary",
+                    assets_count=5,
+                    url="https://github.com/owner/repo/releases/tag/v2.0.0",
+                    ai_summary=ReleaseSummary(
+                        change_type="feature",
+                        key_changes=["新功能 A", "新功能 B", "性能优化"],
+                        summary_cn="这是一个重要版本更新",
+                        impact_level=5,
+                    ),
+                ),
+            ],
+        )
+
+        report = DailyReport(
+            date="2026-01-05",
+            summary_brief="Test",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            releases=releases,
+            stats={"total_prs_analyzed": 0},
+        )
+
+        # Act
+        card = formatter.format_card(report)
+
+        # Assert
+        elements = card["card"]["body"]["elements"]
+        content_parts = [
+            el.get("text", {}).get("content", "")
+            for el in elements
+            if el.get("tag") == "div"
+        ]
+        combined_content = " ".join(content_parts)
+
+        # 应该包含 AI 总结内容（与 MarkdownReporter 一致）
+        assert "新功能 A" in combined_content
+        assert "这是一个重要版本更新" in combined_content
+        # 应该包含变更类型
+        assert "变更类型" in combined_content or "feature" in combined_content
