@@ -172,14 +172,16 @@ jobs:
       REPORT_DATE: ${{ needs.analyze.outputs.report_date }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
       - name: Download report artifacts
         uses: actions/download-artifact@v7
         with:
           name: trend-report-${{ needs.analyze.outputs.report_date }}
-          path: .  # 下载到工作目录根目录，保留原始目录结构
+          path: reports  # 下载到 reports 目录，避免与 checkout 冲突
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # 获取完整历史，确保获取最新版本
 
       - name: Set up Python
         uses: actions/setup-python@v6
