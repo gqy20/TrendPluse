@@ -71,6 +71,11 @@ class TestCommitSignalsClearing:
         mock_settings_instance.github_repos = ["test/repo"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
+        mock_settings_instance.feishu_webhook_url = ""
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # 配置 PR 数据（有 PR 触发聚合流程）

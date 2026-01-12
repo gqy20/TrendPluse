@@ -63,7 +63,11 @@ class TestEmptyReportSummary:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # Mock 空信号列表
@@ -171,7 +175,11 @@ class TestEmptyReportSummary:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # 创建 mock commit 信号
@@ -314,7 +322,11 @@ class TestEmptyReportSummary:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # Mock commit 信号为空
@@ -447,7 +459,11 @@ class TestEmptyReportSummary:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # 创建 mock commit 信号（5个）
@@ -582,7 +598,11 @@ class TestEmptyReportSummary:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # 创建包含高影响信号的 commit 信号列表

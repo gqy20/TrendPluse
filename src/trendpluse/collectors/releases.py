@@ -9,6 +9,7 @@ from typing import Any
 
 from github import Github, GithubException
 
+from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ReleaseInfo, ReleasesData
 
 
@@ -80,6 +81,66 @@ class ReleaseCollector:
             except Exception as e:
                 print(f"处理仓库 {repo_name} 时发生错误: {e}")
                 continue
+
+        # 按 created_at 降序排列
+        all_releases.sort(key=lambda x: x.date, reverse=True)
+
+        # 构建 ReleasesData
+        releases_data = ReleasesData(
+            total_count=total_count,
+            unique_repos_count=unique_repos_count,
+            releases=all_releases,
+        )
+
+        return releases_data, all_detailed_releases
+
+    def collect_releases_parallel(
+        self,
+        repos: list[str],
+        since: datetime,
+        include_prereleases: bool = False,
+        max_workers: int | None = None,
+    ) -> tuple[ReleasesData, list[dict]]:
+        """并行收集 Release 数据
+
+        Args:
+            repos: 仓库列表
+            since: 起始时间
+            include_prereleases: 是否包含预发布版本
+            max_workers: 最大线程数（默认为 min(32, len(repos) + 4)）
+
+        Returns:
+            (ReleasesData 对象, 详细 Release 列表)
+        """
+        # 确保 since 有时区信息
+        if since.tzinfo is None:
+            since = since.replace(tzinfo=UTC)
+
+        # 定义采集单个仓库的函数
+        def _collect_one(repo_name: str) -> tuple[list[ReleaseInfo], list[dict]]:
+            """采集单个仓库的 releases"""
+            return self._collect_repo_releases(
+                repo=repo_name,
+                since=since,
+                include_prereleases=include_prereleases,
+            )
+
+        # 并行采集所有仓库
+        results = parallel_map(_collect_one, repos, max_workers=max_workers)
+
+        # 处理结果
+        all_releases: list[ReleaseInfo] = []
+        all_detailed_releases: list[dict] = []
+
+        total_count = 0
+        unique_repos_count = 0
+
+        for repo_releases, detailed in results:
+            if repo_releases:
+                all_releases.extend(repo_releases)
+                all_detailed_releases.extend(detailed)
+                unique_repos_count += 1
+                total_count += len(repo_releases)
 
         # 按 created_at 降序排列
         all_releases.sort(key=lambda x: x.date, reverse=True)

@@ -63,7 +63,11 @@ class TestSignalCategorization:
         mock_settings_instance.github_repos = ["anthropics/skills"]
         mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = None
+        mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
 
         # 创建包含 engineering 和 research 类型的 commit 信号
@@ -170,9 +174,9 @@ class TestSignalCategorization:
         pipeline = TrendPulsePipeline()
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
 
-        # Assert - 验证 commit_signals 被保留
-        assert len(report.commit_signals) == 3
-        assert report.commit_signals == mock_commit_signals
+        # Assert - 验证 commit_signals 被清空（避免重复显示）
+        assert len(report.commit_signals) == 0
+        assert report.commit_signals == []
 
         # Assert - 验证 commit_signals 被正确分类
         assert len(report.engineering_signals) == 2  # 2个 engineering信号

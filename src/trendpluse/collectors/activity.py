@@ -8,6 +8,7 @@ from typing import Any
 
 from github import Github, GithubException
 
+from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ActivityData, RepoActivity
 
 
@@ -75,6 +76,66 @@ class ActivityCollector:
             except GithubException as e:
                 print(f"获取仓库 {repo_name} 活跃度失败: {e}")
                 continue
+
+        # 按活跃度排序
+        top_repos.sort(key=lambda x: -x.commits)
+
+        # 构建 ActivityData
+        activity_data = ActivityData(
+            total_commits=total_commits,
+            active_repos_count=active_repos_count,
+            new_contributors=total_new_contributors,
+            top_repos=top_repos,
+        )
+
+        return activity_data, all_detailed_commits
+
+    def collect_activity_parallel(
+        self,
+        repos: list[str],
+        since: datetime,
+        max_workers: int | None = None,
+    ) -> tuple[ActivityData, list[dict]]:
+        """并行收集仓库活跃度数据
+
+        Args:
+            repos: 仓库列表
+            since: 起始时间
+            max_workers: 最大线程数（默认为 min(32, len(repos) + 4)）
+
+        Returns:
+            (ActivityData 对象, 详细 commit 列表)
+        """
+        # 确保 since 有时区信息
+        if since.tzinfo is None:
+            since = since.replace(tzinfo=UTC)
+
+        # 定义采集单个仓库的函数
+        def _collect_one(repo_name: str) -> tuple[RepoActivity, list[dict]]:
+            """采集单个仓库的活跃度"""
+            repo = self.client.get_repo(repo_name)
+            return self._collect_repo_activity(repo, since, repo_name)
+
+        # 并行采集所有仓库
+        results = parallel_map(_collect_one, repos, max_workers=max_workers)
+
+        # 处理结果
+        top_repos: list[RepoActivity] = []
+        all_detailed_commits: list[dict] = []
+
+        total_commits = 0
+        active_repos_count = 0
+        total_new_contributors = 0
+
+        for repo_activity, repo_commits in results:
+            if repo_activity:
+                top_repos.append(repo_activity)
+                all_detailed_commits.extend(repo_commits)
+
+                if repo_activity.commits > 0:
+                    active_repos_count += 1
+                    total_commits += repo_activity.commits
+                    total_new_contributors += repo_activity.new_contributors
 
         # 按活跃度排序
         top_repos.sort(key=lambda x: -x.commits)

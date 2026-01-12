@@ -117,6 +117,17 @@ class Settings(BaseSettings):
         default=False, description="是否包含预发布版本（alpha/beta/rc）"
     )
 
+    # 并行采集配置
+    enable_parallel_collection: bool = Field(
+        default=True, description="是否启用并行数据采集（多仓库场景推荐）"
+    )
+    max_parallel_workers: int = Field(
+        default=8,
+        ge=1,
+        le=32,
+        description="并行采集的最大线程数（1-32，默认8）",
+    )
+
     # 成本控制
     daily_token_budget: int = 100_000
     max_retries: int = 3
