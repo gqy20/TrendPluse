@@ -252,14 +252,14 @@ class TestFeishuFormatter:
         assert "owner/repo2" in combined_content
         assert "owner/repo3" in combined_content
 
-    def test_format_releases_deduplicates_same_repo(self):
-        """测试：同一仓库的多个版本只显示一次（显示最新版本）"""
+    def test_format_releases_shows_all_versions(self):
+        """测试：版本发布显示所有版本（与 MarkdownReporter 一致）"""
         # Arrange
         from trendpluse.notifiers.formatters import FeishuFormatter
 
         formatter = FeishuFormatter()
 
-        # 同一仓库有 3 个版本，应该只显示最新的 v1.2.0
+        # 同一仓库有 3 个版本，都应该显示（最多 5 个）
         releases = ReleasesData(
             total_count=3,
             unique_repos_count=1,
@@ -321,28 +321,21 @@ class TestFeishuFormatter:
         ]
         combined_content = " ".join(content_parts)
 
-        # 应该只显示最新版本 v1.2.0
-        # 提取版本发布部分进行验证
-        import re
+        # 应该显示所有版本
+        # 直接在 combined_content 中验证
+        # 验证包含所有版本
+        assert "v1.0.0" in combined_content
+        assert "v1.1.0" in combined_content
+        assert "v1.2.0" in combined_content
+        # 验证总览统计
+        assert "**新发布版本**: 3 个" in combined_content
+        assert "**涉及仓库**: 1 个" in combined_content
+        # 验证包含发布者和时间信息
+        assert "user1" in combined_content
+        assert "2026-01-03" in combined_content
 
-        release_section_match = re.search(
-            r"### 🎯 版本发布.*?(?=###|\Z)", combined_content, re.DOTALL
-        )
-        assert release_section_match is not None
-        release_section = release_section_match.group(0)
-
-        # 只显示最新版本 v1.2.0
-        assert "v1.2.0" in release_section
-        # 不应该显示旧版本
-        assert "v1.0.0" not in release_section
-        assert "v1.1.0" not in release_section
-        # 统计应该显示 "1个仓库" 而不是 "3个"
-        assert "1个仓库" in release_section
-        # 应该包含链接
-        assert "](https://github.com/owner/repo/releases/tag/v1.2.0)" in release_section
-
-    def test_format_releases_includes_links(self):
-        """测试：版本发布包含可点击链接"""
+    def test_format_releases_includes_detailed_info(self):
+        """测试：版本发布包含详细信息（发布者、时间、摘要、链接）"""
         # Arrange
         from trendpluse.notifiers.formatters import FeishuFormatter
 
@@ -357,7 +350,7 @@ class TestFeishuFormatter:
                     version="v2.0.0",
                     author="user1",
                     date="2026-01-04",
-                    summary="Test release",
+                    summary="Test release with some details",
                     assets_count=1,
                     url="https://github.com/owner/repo1/releases/tag/v2.0.0",
                 ),
@@ -366,7 +359,7 @@ class TestFeishuFormatter:
                     version="v1.5.0",
                     author="user2",
                     date="2026-01-04",
-                    summary="Test release",
+                    summary="Another test release",
                     assets_count=1,
                     url="https://github.com/owner/repo2/releases/tag/v1.5.0",
                 ),
@@ -400,15 +393,24 @@ class TestFeishuFormatter:
         ]
         combined_content = " ".join(content_parts)
 
-        # 飞书 Markdown 链接语法：[text](url)
-        assert (
-            "[owner/repo1](https://github.com/owner/repo1/releases/tag/v2.0.0)"
-            in combined_content
-        )
-        assert (
-            "[owner/repo2](https://github.com/owner/repo2/releases/tag/v1.5.0)"
-            in combined_content
-        )
+        # 验证包含详细信息（与 MarkdownReporter 一致）
+        # 仓库链接
+        assert "[owner/repo1](https://github.com/owner/repo1)" in combined_content
+        assert "[owner/repo2](https://github.com/owner/repo2)" in combined_content
+        # 版本号
+        assert "v2.0.0" in combined_content
+        assert "v1.5.0" in combined_content
+        # 发布者
+        assert "user1" in combined_content
+        assert "user2" in combined_content
+        # 时间
+        assert "2026-01-04" in combined_content
+        # 摘要
+        assert "Test release" in combined_content
+        # 资产信息
+        assert "**资产**" in combined_content
+        # 查看详情链接
+        assert "查看详情" in combined_content
 
     def test_format_card_includes_release_signals(self):
         """测试：卡片包含 Release 信号部分（与 Markdown 一致）"""

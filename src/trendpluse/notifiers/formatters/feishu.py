@@ -6,7 +6,8 @@
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
-    ReleaseInfo,
+    ReleasesData,
+    ReleaseSummary,
     Signal,
 )
 
@@ -55,17 +56,31 @@ class FeishuFormatter:
         # 2. 高影响信号（如果有）
         elements.extend(self._create_signals_section(report))
 
-        # 3. 版本发布（如果有）
+        # 3. Release 信号（如果有，与 MarkdownReporter 一致）
+        if report.release_signals:
+            elements.append({"tag": "hr"})
+            elements.extend(
+                self._create_release_signals_section(report.release_signals)
+            )
+
+        # 4. Breaking Changes（如果有，与 MarkdownReporter 一致）
+        if report.breaking_changes:
+            elements.append({"tag": "hr"})
+            elements.append(
+                self._create_breaking_changes_section(report.breaking_changes)
+            )
+
+        # 5. 版本发布（如果有）
         if report.releases and report.releases.releases:
             elements.append({"tag": "hr"})
             elements.append(self._create_releases_section(report.releases))
 
-        # 4. 活跃仓库 TOP 3（如果有）
-        if report.activity and report.activity.top_repos:
+        # 6. 活跃度信息（如果有，与 MarkdownReporter 一致）
+        if report.activity:
             elements.append({"tag": "hr"})
             elements.append(self._create_activity_section(report.activity))
 
-        # 5. 统计信息
+        # 7. 统计信息
         elements.append({"tag": "hr"})
         elements.append(self._create_stats_section(report.stats))
 
@@ -122,12 +137,11 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 获取 PR 高影响信号（engineering, research, release）
+        # 获取 PR 高影响信号（仅 engineering 和 research，不含 release_signals）
         pr_signals = self._get_high_impact_signals(
             [
                 report.engineering_signals,
                 report.research_signals,
-                report.release_signals,
             ]
         )
 
@@ -250,8 +264,8 @@ class FeishuFormatter:
 
         return "链接"
 
-    def _create_releases_section(self, releases) -> dict:
-        """创建版本发布部分
+    def _create_releases_section(self, releases: ReleasesData) -> dict:
+        """创建版本发布部分（与 MarkdownReporter 一致，包含详细信息）
 
         Args:
             releases: ReleasesData 对象
@@ -259,34 +273,163 @@ class FeishuFormatter:
         Returns:
             版本发布部分元素
         """
-        # 按仓库去重，保留日期最新的版本
-        latest_by_repo: dict[str, ReleaseInfo] = {}
-        for r in releases.releases:
-            repo = r.repo
-            # 如果该仓库还没记录，或者当前版本日期更新，则替换
-            if repo not in latest_by_repo or r.date > latest_by_repo[repo].date:
-                latest_by_repo[repo] = r
+        lines = ["### 🎯 版本发布动态\n\n"]
 
-        unique_releases = list(latest_by_repo.values())[:5]
+        # 总览
+        lines.append("### 总览\n\n")
+        lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
+        lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
 
-        content = f"### 🎯 版本发布 ({len(unique_releases)}个仓库)\n\n"
-        for release in unique_releases:
-            # 飞书 Markdown 链接语法：[text](url)
-            content += f"• [{release.repo}]({release.url}) {release.version}"
-            if release.date:
-                content += f" ({release.date})"
-            content += "\n"
+        # 详细 Release 列表（最多 5 个，飞书卡片不宜过长）
+        if releases.releases:
+            lines.append("\n### 最新发布\n\n")
+
+            for release in releases.releases[:5]:
+                repo_name = release.repo.replace("_", "\\_")
+                version = release.version
+                author = release.author
+                date = release.date
+                summary = release.summary
+                assets_count = release.assets_count
+                url = release.url
+                ai_summary = release.ai_summary
+
+                # 简单的版本类型判断
+                if version.startswith("v") and ".0.0" in version:
+                    type_emoji = "🚀"
+                else:
+                    type_emoji = "⚡" if assets_count > 0 else "📦"
+
+                # Release 标题（仓库链接）
+                repo_link = f"[{repo_name}](https://github.com/{release.repo})"
+                lines.append(f"#### {type_emoji} {repo_link} `{version}`\n\n")
+                lines.append(f"**发布者**: `{author}` | **时间**: {date}\n\n")
+
+                # 优先使用 AI 总结
+                if ai_summary:
+                    change_emoji = ReleaseSummary.get_change_type_emoji(
+                        ai_summary.change_type
+                    )
+                    lines.append(
+                        f"**变更类型**: {change_emoji} {ai_summary.change_type}\n\n"
+                    )
+                    lines.append("**变更摘要**:\n")
+                    for change in ai_summary.key_changes:
+                        lines.append(f"- {change}\n")
+                    lines.append("\n")
+                    if ai_summary.summary_cn:
+                        lines.append(f"{ai_summary.summary_cn}\n\n")
+                elif summary:
+                    # 回退到原始摘要（截取前 150 字符，飞书不宜过长）
+                    summary_text = summary[:150].replace("\n", " ")
+                    if len(summary) > 150:
+                        summary_text += "..."
+                    lines.append(f"**摘要**: {summary_text}\n\n")
+
+                # Assets
+                if assets_count > 0:
+                    lines.append(f"**资产**: {assets_count} 个文件\n\n")
+
+                lines.append(f"**链接**: [查看详情]({url})\n\n")
 
         return {
             "tag": "div",
             "text": {
                 "tag": "lark_md",
-                "content": content,
+                "content": "".join(lines),
+            },
+        }
+
+    def _create_release_signals_section(self, signals: list[Signal]) -> list[dict]:
+        """创建 Release 信号部分（与 MarkdownReporter 一致）
+
+        Args:
+            signals: Release 信号列表
+
+        Returns:
+            Release 信号元素列表
+        """
+        elements: list[dict] = []
+
+        if not signals:
+            return elements
+
+        elements.append(
+            {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "### 🎯 Release 信号\n\n",
+                },
+            }
+        )
+
+        # 筛选高影响信号（评分 >= 4）
+        high_impact = [s for s in signals if s.impact_score >= 4]
+        if not high_impact:
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": "暂无 release 信号。\n",
+                    },
+                }
+            )
+            return elements
+
+        # 按评分降序，最多 5 个
+        sorted_signals = sorted(high_impact, key=lambda x: (-x.impact_score, x.title))[
+            :5
+        ]
+
+        elements.extend(self._create_signal_items(sorted_signals))
+
+        return elements
+
+    def _create_breaking_changes_section(self, breaking_changes: list[dict]) -> dict:
+        """创建 Breaking Changes 部分（与 MarkdownReporter 一致）
+
+        Args:
+            breaking_changes: breaking changes 列表
+
+        Returns:
+            Breaking Changes 部分元素
+        """
+        lines = ["### ⚠️ Breaking Changes\n\n"]
+
+        for bc in breaking_changes:
+            repo_name = bc["repo"].replace("_", "\\_")
+            tag_name = bc["tag_name"]
+            repo_link = f"[{repo_name}](https://github.com/{bc['repo']})"
+
+            lines.append(f"### {repo_link} `{tag_name}`\n\n")
+
+            for change in bc.get("changes", []):
+                impact = change.get("impact", "unknown")
+                impact_emoji = {
+                    "high": "🔴",
+                    "medium": "🟡",
+                    "low": "🟢",
+                }.get(impact, "⚪")
+
+                category = change.get("category", "")
+                description = change.get("description", "")
+
+                lines.append(f"- {impact_emoji} **[{category}]** {description}\n")
+
+            lines.append("\n")
+
+        return {
+            "tag": "div",
+            "text": {
+                "tag": "lark_md",
+                "content": "".join(lines),
             },
         }
 
     def _create_activity_section(self, activity: ActivityData) -> dict:
-        """创建活跃度部分
+        """创建活跃度部分（与 MarkdownReporter 一致，包含总览）
 
         Args:
             activity: ActivityData 对象
@@ -294,15 +437,25 @@ class FeishuFormatter:
         Returns:
             活跃度部分元素
         """
-        content = "### 🔥 活跃仓库 TOP 3\n\n"
-        for i, repo in enumerate(activity.top_repos[:3], 1):
-            content += f"{i}. **{repo.repo}** ({repo.commits} commits)\n"
+        lines = ["### 📈 仓库活跃度\n\n"]
+
+        # 总览指标
+        lines.append("### 总览\n\n")
+        lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
+        lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
+        lines.append(f"- **新贡献者数**: {activity.new_contributors}\n")
+
+        # 活跃仓库 TOP 3（飞书卡片不宜过长，显示 TOP 3）
+        if activity.top_repos:
+            lines.append("\n### 活跃仓库 TOP 3\n\n")
+            for i, repo in enumerate(activity.top_repos[:3], 1):
+                lines.append(f"{i}. **{repo.repo}** ({repo.commits} commits)\n")
 
         return {
             "tag": "div",
             "text": {
                 "tag": "lark_md",
-                "content": content,
+                "content": "".join(lines),
             },
         }
 
