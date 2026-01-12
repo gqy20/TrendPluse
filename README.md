@@ -16,10 +16,12 @@
 
 - 🔍 **智能采集**: 使用 GitHub API 实时获取 PR、Issue、Release
 - 🤖 **AI 分析**: 使用 glm-4.7 提取趋势信号和关键洞察
-- 📊 **每日报告**: 自动生成结构化的 Markdown 趋势分析报告
+- 📊 **每日报告**: 自动生成结构化的 Markdown 和 JSON 趋势分析报告
 - 🎯 **多维分类**: 工程实践、研究成果、生态动向等分类
 - 🌐 **自动发布**: GitHub Pages 自动展示报告
 - ⚡ **TDD 开发**: 测试驱动开发，代码质量有保障
+- 🚀 **并行处理**: 数据采集和 AI 分析并行化，提升处理效率
+- 📱 **飞书通知**: 支持飞书机器人推送趋势报告（可选）
 
 ### 报告分类
 
@@ -73,6 +75,11 @@ ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic
 
 # 可选配置（提高 GitHub API 速率限制）
 GITHUB_TOKEN=your_github_token_here
+
+# 飞书通知（可选）
+FEISHU_WEBHOOK_URL=your_feishu_webhook_url
+FEISHU_SECRET=your_feishu_secret
+FEISHU_AT_MOBILES=13800138000,13900139000
 ```
 
 ### 获取 API Key
@@ -158,8 +165,9 @@ make docs-serve
 
 项目配置了自动化工作流：
 - **CI** - 每次 PR/push 时运行测试和代码检查
-- **每日分析** - 每天 UTC 0:00 自动生成趋势报告
+- **每日分析** - 每天 UTC 0:10 自动生成趋势报告（北京时间 8:10）
 - **文档部署** - 报告更新后自动部署到 GitHub Pages
+- **飞书通知** - 可选的飞书机器人推送
 
 详见 [`.github/workflows/`](./.github/workflows/)
 
@@ -169,40 +177,61 @@ make docs-serve
 TrendPluse/
 ├── .github/
 │   └── workflows/          # GitHub Actions 配置
-│       ├── ci.yml          # CI workflow
-│       ├── daily-analysis.yml  # 每日分析
-│       └── deploy-pages.yml    # Pages 部署
+│       ├── ci.yml                    # CI workflow
+│       ├── run-daily.yml             # 每日分析
+│       ├── deploy-pages.yml          # Pages 部署
+│       ├── send-feishu.yml           # 飞书通知
+│       └── process_repo_request.yml  # 仓库请求处理
 ├── docs/                   # MkDocs 文档源文件
 │   ├── index.md            # 首页
-│   ├── features.md         # 功能概述
-│   ├── quickstart.md       # 快速开始
-│   ├── configuration.md    # 配置指南
 │   ├── reports/            # 报告目录
 │   │   └── index.md        # 报告索引
 │   └── stylesheets/        # 自定义样式
 ├── reports/                # 生成的趋势报告
-│   └── report-*.md
+│   ├── report-*.md         # Markdown 格式
+│   └── report-*.json       # JSON 格式
 ├── scripts/                # 工具脚本
-│   ├── run.py              # 主程序入口
-│   ├── generate_report_index.py  # 生成报告索引
-│   ├── sync_repos_to_docs.py     # 同步仓库列表到文档
-│   ├── repos_doc_generator.py    # 仓库文档生成器
-│   └── check.py            # 健康检查脚本
+│   ├── run.py                       # 主程序入口
+│   ├── generate_report_index.py     # 生成报告索引
+│   ├── sync_repos_to_docs.py        # 同步仓库列表到文档
+│   ├── add_repo.py                  # 添加监控仓库
+│   ├── send_feishu_notification.py  # 发送飞书通知
+│   └── repos_doc_generator.py       # 仓库文档生成器
 ├── src/trendpluse/         # 源代码
 │   ├── analyzers/          # AI 分析器
+│   │   ├── base.py               # LLM 分析器基类
+│   │   ├── trend_analyzer.py     # PR 趋势分析
+│   │   ├── commit_analyzer.py    # Commit 分析
+│   │   ├── release_analyzer.py   # Release 分析
+│   │   ├── release_summarizer.py # Release AI 总结
+│   │   ├── breaking_changes_detector.py  # 不兼容变更检测
+│   │   └── signal_deduplicator.py      # 信号去重
 │   ├── collectors/         # 数据采集器
+│   │   ├── github_events.py     # GitHub 事件采集
+│   │   ├── activity.py          # 活跃度采集
+│   │   ├── releases.py          # Release 采集
+│   │   ├── filter.py            # 事件筛选
+│   │   ├── github_api.py        # GitHub API 封装
+│   │   └── parallel.py          # 并行采集框架
 │   ├── models/             # 数据模型
+│   │   └── signal.py            # 信号和报告模型
 │   ├── reporters/          # 报告生成器
-│   ├── config/             # 配置模块
-│   ├── reports/            # 报告存储
-│   ├── config.py           # 配置管理（主入口）
-│   ├── pipeline.py         # 主流程
+│   │   └── markdown_reporter.py # Markdown 报告生成
+│   ├── notifiers/          # 通知发送
+│   │   ├── base.py              # 通知器基类
+│   │   ├── feishu.py            # 飞书通知
+│   │   └── formatters/
+│   │       └── feishu.py        # 飞书卡片格式化
+│   ├── config.py           # 配置管理
+│   ├── pipeline.py         # 主流程协调器
 │   ├── logger.py           # 日志系统
 │   ├── core.py             # 核心基础函数
-│   ├── api.py              # API 接口定义
 │   └── main.py             # 命令行入口
 ├── tests/                  # 测试文件
 │   └── unit/
+├── data/                   # 数据文件
+│   ├── signal_history.json  # 信号历史记录
+│   └── snapshots/           # 数据快照
 ├── mkdocs.yml              # MkDocs 配置
 ├── pyproject.toml          # 项目配置
 └── README.md               # 本文件
@@ -216,9 +245,11 @@ TrendPluse/
 
 报告包含：
 - 📊 当日趋势总览
-- 🔧 工程信号详情
-- 🔬 研究信号详情
-- 📈 统计信息
+- 🔧 工程信号详情（折叠面板）
+- 🔬 研究信号详情（折叠面板）
+- 🚀 Release AI 总结
+- 📈 活跃度统计
+- 🔗 完整 JSON 数据（机器可读）
 
 ## 开发指南
 
@@ -371,6 +402,28 @@ gh run view <run_id> --log-failed
 
 # 检查 secrets 配置
 gh secret list
+```
+
+### 飞书通知发送失败
+
+**问题**: 报告生成成功但未收到飞书通知
+
+**可能原因**:
+- `FEISHU_WEBHOOK_URL` 配置错误
+- `FEISHU_SECRET` 验证失败
+- 网络连接问题
+
+**解决方案**:
+```bash
+# 检查环境变量配置
+echo $FEISHU_WEBHOOK_URL
+echo $FEISHU_SECRET
+
+# 手动发送通知测试
+uv run python scripts/send_feishu_notification.py
+
+# 查看飞书卡片内容
+cat feishu_card.json
 ```
 
 ## 贡献指南

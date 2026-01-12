@@ -7,17 +7,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 import instructor
-from tenacity import (
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
 
 from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.utils.retry import create_anthropic_retry_decorator
 
-# 可重试的临时错误类型
-RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
+# 创建重试装饰器（统一配置）
+_llm_retry = create_anthropic_retry_decorator()
 
 
 class TrendAnalyzer:
@@ -85,12 +80,7 @@ PR 描述: {pr_details.get("body", "")}
 
         return signal  # type: ignore[no-any-return]
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=1, max=10),
-        retry=retry_if_exception_type(RETRYABLE_ERRORS),
-        reraise=True,
-    )
+    @_llm_retry
     def _call_llm_for_signal(self, prompt: str) -> Signal:
         """调用 LLM 提取 PR 信号（带重试机制）
 

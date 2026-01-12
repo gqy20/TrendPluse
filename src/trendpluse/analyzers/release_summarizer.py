@@ -7,14 +7,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 import instructor
-from tenacity import (
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
 
 from trendpluse.models.signal import ReleaseSummary
+from trendpluse.utils.retry import create_anthropic_retry_decorator
+
+# 创建重试装饰器（统一配置）
+_llm_retry = create_anthropic_retry_decorator()
 
 # 可重试的临时错误类型
 RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
@@ -99,12 +97,7 @@ class ReleaseSummarizer:
 
         return summaries
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=1, max=10),
-        retry=retry_if_exception_type(RETRYABLE_ERRORS),
-        reraise=True,
-    )
+    @_llm_retry
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）
 
@@ -178,7 +171,7 @@ Release Notes:
 
         # 使用 instructor 获取结构化输出（带重试机制）
         try:
-            return self._call_llm_for_summary(prompt)
+            return self._call_llm_for_summary(prompt)  # type: ignore[no-any-return]
         except RETRYABLE_ERRORS as e:
             # 重试耗尽后的可重试错误
             print(f"[ERROR] ReleaseSummarizer: 重试耗尽 - {type(e).__name__}: {e}")

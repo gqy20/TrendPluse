@@ -141,6 +141,11 @@ GitHub API → Collectors → Analyzers (AI) → Pipeline → Reporters → Mark
 - `MAX_CANDIDATES`: 最大候选事件数（默认 20）
 - `DAYS_TO_LOOKBACK`: PR 和 Release 回溯天数（默认 7）
 
+**高级配置**:
+- `MAX_PARALLEL_WORKERS`: 并行采集线程数（1-32，默认 8）
+- `DAILY_TOKEN_BUDGET`: 每日 Token 预算控制
+- `GITHUB_REPOS`: 逗号分隔的仓库列表（覆盖默认值）
+
 ### 测试策略
 
 - **TDD 开发**: 先写测试，再实现功能
@@ -149,6 +154,23 @@ GitHub API → Collectors → Analyzers (AI) → Pipeline → Reporters → Mark
 - pre-commit hooks 包含测试检查
 
 ### 关键实现细节
+
+#### 并行采集框架
+项目使用 `collectors/parallel.py` 提供的并行采集框架：
+- `parallel_map()`: 并行执行函数并保持顺序，返回结果列表
+- `parallel_execute()`: 并行执行，忽略错误的任务
+- 所有 Collector 使用 `max_parallel_workers` 配置（默认 8，范围 1-32）
+- 错误处理：单个任务失败不影响整体流程
+
+#### LLM 分析器基类
+所有 AI 分析器继承 `BaseLLMAnalyzer` (在 `analyzers/base.py`)：
+- 统一的 Anthropic 客户端初始化
+- `_extract_text_from_response()` 方法提取文本内容
+- 支持 `base_url` 参数（用于智谱 AI）
+
+#### 报告输出格式
+- Markdown: `reports/report-YYYY-MM-DD.md`（人类可读）
+- JSON: `reports/report-YYYY-MM-DD.json`（机器可读，用于数据分析和 API）
 
 #### 跨类型信号聚合
 `TrendAnalyzer.aggregate_and_generate_report()` 使用 LLM 识别跨 PR、Commit、Release 的高层次趋势模式，而不仅仅是分类汇总。
@@ -170,6 +192,73 @@ Pipeline 在各环节失败时优雅降级，确保至少生成包含活跃度�
 - `actionlint`: GitHub Actions 工作流检查
 - `sync-repos-to-docs`: 自动同步仓库列表到文档（`make install` 时安装）
 
+### GitHub Actions 工作流
+
+#### CI 工作流 (`.github/workflows/ci.yml`)
+- 每次 PR/push 触发
+- 运行测试、代码检查、类型检查
+
+#### 每日分析 (`.github/workflows/run-daily.yml`)
+- 每天 UTC 0:10 运行（北京时间 8:10）
+- 三个 Job：analyze → deploy → notify
+- 自动提交报告（[skip ci] 跳过 CI）
+- 部署到 GitHub Pages
+- 可选发送飞书通知
+
+#### 飞书通知 (`.github/workflows/send-feishu.yml`)
+- 手动触发
+- 支持指定报告日期
+- 用于重发通知或测试
+
+### 飞书通知详解
+
+#### 签名验证
+- 支持飞书签名验证（`FEISHU_SECRET`）
+- 使用 HMAC-SHA256 生成签名
+- Base64 编码传输
+
+#### 重试机制
+- 使用 `tenacity` 库
+- 最多重试 3 次
+- 指数退避（1s → 2s → 4s → 10s）
+
+#### 卡片格式
+- JSON 2.0 格式
+- 折叠面板组织内容
+- 支持富文本 Markdown
+- @ 提醒功能
+- 主按钮跳转到报告
+
+#### FeishuFormatter 职责
+- 将 `DailyReport` 转换为飞书卡片
+- 按优先级筛选信号（impact_score >= 4）
+- 限制卡片长度（最多 5 个信号）
+- URL 格式化（commit SHA、PR 号码）
+
+### 工具脚本
+
+| 脚本 | 用途 |
+|------|------|
+| `run.py` | 主程序入口（每日分析） |
+| `generate_report_index.py` | 生成 `docs/reports/index.md` |
+| `sync_repos_to_docs.py` | 同步仓库列表到 README |
+| `add_repo.py` | 添加监控仓库 |
+| `send_feishu_notification.py` | 发送飞书通知 |
+| `repos_doc_generator.py` | 生成仓库文档 |
+
+### 文档系统 (MkDocs)
+
+#### 配置文件
+- `mkdocs.yml`: 主配置
+- `docs/`: 文档源文件
+- `docs/stylesheets/extra.css`: 自定义样式
+
+#### 主题
+- Material for MkDocs
+- 自动亮/暗模式切换
+- 中英文搜索
+- Git 修订日期
+
 ### 项目结构
 
 ```
@@ -186,9 +275,11 @@ src/trendpluse/
 │   ├── activity.py
 │   ├── releases.py
 │   ├── filter.py
-│   └── github_api.py
+│   ├── github_api.py
+│   └── parallel.py   # 并行采集框架
 │
 ├── analyzers/        # AI 分析器
+│   ├── base.py       # LLM 分析器基类
 │   ├── trend_analyzer.py
 │   ├── commit_analyzer.py
 │   ├── release_analyzer.py
@@ -221,7 +312,7 @@ docs/                        # MkDocs 文档源
 │   └── index.md
 └── stylesheets/
 
-reports/                     # 生成的趋势报告（保存为 report-YYYY-MM-DD.md）
+reports/                     # 生成的趋势报告（保存为 report-YYYY-MM-DD.md/json）
 data/                        # 数据文件
 ├── signal_history.json      # 信号历史记录
 └── snapshots/               # 数据快照
@@ -237,8 +328,8 @@ data/                        # 数据文件
 
 ### 添加新 Analyzer
 1. 在 `analyzers/` 下创建新文件
-2. 使用 `instructor` + Pydantic 模型实现结构化输出
-3. 参考 `TrendAnalyzer` 的模式，支持 `api_key`、`model`、`base_url` 参数
+2. 继承 `BaseLLMAnalyzer` 基类
+3. 使用 `instructor` + Pydantic 模型实现结构化输出
 4. 在 `pipeline.py` 中集成调用
 5. 如需去重，在 `SignalDeduplicator` 中添加逻辑
 

@@ -4,12 +4,11 @@
 """
 
 from github import Github, GithubException
-from tenacity import (
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
+
+from trendpluse.utils.retry import create_github_retry_decorator
+
+# 创建重试装饰器（统一配置）
+_github_retry = create_github_retry_decorator()
 
 
 class GitHubDetailFetcher:
@@ -26,14 +25,8 @@ class GitHubDetailFetcher:
         else:
             # 无 token 时仍然可以访问公开仓库，但有速率限制
             self.client = Github()
-        self._rate_limit_wait = wait_exponential(multiplier=1, min=4, max=60)
 
-    @retry(
-        stop=stop_after_attempt(3),
-        retry=retry_if_exception_type(GithubException),
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        reraise=True,
-    )
+    @_github_retry
     def fetch_pr_details(self, repo_name: str, pr_number: int) -> dict:
         """获取 PR 详情
 
@@ -63,12 +56,7 @@ class GitHubDetailFetcher:
             "changed_files": pr.changed_files,
         }
 
-    @retry(
-        stop=stop_after_attempt(3),
-        retry=retry_if_exception_type(GithubException),
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        reraise=True,
-    )
+    @_github_retry
     def fetch_release_details(self, repo_name: str, tag_name: str) -> dict:
         """获取 Release 详情
 
@@ -93,12 +81,7 @@ class GitHubDetailFetcher:
             "prerelease": release.prerelease,
         }
 
-    @retry(
-        stop=stop_after_attempt(3),
-        retry=retry_if_exception_type(GithubException),
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        reraise=True,
-    )
+    @_github_retry
     def fetch_pr_comments(self, repo_name: str, pr_number: int) -> list[dict]:
         """获取 PR 评论
 
