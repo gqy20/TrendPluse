@@ -185,6 +185,12 @@ class TrendPulsePipeline:
             date=date.strftime("%Y-%m-%d"),
         )
 
+        # 5.5. 确保低层次信号被清空（避免重复显示）
+        # 虽然 TrendAnalyzer 尝试清空这些字段，但 LLM 返回的对象可能不遵守
+        # 这里强制清空以确保 Markdown 报告不会重复显示
+        report.commit_signals = []
+        report.release_signals = []
+
         # 6. 添加活跃度、release 数据和 breaking changes
         report.activity = activity_data
         report.releases = releases_data
