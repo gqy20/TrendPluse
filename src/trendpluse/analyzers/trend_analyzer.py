@@ -229,9 +229,9 @@ PR 描述: {pr_details.get("body", "")}
         )
 
         # 清空低层次信号（已被聚合到高层次趋势中）
+        # 注意：只清空 commit_signals，因为它们被聚合到 engineering/research_signals
+        # release_signals 应该保留，因为它们是独立的分析结果
         report.commit_signals = []
-        if hasattr(report, "release_signals"):
-            report.release_signals = []
 
         return report  # type: ignore[no-any-return]
 
