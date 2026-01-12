@@ -281,7 +281,7 @@ class TrendPulsePipeline:
             summary_brief=summary_brief,
             engineering_signals=engineering_signals,
             research_signals=research_signals,
-            commit_signals=commit_signals or [],
+            commit_signals=[],  # 清空，避免与工程/研究信号重复显示
             stats={
                 "total_prs_analyzed": 0,
                 "high_impact_signals": high_impact_count,
