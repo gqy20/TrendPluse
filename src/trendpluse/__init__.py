@@ -2,7 +2,6 @@
 
 __version__ = "0.1.0"
 
-from .core import add, greet
 from .logger import (
     console,
     get_logger,
@@ -17,8 +16,6 @@ from .logger import (
 )
 
 __all__ = [
-    "greet",
-    "add",
     "__version__",
     "logger",
     "get_logger",

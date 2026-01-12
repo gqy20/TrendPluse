@@ -142,39 +142,6 @@ class MarkdownReporter:
             + stats_section
         )
 
-    def _render_monitored_repos(self, repos: list[str]) -> str:
-        """渲染监控仓库列表
-
-        Args:
-            repos: 仓库列表
-
-        Returns:
-            Markdown 格式的监控仓库列表
-        """
-        lines = ["## 📋 监控仓库\n\n"]
-
-        # 按组织分组
-        repos_by_org: dict[str, list[str]] = {}
-        for repo in repos:
-            org = repo.split("/")[0]
-            if org not in repos_by_org:
-                repos_by_org[org] = []
-            repos_by_org[org].append(repo)
-
-        # 排序组织名称
-        sorted_orgs = sorted(repos_by_org.keys())
-
-        for org in sorted_orgs:
-            org_repos = sorted(repos_by_org[org])
-            lines.append(f"### {org}\n\n")
-            for repo in org_repos:
-                repo_name = repo.replace("_", "\\_")
-                repo_link = f"[{repo_name}](https://github.com/{repo})"
-                lines.append(f"- {repo_link}\n")
-            lines.append("\n")
-
-        return "".join(lines)
-
     def _render_commit_signals(self, signals: list[Signal]) -> str:
         """渲染 commit 信号
 
@@ -324,21 +291,6 @@ class MarkdownReporter:
             "total_breaking_changes": "Breaking Changes 数",
         }
         return labels.get(key, key)
-
-    def _extract_repo_name(self, url: str) -> str:
-        """从 URL 提取仓库名
-
-        Args:
-            url: GitHub URL
-
-        Returns:
-            仓库名称
-        """
-        if "github.com/" in url:
-            parts = url.split("github.com/")[1].split("/")
-            if len(parts) >= 2:
-                return f"{parts[0]}/{parts[1]}"
-        return "链接"
 
     def _format_source_url(self, url: str) -> str:
         """格式化 source URL 显示文本

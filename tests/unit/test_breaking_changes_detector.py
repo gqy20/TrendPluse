@@ -11,7 +11,7 @@ from trendpluse.analyzers.breaking_changes_detector import (
 class TestBreakingChangesDetector:
     """测试 Breaking Changes 检测器"""
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_init_with_required_params(self, mock_anthropic):
         """测试：正确初始化检测器"""
         # Arrange & Act
@@ -27,7 +27,7 @@ class TestBreakingChangesDetector:
         assert detector.base_url == "https://api.test.com"
         mock_anthropic.assert_called_once()
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_breaking_changes_returns_list(self, mock_anthropic):
         """测试：检测应返回 breaking changes 列表"""
         # Arrange
@@ -66,7 +66,7 @@ class TestBreakingChangesDetector:
         assert results[0]["has_breaking"] is True
         assert len(results[0]["changes"]) == 1
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_with_empty_releases(self, mock_anthropic):
         """测试：空 releases 应返回空列表"""
         # Arrange
@@ -80,7 +80,7 @@ class TestBreakingChangesDetector:
         # Assert
         assert results == []
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_parses_markdown_code_blocks(self, mock_anthropic):
         """测试：应正确解析 markdown 代码块"""
         # Arrange
@@ -112,7 +112,7 @@ class TestBreakingChangesDetector:
         assert len(results) == 1
         assert results[0]["has_breaking"] is False
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_handles_llm_error_gracefully(self, mock_anthropic):
         """测试：LLM 错误应优雅处理"""
         # Arrange
@@ -137,7 +137,7 @@ class TestBreakingChangesDetector:
         # Assert - 应返回空列表
         assert results == []
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_identifies_multiple_breaking_changes(self, mock_anthropic):
         """测试：应识别多个 breaking changes"""
         # Arrange
@@ -174,7 +174,7 @@ class TestBreakingChangesDetector:
         assert results[0]["has_breaking"] is True
         assert len(results[0]["changes"]) == 2
 
-    @patch("trendpluse.analyzers.breaking_changes_detector.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_detect_filters_non_breaking_releases(self, mock_anthropic):
         """测试：应过滤非 breaking changes 的版本"""
         # Arrange

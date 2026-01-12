@@ -6,11 +6,10 @@
 import json
 from typing import Any
 
-from anthropic import Anthropic
-from anthropic.types import TextBlock
+from trendpluse.analyzers.base import BaseLLMAnalyzer
 
 
-class BreakingChangesDetector:
+class BreakingChangesDetector(BaseLLMAnalyzer):
     """Breaking Changes 检测器
 
     分析 release notes，检测 breaking changes 和不兼容更新。
@@ -29,15 +28,7 @@ class BreakingChangesDetector:
             model: 使用的模型
             base_url: API 基础 URL（可选）
         """
-        self.api_key = api_key
-        self.model = model
-        self.base_url = base_url
-
-        # 初始化 Anthropic 客户端
-        if base_url:
-            self.client = Anthropic(api_key=api_key, base_url=base_url)
-        else:
-            self.client = Anthropic(api_key=api_key)
+        super().__init__(api_key=api_key, model=model, base_url=base_url)
 
     def detect_breaking_changes(self, releases: dict[str, Any]) -> list[dict]:
         """检测 breaking changes
@@ -111,15 +102,8 @@ class BreakingChangesDetector:
             ],
         )
 
-        # 提取 TextBlock 的 text 内容
-        for block in message.content:
-            if isinstance(block, TextBlock):
-                return block.text  # type: ignore[no-any-return]
-            # 兼容测试中的 MagicMock 对象
-            if hasattr(block, "text"):
-                return block.text  # type: ignore[no-any-return]
-        # 如果没有找到 TextBlock，返回空字符串
-        return ""
+        # 使用基类方法提取文本
+        return self._extract_text_from_response(message)
 
     def _build_prompt(self, releases: list[dict[str, Any]]) -> str:
         """构建分析 prompt

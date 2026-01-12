@@ -9,7 +9,7 @@ from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 class TestReleaseAnalyzer:
     """测试 Release 分析器"""
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_init_with_required_params(self, mock_anthropic):
         """测试：正确初始化分析器"""
         # Arrange & Act
@@ -25,7 +25,7 @@ class TestReleaseAnalyzer:
         assert analyzer.base_url == "https://api.test.com"
         mock_anthropic.assert_called_once()
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_init_with_default_model(self, mock_anthropic):
         """测试：使用默认模型初始化"""
         # Arrange & Act
@@ -34,7 +34,7 @@ class TestReleaseAnalyzer:
         # Assert
         assert analyzer.model == "glm-4.7"
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_returns_signals(self, mock_anthropic):
         """测试：分析 releases 应返回信号列表"""
         # Arrange
@@ -74,7 +74,7 @@ class TestReleaseAnalyzer:
         assert signals[0].category == "engineering"
         assert signals[0].impact_score == 4
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_with_empty_list(self, mock_anthropic):
         """测试：空 releases 应返回空列表"""
         # Arrange
@@ -88,7 +88,7 @@ class TestReleaseAnalyzer:
         # Assert
         assert signals == []
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_with_missing_detailed_releases(self, mock_anthropic):
         """测试：缺少 detailed_releases 字段应返回空列表"""
         # Arrange
@@ -102,7 +102,7 @@ class TestReleaseAnalyzer:
         # Assert
         assert signals == []
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_handles_llm_error_gracefully(self, mock_anthropic):
         """测试：LLM API 错误应优雅处理并返回空列表"""
         # Arrange
@@ -127,7 +127,7 @@ class TestReleaseAnalyzer:
         # Assert - 应返回空列表而不是抛出异常
         assert signals == []
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_parses_markdown_code_blocks(self, mock_anthropic):
         """测试：应正确解析 markdown 代码块包裹的 JSON"""
         # Arrange
@@ -162,7 +162,7 @@ class TestReleaseAnalyzer:
         assert len(signals) == 1
         assert signals[0].title == "测试"
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_filters_minor_releases(self, mock_anthropic):
         """测试：应过滤掉不重要的版本更新"""
         # Arrange
@@ -191,7 +191,7 @@ class TestReleaseAnalyzer:
         # Assert
         assert signals == []
 
-    @patch("trendpluse.analyzers.release_analyzer.Anthropic")
+    @patch("trendpluse.analyzers.base.Anthropic")
     def test_analyze_releases_identifies_major_version_upgrade(self, mock_anthropic):
         """测试：应识别主版本升级"""
         # Arrange
