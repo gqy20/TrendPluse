@@ -176,7 +176,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download report artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: trend-report-${{ needs.analyze.outputs.report_date }}
           path: .  # 下载到工作目录根目录，保留原始目录结构
