@@ -52,6 +52,8 @@ def find_report_json(report_date: str) -> Path | None:
 def load_report_from_json(json_path: str) -> DailyReport:
     """从 JSON 文件加载 DailyReport 对象
 
+    如果数据不完整（例如只包含 date），会提供默认值以确保返回有效的 DailyReport。
+
     Args:
         json_path: JSON 文件路径
 
@@ -60,6 +62,29 @@ def load_report_from_json(json_path: str) -> DailyReport:
     """
     content = Path(json_path).read_text(encoding="utf-8")
     data = json.loads(content)
+
+    # 检查数据是否完整，如果不完整则提供默认值
+    required_fields = ["summary_brief", "stats"]
+    missing_fields = [f for f in required_fields if f not in data]
+
+    if missing_fields:
+        console.print(f"[yellow]报告数据不完整，缺少字段: {missing_fields}[/yellow]")
+        console.print("[yellow]使用默认值填充[/yellow]")
+
+        # 提供必需字段的默认值
+        if "summary_brief" not in data:
+            data["summary_brief"] = "报告数据不完整，可能是数据采集或分析失败。"
+        if "stats" not in data:
+            data["stats"] = {}
+        if "engineering_signals" not in data:
+            data["engineering_signals"] = []
+        if "research_signals" not in data:
+            data["research_signals"] = []
+        if "commit_signals" not in data:
+            data["commit_signals"] = []
+        if "release_signals" not in data:
+            data["release_signals"] = []
+
     return DailyReport(**data)
 
 
