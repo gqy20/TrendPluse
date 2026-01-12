@@ -68,17 +68,13 @@ class TestReleaseSummarizerParallel:
         # 串行处理（max_workers=1）
         call_count[0] = 0
         start = time.time()
-        summaries_serial = summarizer.summarize_releases(  # type: ignore[call-arg]
-            releases, max_workers=1
-        )
+        summaries_serial = summarizer.summarize_releases(releases, max_workers=1)
         serial_time = time.time() - start
 
         # 并行处理（max_workers=3）
         call_count[0] = 0
         start = time.time()
-        summaries_parallel = summarizer.summarize_releases(  # type: ignore[call-arg]
-            releases, max_workers=3
-        )
+        summaries_parallel = summarizer.summarize_releases(releases, max_workers=3)
         parallel_time = time.time() - start
 
         # 验证结果一致
@@ -94,7 +90,7 @@ class TestReleaseSummarizerParallel:
         """测试：空列表时 max_workers 参数不应导致错误"""
         summarizer = ReleaseSummarizer(api_key="test-key")
 
-        summaries = summarizer.summarize_releases([], max_workers=3)  # type: ignore[call-arg]
+        summaries = summarizer.summarize_releases([], max_workers=3)
 
         assert summaries == {}
 
@@ -108,14 +104,14 @@ class TestReleaseSummarizerParallel:
             "body": "",
         }
 
-        summaries = summarizer.summarize_releases([release], max_workers=3)  # type: ignore[call-arg]
+        summaries = summarizer.summarize_releases([release], max_workers=3)
 
         assert len(summaries) == 1
         assert "test/repo@v1.0.0" in summaries
 
     def test_summarize_releases_handles_individual_failures_gracefully(
         self, mock_summary
-    ):  # type: ignore[no-any-unimported]
+    ):
         """测试：单个 release 失败不应影响其他 releases"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -144,10 +140,13 @@ class TestReleaseSummarizerParallel:
             for i in range(5)
         ]
 
-        summaries = summarizer.summarize_releases(releases, max_workers=3)  # type: ignore[call-arg]
+        summaries = summarizer.summarize_releases(releases, max_workers=3)
 
-        # 应该成功处理 4 个（1 个失败）
-        assert len(summaries) == 4
+        # 所有 5 个都应有结果（失败的返回默认值）
+        assert len(summaries) == 5
+        # 其中至少 4 个是成功的（change_type='feature'）
+        success_count = sum(1 for s in summaries.values() if s.change_type == "feature")
+        assert success_count >= 4, f"应该至少有 4 个成功，实际有 {success_count} 个"
 
     def test_summarize_releases_default_max_workers(self, mock_summary):
         """测试：不提供 max_workers 时应使用默认值"""

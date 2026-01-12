@@ -3,6 +3,8 @@
 使用 AI 分析 Release Notes，生成结构化的中文总结。
 """
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import anthropic
 import instructor
 
@@ -35,23 +37,56 @@ class ReleaseSummarizer:
         )
 
     def summarize_releases(
-        self, detailed_releases: list[dict]
+        self,
+        detailed_releases: list[dict],
+        max_workers: int = 3,
     ) -> dict[str, ReleaseSummary]:
-        """批量总结 Releases
+        """批量总结 Releases（并行处理）
 
         Args:
             detailed_releases: 详细 Release 信息列表
+            max_workers: 最大并行线程数（默认 3）
 
         Returns:
             {version: ReleaseSummary} 字典
         """
+        # 处理空列表
+        if not detailed_releases:
+            return {}
+
+        # 单个 release 时直接调用，避免线程池开销
+        if len(detailed_releases) == 1:
+            release = detailed_releases[0]
+            key = f"{release['repo']}@{release['tag_name']}"
+            return {key: self._summarize_single_release(release)}
+
+        # 并行处理多个 releases
         summaries: dict[str, ReleaseSummary] = {}
 
-        for release in detailed_releases:
-            # 使用 version + repo 作为唯一标识
-            key = f"{release['repo']}@{release['tag_name']}"
-            summary = self._summarize_single_release(release)
-            summaries[key] = summary
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # 提交所有任务
+            future_to_key: dict = {}
+            for release in detailed_releases:
+                key = f"{release['repo']}@{release['tag_name']}"
+                future = executor.submit(self._summarize_single_release, release)
+                future_to_key[future] = key
+
+            # 收集结果
+            for future in as_completed(future_to_key):
+                key = future_to_key[future]
+                try:
+                    summaries[key] = future.result()
+                except Exception as e:
+                    # 单个失败不影响其他 releases
+                    print(f"[WARNING] ReleaseSummarizer: 总结失败 {key} - {e}")
+                    # 失败时添加一个默认的 ReleaseSummary
+                    repo, tag_name = key.split("@")
+                    summaries[key] = ReleaseSummary(
+                        change_type="other",
+                        key_changes=[],
+                        summary_cn=f"{repo} {tag_name} 发布（分析失败）",
+                        impact_level=1,
+                    )
 
         return summaries
 
