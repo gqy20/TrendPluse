@@ -66,6 +66,7 @@ class Settings(BaseSettings):
             "google-gemini/gemini-cli",
             "agentscope-ai/agentscope",
             "agno-agi/agno",
+            "vercel/ai",
             # Agentic AI 核心框架
             "openai/swarm",
             "openai/codex",
