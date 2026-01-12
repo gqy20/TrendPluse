@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
   issues: write
 
 jobs:
@@ -18,25 +17,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 创建分支
-        run: |
-          git checkout -b add-repo-${{ github.event.issue.number }}
 
       - name: 解析 Issue
         id: parse
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          # 解析 GitHub 仓库 - 使用 sed 避免变长后顾断言
+          # 解析 GitHub 仓库
           REPO=$(echo "$ISSUE_BODY" | sed -n '/### GitHub 仓库/,/###/p' | grep -oP '^[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+$' | head -1 || echo "")
 
-          # 解析分类 - 使用 sed 避免变长后顾断言，跳过空行
+          # 解析分类
           CATEGORY=$(echo "$ISSUE_BODY" | sed -n '/### 分类/,/###/p' | grep -vP '^###' | grep -vP '^$' | head -1 | xargs || echo "")
 
-          # 解添加理由 - 移除换行符并限制长度
+          # 解添加理由
           REASON=$(echo "$ISSUE_BODY" | sed -n '/### 添加理由/,/###/p' | sed '1d;$d' | tr -d '\n\r' | sed 's/^\s*-\s*\[x\]\s*//' | head -c 200 || echo "")
 
           echo "repo=$REPO" >> $GITHUB_OUTPUT
@@ -51,7 +44,6 @@ jobs:
         run: |
           REPO="${{ steps.parse.outputs.repo }}"
 
-          # 验证格式
           if [[ ! "$REPO" =~ ^[a-zA-Z0-9_-]+/[a-zA-Z0-9._-]+$ ]]; then
             echo "❌ 仓库格式错误: $REPO"
             echo "format_error=true" >> $GITHUB_OUTPUT
@@ -67,7 +59,6 @@ jobs:
         run: |
           REPO="${{ steps.parse.outputs.repo }}"
 
-          # 验证仓库存在
           if ! gh api repos/$REPO --silent 2>/dev/null; then
             echo "❌ 仓库不存在: $REPO"
             echo "not_found=true" >> $GITHUB_OUTPUT
@@ -105,36 +96,30 @@ jobs:
             --repo "${{ steps.parse.outputs.repo }}" \
             --category "${{ steps.parse.outputs.category }}"
 
-      - name: 提交并推送更改
+      - name: 提交并推送变更
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git stash
+          git pull --rebase origin main
+          git stash pop || true
           git add src/trendpluse/config.py
           git diff --quiet && git diff --staged --quiet || git commit -m "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
-          git push origin add-repo-${{ github.event.issue.number }}
+          git push
 
-      - name: 创建 PR
+      - name: 关闭 Issue
+        if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_BODY="## 变更说明
-
-          通过 Issue 自动添加新监控仓库。
+          gh issue close ${{ github.event.issue.number }} \
+            --comment "✅ **仓库已成功添加到监控列表**
 
           - **仓库**: \`${{ steps.parse.outputs.repo }}\`
           - **分类**: ${{ steps.parse.outputs.category }}
-          - **理由**: ${{ steps.parse.outputs.reason }}
+          - **提交**: 已自动提交到 main 分支
 
-          ## 来源
-
-          Closes #${{ github.event.issue.number }}"
-
-          gh pr create \
-            --title "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}" \
-            --body "$PR_BODY" \
-            --base main \
-            --head add-repo-${{ github.event.issue.number }} \
-            --label "enhancement" || echo "PR 已存在或创建失败"
+          变更将在下次趋势分析中生效。"
 
       - name: 评论验证失败
         if: failure()
