@@ -3,9 +3,11 @@
 测试 AI 生成的 Release 总结数据结构。
 """
 
+from typing import Literal
+
 import pytest
 
-from trendpluse.models.signal import ReleaseSummary  # type: ignore[attr-defined]
+from trendpluse.models.signal import ReleaseSummary
 
 
 class TestReleaseSummary:
@@ -43,7 +45,15 @@ class TestReleaseSummary:
         """
         # Arrange & Act & Assert
         # 有效的变更类型
-        valid_types = ["feature", "fix", "improvement", "breaking", "other"]
+        valid_types: list[
+            Literal["feature", "fix", "improvement", "breaking", "other"]
+        ] = [
+            "feature",
+            "fix",
+            "improvement",
+            "breaking",
+            "other",
+        ]
         for change_type in valid_types:
             summary = ReleaseSummary(
                 change_type=change_type,

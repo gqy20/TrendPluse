@@ -21,6 +21,41 @@ SIGNAL_TYPE_EMOJIS: dict[str, str] = {
 
 DEFAULT_EMOJI: str = "📌"
 
+# Release 变更类型到 Emoji 的映射常量
+RELEASE_CHANGE_TYPE_EMOJIS: dict[str, str] = {
+    "feature": "🆕",
+    "fix": "🔧",
+    "improvement": "✨",
+    "breaking": "💥",
+    "other": "📦",
+}
+
+
+class ReleaseSummary(BaseModel):
+    """Release 总结（AI 生成）
+
+    由 ReleaseSummarizer 生成的 Release 变更总结。
+    """
+
+    change_type: Literal["feature", "fix", "improvement", "breaking", "other"] = Field(
+        description="变更类型"
+    )
+    key_changes: list[str] = Field(description="关键变更点列表（简洁的中文描述）")
+    summary_cn: str = Field(description="中文总结（2-3 句话）")
+    impact_level: int = Field(ge=1, le=5, description="影响级别 1-5")
+
+    @classmethod
+    def get_change_type_emoji(cls, change_type: str) -> str:
+        """获取变更类型的表情
+
+        Args:
+            change_type: 变更类型
+
+        Returns:
+            类型表情，未知类型返回默认值 📌
+        """
+        return RELEASE_CHANGE_TYPE_EMOJIS.get(change_type, DEFAULT_EMOJI)
+
 
 class Signal(BaseModel):
     """单条趋势信号"""
