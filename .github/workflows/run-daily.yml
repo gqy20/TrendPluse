@@ -162,7 +162,7 @@ jobs:
     needs: [analyze, deploy_pages]
     runs-on: ubuntu-latest
     if: |
-      inputs.send_notification != false &&
+      (inputs.send_notification != false || github.event_name == 'schedule') &&
       needs.analyze.outputs.has_report == 'true'
     env:
       FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
