@@ -158,6 +158,8 @@ class FeishuFormatter:
     def _create_signals_section(self, report: DailyReport) -> list[dict]:
         """创建高影响信号部分（与 MarkdownReporter 一致：按分类分组）
 
+        工程信号和研究信号使用折叠面板，Commit 信号使用普通展示。
+
         Args:
             report: 日报对象
 
@@ -170,54 +172,50 @@ class FeishuFormatter:
         def get_high_impact(signals: list[Signal]) -> list[Signal]:
             return [s for s in signals if s.impact_score >= 4]
 
-        # 工程信号（总是显示，与 MarkdownReporter 一致）
+        # 工程信号（使用折叠面板）
         engineering_signals = get_high_impact(report.engineering_signals)
-        elements.append({"tag": "hr"})
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": "### 🔧 工程信号\n\n",
-                },
-            }
-        )
         if engineering_signals:
-            elements.extend(self._create_signal_items(engineering_signals))
-        else:
+            elements.append({"tag": "hr"})
+            content = self._generate_signals_content(engineering_signals)
             elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "暂无信号。\n",
-                    },
-                }
+                self._create_collapsible_panel(
+                    title=f"### 🔧 工程信号 ({len(engineering_signals)}个)",
+                    content=content,
+                    expanded=True,  # 工程信号默认展开
+                )
+            )
+        else:
+            # 即使没有信号也显示空状态
+            elements.append({"tag": "hr"})
+            elements.append(
+                self._create_collapsible_panel(
+                    title="### 🔧 工程信号",
+                    content="暂无信号。\n",
+                    expanded=False,
+                )
             )
 
-        # 研究信号（总是显示，与 MarkdownReporter 一致）
+        # 研究信号（使用折叠面板）
         research_signals = get_high_impact(report.research_signals)
-        elements.append({"tag": "hr"})
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": "### 🔬 研究信号\n\n",
-                },
-            }
-        )
         if research_signals:
-            elements.extend(self._create_signal_items(research_signals))
-        else:
+            elements.append({"tag": "hr"})
+            content = self._generate_signals_content(research_signals)
             elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "暂无信号。\n",
-                    },
-                }
+                self._create_collapsible_panel(
+                    title=f"### 🔬 研究信号 ({len(research_signals)}个)",
+                    content=content,
+                    expanded=False,
+                )
+            )
+        else:
+            # 即使没有信号也显示空状态
+            elements.append({"tag": "hr"})
+            elements.append(
+                self._create_collapsible_panel(
+                    title="### 🔬 研究信号",
+                    content="暂无信号。\n",
+                    expanded=False,
+                )
             )
 
         # Commit 信号（仅在有内容时显示，与 MarkdownReporter 一致）
@@ -247,6 +245,47 @@ class FeishuFormatter:
                 )
 
         return elements
+
+    def _generate_signals_content(self, signals: list[Signal]) -> str:
+        """生成信号内容（不包含外层标题，用于折叠面板）
+
+        Args:
+            signals: 信号列表
+
+        Returns:
+            Markdown 格式的内容字符串
+        """
+        if not signals:
+            return "暂无信号。\n"
+
+        content_parts = []
+        for i, signal in enumerate(signals):
+            type_emoji = self._get_type_emoji(signal.type)
+            impact_stars = "⭐" * signal.impact_score
+            repos = ", ".join(f"`{r}`" for r in signal.related_repos)
+
+            # 来源链接（格式化显示）
+            sources_md = "\n".join(
+                f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
+            )
+
+            # 构建单个信号内容，使用 ##### 五级标题
+            signal_content = f"##### {type_emoji} {signal.title}\n\n"
+            signal_content += (
+                f"\n**类型**: `{signal.type}` | **影响**: {impact_stars} "
+                f"({signal.impact_score}/5) | **分类**: `{signal.category}`\n\n"
+            )
+            signal_content += f"**为什么重要**: {signal.why_it_matters}\n\n"
+            signal_content += f"**相关仓库**: {repos}\n\n"
+            signal_content += f"**来源**:\n{sources_md}\n\n"
+
+            content_parts.append(signal_content)
+
+            # 信号之间添加分割线（最后一个信号除外）
+            if i < len(signals) - 1:
+                content_parts.append("---\n\n")
+
+        return "".join(content_parts)
 
     def _create_signal_items(self, signals: list[Signal]) -> list[dict]:
         """创建单个信号列表的元素
