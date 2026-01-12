@@ -175,15 +175,14 @@ class TestFeishuFormatter:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证 body 中的醒目主标题和日期标题（使用 # 和 ### Markdown 标题）
+        # 验证 body 中的醒目主标题和日期（主标题使用 #，日期使用普通文本）
         elements = card["card"]["body"]["elements"]
         assert any(
             "# 📊 TrendPulse 每日报告" in el.get("text", {}).get("content", "")
             for el in elements
         )
         assert any(
-            "### 📅 2026-01-04" in el.get("text", {}).get("content", "")
-            for el in elements
+            "📅 2026-01-04" in el.get("text", {}).get("content", "") for el in elements
         )
 
         # 验证摘要元素
@@ -491,8 +490,8 @@ class TestFeishuFormatter:
         ]
         combined_content = " ".join(content_parts)
 
-        # 应该包含 Release 信号标题（与 MarkdownReporter 一致）
-        assert "### 🎯 Release 信号" in combined_content
+        # 应该包含 Release 信号标题（使用粗体而非标题）
+        assert "**🎯 Release 信号**" in combined_content
 
     def test_format_card_includes_breaking_changes(self):
         """测试：卡片包含 Breaking Changes 部分（与 Markdown 一致）"""
@@ -539,8 +538,8 @@ class TestFeishuFormatter:
         ]
         combined_content = " ".join(content_parts)
 
-        # 应该包含 Breaking Changes 标题（与 MarkdownReporter 一致）
-        assert "### ⚠️ Breaking Changes" in combined_content
+        # 应该包含 Breaking Changes 标题（使用粗体而非标题）
+        assert "**⚠️ Breaking Changes**" in combined_content
         # 应该包含变更内容
         assert "移除旧 API" in combined_content
         # 应该包含影响级别表情

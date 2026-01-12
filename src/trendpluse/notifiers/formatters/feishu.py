@@ -45,13 +45,13 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 0. 添加醒目的主标题（使用 # 一级标题）和日期（使用 ### 三级标题）
+        # 0. 添加醒目的主标题和日期（标题用一级，日期用普通文本）
         elements.append(
             {
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": f"# 📊 TrendPulse 每日报告\n\n### 📅 {report.date}",
+                    "content": f"# 📊 TrendPulse 每日报告\n\n📅 {report.date}",
                 },
             }
         )
@@ -82,7 +82,7 @@ class FeishuFormatter:
             content = self._generate_releases_content(report.releases)
             elements.append(
                 self._create_collapsible_panel(
-                    title=f"### 🎯 版本发布 ({report.releases.total_count}个版本)",
+                    title=f"🎯 版本发布 ({report.releases.total_count}个版本)",
                     content=content,
                     expanded=False,
                     icon="down-small-ccm_outlined",
@@ -95,7 +95,7 @@ class FeishuFormatter:
             content = self._generate_activity_content(report.activity)
             elements.append(
                 self._create_collapsible_panel(
-                    title="### 📈 仓库活跃度详情",
+                    title="📈 仓库活跃度详情",
                     content=content,
                     expanded=False,
                     icon="down-small-ccm_outlined",
@@ -107,7 +107,7 @@ class FeishuFormatter:
         stats_content = self._generate_stats_content(report.stats)
         elements.append(
             self._create_collapsible_panel(
-                title="### 📊 统计信息",
+                title="📊 统计信息",
                 content=stats_content,
                 expanded=False,
                 icon="down-small-ccm_outlined",
@@ -188,7 +188,7 @@ class FeishuFormatter:
             content = self._generate_signals_content(engineering_signals)
             elements.append(
                 self._create_collapsible_panel(
-                    title=f"### 🔧 工程信号 ({len(engineering_signals)}个)",
+                    title=f"🔧 工程信号 ({len(engineering_signals)}个)",
                     content=content,
                     expanded=True,  # 工程信号默认展开
                 )
@@ -198,7 +198,7 @@ class FeishuFormatter:
             elements.append({"tag": "hr"})
             elements.append(
                 self._create_collapsible_panel(
-                    title="### 🔧 工程信号",
+                    title="🔧 工程信号",
                     content="暂无信号。\n",
                     expanded=False,
                 )
@@ -211,7 +211,7 @@ class FeishuFormatter:
             content = self._generate_signals_content(research_signals)
             elements.append(
                 self._create_collapsible_panel(
-                    title=f"### 🔬 研究信号 ({len(research_signals)}个)",
+                    title=f"🔬 研究信号 ({len(research_signals)}个)",
                     content=content,
                     expanded=False,
                 )
@@ -221,7 +221,7 @@ class FeishuFormatter:
             elements.append({"tag": "hr"})
             elements.append(
                 self._create_collapsible_panel(
-                    title="### 🔬 研究信号",
+                    title="🔬 研究信号",
                     content="暂无信号。\n",
                     expanded=False,
                 )
@@ -236,7 +236,7 @@ class FeishuFormatter:
                     "tag": "div",
                     "text": {
                         "tag": "lark_md",
-                        "content": "### 💾 Commit 信号\n\n",
+                        "content": "**💾 Commit 信号**\n\n",
                     },
                 }
             )
@@ -394,13 +394,13 @@ class FeishuFormatter:
         lines: list[str] = []
 
         # 总览（不包含外层标题，因为已在折叠面板标题中）
-        lines.append("### 总览\n\n")
+        lines.append("**总览**\n\n")
         lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
         lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
 
         # 详细 Release 列表（最多 5 个，飞书卡片不宜过长）
         if releases.releases:
-            lines.append("\n### 最新发布\n\n")
+            lines.append("\n**最新发布**\n\n")
 
             for release in releases.releases[:5]:
                 repo_name = release.repo.replace("_", "\\_")
@@ -420,7 +420,7 @@ class FeishuFormatter:
 
                 # Release 标题（仓库链接）
                 repo_link = f"[{repo_name}](https://github.com/{release.repo})"
-                lines.append(f"#### {type_emoji} {repo_link} `{version}`\n\n")
+                lines.append(f"##### {type_emoji} {repo_link} `{version}`\n\n")
                 lines.append(f"**发布者**: `{author}` | **时间**: {date}\n\n")
 
                 # 优先使用 AI 总结
@@ -489,7 +489,7 @@ class FeishuFormatter:
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": "### 🎯 Release 信号\n\n",
+                    "content": "**🎯 Release 信号**\n\n",
                 },
             }
         )
@@ -526,14 +526,14 @@ class FeishuFormatter:
         Returns:
             Breaking Changes 部分元素
         """
-        lines = ["### ⚠️ Breaking Changes\n\n"]
+        lines = ["**⚠️ Breaking Changes**\n\n"]
 
         for bc in breaking_changes:
             repo_name = bc["repo"].replace("_", "\\_")
             tag_name = bc["tag_name"]
             repo_link = f"[{repo_name}](https://github.com/{bc['repo']})"
 
-            lines.append(f"### {repo_link} `{tag_name}`\n\n")
+            lines.append(f"**{repo_link}** `{tag_name}`\n\n")
 
             for change in bc.get("changes", []):
                 impact = change.get("impact", "unknown")
@@ -570,14 +570,14 @@ class FeishuFormatter:
         lines: list[str] = []
 
         # 总览指标（不包含外层标题，因为已在折叠面板标题中）
-        lines.append("### 总览\n\n")
+        lines.append("**总览**\n\n")
         lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
         lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
         lines.append(f"- **新贡献者数**: {activity.new_contributors}\n")
 
         # 活跃仓库 TOP 3（飞书卡片不宜过长，显示 TOP 3）
         if activity.top_repos:
-            lines.append("\n### 活跃仓库 TOP 3\n\n")
+            lines.append("\n**活跃仓库 TOP 3**\n\n")
             for i, repo in enumerate(activity.top_repos[:3], 1):
                 lines.append(f"{i}. **{repo.repo}** ({repo.commits} commits)\n")
 
