@@ -15,7 +15,7 @@ class TestFeishuFormatter:
 
     @staticmethod
     def _get_all_card_content(elements: list) -> list[str]:
-        """提取卡片中所有元素的内容（包括折叠面板内的内容）
+        """提取卡片中所有元素的内容（包括折叠面板内的内容和标题）
 
         Args:
             elements: 卡片元素列表
@@ -33,8 +33,16 @@ class TestFeishuFormatter:
                 content = el.get("text", {}).get("content", "")
                 contents.append(content)
 
-            # 折叠面板元素 - 递归提取内部内容
+            # 折叠面板元素 - 递归提取内部内容和标题
             elif tag == "collapsible_panel":
+                # 添加面板标题
+                header = el.get("header", {})
+                title = header.get("title", {})
+                title_content = title.get("content", "")
+                if title_content:
+                    contents.append(title_content)
+
+                # 添加面板内部内容
                 panel_elements = el.get("elements", [])
                 for panel_el in panel_elements:
                     if panel_el.get("tag") == "div":
@@ -184,8 +192,8 @@ class TestFeishuFormatter:
             for el in elements
         )
 
-        # 验证高影响信号
-        assert any("🚀" in el.get("text", {}).get("content", "") for el in elements)
+        # 验证高影响信号（注意：工程信号现在在折叠面板中）
+        assert self._content_contains(elements, "Test Signal 1")
 
         # 验证版本发布（去重后只显示最新版本 v1.1.0）
         # 注意：版本发布现在在折叠面板中，需要使用辅助函数检查

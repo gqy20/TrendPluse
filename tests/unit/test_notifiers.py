@@ -18,6 +18,58 @@ from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.feishu import FeishuNotifier
 
 
+def _get_all_card_content(elements: list) -> list[str]:
+    """提取卡片中所有元素的内容（包括折叠面板内的内容和标题）
+
+    Args:
+        elements: 卡片元素列表
+
+    Returns:
+        所有元素的内容列表
+    """
+    contents: list[str] = []
+
+    for el in elements:
+        tag = el.get("tag")
+
+        # 直接的 div 元素
+        if tag == "div":
+            content = el.get("text", {}).get("content", "")
+            contents.append(content)
+
+        # 折叠面板元素 - 递归提取内部内容和标题
+        elif tag == "collapsible_panel":
+            # 添加面板标题
+            header = el.get("header", {})
+            title = header.get("title", {})
+            title_content = title.get("content", "")
+            if title_content:
+                contents.append(title_content)
+
+            # 添加面板内部内容
+            panel_elements = el.get("elements", [])
+            for panel_el in panel_elements:
+                if panel_el.get("tag") == "div":
+                    content = panel_el.get("text", {}).get("content", "")
+                    contents.append(content)
+
+    return contents
+
+
+def _content_contains(elements: list, text: str) -> bool:
+    """检查卡片中是否包含指定文本（包括折叠面板内）
+
+    Args:
+        elements: 卡片元素列表
+        text: 要查找的文本
+
+    Returns:
+        是否包含该文本
+    """
+    contents = _get_all_card_content(elements)
+    return any(text in content for content in contents)
+
+
 class TestBaseNotifier:
     """测试 BaseNotifier 抽象基类"""
 
@@ -71,12 +123,8 @@ class TestFeishuNotifier:
 
         # JSON 2.0: elements 在 body 下
         elements = card["card"]["body"]["elements"]
-        # 查找高影响信号部分（包含 "高影响信号" 或 "🔥"）
-        has_highlights = any(
-            "高影响信号" in str(el.get("text", {})) or "🔥" in str(el)
-            for el in elements
-        )
-        assert has_highlights
+        # 注意：工程信号现在在折叠面板中，需要使用辅助函数检查
+        assert _content_contains(elements, "工程信号")
 
     def test_build_card_includes_stats_section(self, sample_report: DailyReport):
         """卡片应包含统计信息部分"""
@@ -85,8 +133,8 @@ class TestFeishuNotifier:
 
         # JSON 2.0: elements 在 body 下
         elements = card["card"]["body"]["elements"]
-        has_stats = any("统计信息" in str(el) or "📊" in str(el) for el in elements)
-        assert has_stats
+        # 注意：统计信息现在在折叠面板中，需要使用辅助函数检查
+        assert _content_contains(elements, "统计信息")
 
     def test_build_card_includes_action_buttons(self, sample_report: DailyReport):
         """卡片应包含操作按钮"""
