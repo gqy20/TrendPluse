@@ -1,0 +1,199 @@
+"""测试聚合后 commit_signals 被正确清空
+
+这是修复报告重复显示 Commit 信号问题的测试。
+"""
+
+from datetime import datetime
+from unittest.mock import Mock, patch
+
+from trendpluse.models.signal import ActivityData, ReleasesData, Signal
+from trendpluse.pipeline import TrendPulsePipeline
+
+
+class MockSignalDeduplicator:
+    """Mock SignalDeduplicator for testing"""
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def deduplicate(self, signals):
+        return signals
+
+
+class TestCommitSignalsClearing:
+    """测试聚合后 commit_signals 被正确清空"""
+
+    # 注意：patch 装饰器从下往上应用，参数从上往下对应
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_aggregated_commit_signals_should_be_cleared(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_fetcher,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+    ):
+        """测试：聚合后 commit_signals 应该被清空
+
+        场景：当 TrendAnalyzer.aggregate_and_generate_report() 返回的报告包含
+        非空的 commit_signals 时，Pipeline 应该强制清空这些字段，避免在
+        Markdown 报告中重复显示。
+
+        为什么需要这个测试：
+        - TrendAnalyzer 尝试清空 commit_signals，但 LLM 返回的对象可能
+          不遵守这个操作
+        - MarkdownReporter 会独立检查并渲染 commit_signals
+        - 这导致工程信号/研究信号和 Commit 信号重复显示
+        """
+        # Arrange - 配置所有 Mock
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["test/repo"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings.return_value = mock_settings_instance
+
+        # 配置 PR 数据（有 PR 触发聚合流程）
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_collector.return_value = mock_collector_instance
+
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_filter.return_value = mock_filter_instance
+
+        mock_fetcher_instance = Mock()
+        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
+            {"number": 1, "title": "Test PR", "repo_name": "test/repo"}
+        ]
+        mock_fetcher.return_value = mock_fetcher_instance
+
+        # 配置活跃度数据
+        mock_activity_collector_instance = Mock()
+        mock_activity_data = ActivityData(
+            total_commits=5,
+            active_repos_count=1,
+            new_contributors=0,
+            top_repos=[],
+        )
+        detailed_commits = [
+            {
+                "repo": "test/repo",
+                "sha": "abc123",
+                "message": "feat: new feature",
+                "author": "testuser",
+                "timestamp": "2026-01-12T10:00:00Z",
+            }
+        ]
+        mock_activity_collector_instance.collect_activity.return_value = (
+            mock_activity_data,
+            detailed_commits,
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        # 配置 Release 数据
+        mock_release_collector_instance = Mock()
+        mock_releases_data = ReleasesData(
+            total_count=0,
+            unique_repos_count=0,
+            releases=[],
+        )
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            [],
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        # 配置 Commit 分析器（返回一些信号）
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_signal = Signal(
+            id="commit-1",
+            title="Commit Signal",
+            type="capability",
+            impact_score=4,
+            category="engineering",
+            why_it_matters="Test commit signal",
+            related_repos=["test/repo"],
+            sources=["https://github.com/test/repo/commit/abc123"],
+        )
+        mock_commit_analyzer_instance.analyze_commits.return_value = [
+            mock_commit_signal
+        ]
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        # 配置 Release 分析器
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        # 配置 Trend Analyzer
+        mock_pr_signal = Signal(
+            id="pr-1",
+            title="PR Signal",
+            type="capability",
+            impact_score=5,
+            category="engineering",
+            why_it_matters="Test PR signal",
+            related_repos=["test/repo"],
+            sources=["https://github.com/test/repo/pull/1"],
+        )
+        mock_analyzer_instance = Mock()
+        mock_analyzer_instance.analyze_prs.return_value = [mock_pr_signal]
+
+        # 关键：模拟 LLM 返回的对象保留了 commit_signals（这是 Bug）
+        # 实际中，instructor + LLM 可能不会遵守代码中的清空操作
+        mock_report_obj = Mock()
+        mock_report_obj.date = "2026-01-12"
+        mock_report_obj.engineering_signals = [mock_pr_signal]
+        mock_report_obj.research_signals = []
+        # 模拟 LLM 没有清空 commit_signals（问题所在）
+        mock_report_obj.commit_signals = [mock_commit_signal]
+        mock_report_obj.activity = {}
+        mock_report_obj.stats = {"total_prs_analyzed": 1}
+        mock_report_obj.model_dump_json = Mock(return_value='{"date": "2026-01-12"}')
+        mock_analyzer_instance.aggregate_and_generate_report.return_value = (
+            mock_report_obj
+        )
+        mock_analyzer.return_value = mock_analyzer_instance
+
+        # 配置 Reporter
+        mock_reporter_instance = Mock()
+        mock_reporter.return_value = mock_reporter_instance
+
+        # Act
+        pipeline = TrendPulsePipeline()
+        report = pipeline.run_daily(date=datetime(2026, 1, 12))
+
+        # Assert
+        assert report is not None
+        # 验证：聚合后 commit_signals 必须被清空
+        # 这是修复报告重复显示的核心断言
+        assert report.commit_signals == [], (
+            f"commit_signals 应该被清空，但实际包含: {report.commit_signals}"
+        )
+        # 验证工程信号仍然存在（没有被错误清空）
+        assert len(report.engineering_signals) > 0, "engineering_signals 不应该为空"
