@@ -3,6 +3,7 @@
 将 DailyReport 转换为飞书卡片格式。
 """
 
+import re
 from typing import TYPE_CHECKING
 
 from trendpluse.models.signal import (
@@ -141,17 +142,25 @@ class FeishuFormatter:
     def _create_summary_element(self, summary: str) -> dict:
         """创建摘要元素
 
+        移除摘要中重复的日期信息（因为主标题已包含日期）。
+
         Args:
             summary: 摘要文本
 
         Returns:
             摘要元素字典
         """
+        # 移除摘要中的日期信息，避免与主标题重复
+        # 摘要格式: "今日 (YYYY-MM-DD) 发现..." -> "今日 发现..."
+        cleaned_summary = re.sub(r"今日 \(\d{4}-\d{2}-\d{2}\) ", "今日 ", summary)
+        # 另一种可能格式: "今日 (YYYY-MM-DD)未发现..." -> "今日未发现..."
+        cleaned_summary = re.sub(r"今日 \(\d{4}-\d{2}-\d{2}\)", "今日", cleaned_summary)
+
         return {
             "tag": "div",
             "text": {
                 "tag": "lark_md",
-                "content": summary,
+                "content": cleaned_summary,
             },
         }
 
