@@ -13,6 +13,50 @@ from trendpluse.models.signal import (
 class TestFeishuFormatter:
     """测试 FeishuFormatter 对 DailyReport 的格式化"""
 
+    @staticmethod
+    def _get_all_card_content(elements: list) -> list[str]:
+        """提取卡片中所有元素的内容（包括折叠面板内的内容）
+
+        Args:
+            elements: 卡片元素列表
+
+        Returns:
+            所有元素的内容列表
+        """
+        contents: list[str] = []
+
+        for el in elements:
+            tag = el.get("tag")
+
+            # 直接的 div 元素
+            if tag == "div":
+                content = el.get("text", {}).get("content", "")
+                contents.append(content)
+
+            # 折叠面板元素 - 递归提取内部内容
+            elif tag == "collapsible_panel":
+                panel_elements = el.get("elements", [])
+                for panel_el in panel_elements:
+                    if panel_el.get("tag") == "div":
+                        content = panel_el.get("text", {}).get("content", "")
+                        contents.append(content)
+
+        return contents
+
+    @staticmethod
+    def _content_contains(elements: list, text: str) -> bool:
+        """检查卡片中是否包含指定文本（包括折叠面板内）
+
+        Args:
+            elements: 卡片元素列表
+            text: 要查找的文本
+
+        Returns:
+            是否包含该文本
+        """
+        contents = TestFeishuFormatter._get_all_card_content(elements)
+        return any(text in content for content in contents)
+
     def test_format_card_with_structured_data(self):
         """测试：使用结构化数据生成飞书卡片"""
         # Arrange
@@ -144,15 +188,16 @@ class TestFeishuFormatter:
         assert any("🚀" in el.get("text", {}).get("content", "") for el in elements)
 
         # 验证版本发布（去重后只显示最新版本 v1.1.0）
-        assert any("v1.1.0" in el.get("text", {}).get("content", "") for el in elements)
+        # 注意：版本发布现在在折叠面板中，需要使用辅助函数检查
+        assert self._content_contains(elements, "v1.1.0")
 
         # 验证活跃仓库
-        assert any(
-            "owner/repo1" in el.get("text", {}).get("content", "") for el in elements
-        )
+        # 注意：活跃度现在在折叠面板中，需要使用辅助函数检查
+        assert self._content_contains(elements, "owner/repo1")
 
         # 验证统计信息
-        assert any("10" in el.get("text", {}).get("content", "") for el in elements)
+        # 注意：统计信息现在在折叠面板中，需要使用辅助函数检查
+        assert self._content_contains(elements, "10")
 
     def test_format_card_with_minimal_data(self):
         """测试：最小数据集也能生成有效卡片"""
@@ -240,17 +285,11 @@ class TestFeishuFormatter:
         # Assert
         # JSON 2.0: elements 在 body 下
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
 
-        # 验证包含 TOP 3 仓库
-        combined_content = " ".join(content_parts)
-        assert "owner/repo1" in combined_content
-        assert "owner/repo2" in combined_content
-        assert "owner/repo3" in combined_content
+        # 验证包含 TOP 3 仓库（注意：活跃度现在在折叠面板中）
+        assert self._content_contains(elements, "owner/repo1")
+        assert self._content_contains(elements, "owner/repo2")
+        assert self._content_contains(elements, "owner/repo3")
 
     def test_format_releases_shows_all_versions(self):
         """测试：版本发布显示所有版本（与 MarkdownReporter 一致）"""
@@ -314,25 +353,17 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 应该显示所有版本
-        # 直接在 combined_content 中验证
-        # 验证包含所有版本
-        assert "v1.0.0" in combined_content
-        assert "v1.1.0" in combined_content
-        assert "v1.2.0" in combined_content
+        # 应该显示所有版本（注意：版本发布现在在折叠面板中）
+        assert self._content_contains(elements, "v1.0.0")
+        assert self._content_contains(elements, "v1.1.0")
+        assert self._content_contains(elements, "v1.2.0")
         # 验证总览统计
-        assert "**新发布版本**: 3 个" in combined_content
-        assert "**涉及仓库**: 1 个" in combined_content
+        assert self._content_contains(elements, "**新发布版本**: 3 个")
+        assert self._content_contains(elements, "**涉及仓库**: 1 个")
         # 验证包含发布者和时间信息
-        assert "user1" in combined_content
-        assert "2026-01-03" in combined_content
+        assert self._content_contains(elements, "user1")
+        assert self._content_contains(elements, "2026-01-03")
 
     def test_format_releases_includes_detailed_info(self):
         """测试：版本发布包含详细信息（发布者、时间、摘要、链接）"""
@@ -386,31 +417,29 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 验证包含详细信息（与 MarkdownReporter 一致）
+        # 验证包含详细信息（注意：版本发布现在在折叠面板中）
         # 仓库链接
-        assert "[owner/repo1](https://github.com/owner/repo1)" in combined_content
-        assert "[owner/repo2](https://github.com/owner/repo2)" in combined_content
+        assert self._content_contains(
+            elements, "[owner/repo1](https://github.com/owner/repo1)"
+        )
+        assert self._content_contains(
+            elements, "[owner/repo2](https://github.com/owner/repo2)"
+        )
         # 版本号
-        assert "v2.0.0" in combined_content
-        assert "v1.5.0" in combined_content
+        assert self._content_contains(elements, "v2.0.0")
+        assert self._content_contains(elements, "v1.5.0")
         # 发布者
-        assert "user1" in combined_content
-        assert "user2" in combined_content
+        assert self._content_contains(elements, "user1")
+        assert self._content_contains(elements, "user2")
         # 时间
-        assert "2026-01-04" in combined_content
+        assert self._content_contains(elements, "2026-01-04")
         # 摘要
-        assert "Test release" in combined_content
+        assert self._content_contains(elements, "Test release")
         # 资产信息
-        assert "**资产**" in combined_content
+        assert self._content_contains(elements, "**资产**")
         # 查看详情链接
-        assert "查看详情" in combined_content
+        assert self._content_contains(elements, "查看详情")
 
     def test_format_card_includes_release_signals(self):
         """测试：卡片包含 Release 信号部分（与 Markdown 一致）"""
@@ -546,17 +575,11 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 应该包含总览指标（与 MarkdownReporter 一致）
-        assert "**总 Commit 数**: 150" in combined_content
-        assert "**活跃仓库数**: 3" in combined_content
-        assert "**新贡献者数**: 1" in combined_content
+        # 应该包含总览指标（注意：活跃度现在在折叠面板中）
+        assert self._content_contains(elements, "**总 Commit 数**: 150")
+        assert self._content_contains(elements, "**活跃仓库数**: 3")
+        assert self._content_contains(elements, "**新贡献者数**: 1")
 
     def test_format_releases_includes_ai_summary(self):
         """测试：版本发布包含 AI 总结（与 Markdown 一致）"""
@@ -604,15 +627,11 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 应该包含 AI 总结内容（与 MarkdownReporter 一致）
-        assert "新功能 A" in combined_content
-        assert "这是一个重要版本更新" in combined_content
+        # 应该包含 AI 总结内容（注意：版本发布现在在折叠面板中）
+        assert self._content_contains(elements, "新功能 A")
+        assert self._content_contains(elements, "这是一个重要版本更新")
         # 应该包含变更类型
-        assert "变更类型" in combined_content or "feature" in combined_content
+        assert self._content_contains(elements, "变更类型") or self._content_contains(
+            elements, "feature"
+        )

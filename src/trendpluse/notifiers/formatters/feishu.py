@@ -3,6 +3,8 @@
 将 DailyReport 转换为飞书卡片格式。
 """
 
+from typing import TYPE_CHECKING
+
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
@@ -10,6 +12,9 @@ from trendpluse.models.signal import (
     ReleaseSummary,
     Signal,
 )
+
+if TYPE_CHECKING:
+    pass
 
 
 class FeishuFormatter:
@@ -70,21 +75,45 @@ class FeishuFormatter:
                 self._create_breaking_changes_section(report.breaking_changes)
             )
 
-        # 5. 版本发布（如果有）
+        # 5. 版本发布（如果有）- 使用折叠面板
         if report.releases and report.releases.releases:
             elements.append({"tag": "hr"})
-            elements.append(self._create_releases_section(report.releases))
+            content = self._generate_releases_content(report.releases)
+            elements.append(
+                self._create_collapsible_panel(
+                    title=f"### 🎯 版本发布 ({report.releases.total_count}个版本)",
+                    content=content,
+                    expanded=False,
+                    icon="down-small-ccm_outlined",
+                )
+            )
 
-        # 6. 活跃度信息（如果有，与 MarkdownReporter 一致）
+        # 6. 活跃度信息（如果有）- 使用折叠面板
         if report.activity:
             elements.append({"tag": "hr"})
-            elements.append(self._create_activity_section(report.activity))
+            content = self._generate_activity_content(report.activity)
+            elements.append(
+                self._create_collapsible_panel(
+                    title="### 📈 仓库活跃度详情",
+                    content=content,
+                    expanded=False,
+                    icon="down-small-ccm_outlined",
+                )
+            )
 
-        # 7. 统计信息
+        # 7. 统计信息 - 使用折叠面板
         elements.append({"tag": "hr"})
-        elements.append(self._create_stats_section(report.stats))
+        stats_content = self._generate_stats_content(report.stats)
+        elements.append(
+            self._create_collapsible_panel(
+                title="### 📊 统计信息",
+                content=stats_content,
+                expanded=False,
+                icon="down-small-ccm_outlined",
+            )
+        )
 
-        # 6. 查看详情按钮（JSON V2 格式：按钮直接在 elements 中）
+        # 8. 查看详情按钮（JSON V2 格式：按钮直接在 elements 中）
         report_url = self.report_url_template.format(date=report.date)
         elements.append({"tag": "hr"})
         elements.append(
@@ -305,14 +334,14 @@ class FeishuFormatter:
 
         return "链接"
 
-    def _create_releases_section(self, releases: ReleasesData) -> dict:
-        """创建版本发布部分（与 MarkdownReporter 一致，包含详细信息）
+    def _generate_releases_content(self, releases: ReleasesData) -> str:
+        """生成版本发布内容（不包含外层 div）
 
         Args:
             releases: ReleasesData 对象
 
         Returns:
-            版本发布部分元素
+            Markdown 格式的内容字符串
         """
         lines = ["### 🎯 版本发布动态\n\n"]
 
@@ -373,11 +402,23 @@ class FeishuFormatter:
 
                 lines.append(f"**链接**: [查看详情]({url})\n\n")
 
+        return "".join(lines)
+
+    def _create_releases_section(self, releases: ReleasesData) -> dict:
+        """创建版本发布部分（与 MarkdownReporter 一致，包含详细信息）
+
+        Args:
+            releases: ReleasesData 对象
+
+        Returns:
+            版本发布部分元素
+        """
+        content = self._generate_releases_content(releases)
         return {
             "tag": "div",
             "text": {
                 "tag": "lark_md",
-                "content": "".join(lines),
+                "content": content,
             },
         }
 
@@ -469,14 +510,14 @@ class FeishuFormatter:
             },
         }
 
-    def _create_activity_section(self, activity: ActivityData) -> dict:
-        """创建活跃度部分（与 MarkdownReporter 一致，包含总览）
+    def _generate_activity_content(self, activity: ActivityData) -> str:
+        """生成活跃度内容（不包含外层 div）
 
         Args:
             activity: ActivityData 对象
 
         Returns:
-            活跃度部分元素
+            Markdown 格式的内容字符串
         """
         lines = ["### 📈 仓库活跃度\n\n"]
 
@@ -492,13 +533,41 @@ class FeishuFormatter:
             for i, repo in enumerate(activity.top_repos[:3], 1):
                 lines.append(f"{i}. **{repo.repo}** ({repo.commits} commits)\n")
 
+        return "".join(lines)
+
+    def _create_activity_section(self, activity: ActivityData) -> dict:
+        """创建活跃度部分（与 MarkdownReporter 一致，包含总览）
+
+        Args:
+            activity: ActivityData 对象
+
+        Returns:
+            活跃度部分元素
+        """
+        content = self._generate_activity_content(activity)
         return {
             "tag": "div",
             "text": {
                 "tag": "lark_md",
-                "content": "".join(lines),
+                "content": content,
             },
         }
+
+    def _generate_stats_content(self, stats: dict) -> str:
+        """生成统计信息内容（不包含外层 div）
+
+        Args:
+            stats: 统计数据字典
+
+        Returns:
+            Markdown 格式的内容字符串
+        """
+        content = "### 📊 统计信息\n\n"
+        content += f"• 分析 PR 数: {stats.get('total_prs_analyzed', 0)}\n"
+        content += f"• 高影响信号: {stats.get('high_impact_signals', 0)}\n"
+        content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
+        content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}"
+        return content
 
     def _create_stats_section(self, stats: dict) -> dict:
         """创建统计信息部分
@@ -509,12 +578,7 @@ class FeishuFormatter:
         Returns:
             统计信息部分元素
         """
-        content = "### 📊 统计信息\n\n"
-        content += f"• 分析 PR 数: {stats.get('total_prs_analyzed', 0)}\n"
-        content += f"• 高影响信号: {stats.get('high_impact_signals', 0)}\n"
-        content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
-        content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}"
-
+        content = self._generate_stats_content(stats)
         return {
             "tag": "div",
             "text": {
@@ -533,3 +597,61 @@ class FeishuFormatter:
             类型表情
         """
         return Signal.get_type_emoji(signal_type)
+
+    def _create_collapsible_panel(
+        self,
+        title: str,
+        content: str,
+        expanded: bool = False,
+        icon: str | None = None,
+    ) -> dict:
+        """创建折叠面板组件
+
+        Args:
+            title: 面板标题
+            content: 面板内容（Markdown 格式）
+            expanded: 是否默认展开
+            icon: 可选图标 token
+
+        Returns:
+            折叠面板字典
+        """
+        panel: dict = {
+            "tag": "collapsible_panel",
+            "expanded": expanded,
+            "header": {
+                "title": {
+                    "tag": "markdown",
+                    "content": title,
+                },
+                "vertical_align": "center",
+            },
+            "border": {
+                "color": "grey",
+                "corner_radius": "5px",
+            },
+            "vertical_spacing": "8px",
+            "padding": "8px 8px 8px 8px",
+            "elements": [
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": content,
+                    },
+                }
+            ],
+        }
+
+        # 添加图标（可选）
+        if icon:
+            header: dict = panel["header"]
+            header["icon"] = {
+                "tag": "standard_icon",
+                "token": icon,
+                "size": "16px 16px",
+            }
+            header["icon_position"] = "right"
+            header["icon_expanded_angle"] = -180
+
+        return panel
