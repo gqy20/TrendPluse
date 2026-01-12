@@ -368,3 +368,275 @@ class TestSignalDeduplicator:
 
         # Assert
         assert is_dup is False
+
+    # ==================== 跨类型去重测试 ====================
+
+    def test_deduplicate_cross_type_pr_and_commit_signals(
+        self, deduplicator, mock_llm_client
+    ):
+        """测试：PR 和 Commit 描述同一趋势时应合并为一个信号"""
+        # Arrange
+        # PR 提取的信号
+        pr_signal = Signal(
+            id="pr-1",
+            title="流式处理支持",
+            type="capability",  # 业务类型
+            category="engineering",
+            impact_score=5,
+            why_it_matters="音频流处理能力",
+            sources=["https://github.com/test/repo/pull/123"],
+            related_repos=["test/repo"],
+        )
+
+        # Commit 提取的信号（描述同一趋势）
+        commit_signal = Signal(
+            id="commit-1",
+            title="音频流处理支持",  # 标题略有不同但本质相同
+            type="capability",  # 业务类型
+            category="engineering",
+            impact_score=4,
+            why_it_matters="实现音频流功能",
+            sources=["https://github.com/test/repo/commit/abc123"],
+            related_repos=["test/repo"],
+        )
+
+        # Mock LLM 返回重复
+        mock_llm_client.messages.create.return_value = MagicMock(
+            content=[MagicMock(text="DUPLICATE")]
+        )
+
+        # Act
+        unique_signals = deduplicator.deduplicate([pr_signal, commit_signal])
+
+        # Assert - 应该合并为 1 个信号
+        assert len(unique_signals) == 1
+        # 应该聚合两个来源
+        assert len(unique_signals[0].sources) == 2
+        assert any("/pull/123" in s for s in unique_signals[0].sources)
+        assert any("/commit/abc123" in s for s in unique_signals[0].sources)
+
+    def test_deduplicate_keeps_highest_impact_score(
+        self, deduplicator, mock_llm_client
+    ):
+        """测试：合并时应保留影响评分最高的信号"""
+        # Arrange
+        low_score_signal = Signal(
+            id="low",
+            title="MCP 集成",
+            type="capability",
+            category="engineering",
+            impact_score=3,
+            why_it_matters="低评分",
+            sources=["https://github.com/test/repo/commit/low"],
+            related_repos=["test/repo"],
+        )
+
+        high_score_signal = Signal(
+            id="high",
+            title="MCP 资源协议集成",
+            type="capability",
+            category="engineering",
+            impact_score=5,
+            why_it_matters="高评分",
+            sources=["https://github.com/test/repo/pull/high"],
+            related_repos=["test/repo"],
+        )
+
+        # Mock LLM 返回重复
+        mock_llm_client.messages.create.return_value = MagicMock(
+            content=[MagicMock(text="DUPLICATE")]
+        )
+
+        # Act
+        unique_signals = deduplicator.deduplicate([low_score_signal, high_score_signal])
+
+        # Assert
+        assert len(unique_signals) == 1
+        # 应该保留高评分的信号
+        assert unique_signals[0].impact_score == 5
+        assert unique_signals[0].id == "high"
+
+    def test_deduplicate_aggregates_all_sources(self, deduplicator, mock_llm_client):
+        """测试：合并时应聚合所有来源"""
+        # Arrange
+        pr_signal = Signal(
+            id="pr-1",
+            title="RAG 优化",
+            type="performance",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="检索增强",
+            sources=["https://github.com/test/repo/pull/100"],
+            related_repos=["test/repo"],
+        )
+
+        commit_signal_1 = Signal(
+            id="commit-1",
+            title="RAG 性能优化",
+            type="performance",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="提升检索速度",
+            sources=["https://github.com/test/repo/commit/aaa"],
+            related_repos=["test/repo"],
+        )
+
+        commit_signal_2 = Signal(
+            id="commit-2",
+            title="RAG 优化",
+            type="performance",
+            category="engineering",
+            impact_score=3,
+            why_it_matters="缓存优化",
+            sources=["https://github.com/test/repo/commit/bbb"],
+            related_repos=["test/repo"],
+        )
+
+        # Mock LLM 返回重复
+        mock_llm_client.messages.create.return_value = MagicMock(
+            content=[MagicMock(text="DUPLICATE")]
+        )
+
+        # Act
+        unique_signals = deduplicator.deduplicate(
+            [pr_signal, commit_signal_1, commit_signal_2]
+        )
+
+        # Assert
+        assert len(unique_signals) == 1
+        # 应该聚合所有 3 个来源
+        assert len(unique_signals[0].sources) == 3
+        assert any("/pull/100" in s for s in unique_signals[0].sources)
+        assert any("/commit/aaa" in s for s in unique_signals[0].sources)
+        assert any("/commit/bbb" in s for s in unique_signals[0].sources)
+
+    def test_fingerprint_ignores_signal_type_for_deduplication(self, deduplicator):
+        """测试：指纹计算应忽略信号类型，只基于业务本质"""
+        # Arrange
+        # PR 信号
+        signal_from_pr = Signal(
+            id="pr-1",
+            title="MCP 集成",
+            type="capability",
+            category="engineering",
+            impact_score=5,
+            why_it_matters="协议支持",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
+
+        # Commit 信号（业务类型相同）
+        signal_from_commit = Signal(
+            id="commit-1",
+            title="MCP 集成",
+            type="capability",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="协议实现",
+            sources=["https://github.com/test/repo/commit/abc"],
+            related_repos=["test/repo"],
+        )
+
+        # Act
+        fingerprint_pr = deduplicator.compute_fingerprint(signal_from_pr)
+        fingerprint_commit = deduplicator.compute_fingerprint(signal_from_commit)
+
+        # Assert - 指纹应该相同（因为业务本质相同）
+        assert fingerprint_pr == fingerprint_commit
+
+    def test_deduplicate_pr_commit_release_same_trend(
+        self, deduplicator, mock_llm_client
+    ):
+        """测试：PR、Commit、Release 描述同一趋势时应合并"""
+        # Arrange
+        pr_signal = Signal(
+            id="pr-1",
+            title="工作流引擎重构",
+            type="abstraction",
+            category="engineering",
+            impact_score=5,
+            why_it_matters="架构改进",
+            sources=["https://github.com/test/repo/pull/50"],
+            related_repos=["test/repo"],
+        )
+
+        commit_signal = Signal(
+            id="commit-1",
+            title="重构工作流引擎",
+            type="abstraction",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="代码清理",
+            sources=["https://github.com/test/repo/commit/xyz"],
+            related_repos=["test/repo"],
+        )
+
+        release_signal = Signal(
+            id="release-1",
+            title="工作流引擎发布",
+            type="abstraction",
+            category="engineering",
+            impact_score=5,
+            why_it_matters="v2.0 发布",
+            sources=["https://github.com/test/repo/releases/tag/v2.0.0"],
+            related_repos=["test/repo"],
+        )
+
+        # Mock LLM 返回重复
+        mock_llm_client.messages.create.return_value = MagicMock(
+            content=[MagicMock(text="DUPLICATE")]
+        )
+
+        # Act
+        unique_signals = deduplicator.deduplicate(
+            [pr_signal, commit_signal, release_signal]
+        )
+
+        # Assert
+        assert len(unique_signals) == 1
+        # 应该聚合 3 个来源
+        assert len(unique_signals[0].sources) == 3
+        assert any("/pull/50" in s for s in unique_signals[0].sources)
+        assert any("/commit/xyz" in s for s in unique_signals[0].sources)
+        assert any("/releases/tag/v2.0.0" in s for s in unique_signals[0].sources)
+
+    def test_deduplicate_different_trends_not_merged(
+        self, deduplicator, mock_llm_client
+    ):
+        """测试：不同趋势不应被合并"""
+        # Arrange
+        signal_1 = Signal(
+            id="s1",
+            title="MCP 集成",
+            type="capability",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="协议支持",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
+
+        signal_2 = Signal(
+            id="s2",
+            title="RAG 优化",
+            type="performance",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="检索增强",
+            sources=["https://github.com/test/repo/pull/2"],
+            related_repos=["test/repo"],
+        )
+
+        # Mock LLM 返回非重复
+        mock_llm_client.messages.create.return_value = MagicMock(
+            content=[MagicMock(text="UNIQUE")]
+        )
+
+        # Act
+        unique_signals = deduplicator.deduplicate([signal_1, signal_2])
+
+        # Assert
+        assert len(unique_signals) == 2
+        # 信号不应被合并
+        assert len(unique_signals[0].sources) == 1
+        assert len(unique_signals[1].sources) == 1
