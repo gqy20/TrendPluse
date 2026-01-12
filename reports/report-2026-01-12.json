@@ -1,1 +1,655 @@
-{"date": "2026-01-12"}
+{
+  "date": "2026-01-12",
+  "summary_brief": "今日 (2026-01-12) 发现 7 个 Commit 信号，1 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "commit-0",
+      "title": "CLI会话被动分析",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "引入被动活动记录器，标志着CLI工具正从单纯的命令执行向智能行为分析和上下文感知演进，为未来的自动化调试和用户意图预测奠定基础。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/39b3f20a2285e85f265cc0a160ff34cc4de27321"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "TUI鼠标交互增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "在终端界面（TUI）中增加鼠标悬停和点击支持，显著降低了非专业用户的使用门槛，提升了终端工具的可访问性和交互效率。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "Token使用优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "通过截断冗余注释体来减少Token消耗，反映了在LLM应用开发中成本控制和效率优化的核心需求，尤其是在处理大规模代码库时。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "刷新令牌死锁修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "修复认证系统中的死锁问题，对于保障企业级应用的高可用性和用户会话的稳定性至关重要，防止服务因认证阻塞而中断。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/0c2729d9b30cda8ae596b0ece3783124fb4cd232"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "MCP资源类型支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "扩展MCP（Model Context Protocol）工具以支持资源内容类型，增强了AI工具与外部数据源的互操作性，推动了插件生态的标准化。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/8b9a85b7e7278813cd6be733d7cd67ef3ea24972"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "Claude Code工作流集成",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "将Claude Code集成到GitHub工作流中，展示了AI编程助手正深度嵌入DevOps流程，实现从代码编写到CI/CD的全流程自动化。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/7e7ebc46c37be9ccd09da7f8898f4d86289dc8ba"
+      ],
+      "related_repos": [
+        "agno-agi/agno"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "commit-2",
+      "title": "跨规格共享记忆",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "实现跨规格的共享记忆机制，解决了AI Agent在处理复杂任务时上下文碎片化的痛点，是迈向长期记忆和持续学习的关键一步。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/0c139add1e258868d84e628cf70007f16a1b1e22"
+      ],
+      "related_repos": [
+        "AndyMik90/Auto-Claude",
+        "langgenius/dify"
+      ]
+    }
+  ],
+  "commit_signals": [
+    {
+      "id": "commit-0",
+      "title": "CLI会话被动分析",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "引入被动活动记录器，标志着CLI工具正从单纯的命令执行向智能行为分析和上下文感知演进，为未来的自动化调试和用户意图预测奠定基础。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/39b3f20a2285e85f265cc0a160ff34cc4de27321"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-1",
+      "title": "TUI鼠标交互增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "在终端界面（TUI）中增加鼠标悬停和点击支持，显著降低了非专业用户的使用门槛，提升了终端工具的可访问性和交互效率。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "commit-2",
+      "title": "跨规格共享记忆",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "实现跨规格的共享记忆机制，解决了AI Agent在处理复杂任务时上下文碎片化的痛点，是迈向长期记忆和持续学习的关键一步。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/0c139add1e258868d84e628cf70007f16a1b1e22"
+      ],
+      "related_repos": [
+        "AndyMik90/Auto-Claude",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "Token使用优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "通过截断冗余注释体来减少Token消耗，反映了在LLM应用开发中成本控制和效率优化的核心需求，尤其是在处理大规模代码库时。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "刷新令牌死锁修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "修复认证系统中的死锁问题，对于保障企业级应用的高可用性和用户会话的稳定性至关重要，防止服务因认证阻塞而中断。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/0c2729d9b30cda8ae596b0ece3783124fb4cd232"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "MCP资源类型支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "扩展MCP（Model Context Protocol）工具以支持资源内容类型，增强了AI工具与外部数据源的互操作性，推动了插件生态的标准化。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/8b9a85b7e7278813cd6be733d7cd67ef3ea24972"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "commit-6",
+      "title": "Claude Code工作流集成",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "将Claude Code集成到GitHub工作流中，展示了AI编程助手正深度嵌入DevOps流程，实现从代码编写到CI/CD的全流程自动化。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/7e7ebc46c37be9ccd09da7f8898f4d86289dc8ba"
+      ],
+      "related_repos": [
+        "agno-agi/agno"
+      ]
+    }
+  ],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 5,
+    "total_commits_analyzed": 50,
+    "total_releases": 1
+  },
+  "activity": {
+    "total_commits": 50,
+    "active_repos_count": 11,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 23,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rekram1-node",
+          "zeke",
+          "thdxr",
+          "dbpolito",
+          "kitlangton"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "xaviduds",
+          "SomeoneToIgnore",
+          "oscarvarto",
+          "Veykril",
+          "RubenFricke"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "StillKnotKnown",
+          "g1331",
+          "bhanuprasad14"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "NTaylorMullen",
+          "abhipatel12",
+          "SandyTao520"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "yihong0618",
+          "fatelei"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "majdyz"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "cuiyuebing"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Mustafa-Esoofally"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 1,
+    "unique_repos_count": 1,
+    "releases": [
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.13",
+        "author": "thdxr",
+        "date": "2026-01-11",
+        "summary": "## Core\n- Ensure Codex built-in plugin is always available\n- Ensure /connect works for OpenAI Business plans by adding missing field\n- Track file modifications in ACP (@wid4t)\n- Pass sessionID to chat.system.transform (@spoons-and-mirrors)\n- Extract external directory validation to shared utility to reduce code duplication across tools\n- Exclude 'none' variant for gpt-5.2-codex (@Alejandro-CSt)\n- Follow symlinks by default in ripgrep searches (@kdcokenny)\n- Disable telemetry in the PHP language server (@madflow)\n## TUI\n- Move props.ref to onMount in TUI component (@itsrainingmani)\n- Fixed command palette incorrectly highlighting items on mouse hover (@kitlangton)\n## Desktop\n- Add ability to fork sessions in desktop app (@dbpolito)\n- Make mouse hover and click work on prompt input autocomplete (@dbpolito)\n- Add missing StoreExt import and fix unused mut warning in desktop (@jerome-benoit)\n- Fix missing import causing desktop build to fail (@Leka74)\n- Support configuring default server URL for desktop (@athal7)\n- Remove split operation in serverDisplayName function (@OpeOginni)\n\n**Thank you to 13 community contributors:**\n- @madflow:\n  - fix: disable telemetry in the php lsp server (#7649)\n- @dbpolito:\n  - fix(desktop): Allow Selecting Card Errors (#7506)\n  - feat(deskop): Add Copy to Messages (#7658)\n  - feat(desktop): Make mouse hover / click work on prompt input autocomplete (#7661)\n  - feat(desktop): Fork Session (#7673)\n- @zerone0x:\n  - fix(ui): allow text editing shortcuts in search dialogs on macOS (#7419)\n- @OpeOginni:\n  - fix(desktop): remove split operation in serverDisplayName function (#7397)\n- @athal7:\n  - feat: support configuring default server URL for desktop (#7363)\n- @kdcokenny:\n  - fix(grep): follow symlinks by default in ripgrep searches (#7501)\n- @Alejandro-CSt:\n  - fix: exclude 'none' variant for gpt-5.2-codex (#7682)\n- @Leka74:\n  - fix(desktop): build failing - missing import (#7697)\n- @jerome-benoit:\n  - fix(desktop): add missing StoreExt import and fix unused mut warning (#7707)\n- @spoons-and-mirrors:\n  - feat: pass sessionID to chat.system.transform (#7718)\n- @kitlangton:\n  - fix(opencode): command palette mouse hover highlights wrong item (#7721)\n- @wid4t:\n  - feat(acp): track file modified (#7723)\n- @itsrainingmani:\n  - fix(tui): move props.ref to onMount (#7702)",
+        "assets_count": 32,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.13",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anomalyco/opencode v1.1.13 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
