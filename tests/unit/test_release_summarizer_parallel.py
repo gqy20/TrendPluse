@@ -113,40 +113,44 @@ class TestReleaseSummarizerParallel:
         self, mock_summary
     ):
         """测试：单个 release 失败不应影响其他 releases"""
-        # 创建 mock 客户端
-        mock_client = MagicMock()
-
-        call_count = [0]
-
-        def mock_create_sometimes_fails(*args, **kwargs):
-            call_count[0] += 1
-            time.sleep(0.02)  # 模拟 API 延迟
-            # 第 3 个调用失败
-            if call_count[0] == 3:
-                raise Exception("模拟 API 失败")
-            return mock_summary
-
-        mock_client.chat.completions.create.side_effect = mock_create_sometimes_fails
+        from unittest.mock import patch
 
         summarizer = ReleaseSummarizer(api_key="test-key")
-        summarizer.client = mock_client
 
-        releases = [
-            {
-                "repo": f"test/repo{i}",
-                "tag_name": f"v1.0.{i}",
-                "body": "test",
-            }
-            for i in range(5)
-        ]
+        def mock_summarize_with_one_failure(release):
+            """Mock 方法：test/repo2 失败"""
+            time.sleep(0.02)  # 模拟 API 延迟
+            # test/repo2 失败
+            if release["repo"] == "test/repo2":
+                raise Exception("模拟 API 失败")
+            # 其他返回成功
+            return mock_summary
 
-        summaries = summarizer.summarize_releases(releases, max_workers=3)
+        with patch.object(
+            summarizer,
+            "_summarize_single_release",
+            side_effect=mock_summarize_with_one_failure,
+        ):
+            releases = [
+                {
+                    "repo": f"test/repo{i}",
+                    "tag_name": f"v1.0.{i}",
+                    "body": "test",
+                }
+                for i in range(5)
+            ]
 
-        # 所有 5 个都应有结果（失败的返回默认值）
-        assert len(summaries) == 5
-        # 其中至少 4 个是成功的（change_type='feature'）
-        success_count = sum(1 for s in summaries.values() if s.change_type == "feature")
-        assert success_count >= 4, f"应该至少有 4 个成功，实际有 {success_count} 个"
+            summaries = summarizer.summarize_releases(releases, max_workers=3)
+
+            # 所有 5 个都应有结果（失败的返回默认值）
+            assert len(summaries) == 5
+            # 其中 4 个是成功的（change_type='feature'），1 个是默认值
+            success_count = sum(
+                1
+                for s in summaries.values()
+                if s is not None and s.change_type == "feature"
+            )
+            assert success_count == 4, f"应该有 4 个成功，实际有 {success_count} 个"
 
     def test_summarize_releases_default_max_workers(self, mock_summary):
         """测试：不提供 max_workers 时应使用默认值"""
