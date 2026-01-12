@@ -127,7 +127,7 @@ class FeishuFormatter:
         }
 
     def _create_signals_section(self, report: DailyReport) -> list[dict]:
-        """创建高影响信号部分，区分 PR 信号和 Commit 信号
+        """创建高影响信号部分（与 MarkdownReporter 一致：按分类分组）
 
         Args:
             report: 日报对象
@@ -137,44 +137,85 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 获取 PR 高影响信号（仅 engineering 和 research，不含 release_signals）
-        pr_signals = self._get_high_impact_signals(
-            [
-                report.engineering_signals,
-                report.research_signals,
-            ]
+        # 筛选高影响信号（评分 >= 4）
+        def get_high_impact(signals: list[Signal]) -> list[Signal]:
+            return [s for s in signals if s.impact_score >= 4]
+
+        # 工程信号（总是显示，与 MarkdownReporter 一致）
+        engineering_signals = get_high_impact(report.engineering_signals)
+        elements.append({"tag": "hr"})
+        elements.append(
+            {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "### 🔧 工程信号\n\n",
+                },
+            }
         )
+        if engineering_signals:
+            elements.extend(self._create_signal_items(engineering_signals))
+        else:
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": "暂无信号。\n",
+                    },
+                }
+            )
 
-        # 获取 Commit 高影响信号
-        commit_signals = self._get_high_impact_signals([report.commit_signals])
+        # 研究信号（总是显示，与 MarkdownReporter 一致）
+        research_signals = get_high_impact(report.research_signals)
+        elements.append({"tag": "hr"})
+        elements.append(
+            {
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": "### 🔬 研究信号\n\n",
+                },
+            }
+        )
+        if research_signals:
+            elements.extend(self._create_signal_items(research_signals))
+        else:
+            elements.append(
+                {
+                    "tag": "div",
+                    "text": {
+                        "tag": "lark_md",
+                        "content": "暂无信号。\n",
+                    },
+                }
+            )
 
-        # 添加 PR 信号部分
-        if pr_signals:
+        # Commit 信号（仅在有内容时显示，与 MarkdownReporter 一致）
+        if report.commit_signals:
+            commit_signals = get_high_impact(report.commit_signals)
             elements.append({"tag": "hr"})
             elements.append(
                 {
                     "tag": "div",
                     "text": {
                         "tag": "lark_md",
-                        "content": "### 🔥 PR 信号\n\n",
+                        "content": "### 💾 Commit 信号\n\n",
                     },
                 }
             )
-            elements.extend(self._create_signal_items(pr_signals))
-
-        # 添加 Commit 信号部分
-        if commit_signals:
-            elements.append({"tag": "hr"})
-            elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "### 🔥 Commit 信号\n\n",
-                    },
-                }
-            )
-            elements.extend(self._create_signal_items(commit_signals))
+            if commit_signals:
+                elements.extend(self._create_signal_items(commit_signals))
+            else:
+                elements.append(
+                    {
+                        "tag": "div",
+                        "text": {
+                            "tag": "lark_md",
+                            "content": "暂无 commit 信号。\n",
+                        },
+                    }
+                )
 
         return elements
 
@@ -481,27 +522,6 @@ class FeishuFormatter:
                 "content": content,
             },
         }
-
-    def _get_high_impact_signals(
-        self, signal_lists: list[list[Signal]]
-    ) -> list[Signal]:
-        """获取高影响信号
-
-        Args:
-            signal_lists: 信号列表的列表
-
-        Returns:
-            高影响信号列表（按评分降序）
-        """
-        all_signals = []
-        for signals in signal_lists:
-            all_signals.extend(signals)
-
-        # 筛选高影响信号（评分 >= 4），按评分降序，最多 5 个
-        return sorted(
-            [s for s in all_signals if s.impact_score >= 4],
-            key=lambda x: (-x.impact_score, x.title),
-        )[:5]
 
     def _get_type_emoji(self, signal_type: str) -> str:
         """获取信号类型的表情
