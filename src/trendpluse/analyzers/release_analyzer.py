@@ -178,15 +178,8 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             信号列表
         """
         try:
-            # 移除可能的 markdown 代码块标记
-            response_text = llm_response.strip()
-            if response_text.startswith("```json"):
-                response_text = response_text[7:]  # 移除 ```json
-            elif response_text.startswith("```"):
-                response_text = response_text[3:]  # 移除 ```
-            if response_text.endswith("```"):
-                response_text = response_text[:-3]  # 移除结尾的 ```
-            response_text = response_text.strip()
+            # 使用基类方法提取 JSON
+            response_text = self._extract_json_from_markdown(llm_response)
 
             # 解析 JSON
             data = json.loads(response_text)
@@ -204,18 +197,17 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
                     tag_name = releases[idx].get("tag_name", "")
                     release_url = f"https://github.com/{repo}/releases/tag/{tag_name}"
                     sources = [release_url]
+                    related_repos = [repo]
                 else:
                     sources = item.get("sources", [])
+                    related_repos = item.get("related_repos", [])
 
-                signal = Signal(
-                    id=f"release-{idx}",
-                    title=item["title"],
-                    type=item["type"],
-                    category=item["category"],
-                    impact_score=item["impact_score"],
-                    why_it_matters=item["why_it_matters"],
+                # 使用基类方法创建 Signal
+                signal = self._create_signal_from_dict(
+                    item=item,
+                    index=idx,
                     sources=sources,
-                    related_repos=item["related_repos"],
+                    related_repos=related_repos,
                 )
                 signals.append(signal)
 
