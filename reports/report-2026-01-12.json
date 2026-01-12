@@ -4,139 +4,130 @@
   "engineering_signals": [
     {
       "id": "commit-0",
-      "title": "多分支代码索引",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "TabbyML 支持索引多个分支，显著增强了代码补全工具在复杂开发场景（如多版本并行开发）下的上下文感知能力。",
-      "sources": [
-        "https://github.com/TabbyML/tabby/commit/b409924ffebd3dbfa50ec9bf91e0ef934eceb067"
-      ],
-      "related_repos": [
-        "zed-industries/zed",
-        "TabbyML/tabby"
-      ]
-    },
-    {
-      "id": "commit-1",
-      "title": "Claude Code Hook",
+      "title": "Claude Code 工作流集成",
       "type": "workflow",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "Dify 和 Agno 同时集成 Claude Code 相关功能/Hooks，表明 AI 编排工具正在深度集成 Anthropic 的新一代代码生成能力。",
+      "why_it_matters": "主流 AI 框架（Dify, Agno）正在积极集成 Claude Code 的 GitHub Actions 工作流，标志着 AI 编程助手正式成为 CI/CD 流程的标准组件。",
       "sources": [
         "https://github.com/langgenius/dify/commit/f9a21b56abda5ea77c6cdcd4006ff922fbee1b59"
       ],
       "related_repos": [
         "langgenius/dify",
-        "agno-agi/agno",
-        "google-gemini/gemini-cli"
+        "agno-agi/agno"
       ]
     },
     {
-      "id": "commit-3",
-      "title": "TUI 鼠标交互增强",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "OpenCode 连续提交多个 TUI 鼠标交互支持（悬停、点击、粘贴），显示终端用户界面（TUI）正朝着类 GUI 的易用性演进。",
-      "sources": [
-        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
-      ],
-      "related_repos": [
-        "anomalyco/opencode",
-        "zed-industries/zed"
-      ]
-    },
-    {
-      "id": "commit-4",
-      "title": "Token 优化策略",
-      "type": "performance",
+      "id": "commit-1",
+      "title": "多分支代码索引",
+      "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "GPTme 通过截断冗长评论来减少 Token 消耗，反映了在 LLM 应用成本优化中，对输入数据清洗和压缩的持续关注。",
+      "why_it_matters": "TabbyML 支持索引多个分支，打破了代码补全工具仅限于单一分支的局限，显著提升了跨分支开发时的上下文感知能力。",
       "sources": [
-        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+        "https://github.com/TabbyML/tabby/commit/b409924ffebd3dbfa50ec9bf91e0ef934eceb067"
       ],
       "related_repos": [
-        "ErikBjare/gptme",
         "TabbyML/tabby"
       ]
     },
     {
-      "id": "commit-5",
-      "title": "Docker 安全加固",
-      "type": "safety",
+      "id": "commit-2",
+      "title": "流式响应变量同步",
+      "type": "performance",
       "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Dify 明确限制基础版本以避免 CVE，显示了 AI 基础设施项目对供应链安全和漏洞管理的重视。",
+      "impact_score": 4,
+      "why_it_matters": "Dify 修复了流式响应中的变量竞态条件，确保在引用变量更新后才发送响应，解决了 AI 应用中常见的数据不一致问题。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/00698e41b7c6bbded6869dbfaa05bf35350039e3"
+        "https://github.com/langgenius/dify/commit/b63dfbf654ed2191aa94aa4bcf8d09c09cc90759"
       ],
       "related_repos": [
-        "langgenius/dify",
-        "OpenDevin/OpenDevin"
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "commit-3",
+      "title": "Token 优化与截断",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme 通过截断冗余注释体来降低 Token 消耗，反映了在 LLM 应用开发中对成本控制和延迟优化的持续关注。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/fcfe48aade8ce5630c81454ed46928d15b5d44e7"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme"
+      ]
+    },
+    {
+      "id": "commit-4",
+      "title": "TUI 鼠标交互增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 和 Zed 等 CLI/TUI 工具正在增加鼠标悬停和点击支持，打破了终端工具仅限键盘交互的传统，提升用户体验。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/82b432349e4063f612f54758ba78999b75cf13fb"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "commit-5",
+      "title": "插件工厂模式重构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Fabric 引入工厂函数以减少插件系统中的代码重复，体现了 AI 工具链正从快速原型向可维护的软件架构演进。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/cf55be784f44bc7c2f0cfcecb4ec75077930c8f7"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric"
       ]
     },
     {
       "id": "commit-6",
-      "title": "浏览器自动化集成",
-      "type": "capability",
+      "title": "刷新令牌死锁修复",
+      "type": "safety",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "AgentScope 和 Agno 同时更新浏览器工具，表明“Web 操控”能力（Browser Use）已成为 AI Agent 执行复杂任务的标准配置。",
+      "why_it_matters": "Dify 修复了刷新令牌的死锁问题，这对于高并发 AI 应用的稳定性和用户会话的连续性至关重要。",
       "sources": [
-        "https://github.com/agentscope-ai/agentscope/commit/f646df4a77a06bb8733b666300ca33f20f4556b9"
+        "https://github.com/langgenius/dify/commit/0c2729d9b30cda8ae596b0ece3783124fb4cd232"
       ],
       "related_repos": [
-        "agno-agi/agno",
-        "agentscope-ai/agentscope"
-      ]
-    }
-  ],
-  "research_signals": [
-    {
-      "id": "commit-2",
-      "title": "跨项目记忆共享",
-      "type": "capability",
-      "category": "research",
-      "impact_score": 5,
-      "why_it_matters": "Auto-Claude 引入跨规范学习的项目级共享记忆，解决了 AI Agent 在长期任务中遗忘上下文的核心痛点，向持久化智能迈进一步。",
-      "sources": [
-        "https://github.com/AndyMik90/Auto-Claude/commit/0c139add1e258868d84e628cf70007f16a1b1e22"
-      ],
-      "related_repos": [
-        "langgenius/dify",
-        "anomalyco/opencode",
-        "AndyMik90/Auto-Claude"
+        "langgenius/dify"
       ]
     },
     {
       "id": "commit-7",
-      "title": "被动式会话分析",
-      "type": "capability",
-      "category": "research",
+      "title": "依赖版本锁定",
+      "type": "safety",
+      "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Gemini CLI 引入被动活动记录器，用于会话分析，这预示着 CLI 工具正从单纯的命令执行转向具备行为审计和自我反思能力的智能体。",
+      "why_it_matters": "Dify 锁定 esbuild 和 glob 版本以避免 CVE，显示 AI 基础设施项目正面临更严峻的供应链安全挑战。",
       "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/39b3f20a2285e85f265cc0a160ff34cc4de27321"
+        "https://github.com/langgenius/dify/commit/00698e41b7c6bbded6869dbfaa05bf35350039e3"
       ],
       "related_repos": [
-        "google-gemini/gemini-cli",
-        "anomalyco/opencode"
+        "langgenius/dify"
       ]
     }
   ],
+  "research_signals": [],
   "commit_signals": [],
   "release_signals": [],
   "stats": {
     "total_prs_analyzed": 0,
-    "high_impact_signals": 5,
-    "total_commits_analyzed": 64,
+    "high_impact_signals": 4,
+    "total_commits_analyzed": 63,
     "total_releases": 2
   },
   "activity": {
-    "total_commits": 64,
+    "total_commits": 63,
     "active_repos_count": 14,
     "new_contributors": 0,
     "top_repos": [
@@ -154,26 +145,14 @@
       },
       {
         "repo": "langgenius/dify",
-        "commits": 10,
+        "commits": 11,
         "new_contributors": 0,
         "top_contributors": [
+          "QuantumGhost",
           "hyoban",
           "dependabot[bot]",
           "hjlarry",
-          "QuantumGhost",
           "lyzno1"
-        ]
-      },
-      {
-        "repo": "zed-industries/zed",
-        "commits": 7,
-        "new_contributors": 0,
-        "top_contributors": [
-          "amtoaer",
-          "xaviduds",
-          "SomeoneToIgnore",
-          "oscarvarto",
-          "Veykril"
         ]
       },
       {
@@ -183,6 +162,18 @@
         "top_contributors": [
           "ksylvan",
           "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "amtoaer",
+          "xaviduds",
+          "SomeoneToIgnore",
+          "oscarvarto",
+          "Veykril"
         ]
       },
       {
@@ -517,12 +508,12 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "重构供应商插件初始化逻辑，新增统一的工厂函数以消除 8 个供应商实现的重复代码",
-            "更新 anthropic、bedrock、gemini、lmstudio、ollama、openai、perplexity、vertexai 共 8 个供应商文件以使用新的工厂函数",
-            "为新增的工厂函数添加 3 个测试用例，确保重构后的功能正常",
-            "在 README 中添加 GitHub 赞助部分，以支持开源项目的持续发展"
+            "重构供应商插件架构：添加 NewVendorPluginBase 工厂函数以消除代码重复",
+            "更新 8 个 AI 供应商实现统一使用新的工厂函数",
+            "新增 3 个工厂函数测试用例",
+            "文档更新：在 README 中添加 GitHub 赞助支持部分"
           ],
-          "summary_cn": "本次 v1.4.376 版本主要进行了代码重构优化，通过引入统一的供应商插件工厂函数，成功消除了 8 个不同 AI 供应商实现中的重复样板代码。此外还更新了文档，添加了 GitHub 赞助部分以支持项目的长期维护。",
+          "summary_cn": "本次 v1.4.376 版本主要进行了代码重构优化，通过引入统一的工厂函数消除了 8 个 AI 供应商插件实现中的重复样板代码，提升了代码可维护性。同时更新了文档以添加开源赞助支持信息。",
           "impact_level": 2
         }
       },
@@ -537,14 +528,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "TUI 新增多项鼠标交互支持：子代理头部导航、问题工具、自动补全等",
-            "桌面应用新增图片附件预览功能",
-            "MCP 工具输出支持资源内容类型",
-            "修复多项 TUI 体验问题：粘贴光标位置、斜杠命令高亮行跳转等",
-            "优化外部目录权限检查和工作树处理"
+            "TUI 全面增强：添加鼠标悬停和点击支持（子代理导航、问题工具、自动完成）",
+            "修复多个 TUI 问题：光标位置、自动完成高亮跳转、提示引用初始化",
+            "MCP 工具增强：支持 resource 内容类型输出，改进子目录权限检查",
+            "桌面端新增图片附件预览功能",
+            "重构 TUI 事件流使用 SDK 替代手动 RPC 订阅"
           ],
-          "summary_cn": "v1.1.14 版本主要聚焦于用户界面体验提升，TUI 新增了多处鼠标悬停和点击交互支持，包括子代理头部导航、问题工具和自动补全功能，并修复了光标位置和高亮行显示等问题。桌面应用新增了图片附件预览功能，同时增强了 MCP 工具对资源内容类型的支持以及外部目录权限检查。",
-          "impact_level": 2
+          "summary_cn": "v1.1.14 版本带来了显著的 TUI 交互体验升级，全面引入鼠标悬停和点击支持，包括子代理导航、问题工具和自动完成功能。同时修复了多个 TUI 缺陷（光标位置、高亮跳转等），增强了 MCP 工具输出和桌面端图片预览能力。本次更新有 10 位社区贡献者参与，包含多项核心优化和事件流重构。",
+          "impact_level": 3
         }
       }
     ]
