@@ -31,7 +31,7 @@ class FeishuFormatter:
             report_url_template: 报告 URL 模板，使用 {date} 作为占位符
         """
         self.report_url_template = report_url_template or (
-            "https://home.gqy20.top/TrendPluse/reports/report-{date}.html"
+            "https://home.gqy20.top/TrendPluse/reports/report-{date}/"
         )
 
     def format_card(self, report: DailyReport) -> dict:
@@ -383,7 +383,7 @@ class FeishuFormatter:
         return "链接"
 
     def _generate_releases_content(self, releases: ReleasesData) -> str:
-        """生成版本发布内容（不包含外层 div）
+        """生成版本发布内容（不包含外层标题，用于折叠面板）
 
         Args:
             releases: ReleasesData 对象
@@ -391,9 +391,9 @@ class FeishuFormatter:
         Returns:
             Markdown 格式的内容字符串
         """
-        lines = ["### 🎯 版本发布动态\n\n"]
+        lines: list[str] = []
 
-        # 总览
+        # 总览（不包含外层标题，因为已在折叠面板标题中）
         lines.append("### 总览\n\n")
         lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
         lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
@@ -559,7 +559,7 @@ class FeishuFormatter:
         }
 
     def _generate_activity_content(self, activity: ActivityData) -> str:
-        """生成活跃度内容（不包含外层 div）
+        """生成活跃度内容（不包含外层标题，用于折叠面板）
 
         Args:
             activity: ActivityData 对象
@@ -567,9 +567,9 @@ class FeishuFormatter:
         Returns:
             Markdown 格式的内容字符串
         """
-        lines = ["### 📈 仓库活跃度\n\n"]
+        lines: list[str] = []
 
-        # 总览指标
+        # 总览指标（不包含外层标题，因为已在折叠面板标题中）
         lines.append("### 总览\n\n")
         lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
         lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
@@ -602,7 +602,7 @@ class FeishuFormatter:
         }
 
     def _generate_stats_content(self, stats: dict) -> str:
-        """生成统计信息内容（不包含外层 div）
+        """生成统计信息内容（不包含外层标题，用于折叠面板）
 
         Args:
             stats: 统计数据字典
@@ -610,7 +610,8 @@ class FeishuFormatter:
         Returns:
             Markdown 格式的内容字符串
         """
-        content = "### 📊 统计信息\n\n"
+        # 不包含外层标题，因为已在折叠面板标题中
+        content = ""
         content += f"• 分析 PR 数: {stats.get('total_prs_analyzed', 0)}\n"
         content += f"• 高影响信号: {stats.get('high_impact_signals', 0)}\n"
         content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
