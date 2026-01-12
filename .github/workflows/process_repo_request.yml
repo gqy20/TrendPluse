@@ -86,9 +86,9 @@ jobs:
           python-version: '3.13'
 
       - name: 安装 uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
 
       - name: 添加仓库到配置
         run: |
