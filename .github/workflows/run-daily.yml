@@ -108,6 +108,9 @@ jobs:
         with:
           fetch-depth: 0  # 获取完整历史，用于 git-revision-date-localized-plugin
 
+      - name: Pull latest changes
+        run: git pull origin main
+
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
