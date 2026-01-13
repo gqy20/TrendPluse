@@ -1,0 +1,922 @@
+{
+  "date": "2026-01-13",
+  "summary_brief": "今日 (2026-01-13) 发现 10 个 Commit 信号，15 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "MCP 协议热重载支持",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入的 MCP 服务器热重载功能消除了开发过程中重启应用的痛点，显著提升了基于 MCP 协议构建 AI Agent 的开发效率和迭代速度。",
+      "sources": [
+        "https://github.com/openai/codex/commit/3e91a95ce11ab190c827f91f23b434219c2c00d4"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "modelcontextprotocol/servers"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "Agent 协作测试框架",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 新增的协作测试工具为多 Agent 系统提供了标准化的测试与验证手段，解决了当前多 Agent 协作难以自动化测试的难题，有助于提升复杂系统的稳定性。",
+      "sources": [
+        "https://github.com/openai/codex/commit/86f81ca0108639cb44796ea8c294aabdd8b3b091"
+      ],
+      "related_repos": [
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "Zed 编辑器多线程 Agent",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Zed 引入的子线程生成与执行机制，允许 AI Agent 在后台独立执行任务而不阻塞主线程，这是构建高性能、响应式 AI 编辑器的关键架构升级。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/756637fef591290c7e4ad6398390709fd181961f"
+      ],
+      "related_repos": [
+        "zed-industries/zed"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "OpenCode 安全认证增强",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 新增的密码认证和服务器安全机制，强化了远程 AI 编程环境的安全边界，对于企业级部署和防止未授权访问至关重要。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/1954c1255e71ab86283e6a99ac82598268fc308d"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "Gemini CLI 技能插件化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Google Gemini CLI 支持内置技能分发和安装/卸载命令，标志着 AI 编程助手从单一工具向可扩展平台的演进，允许用户自定义和扩展 Agent 能力。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/e9c9dd1d6723fde75c255e2ade5ed33280c6809c"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "AST 代码分块策略",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Agno 引入基于抽象语法树 (AST) 的代码分块策略，相比传统的基于行或 Token 的切分，能更准确地保留代码的语义完整性，提升 RAG 和代码理解的准确性。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/bbe5fffd0e90ef88c685239e6c729f7d1c1ed9d4"
+      ],
+      "related_repos": [
+        "agno-agi/agno"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "LangGraph 默认缓存策略调整",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "LangGraph 翻转了基础缓存的默认设置，反映了框架在成本控制与响应延迟之间的权衡策略调整，引导开发者在构建有状态应用时更加关注缓存行为。",
+      "sources": [
+        "https://github.com/langchain-ai/langgraph/commit/f91d79d0c86932ded6e3b9f195d5a0bbd5aef99c"
+      ],
+      "related_repos": [
+        "langchain-ai/langgraph"
+      ]
+    },
+    {
+      "id": "signal-8",
+      "title": "Dify 集成 Claude Code",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 添加 Claude Code 专属钩子，标志着主流 AI 应用开发平台正在与 Anthropic 的代码生成能力进行深度集成，促进了工作流编排与代码生成的融合。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/f9a21b56abda5ea77c6cdcd4006ff922fbee1b59"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "signal-9",
+      "title": "OpenCode 终端动态编号",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "OpenCode 改进终端编号逻辑以支持动态环境，解决了在复杂多任务场景下终端管理混乱的问题，提升了 AI 操作命令行时的用户体验。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/1a5a63843ed49d94dc2fb2db491eb08c31a169d6"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "signal-5",
+      "title": "Agno 引入学习机机制",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Agno (原 Phidata) 推出的 'Learning Machine' 功能，暗示了 AI Agent 具备了从执行过程中动态学习和积累经验的能力，这是迈向自适应和自我进化 Agent 的重要一步。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/6c1e0e46b7cbeef7ea5641c2c8ed4c984634cc58"
+      ],
+      "related_repos": [
+        "agno-agi/agno"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 7,
+    "total_commits_analyzed": 214,
+    "total_releases": 15
+  },
+  "activity": {
+    "total_commits": 214,
+    "active_repos_count": 20,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 56,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rekram1-node",
+          "thdxr",
+          "actions-user",
+          "Brendonovich",
+          "jerome-benoit"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 30,
+        "new_contributors": 0,
+        "top_contributors": [
+          "MrSubidubi",
+          "rtfeldman",
+          "SomeoneToIgnore",
+          "agu-z",
+          "as-cii"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 27,
+        "new_contributors": 0,
+        "top_contributors": [
+          "NTaylorMullen",
+          "chrstnb",
+          "scidomino",
+          "sehoon38",
+          "adamfweidman"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 17,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown",
+          "MikeeBuilds"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 16,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dependabot[bot]",
+          "jif-oai",
+          "pakrym-oai",
+          "aibrahim-oai",
+          "charley-oai"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "QuantumGhost",
+          "hyoban",
+          "dependabot[bot]",
+          "hjlarry",
+          "lyzno1"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 9,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "BarreiroT",
+          "ChaiEranki",
+          "sjf",
+          "yuvalman"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl",
+          "tofarr",
+          "xingyaoww",
+          "saurya",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy",
+          "sydney-runkle",
+          "davidfertube",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "kausmeows",
+          "harshsinha03",
+          "ashpreetbedi",
+          "uzaxirr",
+          "bhatt-neel-dev"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ant-kurt",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "sydney-runkle",
+          "hinthornw",
+          "dumko2001",
+          "jdrogers940"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "koushiv777",
+          "GininDenis"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ant-kurt"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "noahzweben"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "cuiyuebing"
+        ]
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "zwpaper"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 15,
+    "unique_repos_count": 8,
+    "releases": [
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "sdk==0.3.3",
+        "author": "github-actions[bot]",
+        "date": "2026-01-13",
+        "summary": "Changes since sdk==0.3.2\n\n* chore: Better error messages (#6681)\n* feat(sdk-py): add end-time to crons client (#6674)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/sdk%3D%3D0.3.3",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "改进错误提示信息，提升用户体验",
+            "SDK Python 版本新增 crons 客户端结束时间功能",
+            "优化内部错误处理机制"
+          ],
+          "summary_cn": "这是一个小版本更新（0.3.2 → 0.3.3），主要包含一个新功能和一项改进。SDK Python 版本为 crons 客户端新增了结束时间参数支持，同时优化了错误提示信息以提升开发体验。本次变更不涉及破坏性改动，升级风险较低。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.5",
+        "author": "ashwin-ant",
+        "date": "2026-01-12",
+        "summary": "## What's changed\n\n- Added `CLAUDE_CODE_TMPDIR` environment variable to override the temp directory used for internal temp files, useful for environments with custom temp directory requirements\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.5",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 CLAUDE_CODE_TMPDIR 环境变量，允许自定义内部临时文件的存储目录",
+            "支持具有特殊临时目录需求的环境配置",
+            "增强了临时文件路径的灵活性"
+          ],
+          "summary_cn": "此版本为功能增强更新，新增了 CLAUDE_CODE_TMPDIR 环境变量支持。该变更允许用户覆盖默认的临时文件存储路径，适用于需要自定义临时目录配置的运行环境。这是一个非破坏性的改进，提升了工具在不同环境下的适应性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.5",
+        "author": "ashwin-ant",
+        "date": "2026-01-12",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.5\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.5\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.5\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.5\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.5\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.5",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "更新至与 Claude Code v2.1.5 版本功能保持一致",
+            "支持 npm、yarn、pnpm、bun 等多种包管理器安装",
+            "版本号升级至 0.2.5"
+          ],
+          "summary_cn": "这是一个小型版本更新，主要将 TypeScript SDK 同步至与 Claude Code v2.1.5 版本功能一致。该更新确保了 SDK 的功能对等性，开发者可通过 npm、yarn、pnpm 或 bun 进行安装升级。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.377",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "## Changes\n\n### PR [#1929](https://github.com/danielmiessler/Fabric/pull/1929) by [ksylvan](https://github.com/ksylvan): Add Mammouth as new OpenAI-compatible AI provider\n\n- Feat: add Mammouth as new OpenAI-compatible AI provider\n- Add Mammouth provider configuration with API base URL\n- Configure Mammouth to use standard OpenAI-compatible interface\n- Disable Responses API implementation for Mammouth provider\n- Add \"Mammouth\" to VSCode spell check dictionary\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.377",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Mammouth 作为 OpenAI 兼容的 AI 提供商",
+            "添加 Mammouth 提供商配置及 API 基础 URL",
+            "配置 Mammouth 使用标准 OpenAI 兼容接口",
+            "为 Mammouth 提供商禁用 Responses API 实现",
+            "在 VSCode 拼写检查字典中添加 Mammouth"
+          ],
+          "summary_cn": "此版本新增了 Mammouth 作为 OpenAI 兼容的 AI 提供商支持，扩展了 Fabric 的 AI 服务集成能力。新功能包含完整的 Mammouth 提供商配置，使用标准 OpenAI 兼容接口，并已在 VSCode 扩展中同步更新拼写检查字典。这是一个非破坏性的功能增强，为用户提供了更多的 AI 服务选择。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.376",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "## Changes\n\n### PR [#1928](https://github.com/danielmiessler/Fabric/pull/1928) by [ksylvan](https://github.com/ksylvan): Eliminate repetitive boilerplate across eight vendor implementations\n\n- Refactor: add NewVendorPluginBase factory function to reduce duplication\n- Update 8 vendor files (anthropic, bedrock, gemini, lmstudio, ollama, openai, perplexity, vertexai) to use the factory function\n- Add 3 test cases for the new factory function\n- Add centralized factory function for AI vendor plugin initialization\n- Chore: exempt json files from VSCode format-on-save\n\n### Direct commits\n\n- Docs: Add GitHub sponsor section to README\nI spend hundreds of hours a year on open source. If you'd like to help support this project, you can sponsor me here.\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.376",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "重构8个AI厂商实现，通过NewVendorPluginBase工厂函数消除重复样板代码",
+            "为anthropic、bedrock、gemini等8个vendor实现统一了初始化逻辑",
+            "新增工厂函数测试用例，提升代码可维护性",
+            "文档更新：在README中添加GitHub赞助支持说明"
+          ],
+          "summary_cn": "v1.4.376 版本主要进行了代码重构优化，引入统一的工厂函数来消除8个AI厂商插件实现中的重复代码，显著提升了代码质量和可维护性。同时新增了相关测试用例，并在文档中添加了赞助支持信息。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "Changes since 1.0.5\n\n* fix: flip default on base cache (#6677)\n* fix: change default recursion limit (#6676)\n* fix: sanitize namespace for deeply nested graph jumps (#6665)\n* fix: typo: saved the world \"BaseMessge\" to \"BaseMessage\"  (#6639)\n* release(cli): relax api bounds (#6606)\n* feat(checkpoint): Validate checkpointer type at compile time (#6586)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/1.0.6",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "翻转了 base cache 的默认行为（可能导致现有应用缓存行为变化）",
+            "修改了递归限制的默认值（可能影响深层图遍历场景）",
+            "修复了深层嵌套图跳转时的命名空间清理问题",
+            "修复了 BaseMessage 拼写错误",
+            "在编译时验证 checkpointer 类型（类型安全增强）"
+          ],
+          "summary_cn": "langgraph 1.0.6 是一个以修复为主的版本，包含5个bug修复和1个类型安全增强功能。最需要注意的是两个默认行为变更（base cache 和 recursion limit），虽然标记为修复但可能影响现有代码的行为，升级时建议重点关注这两项变更的影响。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "prebuilt==1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "Changes since prebuilt==1.0.5\n\n* fix: flip default on base cache (#6677)\n* fix(prebuilt): support generic type arguments for ToolRuntime injection (#6509)\n* fix: add `state` attribute to `ToolCallRequest` overrides (#6668)\n* fix: suppress unintended deprecation warning (#6669)\n* docs: x-refs and explainer in tool node docs (#6653)\n* docs: `ToolNode` nit (#6652)\n* feat(checkpoint): Validate checkpointer type at compile time (#6586)\n* release(langgraph): bump to 1.0.5 (#6582)\n* release(checkpoint-postgres): 3.0.1 (#6568)\n* release(checkpoint-sqlite): 3.0.1 (#6566)\n* feat: custom encryption at rest (#6482)\n* chore: Bump lockfile (#6537)\n* feat: Include pagination in assistants search response (#6526)\n* release(langgraph): 1.0.4 (#6502)\n* chore(sdk-py): Add more type checking. (#6479)\n* fix: interrupt stream mode values (#6475)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/prebuilt%3D%3D1.0.6",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复翻转基础缓存默认行为",
+            "支持 ToolRuntime 注入的泛型类型参数",
+            "在编译时验证检查点(checkpoint)类型",
+            "为 ToolCallRequest 覆盖添加 state 属性",
+            "支持自定义静态数据加密功能"
+          ],
+          "summary_cn": "此版本主要包含多个错误修复和功能增强，核心变更包括翻转基础缓存默认行为、支持 ToolRuntime 泛型注入以及在编译时验证 checkpoint 类型。同时新增了自定义静态数据加密功能和辅助搜索分页支持，并修复了流模式中断和意外弃用警告等问题。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "checkpointsqlite==3.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "Changes since checkpointsqlite==3.0.1\n\n* fix: flip default on base cache (#6677)\n* docs: storage nits (#6651)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/checkpointsqlite%3D%3D3.0.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复：反转基础缓存的默认设置",
+            "文档更新：存储相关的细节说明优化"
+          ],
+          "summary_cn": "这是一个 checkpointsqlite 的小版本更新（3.0.1 → 3.0.2），主要包含错误修复和文档改进。核心变更为反转基础缓存的默认设置行为，同时优化了存储相关文档的细节说明。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "checkpointpostgres==3.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "Changes since checkpointpostgres==3.0.2\n\n* fix: flip default on base cache (#6677)\n* docs: storage nits (#6651)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/checkpointpostgres%3D%3D3.0.3",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复：翻转 base cache 的默认行为（#6677）",
+            "文档：存储相关细节说明更新（#6651）"
+          ],
+          "summary_cn": "这是一个 checkpointpostgres 的补丁版本（3.0.2 → 3.0.3），主要包含一个默认行为的修复和一个文档更新。核心变更是翻转了 base cache 的默认设置，这可能影响缓存相关的功能表现。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "checkpoint==4.0.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "Changes since checkpoint==3.0.1\n\n* fix: flip default on base cache (#6677)\n* fix(checkpoint): InMemorySaver context managers should return self in… (#6529)\n* fix: docstring for serializer protocol (#6525)\n* chore: clean up some refs (#6487)\n* chore: add `pyproject.toml` links (#6364)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/checkpoint%3D%3D4.0.0",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "翻转基础缓存的默认行为设置（可能影响现有代码的缓存逻辑）",
+            "修复 InMemorySaver 上下文管理器返回 self 的问题",
+            "修复序列化协议文档字符串错误",
+            "添加 pyproject.toml 链接引用",
+            "清理部分代码引用"
+          ],
+          "summary_cn": "checkpoint 4.0.0 是一个包含破坏性变更的主版本更新。最关键的变更是翻转了基础缓存的默认行为，这可能会影响依赖旧默认值的应用程序。同时修复了 InMemorySaver 上下文管理器和序列化协议的文档问题。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.3.25",
+        "author": "kausmeows",
+        "date": "2026-01-12",
+        "summary": "# Changelog\r\n\r\n## New Features:\r\n\r\n- **LearningMachine:** A unified learning system that enables agents to learn from every interaction. It coordinates multiple **learning types**, each with its own storage backend and retrieval pattern.\r\n- **Code Chunker:** A new chunker that leverages ASTs to split code into contextually relevant segments\r\n\r\n## Improvements:\r\n\r\n- **BrowserbaseTools:** Fixed `get_page_content()` tool failing on large pages by parsing HTML to extract only visible text content (strips scripts, styles, comments)\r\n- **Models:** Skip retries for non-retryable errors from LLM providers (auth failures, context limits)\r\n- **AgentOS**: Fixed inconsistent URL handling where trailing slashes caused 404 errors or unnecessary redirects.\r\n\r\n## Bug Fixes:\r\n\r\n- **GoogleBigQueryTools:** Fixed SQL statement parsing/cleanup when queries include comments.\r\n- **DocumentChunking:** Fixed to properly respect `chunk_size` Parameter\r\n\r\n## What's Changed\r\n* fix: GoogleBigQueryTools SQL statements parsing by @manuhortet in https://github.com/agno-agi/agno/pull/5957\r\n* chore: new demo env script by @ashpreetbedi in https://github.com/agno-agi/agno/pull/5961\r\n* Add projects folder to gitignore for local symlink setup by @ashpreetbedi in https://github.com/agno-agi/agno/pull/5964\r\n* feat: Add Claude Code GitHub Workflow by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/5976\r\n* fix: parse html content from browserbase tools by @kausmeows in https://github.com/agno-agi/agno/pull/5967\r\n* Fix: DocumentChunking Now Properly Respects chunk_size Parameter by @bhatt-neel-dev in https://github.com/agno-agi/agno/pull/5916\r\n* fix: add retry logic to skip non-retryable model provider errors. by @uzaxirr in https://github.com/agno-agi/agno/pull/5984\r\n* feat: Learning Machine by @ashpreetbedi in https://github.com/agno-agi/agno/pull/5897\r\n* feat: Add CodeChunking strategy for AST-based code chunking [SDK-418] by @harshsinha03 in https://github.com/agno-agi/agno/pull/5981\r\n* chore: v2.3.25 by @kausmeows in https://github.com/agno-agi/agno/pull/5986\r\n\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.3.24...v2.3.25",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.3.25",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 LearningMachine 统一学习系统，支持智能体从交互中持续学习",
+            "新增 Code Chunker，基于 AST 将代码分割为语义相关片段",
+            "修复 BrowserbaseTools 在大型页面上的失败问题，优化 HTML 文本提取",
+            "修复 GoogleBigQueryTools SQL 语句解析中的注释处理",
+            "修复 DocumentChunking 未正确遵循 chunk_size 参数的问题"
+          ],
+          "summary_cn": "v2.3.25 版本主要引入了两大核心功能：LearningMachine 统一学习系统和基于 AST 的 Code Chunker，显著增强了智能体的学习和代码理解能力。同时修复了多个关键组件的 Bug，包括 BrowserbaseTools 的大页面处理、BigQuery 的 SQL 解析以及文档分块参数问题，并优化了模型错误重试机制和 AgentOS 的 URL 处理。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "version": "v2.7.3",
+        "author": "AndyMik90",
+        "date": "2026-01-12",
+        "summary": "## ✨ New Features\n\n- Add terminal copy/paste keyboard shortcuts for Windows/Linux\n- Add Sentry environment variables to CI build workflows for error monitoring\n- Add Claude Code changelog link to version notifiers\n- Enhance PR merge readiness checks with branch state validation\n- Add PR creation workflow for task worktrees\n- Add prominent verdict summary to PR review comments\n- Add Dart/Flutter/Melos support to security profiles\n- Custom Anthropic compatible API profile management\n- Add terminal dropdown with inbuilt and external options in task review\n- Centralize CLI tool path management\n- Add terminal support for worktrees\n- Add Files tab to task details panel\n- Enhance PR review page to include PRs filters\n- Add GitLab integration\n- Add Flatpak packaging support for Linux\n- Bundle Python 3.12 with packaged Electron app\n- Add iOS/Swift project detection\n- Add automated PR review with follow-up support\n- Add i18n internationalization system\n- Add OpenRouter as LLM/embedding provider\n- Add UI scale feature with 75-200% range\n\n## 🛠️ Improvements\n\n- Extract shared task form components for consistent modals\n- Simplify task description handling and improve modal layout\n- Replace confidence scoring with evidence-based validation in GitHub reviews\n- Convert synchronous I/O to async operations in worktree handlers\n- Remove top bars from UI\n- Improve task card title readability\n- Add path-aware AI merge resolution and device code streaming\n- Increase Claude SDK JSON buffer size to 10MB\n- Improve performance by removing projectTabs from useEffect dependencies\n- Normalize feature status values for Kanban display\n- Improve GLM presets, ideation auth, and Insights env\n- Detect and clear cross-platform CLI paths in settings\n- Improve CLI tool detection and add Claude CLI path settings\n- Multiple bug fixes including binary file handling and semantic tracking\n- Centralize Claude CLI invocation across the application\n- Improve PR review with structured outputs and fork support\n- Improve task card description truncation for better display\n- Improve GitHub PR review with better evidence-based findings\n\n## 🐛 Bug Fixes\n\n- Implement atomic JSON writes to prevent file corruption\n- Prevent \"Render frame was disposed\" crash in frontend\n- Strip ANSI escape codes from roadmap/ideation progress messages\n- Resolve integrations freeze and improve rate limit handling\n- Use shared project-wide memory for cross-spec learning\n- Add isinstance(dict) validation to Graphiti to prevent AttributeError\n- Enforce implementation_plan schema in planner\n- Remove obsolete @lydell/node-pty extraResources entry from build\n- Add Post Clean Review button for clean PR reviews\n- Fix Kanban status flip-flop and phase state inconsistency\n- Resolve multiple merge-related issues affecting worktree operations\n- Show running review state when switching back to PR with in-progress review\n- Properly quote Windows .cmd/.bat paths in spawn() calls\n- Improve Claude CLI detection on Windows with space-containing paths\n- Display subtask titles instead of UUIDs in UI\n- Use HTTP for Azure Trusted Signing timestamp URL in CI\n- Fix Kanban state transitions and status flip-flop bug\n- Use selectedPR from hook to restore Files changed list\n- Automate auto labeling based on comments\n- Fix subtasks tab not updating on Linux\n- Add PYTHONPATH to subprocess environment for bundled packages\n- Prevent crash after worktree creation in terminal\n- Ensure PATH includes system directories when launched from Electron\n- Grant worktree access to original project directories\n- Filter task IPC events by project to prevent cross-project interference\n- Verify critical packages exist, not just marker file during Python bundling\n- Await async sendMessage to prevent race condition in insights\n- Add pywin32 dependency for LadybugDB on Windows\n- Handle Ollama version errors during model pull\n- Add helpful error message when Python dependencies are missing\n- Prevent app freeze by making Claude CLI detection non-blocking\n- Use Homebrew for Ollama installation on macOS\n\n---\n\n**Full Changelog**: https://github.com/AndyMik90/Auto-Claude/blob/main/CHANGELOG.md",
+        "assets_count": 17,
+        "url": "https://github.com/AndyMik90/Auto-Claude/releases/tag/v2.7.3",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 GitLab 集成和 OpenRouter LLM/Embedding 提供商支持",
+            "增强 PR 自动化功能：创建工作流、自动审查、后续跟进支持",
+            "新增 i18n 国际化系统和 UI 缩放功能（75-200%）",
+            "添加 Dart/Flutter/Melos、iOS/Swift 项目检测支持",
+            "添加 Flatpak 打包支持，内置 Python 3.12"
+          ],
+          "summary_cn": "v2.7.3 版本是一个重大功能更新，新增了 GitLab 集成、OpenRouter 提供商支持、i18n 国际化系统等重要功能，同时大幅增强了 PR 自动化处理能力（包括自动审查、创建工作流和后续跟进）。此外还扩展了多语言和框架支持（Dart/Flutter/iOS/Swift），并添加了 Flatpak 打包支持、UI 缩放、终端复制/粘贴快捷键等实用改进。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.15",
+        "author": "thdxr",
+        "date": "2026-01-12",
+        "summary": "## Core\n- Rename OPENCODE_PASSWORD to OPENCODE_SERVER_PASSWORD for clearer authentication configuration\n- Fix HTTP exception handling order to prevent NamedError from masking HTTP exceptions\n- Add password authentication and improve server security\n- Improve error handling for built-in plugin installation failures\n- Allow wildcard permissions to match both the command with and without arguments\n- Fix model selection in title generation to use user's model instead of assistant's\n## TUI\n- Prevent layout jump when toggling tips visibility in TUI (@R44VC0RP)\n- Add hint for variants toggle in TUI\n- Fix autocomplete reopening after backspace deletes space in terminal UI (@Raviguntakala)\n- Rename kvStore to store for consistency in TUI\n- Redesign tips display on home screen\n- Redesign tips display on home screen\n- Remove update complete toast notification from TUI\n## Desktop\n- Disable AppImage build (@Brendonovich)\n- Improve server detection and connection logic in desktop application (@Brendonovich)\n- Resolve defaultServerUrl inside AppInterface to improve server URL handling (@Brendonovich)\n\n**Thank you to 7 community contributors:**\n- @Brendonovich:\n  - app: resolve defaultServerUrl inside AppInterface\n  - fix(desktop): improve server detection & connection logic (#7962)\n  - disable appimage\n- @shubh73:\n  - docs: fix typo (#8041)\n- @jerome-benoit:\n  - fix(nix): filter optional dependencies by target platform (#8033)\n- @Raviguntakala:\n  - fix(tui): reopen autocomplete after backspace deletes space (#6031)\n- @dbpolito:\n  - fix(desktop): Improve User Message Badges for Big Titles and Small Screens (#8037)\n- @kdcokenny:\n  - docs: fix permission rule ordering in examples (#7010)\n- @R44VC0RP:\n  - fix(tui): prevent layout jump when toggling tips visibility (#8068)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.15",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "重命名环境变量 OPENCODE_PASSWORD 为 OPENCODE_SERVER_PASSWORD 以提高配置清晰度",
+            "修复 HTTP 异常处理顺序问题，防止 NamedError 掩盖 HTTP 异常",
+            "增强密码认证和服务器安全性",
+            "修复 TUI 多个问题：自动补全、布局跳动、提示显示等",
+            "改进桌面应用服务器检测和连接逻辑"
+          ],
+          "summary_cn": "这是一个主要包含修复和安全增强的版本。核心变更包括重命名密码环境变量、修复异常处理顺序问题以及增强服务器安全性，这些变更涉及配置变更需用户注意。TUI 和 Desktop 方面修复了多个用户体验问题，包括自动补全、布局跳动和服务器连接逻辑等，共计有 7 位社区贡献者参与。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.14",
+        "author": "thdxr",
+        "date": "2026-01-12",
+        "summary": "## Core\n- Support resource content type in MCP tool output (@antigremlin)\n- Check worktree for external_directory permission in subdirectories (@dmmulroy)\n- Bump Copilot plugin version\n## TUI\n- Add clickable navigation to subagent header\n- Add mouse hover and click support to questions tool (@indeep99)\n- Fix prompt ref initialization to prevent undefined reference errors\n- Refactor event streaming in TUI to use SDK instead of manual RPC subscription\n- Fix cursor position when pasting single-line text in TUI (@Octane0411)\n- Add mouse hover and click support to autocomplete (@kitlangton)\n- Copy OAuth URL when device code is unavailable (@itskingori)\n- Fix slash command autocomplete highlighted row jumping (@kitlangton)\n## Desktop\n- Add image preview support for image attachments in desktop (@dbpolito)\n\n**Thank you to 10 community contributors:**\n- @kitlangton:\n  - fix(tui): slash command autocomplete highlighted row jumping (#7815)\n  - feat(tui): add mouse hover and click support to autocomplete (#7820)\n- @itskingori:\n  - fix(tui): copy oauth url when no device code (#7812)\n- @zeke:\n  - docs: fix typos on the providers page (#7829)\n  - docs: fix typos in settings doc (#7892)\n- @dbpolito:\n  - feat(desktop): Image Preview support for Image Attachments (#7841)\n  - feat(desktop): User Message Badges on Hover (#7835)\n- @jacobwgillespie:\n  - chore(lander): fix spacing in desktop app banner (#7822)\n- @dmmulroy:\n  - fix: check worktree for external_directory permission in subdirs (#7811)\n- @Octane0411:\n  - Fix: TUI single-line paste cursor position (#7277)\n- @indeep99:\n  - feat(tui): add mouse hover and click support to questions tool (#7905)\n- @antigremlin:\n  - fix(mcp): support `resource` content type in MCP tool output (#7879)\n- @eyalch:\n  - docs: fix scroll_speed default value (#7867)",
+        "assets_count": 20,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.14",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 TUI 鼠标交互支持：自动补全、问题工具可点击",
+            "新增桌面端图片附件预览功能",
+            "支持 MCP 工具输出的 resource 内容类型",
+            "修复 TUI 多项问题：光标位置、自动补全跳转、OAuth URL 复制",
+            "优化事件流处理，使用 SDK 替代手动 RPC 订阅"
+          ],
+          "summary_cn": "这是一个功能增强版本，主要改进了 TUI 和桌面端的用户体验。新增了多处鼠标点击/悬停支持（自动补全、问题工具）和桌面端图片预览功能，同时修复了多个 TUI 相关问题并优化了事件流处理机制。MCP 工具输出也新增了对 resource 内容类型的支持。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.218.7",
+        "author": "github-actions[bot]",
+        "date": "2026-01-12",
+        "summary": "- Fixed worktree trust not applied in window reuse ([#46629](https://github.com/zed-industries/zed/pull/46629))\r\n- Fixed groups of language servers not starting after worktree trust approval ([#46615](https://github.com/zed-industries/zed/pull/46615))\r\n- Fixed \"show project items\" keeping worktree trust title bar element hidden ([#46608](https://github.com/zed-industries/zed/pull/46608))\r\n- Fixed worktree trust pop-up appearing on a keymap editor invication ([#46579](https://github.com/zed-industries/zed/pull/46579))\r\n- Fixed an issue where HTML tags where highlighted as JSX components. ([#46447](https://github.com/zed-industries/zed/pull/46447))\r\n- Fixes crash due to markdown parsing via bumping pulldown-cmark ([#46310](https://github.com/zed-industries/zed/pull/46310))\r\n\r\n",
+        "assets_count": 10,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.218.7",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复了工作树信任在窗口重用时未生效的问题",
+            "修复了工作树信任批准后语言服务器组无法启动的问题",
+            "修复了 HTML 标签被错误高亮为 JSX 组件的问题",
+            "修复了由于 markdown 解析导致的崩溃问题",
+            "修复了多个工作树信任弹窗相关的显示问题"
+          ],
+          "summary_cn": "这是一个以修复为主的版本，重点解决了工作树信任机制的多个缺陷，包括窗口重用时信任状态未生效、语言服务器启动失败以及弹窗显示异常等问题。同时修复了 HTML 标签语法高亮错误和 markdown 解析导致的崩溃问题，提升了编辑器的稳定性。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
