@@ -105,6 +105,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # 获取完整历史，用于 git-revision-date-localized-plugin
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -172,16 +174,16 @@ jobs:
       REPORT_DATE: ${{ needs.analyze.outputs.report_date }}
 
     steps:
-      - name: Download report artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: trend-report-${{ needs.analyze.outputs.report_date }}
-          path: reports  # 下载到 reports 目录，避免与 checkout 冲突
-
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0  # 获取完整历史，确保获取最新版本
+
+      - name: Download report artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: trend-report-${{ needs.analyze.outputs.report_date }}
+          path: reports
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
