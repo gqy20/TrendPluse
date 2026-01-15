@@ -35,7 +35,7 @@ body:
           value: "60"
         - label: 90 天（最近三个月）
           value: "90"
-      default: "7"
+      default: 0
     validations:
       required: true
 
