@@ -25,16 +25,11 @@ body:
       label: 📅 分析时间范围
       description: 选择回溯的天数
       options:
-        - label: 7 天（最近一周）
-          value: "7"
-        - label: 14 天（最近两周）
-          value: "14"
-        - label: 30 天（最近一个月）
-          value: "30"
-        - label: 60 天（最近两个月）
-          value: "60"
-        - label: 90 天（最近三个月）
-          value: "90"
+        - 最近一周（7 天）
+        - 最近两周（14 天）
+        - 最近一个月（30 天）
+        - 最近两个月（60 天）
+        - 最近三个月（90 天）
       default: 0
     validations:
       required: true

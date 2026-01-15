@@ -90,7 +90,11 @@ jobs:
           echo "Found repository: $REPO_URL"
 
           # 提取分析天数（从表单或命令行参数）
-          DAYS=$(echo "$BODY" | grep -oP '(?<=--days=)\d+' || echo "7")
+          # 优先尝试表单格式："最近一周（7 天）" 或 "--days=14"
+          DAYS=$(echo "$BODY" | grep -oP '\d+(?=\s*天)' | head -1)
+          if [ -z "$DAYS" ]; then
+            DAYS=$(echo "$BODY" | grep -oP '(?<=--days=)\d+' || echo "7")
+          fi
           echo "Analysis days: $DAYS"
 
           # 调用分析脚本
