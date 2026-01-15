@@ -78,7 +78,7 @@ jobs:
           echo "Issue content received"
 
           # 提取 GitHub URL（支持多种格式）
-          REPO_URL=$(echo "$BODY" | grep -oE 'https?://github\.com/[^/]+/[^/ )\n]+' | head -1)
+          REPO_URL=$(echo "$BODY" | grep -oE 'https://github\.com/[^/]+/[^/[:space:]]+' | head -1)
 
           if [ -z "$REPO_URL" ]; then
             echo "错误：未找到有效的 GitHub URL"
