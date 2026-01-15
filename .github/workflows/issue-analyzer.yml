@@ -12,10 +12,6 @@ permissions:
 
 jobs:
   analyze:
-    # 只处理包含 @claude 的 issue/评论
-    if: |
-      contains(github.event.issue.body, '@claude') ||
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -51,6 +47,12 @@ jobs:
             BODY="$COMMENT_BODY"
           else
             BODY="$ISSUE_BODY"
+          fi
+
+          # 检查是否包含 @claude（不区分大小写）
+          if ! echo "$BODY" | grep -i "@claude" > /dev/null; then
+            echo "未检测到 @claude 提及，跳过执行"
+            exit 0
           fi
 
           echo "Issue content received"
