@@ -156,6 +156,7 @@ credentials.json
 *.orig
 *.rej
 *.patch
+tmp/
 
 # 数据库文件
 *.db
