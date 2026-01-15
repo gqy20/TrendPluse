@@ -220,12 +220,13 @@ def _generate_summary(
     # Release 信息
     if data.get("releases") and data["releases"].get("count", 0) > 0:
         rel = data["releases"]
-        context_parts.append(f"""
-- 发布信息：
-  - 发布数量: {rel["count"]}
-  - 最新版本: {rel.get("latest", {}).get("name", "N/A")}
-  - 最新发布时间: {rel.get("latest", {}).get("published_at", "N/A")}
-""")
+        latest = rel.get("latest", {})
+        context_parts.append(
+            f"- 发布信息：\n"
+            f"  - 发布数量: {rel['count']}\n"
+            f"  - 最新版本: {latest.get('version', 'N/A')}\n"
+            f"  - 发布时间: {latest.get('date', 'N/A')}\n"
+        )
 
     # PR 事件
     if data.get("pr_events") and data["pr_events"].get("count", 0) > 0:
@@ -325,19 +326,28 @@ def generate_markdown_report(data: dict) -> str:
         lines.append("")
 
         for release in rel.get("all", [])[:5]:  # 最多显示 5 个
-            lines.append(f"#### `{release.get('name', 'N/A')}`")
-            lines.append("")
-            if release.get("published_at"):
-                pub_date = release["published_at"][:10]
-                lines.append(f"**发布日期**: {pub_date}  ")
+            version = release.get("version", "N/A")
+            url = release.get("url", "")
+            if url:
+                lines.append(f"#### [`{version}`]({url})")
+            else:
+                lines.append(f"#### `{version}`")
             lines.append("")
 
-            # Release notes（如果有且不太长）
-            notes = release.get("body", "")
-            if notes and len(notes) < 500:
-                # 截取前几行
-                notes_preview = "\n".join(notes.split("\n")[:5])
-                lines.append(f"{notes_preview}  ")
+            # 发布日期
+            if release.get("date"):
+                lines.append(f"**发布日期**: {release['date']}  ")
+            lines.append("")
+
+            # 发布者
+            if release.get("author"):
+                lines.append(f"**发布者**: {release['author']}  ")
+            lines.append("")
+
+            # 摘要（如果有且不太长）
+            summary = release.get("summary", "")
+            if summary and len(summary) < 500:
+                lines.append(f"**摘要**: {summary}  ")
                 lines.append("")
     else:
         lines.append("*暂无发布数据*")
