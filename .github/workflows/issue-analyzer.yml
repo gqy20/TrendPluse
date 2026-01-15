@@ -1,0 +1,77 @@
+name: Issue Repo Analyzer
+
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  analyze:
+    # 只处理包含 @claude 的 issue/评论
+    if: |
+      contains(github.event.issue.body, '@claude') ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -e .
+
+      - name: Extract GitHub URL and analyze
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -e
+
+          # 获取 issue/评论内容（通过环境变量，避免直接使用 github.event）
+          if [ "$EVENT_NAME" = "issue_comment" ]; then
+            BODY="$COMMENT_BODY"
+          else
+            BODY="$ISSUE_BODY"
+          fi
+
+          echo "Issue content received"
+
+          # 提取 GitHub URL（支持多种格式）
+          REPO_URL=$(echo "$BODY" | grep -oE 'https?://github\.com/[^/]+/[^/ )\n]+' | head -1)
+
+          if [ -z "$REPO_URL" ]; then
+            echo "错误：未找到有效的 GitHub URL"
+            echo "请在 issue 中提供要分析的仓库 URL，例如："
+            echo "  https://github.com/owner/repo"
+            gh issue comment ${{ github.event.issue.number }} --body "❌ 未找到有效的 GitHub URL，请提供要分析的仓库地址。"
+            exit 1
+          fi
+
+          echo "Found repository: $REPO_URL"
+
+          # 调用分析脚本
+          uv run python scripts/analyze_repo.py "$REPO_URL" --output /tmp/report.md
+
+          # 回复 issue
+          gh issue comment ${{ github.event.issue.number }} --body-file /tmp/report.md
+
+          echo "Analysis completed successfully"
