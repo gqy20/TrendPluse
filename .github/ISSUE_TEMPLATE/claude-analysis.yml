@@ -6,6 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        @claude
+
         ## 🤖 Claude 仓库分析
 
         请填写要分析的仓库信息，Claude 将自动生成趋势分析报告。
