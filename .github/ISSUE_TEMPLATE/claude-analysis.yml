@@ -1,0 +1,58 @@
+name: 🤖 @claude 仓库分析
+description: 使用 Claude AI 分析 GitHub 仓库趋势
+title: "[分析] "
+labels: ["claude-analysis"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🤖 Claude 仓库分析
+
+        请填写要分析的仓库信息，Claude 将自动生成趋势分析报告。
+
+  - type: input
+    id: repo_url
+    attributes:
+      label: 📦 GitHub 仓库 URL
+      description: 要分析的仓库地址（例如：https://github.com/anthropics/claude-code-action）
+      placeholder: "https://github.com/owner/repo"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: days_range
+    attributes:
+      label: 📅 分析时间范围
+      description: 选择回溯的天数
+      options:
+        - label: 7 天（最近一周）
+          value: "7"
+        - label: 14 天（最近两周）
+          value: "14"
+        - label: 30 天（最近一个月）
+          value: "30"
+        - label: 60 天（最近两个月）
+          value: "60"
+        - label: 90 天（最近三个月）
+          value: "90"
+      default: "7"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: 💬 额外说明（可选）
+      description: 如果有特定关注点或分析需求，请在此说明
+      placeholder: "例如：关注最新的 Release 变更、PR 趋势等"
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        💡 **提示**：提交 Issue 后，系统会自动触发分析并回复报告。
+
+        ⚡ **快速使用**：你也可以直接在任何 Issue/评论中输入：
+        ```
+        @claude https://github.com/owner/repo
+        ```

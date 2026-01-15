@@ -4,7 +4,7 @@ on:
   issue_comment:
     types: [created]
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 permissions:
   contents: read
@@ -40,6 +40,7 @@ jobs:
           COMMENT_BODY: ${{ github.event.comment.body }}
           EVENT_NAME: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           set -e
 
@@ -58,7 +59,7 @@ jobs:
             echo "✓ User has $PERMISSION permission: $TRIGGER_USER"
           else
             echo "✗ User lacks write permission: $TRIGGER_USER (permission: $PERMISSION)"
-            gh issue comment ${{ github.event.issue.number }} --body "❌ 只有仓库写权限才能使用 @claude 分析功能"
+            gh issue comment $ISSUE_NUMBER --body "❌ 只有仓库写权限才能使用 @claude 分析功能"
             exit 1
           fi
 
@@ -82,18 +83,20 @@ jobs:
 
           if [ -z "$REPO_URL" ]; then
             echo "错误：未找到有效的 GitHub URL"
-            echo "请在 issue 中提供要分析的仓库 URL，例如："
-            echo "  https://github.com/owner/repo"
-            gh issue comment ${{ github.event.issue.number }} --body "❌ 未找到有效的 GitHub URL，请提供要分析的仓库地址。"
+            gh issue comment $ISSUE_NUMBER --body "❌ 未找到有效的 GitHub URL，请提供要分析的仓库地址。"
             exit 1
           fi
 
           echo "Found repository: $REPO_URL"
 
+          # 提取分析天数（从表单或命令行参数）
+          DAYS=$(echo "$BODY" | grep -oP '(?<=--days=)\d+' || echo "7")
+          echo "Analysis days: $DAYS"
+
           # 调用分析脚本
-          uv run python scripts/analyze_repo.py "$REPO_URL" --output /tmp/report.md
+          uv run python scripts/analyze_repo.py "$REPO_URL" --days "$DAYS" --output /tmp/report.md
 
           # 回复 issue
-          gh issue comment ${{ github.event.issue.number }} --body-file /tmp/report.md
+          gh issue comment $ISSUE_NUMBER --body-file /tmp/report.md
 
           echo "Analysis completed successfully"
