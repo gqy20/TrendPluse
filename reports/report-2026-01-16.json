@@ -1,0 +1,870 @@
+{
+  "date": "2026-01-16",
+  "summary_brief": "今日 (2026-01-16) 发现 8 个 Commit 信号，13 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "AI Agent 协作模式",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入 'collab tools' 和 'agent roles'，标志着 AI 编程工具从单一助手向多智能体协作系统演进，提升了处理复杂任务的能力。",
+      "sources": [
+        "https://github.com/openai/codex/commit/05b960671dcd3ab062a1214b93447851ea432636"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "crewAIInc/crewAI",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "技能系统标准化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 支持 `SKILL.toml`，Gemini CLI 引入 `frontmatter` 解析，表明行业正在推动 AI 技能/插件的配置标准化，降低了定制门槛。",
+      "sources": [
+        "https://github.com/openai/codex/commit/42fa4c237f2b70f07f8759a731455f9453daf363"
+      ],
+      "related_repos": [
+        "ruvnet/claude-flow",
+        "google-gemini/gemini-cli",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "安全沙箱与隔离",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 深度集成 Linux Landlock 和 User Namespaces，显示 AI Agent 在执行代码时对系统安全隔离的极高要求，是 Agent 落地生产的关键。",
+      "sources": [
+        "https://github.com/openai/codex/commit/2259031d64644f74ca757cc535db61c2d47c378c"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "MCP 工具生态扩展",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude-Flow 宣称集成 175+ MCP 工具，且多个项目（OpenCode, Continue）在优化 MCP 服务器的超时和权限处理，证明 MCP 正成为 AI 工具调用的标准协议。",
+      "sources": [
+        "https://github.com/ruvnet/claude-flow/commit/d677698c12aae7d607310a4aac57ab69e2230fdc"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "ruvnet/claude-flow",
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "本地化模型支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 新增对 SAP AI Core 和 Claude 4.5 Haiku 的支持，反映了 AI 编程工具正积极适配企业级私有部署和更小/更快的模型。",
+      "sources": [
+        "https://github.com/cline/cline/commit/dca0a8fa3eab6baf58bb3fb017583465e8d72759"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "流式输出与 UI 优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 和 OpenCode 都在大量修复流式渲染、CJK 字符换行和 UI 响应问题，说明提升用户感知的响应速度和稳定性是当前竞争焦点。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/994c55f709d43bb0fb4a2875855e6b3416f1b1c6"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "cline/cline",
+        "zed-industries/zed"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "signal-3",
+      "title": "模型推理能力控制",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 引入 `reasoningEffort` 参数，允许动态调整模型的推理深度，这为平衡成本与质量提供了细粒度控制，是推理模型应用的重要趋势。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/f4086ac4596a6a22cc9c5b0f82f81c0068b9d470"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "Agent 评估与测试",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "LangChain DeepAgents 添加了针对摘要任务的 'mini eval'，显示社区正在从单纯开发转向建立标准化的 Agent 能力评估体系。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/51eada89185c90a94f452d2c7f18fa47888a81fe"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "langchain-ai/langchain"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 5,
+    "total_commits_analyzed": 459,
+    "total_releases": 13
+  },
+  "activity": {
+    "total_commits": 459,
+    "active_repos_count": 21,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 123,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 99,
+        "new_contributors": 0,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "actions-user",
+          "rekram1-node",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 35,
+        "new_contributors": 0,
+        "top_contributors": [
+          "danilo-leal",
+          "ConradIrwin",
+          "maxdeviant",
+          "Veykril",
+          "rtfeldman"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 28,
+        "new_contributors": 0,
+        "top_contributors": [
+          "bdmorgan",
+          "sehoon38",
+          "NTaylorMullen",
+          "abhipatel12",
+          "jerop"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 26,
+        "new_contributors": 0,
+        "top_contributors": [
+          "RomneyDa",
+          "sestinj",
+          "uinstinct",
+          "dependabot[bot]",
+          "bdougie"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 25,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 23,
+        "new_contributors": 0,
+        "top_contributors": [
+          "fatelei",
+          "hyoban",
+          "CodingOnStar",
+          "asukaminato0721",
+          "hj24"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 22,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy",
+          "vtrivedy",
+          "jordanallred",
+          "eyurtsev",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 18,
+        "new_contributors": 0,
+        "top_contributors": [
+          "jif-oai",
+          "aibrahim-oai",
+          "etraut-openai",
+          "viyatb-oai",
+          "yuvrajangadsingh"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "abeatrix",
+          "BarreiroT",
+          "maxpaulus43",
+          "candieduniverse",
+          "tjandy98"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 9,
+        "new_contributors": 0,
+        "top_contributors": [
+          "neubig",
+          "tofarr",
+          "VedantMadane",
+          "amanape",
+          "MkDev11"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy",
+          "sydney-runkle",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "coop-must-build",
+          "loftybuilder"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "greysonlalonde",
+          "heitorado",
+          "nicoferdi96",
+          "lorenzejay"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "eavanvalkenburg",
+          "moonbox3",
+          "markwallace-microsoft"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "DavdGao"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "tobinsouth",
+          "noahzweben"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ashwin-ant"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "uzaxirr"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 13,
+    "unique_repos_count": 9,
+    "releases": [
+      {
+        "repo": "cline/cline",
+        "version": "v3.51.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-15",
+        "summary": "\n### Added\n\n- Adding OpenAI gpt-5.2-codex  model to the model picker\n\n**Full Changelog**: https://github.com/cline/cline/compare/v3.50.0...v3.51.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.51.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 OpenAI gpt-5.2-codex 模型支持",
+            "在模型选择器中集成 gpt-5.2-codex 选项"
+          ],
+          "summary_cn": "cline v3.51.0 版本是一个功能更新版本，主要增强了 AI 模型支持。本次更新在模型选择器中新增了 OpenAI 的 gpt-5.2-codex 模型，为用户提供了更多的模型选择。这是一个纯功能增强版本，不包含破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "continuedev/continue",
+        "version": "v1.5.34",
+        "author": "sestinj",
+        "date": "2026-01-15",
+        "summary": "Direct stable release from main branch. Version 1.5.34 built and published directly from the latest main branch.",
+        "assets_count": 0,
+        "url": "https://github.com/continuedev/continue/releases/tag/v1.5.34",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "从 main 分支直接构建并发布稳定版本",
+            "版本号 1.5.34",
+            "无具体变更细节说明"
+          ],
+          "summary_cn": "这是一个直接从最新 main 分支构建并发布的 1.5.34 稳定版本。Release Notes 中未提供具体的变更内容、新功能或修复项的详细信息。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "continuedev/continue",
+        "version": "v1.5.33",
+        "author": "sestinj",
+        "date": "2026-01-15",
+        "summary": "Direct stable release from main branch. Version 1.5.33 built and published directly from the latest main branch.",
+        "assets_count": 0,
+        "url": "https://github.com/continuedev/continue/releases/tag/v1.5.33",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "从 main 分支直接构建并发布 v1.5.33 稳定版",
+            "基于最新 main 分支代码的正式版本"
+          ],
+          "summary_cn": "这是一个直接从 main 分支构建并发布的稳定版本 v1.5.33。此次发布将最新主分支代码正式发布为稳定版本，但未提供具体的功能变更、问题修复或改进详情。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "continuedev/continue",
+        "version": "@continuedev/config-yaml@1.39.0",
+        "author": "sestinj",
+        "date": "2026-01-15",
+        "summary": "# [1.39.0](https://github.com/continuedev/continue/compare/@continuedev/config-yaml@1.38.0...@continuedev/config-yaml@1.39.0) (2026-01-15)\n\n\n### Bug Fixes\n\n* add GH_TOKEN to continue-agents workflow ([dd93919](https://github.com/continuedev/continue/commit/dd939190701be55917d4d224f012017e8ea17be9)), closes [#9493](https://github.com/continuedev/continue/issues/9493)\n* break circular dependency by extracting tool names ([6a5f80b](https://github.com/continuedev/continue/commit/6a5f80b0fc739ed36448b62bd036c01476b91d49))\n* **cli:** compaction for missing tool results ([0792b94](https://github.com/continuedev/continue/commit/0792b949bdf629fd14dac45478b2027962b77454))\n* context length error detection ([1bfb72e](https://github.com/continuedev/continue/commit/1bfb72edf3f6c0eccb66454eb9e3ad423f58bee5))\n* correct built-in tool names list ([26bef77](https://github.com/continuedev/continue/commit/26bef77a8859788b870e42036e0958bdbaa9d93a))\n* correct import order in ToolPermissionService ([2003128](https://github.com/continuedev/continue/commit/2003128f084517bdf5343d6e2205edc85db8ff64))\n* decode URI-encoded pathname for WSL workspace paths ([074a6c7](https://github.com/continuedev/continue/commit/074a6c74baf35b98e0092f0e6b37027bb6561eba))\n* merge yaml.schemas settings ([a0729bd](https://github.com/continuedev/continue/commit/a0729bd6ec7f5a7b8cdf187baac8abf3156b9f75)), closes [#7080](https://github.com/continuedev/continue/issues/7080)\n* properly resolve WSL2 workspace paths in runTerminalCommand ([eab2ac1](https://github.com/continuedev/continue/commit/eab2ac1e045f2e4ba994cb7371b8e3a8e8aaf4b7))\n* resolve circular dependency in subagent executor ([87fd9b6](https://github.com/continuedev/continue/commit/87fd9b67df4661a261881a2cb028ab651c695128))\n* resolve circular dependency in subagent tool ([1c448c4](https://github.com/continuedev/continue/commit/1c448c479d1e2f4c50c586d494288d6b8889c178))\n* upgrade @sentry/profiling-node from 9.46.0 to 9.47.1 ([9448930](https://github.com/continuedev/continue/commit/9448930f6094cf46dff5001664c9033312072edc))\n* upgrade lru-cache from 11.0.2 to 11.2.4 ([269be8b](https://github.com/continuedev/continue/commit/269be8bb5fdb4651a2e52f832e92f5dc8b250b55))\n* upgrade monaco-editor from 0.45.0 to 0.55.1 ([cc1c70d](https://github.com/continuedev/continue/commit/cc1c70d246b124a592cf94b17cb1fe7ba8fa2bc2))\n* use try/finally for env cleanup in test ([27adb1d](https://github.com/continuedev/continue/commit/27adb1d677653904c8a2efad1fc1065deb7993e7))\n* wrap fileURLToPath in try-catch for WSL2 compatibility ([788e253](https://github.com/continuedev/continue/commit/788e25338a1f21fe0b15db92397cb7fc1c236c6a)), closes [#8091](https://github.com/continuedev/continue/issues/8091)\n\n\n### Features\n\n* subagents ([32af25f](https://github.com/continuedev/continue/commit/32af25fc9980c505c16889b47e78feb7feafbc95))\n\n\n\n",
+        "assets_count": 0,
+        "url": "https://github.com/continuedev/continue/releases/tag/%40continuedev/config-yaml%401.39.0",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复多个循环依赖问题（子代理执行器、子代理工具、工具名称提取）",
+            "完善 WSL2 工作区路径处理，支持 URI 编码解码",
+            "修复上下文长度错误检测和缺失工具结果的压缩处理",
+            "添加 GH_TOKEN 到 continue-agents 工作流",
+            "合并 yaml.schemas 设置，修复内置工具名称列表"
+          ],
+          "summary_cn": "此版本主要修复了多个关键性问题，包括循环依赖、WSL2 路径解析、上下文长度检测等核心功能。同时改进了 YAML 配置处理和 CI/CD 工作流，提升了配置插件的稳定性和兼容性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.379",
+        "author": "github-actions[bot]",
+        "date": "2026-01-15",
+        "summary": "## Changes\n\n### PR [#1935](https://github.com/danielmiessler/Fabric/pull/1935) by [dependabot](https://github.com/apps/dependabot): chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates\n\n- Updated @sveltejs/kit from version 2.21.1 to 2.49.5\n- Updated devalue dependency from version 5.3.2 to 5.6.2\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.379",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "更新 @sveltejs/kit 依赖从 2.21.1 到 2.49.5（跨多个小版本）",
+            "更新 devalue 依赖从 5.3.2 到 5.6.2"
+          ],
+          "summary_cn": "这是一个依赖维护版本，通过 Dependabot 自动更新了两个 npm 依赖包。主要升级了 @sveltejs/kit 从 2.21.1 到 2.49.5（跨多个小版本），以及 devalue 从 5.3.2 升级到 5.6.2，属于常规的依赖包安全更新和功能增强。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langgenius/dify",
+        "version": "1.11.4",
+        "author": "laipz8200",
+        "date": "2026-01-15",
+        "summary": "\r\n## 🔒 Security\r\n\r\nDify now requires Node.js 24.13.0 to pick up the upstream fix for the AsyncLocalStorage/async_hooks DoS CVE that can crash apps with deeply nested input. **All self-hosted deployments should upgrade Node.js**. Thanks to @hyoban in #30945.\r\n\r\nRelated: #30935.\r\n\r\n## 🛠️ Bug Fixes\r\n\r\n- **Redirect After Login**: We’ve sorted out the login redirects to bring you back to your intended destination smoothly after logging in. Shoutout to @hyoban for this fix in #30985.\r\n  \r\n- **Missing ID and Message ID**: Missing the essentials? Not anymore! We’ve patched the missing `id` and `message_id` issue, thanks to @fatelei in #31008.\r\n\r\n- **Destructuring Undefined Properties**: Ever run into that annoying error where you can't destructure `name` from `value` because it's undefined? That’s been crushed too, all thanks to @fatelei in #30991.\r\n\r\n---\r\n\r\n## Upgrade Guide\r\n\r\n### Docker Compose Deployments\r\n\r\n1. Back up your customized docker-compose YAML file (optional)\r\n\r\n   ```bash\r\n   cd docker\r\n   cp docker-compose.yaml docker-compose.yaml.$(date +%s).bak\r\n   ```\r\n\r\n2. Get the latest code from the main branch\r\n\r\n   ```bash\r\n   git checkout main\r\n   git pull origin main\r\n   ```\r\n\r\n3. Stop the service. Please execute in the docker directory\r\n\r\n   ```bash\r\n   docker compose down\r\n   ```\r\n\r\n4. Back up data\r\n\r\n   ```bash\r\n   tar -cvf volumes-$(date +%s).tgz volumes\r\n   ```\r\n\r\n5. Upgrade services\r\n\r\n   ```bash\r\n   docker compose up -d\r\n   ```\r\n\r\n> [!NOTE]\r\n> \r\n> If you encounter errors like below\r\n> \r\n> ```bash\r\n> 2025/11/26 11:37:57 /app/internal/db/pg/pg.go:30\r\n> [error] failed to initialize database, got error failed to connect to `host=db_postgres user=postgres database=dify_plugin`: hostname resolving error (lookup db_postgres on 127.0.0.11:53: server misbehaving)\r\n> \r\n> 2025/11/26 11:37:57 /app/internal/db/pg/pg.go:34\r\n> [error] failed to initialize database, got error failed to connect to `host=db_postgres user=postgres database=postgres`: hostname > resolving error (lookup db_postgres on 127.0.0.11:53: server misbehaving)\r\n> 2025/11/26 11:37:57 init.go:99: [PANIC]failed to init dify plugin db: failed to connect to `host=db_postgres user=postgres database=postgres`: hostname resolving error (lookup db_postgres on 127.0.0.11:53: server misbehaving)\r\n> panic: [PANIC]failed to init dify plugin db: failed to connect to `host=db_postgres user=postgres database=postgres`: hostname resolving error (lookup db_postgres on 127.0.0.11:53: server misbehaving)\r\n> ```\r\n> Please use the following command instead. For details, please read this https://github.com/langgenius/dify/issues/28706\r\n>    ```bash\r\n>    docker compose --profile postgresql up -d\r\n>    ```\r\n\r\n### Source Code Deployments\r\n\r\n1. Stop the API server, Worker, and Web frontend Server.\r\n\r\n2. Get the latest code from the release branch:\r\n\r\n   ```bash\r\n   git checkout 1.11.4\r\n   ```\r\n\r\n3. Update Python dependencies:\r\n\r\n   ```bash\r\n   cd api\r\n   uv sync\r\n   ```\r\n\r\n4. Then, let's run the migration script:\r\n\r\n   ```bash\r\n   uv run flask db upgrade\r\n   ```\r\n\r\n5. Finally, run the API server, Worker, and Web frontend Server again.\r\n\r\n---\r\n\r\n## What's Changed\r\n\r\n- fix: redirect after login by @hyoban in https://github.com/langgenius/dify/pull/30985\r\n- fix: fix missing id and message_id by @fatelei in https://github.com/langgenius/dify/pull/31008\r\n- build: require node 24.13.0 by @hyoban in https://github.com/langgenius/dify/pull/30945\r\n- chore: bump version to 1.11.4 by @laipz8200 in https://github.com/langgenius/dify/pull/30961\r\n- fix: fix Cannot destructure property 'name' of 'value' as it is undef… by @hyoban in https://github.com/langgenius/dify/pull/30991\r\n\r\n**Full Changelog**: https://github.com/langgenius/dify/compare/1.11.3...1.11.4",
+        "assets_count": 0,
+        "url": "https://github.com/langgenius/dify/releases/tag/1.11.4",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "安全修复：升级 Node.js 到 24.13.0 版本，修复 AsyncLocalStorage/async_hooks DoS CVE 漏洞（可导致深层嵌套输入使应用崩溃），所有自托管部署必须升级",
+            "修复登录后重定向问题，确保登录后能正确跳转到目标页面",
+            "修复缺失 id 和 message_id 字段的问题",
+            "修复解构 undefined 属性导致的错误（无法从 value 中解构 name）"
+          ],
+          "summary_cn": "Dify 1.11.4 版本主要包含重要的安全修复，要求所有自托管部署必须将 Node.js 升级到 24.13.0 以修复上游的 AsyncLocalStorage/async_hooks DoS CVE 漏洞。此外还修复了登录后重定向、缺失 ID 字段、解构 undefined 属性等多个 bug 问题。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "version": "python-1.39.1",
+        "author": "moonbox3",
+        "date": "2026-01-15",
+        "summary": "## What's Changed\r\n* Python: feat(oracle): add new Oracle connector for Semantic Kernel by @monita1208 in https://github.com/microsoft/semantic-kernel/pull/13229\r\n* Python: Fix YAML agent ignoring model.options execution settings by @yashwantbezawada in https://github.com/microsoft/semantic-kernel/pull/13365\r\n* Python: Add DriverInfo metadata to MongoDB connector by @NoahStapp in https://github.com/microsoft/semantic-kernel/pull/13379\r\n* Python: Updated Copilot Studio README by @dmytrostruk in https://github.com/microsoft/semantic-kernel/pull/13432\r\n* Python: improve the filtering of in-memory vector stores by @eavanvalkenburg in https://github.com/microsoft/semantic-kernel/pull/13440\r\n* Python: adding collection to all for oracle by @eavanvalkenburg in https://github.com/microsoft/semantic-kernel/pull/13412\r\n* Python: Bump to v1.39.1 for a release by @moonbox3 in https://github.com/microsoft/semantic-kernel/pull/13455\r\n\r\n## New Contributors\r\n* @monita1208 made their first contribution in https://github.com/microsoft/semantic-kernel/pull/13229\r\n* @yashwantbezawada made their first contribution in https://github.com/microsoft/semantic-kernel/pull/13365\r\n* @NoahStapp made their first contribution in https://github.com/microsoft/semantic-kernel/pull/13379\r\n* @DeepAQ made their first contribution in https://github.com/microsoft/semantic-kernel/pull/13275\r\n\r\n**Full Changelog**: https://github.com/microsoft/semantic-kernel/compare/python-1.39.0...python-1.39.1",
+        "assets_count": 2,
+        "url": "https://github.com/microsoft/semantic-kernel/releases/tag/python-1.39.1",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Oracle 数据库连接器，扩展 Semantic Kernel 的数据源集成能力",
+            "修复 YAML Agent 忽略 model.options 执行设置的问题",
+            "为 MongoDB 连接器添加 DriverInfo 元数据支持",
+            "改进内存向量存储的过滤功能",
+            "更新 Copilot Studio README 文档"
+          ],
+          "summary_cn": "Semantic Kernel Python 1.39.1 版本主要引入了新的 Oracle 数据库连接器，扩展了数据源集成能力。同时修复了 YAML Agent 配置问题，优化了 MongoDB 和内存向量存储功能，属于功能增强与 bug 修复的常规更新。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.85.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-15",
+        "summary": "## New Features\r\n- App-server v2 now emits collaboration tool calls as item events in the turn stream, so clients can render agent coordination in real time. (#9213)\r\n- Collaboration tools gained richer agent control: `spawn_agent` accepts an agent role preset, and `send_input` can optionally interrupt a running agent before delivering the message. (#9275, #9276)\r\n- `/models` metadata now includes upgrade migration markdown so clients can display richer guidance when suggesting model upgrades. (#9219)\r\n\r\n## Bug Fixes\r\n- [revert] Linux sandboxing now falls back to Landlock-only restrictions when user namespaces are unavailable, and sets `no_new_privs` before applying sandbox rules. (#9250)\r\n- `codex resume --last` now respects the current working directory, with `--all` as an explicit override. (#9245)\r\n- Stdin prompt decoding now handles BOMs/UTF-16 and provides clearer errors for invalid encodings. (#9151)\r\n\r\n## Changelog\r\n\r\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.84.0...rust-v0.85.0\r\n\r\n- #9219 Add `migration_markdown` in `model_info` @aibrahim-oai\r\n- #9250 fix: fallback to Landlock-only when user namespaces unavailable and set PR_SET_NO_NEW_PRIVS early @viyatb-oai\r\n- #9213 feat: collab tools app-server event mapping @jif-oai\r\n- #9275 feat: add agent roles to collab tools @jif-oai\r\n- #9276 feat: add interrupt capabilities to `send_input` @jif-oai\r\n- #9209 feat: basic tui for event emission @jif-oai\r\n- #9245 Changed `codex resume --last` to honor the current cwd @etraut-openai\r\n- #9207 Propagate MCP disabled reason @gt-oai\r\n- #9151 fix(exec): improve stdin prompt decoding @liqiongyu\r\n- #9300 revert: remove pre-Landlock bind mounts apply @viyatb-oai\r\n\r\n\r\n",
+        "assets_count": 74,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.85.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "App-server v2 现在将协作工具调用作为事件发送，支持实时渲染代理协调",
+            "协作工具增强：spawn_agent 支持角色预设，send_input 可中断运行中的代理",
+            "/models 元数据新增升级迁移 Markdown，提供更丰富的模型升级指导",
+            "Linux 沙箱改进：当用户命名空间不可用时回退到 Landlock 限制",
+            "修复 codex resume --last 现在遵循当前工作目录"
+          ],
+          "summary_cn": "此次更新主要增强了协作工具的实时性和控制能力，App-server v2 现在支持实时渲染代理协调，同时 spawn_agent 和 send_input 功能得到增强。此外，改进了模型升级指导和 Linux 沙箱的兼容性，并修复了多个命令行工具的问题。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.84.0",
+        "author": "github-actions[bot]",
+        "date": "2026-01-15",
+        "summary": "## New Features\n- Extend the Rust protocol/types to include additional metadata on text elements, enabling richer client rendering and schema evolution (#9235)\n\n## Chores\n- Reduce flaky Rust release pipelines (notably on Windows) by increasing the release build job timeout (#9242)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.83.0...rust-v0.84.0\n\n- #9242 fix: increase timeout for release builds from 30 to 60 minutes @bolinfest\n- #9235 Add text element metadata to types @charley-oai\n\n\n",
+        "assets_count": 74,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.84.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "扩展 Rust 协议和类型，为文本元素添加额外的元数据，支持更丰富的客户端渲染",
+            "增加 release 构建作业的超时时间（从 30 分钟提升到 60 分钟），减少 Windows 平台的管道不稳定问题",
+            "改进 schema 演进能力，支持协议的向前兼容性"
+          ],
+          "summary_cn": "rust-v0.84.0 版本主要扩展了 Rust 协议/类型系统，为文本元素引入元数据以支持更丰富的客户端渲染和 schema 演进。同时优化了 release 构建管道，通过将超时时间从 30 分钟增加到 60 分钟来减少 Windows 平台上的构建失败。此次更新以功能增强为主，提升了协议的扩展性和构建稳定性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "version": "1.8.1",
+        "author": "lorenzejay",
+        "date": "2026-01-15",
+        "summary": "## What's Changed\n\n### Features\n- Add A2A task execution utilities\n- Add A2A server configuration and agent card generation\n- Add additional A2A transports\n- Add Galileo to integrations page\n\n### Bug Fixes\n- Enhance Azure model stop word support detection\n- Increase frame inspection depth to detect `parent_flow`\n- Unlink task in execution spans\n- Improve error handling for HumanFeedbackPending in flow execution\n- Handle HumanFeedbackPending in flow error management\n\n### Documentation\n- Update A2A agent card documentation and refine existing A2A documentation\n- Work in progress on documentation for PII redaction feature\n\n## Contributors\n\n@Anaisdg, @GininDenis, @greysonlalonde, @joaomdmoura, @koushiv777, @lorenzejay, @vinibrsl",
+        "assets_count": 0,
+        "url": "https://github.com/crewAIInc/crewAI/releases/tag/1.8.1",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 A2A（Agent-to-Agent）任务执行工具和服务器配置",
+            "增强 Azure 模型停止词检测支持和框架检测深度",
+            "改进 Flow 执行中 HumanFeedbackPending 的错误处理机制",
+            "优化任务执行 span 的关联逻辑",
+            "更新 A2A 相关文档和 Galileo 集成页面"
+          ],
+          "summary_cn": "crewAI v1.8.1 主要引入了 Agent-to-Agent (A2A) 通信功能，包括任务执行工具、服务器配置及多种传输方式。同时修复了 Azure 模型支持、框架检测深度以及人工反馈处理等方面的多个 bug，提升了整体稳定性和开发者体验。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.3.6",
+        "author": "github-actions[bot]",
+        "date": "2026-01-15",
+        "summary": "Changes since deepagents==0.3.5\n\nchore: add tests for config, context, metadata propagation (#776)\nfix: import rules (#763)\nfix(deepagents): throw a clear exception message when 'messages' key missing from the output of the subagent (#678)\nrelease: deepagents 0.3.6 (#752)\nchore: automatically sort imports (#740)\nfix: no f string needed (#750)\nfeat: add agent name when creating subagents (#735)\nfeat(cli): inject local context into system prompt via `LocalContextMiddleware`\nchore: update twitter URL (#727)\nchore: CR on docstrings/readme (#722)",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.3.6",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复子代理输出缺少 'messages' 键时的异常处理",
+            "修复导入规则问题",
+            "新增子代理名称支持功能",
+            "CLI 支持通过 LocalContextMiddleware 注入本地上下文",
+            "添加配置、上下文和元数据传播测试"
+          ],
+          "summary_cn": "deepagents 0.3.6 版本主要包含错误修复和功能增强。核心改进包括修复子代理输出异常处理机制、添加子代理名称支持，以及 CLI 中本地上下文注入功能。同时新增了多项测试以确保配置、上下文和元数据传播的稳定性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.23",
+        "author": "thdxr",
+        "date": "2026-01-15",
+        "summary": "## Core\n- Ensure agent exists before processing title in session summary (@0x404)\n- More defensive handling of project list to prevent errors\n- Filter dead worktrees from git worktree list\n- Load models.dev in development mode\n- Ensure frontmatter can process same content as other agents\n- Show toast error message when ConfigMarkdown parsing fails (@vvarp)\n- Prettify retry duration display in TUI\n- Handle broken symlinks gracefully in grep tool (@andrew-kramer-inno)\n- Honor per-server MCP timeouts\n- Upgrade OpenTUI to v0.1.73, fixing CJK word wrapping and Thai text rendering in non-tmux environments\n- Add input limit for compaction (@brandon93s)\n- Fix Codex ID issue\n- Revert provider-level store option\n- Allow provider-level store option (@cyhhao)\n- Make dialog keybinds configurable (@CasualDeveloper)\n## TUI\n- Update black plan selection with light rays effect and mobile styles (@aaroniker)\n- Use native text truncation for sidebar diff paths\n- Center the initially selected session in the session list (@ariane-emory)\n- Restore brand integrity of TUI wordmark (@kitlangton)\n## Desktop\n- Fix sidebar toggle on desktop\n- Persist workspace branch selection across sessions\n- Persist workspace order and collapsed state in sidebar\n- Fix thinking animation opacity and improve design\n- Fix session icon and name alignment\n- Show session as busy even when it's the active session\n- Stop killing opencode-cli process on dev mode restart (@dbpolito)\n- Update desktop question tools (@dbpolito)\n- Fix current session background color\n- Remove the active state from load more button after press\n- Fix new session tooltip position and add keyboard shortcut\n- Remove more options tooltip\n- Fix workspace name color in UI\n- Hide \"View all sessions\" button when on active project page\n- Fix avatar button states\n- Reduce font size of load more button\n- Fix recent sessions title color\n- Fix project dropdown labels and sorting order\n- Move left panel toggle button to the right\n- Fix avatar background color\n- Show project options on hover of row\n- Increase delay on session list tooltips\n- Fix tooltip gutter spacing on session items and archive buttons\n- Archive icon replaces diff count on hover\n- Fix hover state for recent sessions in gutter\n- Fix search bar functionality in header\n- Fixed layout issues in the app\n- Fix stale sessions in new layout\n- New app layout\n- Open external links in system browser instead of webview in desktop app (@turculaurentiu91)\n\n**Thank you to 15 community contributors:**\n- @CasualDeveloper:\n  - feat(tui): make dialog keybinds configurable (#6143) (#6144)\n- @kitlangton:\n  - fix: restore brand integrity of TUI wordmark (#8584)\n- @cyhhao:\n  - feat: allow provider-level store option (#8000)\n- @ariane-emory:\n  - fix(tui): Center the initially selected session in the session_list (resolves #8558) (#8560)\n- @brandon93s:\n  - fix(opencode): add input limit for compaction (#8465)\n- @R44VC0RP:\n  - fix: enable sticky header on changelog and download pages (#8556)\n- @turculaurentiu91:\n  - fix(desktop): open external links in system browser instead of webview (#7360)\n- @LAG-4:\n  - docs: fix typos in documentation (#8703)\n- @andrew-kramer-inno:\n  - fix: handle broken symlinks gracefully in grep tool (#8612)\n- @vvarp:\n  - fix: show toast error message on ConfigMarkdown parse error (#8049)\n- @dbpolito:\n  - chore(desktop): Question Tools Updates\n  - chore(desktop): Stop Killing opencode-cli on dev\n- @aaroniker:\n  - feat(console): Update /black plan selection, light rays effect. mobile styles (#8731)\n  - feat(console): Style improvements for /black, View Transition fixes (#8739)\n- @nathannewyen:\n  - docs: add /thinking command documentation (#8722)\n- @0x404:\n  - fix(session): ensure agent exists before processing title in session summary (#8662)\n- @ricardo-valero:\n  - fix: update hix hashes for all systems (#8732)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.23",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "升级 OpenTUI 到 v0.1.73，修复 CJK 换行和泰文渲染问题",
+            "添加大量桌面端 UI 修复和改进，包括会话管理、工作区持久化、动画效果等",
+            "增强核心功能稳定性：改进 git worktree、grep 工具、MCP 超时等错误处理",
+            "新增可配置的对话框快捷键和输入限制功能",
+            "优化 TUI 界面：会话列表居中、diff 路径显示、品牌标识等改进"
+          ],
+          "summary_cn": "这是一个功能增强版本，主要包含三方面改进：升级 OpenTUI 修复中文等多语言渲染问题；桌面端 UI 大量修复包括会话管理、工作区状态持久化等用户体验提升；核心功能增强错误处理和稳定性，包括 git worktree、grep 工具、MCP 超时等改进，同时新增了对话框快捷键配置等可选功能。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.21",
+        "author": "thdxr",
+        "date": "2026-01-15",
+        "summary": "## Core\n- Add error message to prompt users to reauthenticate with Copilot\n- Official Copilot plugin\n- Adjust LSP wording to better encourage users to fix issues\n- Fix plan path permissions\n- Add check in case provider doesn't exist in models list\n- Adjust GitLab logic in provider configuration\n- Add AWS Web Identity Token File support for Bedrock (@bainos)\n- Add Chocolatey and Scoop to OpenCode upgrade methods (@itsrainingmani)\n- Remove duplicate path import in session module (@CasualDeveloper)\n## TUI\n- Improve question prompt UX in TUI (@kitlangton)\n\n**Thank you to 8 community contributors:**\n- @kitlangton:\n  - feat(tui): improve question prompt UX (#8339)\n- @R44VC0RP:\n  - fix(homepage): Update FAQ to include desktop and web links (#8453)\n  - docs: update screenshot images (#8479)\n  - feat(console): add /changelog page (#8476)\n  - docs: add Web usage page (#8482)\n  - fix(console): make logo on /black link back to homepage (#8498)\n  - feat(console): add OG image and SEO meta tags for /black page (#8506)\n- @CasualDeveloper:\n  - fix(session): remove typo'd duplicate path import (#8408) (#8412)\n- @itsrainingmani:\n  - feat: add choco and scoop to opencode upgrade methods (#8439)\n- @aaroniker:\n  - feat(console/app): Style changes, view transitions, small improvements (#8481)\n- @bainos:\n  - feat(opencode): add AWS Web Identity Token File support for Bedrock (#8461)\n- @samiulsami:\n  - feat(install): respect ZDOTDIR for zsh config detection (#8511)\n- @IdrisGit:\n  - docs: fix permission system documentation in agents section (#7652)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.21",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "官方 Copilot 插件支持，增加重新认证错误提示",
+            "新增 AWS Web Identity Token File 支持 Bedrock",
+            "新增 Chocolatey 和 Scoop 升级方式支持",
+            "改进 TUI 问题提示用户体验，修复计划路径权限问题",
+            "增强 GitLab 配置逻辑，修复会话模块重复导入"
+          ],
+          "summary_cn": "v1.1.21 版本主要增强了 Copilot 集成支持，推出官方插件并改进用户认证体验。新增了 AWS Bedrock Web Identity Token 支持、Chocolatey 和 Scoop 升级方式，同时修复了多个路径权限和配置问题。感谢 8 位社区贡献者参与本次开发。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
