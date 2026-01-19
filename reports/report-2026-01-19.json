@@ -1,0 +1,582 @@
+{
+  "date": "2026-01-19",
+  "summary_brief": "今日 (2026-01-19) 发现 8 个 Commit 信号，2 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "Git Worktree 可视化支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "为 AI 编程助手引入 Git Worktree 视图，显著增强了处理多分支并行开发工作流的能力，解决了复杂项目管理中的痛点。",
+      "sources": [
+        "https://github.com/cline/cline/commit/7885c75a4fe3fe1635309483112c73d938a0cfbc"
+      ],
+      "related_repos": [
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenAI 模型补丁工具集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "为 OpenAI 模型引入专用的 `apply_patch` 工具，优化了 AI 编辑代码的机制，使其能更精准地应用差异补丁而非重写整个文件。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/b7ad6bd83922e2259a467fe59f27806af8060629"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "远程配置锁定机制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "在远程配置 Vertex 和 LiteLLM 时锁定选项，防止用户在托管环境中意外覆盖关键配置，提升了企业级部署的安全性和稳定性。",
+      "sources": [
+        "https://github.com/cline/cline/commit/13cf28d8f4be1bd3318450975f45e2843d288e9d"
+      ],
+      "related_repos": [
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "Ollama 上下文窗口修复",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "修复了 Ollama 服务器忽略默认上下文窗口配置的问题，并增加了对 NaN/Inf 值的验证，确保本地 LLM 调用的稳定性和参数有效性。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/556e098fc1e344c69554f38cd4142f2964d4f51b"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "TUI Vim 风格滚动绑定",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "在终端用户界面（TUI）中实现了 Vim 风格的逐行滚动绑定，提升了习惯 Vim 操作的开发者在终端环境下的使用体验。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/bfb8c531c22c0101d7c906c9d542b118c5a0aae0"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "Docker 沙箱 CORS 支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "为 Docker 沙箱服务添加 CORS 源支持，实现了远程浏览器访问能力，这对于自动化测试和远程代理操作至关重要。",
+      "sources": [
+        "https://github.com/OpenDevin/OpenDevin/commit/9fd4e4243866c92ced35d9a14cd537f3785d63b4"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "终端 PTY 写入安全重构",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "将终端操作重构为使用 `PtyManager.writeToPty`，解决了潜在的竞争条件和安全问题，提高了终端交互的鲁棒性。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/4637a1a9270caf22c8198c854fbab48e207d4d8d"
+      ],
+      "related_repos": [
+        "AndyMik90/Auto-Claude"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "Nix Flake 打包架构重构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "彻底重构了 Nix Flake 和包结构，提升了项目在 NixOS 系统上的可维护性和安装体验，反映了 Reproducible Builds 的趋势。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/dac099a4892689d11abedb0fcc1098b50e0958c8"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 4,
+    "total_commits_analyzed": 73,
+    "total_releases": 2
+  },
+  "activity": {
+    "total_commits": 73,
+    "active_repos_count": 11,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 32,
+        "new_contributors": 0,
+        "top_contributors": [
+          "rekram1-node",
+          "actions-user",
+          "kitlangton",
+          "itsrainingmani",
+          "noamzbr"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 14,
+        "new_contributors": 0,
+        "top_contributors": [
+          "bhanuprasad14",
+          "AndyMik90",
+          "youngmrz",
+          "VDT-91",
+          "kaigler"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 10,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "saoudrizwan",
+          "BarreiroT"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "aibrahim-oai",
+          "slkzgm"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "neubig",
+          "tofarr"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hinthornw",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Mustafa-Esoofally"
+        ]
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "albertvillanova"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "JosephTLyons"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 2,
+    "unique_repos_count": 2,
+    "releases": [
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "checkpointsqlite==3.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-01-19",
+        "summary": "Changes since checkpointsqlite==3.0.2\n\n* fix: aiosqlite's breaking change (#6699)\n* chore(deps): upgrade dependencies with `uv lock --upgrade` (#6671)\n* chore: update twitter URLs (#6683)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/checkpointsqlite%3D%3D3.0.3",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 aiosqlite 的破坏性变更兼容性问题",
+            "使用 uv lock --upgrade 升级依赖",
+            "更新 Twitter URL 链接"
+          ],
+          "summary_cn": "这是一个针对 checkpointsqlite 3.0.2 的修复版本。主要修复了 aiosqlite 库的破坏性变更带来的兼容性问题（#6699），同时进行了依赖项升级和链接更新等维护性工作。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.383",
+        "author": "github-actions[bot]",
+        "date": "2026-01-18",
+        "summary": "## Changes\n\n### PR [#1943](https://github.com/danielmiessler/Fabric/pull/1943) by [ksylvan](https://github.com/ksylvan): fix: Ollama server now respects the default context window\n\n- Fix: Ollama server now respects the default context window instead of using hardcoded 2048 tokens\n- Add parseOllamaNumCtx() function with type-safe extraction supporting 6 numeric types and platform-aware integer overflow protection\n- Extract num_ctx from client request options and add ModelContextLength field to ChatRequest struct\n- Implement DoS protection via 1,000,000 token maximum limit with sanitized error messages\n- Add comprehensive unit tests for parseOllamaNumCtx function covering edge cases including overflow and invalid types\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.383",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Ollama 服务器现在会遵守默认的上下文窗口设置，不再使用硬编码的 2048 tokens 限制",
+            "新增 parseOllamaNumCtx() 函数，支持类型安全的提取，包含 6 种数值类型支持和平台感知的整数溢出保护",
+            "从客户端请求选项中提取 num_ctx 参数，并在 ChatRequest 结构体中添加 ModelContextLength 字段",
+            "实现 DoS 防护机制，设置 1,000,000 tokens 的最大限制并提供清理过的错误消息",
+            "为 parseOllamaNumCtx 函数添加全面的单元测试，覆盖溢出和无效类型等边界情况"
+          ],
+          "summary_cn": "本次版本主要修复了 Ollama 服务器的上下文窗口处理逻辑，将硬编码的 2048 tokens 限制改为遵守默认配置。新增了类型安全的 parseOllamaNumCtx() 函数，支持 6 种数值类型并具备平台感知的溢出保护，同时通过 100 万 tokens 的上限实现了 DoS 防护。该变更还包含全面的单元测试覆盖，确保边界情况的处理正确性。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
