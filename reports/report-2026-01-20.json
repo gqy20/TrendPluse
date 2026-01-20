@@ -1,0 +1,753 @@
+{
+  "date": "2026-01-20",
+  "summary_brief": "今日 (2026-01-20) 发现 10 个 Commit 信号，6 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "OpenAI Codex 原生工具调用支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Cline 增加了对 Ollama 和 LMStudio 的原生工具调用支持，标志着 AI 编助手正在从单一的云端 API 依赖向本地化、私有化模型部署方向扩展，增强了离线开发能力和数据隐私性。",
+      "sources": [
+        "https://github.com/cline/cline/commit/fb695602a444e3e5a680c8cbcc7d32d597f02de4"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "openai/codex",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenAI Codex 协作模式与 TUI 交互",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Codex 引入了 `UserTurn` 协议和协作模式 UX，这表明 AI 编程工具正从简单的“指令-响应”模式向更复杂的“人机结对编程”模式演进，强调了状态同步和交互反馈。",
+      "sources": [
+        "https://github.com/openai/codex/commit/bf430ad9fee5583afab2bd6641407d67383be297"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "OpenCode 深度集成 GitHub Copilot",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 开始自动将 GPT-5+ 模型路由到 Responses API 并修复 Copilot 兼容性，显示了主流编辑器正在构建“模型路由层”，以无缝整合不同供应商（OpenAI, GitHub, Anthropic）的最优模型。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/fc6c9cbbd262daa0f98338ed3c79270fbfa086ad"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "zed-industries/zed",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "Zed 编辑器内置 AI 智能体规则",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Zed 将 `.rules` 文件符号链接为 `AGENTS.md`，这种将项目级上下文和规则直接集成到编辑器工作流的趋势，意味着 AI 编程助手正变得更加上下文感知和项目定制化。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/099226e50c74af64f6fefbea34a947714085ac94"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "zed-industries/zed",
+        "continuedev/continue"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "Agno v2.4.0 与知识库元数据传播",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Agno 修复了知识库元数据传播问题并发布 v2.4.0，反映了 AI 框架正在解决 RAG（检索增强生成）系统中的数据一致性和上下文传递难题，这对于构建长期记忆的智能体至关重要。",
+      "sources": [
+        "https://github.com/agno-agi/agno/commit/8d688ebbbfe7905df4fc5928be7546486ec6b4e3"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "langgenius/dify",
+        "run-llama/llama_index"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "Gemini CLI 核心调度器解耦",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI 将调度器解耦为编排、策略和确认三个组件，这种架构重构提升了系统的模块化程度，使得 AI 工具的决策逻辑更易于测试、审计和扩展。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/e2901f3f7e2ffeb369ccb81d372e236b51d65e88"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "Dify 企业级工作区权限控制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Dify 实施了企业版工作区权限控制，随着 AI 应用进入生产环境，对于多租户、细粒度权限管理和合规性的需求正在成为 AI 编排平台的核心竞争力。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/269c85d5a3613d7d9226665679e4497f9853d665"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "langgenius/dify"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "Auto-Claude 终端认证流程优化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Auto-Claude 将认证流程从 setup-token 替换为嵌入式 `/login` 终端流，并修复了 Windows CLI 检测问题，显示了 AI 工具正致力于降低跨平台使用的摩擦成本，提升开发者体验。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/11f8d572ff2bf1422d99f4bc12cdfa02ee43daa5"
+      ],
+      "related_repos": [
+        "AndyMik90/Auto-Claude",
+        "openai/codex",
+        "google-gemini/gemini-cli"
+      ]
+    },
+    {
+      "id": "signal-8",
+      "title": "LlamaIndex 集成火山引擎 MySQL 向量库",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "LlamaIndex 集成了火山引擎的 MySQL 向量存储，体现了 RAG 技术栈正在与云服务商的原生数据库深度整合，以降低基础设施运维成本并提升性能。",
+      "sources": [
+        "https://github.com/run-llama/llama_index/commit/e7182dc41e3eb4ee5c667977062373ac5ebaf603"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "run-llama/llama_index",
+        "agentscope-ai/agentscope"
+      ]
+    },
+    {
+      "id": "signal-9",
+      "title": "OpenCode 批处理工具限制放宽",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "OpenCode 将批处理工具的最大限制从 10 提升至 25，这种针对 AI Agent 操作效率的微调，反映了开发者正在不断探索 Agent 执行任务时的吞吐量与稳定性之间的平衡。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/673e79f457ed75f6077d7c5ad71906a7c8ce415c"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "openai/codex",
+        "cline/cline"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 5,
+    "total_commits_analyzed": 233,
+    "total_releases": 6
+  },
+  "activity": {
+    "total_commits": 233,
+    "active_repos_count": 18,
+    "new_contributors": 0,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 93,
+        "new_contributors": 0,
+        "top_contributors": [
+          "adamdotdevin",
+          "iamdavidhill",
+          "actions-user",
+          "rekram1-node",
+          "neriousy"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 24,
+        "new_contributors": 0,
+        "top_contributors": [
+          "MrSubidubi",
+          "danilo-leal",
+          "osyvokon",
+          "SomeoneToIgnore",
+          "mason-palmer"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 23,
+        "new_contributors": 0,
+        "top_contributors": [
+          "jif-oai",
+          "dependabot[bot]",
+          "aibrahim-oai",
+          "etraut-openai",
+          "shijie-oai"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 15,
+        "new_contributors": 0,
+        "top_contributors": [
+          "fatelei",
+          "hyoban",
+          "lyzno1",
+          "BeautyyuYanli",
+          "zxhlyh"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 13,
+        "new_contributors": 0,
+        "top_contributors": [
+          "NTaylorMullen",
+          "gundermanc",
+          "abhipatel12",
+          "Kimsoo0119",
+          "pyrytakala"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "sestinj",
+          "uinstinct"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "kausmeows",
+          "ysolanky",
+          "ashpreetbedi",
+          "harshsinha03",
+          "willemcdejongh"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 10,
+        "new_contributors": 0,
+        "top_contributors": [
+          "abeatrix",
+          "saoudrizwan",
+          "robinnewhouse",
+          "adamdost-0",
+          "BarreiroT"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "qbc2016",
+          "DavdGao",
+          "denverdino"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "StillKnotKnown",
+          "AndyMik90",
+          "TamerineSky"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "gptme-thomas",
+          "TimeToBuildBob",
+          "loftybuilder"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "markwallace-microsoft",
+          "moonbox3",
+          "eavanvalkenburg"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "chenopis",
+          "FishMage"
+        ]
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "albertvillanova",
+          "B-Step62"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ccurme",
+          "duanckham"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "paul-gauthier"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 6,
+    "unique_repos_count": 5,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.384",
+        "author": "github-actions[bot]",
+        "date": "2026-01-19",
+        "summary": "## Changes\n\n### PR [#1944](https://github.com/danielmiessler/Fabric/pull/1944) by [ksylvan](https://github.com/ksylvan): Add Infermatic AI Provider Support\n\n- Add Infermatic provider to ProviderMap as part of Phase 1 implementation for issue #1033\n- Add test coverage for the Infermatic AI provider in TestCreateClient to verify provider exists and creates valid client\n- Replace go-git status API with native `git status --porcelain` command to fix worktree compatibility issues\n- Simplify `IsWorkingDirectoryClean` and `GetStatusDetails` functions to use CLI output parsing instead of go-git library\n- Use native `git rev-parse HEAD` to get commit hash after commit and remove unused imports from walker.go\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.384",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Infermatic AI 服务商支持（Phase 1 实现）",
+            "为 Infermatic AI 提供商添加测试覆盖",
+            "替换 go-git API 为原生 git 命令以修复 worktree 兼容性问题",
+            "简化工作目录状态检查函数实现",
+            "优化代码结构，移除未使用的导入"
+          ],
+          "summary_cn": "此版本主要为 Fabric 添加了 Infermatic AI 服务商支持（Issue #1033 Phase 1），并完善了相关测试覆盖。同时，通过使用原生 git 命令替代 go-git 库修复了 worktree 兼容性问题，简化了代码实现并提升了可靠性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "version": "python-1.39.2",
+        "author": "moonbox3",
+        "date": "2026-01-19",
+        "summary": "## What's Changed\r\n* Python: inversed the filter logic for InMemory vector stores by @eavanvalkenburg in https://github.com/microsoft/semantic-kernel/pull/13457\r\n* Python: Bump Python version to 1.39.2 for a release by @moonbox3 in https://github.com/microsoft/semantic-kernel/pull/13459\r\n\r\n\r\n**Full Changelog**: https://github.com/microsoft/semantic-kernel/compare/python-1.39.1...python-1.39.2",
+        "assets_count": 2,
+        "url": "https://github.com/microsoft/semantic-kernel/releases/tag/python-1.39.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 InMemory 向量存储的过滤逻辑（反转过滤条件）",
+            "Python 版本升级至 1.39.2"
+          ],
+          "summary_cn": "这是一个 Python 版本的修复版本（1.39.2），主要修复了 InMemory 向量存储中的过滤逻辑错误，确保过滤条件能够正确应用。该变更属于问题修复，没有引入新功能或破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "version": "dotnet-1.69.0",
+        "author": "dmytrostruk",
+        "date": "2026-01-19",
+        "summary": "\n\n## Changes:\n\n* 3b61c786c9b4f9a8224f39f647859fd51af4c902 .Net: Version 1.69.0 (#13460)\n* 1e1fb14d68eb67151473fe8a8e0cc0aef9f57ba1 Python: Bump Python version to 1.39.2 for a release (#13459)\n* f511c965c1145a6dc0b19f4958a06cdbde6244da Python: inversed the filter logic for InMemory vector stores (#13457)\n* c97c3e6aa7b805c4e0d8d07db479e82eb6102f7e .Net: Bump .Net packages, minor versions only (#13452)\n* adb71bc63b2c77604ab8403c33fb638cd7d7ac1c Python: Bump to v1.39.1 for a release (#13455)\n* e68f09c710043d2191eb9e766beb06e56ec1405d Python: adding collection to all for oracle (#13412)\n* e50ba67f004eda257a07841ff36bd6526dbfc238 Python: improve the filtering of in-memory vector stores (#13440)\n* dc0eefd8a3eba67481f6026f4d5bfa2a4bc4df46 .Net: Skip and AzureAIInference chat completion tests (#13451)\n* 4a09cbdedc9437bdee7cf73e02a17c216035ed98 .Net: Add FunctionChoiceBehavior support to Google Gemini connector (#13256) [ #12702 ]\n* 0a9ee4051212a67d0c2f142205c3fb3f27eb26b6 .Net: Update AWS Vulnerable Package Dependencies (#13449)\n<details><summary><b>See More</b></summary>\n\n* dc7c1c048488a8b611b5382d0d7efe05608a9fa0 Python: Updated Copilot Studio README (#13432)\n* 4e0ccb9c4369c3f3c0d4129c1c5fe7e85f360443 .Net: Switch MEVD MongoDB Driver to v3.51 (#13370) [ #11652, #12707, #10291 ]\n* 43da976c9b42548088e51e326b7df90bdc57a056 Bump react and react-dom versions to be 19.2.1 (#13408)\n* 4ac376749dcc98ac8f9b0081e574b0d34684a35f Fix C# 14 Contains translation for MEVD providers (#13407) [ #13263, #13395 ]\n* 0195778be25892cba507fe593d5592b71c2adf68 Updating SECURITY.ms to latest version. (#13406)\n\nThis list of changes was [auto generated](https://msdata.visualstudio.com/Vienna/_build/results?buildId=204458247&view=logs).</details>",
+        "assets_count": 0,
+        "url": "https://github.com/microsoft/semantic-kernel/releases/tag/dotnet-1.69.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "为 Google Gemini 连接器新增 FunctionChoiceBehavior 支持",
+            "修复内存向量存储的过滤逻辑（Python）并反转过滤行为",
+            "升级 MongoDB Driver 到 v3.51 版本并修复 C# 14 翻译问题",
+            "更新 AWS 漏洞依赖包，增强安全性",
+            "为 Oracle 添加集合支持并改进 Copilot Studio 文档"
+          ],
+          "summary_cn": "dotnet-1.69.0 版本主要增强了功能性和安全性，为 Google Gemini 添加了 FunctionChoiceBehavior 支持，同时修复了内存向量存储的过滤逻辑和 C# 14 翻译问题。该版本还进行了关键依赖升级，包括修复 AWS 漏洞包和升级 MongoDB Driver 到 v3.51，并持续改进 Python 和 .NET 生态的兼容性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.24.4",
+        "author": "github-actions[bot]",
+        "date": "2026-01-19",
+        "summary": "## What's Changed\n* fix(patch): cherry-pick 88f1ec8 to release/v0.24.0-pr-16179 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/16783\n\n\n**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.24.0...v0.24.4",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.24.4",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复补丁：从主分支 cherry-pick 提交 88f1ec8 到 release/v0.24.0-pr-16179 分支",
+            "解决分支合并冲突（CONFLICTS）",
+            "针对 v0.24.0 版本的问题修复"
+          ],
+          "summary_cn": "这是一个 v0.24.0 系列的补丁版本更新（v0.24.0 → v0.24.4），主要包含一个 cherry-pick 合并修复。此次变更将特定的提交（88f1ec8）反向移植到 release 分支，解决了合并冲突问题，属于常规的维护性修复更新。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.4.0",
+        "author": "kausmeows",
+        "date": "2026-01-19",
+        "summary": "# Changelog\r\n\r\n## New Features:\r\n\r\n- **Knowledge Protocol:** Introduced `KnowledgeProtocol` The main Knowledge implementation now satisfies this interface. Any other implementation may be used with Agent/Team. Note - Only the main Agno Knowledge implementation of this protocol currently supports AgentOS Knowledge management.\r\n- **Agent Builder:** Users can now persist and manage Agent, Team, and Workflow configurations directly in the database. New AgentOS endpoints enable programmatic creation, retrieval, and updates of component definitions.\r\n- **New Events:** Added new events for Model, compression and memory.\r\n    - `ModelRequestStarted` and `ModelRequestCompleted`\r\n    - `CompressionStarted` and `CompressionCompleted`\r\n    - Update `MemoryUpdateCompleted` to contain the memory content.\r\n- **Gemini file inputs:** Add direct GCS and external URL support for Gemini file inputs\r\n- **TavilyTools:** Add `api_base_url` parameter support to TavilyTools for custom hosted usecases.\r\n\r\n## Improvements:\r\n\r\n- **Default DB on `AgentOS`:** Add `db` to the `AgentOS` class. If populated, it propagates to all\r\nagents, teams and workflows without db. It is also used as tracing db.\r\n- Deprecated `enable_user_memories` : Introduced `update_memory_on_run` for the same behavior.\r\n- **Knowledge config endpoint**: Improved checking for available readers without needing instantiation of the reader classes. Reduced unnecessary warnings and improved response times.\r\n- **Unify dates format on OS API layer:** Unify the format of all dates we send via the OS API. Everything is now a UTC datetime\r\n- **AgentOS Trailing Slash Handling:** Add a  `TrailingSlashMiddleware` that strips trailing slashes from request paths, all endpoints returns identical responses without 307 redirects.\r\n- **Pass instructions as is without XML tags:**\r\n    - **Agent & Team**: Instructions are now added directly to the system message without `<instructions>` tags by default\r\n    - Added `add_instruction_tags=True` option to restore the previous behavior for users who prefer structured prompts\r\n\r\n## Bug Fixes:\r\n\r\n- **LanceDB:** Fixed a bug for duplicate embeddings during async insert and upsert operations.\r\n- **Qdrant Async Search:** Fixed async search methods which were preventing event loop blocking during concurrent async operations.\r\n- **CSV Reader:** CSVReader and FieldLabeledCSVReader ignored `encoding` parameter for BytesIO inputs - always used hardcoded `\"utf-8\"` instead of `self.encoding or \"utf-8\"`.\r\n- **PDF Reader:** Fixed bug where empty string passwords (`\"\"`) were incorrectly treated as `None` due to Python's falsy evaluation\r\n- **Openrouter with Gemini:** Adds support for preserving Gemini's `reasoning_details` field when using OpenRouter, fixing multi-turn conversation issues.\r\n- **MongoDB Async Search:** Fixed `async_search()` to use `async_get_embedding()` instead of blocking `get_embedding()` calls, preventing event loop blocking during concurrent async operations.\r\n- **Gemini vertex ai file upload:** Fixed a bug where on trying to upload files to Gemini via Vertex AI, the API returned a 400 error.\r\n- **Skills System Prompt:** Fixed an issue where agents attempted to call skill names directly as functions, resulting in \"Function not found\" errors.\r\n\r\n## Breaking changes:\r\n\r\n- **Remove all deprecated fields:**\r\n    - `session_state, dependencies, user_id` etc in tool functions and hooks where `RunContext` has replaced it\r\n    - `stream_intermediate_steps` → `stream_events`\r\n    - `yield_run_response` → `yield_run_output`\r\n    - `delegate_task_to_all_members` removed from Team class\r\n- **Add WebSearchTools:** Replacing DDG websearch tool with a Generic web search tool which will be the default on for any websearch related cookbooks & docs.\r\n- **Knowledge add_content() renamed to insert():** The `add_content()` method and its variants have been renamed to `insert()` `insert_many` Old method names are still supported, but all examples and docs will soon only reference the new methods.\r\n- AgentOS `tracing_db` : `tracing_db`  has been deprecated in favor of `db` parameter on the AgentOS.\r\n\r\n## What's Changed\r\n* fix: gemini vertex ai file upload error by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/5857\r\n* chore: Demo script for windows by @VirusDumb in https://github.com/agno-agi/agno/pull/5965\r\n* [fix] Add missing attributes to RemoteAgent for Team compatibility by @AhmedA-afk in https://github.com/agno-agi/agno/pull/5987\r\n* fix: use async embedder in async search methods for qdrant by @uzaxirr in https://github.com/agno-agi/agno/pull/6002\r\n* fix: use async embedder in MongoDB async_search to prevent event loop blocking by @uzaxirr in https://github.com/agno-agi/agno/pull/6003\r\n* fix: prevent duplicate embedding in LanceDB insert() by @pengzy-cosmo in https://github.com/agno-agi/agno/pull/5919\r\n* feat: Add direct GCS and external URL support for Gemini file inputs by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/5997\r\n* [feat] Add api_base_url parameter support to TavilyTools by @ormeilu in https://github.com/agno-agi/agno/pull/5962\r\n* feat(cookbook): Revamp 01_demo with new impressive agents by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6010\r\n* fix: add TrailingSlashMiddleware to normalize URL paths by @uzaxirr in https://github.com/agno-agi/agno/pull/5985\r\n* fix: Allow empty string passwords for PDF decryption by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6053\r\n* fix: clarify that skill names are not callable functions by @ysolanky in https://github.com/agno-agi/agno/pull/6062\r\n* feat: v2.4.0 by @kausmeows in https://github.com/agno-agi/agno/pull/5818\r\n* fix: Update failing integration test prompt by @willemcdejongh in https://github.com/agno-agi/agno/pull/6074\r\n* feat: merge v2.4.0 with cookbook refactoring by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6042\r\n* fix: preserve Router client across copies for background tasks by @ysolanky in https://github.com/agno-agi/agno/pull/6064\r\n* fix: correct `openai-agents` install instruction by @harshsinha03 in https://github.com/agno-agi/agno/pull/6076\r\n* chore: Release 2.4.0 by @kausmeows in https://github.com/agno-agi/agno/pull/6066\r\n\r\n## New Contributors\r\n* @AhmedA-afk made their first contribution in https://github.com/agno-agi/agno/pull/5987\r\n* @pengzy-cosmo made their first contribution in https://github.com/agno-agi/agno/pull/5919\r\n* @ormeilu made their first contribution in https://github.com/agno-agi/agno/pull/5962\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.3.26...v2.4.0",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.4.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "引入 Knowledge Protocol 接口，使知识实现可插拔",
+            "新增 Agent Builder 功能，支持在数据库中持久化管理 Agent/Team/Workflow 配置",
+            "AgentOS 新增默认数据库支持，自动传播到所有组件",
+            "新增 Model、Compression 和 Memory 相关事件",
+            "改进指令处理方式，默认移除 XML 标签",
+            "弃用 enable_user_memories，改用 update_memory_on_run"
+          ],
+          "summary_cn": "Agno v2.4.0 是一个功能丰富的版本，主要引入了 Knowledge Protocol 接口和 Agent Builder 功能，大幅提升了组件的可配置性和管理能力。版本还新增了多个事件类型、改进了数据库处理和 API 响应格式，并对部分接口进行了弃用和重构。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.26",
+        "author": "thdxr",
+        "date": "2026-01-19",
+        "summary": "## Core\n- Increase maximum batch tool limit from 10 to 25 (@spoons-and-mirrors)\n- Remove favicon from application\n- Apply patch description\n- Format only edited file in Cargo workspace instead of entire workspace (@goniz)\n- Cargo fmt does not support formatting single files\n- Rename uv formatter from 'uv format' to 'uv' for config consistency (@paulclou)\n- Initial e2e test setup for app\n- Reset worktree to clean state\n- Delete workspace functionality\n- Tweak apply_patch tool description\n- Omit todo tools for OpenAI models\n- Add proper variant support to copilot\n- Track reasoning by output_index for Copilot compatibility (@NateSmyth)\n- Add scheduler and cleanup module\n- Auto-route GPT-5+ models to Responses API in GitHub Copilot integration (@christso)\n- Use streamObject when using OpenAI OAuth in agent generation (@thmalek)\n- Fix incorrect model variants for Grok models\n- Note untracked files in review documentation\n- Treat .fbs files as text instead of images in tool handling (@zerone0x)\n- Update GitLab AI provider to version 1.3.2 (@vglafirov)\n- Add command execute before hook (@spoons-and-mirrors)\n- Overhaul Nix flake and packages (@gigamonster256)\n- Preserve file attachment metadata during session replay (@liorshk)\n- Update Scoop installation method (@chawyehsu)\n- Fix import issue in patch module\n- Restore persisted model and agent when loading ACP session (@noamzbr)\n- Use single global event subscription and route by session ID in ACP (@noamzbr)\n- Increase question header and label limits (@bdwelle)\n- Add apply_patch tool for OpenAI models\n- Fix Java language server download on Windows (@pschiel)\n- Add vim-style line-by-line scrolling keybindings (@NathanFlurry)\n- Prevent environment variables in config from being replaced with actual values\n- Fix mDNS hostname discovery (@j0nl1)\n- Revert OAuth redirect URI configuration for MCP servers\n- Fix GPT ID handling in API responses\n- Add OAuth polling safety margin in Copilot device authentication (@hamir-suspect)\n- Open help dialog with tui/open-help route (@AksharP5)\n## TUI\n- Clarify resume session tip in TUI (@kearns-cu)\n- Set input mode based on whether mouse or keyboard is in use to prevent unwanted mouse events (@jcampuza)\n- Don't unnecessarily wrap lines and introduce an unneeded empty line (@ariane-emory)\n- Add mouse support for permission buttons in TUI (@Hona)\n- Fix Windows evaluating text on copy (@Hona)\n- Uninstall OpenCode installed via Windows package managers (@itsrainingmani)\n- Unify command registry and derive slash commands from command definitions (@kitlangton)\n- Hide variants hint when list is empty\n- Fix model state persistence when model store is not ready\n- Centralize OSC 52 clipboard support for SSH sessions (@b3nw)\n- Keep primary model after subagent runs (@sethcarlton)\n- Make home/end keys work in menu list modal windows (@ariane-emory)\n## Desktop\n- Fix favicon in app\n- Change keybind for cycling thinking effort in app (@neriousy)\n- Fixed global terminal and review pane toggle functionality\n- Fix hash-based navigation in the application\n- Give feedback when trying to paste an unsupported file type (@neriousy)\n- Rename favicons to v2 for cache busting (@R44VC0RP)\n- Reload instance after workspace reset\n- Make terminal sessions scoped to workspace\n- Add hover overlay with upload and trash icons to project icon in edit dialog\n- Tighten edit project color spacing\n- Constrain edit project dialog width\n- Tweak edit project icon container styling\n- Adjust edit project icon helper text\n- Update edit project dialog padding and avatar styles for consistency\n- New layout improvements for app\n- New session layout\n- Improved session layout\n- Hide settings button in app\n- Add more end-to-end tests for the app\n- Add end-to-end testing utilities for the application\n- Tweak share button to prevent layout shift in desktop (@itsrainingmani)\n- Apply getComputedStyle polyfill on all platforms in desktop app (@Slone123c)\n- Improve layout and styling of desktop session search button (@OpeOginni)\n- Remove redundant toast for thinking effort changes (@kitlangton)\n- Add session unshare button to desktop application (@itsrainingmani)\n- Remove max-width constraint from session name tooltip\n- Adjust project path tooltip placement\n- Remove max width on sidebar new buttons\n- Adjust session list tooltip trigger and delay\n- Keep project avatar hover styles while popover is open\n- Adjust recent sessions popover padding\n- Reduce prompt dock bottom spacing\n- Show project name in avatar hover\n- Remove loading text after splash screen\n- Fix command palette file list item spacing\n- Shrink project notification dot and apply masking\n- Update desktop initializing splash logo\n- Align project avatar notification dot\n- Don't try to open command palette if a dialog is already open (@BlankParticle)\n- Added Windows-only guard to make window.getComputedStyle fall back to document.documentElement (@Eric-Guo)\n- Fix flaky session archiving behavior\n- Prevent text clipping on search button descenders\n- Remove secondary text from commands\n- Limit search modal max-height to 480px\n- Refine search modal styling and list component\n- Reduce command item left padding in search modal\n- Add hideIcon and class options to List search and customize search modal input styling\n- Adjust command item left padding in search modal\n- Add left padding to command items in search modal\n- Increase keybind border radius in search modal\n- Display arrow keys as symbols in keybind formatting\n- Use Keybind component in search modal list\n- Use Keybind component in titlebar search button\n- Fix recent sessions gutter spacing\n## Extensions\n- Add use_github_token to example\n\n**Thank you to 39 community contributors:**\n- @ariane-emory:\n  - fix: make home/end keys work in menu list modal windows (resolves #7190) (#8347)\n  - fix: Don't unnecessarily wrap lines and introduce an unneeded empty line (resolves #9489) (#9488)\n- @sethcarlton:\n  - fix: keep primary model after subagent runs (#8951)\n- @AksharP5:\n  - fix: open help dialog with tui/open-help route (#8596)\n- @b3nw:\n  - fix: centralize OSC 52 clipboard support for SSH sessions (#8974)\n- @gigamonster256:\n  - fix(nix): add desktop application entry (#8972)\n  - feat(nix): overhaul nix flake and packages  (#9032)\n  - fix: nix ci - swapped dash/underscore (#9352)\n- @dbpolito:\n  - fix(desktop): Stream bash output + strip-asni (#8961)\n- @hamir-suspect:\n  - fix(opencode): add oauth polling safety margin in copilot device authentication (#8986)\n- @jerome-benoit:\n  - fix(nix): resolve hash race condition in parallel matrix jobs (#8995)\n- @benjaminshafii:\n  - docs: Add OpenWork to ecosystem (#8741)\n- @Eric-Guo:\n  - fix(desktop): Added a Windows-only guard that makes window.getComputedStyle fall back to document.documentElement (#9054)\n- @j0nl1:\n  - fix: mdns discover hostname (#9039)\n- @Slone123c:\n  - fix: escape CSS selector keys to handle special characters (#9030)\n  - fix(desktop): apply getComputedStyle polyfill on all platforms (#9369)\n- @cgilly2fast:\n  - docs: add firmware provider to providers docs (#8993)\n- @berenar:\n  - docs(config): explain that `autoupdate` doesn't work when installed with a package manager (#9092)\n- @BlankParticle:\n  - fix: don't try to open command palette if a dialog is already open (#9116)\n- @kitlangton:\n  - refactor(tui): unify command registry and derive slash commands (#9115)\n  - fix(app): remove redundant toast for thinking effort changes (#9181)\n- @NathanFlurry:\n  - feat: bind vim-style line-by-line scrolling (#8980)\n- @pschiel:\n  - fix(windows): fix jdtls download on Windows (#9195)\n- @bdwelle:\n  - feat(tool): increase question header and label limits (#9201)\n- @noamzbr:\n  - fix(acp): use single global event subscription and route by sessionID (#5628)\n  - fix: restore persisted model/agent when loading ACP session (#7809)\n- @itsrainingmani:\n  - feat(cli): uninstall opencode installed via windows package managers (#8571)\n  - feat(desktop): implement session unshare button (#8660)\n  - refactor(desktop): tweak share button to prevent layout shift (#9322)\n- @OpeOginni:\n  - refactor(desktop): improve layout and styling of session search button (#9251)\n- @chawyehsu:\n  - refactor(installation): update scoop installation method (#9243)\n- @liorshk:\n  - fix(acp): preserve file attachment metadata during session replay (#6342)\n- @spoons-and-mirrors:\n  - feat(hook): command execute before hook (#9267)\n  - tweak(batch): up restrictive max batch tool from `10` to `25` (#9275)\n- @vglafirov:\n  - fix: update gitlab-ai-provider to 1.3.2 (#9279)\n  - docs: Improve Gitlab self-hosted instances documentation (#9391)\n- @zerone0x:\n  - fix(tool): treat .fbs files as text instead of images (#9276)\n- @alanpog:\n  - docs: clarify agent tool access and explore vs general distinction (#9300)\n- @Hona:\n  - fix: Windows evaluating text on copy (#9293)\n  - feat(tui): use mouse for permission buttons (#9305)\n- @thmalek:\n  - fix(opencode): use streamObject when using openai oauth in agent generation (#9231)\n- @christso:\n  - fix(github-copilot): auto-route GPT-5+ models to Responses API (#5877)\n- @NateSmyth:\n  - fix: track reasoning by output_index for copilot compatibility (#9124)\n- @kedMertens:\n  - docs: update codecompanion.nvim acp doc (#9411)\n- @paulclou:\n  - fix(config): rename uv formatter from 'uv format' to 'uv' for config consistency (#9409)\n- @jcampuza:\n  - fix(app): list component jumping when mouse happens to be under the list and keyboard navigating. (#9435)\n  - fix(opencode): sets input mode based on whether mouse vs keyboard is in use to prevent mouse events firing (#9449)\n- @goniz:\n  - fix(opencode): `cargo fmt` is formatting whole workspace instead of edited file (#9436)\n- @R44VC0RP:\n  - fix(web): rename favicons to v2 for cache busting (#9492)\n- @neriousy:\n  - fix(app): give feedback when trying to paste a unsupported filetype (#9452)\n  - fix: keyboard nav when mouse hovered over list (#9500)\n  - fix(app): change keybind for cycling thinking effort (#9508)\n- @kearns-cu:\n  - fix(tui): clarify resume session tip  (#9490)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.26",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "增加批量工具限制从 10 提升至 25",
+            "新增 OpenAI 模型的 apply_patch 工具支持",
+            "重做 Nix flake 和包管理配置",
+            "增加 vim 风格的逐行滚动快捷键",
+            "修复 Windows 平台 Java 语言服务器下载问题"
+          ],
+          "summary_cn": "v1.1.26 版本主要进行了多项功能增强和修复，包括提升批量工具处理能力、新增 OpenAI 模型的补丁工具支持、重做 Nix 包配置等。同时修复了多个平台兼容性问题（如 Windows Java LS、mDNS 主机发现）和 API 处理相关 bug，并增强了 Copilot 集成和 MCP 服务器功能。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
