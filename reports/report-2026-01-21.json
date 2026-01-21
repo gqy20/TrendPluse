@@ -1,0 +1,783 @@
+{
+  "date": "2026-01-21",
+  "summary_brief": "今日 (2026-01-21) 发现 8 个 Commit 信号，9 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "Agent SDK 优先架构",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code Action 移除 CLI 路径，转而完全依赖 Agent SDK，标志着 AI 编程工具正从简单的命令行包装器向结构化的 SDK 抽象层演进，提升了可维护性和扩展性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/commit/49cfcf81070eac8de029f52cf67d7214185a2212"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code-action"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "模型能力检测与回退",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Fabric 和 GPTme 新增对模型特定能力（如推理、图像生成）的检测与兼容性警告。这反映了 AI 应用正从“假设模型全能”转向“根据模型能力动态适配功能”的鲁棒性设计趋势。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/a23c69894722c881c06d4d5d7b1e24d2ea19b57b"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "danielmiessler/fabric"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "多模态与上下文压缩",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 实现了增强的锚定迭代上下文压缩，而 Cline 优化了 Jupyter Notebook 支持。这显示 AI 工具正在积极解决长上下文和高维数据（如 Notebook）带来的性能与 Token 消耗挑战。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/1182168bd972f0acc6869927f3b69558def0a4fc"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "cline/cline"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "沙箱与安全隔离",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 和 OpenCode 均在加强沙箱机制，特别是在 Windows 路径解析、权限控制及配置文件加载限制方面。这反映了业界对 AI Agent 自主操作系统的安全性担忧正在推动更严格的隔离标准。",
+      "sources": [
+        "https://github.com/openai/codex/commit/f2de920185d074e4b4a4dadfdeab5e95b46f437b"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "异步工作流与并发",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "DeepAgents 和 DeerFlow 正在将检索器和核心工作流重构为异步/等待模式。这是为了应对 Agent 系统中日益增长的 I/O 密集型操作（如工具调用、API 请求），以提升响应速度和吞吐量。",
+      "sources": [
+        "https://github.com/bytedance/deer-flow/commit/0e64c529753e5d49472606cd7e5630b5b840224f"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "bytedance/deer-flow"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "MCP 与插件生态",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 和 Gemini CLI 在 MCP（Model Context Protocol）服务器的 OAuth 回调、指令修复和工具输入保留方面进行了大量修复。MCP 正成为连接 AI Agent 与外部数据/服务的标准协议，其稳定性至关重要。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/694695050a40635cc8d3d2aacbfea2aa71512e84"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "anomalyco/opencode"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "自动化代码审查",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Auto-Claude 引入了带有验证管道和上下文增强的 PR 审查功能。这展示了 AI Agent 正从单纯的“写代码”向更复杂的“审查与协作”工作流扩展，旨在提升整个软件生命周期的效率。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/d8f4de9a06c01ed7248ea18e9eead1450bc76bcc"
+      ],
+      "related_repos": [
+        "AndyMik90/Auto-Claude"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "signal-2",
+      "title": "Agent 评估与遥测",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Gemini CLI 引入了针对通用 Agent 的初始评估，并增加了遥测功能以跟踪计划模式的采用情况。这表明 Agent 系统的开发重点正从单纯的功能实现转向科学的效果评估与数据驱动优化。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/commit/d7ef093bf5cdf900162c74ba0903dbaa51bf010e"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "openai/codex"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 6,
+    "total_commits_analyzed": 331,
+    "total_releases": 9
+  },
+  "activity": {
+    "total_commits": 331,
+    "active_repos_count": 24,
+    "new_contributors": 7,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 141,
+        "new_contributors": 7,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "actions-user",
+          "rekram1-node",
+          "ProdigyRahul"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 33,
+        "new_contributors": 0,
+        "top_contributors": [
+          "chrstnb",
+          "NTaylorMullen",
+          "Adib234",
+          "joshualitt",
+          "SandyTao520"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 31,
+        "new_contributors": 0,
+        "top_contributors": [
+          "jif-oai",
+          "aibrahim-oai",
+          "charley-oai",
+          "dylan-hurd-oai",
+          "MaxMiksa"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 23,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Veykril",
+          "probably-neb",
+          "danilo-leal",
+          "osyvokon",
+          "katie-z-geer"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 14,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 14,
+        "new_contributors": 0,
+        "top_contributors": [
+          "vtrivedy",
+          "mdrxy",
+          "sydney-runkle",
+          "eyurtsev"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hyoban",
+          "dependabot[bot]",
+          "byteforge38",
+          "github-actions[bot]",
+          "Copilot"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 11,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 10,
+        "new_contributors": 0,
+        "top_contributors": [
+          "BarreiroT",
+          "abeatrix",
+          "robinnewhouse",
+          "saoudrizwan",
+          "ThanhNguyxn"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "TamerineSky"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "hieptl",
+          "malhotra5"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "DavdGao",
+          "qbc2016"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "isabella-anthropic"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 4,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Mustafa-Esoofally",
+          "d8rt8v",
+          "deksprime",
+          "kausmeows"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ashwin-ant"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "gptme-thomas",
+          "ErikBjare"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "xunliu"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ericharmeling"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "lorenzejay"
+        ]
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "Michellehbn"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 9,
+    "unique_repos_count": 7,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.386",
+        "author": "github-actions[bot]",
+        "date": "2026-01-21",
+        "summary": "## Changes\n\n### PR [#1945](https://github.com/danielmiessler/Fabric/pull/1945) by [ksylvan](https://github.com/ksylvan): feat: Add Spotify API integration for podcast metadata retrieval\n\n- Add Spotify metadata retrieval via --spotify flag\n- Add Spotify plugin with OAuth token handling and metadata\n- Wire --spotify flag into CLI processing and output\n- Register Spotify in plugin setup, env, and registry\n- Update shell completions to include --spotify option\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.386",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Spotify API 集成功能，支持播客元数据检索",
+            "实现 Spotify 插件，包含 OAuth token 处理和元数据获取",
+            "在 CLI 中添加 --spotify 标志，整合到命令行处理流程",
+            "注册 Spotify 插件到环境配置和注册表",
+            "更新 Shell 自动补全功能，支持 --spotify 选项"
+          ],
+          "summary_cn": "此版本为 Fabric 添加了 Spotify API 集成功能，用户可通过 --spotify 标志检索播客元数据。变更包括实现 Spotify 插件（含 OAuth 认证）、CLI 标志集成以及 Shell 自动补全更新，属于新增功能类型。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.14",
+        "author": "ashwin-ant",
+        "date": "2026-01-20",
+        "summary": "## What's changed\n\n- Added history-based autocomplete in bash mode (`!`) - type a partial command and press Tab to complete from your bash command history\n- Added search to installed plugins list - type to filter by name or description\n- Added support for pinning plugins to specific git commit SHAs, allowing marketplace entries to install exact versions\n- Fixed a regression where the context window blocking limit was calculated too aggressively, blocking users at ~65% context usage instead of the intended ~98%\n- Fixed memory issues that could cause crashes when running parallel subagents\n- Fixed memory leak in long-running sessions where stream resources were not cleaned up after shell commands completed\n- Fixed `@` symbol incorrectly triggering file autocomplete suggestions in bash mode\n- Fixed `@`-mention menu folder click behavior to navigate into directories instead of selecting them\n- Fixed `/feedback` command generating invalid GitHub issue URLs when description is very long\n- Fixed `/context` command to show the same token count and percentage as the status line in verbose mode\n- Fixed an issue where `/config`, `/context`, `/model`, and `/todos` command overlays could close unexpectedly\n- Fixed slash command autocomplete selecting wrong command when typing similar commands (e.g., `/context` vs `/compact`)\n- Fixed inconsistent back navigation in plugin marketplace when only one marketplace is configured\n- Fixed iTerm2 progress bar not clearing properly on exit, preventing lingering indicators and bell sounds\n- Improved backspace to delete pasted text as a single token instead of one character at a time\n- [VSCode] Added `/usage` command to display current plan usage\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.14",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 bash 模式历史命令自动补全功能（Tab 键触发）",
+            "修复上下文窗口阻塞限制计算错误（从 65% 恢复至预期的 98%）",
+            "修复并行子代理崩溃和长时间会话内存泄漏问题",
+            "插件市场增强：支持通过 SHA 固定版本、新增搜索过滤功能",
+            "多项用户体验改进：命令覆盖层稳定性、斜杠命令补全准确性、粘贴文本删除等"
+          ],
+          "summary_cn": "Claude Code v2.1.14 版本主要带来了 bash 历史命令自动补全等新功能，并重点修复了上下文窗口阻塞限制计算错误、并行子代理崩溃及内存泄漏等严重影响使用的问题。同时优化了插件市场体验（支持 SHA 固定版本和搜索）以及多项命令相关的交互细节，整体提升了稳定性和可用性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.14",
+        "author": "ashwin-ant",
+        "date": "2026-01-20",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.14\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.14\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.14\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.14\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.14\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.14",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "更新至与 Claude Code v2.1.14 功能对等",
+            "保持与其他 Claude 工具链的版本同步",
+            "包含 Claude Code v2.1.14 的相关改进和修复"
+          ],
+          "summary_cn": "此版本主要是同步更新，使 SDK 与 Claude Code v2.1.14 保持功能对等。这是一个常规的维护版本，建议用户升级以获取最新的功能特性和问题修复。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.385",
+        "author": "github-actions[bot]",
+        "date": "2026-01-20",
+        "summary": "## Changes\n\n### PR [#1947](https://github.com/danielmiessler/Fabric/pull/1947) by [cleong14](https://github.com/cleong14): feat(patterns): add extract_bd_ideas pattern\n\n- Added extract_bd_ideas pattern that extracts actionable ideas from content and transforms them into well-structured bd issue tracker commands\n- Implemented identification system for tasks, problems, ideas, improvements, bugs, and features\n- Added actionability evaluation and appropriate scoping functionality\n- Integrated priority assignment system (P0-P4) with relevant labels\n- Created ready-to-execute bd create commands output format\n\n### PR [#1948](https://github.com/danielmiessler/Fabric/pull/1948) by [cleong14](https://github.com/cleong14): feat(patterns): add create_bd_issue pattern\n\n- Added create_bd_issue pattern that transforms natural language issue descriptions into optimal bd (Beads) issue tracker commands\n- Implemented comprehensive bd create flag reference for better command generation\n- Added intelligent type detection system that automatically categorizes issues as bug, feature, task, epic, or chore\n- Included priority assessment capability that assigns P0-P4 priority levels based on urgency signals in descriptions\n- Integrated smart label selection feature that automatically chooses 1-4 relevant labels for each issue\n\n### PR [#1949](https://github.com/danielmiessler/Fabric/pull/1949) by [ksylvan](https://github.com/ksylvan): Fix #1931 - Image Generation Feature should warn if the model is not capable of Image Generation\n\n- Add image generation compatibility warnings for unsupported models\n- Add warning to stderr when using incompatible models with image generation\n- Add GPT-5, GPT-5-nano, and GPT-5.2 to supported image generation models\n- Create `checkImageGenerationCompatibility` function in OpenAI plugin\n- Add comprehensive tests for image generation compatibility warnings\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.385",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 extract_bd_ideas 模式，可从内容中提取可执行的思路并转换为 bd issue tracker 命令",
+            "新增 create_bd_issue 模式，将自然语言描述转换为优化的 bd issue 命令，支持智能类型检测和优先级评估",
+            "增强图像生成功能，为不兼容的模型添加兼容性警告，并支持 GPT-5 系列模型",
+            "实现了智能问题分类系统，可自动识别 bug、feature、task、epic、chores 等类型",
+            "新增优先级分配系统（P0-P4）和智能标签选择功能"
+          ],
+          "summary_cn": "Fabric v1.4.385 发布，主要新增了两个强大的 bd issue 管理模式：extract_bd_ideas 可从内容中提取可执行思路并转换为结构化命令，create_bd_issue 可将自然语言描述自动转换为优化的 issue 命令，支持智能类型检测、优先级评估和标签选择。同时增强了图像生成功能的兼容性检查，为不支持图像生成的模型添加了警告提示，并新增了对 GPT-5 系列模型的支持。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.24.5",
+        "author": "github-actions[bot]",
+        "date": "2026-01-20",
+        "summary": "**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.24.4...v0.24.5",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.24.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "版本号从 v0.24.4 升级到 v0.24.5",
+            "详细信息需查看 Full Changelog 链接",
+            "无具体变更描述文本可供分析"
+          ],
+          "summary_cn": "gemini-cli v0.24.5 发布，从 v0.24.4 小版本升级。由于 Release Notes 仅提供了变更日志链接，未包含具体变更内容，无法提取详细的变更信息。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "version": "v1.0.13",
+        "author": "DavdGao",
+        "date": "2026-01-20",
+        "summary": "## Highlight\r\n\r\n### RAG\r\n\r\n- Support MongoDB vector database\r\n- Support Excel reader \r\n\r\n### Example\r\n\r\n- Integration with Qwen-Deep-Research model\r\n\r\n## What's Changed\r\n* Add example integration for Qwen-Deep-Research model by @denverdino in https://github.com/agentscope-ai/agentscope/pull/869\r\n* feat(tool): add func_name parameter to support custom tool renaming by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/1115\r\n* feat(rag): add MongoDB vector store in the RAG module. by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/860\r\n* ci(gemini): add code review guide for the gemini code assist by @DavdGao in https://github.com/agentscope-ai/agentscope/pull/1135\r\n* fix(doc): fix typos by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/1137\r\n* feat(rag): add excel reader to support excel files in the rag module by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/872\r\n* docs: update the documentations in the AgentScope repo by @DavdGao in https://github.com/agentscope-ai/agentscope/pull/1128\r\n* fix(formattter): assigns content as an empty list [] for messages without valid content blocks by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/1141\r\n* fix(model): fix openai stream parse when delta is None by @qbc2016 in https://github.com/agentscope-ai/agentscope/pull/1142\r\n* chore(version): update the version to 1.0.13 for a quick release by @DavdGao in https://github.com/agentscope-ai/agentscope/pull/1143\r\n* feat(dashscope): support to load headers from the environment by @DavdGao in https://github.com/agentscope-ai/agentscope/pull/1096\r\n\r\n## New Contributors\r\n* @denverdino made their first contribution in https://github.com/agentscope-ai/agentscope/pull/869\r\n\r\n**Full Changelog**: https://github.com/agentscope-ai/agentscope/compare/v1.0.12...v1.0.13",
+        "assets_count": 0,
+        "url": "https://github.com/agentscope-ai/agentscope/releases/tag/v1.0.13",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "RAG 模块新增 MongoDB 向量数据库支持",
+            "RAG 模块新增 Excel 文件读取器",
+            "工具模块支持自定义工具重命名",
+            "新增 Qwen-Deep-Research 模型集成示例",
+            "修复 OpenAI 流式解析和格式化器处理问题"
+          ],
+          "summary_cn": "AgentScope v1.0.13 版本主要增强了 RAG 能力，新增了 MongoDB 向量数据库和 Excel 文件读取支持，同时提供了 Qwen-Deep-Research 模型集成示例。此外还修复了 OpenAI 流式解析和格式化器的几个 Bug，并改进了工具自定义重命名和环境变量加载功能。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.28",
+        "author": "thdxr",
+        "date": "2026-01-20",
+        "summary": "## Core\n- Preserve tool input from running state for MCP tool results (@rynfar)\n- Pass arguments to commands without explicit placeholders (@remorses)\n- Adjust Codex prompt to discourage unnecessary questions and encourage more autonomous decision-making\n- Register OAuth callback before opening browser in MCP (@msvechla)\n- Support ACP audience by mapping to ignore and synthetic (@noamzbr)\n- Terminal no longer hangs on exit or Ctrl+D and closes the pane properly (@ProdigyRahul)\n## TUI\n- Prevent sidebar height from overflowing in terminal UI (@IdrisGit)\n## Desktop\n- Refactor Select component to use settings variant for settings modal styling\n- Show \"View all sessions\" button for active project and close hovercard on click\n- Remove close delay on hover cards to prevent overlapping\n- Fix review empty state font size\n- Fix race condition when editing project names (@DNGriffin)\n- Resolve Select children type conflict with ButtonProps\n- Fix prompt agent button style\n- Fix type error\n- Update keyboard shortcuts panel to match general settings styling\n- Add color scheme preview on hover in appearance dropdown\n- Update settings panel padding and make content full width\n- Set 32px spacing between main title and group title\n- Add fade gradient to settings panel headers\n- Reset select trigger to default state after selection\n- Add extra large dialog size and use it for settings modal\n- Add triggerStyle prop to Select component and apply it to font selector\n- Render font options in their respective fonts\n- Wrap settings row groups with styled container\n- Remove border and background from settings panel headers\n- Remove subheader from General settings panel\n- Add keyboard icon and use it for Shortcuts settings tab\n- Add sliders icon and use it for General settings tab\n- Update settings tabs layout and spacing\n- Increase icon letter size to 32px in edit project dialog\n- Increase session messages popover open delay to 1000ms\n- Fix end-to-end tests in app package\n- Add Windows end-to-end tests for the app\n- Change terminal.new keybind to Ctrl+Alt+T (@ProdigyRahul)\n- Cleanup PTY exited event listener on component unmount (@ProdigyRahul)\n- Fix duplicate session loads in app\n- Add tooltips to sidebar new session and workspace buttons (@ProdigyRahul)\n- Better pending states for workspace operations\n- Fix session loading loop in app\n- Add restart and reload menu items on macOS (@BlankParticle)\n- Fix broken app functionality\n- Add settings page to app\n\n**Thank you to 13 community contributors:**\n- @ProdigyRahul:\n  - fix(app): terminal no longer hangs on exit or ctrl + D and closes the pane (#9506)\n  - feat(app): add tooltips to sidebar new session/workspace buttons (#9652)\n  - fix(app): cleanup pty.exited event listener on unmount (#9671)\n  - fix(app): change terminal.new keybind to ctrl+alt+t (#9670)\n- @BlankParticle:\n  - feat: add restart and reload menu items on macOS (#9212)\n- @noamzbr:\n  - feat: Support ACP audience by mapping to ignore and synthetic (#9593)\n- @msvechla:\n  - fix(mcp): register OAuth callback before opening browser (#9646)\n- @remorses:\n  - fix: pass arguments to commands without explicit placeholders (#9606)\n- @zerone0x:\n  - fix(ui): show filename in Edit/Write permission titles (#9662)\n- @MBanucu:\n  - fix(opencode): Allow compatible Bun versions in packageManager field (#9597)\n- @DRunkPiano114:\n  - fix(ui): prevent Enter key action during IME composition (#9564)\n- @IdrisGit:\n  - fix(tui): prevent sidebar height from overflowing. (#9689)\n- @gigamonster256:\n  - fix(opencode): relax bun version requirement (#9682)\n- @DNGriffin:\n  - fix(app): Edit-project name race condition (#9551)\n- @rynfar:\n  - fix(opencode): preserve tool input from running state for MCP tool results (#9667)\n- @kdcokenny:\n  - docs(web): add KDCO plugins to ecosystem (#7694)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.28",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "优化 MCP 工具调用流程：保留运行状态的工具输入，在打开浏览器前注册 OAuth 回调",
+            "改进 Codex 提示策略，减少不必要提问并鼓励自主决策",
+            "修复终端关闭问题，解决退出或 Ctrl+D 时的挂起问题",
+            "重构桌面应用设置界面：统一样式、添加键盘快捷键面板、优化外观选择器等UI体验",
+            "修复多个 UI 问题：侧边栏溢出、项目名称编辑竞态条件、选择器类型冲突等"
+          ],
+          "summary_cn": "v1.1.28 版本主要包含核心功能的稳定性改进和桌面应用 UI 的全面优化。在核心层面，增强了 MCP 工具调用流程和 Codex 交互体验，修复了终端挂起问题。桌面端进行了大规模的 UI/UX 改进，包括重构设置面板、优化交互细节和修复多个样式与功能 bug。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.27",
+        "author": "thdxr",
+        "date": "2026-01-20",
+        "summary": "## Core\n- Remove filetime assertions from patch tool\n- Ensure truncation handling applies to MCP servers\n- Update batch tool definition to outline correct value for max tool calls (@jamesmengo)\n## TUI\n- Add space toggle hint to tool selection prompt (@cjellick)\n- Fix message history cleanup to prevent memory leaks in TUI\n## Desktop\n- Fixed flash of home page on application start\n- Fixed localStorage quota handling in app\n- Persist quota limits to prevent loss on reload\n- Completely disable pinch to zoom in desktop application (@Brendonovich)\n- Fix message list overflow and scrolling issues (@neriousy)\n- Add 8px padding to recent sessions popover\n- Remove top padding from edit project dialog form\n- Update session messages popover gutter to 28px\n- Position session messages popover at top\n- Retain session hover state when popover is open and update border radius\n- Update session hover popover styling\n- Update review session empty state styling\n- Add ability to select project directory text in web interface (@DNGriffin)\n\n**Thank you to 5 community contributors:**\n- @DNGriffin:\n  - feat(app): Add ability to select project directory text to web (#9344)\n- @neriousy:\n  - fix(app): message list overflow & scrolling (#9530)\n- @jamesmengo:\n  - fix(batch): update batch tool definition to outline correct value for max tool calls (#9517)\n- @cjellick:\n  - fix: add space toggle hint to tool selection prompt (#9535)\n- @Brendonovich:\n  - fix(desktop): completely disable pinch to zoom",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.27",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 TUI 内存泄漏问题（消息历史清理）",
+            "修复桌面应用启动时主页闪烁问题",
+            "修复消息列表溢出和滚动问题",
+            "修复 localStorage 配额处理并持久化配额限制",
+            "完全禁用桌面应用的缩放功能"
+          ],
+          "summary_cn": "此版本主要包含多个 Bug 修复和改进，重点解决了 TUI 的内存泄漏问题以及桌面应用的用户体验问题（包括启动闪烁、消息列表滚动和配额处理等）。同时进行了多项 UI/UX 优化，涉及会话提示框、编辑对话框等样式调整，并增加了项目目录文本选择功能。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.219.5",
+        "author": "github-actions[bot]",
+        "date": "2026-01-20",
+        "summary": "- Fixed a crash that could occur when trying to edit edit prediction providers in the settings UI. ([#47162](https://github.com/zed-industries/zed/pull/47162))\r\n- Fixed images in agent threads being converted to PNG but retaining old format, causing some API errors in the process. ([#45978](https://github.com/zed-industries/zed/pull/45978))\r\n- Fixed an issue where JSX components were highlighted too broadly, causing normal HTML tags to be highlighted as such ([#47132](https://github.com/zed-industries/zed/pull/47132))\r\n- Fixed an issue where relative line numbering would break with nested folds. ([#47108](https://github.com/zed-industries/zed/pull/47108))\r\n- Add support for GPT-5.2-Codex via OpenAI API Key ([#47031](https://github.com/zed-industries/zed/pull/47031))\r\n- Fixed a panic in the git panel when utf8 multibyte character filenames got truncated ([#46917](https://github.com/zed-industries/zed/pull/46917))\r\n- Fixed emoji being too small on Linux when using High DPI ([#46860](https://github.com/zed-industries/zed/pull/46860))\r\n- Agent: Fixed a bug where the button to delete a thread stopped showing up. ([#46831](https://github.com/zed-industries/zed/pull/46831))\r\n\r\n",
+        "assets_count": 10,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.219.5",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "新增 GPT-5.2-Codex 模型支持",
+            "修复编辑预测提供者设置时的崩溃问题",
+            "修复 Agent 线程中图片格式转换错误",
+            "修复 JSX 组件高亮范围过大问题",
+            "修复相对行号在嵌套折叠时的显示错误"
+          ],
+          "summary_cn": "本次版本主要是 Bug 修复更新，同时新增了对 OpenAI GPT-5.2-Codex 模型的支持。修复了多个关键问题，包括设置界面崩溃、Agent 线程图片格式转换错误、JSX 语法高亮问题以及相对行号显示错误，同时解决了 Linux 高 DPI 下 emoji 显示过小和 Git 面板文件名处理异常等问题。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
