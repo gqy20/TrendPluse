@@ -22,20 +22,18 @@ console = Console()
 
 
 def check_env_vars() -> bool:
-    """检查必需的环境变量"""
-    required_vars = ["ANTHROPIC_API_KEY"]
-    optional_vars = ["GITHUB_TOKEN", "ANTHROPIC_BASE_URL"]
+    """检查必需的环境变量
 
-    missing = []
-    for var in required_vars:
-        if not os.getenv(var):
-            missing.append(var)
+    支持 ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY（备选）
+    """
+    # 检查 API Key（支持两种环境变量）
+    api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_KEY")
 
-    if missing:
+    if not api_key:
         console.print(
             Panel(
                 "[bold red]缺少必需的环境变量:[/bold red]\n"
-                + "\n".join(f"  - {var}" for var in missing),
+                "  - ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY",
                 title="[bold red]配置错误[/bold red]",
                 border_style="red",
             )
@@ -43,6 +41,7 @@ def check_env_vars() -> bool:
         return False
 
     # 显示可选变量状态
+    optional_vars = ["GITHUB_TOKEN", "ANTHROPIC_BASE_URL"]
     for var in optional_vars:
         value = os.getenv(var)
         status = "[green]✓[/green]" if value else "[yellow]✗[/yellow] (未设置)"
@@ -68,6 +67,8 @@ def main():
         console.print(
             "\n[yellow]提示: 创建 .env 文件并设置以下变量:[/yellow]"
             "\n  ANTHROPIC_API_KEY=your-api-key"
+            "\n  # 或使用备选环境变量:"
+            "\n  # ANTHROPIC_AUTH_KEY=your-api-key"
             "\n  ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic"
             "\n  GITHUB_TOKEN=your-github-token"
         )
