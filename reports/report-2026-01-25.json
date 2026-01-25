@@ -1,0 +1,568 @@
+{
+  "date": "2026-01-25",
+  "summary_brief": "今日 (2026-01-25) 发现 6 个 Commit 信号，2 个 Release 信号。",
+  "engineering_signals": [
+    {
+      "id": "signal-0",
+      "title": "MCP协议深度集成与边界定义",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Model Context Protocol (MCP) 正迅速成为 AI 代理工具调用的标准接口。多个项目（gptme, deer-flow）正在积极适配或升级 MCP 版本，特别是引入 'roots' 支持来定义操作边界，这标志着 AI 代理从单纯的工具调用向具备安全沙箱和上下文感知的复杂系统演进。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/dd3108cba7358f31f5af3d7aa3ab422280c82fa4"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "ErikBjare/gptme"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "AI辅助编码的会话状态管理",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 引入了 'ephemeral threads'（临时线程）和会话源追踪，旨在解决多轮对话中的状态污染和上下文混淆问题。这表明 AI 编码工具正从单一的对话模式向支持复杂分支、并行任务和状态回滚的 'IDE级' 工作流转变。",
+      "sources": [
+        "https://github.com/openai/codex/commit/83775f4df117b991e99db962171552fc056395e8"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "语义路由与WASM性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude-flow 集成了 SemanticRouter 和 SONA WASM，并强调 'verified benchmarks'。这反映了 AI 应用正通过将路由逻辑下沉到边缘（WASM）和利用语义理解来优化请求分发，从而降低延迟和成本，提升响应速度。",
+      "sources": [
+        "https://github.com/ruvnet/claude-flow/commit/34d38c8b4227580b81dd78f4e4b75454f88eada4"
+      ],
+      "related_repos": [
+        "ruvnet/claude-flow"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "多模态渲染与DOM交互优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 针对 Markdown 渲染采用了 morphdom 进行 DOM 更新，并修复了终端克隆时的挂载问题。这表明 AI 代码生成工具正面临严峻的前端性能挑战——如何高效地流式更新复杂的代码视图而不引起 UI 闪烁或卡顿是提升用户体验的关键。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/399fec770f4f56c1df85a6f2d4858bc3f8c11c9a"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "AndyMik90/Auto-Claude"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "协作模式下的非破坏性编辑",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenAI Codex 修复了 'collaboration mode masks'，确保在不改变基础设置的情况下应用掩码。这反映了 AI 编程工具正从单人脚本向多人协作环境（如 Pair Programming）演进，需要更精细的权限和状态隔离机制。",
+      "sources": [
+        "https://github.com/openai/codex/commit/58450ba2a1d7c0d2d5405ae5f1f99fcf09e1cfe4"
+      ],
+      "related_repos": [
+        "openai/codex"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "跨平台终端兼容性增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 和 OpenCode 同时解决了 Windows 终端和 Sandbox 环境下的兼容性问题（如信号处理、文件清理）。随着 AI 工具试图渗透到企业级开发环境，确保在不同操作系统（特别是 Windows）和受限环境下的稳定性至关重要。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/b584192a4ccc2f8fde8533f181669200c229ef4f"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_prs_analyzed": 0,
+    "high_impact_signals": 3,
+    "total_commits_analyzed": 165,
+    "total_releases": 2
+  },
+  "activity": {
+    "total_commits": 165,
+    "active_repos_count": 11,
+    "new_contributors": 2,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 115,
+        "new_contributors": 2,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "actions-user",
+          "thdxr",
+          "rekram1-node"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 12,
+        "new_contributors": 0,
+        "top_contributors": [
+          "jif-oai",
+          "aibrahim-oai",
+          "charley-oai",
+          "mzeng-openai",
+          "MaxMiksa"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 8,
+        "new_contributors": 0,
+        "top_contributors": [
+          "AndyMik90",
+          "MikeeBuilds",
+          "StillKnotKnown"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 7,
+        "new_contributors": 0,
+        "top_contributors": [
+          "dependabot[bot]",
+          "xunliu"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 6,
+        "new_contributors": 0,
+        "top_contributors": [
+          "smitbarmase",
+          "kubkon",
+          "maxbrunsfeld",
+          "benbrandt",
+          "reflectronic"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 5,
+        "new_contributors": 0,
+        "top_contributors": [
+          "bdmorgan",
+          "scidomino",
+          "ved015"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "github-actions[bot]",
+          "ksylvan",
+          "infinitelyloopy-bt"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 3,
+        "new_contributors": 0,
+        "top_contributors": [
+          "vtrivedy",
+          "Jordanh1996"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 2,
+        "new_contributors": 0,
+        "top_contributors": [
+          "tofarr",
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 1,
+        "new_contributors": 0,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "new_contributors": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 2,
+    "unique_repos_count": 2,
+    "releases": [
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.35",
+        "author": "thdxr",
+        "date": "2026-01-25",
+        "summary": "## Core\n- Add tests\n- Sync changes from upstream\n- Fix models snapshot loading to prevent caching issues\n- Fix Nix configuration\n- Fix unicode filename handling in snapshot diff by disabling quote escaping\n- Deep merge providerOptions in applyCaching to preserve nested configuration (@zerone0x)\n- Construct apply_patch metadata before requesting permission in web interface (@brittlewis12)\n- Remove models.dev macro\n- Tell the model what model it is in the environment section of the prompt\n- Retry web fetch with simple user agent on 403 errors (@Arasple)\n- Allow GPT-5.1-Codex model in Codex auth plugin (@Danztee)\n- Bump gitlab-ai-provider version (@vglafirov)\n- Add model information as part of task metadata (@shantur)\n- Add xhigh reasoning effort for GitHub Copilot GPT-5 models (@Arthur742Ramos)\n- Normalize path separators for session diff filtering on Windows (@alexyaroshuk)\n- Faster workspace creation\n## TUI\n- Fix question selection click when terminal is unfocused (@maharshi365)\n- Use min/maxHeight for question textarea\n- Permission prompt should ignore keyboard events while dialog stack length is greater than zero (@justfortheloveof)\n- Use selectedForeground for question prompt tab text visibility (@ariane-emory)\n- Always center selected item in selection dialogs (@ariane-emory)\n## Desktop\n- Fix submit button state in app\n- Fix unnecessary suspense flash in app\n- Add active state to comment cards in prompt input\n- Fix type error\n- Terminal clone needs remount to function properly\n- Remove terminal connection error overlay\n- Remove space between ellipsis and truncated text in comment card tooltip\n- Update status popover empty state text color and centering\n- Prevent focus on share popover text field\n- Add link icon and use it for copy-to-clipboard buttons in UI\n- Adjust share popover position 64px to the left\n- Update share popover gutter to 6px and radius to match status dropdown\n- Add 8px spacing between share button and icon buttons in titlebar\n- Replace Popover with DropdownMenu for server options in app\n- Update options icon button styling with improved active state and hover effects\n- Change server item actions div padding from px-4 to pl-4\n- Add onFilter callback to List component and hide add server row during search\n- Position status circle inside input wrapper and fix dialog padding\n- Remove hover background color from server list items\n- Allow add server row to grow for error messages in app\n- Update add server button and row styling in app\n- Update manage servers dialog styling and behavior\n- Add truncation tooltip to server items in status popover\n- Update server and MCP item styles in status popover\n- Update status popover styling and positioning\n- Use 4px border radius (rounded-sm) consistently in app components\n- Update titlebar spacing and status popover styling in app\n- Enable submit button when comment cards are present in app\n- Add back button in subagent sessions (@tomzhu1024)\n- Model select dropdown not closing when pressing Escape key\n- Improve model selector user experience\n- Fix inability to select text when creating a new session\n- Fix scrolling in unpaid model selector\n- Fix Adam integration issue\n- Add critical shadow for comment input validation and set editor popover radius to 14px\n- Improve comment popover with better error styling and click-outside detection\n- Change prompt placeholder based on comment count in app\n- Adjust prompt container padding to 16px on bottom and horizontal sides\n- Adjust prompt input positioning to 12px from bottom and right edges, remove session panel bottom padding\n- Add escape/click-away to close read-only comment popovers, 10px radius, and remove 'Click to view context' text\n- Don't use findLast in app package\n- Add state to pause existing audio for demo menus and add support for audio controls (@jcampuza)\n- Implement new server management for web and desktop (@OpeOginni)\n- New workspace appears expanded and at the top of the list\n- Missing translations in app\n- Better error screen when connecting to sidecar\n- Fix line selection issues in the app\n- Fixed reactive loops in the app\n- Better session stream rendering performance\n- Add Iosevka as a font choice in desktop app (@ariane-emory)\n- Always close hovercard when view-sessions is clicked (@DNGriffin)\n- Close comment input popover on Escape key or click away\n- Use shadow-lg-border-base on read-only comment popovers and align label spacing\n- Remove border from comment input popover\n- Position read-only comment popover below icon with 4px gutter\n- Style comment popovers with 14px radius, move label below comment, and adjust text colors and sizes\n- Move filename and line count below comment text in popovers\n- Add tooltip with path, 6px spacing before close icon, and reduce filename truncation to 14 characters in editor tabs\n- Add middle truncation for filename in comment card\n- Truncate filename from start to show end of path in the app\n- Remove gap between filename and comment in comment card\n- Add shadow-xs-border with hover state to comment card\n- Fix comment card styling with 48px height, 2px gap, and truncated filename while preserving line count visibility\n- Increase comment font size to 12px in the app\n- Add 8px gap before close icon and truncate long filenames in app\n- Keep close icon in top right of comment card\n- Add transition-all to comment card hover states\n- Add close-small icon and use it for comment card dismiss button\n- Truncate comment text and set card max-width to 200px in app\n- Indent comment text to align with filename in context card\n- Style submitted comment icons to match comment popup style\n- Update prompt input styling with refined borders, hover states, and spacing\n- Update context cards styling with 8px padding/gap and 6px border radius\n- Add button-primary-base variable and use primary variant for Comment button\n- Improve comment popup styling and add new comment icon\n- Center checkbox indicator in provider selection (@ProdigyRahul)\n- Auto-open OAuth links for Codex and Copilot (@edoedac0)\n- Close delete workspace dialog immediately\n- Don't remount directory layout in app for better performance\n- Reapply work in progress changes for line selection feature in app\n- Revert line selection work in progress\n- Fix view all sessions flakiness in app (@DNGriffin)\n\n**Thank you to 18 community contributors:**\n- @ProdigyRahul:\n  - fix(app): enable dialog dismiss on model selector (dialog.tsx) (#10203)\n  - fix(app): center checkbox indicator in provider selection (#10267)\n  - fix(app): tooltip text in light mode to use inverted neutral scale (#9786)\n  - fix(app): markdown rendering with morphdom for better dom functions (#10373)\n- @DNGriffin:\n  - fix(app): View all sessions flakiness  (#10149)\n  - fix(app): Fix plan mode btn keyboard a11y issues (#10330)\n  - fix(app): Always close hovercard when view-sessions clicked (#10326)\n- @shantur:\n  - docs(ecosystem): Add CodeNomad entry to ecosystem documentation (#10222)\n  - feat(tasks): Add model info as part of metadata (#10307)\n- @edoedac0:\n  - feat(app): auto-open oauth links for codex and copilot (#10258)\n- @ariane-emory:\n  - feat: always center selected item in selection dialogs (resolves #10209) (#10207)\n  - feat(desktop): add Iosevka as a font choice (resolves #10103) (#10347)\n  - fix(tui): Use selectedForeground for question prompt tab text visibility (resolves #10334) (#10337)\n- @alexyaroshuk:\n  - fix(app): normalize path separators for session diff filtering on Windows (#10291)\n- @Arthur742Ramos:\n  - fix: add xhigh reasoning effort for GitHub Copilot GPT-5 models (#10092)\n- @vglafirov:\n  - fix: bump gitlab-ai-provider version (#10255)\n- @Danztee:\n  - fix: allow gpt-5.1-codex model in codex auth pluginFixes (#10181)\n- @Arasple:\n  - fix: retry webfetch with simple UA on 403 (#10328)\n- @neriousy:\n  - feat(docs): add a desktop troubleshooting guide (#10397)\n- @justfortheloveof:\n  - fix: permission prompt should ignore keyboard events while dialog stack len > 0 (#10338)\n- @brittlewis12:\n  - fix(web): construct apply_patch metadata before requesting permission (#10422)\n- @OpeOginni:\n  - feat(web): implement new server management for web and desktop (#8513)\n- @zerone0x:\n  - fix(provider): deep merge providerOptions in applyCaching (#10323)\n- @jcampuza:\n  - fix: add state to pause existing audio for demo menus, add support fo… (#10428)\n- @maharshi365:\n  - fix(opentui): question selection click when terminal unfocused (#9731)\n- @tomzhu1024:\n  - feat(app): back button in subagent sessions (#10439)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.35",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "修复模型快照加载缓存问题",
+            "支持 GPT-5.1-Codex 模型和 GitHub Copilot GPT-5 xhigh 推理",
+            "修复 Windows 路径分隔符和 Unicode 文件名处理",
+            "优化 TUI 交互体验（问题选择、权限提示、对话框居中）",
+            "修复 Desktop 应用终端连接和提交流程问题"
+          ],
+          "summary_cn": "v1.1.35 是一个以改进和修复为主的版本，主要修复了模型快照加载、Windows 路径处理和 Unicode 文件名等核心问题，同时增强了对 GPT-5.1-Codex 和 GitHub Copilot GPT-5 模型的支持。TUI 和 Desktop 界面也获得多项交互优化，包括问题选择、权限提示和终端连接等方面的改进。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.391",
+        "author": "github-actions[bot]",
+        "date": "2026-01-24",
+        "summary": "## Changes\n\nMiniMax unexpected status code: 404 from provider MiniMax, response body: 404 page not found\n### PR [#1965](https://github.com/danielmiessler/Fabric/pull/1965) by [infinitelyloopy-bt](https://github.com/infinitelyloopy-bt): fix(azure): Fix deployment URL path for Azure OpenAI API\n\n- Fixed deployment URL path construction for Azure OpenAI API to correctly include deployment names in request URLs\n- Added custom middleware to transform API paths and extract deployment names from request body model fields\n- Moved StreamOptions configuration to only apply to streaming requests, as Azure rejects stream_options for non-streaming requests\n- Added Azure OpenAI troubleshooting documentation with technical details and configuration guidance\n- Resolved SDK route matching bug that was preventing proper URL generation for Azure OpenAI endpoints\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.391",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Azure OpenAI API 部署 URL 路径构建问题，正确包含部署名称",
+            "添加自定义中间件转换 API 路径并从请求体中提取部署名称",
+            "修复 StreamOptions 配置逻辑，仅对流式请求应用（Azure 会拒绝非流式请求的此参数）",
+            "修复 SDK 路由匹配 Bug，解决 Azure OpenAI 端点 URL 生成问题",
+            "新增 Azure OpenAI 故障排查文档，包含技术细节和配置指南"
+          ],
+          "summary_cn": "v1.4.391 版本主要修复了 Azure OpenAI API 集成中的多个关键问题，包括部署 URL 路径构建错误、StreamOptions 配置不当以及 SDK 路由匹配 Bug。通过引入自定义中间件和优化配置逻辑，确保 Azure OpenAI 请求能正确处理部署名称和流式参数，同时新增了完整的故障排查文档。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ]
+}
