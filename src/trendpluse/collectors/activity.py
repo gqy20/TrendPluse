@@ -142,10 +142,33 @@ class ActivityCollector(BaseGitHubCollector):
 
             # 解析响应
             repository = result.get("repository", {})
-            default_branch_ref = repository.get("defaultBranchRef", {})
-            target = default_branch_ref.get("target", {})
+            if not repository:
+                return RepoActivity(
+                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
+                ), []
+
+            default_branch_ref = repository.get("defaultBranchRef")
+            if not default_branch_ref:
+                return RepoActivity(
+                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
+                ), []
+
+            target = default_branch_ref.get("target")
+            if not target:
+                return RepoActivity(
+                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
+                ), []
+
+            # 注意：target 就是 Commit 类型（通过 ... on Commit 投影）
+            # 不需要检查 __typename，直接处理
+
             history = target.get("history", {})
             nodes = history.get("nodes", [])
+
+            if not nodes:
+                return RepoActivity(
+                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
+                ), []
 
             # 统计贡献者
             contributor_commits: dict[str, int] = {}

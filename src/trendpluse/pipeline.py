@@ -112,19 +112,20 @@ class TrendPulsePipeline:
         if date is None:
             date = datetime.now()
 
-        # 0. 收集仓库活跃度数据（使用 GraphQL API）
+        # 从当前时间往前推 24 小时
+        day_ago = date - timedelta(days=1)
+
+        # 0. 收集仓库活跃度数据（使用 GraphQL API，查询最近 24 小时）
         (
             activity_data,
             detailed_commits,
         ) = self.activity_collector.collect_activity_graphql(
             repos=self.settings.github_repos,
-            since=date,
+            since=day_ago,
             max_workers=self.settings.max_parallel_workers,
         )
 
         # 0.3. 收集 Releases 数据（只分析最近 24 小时）
-        # 从当前时间往前推 24 小时
-        day_ago = date - timedelta(days=1)
         releases_data, detailed_releases = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
             since=day_ago,

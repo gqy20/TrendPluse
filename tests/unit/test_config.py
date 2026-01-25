@@ -69,8 +69,10 @@ class TestSettings:
 
     def test_validate_missing_required_fields(self, monkeypatch):
         """测试：缺少必需字段应该抛出错误"""
-        # Arrange - 清除环境变量
+        # Arrange - 清除所有环境变量（包括备选变量）
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+        monkeypatch.delenv("ANTHROPIC_AUTH_KEY", raising=False)
+        monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
         monkeypatch.delenv("GITHUB_TOKEN", raising=False)
 
         # Act & Assert
