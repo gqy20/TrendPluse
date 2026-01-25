@@ -60,7 +60,7 @@ class TestGraphQLActivityCollector:
             collector = ActivityCollector(token=token)
 
             # Act
-            activity_data, commits = collector.collect_activity_graphql(repos, since)  # type: ignore[attr-defined]
+            activity_data, commits = collector.collect_activity_graphql(repos, since)
 
             # Assert
             assert isinstance(activity_data, ActivityData)
@@ -96,7 +96,7 @@ class TestGraphQLActivityCollector:
             collector = ActivityCollector(token=token)
 
             # Act
-            activity_data, commits = collector.collect_activity_graphql(repos, since)  # type: ignore[attr-defined]
+            activity_data, commits = collector.collect_activity_graphql(repos, since)
 
             # Assert
             assert activity_data.total_commits == 0
@@ -119,14 +119,18 @@ class TestGraphQLActivityCollector:
 
             # Act
             try:
-                collector.collect_activity_graphql(repos, since)  # type: ignore[attr-defined]
+                collector.collect_activity_graphql(repos, since)
             except Exception:
                 pass  # 我们只关心查询是否正确
 
             # Assert - 验证 GraphQL 查询包含关键字段
             call_args = mock_client.execute.call_args
             if call_args:
-                query = call_args[0][0]
+                # gql() 将查询字符串转换为 GraphQLRequest 对象
+                # 需要从第一个参数（位置参数）中提取查询字符串
+                request_obj = call_args[0][0]
+                # GraphQLRequest 对象有 query 属性存储原始查询字符串
+                query = getattr(request_obj, "query", str(request_obj))
                 assert "repository" in query
                 assert "defaultBranchRef" in query
                 assert "history" in query
@@ -142,9 +146,11 @@ class TestGraphQLActivityCollector:
         since = datetime(2025, 1, 25, tzinfo=UTC)
 
         # Mock 两个仓库的响应
-        def mock_execute(query, variables):
-            owner = variables["owner"]
-            repo = variables["repo"]
+        def mock_execute(query, variable_values=None):
+            # execute_query() 使用 variable_values 参数传递变量
+            variables = variable_values or {}
+            owner = variables.get("owner", "")
+            repo = variables.get("repo", "")
             return {
                 "repository": {
                     "defaultBranchRef": {
@@ -175,7 +181,7 @@ class TestGraphQLActivityCollector:
             collector = ActivityCollector(token=token)
 
             # Act
-            activity_data, commits = collector.collect_activity_graphql(  # type: ignore[attr-defined]
+            activity_data, commits = collector.collect_activity_graphql(
                 repos, since, max_workers=2
             )
 
