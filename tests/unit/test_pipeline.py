@@ -164,7 +164,7 @@ class TestTrendPulsePipeline:
                 "timestamp": "2026-01-02T10:00:00Z",
             }
         ]
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             detailed_commits,
         )
@@ -318,7 +318,7 @@ class TestTrendPulsePipeline:
                 "timestamp": "2026-01-02T10:00:00Z",
             }
         ]
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             detailed_commits,
         )
@@ -453,7 +453,7 @@ class TestTrendPulsePipeline:
             new_contributors=2,
             top_repos=[],
         )
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             [],
         )
@@ -554,7 +554,7 @@ class TestTrendPulsePipeline:
             new_contributors=0,
             top_repos=[],
         )
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             [],
         )
@@ -656,7 +656,7 @@ class TestTrendPulsePipeline:
             new_contributors=0,
             top_repos=[],
         )
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             [],
         )

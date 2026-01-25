@@ -112,8 +112,11 @@ class TrendPulsePipeline:
         if date is None:
             date = datetime.now()
 
-        # 0. 收集仓库活跃度数据（独立于 PR 分析）
-        activity_data, detailed_commits = self.activity_collector.collect_activity(
+        # 0. 收集仓库活跃度数据（使用 GraphQL API）
+        (
+            activity_data,
+            detailed_commits,
+        ) = self.activity_collector.collect_activity_graphql(
             repos=self.settings.github_repos,
             since=date,
             max_workers=self.settings.max_parallel_workers,
