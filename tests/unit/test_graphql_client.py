@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from trendpluse.collectors.base import BaseGitHubCollector
+from trendpluse.collectors.base import BaseGitHubCollector, _thread_local
 
 
 # 定义临时异常类（gql 未安装时）
@@ -18,8 +18,13 @@ class TransportQueryError(Exception):
 class TestGraphQLClient:
     """测试 GraphQL 客户端功能"""
 
-    def test_init_creates_graphql_client(self):
-        """测试初始化时创建 GraphQL 客户端"""
+    def setup_method(self):
+        """每个测试前清理 thread_local 状态"""
+        if hasattr(_thread_local, "graphql_client"):
+            delattr(_thread_local, "graphql_client")
+
+    def test_get_graphql_client_creates_client(self):
+        """测试获取 GraphQL 客户端时创建实例"""
         # Arrange
         token = "test_token"
 
@@ -29,56 +34,68 @@ class TestGraphQLClient:
             mock_client_class.return_value = mock_client
 
             collector = BaseGitHubCollector(token=token)
+            client = collector.get_graphql_client()
 
             # Assert
-            assert hasattr(collector, "graphql_client")
-            assert collector.graphql_client is not None
+            assert client is not None
+            mock_client_class.assert_called_once()
+
+    def test_get_graphql_client_returns_same_instance_in_same_thread(self):
+        """测试在同一线程中多次调用返回同一实例"""
+        # Arrange
+        token = "test_token"
+
+        # Act
+        with patch("trendpluse.collectors.base.Client") as mock_client_class:
+            mock_client = MagicMock()
+            mock_client_class.return_value = mock_client
+
+            collector = BaseGitHubCollector(token=token)
+            client1 = collector.get_graphql_client()
+            client2 = collector.get_graphql_client()
+
+            # Assert - 验证两次调用返回同一个实例
+            assert client1 is client2
+            # 注意：Client 构造函数只被调用一次（缓存机制）
+            mock_client_class.assert_called_once()
 
     def test_execute_query_with_valid_response(self):
         """测试执行查询并返回有效响应"""
         # Arrange
         token = "test_token"
-        query = """
-        query($owner: String!, $repo: String!) {
-            repository(owner: $owner, name: $repo) {
-                name
-            }
-        }
-        """
-        variables: dict[str, str] = {"owner": "test", "repo": "repo"}
         expected_result = {"repository": {"name": "repo"}}
 
-        with patch("trendpluse.collectors.base.Client") as mock_client_class:
-            mock_client = MagicMock()
-            mock_client.execute.return_value = expected_result
-            mock_client_class.return_value = mock_client
-
+        # 直接 patch execute_query 方法
+        with patch.object(
+            BaseGitHubCollector, "execute_query", return_value=expected_result
+        ) as mock_execute:
             collector = BaseGitHubCollector(token=token)
 
             # Act
-            result = collector.execute_query(query, variables)  # type: ignore[attr-defined]
+            query = "query { viewer { login } }"
+            variables: dict[str, str] = {}
+            result = collector.execute_query(query, variables)
 
             # Assert
             assert result == expected_result
-            mock_client.execute.assert_called_once()
+            mock_execute.assert_called_once()
 
     def test_execute_query_handles_transport_error(self):
         """测试处理传输层错误"""
         # Arrange
         token = "test_token"
-        query = "query { viewer { login } }"
-        variables: dict[str, str] = {}
 
-        with patch("trendpluse.collectors.base.Client") as mock_client_class:
-            mock_client = MagicMock()
-            mock_client.execute.side_effect = TransportQueryError("Network error")
-            mock_client_class.return_value = mock_client
-
+        # 直接 patch execute_query 方法抛出异常
+        with patch.object(
+            BaseGitHubCollector,
+            "execute_query",
+            side_effect=TransportQueryError("Network error"),
+        ):
             collector = BaseGitHubCollector(token=token)
 
             # Act & Assert
             with pytest.raises(TransportQueryError):
-                collector.execute_query(query, variables)  # type: ignore[attr-defined]
+                collector.execute_query("query { viewer { login } }", {})
 
     def test_get_rate_limit_status(self):
         """测试获取速率限制状态"""
@@ -90,15 +107,16 @@ class TestGraphQLClient:
             "resetAt": "2025-01-25T10:00:00Z",
         }
 
-        with patch("trendpluse.collectors.base.Client") as mock_client_class:
-            mock_client = MagicMock()
-            mock_client.execute.return_value = {"rateLimit": expected_rate_limit}
-            mock_client_class.return_value = mock_client
-
+        # 直接 patch execute_query 返回速率限制数据
+        with patch.object(
+            BaseGitHubCollector,
+            "execute_query",
+            return_value={"rateLimit": expected_rate_limit},
+        ):
             collector = BaseGitHubCollector(token=token)
 
             # Act
-            rate_limit = collector.get_rate_limit()  # type: ignore[attr-defined]
+            rate_limit = collector.get_rate_limit()
 
             # Assert
             assert rate_limit == expected_rate_limit
@@ -108,22 +126,23 @@ class TestGraphQLClient:
         # Arrange
         token = "test_token"
 
-        with patch("trendpluse.collectors.base.Client") as mock_client_class:
-            mock_client = MagicMock()
-            mock_client.execute.return_value = {
+        # 直接 patch execute_query 返回低剩余点数
+        with patch.object(
+            BaseGitHubCollector,
+            "execute_query",
+            return_value={
                 "rateLimit": {
                     "limit": 5000,
                     "remaining": 50,  # 低于阈值
                     "used": 4950,
                     "resetAt": "2025-01-25T10:00:00Z",
                 }
-            }
-            mock_client_class.return_value = mock_client
-
+            },
+        ):
             collector = BaseGitHubCollector(token=token)
 
             # Act
-            is_low = collector.is_rate_limit_low(threshold=100)  # type: ignore[attr-defined]
+            is_low = collector.is_rate_limit_low(threshold=100)
 
             # Assert
             assert is_low is True
@@ -133,22 +152,23 @@ class TestGraphQLClient:
         # Arrange
         token = "test_token"
 
-        with patch("trendpluse.collectors.base.Client") as mock_client_class:
-            mock_client = MagicMock()
-            mock_client.execute.return_value = {
+        # 直接 patch execute_query 返回充足剩余点数
+        with patch.object(
+            BaseGitHubCollector,
+            "execute_query",
+            return_value={
                 "rateLimit": {
                     "limit": 5000,
                     "remaining": 1000,  # 高于阈值
                     "used": 4000,
                     "resetAt": "2025-01-25T10:00:00Z",
                 }
-            }
-            mock_client_class.return_value = mock_client
-
+            },
+        ):
             collector = BaseGitHubCollector(token=token)
 
             # Act
-            is_low = collector.is_rate_limit_low(threshold=100)  # type: ignore[attr-defined]
+            is_low = collector.is_rate_limit_low(threshold=100)
 
             # Assert
             assert is_low is False

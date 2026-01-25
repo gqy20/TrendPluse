@@ -6,11 +6,15 @@
 
 from abc import ABC
 from datetime import UTC, datetime
+from threading import local
 from typing import Any, cast
 
 from github import Github
 from gql import Client, gql
 from gql.transport.requests import RequestsHTTPTransport
+
+# 线程本地存储，用于为每个线程创建独立的 GraphQL client
+_thread_local = local()
 
 
 class BaseGitHubCollector(ABC):
@@ -21,8 +25,10 @@ class BaseGitHubCollector(ABC):
 
     Attributes:
         client: GitHub REST API 客户端 (PyGithub)
-        graphql_client: GitHub GraphQL API 客户端
         token: GitHub API token（如果有）
+
+    注意：GraphQL 客户端使用线程本地存储，每个线程拥有独立实例，
+    避免并发问题。
     """
 
     def __init__(self, token: str = ""):
@@ -40,8 +46,21 @@ class BaseGitHubCollector(ABC):
             # 无 token 时仍然可以访问公开仓库，但有速率限制
             self.client = Github()
 
-        # 初始化 GraphQL 客户端
-        self.graphql_client = self._create_graphql_client(token)
+        # 注意：GraphQL 客户端不再在 __init__ 中创建
+        # 而是通过 get_graphql_client() 按需获取线程本地实例
+
+    def get_graphql_client(self) -> Client:
+        """获取线程本地的 GraphQL 客户端
+
+        每个线程都会获得独立的 GraphQL 客户端实例，
+        避免多线程并发时的 "Transport is already connected" 错误。
+
+        Returns:
+            当前线程的 GraphQL 客户端
+        """
+        if not hasattr(_thread_local, "graphql_client"):
+            _thread_local.graphql_client = self._create_graphql_client(self.token)
+        return _thread_local.graphql_client
 
     def _create_graphql_client(self, token: str) -> Client:
         """创建 GraphQL 客户端
@@ -76,7 +95,8 @@ class BaseGitHubCollector(ABC):
         Raises:
             Exception: 查询失败时抛出异常
         """
-        result = self.graphql_client.execute(gql(query), variable_values=variables)
+        client = self.get_graphql_client()
+        result = client.execute(gql(query), variable_values=variables)
         return result
 
     def get_rate_limit(self) -> dict[str, Any]:

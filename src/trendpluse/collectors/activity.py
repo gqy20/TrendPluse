@@ -12,8 +12,10 @@ from trendpluse.collectors.parallel import parallel_map
 from trendpluse.models.signal import ActivityData, RepoActivity
 
 # GraphQL 查询模板
+# 注意：history.since 参数需要 GitTimestamp 类型，而不是 DateTime
+# GitTimestamp 不会自动转换为 UTC，保留原始时区信息
 GRAPHQL_COMMIT_QUERY = """
-query($owner: String!, $repo: String!, $since: DateTime!) {
+query($owner: String!, $repo: String!, $since: GitTimestamp!) {
     repository(owner: $owner, name: $repo) {
         defaultBranchRef {
             target {

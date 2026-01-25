@@ -24,16 +24,20 @@ console = Console()
 def check_env_vars() -> bool:
     """检查必需的环境变量
 
-    支持 ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY（备选）
+    支持多种环境变量名：ANTHROPIC_API_KEY、ANTHROPIC_AUTH_KEY、ANTHROPIC_AUTH_TOKEN
     """
-    # 检查 API Key（支持两种环境变量）
-    api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_KEY")
+    # 检查 API Key（支持多种环境变量名）
+    api_key = (
+        os.getenv("ANTHROPIC_API_KEY")
+        or os.getenv("ANTHROPIC_AUTH_KEY")
+        or os.getenv("ANTHROPIC_AUTH_TOKEN")
+    )
 
     if not api_key:
         console.print(
             Panel(
                 "[bold red]缺少必需的环境变量:[/bold red]\n"
-                "  - ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY",
+                "  - ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY 或 ANTHROPIC_AUTH_TOKEN",
                 title="[bold red]配置错误[/bold red]",
                 border_style="red",
             )

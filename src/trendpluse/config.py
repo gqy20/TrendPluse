@@ -104,12 +104,21 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")  # type: ignore[misc]
     def load_alternative_api_key(self) -> None:
-        """当 ANTHROPIC_API_KEY 为空时，尝试使用 ANTHROPIC_AUTH_KEY"""
+        """当 ANTHROPIC_API_KEY 为空时，尝试使用备选环境变量
+
+        支持的备选变量名（按优先级）：
+        1. ANTHROPIC_AUTH_KEY
+        2. ANTHROPIC_AUTH_TOKEN
+        """
         if not self.anthropic_api_key:
-            # 从环境变量直接读取备选值
             import os
 
-            fallback_key = os.getenv("ANTHROPIC_AUTH_KEY", "")
+            # 按优先级尝试多个备选环境变量
+            fallback_key = (
+                os.getenv("ANTHROPIC_AUTH_KEY")
+                or os.getenv("ANTHROPIC_AUTH_TOKEN")
+                or ""
+            )
             # 需要通过 object.__setattr__ 来绕过 frozen 实例限制
             object.__setattr__(self, "anthropic_api_key", fallback_key)
 
