@@ -30,24 +30,21 @@ dependencies = [
     "pydantic>=2.10.0",
     "pydantic-settings>=2.6.0",
     "python-dotenv>=1.0.0",
-
     # 数据采集
     "google-cloud-bigquery>=3.0.0",
-
     # 模板和文档
     "jinja2>=3.1.0",
     "markdown-it-py>=3.0.0",
     "mdit-py-plugins>=0.4.0",
-
     # 工具库
     "rich>=13.0.0",
     "tenacity>=9.0.0",
     "httpx>=0.27.0",
     "aiohttp>=3.10.0",
     "python-dateutil>=2.9.0",
-
     # 数据处理
     "pyyaml>=6.0.0",
+    "gql[all]>=4.0.0",
 ]
 
 [project.optional-dependencies]
@@ -136,6 +133,8 @@ module = [
     "pytest.*",
     "pydantic_settings.*",
     "httpx.*",
+    "gql.*",              # 新增：GraphQL 客户端
+    "graphql_core.*",      # 新增：GraphQL 核心
 ]
 ignore_missing_imports = true
 
@@ -148,3 +147,8 @@ disable_error_code = ["abstract"]  # 测试中故意实例化抽象类
 [[tool.mypy.overrides]]
 module = "trendpluse.analyzers.*"
 warn_unused_ignores = false  # instructor 返回类型复杂，需要 type: ignore
+
+# GraphQL 相关代码允许 Any 返回类型
+[[tool.mypy.overrides]]
+module = "trendpluse.collectors.base"
+disable_error_code = ["no-any-return"]
