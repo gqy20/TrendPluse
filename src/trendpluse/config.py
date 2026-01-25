@@ -3,7 +3,7 @@
 使用 pydantic-settings 管理配置，支持环境变量和 .env 文件。
 """
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -87,7 +87,11 @@ class Settings(BaseSettings):
     github_base_url: str = "https://api.github.com"
 
     # Anthropic/智谱 AI 配置
-    anthropic_api_key: str = Field(default="", description="Anthropic/智谱 AI API Key")
+    # 支持两种环境变量：ANTHROPIC_API_KEY（优先）或 ANTHROPIC_AUTH_KEY（备选）
+    anthropic_api_key: str = Field(
+        default="",
+        description="Anthropic/智谱 AI API Key (支持 ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY)",  # noqa: E501
+    )
     anthropic_base_url: str = Field(
         default="https://open.bigmodel.cn/api/anthropic",
         description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)",
@@ -97,6 +101,17 @@ class Settings(BaseSettings):
     )
     anthropic_max_tokens: int = 8000
     anthropic_timeout: int = 120
+
+    @model_validator(mode="after")  # type: ignore[misc]
+    def load_alternative_api_key(self) -> None:
+        """当 ANTHROPIC_API_KEY 为空时，尝试使用 ANTHROPIC_AUTH_KEY"""
+        if not self.anthropic_api_key:
+            # 从环境变量直接读取备选值
+            import os
+
+            fallback_key = os.getenv("ANTHROPIC_AUTH_KEY", "")
+            # 需要通过 object.__setattr__ 来绕过 frozen 实例限制
+            object.__setattr__(self, "anthropic_api_key", fallback_key)
 
     # 筛选规则
     candidate_labels: list[str] = [

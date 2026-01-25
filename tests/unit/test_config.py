@@ -159,3 +159,31 @@ class TestSettings:
         # Assert
         assert settings.feishu_at_mobiles == ""
         assert settings.feishu_at_mobiles_list == []
+
+    def test_anthropic_auth_key_fallback(self, monkeypatch):
+        """测试：ANTHROPIC_AUTH_KEY 应该作为 ANTHROPIC_API_KEY 的备选"""
+        # Arrange - 只设置 ANTHROPIC_AUTH_KEY，不设置 ANTHROPIC_API_KEY
+        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+        monkeypatch.setenv("ANTHROPIC_AUTH_KEY", "fallback_key")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert - 应该使用 ANTHROPIC_AUTH_KEY 的值
+        assert settings.anthropic_api_key == "fallback_key"
+
+    def test_anthropic_api_key_priority(self, monkeypatch):
+        """测试：当两者都存在时，ANTHROPIC_API_KEY 优先"""
+        # Arrange - 同时设置两个环境变量
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "primary_key")
+        monkeypatch.setenv("ANTHROPIC_AUTH_KEY", "fallback_key")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert - 应该使用 ANTHROPIC_API_KEY 的值（优先级更高）
+        assert settings.anthropic_api_key == "primary_key"

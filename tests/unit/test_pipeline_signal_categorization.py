@@ -145,7 +145,7 @@ class TestSignalCategorization:
         mock_collector.return_value = mock_ghec_instance
 
         mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             mock_detailed_commits,
         )

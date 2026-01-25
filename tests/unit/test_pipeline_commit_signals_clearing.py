@@ -114,7 +114,7 @@ class TestCommitSignalsClearing:
                 "timestamp": "2026-01-12T10:00:00Z",
             }
         ]
-        mock_activity_collector_instance.collect_activity.return_value = (
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
             mock_activity_data,
             detailed_commits,
         )
