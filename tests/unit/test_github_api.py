@@ -228,6 +228,7 @@ class TestGitHubDetailFetcher:
             mock_prs.append(mock_pr)
 
         mock_repo = Mock()
+
         # 为每个 PR 号码创建独立的 mock
         def get_pull_side_effect(pr_number):
             return mock_prs[pr_number - 1]
@@ -315,6 +316,7 @@ class TestGitHubDetailFetcher:
         mock_pr_3.changed_files = 6
 
         mock_repo = Mock()
+
         # 为每个 PR 号码创建独立的 mock
         def get_pull_side_effect(pr_number):
             if pr_number == 1:
