@@ -9,7 +9,10 @@ from typing import Any
 from pydantic import ValidationError
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
+
+logger = get_logger(__name__)
 
 
 class CommitAnalyzer(BaseLLMAnalyzer):
@@ -48,27 +51,27 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         """
         # 处理空列表
         if not commits:
-            print("[DEBUG] CommitAnalyzer: 收到空 commit 列表")
+            logger.debug("CommitAnalyzer: 收到空 commit 列表")
             return []
 
-        print(f"[DEBUG] CommitAnalyzer: 开始分析 {len(commits)} 个 commits")
+        logger.debug(f"CommitAnalyzer: 开始分析 {len(commits)} 个 commits")
 
         try:
             # 调用 LLM 分析
-            print("[DEBUG] CommitAnalyzer: 调用 LLM 分析...")
+            logger.debug("CommitAnalyzer: 调用 LLM 分析...")
             llm_response = self._call_llm(commits)
-            print(f"[DEBUG] CommitAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
-            print(f"[DEBUG] CommitAnalyzer: LLM 响应预览: {llm_response[:500]}...")
+            logger.debug(f"CommitAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
+            logger.debug(f"CommitAnalyzer: LLM 响应预览: {llm_response[:500]}...")
 
             # 解析响应
             signals = self._parse_signals(llm_response, commits)
-            print(f"[DEBUG] CommitAnalyzer: 解析得到 {len(signals)} 个信号")
+            logger.debug(f"CommitAnalyzer: 解析得到 {len(signals)} 个信号")
 
             return signals
 
         except Exception as e:
             # 出错时返回空列表
-            print(f"[DEBUG] CommitAnalyzer: 分析失败 - {type(e).__name__}: {e}")
+            logger.debug(f"CommitAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
     def _call_llm(self, commits: list[dict[str, Any]]) -> str:
@@ -249,11 +252,11 @@ class CommitAnalyzer(BaseLLMAnalyzer):
 
             # 记录跳过的信号数量（用于调试）
             if skipped_count > 0:
-                print(f"[DEBUG] CommitAnalyzer: 跳过 {skipped_count} 个验证失败的信号")
+                logger.debug(f"CommitAnalyzer: 跳过 {skipped_count} 个验证失败的信号")
 
             return signals
 
         except (json.JSONDecodeError, ValidationError) as e:
             # JSON 解析失败或验证失败时返回空列表
-            print(f"[DEBUG] CommitAnalyzer: 解析失败 - {type(e).__name__}: {e}")
+            logger.debug(f"CommitAnalyzer: 解析失败 - {type(e).__name__}: {e}")
             return []

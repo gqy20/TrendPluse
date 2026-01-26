@@ -7,6 +7,9 @@ import json
 from typing import Any
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class BreakingChangesDetector(BaseLLMAnalyzer):
@@ -48,27 +51,27 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
 
         # 处理空列表
         if not detailed_releases:
-            print("[DEBUG] BreakingChangesDetector: 收到空 release 列表")
+            logger.debug("BreakingChangesDetector: 收到空 release 列表")
             return []
 
-        print(
-            f"[DEBUG] BreakingChangesDetector: 开始分析 "
+        logger.debug(
+            f"BreakingChangesDetector: 开始分析 "
             f"{len(detailed_releases)} 个 releases"
         )
 
         try:
             # 调用 LLM 分析
-            print("[DEBUG] BreakingChangesDetector: 调用 LLM 分析...")
+            logger.debug("BreakingChangesDetector: 调用 LLM 分析...")
             llm_response = self._call_llm(detailed_releases)
-            print(
-                f"[DEBUG] BreakingChangesDetector: LLM 响应长度: "
+            logger.debug(
+                f"BreakingChangesDetector: LLM 响应长度: "
                 f"{len(llm_response)} 字符"
             )
 
             # 解析响应
             breaking_changes = self._parse_response(llm_response)
-            print(
-                f"[DEBUG] BreakingChangesDetector: 检测到 "
+            logger.debug(
+                f"BreakingChangesDetector: 检测到 "
                 f"{len(breaking_changes)} 个 breaking changes"
             )
 
@@ -76,8 +79,8 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
 
         except Exception as e:
             # 出错时返回空列表
-            print(
-                f"[DEBUG] BreakingChangesDetector: 检测失败 - {type(e).__name__}: {e}"
+            logger.debug(
+                f"BreakingChangesDetector: 检测失败 - {type(e).__name__}: {e}"
             )
             return []
 

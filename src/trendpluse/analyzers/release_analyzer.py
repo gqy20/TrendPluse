@@ -9,7 +9,10 @@ from typing import Any
 from pydantic import ValidationError
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
+
+logger = get_logger(__name__)
 
 
 class ReleaseAnalyzer(BaseLLMAnalyzer):
@@ -51,27 +54,27 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
 
         # 处理空列表
         if not detailed_releases:
-            print("[DEBUG] ReleaseAnalyzer: 收到空 release 列表")
+            logger.debug("ReleaseAnalyzer: 收到空 release 列表")
             return []
 
-        print(f"[DEBUG] ReleaseAnalyzer: 开始分析 {len(detailed_releases)} 个 releases")
+        logger.debug(f"ReleaseAnalyzer: 开始分析 {len(detailed_releases)} 个 releases")
 
         try:
             # 调用 LLM 分析
-            print("[DEBUG] ReleaseAnalyzer: 调用 LLM 分析...")
+            logger.debug("ReleaseAnalyzer: 调用 LLM 分析...")
             llm_response = self._call_llm(detailed_releases)
-            print(f"[DEBUG] ReleaseAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
-            print(f"[DEBUG] ReleaseAnalyzer: LLM 响应预览: {llm_response[:500]}...")
+            logger.debug(f"ReleaseAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
+            logger.debug(f"ReleaseAnalyzer: LLM 响应预览: {llm_response[:500]}...")
 
             # 解析响应
             signals = self._parse_signals(llm_response, detailed_releases)
-            print(f"[DEBUG] ReleaseAnalyzer: 解析得到 {len(signals)} 个信号")
+            logger.debug(f"ReleaseAnalyzer: 解析得到 {len(signals)} 个信号")
 
             return signals
 
         except Exception as e:
             # 出错时返回空列表
-            print(f"[DEBUG] ReleaseAnalyzer: 分析失败 - {type(e).__name__}: {e}")
+            logger.debug(f"ReleaseAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
     def _call_llm(self, releases: list[dict[str, Any]]) -> str:
@@ -231,11 +234,11 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
 
             # 记录跳过的信号数量（用于调试）
             if skipped_count > 0:
-                print(f"[DEBUG] ReleaseAnalyzer: 跳过 {skipped_count} 个验证失败的信号")
+                logger.debug(f"ReleaseAnalyzer: 跳过 {skipped_count} 个验证失败的信号")
 
             return signals
 
         except (json.JSONDecodeError, ValidationError) as e:
             # JSON 解析失败或验证失败时返回空列表
-            print(f"[DEBUG] ReleaseAnalyzer: 解析失败 - {type(e).__name__}: {e}")
+            logger.debug(f"ReleaseAnalyzer: 解析失败 - {type(e).__name__}: {e}")
             return []
