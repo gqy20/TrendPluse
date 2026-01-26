@@ -55,8 +55,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             return []
 
         logger.debug(
-            f"BreakingChangesDetector: 开始分析 "
-            f"{len(detailed_releases)} 个 releases"
+            f"BreakingChangesDetector: 开始分析 {len(detailed_releases)} 个 releases"
         )
 
         try:
@@ -64,8 +63,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             logger.debug("BreakingChangesDetector: 调用 LLM 分析...")
             llm_response = self._call_llm(detailed_releases)
             logger.debug(
-                f"BreakingChangesDetector: LLM 响应长度: "
-                f"{len(llm_response)} 字符"
+                f"BreakingChangesDetector: LLM 响应长度: {len(llm_response)} 字符"
             )
 
             # 解析响应
@@ -79,9 +77,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
 
         except Exception as e:
             # 出错时返回空列表
-            logger.debug(
-                f"BreakingChangesDetector: 检测失败 - {type(e).__name__}: {e}"
-            )
+            logger.debug(f"BreakingChangesDetector: 检测失败 - {type(e).__name__}: {e}")
             return []
 
     def _call_llm(self, releases: list[dict[str, Any]]) -> str:

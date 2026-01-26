@@ -159,7 +159,9 @@ def test_3_output_format_json_schema():
             messages=[
                 {
                     "role": "user",
-                    "content": "请提取以下信息并转换为 JSON：张三，25岁，zhangsan@example.com",
+                    "content": (
+                        "请提取以下信息并转换为 JSON：张三，25岁，zhangsan@example.com"
+                    ),
                 }
             ],
             extra_body={"output_format": {"type": "json_schema", "schema": schema}},
@@ -242,7 +244,9 @@ def test_6_parse_with_pydantic():
             messages=[
                 {
                     "role": "user",
-                    "content": "提取联系人信息到 JSON：张三，邮箱是 zhangsan@example.com",
+                    "content": (
+                        "提取联系人信息到 JSON：张三，邮箱是 zhangsan@example.com"
+                    ),
                 }
             ],
         )
@@ -252,7 +256,9 @@ def test_6_parse_with_pydantic():
             result = response.parsed_output
             print_result(
                 True,
-                f"parse() 有 parsed_output 属性\n类型: {type(result)}\n内容: {str(result)[:100]}...",
+                f"parse() 有 parsed_output 属性\n"
+                f"类型: {type(result)}\n"
+                f"内容: {str(result)[:100]}...",
             )
         else:
             result = response.content[0].text

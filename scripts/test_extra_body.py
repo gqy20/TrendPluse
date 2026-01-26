@@ -24,7 +24,7 @@ if not API_KEY:
 
         settings = Settings()
         API_KEY = settings.anthropic_api_key
-    except:
+    except Exception:
         pass
 
 BASE_URL = "https://open.bigmodel.cn/api/anthropic"
@@ -66,7 +66,10 @@ try:
         messages=[
             {
                 "role": "user",
-                "content": "提取联系人信息到 JSON：张三，邮箱 zhangsan@example.com，对 AI 感兴趣",
+                "content": (
+                    "提取联系人信息到 JSON：张三，邮箱 "
+                    "zhangsan@example.com，对 AI 感兴趣"
+                ),
             }
         ],
         extra_body={"response_format": {"type": "json_schema", "schema": schema}},
@@ -89,7 +92,8 @@ try:
         except ValidationError as ve:
             print(f"  ❌ Pydantic 验证失败: {ve}")
             print(
-                "     原因: JSON 响应没有遵循 schema（智谱 AI 只保证 JSON 格式，不保证 schema）"
+                "     原因: JSON 响应没有遵循 schema"
+                "（智谱 AI 只保证 JSON 格式，不保证 schema）"
             )
 
     except json.JSONDecodeError as je:

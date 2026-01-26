@@ -24,7 +24,7 @@ if not API_KEY:
 
         settings = Settings()
         API_KEY = settings.anthropic_api_key
-    except:
+    except Exception:
         pass
 
 BASE_URL = "https://open.bigmodel.cn/api/anthropic"
@@ -82,7 +82,8 @@ try:
         messages=[
             {
                 "role": "user",
-                "content": '返回 JSON：{"name": "王五", "email": "wangwu@example.com", "interest": "AI"}',
+                "content": '返回 JSON：{"name": "王五", '
+                '"email": "wangwu@example.com", "interest": "AI"}',
             }
         ],
     )
@@ -98,7 +99,7 @@ try:
     try:
         parsed = json.loads(text_content)
         print(f"  - JSON 解析成功: {parsed}")
-    except:
+    except json.JSONDecodeError:
         print("  - JSON 解析失败")
 
     # 检查是否有其他属性

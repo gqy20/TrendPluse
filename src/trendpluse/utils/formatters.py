@@ -70,10 +70,26 @@ def filter_high_impact(signals: list[Signal], threshold: int = 4) -> list[Signal
     Examples:
         >>> from trendpluse.models.signal import Signal
         >>> signals = [
-        ...     Signal(id="1", title="低影响", type="capability", category="engineering",
-        ...           impact_score=2, why_it_matters="x", sources=[], related_repos=[]),
-        ...     Signal(id="2", title="高影响", type="capability", category="engineering",
-        ...           impact_score=5, why_it_matters="x", sources=[], related_repos=[]),
+        ...     Signal(
+        ...         id="1",
+        ...         title="低影响",
+        ...         type="capability",
+        ...         category="engineering",
+        ...         impact_score=2,
+        ...         why_it_matters="x",
+        ...         sources=[],
+        ...         related_repos=[],
+        ...     ),
+        ...     Signal(
+        ...         id="2",
+        ...         title="高影响",
+        ...         type="capability",
+        ...         category="engineering",
+        ...         impact_score=5,
+        ...         why_it_matters="x",
+        ...         sources=[],
+        ...         related_repos=[],
+        ...     ),
         ... ]
         >>> filtered = filter_high_impact(signals, threshold=4)
         >>> len(filtered)

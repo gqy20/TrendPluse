@@ -23,7 +23,7 @@ if not API_KEY:
 
         settings = Settings()
         API_KEY = settings.anthropic_api_key
-    except:
+    except Exception:
         pass
 
 BASE_URL = "https://open.bigmodel.cn/api/anthropic"
