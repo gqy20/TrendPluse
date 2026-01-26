@@ -228,7 +228,11 @@ class TestGitHubDetailFetcher:
             mock_prs.append(mock_pr)
 
         mock_repo = Mock()
-        mock_repo.get_pull.side_effect = mock_prs
+        # 为每个 PR 号码创建独立的 mock
+        def get_pull_side_effect(pr_number):
+            return mock_prs[pr_number - 1]
+
+        mock_repo.get_pull.side_effect = get_pull_side_effect
 
         mock_github = Mock()
         mock_github.get_repo.return_value = mock_repo
@@ -252,6 +256,8 @@ class TestGitHubDetailFetcher:
 
         # Assert
         assert len(details_list) == 5
+        # 并发返回顺序可能不同，按 number 排序后验证
+        details_list.sort(key=lambda x: x["number"])
         for i, details in enumerate(details_list):
             assert details["number"] == i + 1
             assert details["title"] == f"PR {i + 1}"
@@ -309,11 +315,17 @@ class TestGitHubDetailFetcher:
         mock_pr_3.changed_files = 6
 
         mock_repo = Mock()
-        mock_repo.get_pull.side_effect = [
-            mock_pr_1,
-            GithubException(404, {"message": "Not Found"}, {}),
-            mock_pr_3,
-        ]
+        # 为每个 PR 号码创建独立的 mock
+        def get_pull_side_effect(pr_number):
+            if pr_number == 1:
+                return mock_pr_1
+            elif pr_number == 2:
+                raise GithubException(404, {"message": "Not Found"}, {})
+            elif pr_number == 3:
+                return mock_pr_3
+            raise GithubException(404, {"message": "Not Found"}, {})
+
+        mock_repo.get_pull.side_effect = get_pull_side_effect
 
         mock_github = Mock()
         mock_github.get_repo.return_value = mock_repo
@@ -346,5 +358,7 @@ class TestGitHubDetailFetcher:
 
         # Assert - 应该只返回成功的 2 个
         assert len(details_list) == 2
+        # 并发返回顺序可能不同，按 number 排序后验证
+        details_list.sort(key=lambda x: x["number"])
         assert details_list[0]["number"] == 1
         assert details_list[1]["number"] == 3

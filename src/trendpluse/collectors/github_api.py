@@ -3,10 +3,15 @@
 使用 PyGithub 获取 PR/Release 的详细信息。
 """
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 from github import GithubException
 
 from trendpluse.collectors.base import BaseGitHubCollector
+from trendpluse.logger import get_logger
 from trendpluse.utils.retry import create_github_retry_decorator
+
+logger = get_logger(__name__)
 
 # 创建重试装饰器（统一配置）
 _github_retry = create_github_retry_decorator()
@@ -97,7 +102,7 @@ class GitHubDetailFetcher(BaseGitHubCollector):
         return comments
 
     def fetch_multiple_pr_details(self, candidates: list[dict]) -> list[dict]:
-        """批量获取 PR 详情
+        """批量获取 PR 详情（串行版本，保留向后兼容）
 
         Args:
             candidates: 候选事件列表
@@ -121,3 +126,54 @@ class GitHubDetailFetcher(BaseGitHubCollector):
                     continue
 
         return details_list
+
+    def fetch_multiple_pr_details_concurrent(
+        self, candidates: list[dict], max_workers: int = 10
+    ) -> list[dict]:
+        """批量获取 PR 详情（并发版本）
+
+        使用线程池并发获取多个 PR 的详情，显著提升性能。
+
+        Args:
+            candidates: 候选事件列表
+            max_workers: 最大并发线程数（默认 10）
+
+        Returns:
+            PR 详情列表
+        """
+        if not candidates:
+            return []
+
+        # 提取 PR 任务：(repo_name, pr_number)
+        pr_tasks = []
+        for event in candidates:
+            if event.get("type") == "PullRequestEvent":
+                repo_name = event["repo"]["name"]
+                pr_number = event["payload"]["pull_request"]["number"]
+                pr_tasks.append((repo_name, pr_number))
+
+        # 并发获取 PR 详情
+        results = []
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # 提交所有任务
+            future_to_task = {
+                executor.submit(self.fetch_pr_details, repo, num): (repo, num)
+                for repo, num in pr_tasks
+            }
+
+            # 收集结果
+            for future in as_completed(future_to_task):
+                repo, num = future_to_task[future]
+                try:
+                    details = future.result()
+                    results.append(details)
+                except GithubException as e:
+                    # 记录错误但继续处理其他 PR
+                    logger.debug(
+                        f"获取 PR {repo}#{num} 失败: {e}",
+                        extra={"repo": repo, "pr_number": num},
+                    )
+                    continue
+
+        return results
