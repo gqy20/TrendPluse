@@ -146,3 +146,104 @@ class TestGitHubEventsCollector:
         assert "payload" in event
         assert "created_at" in event
         assert event["repo"]["name"] == "anthropics/skills"
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_events_includes_merged_field(self, mock_github):
+        """测试：事件应包含 merged 字段"""
+        # Arrange
+        mock_repo = Mock()
+        mock_pr = Mock()
+        mock_pr.number = 123
+        mock_pr.title = "Test PR"
+        mock_pr.body = "Test body"
+        mock_pr.merged = True
+        mock_pr.user.login = "alice"
+        mock_pr.created_at = datetime.now(UTC)
+
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github.return_value.get_repo.return_value = mock_repo
+
+        collector = GitHubEventsCollector()
+        repos = ["anthropics/skills"]
+        since = datetime.now() - timedelta(days=1)
+
+        # Act
+        events = collector.fetch_events(repos=repos, since=since)
+
+        # Assert
+        event = events[0]
+        pr_data = event["payload"]["pull_request"]
+        assert "merged" in pr_data
+        assert pr_data["merged"] is True
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_events_includes_labels(self, mock_github):
+        """测试：事件应包含 labels 字段"""
+        # Arrange
+        mock_repo = Mock()
+        mock_pr = Mock()
+        mock_pr.number = 123
+        mock_pr.title = "Test PR"
+        mock_pr.body = "Test body"
+        mock_pr.merged = False
+        mock_pr.user.login = "bob"
+        mock_pr.created_at = datetime.now(UTC)
+
+        # Mock labels
+        mock_label_1 = Mock()
+        mock_label_1.name = "enhancement"
+        mock_label_2 = Mock()
+        mock_label_2.name = "feature"
+        mock_pr.labels = [mock_label_1, mock_label_2]
+
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github.return_value.get_repo.return_value = mock_repo
+
+        collector = GitHubEventsCollector()
+        repos = ["anthropics/skills"]
+        since = datetime.now() - timedelta(days=1)
+
+        # Act
+        events = collector.fetch_events(repos=repos, since=since)
+
+        # Assert
+        event = events[0]
+        pr_data = event["payload"]["pull_request"]
+        assert "labels" in pr_data
+        assert len(pr_data["labels"]) == 2
+        assert pr_data["labels"][0]["name"] == "enhancement"
+        assert pr_data["labels"][1]["name"] == "feature"
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_events_includes_author_and_changes(self, mock_github):
+        """测试：事件应包含作者和变更统计"""
+        # Arrange
+        mock_repo = Mock()
+        mock_pr = Mock()
+        mock_pr.number = 123
+        mock_pr.title = "Test PR"
+        mock_pr.body = "Test body"
+        mock_pr.merged = True
+        mock_pr.user.login = "charlie"
+        mock_pr.additions = 100
+        mock_pr.deletions = 50
+        mock_pr.changed_files = 5
+        mock_pr.created_at = datetime.now(UTC)
+
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github.return_value.get_repo.return_value = mock_repo
+
+        collector = GitHubEventsCollector()
+        repos = ["anthropics/skills"]
+        since = datetime.now() - timedelta(days=1)
+
+        # Act
+        events = collector.fetch_events(repos=repos, since=since)
+
+        # Assert
+        event = events[0]
+        pr_data = event["payload"]["pull_request"]
+        assert pr_data["author"] == "charlie"
+        assert pr_data["additions"] == 100
+        assert pr_data["deletions"] == 50
+        assert pr_data["changed_files"] == 5
