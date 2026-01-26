@@ -204,3 +204,147 @@ class TestGitHubDetailFetcher:
         # Act & Assert
         with pytest.raises(Exception):  # 应该抛出异常或处理
             fetcher.fetch_pr_details("owner/repo", 123)
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_multiple_pr_details_concurrent(self, mock_github_class):
+        """测试：并发批量获取 PR 详情"""
+        # Arrange - 模拟 5 个 PR
+        mock_prs = []
+        for i in range(5):
+            mock_pr = Mock()
+            mock_pr.number = i + 1
+            mock_pr.title = f"PR {i + 1}"
+            mock_pr.body = f"Body {i + 1}"
+            mock_pr.user.login = f"user{i}"
+            mock_pr.created_at.isoformat.return_value = "2026-01-01T00:00:00Z"
+            mock_pr.closed_at.isoformat.return_value = "2026-01-02T00:00:00Z"
+            mock_pr.html_url = f"https://github.com/owner/repo/pull/{i + 1}"
+            mock_pr.state = "closed"
+            mock_pr.merged = True
+            mock_pr.merge_commit_sha = f"sha{i}"
+            mock_pr.additions = 10 * (i + 1)
+            mock_pr.deletions = 5 * (i + 1)
+            mock_pr.changed_files = i + 1
+            mock_prs.append(mock_pr)
+
+        mock_repo = Mock()
+        mock_repo.get_pull.side_effect = mock_prs
+
+        mock_github = Mock()
+        mock_github.get_repo.return_value = mock_repo
+        mock_github_class.return_value = mock_github
+
+        fetcher = GitHubDetailFetcher(token="test_token")
+
+        candidates = [
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "owner/repo"},
+                "payload": {"pull_request": {"number": i + 1}},
+            }
+            for i in range(5)
+        ]
+
+        # Act
+        details_list = fetcher.fetch_multiple_pr_details_concurrent(
+            candidates, max_workers=3
+        )
+
+        # Assert
+        assert len(details_list) == 5
+        for i, details in enumerate(details_list):
+            assert details["number"] == i + 1
+            assert details["title"] == f"PR {i + 1}"
+            assert details["author"] == f"user{i}"
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_multiple_pr_details_concurrent_empty_list(self, mock_github_class):
+        """测试：并发批量获取空列表"""
+        # Arrange
+        mock_github = Mock()
+        mock_github_class.return_value = mock_github
+
+        fetcher = GitHubDetailFetcher(token="test_token")
+
+        # Act
+        details_list = fetcher.fetch_multiple_pr_details_concurrent([])
+
+        # Assert
+        assert details_list == []
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_multiple_pr_details_concurrent_with_errors(self, mock_github_class):
+        """测试：并发批量获取时部分失败"""
+        # Arrange - 3 个 PR，中间的会失败
+        from github.GithubException import GithubException
+
+        mock_pr_1 = Mock()
+        mock_pr_1.number = 1
+        mock_pr_1.title = "PR 1"
+        mock_pr_1.body = "Body 1"
+        mock_pr_1.user.login = "alice"
+        mock_pr_1.created_at.isoformat.return_value = "2026-01-01T00:00:00Z"
+        mock_pr_1.closed_at.isoformat.return_value = "2026-01-02T00:00:00Z"
+        mock_pr_1.html_url = "https://github.com/owner/repo/pull/1"
+        mock_pr_1.state = "closed"
+        mock_pr_1.merged = True
+        mock_pr_1.merge_commit_sha = "sha1"
+        mock_pr_1.additions = 10
+        mock_pr_1.deletions = 5
+        mock_pr_1.changed_files = 2
+
+        mock_pr_3 = Mock()
+        mock_pr_3.number = 3
+        mock_pr_3.title = "PR 3"
+        mock_pr_3.body = "Body 3"
+        mock_pr_3.user.login = "charlie"
+        mock_pr_3.created_at.isoformat.return_value = "2026-01-01T00:00:00Z"
+        mock_pr_3.closed_at.isoformat.return_value = "2026-01-02T00:00:00Z"
+        mock_pr_3.html_url = "https://github.com/owner/repo/pull/3"
+        mock_pr_3.state = "closed"
+        mock_pr_3.merged = True
+        mock_pr_3.merge_commit_sha = "sha3"
+        mock_pr_3.additions = 30
+        mock_pr_3.deletions = 15
+        mock_pr_3.changed_files = 6
+
+        mock_repo = Mock()
+        mock_repo.get_pull.side_effect = [
+            mock_pr_1,
+            GithubException(404, {"message": "Not Found"}, {}),
+            mock_pr_3,
+        ]
+
+        mock_github = Mock()
+        mock_github.get_repo.return_value = mock_repo
+        mock_github_class.return_value = mock_github
+
+        fetcher = GitHubDetailFetcher(token="test_token")
+
+        candidates = [
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "owner/repo"},
+                "payload": {"pull_request": {"number": 1}},
+            },
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "owner/repo"},
+                "payload": {"pull_request": {"number": 2}},
+            },
+            {
+                "type": "PullRequestEvent",
+                "repo": {"name": "owner/repo"},
+                "payload": {"pull_request": {"number": 3}},
+            },
+        ]
+
+        # Act
+        details_list = fetcher.fetch_multiple_pr_details_concurrent(
+            candidates, max_workers=2
+        )
+
+        # Assert - 应该只返回成功的 2 个
+        assert len(details_list) == 2
+        assert details_list[0]["number"] == 1
+        assert details_list[1]["number"] == 3
