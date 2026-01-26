@@ -52,6 +52,12 @@ class GitHubEventsCollector(BaseGitHubCollector):
                     if pr.created_at < since:
                         break
 
+                    # 提取标签信息
+                    labels = []
+                    if hasattr(pr, "labels") and pr.labels:
+                        for label in pr.labels:
+                            labels.append({"name": label.name})
+
                     events.append(
                         {
                             "type": "PullRequestEvent",
@@ -61,6 +67,12 @@ class GitHubEventsCollector(BaseGitHubCollector):
                                     "number": pr.number,
                                     "title": pr.title,
                                     "body": pr.body,
+                                    "merged": pr.merged,
+                                    "labels": labels,
+                                    "author": pr.user.login if pr.user else "Unknown",
+                                    "additions": pr.additions,
+                                    "deletions": pr.deletions,
+                                    "changed_files": pr.changed_files,
                                 }
                             },
                             "created_at": pr.created_at.isoformat(),

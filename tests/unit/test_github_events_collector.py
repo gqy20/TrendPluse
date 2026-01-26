@@ -36,6 +36,13 @@ class TestGitHubEventsCollector:
         mock_pr.number = 123
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
+        mock_pr.labels = []
+        mock_user = Mock()
+        mock_user.login = "test_user"
+        mock_pr.user = mock_user
+        mock_pr.additions = 10
+        mock_pr.deletions = 5
+        mock_pr.changed_files = 2
         mock_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [mock_pr]
@@ -61,8 +68,21 @@ class TestGitHubEventsCollector:
         mock_repo = Mock()
         old_pr = Mock()
         old_pr.created_at = datetime.now(UTC) - timedelta(days=10)
+        old_pr.labels = []
+        mock_user = Mock()
+        mock_user.login = "test_user"
+        old_pr.user = mock_user
+        old_pr.additions = 1
+        old_pr.deletions = 1
+        old_pr.changed_files = 1
+
         recent_pr = Mock()
         recent_pr.created_at = datetime.now(UTC)
+        recent_pr.labels = []
+        recent_pr.user = mock_user
+        recent_pr.additions = 10
+        recent_pr.deletions = 5
+        recent_pr.changed_files = 2
 
         mock_repo.get_pulls.return_value = [recent_pr, old_pr]
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -102,6 +122,14 @@ class TestGitHubEventsCollector:
         mock_repo = Mock()
         mock_pr = Mock()
         mock_pr.created_at = datetime.now(UTC)
+        mock_pr.labels = []
+        mock_user = Mock()
+        mock_user.login = "test_user"
+        mock_pr.user = mock_user
+        mock_pr.additions = 1
+        mock_pr.deletions = 1
+        mock_pr.changed_files = 1
+
         mock_repo.get_pulls.return_value = [mock_pr]
 
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -127,6 +155,13 @@ class TestGitHubEventsCollector:
         mock_pr.number = 123
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
+        mock_pr.labels = []
+        mock_user = Mock()
+        mock_user.login = "test_user"
+        mock_pr.user = mock_user
+        mock_pr.additions = 10
+        mock_pr.deletions = 5
+        mock_pr.changed_files = 2
         mock_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [mock_pr]
@@ -157,7 +192,13 @@ class TestGitHubEventsCollector:
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
         mock_pr.merged = True
-        mock_pr.user.login = "alice"
+        mock_pr.labels = []  # 空标签列表
+        mock_user = Mock()
+        mock_user.login = "alice"
+        mock_pr.user = mock_user
+        mock_pr.additions = 10
+        mock_pr.deletions = 5
+        mock_pr.changed_files = 2
         mock_pr.created_at = datetime.now(UTC)
 
         mock_repo.get_pulls.return_value = [mock_pr]
@@ -186,7 +227,6 @@ class TestGitHubEventsCollector:
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
         mock_pr.merged = False
-        mock_pr.user.login = "bob"
         mock_pr.created_at = datetime.now(UTC)
 
         # Mock labels
@@ -195,6 +235,14 @@ class TestGitHubEventsCollector:
         mock_label_2 = Mock()
         mock_label_2.name = "feature"
         mock_pr.labels = [mock_label_1, mock_label_2]
+
+        # Mock user
+        mock_user = Mock()
+        mock_user.login = "bob"
+        mock_pr.user = mock_user
+        mock_pr.additions = 10
+        mock_pr.deletions = 5
+        mock_pr.changed_files = 2
 
         mock_repo.get_pulls.return_value = [mock_pr]
         mock_github.return_value.get_repo.return_value = mock_repo
@@ -224,7 +272,10 @@ class TestGitHubEventsCollector:
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
         mock_pr.merged = True
-        mock_pr.user.login = "charlie"
+        mock_pr.labels = []  # 空标签列表
+        mock_user = Mock()
+        mock_user.login = "charlie"
+        mock_pr.user = mock_user
         mock_pr.additions = 100
         mock_pr.deletions = 50
         mock_pr.changed_files = 5
