@@ -1,7 +1,12 @@
 """测试格式化工具模块"""
 
 from trendpluse.models.signal import Signal
-from trendpluse.utils.formatters import filter_high_impact, format_source_url
+from trendpluse.utils.formatters import (
+    filter_high_impact,
+    format_source_url,
+    get_impact_emoji,
+    get_release_type_emoji,
+)
 
 
 class TestFormatSourceUrl:
@@ -145,3 +150,49 @@ class TestFilterHighImpact:
 
         assert len(result) == 1
         assert result[0].title == "信号2"
+
+
+class TestGetImpactEmoji:
+    """测试 Breaking Changes 影响 emoji 获取"""
+
+    def test_returns_red_emoji_for_high_impact(self):
+        """高影响应该返回红色圆圈"""
+        assert get_impact_emoji("high") == "🔴"
+
+    def test_returns_yellow_emoji_for_medium_impact(self):
+        """中等影响应该返回黄色圆圈"""
+        assert get_impact_emoji("medium") == "🟡"
+
+    def test_returns_green_emoji_for_low_impact(self):
+        """低影响应该返回绿色圆圈"""
+        assert get_impact_emoji("low") == "🟢"
+
+    def test_returns_white_emoji_for_unknown_impact(self):
+        """未知影响应该返回白色圆圈"""
+        assert get_impact_emoji("unknown") == "⚪"
+        assert get_impact_emoji("critical") == "⚪"
+        assert get_impact_emoji("") == "⚪"
+
+
+class TestGetReleaseTypeEmoji:
+    """测试 Release 版本类型 emoji 获取"""
+
+    def test_returns_rocket_for_major_version(self):
+        """主版本升级应该返回火箭"""
+        assert get_release_type_emoji("v2.0.0", 0) == "🚀"
+        assert get_release_type_emoji("v1.0.0", 5) == "🚀"
+
+    def test_returns_bolt_for_release_with_assets(self):
+        """有资产的版本应该返回闪电"""
+        assert get_release_type_emoji("v1.2.3", 3) == "⚡"
+        assert get_release_type_emoji("v2.1.0", 1) == "⚡"
+
+    def test_returns_package_for_patch_version(self):
+        """补丁版本应该返回包裹"""
+        assert get_release_type_emoji("v1.2.4", 0) == "📦"
+        assert get_release_type_emoji("v1.0.1", 0) == "📦"
+
+    def test_handles_non_standard_version_format(self):
+        """非标准版本格式应该返回包裹"""
+        assert get_release_type_emoji("1.0.0", 0) == "📦"
+        assert get_release_type_emoji("latest", 5) == "⚡"
