@@ -13,6 +13,12 @@ from trendpluse.models.signal import (
     ReleaseSummary,
     Signal,
 )
+from trendpluse.utils.formatters import (
+    filter_high_impact,
+    format_source_url,
+    get_impact_emoji,
+    get_release_type_emoji,
+)
 
 if TYPE_CHECKING:
     pass
@@ -177,12 +183,10 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 筛选高影响信号（评分 >= 4）
-        def get_high_impact(signals: list[Signal]) -> list[Signal]:
-            return [s for s in signals if s.impact_score >= 4]
-
         # 工程信号（使用折叠面板，默认折叠与其他面板一致）
-        engineering_signals = get_high_impact(report.engineering_signals)
+        engineering_signals = filter_high_impact(
+            report.engineering_signals, threshold=4
+        )
         if engineering_signals:
             elements.append({"tag": "hr"})
             content = self._generate_signals_content(engineering_signals)
@@ -205,7 +209,7 @@ class FeishuFormatter:
             )
 
         # 研究信号（使用折叠面板）
-        research_signals = get_high_impact(report.research_signals)
+        research_signals = filter_high_impact(report.research_signals, threshold=4)
         if research_signals:
             elements.append({"tag": "hr"})
             content = self._generate_signals_content(research_signals)
@@ -229,7 +233,7 @@ class FeishuFormatter:
 
         # Commit 信号（仅在有内容时显示，与 MarkdownReporter 一致）
         if report.commit_signals:
-            commit_signals = get_high_impact(report.commit_signals)
+            commit_signals = filter_high_impact(report.commit_signals, threshold=4)
             elements.append({"tag": "hr"})
             elements.append(
                 {
@@ -275,7 +279,7 @@ class FeishuFormatter:
 
             # 来源链接（格式化显示）
             sources_md = "\n".join(
-                f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
+                f"- [{format_source_url(url)}]({url})" for url in signal.sources
             )
 
             # 构建单个信号内容，使用 ##### 五级标题
@@ -314,7 +318,7 @@ class FeishuFormatter:
 
             # 来源链接（格式化显示）
             sources_md = "\n".join(
-                f"- [{self._format_source_url(url)}]({url})" for url in signal.sources
+                f"- [{format_source_url(url)}]({url})" for url in signal.sources
             )
 
             # 构建单个信号内容，使用 ##### 五级标题
@@ -343,44 +347,6 @@ class FeishuFormatter:
                 elements.append({"tag": "hr"})
 
         return elements
-
-    def _format_source_url(self, url: str) -> str:
-        """格式化 source URL 显示文本
-
-        Args:
-            url: GitHub URL
-
-        Returns:
-            格式化的显示文本（包含 commit SHA 或 PR 号码）
-        """
-        if "github.com/" in url:
-            # 移除协议前缀
-            clean_url = url.replace("https://github.com/", "").replace(
-                "http://github.com/", ""
-            )
-
-            # 检测 commit 链接
-            if "/commit/" in clean_url:
-                parts = clean_url.split("/commit/")
-                repo = parts[0]
-                sha = parts[1].split("/")[0]  # 提取 SHA，可能后面有 ? 或 #
-                short_sha = sha[:7]  # 显示前 7 位
-                return f"{repo}@{short_sha}"
-
-            # 检测 PR 链接
-            elif "/pull/" in clean_url:
-                parts = clean_url.split("/pull/")
-                repo = parts[0]
-                pr_num = parts[1].split("/")[0]
-                return f"{repo}#{pr_num}"
-
-            # 默认：提取仓库名
-            else:
-                parts = clean_url.split("/")
-                if len(parts) >= 2:
-                    return f"{parts[0]}/{parts[1]}"
-
-        return "链接"
 
     def _generate_releases_content(self, releases: ReleasesData) -> str:
         """生成版本发布内容（不包含外层标题，用于折叠面板）
@@ -412,11 +378,8 @@ class FeishuFormatter:
                 url = release.url
                 ai_summary = release.ai_summary
 
-                # 简单的版本类型判断
-                if version.startswith("v") and ".0.0" in version:
-                    type_emoji = "🚀"
-                else:
-                    type_emoji = "⚡" if assets_count > 0 else "📦"
+                # 使用公共函数判断版本类型
+                type_emoji = get_release_type_emoji(version, assets_count)
 
                 # Release 标题（仓库链接）
                 repo_link = f"[{repo_name}](https://github.com/{release.repo})"
@@ -537,14 +500,9 @@ class FeishuFormatter:
 
             for change in bc.get("changes", []):
                 impact = change.get("impact", "unknown")
-                impact_emoji = {
-                    "high": "🔴",
-                    "medium": "🟡",
-                    "low": "🟢",
-                }.get(impact, "⚪")
-
                 category = change.get("category", "")
                 description = change.get("description", "")
+                impact_emoji = get_impact_emoji(impact)
 
                 lines.append(f"- {impact_emoji} **[{category}]** {description}\n")
 
