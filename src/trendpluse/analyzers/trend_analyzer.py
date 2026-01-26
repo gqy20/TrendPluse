@@ -6,8 +6,11 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport, Signal
 from trendpluse.utils.retry import create_anthropic_retry_decorator
+
+logger = get_logger(__name__)
 
 # 创建重试装饰器（统一配置）
 _llm_retry = create_anthropic_retry_decorator()
@@ -124,7 +127,7 @@ PR 描述: {pr_details.get("body", "")}
             except Exception as e:
                 repo_name = pr.get("repo_name", "unknown")
                 number = pr.get("number", 0)
-                print(f"分析 PR {repo_name}#{number} 失败: {e}")
+                logger.debug(f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}")
                 return []
 
         # 并行处理多个 PRs
@@ -147,7 +150,9 @@ PR 描述: {pr_details.get("body", "")}
                     # 单个失败不影响其他 PRs
                     repo_name = pr.get("repo_name", "unknown")
                     number = pr.get("number", 0)
-                    print(f"分析 PR {repo_name}#{number} 失败: {e}")
+                    logger.debug(
+                        f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}"
+                    )
 
         return signals
 

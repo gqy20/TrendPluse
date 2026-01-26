@@ -8,8 +8,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import anthropic
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import ReleaseSummary
 from trendpluse.utils.retry import create_anthropic_retry_decorator
+
+logger = get_logger(__name__)
 
 # 创建重试装饰器（统一配置）
 _llm_retry = create_anthropic_retry_decorator()
@@ -85,7 +88,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                     summaries[key] = future.result()
                 except Exception as e:
                     # 单个失败不影响其他 releases
-                    print(f"[WARNING] ReleaseSummarizer: 总结失败 {key} - {e}")
+                    logger.debug(f"ReleaseSummarizer: 总结失败 {key} - {e}")
                     # 失败时添加一个默认的 ReleaseSummary
                     repo, tag_name = key.split("@")
                     summaries[key] = ReleaseSummary(
@@ -174,9 +177,10 @@ Release Notes:
             return self._call_llm_for_summary(prompt)  # type: ignore[no-any-return]
         except RETRYABLE_ERRORS as e:
             # 重试耗尽后的可重试错误
-            print(f"[ERROR] ReleaseSummarizer: 重试耗尽 - {type(e).__name__}: {e}")
-            print(f"[DEBUG] Release: {repo}@{tag_name}")
-            print(f"[DEBUG] Body 长度: {len(body)} 字符")
+            logger.debug(
+                f"ReleaseSummarizer: 重试耗尽 - {type(e).__name__}: {e}, "
+                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
+            )
             # 返回默认总结
             return ReleaseSummary(
                 change_type="other",
@@ -186,9 +190,10 @@ Release Notes:
             )
         except Exception as e:
             # 其他错误（如认证错误，不重试）
-            print(f"[ERROR] ReleaseSummarizer: 分析失败 - {type(e).__name__}: {e}")
-            print(f"[DEBUG] Release: {repo}@{tag_name}")
-            print(f"[DEBUG] Body 长度: {len(body)} 字符")
+            logger.debug(
+                f"ReleaseSummarizer: 分析失败 - {type(e).__name__}: {e}, "
+                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
+            )
             # 返回默认总结
             return ReleaseSummary(
                 change_type="other",
