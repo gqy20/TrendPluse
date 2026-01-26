@@ -94,7 +94,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
         prompt = self._build_prompt(releases)
 
         # 调用 API
-        message = self.client.messages.create(
+        message = self.client.messages.create(  # type: ignore[call-overload]
             model=self.model,
             max_tokens=4096,
             temperature=0.3,

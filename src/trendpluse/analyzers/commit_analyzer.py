@@ -6,6 +6,8 @@
 import json
 from typing import Any
 
+from pydantic import ValidationError
+
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.models.signal import Signal
 
@@ -82,7 +84,7 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_prompt(commits)
 
         # 调用 API
-        message = self.client.messages.create(
+        message = self.client.messages.create(  # type: ignore[call-overload]
             model=self.model,
             max_tokens=4096,
             temperature=0.3,
@@ -173,26 +175,34 @@ class CommitAnalyzer(BaseLLMAnalyzer):
     ) -> list[Signal]:
         """解析 LLM 响应为信号列表
 
+        使用 Pydantic 验证确保数据格式正确：
+        - 必需字段完整性
+        - 字段类型正确性
+        - 枚举值有效性
+        - 数值范围检查
+
         Args:
             llm_response: LLM 响应文本
             commits: 原始 commit 数据
 
         Returns:
-            信号列表
+            验证通过的信号列表
         """
         try:
-            # 使用基类方法提取 JSON
+            # 1. 使用基类方法提取 JSON（移除 ```json 标记）
             response_text = self._extract_json_from_markdown(llm_response)
 
-            # 解析 JSON
+            # 2. 解析 JSON
             data = json.loads(response_text)
 
-            # 处理空数组
+            # 3. 处理空数组
             if not data:
                 return []
 
-            # 转换为 Signal 对象
+            # 4. 转换为 Signal 对象（使用 Pydantic 验证）
             signals = []
+            skipped_count = 0
+
             for idx, item in enumerate(data):
                 # 优先使用 LLM 返回的 commit_sha 进行匹配
                 commit_sha = item.get("commit_sha")
@@ -224,17 +234,26 @@ class CommitAnalyzer(BaseLLMAnalyzer):
                         sources = []
                         related_repos = []
 
-                # 使用基类方法创建 Signal
-                signal = self._create_signal_from_dict(
+                # 使用新的验证方法（Pydantic 自动验证）
+                signal = self._validate_and_create_signal(
                     item=item,
                     index=idx,
                     sources=sources,
                     related_repos=related_repos,
                 )
-                signals.append(signal)
+
+                if signal is not None:
+                    signals.append(signal)
+                else:
+                    skipped_count += 1
+
+            # 记录跳过的信号数量（用于调试）
+            if skipped_count > 0:
+                print(f"[DEBUG] CommitAnalyzer: 跳过 {skipped_count} 个验证失败的信号")
 
             return signals
 
-        except (json.JSONDecodeError, KeyError, TypeError):
-            # 解析失败时返回空列表
+        except (json.JSONDecodeError, ValidationError) as e:
+            # JSON 解析失败或验证失败时返回空列表
+            print(f"[DEBUG] CommitAnalyzer: 解析失败 - {type(e).__name__}: {e}")
             return []
