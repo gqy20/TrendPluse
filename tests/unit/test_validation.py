@@ -3,8 +3,6 @@
 演示新的 _validate_and_create_signal 方法的验证能力。
 """
 
-import pytest
-
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 
 
@@ -178,55 +176,3 @@ class TestSignalValidation:
             "other/repo1",
             "other/repo2",
         }
-
-    def test_old_create_signal_from_dict_still_works(self):
-        """测试：旧的 _create_signal_from_dict 方法仍然可用（向后兼容）"""
-        analyzer = BaseLLMAnalyzer(
-            api_key="test-key",
-            model="glm-4.7",
-            use_instructor=False,
-        )
-
-        valid_item = {
-            "title": "新特性",
-            "type": "capability",
-            "category": "engineering",
-            "impact_score": 4,
-            "why_it_matters": "这是一个重要的新功能",
-        }
-
-        # 旧方法：手动创建（没有验证）
-        signal = analyzer._create_signal_from_dict(
-            item=valid_item,
-            index=0,
-            sources=["https://github.com/test/repo/commit/abc123"],
-            related_repos=["test/repo"],
-        )
-
-        assert signal is not None
-        assert signal.title == "新特性"
-
-    def test_old_method_raises_key_error_for_missing_field(self):
-        """测试：旧方法在缺少字段时抛出 KeyError（对比验证方法）"""
-        analyzer = BaseLLMAnalyzer(
-            api_key="test-key",
-            model="glm-4.7",
-            use_instructor=False,
-        )
-
-        # 缺少必需字段
-        invalid_item = {
-            "type": "capability",
-            "category": "engineering",
-            "impact_score": 4,
-            "why_it_matters": "这是一个重要的新功能",
-        }
-
-        # 旧方法：抛出 KeyError
-        with pytest.raises(KeyError, match="title"):
-            analyzer._create_signal_from_dict(
-                item=invalid_item,
-                index=0,
-                sources=["https://github.com/test/repo/commit/abc123"],
-                related_repos=["test/repo"],
-            )

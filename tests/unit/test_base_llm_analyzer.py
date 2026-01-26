@@ -42,8 +42,8 @@ class TestExtractJsonFromMarkdown:
         assert result == '{"key": "value"}'
 
 
-class TestCreateSignalFromDict:
-    """测试从字典创建 Signal"""
+class TestValidateAndCreateSignal:
+    """测试使用 Pydantic 验证创建 Signal（推荐方法）"""
 
     def test_creates_signal_with_required_fields(self):
         """应该创建包含必需字段的 Signal"""
@@ -58,13 +58,14 @@ class TestCreateSignalFromDict:
         sources = ["https://example.com/pr/1"]
         related_repos = ["anthropics/claude-code"]
 
-        signal = analyzer._create_signal_from_dict(
+        signal = analyzer._validate_and_create_signal(
             item=item,
             index=0,
             sources=sources,
             related_repos=related_repos,
         )
 
+        assert signal is not None
         assert signal.id == "signal-0"
         assert signal.title == "Test Signal"
         assert signal.type == "capability"
@@ -82,13 +83,14 @@ class TestCreateSignalFromDict:
             "why_it_matters": "Test description",
         }
 
-        signal = analyzer._create_signal_from_dict(
+        signal = analyzer._validate_and_create_signal(
             item=item,
             index=0,
             sources=[],
             related_repos=[],
         )
 
+        assert signal is not None
         assert signal.sources == []
 
     def test_merges_related_repos(self):
@@ -103,7 +105,7 @@ class TestCreateSignalFromDict:
             "related_repos": ["repo1", "repo2"],
         }
 
-        signal = analyzer._create_signal_from_dict(
+        signal = analyzer._validate_and_create_signal(
             item=item,
             index=0,
             sources=[],
@@ -111,4 +113,5 @@ class TestCreateSignalFromDict:
         )
 
         # 应该去重并合并
+        assert signal is not None
         assert set(signal.related_repos) == {"repo1", "repo2", "repo3"}
