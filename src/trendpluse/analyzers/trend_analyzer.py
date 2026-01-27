@@ -163,7 +163,7 @@ PR 描述: {pr_details.get("body", "")}
         release_signals: list[Signal],
         date: str,
     ) -> DailyReport:
-        """跨类型聚合信号并生成高层次趋势报告
+        """跨类型聚合信号并生成高层次趋势报告（使用强一致性机制）
 
         Args:
             pr_signals: PR 信号列表
@@ -174,7 +174,16 @@ PR 描述: {pr_details.get("body", "")}
         Returns:
             每日报告，包含聚合后的高层次趋势
         """
-        # 构建 Prompt，要求 LLM 识别跨类型的模式
+        # 步骤 1: 构建 ID 到 Signal 的映射（用于后处理解析）
+        signal_map: dict[str, Signal] = {}
+        for idx, signal in enumerate(pr_signals):
+            signal_map[f"pr-{idx}"] = signal
+        for idx, signal in enumerate(commit_signals):
+            signal_map[f"commit-{idx}"] = signal
+        for idx, signal in enumerate(release_signals):
+            signal_map[f"release-{idx}"] = signal
+
+        # 步骤 2: 使用带 ID 的格式化函数，确保 LLM 能看到完整信息
         prompt = f"""分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
 
 日期: {date}
@@ -185,13 +194,13 @@ PR 描述: {pr_details.get("body", "")}
 - Release 信号: {len(release_signals)} 个
 
 ## PR 信号
-{self._format_signals(pr_signals) if pr_signals else "无"}
+{self._format_signals_with_ids(pr_signals, "pr") if pr_signals else "无"}
 
 ## Commit 技术点
-{self._format_signals(commit_signals) if commit_signals else "无"}
+{self._format_signals_with_ids(commit_signals, "commit") if commit_signals else "无"}
 
 ## Release 信号
-{self._format_signals(release_signals) if release_signals else "无"}
+{self._format_signals_with_ids(release_signals, "release") if release_signals else "无"}
 
 ## 分析要求
 
@@ -203,17 +212,21 @@ PR 描述: {pr_details.get("body", "")}
 ## 输出要求
 
 返回一份 DailyReport，其中：
-1. engineering_signals 包含**聚合后的高层次趋势**（每个趋势应包含多个 sources）
-2. summary_brief 提供整体概览
-3. stats 包含统计信息
+1. engineering_signals 包含**聚合后的高层次趋势**
+2. 每个聚合趋势必须包含 `source_signal_ids` 字段，列出支持该趋势的原始信号 ID
+   （例如 ["pr-0", "commit-1", "release-0"]）
+3. summary_brief 提供整体概览
+4. stats 包含统计信息
 
-注意：
+重要：
+- **source_signal_ids 字段必须填写**，用于后续溯源
+- ID 格式为 "类型-索引"，例如 "pr-0", "commit-1", "release-2"
 - **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
-- 每个趋势的 sources 应包含所有支持该趋势的 PR/Commit/Release 链接
 - 只返回真正有价值的跨类型趋势
 - 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
 """
 
+        # 步骤 3: 调用 LLM 聚合信号
         report = self.client.chat.completions.create(
             model=self.model,
             response_model=DailyReport,
@@ -233,6 +246,10 @@ PR 描述: {pr_details.get("body", "")}
         report.stats["high_impact_signals"] = len(
             self.filter_high_impact(report.engineering_signals, threshold=4)
         )
+
+        # 步骤 4: 使用强一致性机制解析 sources（确定性后处理）
+        # 这是确保 100% 正确性的关键步骤
+        report = self._resolve_sources_from_ids(report, signal_map)
 
         # 清空低层次信号（已被聚合到高层次趋势中）
         # 注意：只清空 commit_signals，因为它们被聚合到 engineering/research_signals
