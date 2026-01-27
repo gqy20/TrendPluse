@@ -328,6 +328,8 @@ PR 描述: {pr_details.get("body", "")}
     def _format_signals(self, signals: list[Signal]) -> str:
         """格式化信号列表为文本
 
+        包含完整信息（sources、related_repos），以便 LLM 在聚合时保留原始链接。
+
         Args:
             signals: 信号列表
 
@@ -339,9 +341,17 @@ PR 描述: {pr_details.get("body", "")}
 
         lines = []
         for signal in signals:
+            # 格式化来源链接
+            sources_text = "\n    ".join(signal.sources) if signal.sources else "无"
+            # 格式化相关仓库
+            repos_text = (
+                ", ".join(signal.related_repos) if signal.related_repos else "无"
+            )
+
             lines.append(
                 f"- {signal.title} (评分: {signal.impact_score}, "
-                f"类型: {signal.type})\n  {signal.why_it_matters}"
+                f"类型: {signal.type})\n  {signal.why_it_matters}\n"
+                f"  相关仓库: {repos_text}\n  来源:\n    {sources_text}"
             )
 
         return "\n".join(lines)
