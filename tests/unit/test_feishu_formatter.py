@@ -494,7 +494,7 @@ class TestFeishuFormatter:
         assert "**🎯 Release 信号**" in combined_content
 
     def test_format_card_includes_breaking_changes(self):
-        """测试：卡片包含 Breaking Changes 部分（与 Markdown 一致）"""
+        """测试：卡片包含 Breaking Changes 部分（使用折叠面板）"""
         # Arrange
         from trendpluse.notifiers.formatters import FeishuFormatter
 
@@ -531,19 +531,28 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 应该包含 Breaking Changes 标题（使用粗体而非标题）
-        assert "**⚠️ Breaking Changes**" in combined_content
+        # 找到 Breaking Changes 折叠面板
+        bc_panel = None
+        for el in elements:
+            if el.get("tag") == "collapsible_panel":
+                title = el.get("header", {}).get("title", {})
+                title_content = title.get("content", "")
+                if "Breaking Changes" in title_content:
+                    bc_panel = el
+                    break
+
+        # 应该存在 Breaking Changes 折叠面板
+        assert bc_panel is not None, "Breaking Changes 折叠面板不存在"
+
+        # 检查面板内容
+        panel_elements = bc_panel.get("elements", [{}])
+        panel_content = panel_elements[0].get("text", {}).get("content", "")
+
         # 应该包含变更内容
-        assert "移除旧 API" in combined_content
+        assert "移除旧 API" in panel_content
         # 应该包含影响级别表情
-        assert "🔴" in combined_content or "🟡" in combined_content
+        assert "🔴" in panel_content or "🟡" in panel_content
 
     def test_format_activity_includes_overview(self):
         """测试：活跃度部分包含总览指标（与 Markdown 一致）"""

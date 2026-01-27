@@ -75,11 +75,17 @@ class FeishuFormatter:
                 self._create_release_signals_section(report.release_signals)
             )
 
-        # 4. Breaking Changes（如果有，与 MarkdownReporter 一致）
+        # 4. Breaking Changes（如果有，使用折叠面板）
         if report.breaking_changes:
             elements.append({"tag": "hr"})
+            content = self._generate_breaking_changes_content(report.breaking_changes)
             elements.append(
-                self._create_breaking_changes_section(report.breaking_changes)
+                self._create_collapsible_panel(
+                    title=f"⚠️ Breaking Changes ({len(report.breaking_changes)}个)",
+                    content=content,
+                    expanded=False,  # 与其他面板保持一致，默认折叠
+                    icon="down-small-ccm_outlined",
+                )
             )
 
         # 5. 版本发布（如果有）- 使用折叠面板
@@ -480,16 +486,16 @@ class FeishuFormatter:
 
         return elements
 
-    def _create_breaking_changes_section(self, breaking_changes: list[dict]) -> dict:
-        """创建 Breaking Changes 部分（与 MarkdownReporter 一致）
+    def _generate_breaking_changes_content(self, breaking_changes: list[dict]) -> str:
+        """生成 Breaking Changes 内容（不包含外层标题，用于折叠面板）
 
         Args:
             breaking_changes: breaking changes 列表
 
         Returns:
-            Breaking Changes 部分元素
+            Markdown 格式的内容字符串
         """
-        lines = ["**⚠️ Breaking Changes**\n\n"]
+        lines = []
 
         for bc in breaking_changes:
             repo_name = bc["repo"].replace("_", "\\_")
@@ -508,13 +514,26 @@ class FeishuFormatter:
 
             lines.append("\n")
 
-        return {
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": "".join(lines),
-            },
-        }
+        return "".join(lines)
+
+    def _create_breaking_changes_section(self, breaking_changes: list[dict]) -> dict:
+        """创建 Breaking Changes 部分（已弃用，建议使用折叠面板）
+
+        为了向后兼容保留此方法，内部调用折叠面板方法。
+
+        Args:
+            breaking_changes: breaking changes 列表
+
+        Returns:
+            Breaking Changes 部分元素
+        """
+        content = self._generate_breaking_changes_content(breaking_changes)
+        return self._create_collapsible_panel(
+            title=f"⚠️ Breaking Changes ({len(breaking_changes)}个)",
+            content=content,
+            expanded=False,
+            icon="down-small-ccm_outlined",
+        )
 
     def _generate_activity_content(self, activity: ActivityData) -> str:
         """生成活跃度内容（不包含外层标题，用于折叠面板）

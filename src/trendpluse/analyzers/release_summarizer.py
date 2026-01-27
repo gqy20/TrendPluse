@@ -167,6 +167,7 @@ Release Notes:
 4. 影响级别（1-5，5 为最高）
 
 注意：
+- **所有文本内容必须使用中文**（key_changes、summary_cn）
 - 优先识别 Breaking Changes（影响级别应为 5）
 - 如果是主版本升级（如 v1.0.0 到 v2.0.0），通常意味着 Breaking Changes
 - 新功能优先于修复，修复优先于改进

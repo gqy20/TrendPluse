@@ -99,8 +99,13 @@ GitHub API → Collectors → Analyzers (AI) → Pipeline → Reporters → Mark
 - `TrendAnalyzer`: 分析 PR 提取信号，支持跨类型聚合
 - `CommitAnalyzer`: 分析 commits 提取信号（支持 SHA 精确匹配）
 - `ReleaseAnalyzer`: 分析 releases 提取信号
+- `ReleaseSummarizer`: 为 releases 生成 AI 总结（变更类型、关键点、影响级别）
 - `BreakingChangesDetector`: 检测不兼容变更
 - `SignalDeduplicator`: 基于 LLM + 历史记录的信号去重
+
+**Utils** (`utils/`): 工具模块
+- `retry.py`: API 重试装饰器工厂函数（`create_anthropic_retry_decorator`、`create_github_retry_decorator`）
+- `formatters.py`: 格式化工具函数
 
 **Reporters** (`reporters/`): 报告生成
 - `MarkdownReporter`: 生成 Markdown 报告
@@ -153,6 +158,27 @@ GitHub API → Collectors → Analyzers (AI) → Pipeline → Reporters → Mark
 - **测试文件组织**: `tests/unit/` 下按模块组织
 - pre-commit hooks 包含测试检查
 
+#### pytest 配置 (`pyproject.toml`)
+```toml
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+```
+
+#### 测试 Fixtures (`tests/conftest.py`)
+- `sample_data`: 示例数据
+- `sample_numbers`: 示例数字列表
+- `temp_file`: 临时文件（自动清理）
+- `temp_dir`: 临时目录（自动清理）
+- `capture_logs`: 日志捕获
+- `clean_env`: 环境变量管理
+- `mock_console`: Rich 控制台模拟
+- `sample_repos`: Anthropic 热门仓库列表
+- `mock_env_vars`: Mock 必需环境变量
+
 ### 关键实现细节
 
 #### 并行采集框架
@@ -191,6 +217,36 @@ Pipeline 在各环节失败时优雅降级，确保至少生成包含活跃度�
 - `mypy`: 类型检查
 - `actionlint`: GitHub Actions 工作流检查
 - `sync-repos-to-docs`: 自动同步仓库列表到文档（`make install` 时安装）
+
+#### 重试机制 (`utils/retry.py`)
+项目使用 `tenacity` 库统一管理 API 重试策略：
+- `create_anthropic_retry_decorator()`: LLM API 重试（超时、速率限制）
+  - 默认最多 3 次，指数退避（1s → 2s → 4s → ... → 10s）
+- `create_github_retry_decorator()`: GitHub API 重试
+  - 默认最多 3 次，指数退避（4s → 8s → 16s → ... → 60s）
+  - GitHub 速率限制建议更长等待时间
+
+#### 信号类型和分类
+`Signal` 模型定义的信号类型（`type` 字段）：
+- `capability`: 🚀 新能力/功能
+- `abstraction`: 🎨 抽象层改进
+- `workflow`: ⚙️ 工作流优化
+- `eval`: 📊 评估/基准
+- `safety`: 🛡️ 安全性增强
+- `performance`: ⚡ 性能优化
+- `commit`: 💾 Commit 信号
+- `release`: 🎯 Release 信号
+
+信号分类（`category` 字段）：
+- `engineering`: 工程信号（工具链、SDK、框架更新）
+- `research`: 研究信号（论文、实验、技术探索）
+
+Release 变更类型（`ReleaseSummary.change_type`）：
+- `feature`: 🆕 新功能
+- `fix`: 🔧 Bug 修复
+- `improvement`: ✨ 改进优化
+- `breaking`: 💥 不兼容变更
+- `other`: 📦 其他
 
 ### GitHub Actions 工作流
 
@@ -264,39 +320,44 @@ Pipeline 在各环节失败时优雅降级，确保至少生成包含活跃度�
 ```
 src/trendpluse/
 ├── __init__.py       # 包初始化，导出公共 API
-├── core.py           # 核心基础函数（add, greet）
 ├── logger.py         # 日志系统（rich）
 ├── config.py         # 配置管理（主入口）
 ├── pipeline.py       # 主流程
 ├── main.py           # 命令行入口
 │
 ├── collectors/       # 数据采集器
-│   ├── github_events.py
-│   ├── activity.py
-│   ├── releases.py
-│   ├── filter.py
-│   ├── github_api.py
-│   └── parallel.py   # 并行采集框架
+│   ├── base.py             # BaseGitHubCollector 基类
+│   ├── github_events.py    # GitHub 事件采集
+│   ├── activity.py         # 活跃度采集（GraphQL）
+│   ├── releases.py         # Release 采集
+│   ├── filter.py           # 事件筛选
+│   ├── github_api.py       # GitHub API 封装
+│   └── parallel.py         # 并行采集框架
 │
 ├── analyzers/        # AI 分析器
-│   ├── base.py       # LLM 分析器基类
-│   ├── trend_analyzer.py
-│   ├── commit_analyzer.py
-│   ├── release_analyzer.py
-│   ├── breaking_changes_detector.py
-│   └── signal_deduplicator.py
+│   ├── base.py                    # LLM 分析器基类
+│   ├── trend_analyzer.py          # PR 趋势分析
+│   ├── commit_analyzer.py         # Commit 分析
+│   ├── release_analyzer.py        # Release 分析
+│   ├── release_summarizer.py      # Release AI 总结
+│   ├── breaking_changes_detector.py  # 不兼容变更检测
+│   └── signal_deduplicator.py     # 信号去重
 │
 ├── models/           # 数据模型
-│   └── signal.py
+│   └── signal.py            # 信号和报告模型
 │
 ├── reporters/        # 报告生成器
-│   └── markdown_reporter.py
+│   └── markdown_reporter.py # Markdown 报告生成
 │
-└── notifiers/        # 通知发送
-    ├── base.py
-    ├── feishu.py
-    └── formatters/
-        └── feishu.py
+├── notifiers/        # 通知发送
+│   ├── base.py              # 通知器基类
+│   ├── feishu.py            # 飞书通知
+│   └── formatters/
+│       └── feishu.py        # 飞书卡片格式化
+│
+└── utils/            # 工具模块
+    ├── retry.py            # API 重试装饰器工厂
+    └── formatters.py       # 格式化工具函数
 
 scripts/
 ├── run.py                    # 主程序入口
@@ -325,13 +386,16 @@ data/                        # 数据文件
 2. 实现数据采集逻辑，返回 `(StructuredData, detailed_list)` 元组
 3. 在 `pipeline.py` 的 `TrendPulsePipeline.__init__()` 中初始化
 4. 在 `run_daily()` 方法中集成调用
+5. 使用 `parallel_map()` 或 `parallel_execute()` 实现并行采集
 
 ### 添加新 Analyzer
 1. 在 `analyzers/` 下创建新文件
 2. 继承 `BaseLLMAnalyzer` 基类
 3. 使用 `instructor` + Pydantic 模型实现结构化输出
-4. 在 `pipeline.py` 中集成调用
-5. 如需去重，在 `SignalDeduplicator` 中添加逻辑
+4. 使用 `_validate_and_create_signal()` 验证 LLM 返回的数据
+5. 在 `pipeline.py` 中集成调用
+6. 如需去重，在 `SignalDeduplicator` 中添加逻辑
+7. 使用 `@create_anthropic_retry_decorator()` 添加重试机制
 
 ### 添加新 Notifier
 1. 继承 `BaseNotifier` (在 `notifiers/base.py`)

@@ -208,6 +208,7 @@ PR 描述: {pr_details.get("body", "")}
 3. stats 包含统计信息
 
 注意：
+- **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
 - 每个趋势的 sources 应包含所有支持该趋势的 PR/Commit/Release 链接
 - 只返回真正有价值的跨类型趋势
 - 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary

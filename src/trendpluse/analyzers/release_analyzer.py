@@ -166,6 +166,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
 ```
 
 注意：
+- **所有文本内容必须使用中文**（title、why_it_matters 等）
 - **只返回真正有价值的重大更新**
 - **忽略纯 bug 修复的补丁版本**
 - **如果没有重要更新，返回空数组 []**

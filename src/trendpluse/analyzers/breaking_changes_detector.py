@@ -160,7 +160,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
     "has_breaking": true,
     "changes": [
       {{
-        "description": "变更描述（简短）",
+        "description": "变更描述（中文，简短明确）",
         "impact": "影响等级（high/medium/low）",
         "category": "分类（API/Config/Behavior/Dependency）"
       }}
@@ -170,6 +170,7 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
 ```
 
 注意：
+- **所有描述必须使用中文**
 - **只返回有 breaking changes 的版本**
 - **如果某个版本没有 breaking changes，不要包含在结果中**
 - **如果没有任何 breaking changes，返回空数组 []**

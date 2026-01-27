@@ -163,6 +163,7 @@ class CommitAnalyzer(BaseLLMAnalyzer):
 ```
 
 注意：
+- **所有文本内容必须使用中文**（title、why_it_matters、tech_details 等）
 - **commit_sha 必需**：必须从输入的 commit 数据中精确复制对应的 `sha` 字段值
 - 精确匹配：确保信号与正确的 commit 关联，避免索引错位
 - 只返回真正有价值的趋势（避免琐碎修复）
