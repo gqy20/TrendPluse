@@ -70,3 +70,76 @@ class TestMarkdownReporter:
         assert "@b17b541" in rendered  # commit 格式
         assert "#456" in rendered  # PR 格式
         assert "continuedev/continue" in rendered  # 仓库格式
+
+    def test_render_signal_card_html(self, reporter, sample_signal):
+        """测试渲染信号卡片 - HTML 格式应包含正确的类和结构"""
+        # Act
+        rendered = reporter.render_signal_card(sample_signal)
+
+        # Assert - 验证 HTML 卡片结构
+        assert '<div class="signal-card signal-high-impact">' in rendered
+        assert '<div class="signal-header">' in rendered
+        assert '<div class="signal-icon">' in rendered
+        assert '<h4 class="signal-title">测试信号</h4>' in rendered
+        assert '<span class="signal-type-badge capability">' in rendered
+        assert '<span class="signal-stars">⭐⭐⭐⭐</span>' in rendered
+        assert '<div class="signal-body">' in rendered
+        assert '<div class="signal-footer">' in rendered
+        assert "这是一个测试信号" in rendered
+        assert "anthropics/claude-code-action" in rendered
+
+    def test_render_signal_card_medium_impact(self, reporter):
+        """测试渲染信号卡片 - 中等影响评分应使用正确的样式"""
+        # Arrange
+        signal = Signal(
+            id="test-3",
+            title="中等影响信号",
+            type="workflow",
+            category="engineering",
+            impact_score=3,
+            why_it_matters="这是一个中等影响的信号",
+            sources=["https://github.com/test/repo/pull/123"],
+            related_repos=["test/repo"],
+        )
+
+        # Act
+        rendered = reporter.render_signal_card(signal)
+
+        # Assert - 中等影响应使用 medium 样式
+        assert '<div class="signal-card signal-medium-impact">' in rendered
+        assert '<span class="signal-stars">⭐⭐⭐</span>' in rendered
+        assert "中等影响信号" in rendered
+
+    def test_render_signal_card_low_impact(self, reporter):
+        """测试渲染信号卡片 - 低影响评分应使用正确的样式"""
+        # Arrange
+        signal = Signal(
+            id="test-4",
+            title="低影响信号",
+            type="eval",
+            category="research",
+            impact_score=2,
+            why_it_matters="这是一个低影响的信号",
+            sources=["https://github.com/test/repo/pull/456"],
+            related_repos=["test/repo"],
+        )
+
+        # Act
+        rendered = reporter.render_signal_card(signal)
+
+        # Assert - 低影响应使用 low 样式
+        assert '<div class="signal-card signal-low-impact">' in rendered
+        assert '<span class="signal-stars">⭐⭐</span>' in rendered
+
+    def test_render_bento_grid(self, reporter, sample_signal):
+        """测试渲染 Bento Grid - 应包含正确的容器和卡片"""
+        # Arrange
+        signals = [sample_signal]
+
+        # Act
+        rendered = reporter.render_bento_grid(signals, "工程")
+
+        # Assert - 验证 Bento Grid 结构
+        assert '<div class="bento-grid">' in rendered
+        assert "<h2>🔧 工程信号</h2>" in rendered
+        assert "signal-card" in rendered
