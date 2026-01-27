@@ -84,6 +84,12 @@ class Signal(BaseModel):
     sources: list[str] = Field(description="PR/Release 链接")
     related_repos: list[str] = Field(description="相关仓库名称")
 
+    # 聚合信号引用字段（仅用于 engineering_signals）
+    source_signal_ids: list[str] = Field(
+        default_factory=list,
+        description=("支持此聚合信号的原始信号 ID 列表 (仅用于聚合信号，由 LLM 填充)"),
+    )
+
     @classmethod
     def get_type_emoji(cls, signal_type: str) -> str:
         """获取信号类型的表情

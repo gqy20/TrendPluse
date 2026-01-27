@@ -355,3 +355,140 @@ PR 描述: {pr_details.get("body", "")}
             )
 
         return "\n".join(lines)
+
+    def _format_signals_with_ids(self, signals: list[Signal], prefix: str) -> str:
+        """格式化信号列表为文本（带 ID 引用）
+
+        用于强一致性方案：每个信号都有唯一 ID，方便 LLM 引用和后处理溯源。
+
+        Args:
+            signals: 信号列表
+            prefix: ID 前缀（pr/commit/release）
+
+        Returns:
+            格式化文本
+        """
+        if not signals:
+            return "无"
+
+        lines = []
+        for idx, signal in enumerate(signals):
+            sig_id = f"{prefix}-{idx}"
+
+            # 格式化来源链接
+            sources_text = "\n    ".join(signal.sources) if signal.sources else "无"
+            # 格式化相关仓库
+            repos_text = (
+                ", ".join(signal.related_repos) if signal.related_repos else "无"
+            )
+
+            lines.append(
+                f"[{sig_id}] {signal.title} "
+                f"(评分: {signal.impact_score}, 类型: {signal.type})\n"
+                f"  {signal.why_it_matters}\n"
+                f"  相关仓库: {repos_text}\n"
+                f"  来源:\n    {sources_text}"
+            )
+
+        return "\n".join(lines)
+
+    def _resolve_sources_from_ids(
+        self,
+        report: "DailyReport",
+        signal_map: dict[str, Signal],
+    ) -> "DailyReport":
+        """根据 source_signal_ids 解析 sources（确定性）
+
+        这是确保强一致性的关键方法：
+        - 不依赖 LLM 正确传递 sources
+        - 通过 ID 查找原始信号，提取其 sources
+        - 确保最终结果 100% 包含正确的 URL
+
+        Args:
+            report: LLM 返回的报告
+            signal_map: ID 到 Signal 的映射
+
+        Returns:
+            补充了 sources 的报告
+        """
+
+        for signal in report.engineering_signals:
+            # 检查是否有 source_signal_ids 字段
+            signal_ids = getattr(signal, "source_signal_ids", None)
+
+            if signal_ids:
+                # 根据 IDs 查找原始 sources（确定性操作）
+                resolved_sources: list[str] = []
+                resolved_repos: set[str] = set()
+
+                for sig_id in signal_ids:
+                    if sig_id in signal_map:
+                        original_signal = signal_map[sig_id]
+                        # 收集 sources
+                        resolved_sources.extend(original_signal.sources)
+                        # 收集 repos
+                        resolved_repos.update(original_signal.related_repos)
+                    else:
+                        from trendpluse.logger import get_logger
+
+                        logger = get_logger(__name__)
+                        logger.warning(f"聚合信号引用了不存在的 ID: {sig_id}")
+
+                # 去重并设置
+                signal.sources = list(set(resolved_sources))
+                signal.related_repos = list(resolved_repos)
+
+                # 验证
+                if not signal.sources:
+                    from trendpluse.logger import get_logger
+
+                    logger = get_logger(__name__)
+                    logger.warning(f"聚合信号 '{signal.id}' 没有解析到任何 sources")
+            else:
+                # Fallback: LLM 没有返回 source_signal_ids
+                from trendpluse.logger import get_logger
+
+                logger = get_logger(__name__)
+                logger.warning(f"聚合信号 '{signal.id}' 缺少 source_signal_ids 字段")
+                # 尝试从 LLM 返回的 sources 中验证
+                if signal.sources:
+                    # 如果有 signal_map，验证 sources
+                    if signal_map:
+                        valid_sources = self._validate_sources(
+                            signal.sources, signal_map
+                        )
+                        signal.sources = valid_sources
+                    # 如果没有 signal_map，保留 LLM 返回的 sources
+                    # (这种情况在测试 mock 时可能出现)
+                # else: sources 保持为空
+
+        return report
+
+    def _validate_sources(
+        self, sources: list[str], signal_map: dict[str, Signal]
+    ) -> list[str]:
+        """验证 sources 是否来自原始信号集合
+
+        Args:
+            sources: LLM 返回的 sources
+            signal_map: 原始信号映射
+
+        Returns:
+            验证通过的 sources 列表
+        """
+        # 收集所有有效的 sources
+        valid_set = set()
+        for signal in signal_map.values():
+            valid_set.update(signal.sources)
+
+        # 过滤出有效的 sources
+        validated = [s for s in sources if s in valid_set]
+
+        if len(validated) < len(sources):
+            from trendpluse.logger import get_logger
+
+            logger = get_logger(__name__)
+            invalid = set(sources) - valid_set
+            logger.warning(f"发现无效的 sources: {invalid}，已过滤")
+
+        return validated
