@@ -1,180 +1,247 @@
 {
   "date": "2026-01-27",
-  "summary_brief": "今日 AI 开发工具链呈现三大核心趋势：一是异步非阻塞执行模式成为行业标准，多个项目从同步阻塞向异步架构迁移；二是 MCP 协议与多模态能力全面普及，头部项目同时增强工具链标准化和跨模态理解；三是生产就绪度显著提升，Claude Code Action v1.0 发布、安全性加固和跨平台兼容性优化成为焦点。同时，结构化输出标准化和计划模式持久化反映了 Agent 系统向可管理、可预测方向演进。",
+  "summary_brief": "今日 31 个信号反映了 AI 开发工具生态的四个关键趋势：异步架构升级（多个项目修复 async/sync 混用问题）、MCP 协议加速标准化落地、多模态能力下放至框架核心层、CLI 工具链体验全面升级。值得注意的是，AI Agent 安全沙箱隔离成为生产部署的重要前置条件，评分 5 的安全相关变更凸显了行业对安全性的重视。",
   "engineering_signals": [
     {
-      "id": "trend-async-architecture",
-      "title": "异步非阻塞执行架构成为 AI 工具链标准模式",
-      "type": "capability",
+      "id": "trend-async-architecture-upgrade",
+      "title": "异步架构升级与并发模型统一",
+      "type": "performance",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "多个项目（gptme Hooks、OpenHands 数据库层、Claude Code Hooks）集体从同步阻塞向异步非阻塞模式演进。这标志着 AI 工具链性能优化进入新阶段——通过避免阻塞操作提升并发性能和用户体验，解决了长任务执行时的资源占用和响应延迟问题。async_hooks 和事件驱动调度器的采纳表明这是受行业最佳实践驱动的系统性升级。",
+      "why_it_matters": "OpenHands 和 GPTme 同时遭遇 async/sync 会话混用导致的连接池死锁问题，暴露了 AI 工具链在异步迁移中的普遍技术债。GPTme 引入非阻塞 Hook 执行机制，体现了行业从同步向异步架构的整体演进。这是提升 AI Agent 并发处理能力的关键基础设施升级。",
       "sources": [
-        "https://github.com/gptme/gptme/pull/1154",
-        "https://x.com/i/status/2015524460481388760",
         "https://github.com/google-gemini/gemini-cli/commit/67b00252d3ff8e8373b0dbc47eb62f40de6ed05b",
-        "https://github.com/OpenHands/OpenHands/pull/12612"
+        "https://x.com/i/status/2015524460481388760",
+        "https://github.com/gptme/gptme/pull/1154",
+        "https://github.com/OpenHands/OpenHands/pull/12612",
+        "https://github.com/OpenHands/OpenHands/pull/12610"
       ],
       "related_repos": [
-        "OpenHands/OpenHands",
-        "openai/codex",
+        "ErikBjare/gptme",
+        "ErikBjare/bob",
         "gptme/gptme",
-        "google-gemini/gemini-cli"
+        "google-gemini/gemini-cli",
+        "OpenHands/OpenHands",
+        "openai/codex"
       ],
       "source_signal_ids": [
-        "pr-3",
-        "commit-1",
-        "pr-9"
+        "pr-5",
+        "pr-10",
+        "pr-11",
+        "commit-2"
       ]
     },
     {
-      "id": "trend-mcp-multimodal",
-      "title": "MCP 协议与多模态能力同步爆发式普及",
+      "id": "trend-mcp-protocol-standardization",
+      "title": "MCP 协议加速标准化落地",
       "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "OpenAI Codex、Google Gemini CLI、Dify、LangChain 等头部项目同时增强 MCP（Model Context Protocol）支持和原生多模态能力。这显示 AI 代理工具链正在经历标准化整合阶段——MCP 成为工具调用的通用协议，而多模态输入（图文音视频）从外部解析转向框架原生支持，标志着 AI 应用从纯文本交互向全媒体理解跃迁。",
+      "why_it_matters": "Anthropic、OpenAI、Google 等巨头同时推进 MCP（Model Context Protocol）集成，标志着 AI 工具调用接口正在形成统一标准。这将解决 AI Agent 生态碎片化问题，实现跨平台工具互操作性，是构建开放 AI 工具生态的关键里程碑。",
       "sources": [
-        "https://github.com/langgenius/dify/commit/e48419937b93ad3c273149bcac6e1d22af3bf4c8",
-        "https://github.com/anthropics/claude-code/releases/tag/v2.1.20",
-        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.23",
-        "https://github.com/openai/codex/commit/bdc4742bfc72f0366a48a3a2886cd2f19c2d1548"
+        "https://github.com/langgenius/dify/commit/c58647d39cc3758fa037a6c8bae5c62d76e8feea"
       ],
       "related_repos": [
         "anthropics/claude-code",
         "openai/codex",
-        "anthropics/claude-code-action",
-        "anthropics/claude-agent-sdk-typescript",
         "google-gemini/gemini-cli",
-        "langchain-ai/langchain",
-        "anthropics/claude-agent-sdk-python",
         "langgenius/dify"
       ],
       "source_signal_ids": [
-        "commit-0",
-        "commit-3",
-        "release-0",
-        "release-1"
+        "commit-0"
       ]
     },
     {
-      "id": "trend-production-readiness",
-      "title": "生产就绪度全面提升：安全加固与 CI/CD 成熟",
-      "type": "safety",
+      "id": "trend-multimodal-native-integration",
+      "title": "多模态能力原生集成至框架核心层",
+      "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "Claude Code Action v1.0 正式发布标志着 AI 辅助编程达到生产可用标准。同时多个项目在安全性上集体加强：Agent 沙箱隔离防止逃逸、Token Exchange 权限请求回滚修复安全漏洞、跨平台依赖处理避免 EBADPLATFORM 错误。这表明 AI 工具正从实验性工具向企业级生产力平台转型，安全性和稳定性成为核心竞争力。",
+      "why_it_matters": "Dify、LangChain、CrewAI 等主流框架同时将多模态处理能力（图像、文档）集成到核心流程，不再依赖外部插件。CrewAI 1.9.0 引入原生多模态文件处理和 Vertex AI 嵌入支持，Agno 集成 Unsplash 图像搜索，标志着 AI Agent 已从纯文本交互升级为多模态原生应用。",
       "sources": [
-        "https://github.com/AndyMik90/Auto-Claude/commit/1e453653b2424e4649d4da63d836a82752f99030",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.20",
+        "https://github.com/crewAIInc/crewAI/pull/4282",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.36",
+        "https://github.com/langgenius/dify/commit/e48419937b93ad3c273149bcac6e1d22af3bf4c8"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "agno-agi/agno",
+        "run-llama/llama_index",
+        "anthropics/claude-code-action",
+        "crewAIInc/crewAI",
+        "anthropics/claude-agent-sdk-typescript",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "release-2",
+        "release-3",
+        "pr-17"
+      ]
+    },
+    {
+      "id": "trend-cli-dx-revolution",
+      "title": "CLI 工具链开发者体验全面升级",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "GPTme 推出三大 DX 改进：交互式 onboarding 向导、诊断命令 gptme-doctor、统一代理管理命令，显著降低了 AI 编程工具的学习曲线。Claude Code 2.1.20 增强任务系统和多目录上下文支持。这反映了 AI 工具从功能可用性向开发者体验优化的战略转型。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1166",
         "https://github.com/anthropics/claude-code/releases/tag/v2.1.20",
-        "https://github.com/ruvnet/claude-flow/pull/1025",
-        "https://github.com/anthropics/claude-code-action/pull/864"
+        "https://github.com/gptme/gptme/pull/1159",
+        "https://github.com/gptme/gptme/pull/1167"
       ],
       "related_repos": [
         "anthropics/claude-code",
-        "anthropics/claude-code-action",
-        "AndyMik90/Auto-Claude",
-        "google-gemini/gemini-cli",
-        "ruvnet/claude-flow"
+        "gptme/gptme"
       ],
       "source_signal_ids": [
-        "release-0",
-        "pr-1",
-        "commit-6",
-        "pr-13"
+        "pr-0",
+        "pr-6",
+        "pr-18",
+        "release-0"
       ]
     },
     {
       "id": "trend-structured-output-standardization",
-      "title": "结构化输出与 Agent 通信协议标准化加速",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "CrewAI 在 Agent SDK 中统一了跨云提供商（Azure、Gemini、Bedrock）的 response_format 支持，并增强 A2A（Agent-to-Agent）通信协议。结合 LangChain 中间层导出 ToolCallRequest 类型，显示行业正在解决多智能体协作的核心痛点：数据格式互操作性。标准化输出协议使 Agent 间协作更可靠，降低了在不同模型和框架间切换的适配成本。",
-      "sources": [
-        "https://github.com/crewAIInc/crewAI/pull/4284",
-        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.20",
-        "https://github.com/langchain-ai/docs/pull/2358",
-        "https://github.com/langchain-ai/langchain/pull/34894",
-        "https://github.com/anthropics/claude-agent-sdk-python/commit/f5823c662262b8aab91bfbce4fef36121994de1d"
-      ],
-      "related_repos": [
-        "anthropics/claude-agent-sdk-typescript",
-        "langchain-ai/docs",
-        "crewAIInc/crewAI",
-        "langchain-ai/langchain",
-        "anthropics/claude-agent-sdk-python"
-      ],
-      "source_signal_ids": [
-        "commit-5",
-        "release-2",
-        "pr-15",
-        "pr-10"
-      ]
-    },
-    {
-      "id": "trend-plan-persistence",
-      "title": "计划模式持久化与上下文智能压缩",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "OpenDevin、Google Gemini CLI 和 gptme 同时引入计划文件持久化存储和上下文智能压缩功能。这反映了 AI 编程从单次执行向可管理的长期工作流演进——用户可以保存、恢复和迭代复杂任务计划，同时通过保留关键文件（specs、plans、source）的智能压缩机制，在长会话中维持连贯性并降低 token 消耗。",
-      "sources": [
-        "https://github.com/gptme/gptme/pull/1151",
-        "https://github.com/anthropics/claude-agent-sdk-python/commit/ef4149d1c9dbed4bf5c329f500a866a61e9407c7"
-      ],
-      "related_repos": [
-        "anthropics/claude-agent-sdk-python",
-        "gptme/gptme",
-        "google-gemini/gemini-cli"
-      ],
-      "source_signal_ids": [
-        "commit-2",
-        "pr-4"
-      ]
-    },
-    {
-      "id": "trend-graceful-degradation",
-      "title": "优雅降级机制增强系统鲁棒性",
+      "title": "结构化输出标准化跨提供商统一",
       "type": "capability",
       "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "多个项目独立采用优雅降级模式：CrewAI 为 File Store 增加内存缓存降级应对依赖缺失，OpenHands 将 TOS 未接受从错误降级为警告优化用户体验，OpenHands 修复 Pydantic v2 兼容性保持字段不可变性。这些变更表明 AI 工具链正从'全有或全无'向容错性更强的设计哲学转变，提升了不同环境下的可用性。",
+      "impact_score": 4,
+      "why_it_matters": "CrewAI 和 Claude Agent SDK 同时推进跨多个 LLM 提供商（Azure、Gemini、Bedrock）的统一结构化输出接口，解决了 JSON 格式不一致的长期痛点。LangChain 新增 ToolCallRequest 中间件导出，增强了工具调用的可扩展性。这将显著提升 AI Agent 调用工具的可靠性和生产可用性。",
       "sources": [
-        "https://github.com/OpenHands/OpenHands/pull/12605",
-        "https://github.com/crewAIInc/crewAI/pull/4283",
-        "https://github.com/OpenHands/OpenHands/pull/12600"
+        "https://github.com/langchain-ai/langchain/pull/34894",
+        "https://github.com/anthropics/claude-agent-sdk-python/commit/fddf5dd9eca62eed1cea6d0feca29f1bdb130be2"
       ],
       "related_repos": [
-        "OpenHands/OpenHands",
-        "crewAIInc/crewAI"
+        "langchain-ai/docs",
+        "anthropics/claude-agent-sdk-python",
+        "agno-agi/agno",
+        "langchain-ai/langchain"
       ],
       "source_signal_ids": [
-        "pr-14",
-        "pr-7",
+        "commit-3",
         "pr-8"
       ]
     },
     {
-      "id": "trend-streaming-oom-prevention",
-      "title": "流式输出与内存溢出防护成为大规模代码库操作标配",
-      "type": "performance",
+      "id": "trend-agent-security-sandbox",
+      "title": "AI Agent 安全沙箱与权限隔离机制",
+      "type": "safety",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Google Gemini CLI 和 OpenAI Codex 针对长命令输出（如 grep/ripgrep）实现了流式处理以防止 OOM，gptme 引入 async_mode 非阻塞执行提升性能。这些优化共同指向一个趋势：随着 AI 工具处理更大规模代码库，流式处理和内存管理成为关键性能瓶颈。跨项目的类似实现表明这是行业共同面临的挑战，流式架构正成为标准解决方案。",
+      "impact_score": 5,
+      "why_it_matters": "Auto-Claude 和 OpenDevin 引入工作树隔离和权限目录检查，防止 Agent 逃逸至项目根目录。GPTme 统一 TOOL_ALLOWLIST 配置并从错误降级 TOS 检查为警告，平衡了安全性与易用性。这是 AI 编程助手从实验环境走向生产部署的关键安全基础设施。",
       "sources": [
-        "https://github.com/gptme/gptme/pull/1154",
-        "https://x.com/i/status/2015524460481388760",
-        "https://github.com/google-gemini/gemini-cli/commit/018dc0d5cfc17e4b9e35e29344dd1cc6a05866fc"
+        "https://github.com/OpenHands/OpenHands/pull/12605",
+        "https://github.com/gptme/gptme/pull/1165",
+        "https://github.com/AndyMik90/Auto-Claude/commit/1e453653b2424e4649d4da63d836a82752f99030"
       ],
       "related_repos": [
-        "openai/codex",
         "gptme/gptme",
-        "google-gemini/gemini-cli"
+        "google-gemini/gemini-cli",
+        "OpenHands/OpenHands",
+        "AndyMik90/Auto-Claude",
+        "OpenDevin/OpenDevin"
       ],
       "source_signal_ids": [
-        "commit-4",
-        "pr-3"
+        "commit-5",
+        "pr-3",
+        "pr-12"
+      ]
+    },
+    {
+      "id": "trend-type-safety-code-quality",
+      "title": "类型安全与代码质量系统性提升",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "GPTme 将不安全的 hasattr() 检查替换为 isinstance() 类型检查，OpenHands 迁移至 Pydantic v2 frozen field 正确模式。这些变更体现了 AI 工具链从动态类型向静态类型保障的演进，提升了代码可靠性和 IDE 支持，是项目长期维护的基础。",
+      "sources": [
+        "https://claude.ai/code/session_01EF7HSg9bV9p9x3zsPG5r5x",
+        "https://github.com/gptme/gptme/pull/1161",
+        "https://github.com/OpenHands/OpenHands/pull/12600"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "trend-graceful-degradation-pattern",
+      "title": "优雅降级与容错模式普及",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "CrewAI 引入内存缓存回退机制（当 aiocache 不可用时），Claude Code Action 回滚 token exchange 权限传递功能。这种快速回滚和降级策略的广泛应用，表明 AI 工具链正在建立更成熟的错误处理和容错机制，提升了生产环境的稳定性。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/pull/4283",
+        "https://github.com/anthropics/claude-code-action/pull/864"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "crewAIInc/crewAI"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "pr-16"
+      ]
+    },
+    {
+      "id": "trend-ci-cd-automation-maturity",
+      "title": "CI/CD 自动化工具链成熟度提升",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code Action 发布 v1.0 正式版，支持自动模式检测和无缝 CLI 集成，标志着 AI 编程助手已达到生产就绪状态。GitHub Actions Checkout v6 升级趋势反映了基础设施工具链的持续演进。OpenHands SDK 升级至 1.10.0 确保功能兼容性。",
+      "sources": [
+        "https://github.com/OpenHands/OpenHands/pull/12613",
+        "https://github.com/actions/checkout/releases",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.36",
+        "https://github.com/OpenHands/OpenHands/pull/12614",
+        "https://github.com/anthropics/claude-code-action/pull/862",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.23",
+        "https://github.com/actions/checkout/compare/v5.0.1...v6.0.2"
+      ],
+      "related_repos": [
+        "actions/checkout",
+        "agno-agi/agno",
+        "anthropics/claude-code-action",
+        "anthropics/claude-agent-sdk-python",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "release-1",
+        "release-3",
+        "pr-1",
+        "pr-9"
+      ]
+    },
+    {
+      "id": "trend-knowledge-management-optimization",
+      "title": "知识管理与上下文优化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "GPTme 改进 /compact resume 的上下文文件提取，LlamaIndex 和 Agno 优化 RAG 检索性能和混合搜索能力。这些改进共同指向 AI Agent 在处理长对话和知识库问答时的准确性提升，是构建可靠 AI 助手的核心能力。",
+      "sources": [
+        "https://github.com/run-llama/llama_index/commit/668e90562733b260d9536fe547809ae97331b23e",
+        "https://github.com/gptme/gptme/pull/1151"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "agno-agi/agno",
+        "run-llama/llama_index",
+        "langgenius/dify"
+      ],
+      "source_signal_ids": [
+        "pr-7",
+        "commit-4"
       ]
     }
   ],
@@ -182,22 +249,28 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_signals": 29,
-    "pr_signals": 16,
-    "commit_signals": 9,
+    "total_signals": 31,
+    "pr_signals": 19,
+    "commit_signals": 8,
     "release_signals": 4,
-    "engineered_trends_identified": 7,
-    "total_prs_analyzed": 16,
-    "total_commits_analyzed": 386,
+    "trend_categories": [
+      "异步架构升级",
+      "协议标准化",
+      "多模态集成",
+      "开发体验",
+      "安全加固"
+    ],
+    "high_impact_signals": 7,
+    "total_prs_analyzed": 19,
+    "total_commits_analyzed": 384,
     "total_releases": 9,
-    "high_impact_signals": 6,
     "total_releases_analyzed": 9,
     "total_breaking_changes": 2
   },
   "activity": {
-    "total_commits": 386,
+    "total_commits": 384,
     "active_repos_count": 26,
-    "new_contributors": 144,
+    "new_contributors": 143,
     "top_repos": [
       {
         "repo": "anomalyco/opencode",
@@ -221,7 +294,7 @@
       },
       {
         "repo": "zed-industries/zed",
-        "commits": 48,
+        "commits": 46,
         "new_contributors": 25,
         "top_contributors": [
           "MrSubidubi",
@@ -257,11 +330,11 @@
       },
       {
         "repo": "langgenius/dify",
-        "commits": 17,
+        "commits": 18,
         "new_contributors": 12,
         "top_contributors": [
-          "CodingOnStar",
           "asukaminato0721",
+          "CodingOnStar",
           "majiayu000",
           "dependabot[bot]",
           "hieheihei"
@@ -269,8 +342,8 @@
       },
       {
         "repo": "agno-agi/agno",
-        "commits": 17,
-        "new_contributors": 9,
+        "commits": 16,
+        "new_contributors": 8,
         "top_contributors": [
           "Mustafa-Esoofally",
           "harshsinha03",
@@ -281,12 +354,22 @@
       },
       {
         "repo": "AndyMik90/Auto-Claude",
-        "commits": 14,
+        "commits": 13,
         "new_contributors": 3,
         "top_contributors": [
           "StillKnotKnown",
           "AndyMik90",
           "kaigler"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 8,
+        "new_contributors": 3,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "loftybuilder",
+          "ErikBjare"
         ]
       },
       {
@@ -299,16 +382,6 @@
           "mamoodi",
           "abhayymishraa",
           "chuckbutkus"
-        ]
-      },
-      {
-        "repo": "ErikBjare/gptme",
-        "commits": 7,
-        "new_contributors": 3,
-        "top_contributors": [
-          "TimeToBuildBob",
-          "loftybuilder",
-          "ErikBjare"
         ]
       },
       {
@@ -629,10 +702,16 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.20",
         "ai_summary": {
-          "change_type": "other",
-          "key_changes": [],
-          "summary_cn": "anthropics/claude-code v2.1.20 发布",
-          "impact_level": 1
+          "change_type": "feature",
+          "key_changes": [
+            "新增 vim 普通模式下的箭头键历史导航功能",
+            "新增 PR 审查状态指示器，显示分支 PR 状态（批准、修改请求、待处理或草稿）",
+            "新增通过 TaskUpdate 工具删除任务的功能",
+            "修复会话压缩问题，防止恢复时加载完整历史记录",
+            "改进 /sandbox 命令 UI，显示依赖状态和安装说明"
+          ],
+          "summary_cn": "claude-code v2.1.20 版本主要带来了多项用户体验增强功能，包括 vim 模式导航改进、PR 状态指示器可视化、任务删除功能等。同时修复了会话恢复、字符渲染、JSON 解析等多个关键 bug，并优化了任务列表、提示文本等 UI 交互细节，提升了整体稳定性和易用性。",
+          "impact_level": 2
         }
       },
       {
@@ -646,11 +725,11 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增公共方法 get_mcp_status()，用于查询 MCP 服务器连接状态",
-            "用户无需访问私有内部成员即可获取 MCP 状态",
-            "更新内置的 Claude CLI 工具至版本 2.1.20"
+            "新增公共方法 get_mcp_status() 用于查询 MCP 服务器连接状态",
+            "用户无需访问私有内部方法即可获取 MCP 状态",
+            "升级内置 Claude CLI 至 2.1.20 版本"
           ],
-          "summary_cn": "此版本主要新增了 MCP 状态查询功能，提供了公共的 get_mcp_status() 方法，方便用户直接查询 MCP 服务器连接状态而无需访问私有成员。同时更新了内置的 Claude CLI 至 2.1.20 版本。",
+          "summary_cn": "此版本主要新增了 get_mcp_status() 公共方法，让用户能够更方便地查询 MCP 服务器连接状态，而无需访问私有内部实现。同时升级了内置的 Claude CLI 工具到 2.1.20 版本。",
           "impact_level": 2
         }
       },
@@ -665,11 +744,12 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增从 `additionalDirectories` 指定目录加载 CLAUDE.md 文件的支持（需设置环境变量 `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`）",
-            "新增 `CLAUDE_CODE_ENABLE_TASKS` 环境变量，设置为 `true` 可启用新的任务系统",
-            "更新至与 Claude Code v2.1.20 版本功能一致"
+            "支持通过 `additionalDirectories` 选项加载指定目录中的 CLAUDE.md 文件",
+            "新增 `CLAUDE_CODE_ENABLE_TASKS` 环境变量控制任务系统功能",
+            "同步更新至 Claude Code v2.1.20 版本功能",
+            "需要设置 `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` 环境变量才能启用新功能"
           ],
-          "summary_cn": "此版本主要为功能增强，新增了从额外目录加载 CLAUDE.md 文件的能力，并引入了新的任务系统选项。SDK 更新至与 Claude Code v2.1.20 版本保持同步，通过环境变量控制新功能的启用。",
+          "summary_cn": "此版本新增了两个重要功能：一是支持从 `additionalDirectories` 指定的目录加载 CLAUDE.md 文件（需通过环境变量显式启用），二是提供了 `CLAUDE_CODE_ENABLE_TASKS` 环境变量用于控制新任务系统。同时，SDK 已同步更新至与 Claude Code v2.1.20 版本功能一致。",
           "impact_level": 2
         }
       },
@@ -682,10 +762,14 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.36",
         "ai_summary": {
-          "change_type": "other",
-          "key_changes": [],
-          "summary_cn": "anthropics/claude-code-action v1.0.36 发布",
-          "impact_level": 1
+          "change_type": "fix",
+          "key_changes": [
+            "回滚了在令牌交换请求中发送 additional_permissions 的功能",
+            "移除了 PR #864 引入的附加权限请求逻辑",
+            "恢复到之前未包含 additional_permissions 参数的令牌交换行为"
+          ],
+          "summary_cn": "此版本回滚了之前在令牌交换请求中添加 additional_permissions 参数的功能变更。该回滚移除了 PR #864 引入的代码，恢复了原有的令牌交换请求行为。",
+          "impact_level": 3
         }
       },
       {
@@ -697,10 +781,13 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.35",
         "ai_summary": {
-          "change_type": "other",
-          "key_changes": [],
-          "summary_cn": "anthropics/claude-code-action v1.0.35 发布",
-          "impact_level": 1
+          "change_type": "feature",
+          "key_changes": [
+            "在令牌交换请求中支持发送 additional_permissions",
+            "将 checkout-action 从旧版本升级到 v6"
+          ],
+          "summary_cn": "此版本主要增强了认证令牌交换功能，新增了对 additional_permissions 的支持。同时升级了底层依赖 checkout-action 到 v6 版本，属于常规的功能增强和依赖维护更新。",
+          "impact_level": 2
         }
       },
       {
@@ -714,13 +801,13 @@
         "ai_summary": {
           "change_type": "breaking",
           "key_changes": [
-            "统一简化配置：自动检测运行模式，所有 prompt 合并为单一输入",
-            "完全重构 API：废弃多个旧输入参数，统一采用 claude_args",
-            "直接访问 Claude Code CLI 的所有功能，增强灵活性",
-            "新增 AWS Bedrock 和 Google Vertex AI 兼容性",
-            "提供丰富的使用场景示例（PR 审查、CI 修复、文档生成等）"
+            "统一配置接口：将多个输入项简化为 prompt 和 claude_args",
+            "自动模式检测：智能判断交互式或自动化模式，无需手动配置",
+            "完整的 CLI 能力访问：通过 claude_args 直接使用所有 Claude Code CLI 功能",
+            "Breaking Changes：废弃 mode、direct_prompt、custom_instructions 等 9 个输入参数",
+            "扩展云服务兼容性：增强对 AWS Bedrock 和 Google Vertex AI 的支持"
           ],
-          "summary_cn": "Claude Code GitHub Action 发布 v1.0 正式版，带来重大架构变更。新版完全简化了配置方式，统一使用 prompt 输入和 claude_args 参数，废弃了 v0.x 版本的多个配置项。此次升级提供自动模式检测、完整的 CLI 功能访问以及更强大的云服务兼容性，但需要参考迁移指南进行代码更新。",
+          "summary_cn": "Claude Code GitHub Action v1.0 重大版本发布，带来了简化的配置体验和更强大的功能。新版本统一了 API 接口，支持自动模式检测和完整的 CLI 能力访问，但包含 Breaking Changes，需要参考迁移指南从 v0.x 升级。",
           "impact_level": 5
         }
       },
@@ -735,14 +822,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增跨提供商的结构化输出和 response_format 支持",
-            "添加 Keycloak SSO 单点登录提供商支持",
-            "增强 A2A 功能（Agent 间协作），包括任务执行、服务配置和事件传输",
-            "改进原生多模态文件处理和 OpenAI responses API",
-            "增强文件存储缓存机制和多个错误处理修复"
+            "跨提供商添加结构化输出和 response_format 支持",
+            "添加 A2A 任务执行工具、服务器配置和代理卡生成",
+            "增强原生多模态文件处理和 OpenAI responses API",
+            "集成 Keycloak SSO 身份验证提供商支持",
+            "改进工具调用、文件存储缓存和多个 API 的错误处理"
           ],
-          "summary_cn": "crewAI 1.9.0 版本是一次重大功能更新，重点引入了跨提供商的结构化输出支持和 Keycloak SSO 集成，显著提升了框架的企业级应用能力。同时大幅增强了 A2A（Agent-to-Agent）协作功能，包括任务执行工具、服务配置和事件传输机制。此外还改进了多模态文件处理、工具调用以及多个错误处理和缓存机制。",
-          "impact_level": 4
+          "summary_cn": "CrewAI v1.9.0 是一次重要的功能更新，主要引入了跨提供商的结构化输出支持、A2A（Agent-to-Agent）任务执行能力以及 Keycloak SSO 身份验证集成。同时增强了多模态文件处理能力，并修复了包括 Google Vertex API、Azure 模型、Bedrock 客户端在内的多个问题。",
+          "impact_level": 3
         }
       },
       {
@@ -756,13 +843,12 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 SeltzTools 工具包，支持 Seltz Search 搜索功能",
-            "Agent 和 Team 类新增 add_search_knowledge_instructions 参数，可控制是否在系统提示中添加知识搜索指令",
-            "修复 knowledge cookbook 相关 bug，提升一致性",
-            "更新搜索知识库上下文",
-            "发布版本 2.4.5"
+            "新增 SeltzTools 工具包，支持 Seltz 搜索功能",
+            "Agent 和 Team 类新增 search_knowledge_instructions 参数，可控制系统提示中是否添加知识搜索指令",
+            "修复 knowledge cookbook 的相关 bug 并提升一致性",
+            "更新搜索知识库上下文"
           ],
-          "summary_cn": "v2.4.5 版本主要引入了 SeltzTools 新工具包，提供 Seltz Search 搜索支持；同时为 Agent 和 Team 类增加了 add_search_knowledge_instructions 参数，允许用户控制知识搜索指令的添加。此外还修复了 knowledge cookbook 的相关 bug 并更新了搜索知识库上下文。",
+          "summary_cn": "Agno v2.4.5 版本主要引入了 SeltzTools 工具包，为 Agent 和 Team 类提供了对 Seltz 搜索的支持，并新增了可配置的知识搜索指令参数。同时修复了 knowledge cookbook 的相关 bug，改进了搜索知识库的上下文处理，提升了整体功能的一致性。",
           "impact_level": 2
         }
       },
@@ -777,14 +863,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 Unsplash 图片搜索工具包，支持从 Unsplash API 获取高质量免版税图片",
-            "新增 Moonshot.ai 模型提供商支持",
-            "修复 Markdown Chunker 的 split_on_headings 参数现在正确遵循 chunk_size 设置",
-            "修复 Workflow 中 JWTMiddleware 依赖注入问题",
-            "修复多个数据库相关问题：LanceDB 空向量、SurrealDB 时间戳保留、Firestore 会话重命名覆盖"
+            "新增 Unsplash 图片搜索工具包，支持高质量免版税图片检索",
+            "集成 Moonshot.ai 模型提供商",
+            "修复 Workflow 中 JWT dependencies 注入问题",
+            "修复 Markdown Chunker 分块大小参数不生效问题",
+            "修复 LanceDB、SurrealDB、Firestore 多个数据库相关 bug"
           ],
-          "summary_cn": "Agno v2.4.4 版本主要增强了图片搜索和模型提供商能力，新增了 Unsplash 图片搜索工具和 Moonshot.ai 模型支持。同时修复了多个关键问题，包括 Markdown 分块器参数处理、Workflow JWT 依赖注入，以及 LanceDB、SurrealDB、Firestore 等数据库的功能性缺陷。",
-          "impact_level": 3
+          "summary_cn": "Agno v2.4.4 版本主要集成了 Unsplash 图片搜索工具和 Moonshot.ai 模型提供商，增强了工具生态能力。同时修复了多个重要问题，包括 Workflow 中 JWT 依赖注入失效、Markdown 分块器参数不生效，以及 LanceDB、SurrealDB、Firestore 等数据库的各类缺陷。这些修复提升了框架在数据处理和存储方面的稳定性和可靠性。",
+          "impact_level": 2
         }
       }
     ]
@@ -796,9 +882,9 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "回滚了 v1.0.35 中引入的 token 交换请求功能，该功能曾在请求中发送 `additional_permissions`",
+          "description": "回滚了 v1.0.35 中引入的 token 交换请求功能，移除了 `additional_permissions` 参数的发送",
           "impact": "medium",
-          "category": "Behavior"
+          "category": "API"
         }
       ]
     },
@@ -808,19 +894,24 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "统一配置接口：移除 `mode`、`direct_prompt`、`override_prompt`，合并为单一的 `prompt` 输入",
+          "description": "统一输入接口：废弃 `mode`, `direct_prompt`, `override_prompt`，合并为新的 `prompt` 输入",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "CLI 参数变更：`custom_instructions`、`model`、`allowed_tools`、`mcp_config` 等配置项迁移至 `claude_args` 参数中",
+          "description": "CLI 参数迁移：将 `custom_instructions`, `model`, `allowed_tools`, `mcp_config` 等迁移至 `claude_args` 参数",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "移除废弃配置项：`disallowed_tools`、`anthropic_model`、`trigger_phrase`、`timeout_minutes`",
+          "description": "移除废弃配置项：删除 `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes` 等输入",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "自动化模式检测：移除手动 `mode` 配置，改为根据设置自动判断交互或自动化模式",
           "impact": "medium",
-          "category": "Config"
+          "category": "Behavior"
         }
       ]
     }
