@@ -7,7 +7,7 @@
 """
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
-from trendpluse.models.signal import Signal
+from trendpluse.models.signal import DailyReport, Signal
 
 
 class TestTrendAnalyzerSourceConsistency:
@@ -59,7 +59,7 @@ class TestTrendAnalyzerSourceConsistency:
         analyzer = TrendAnalyzer(api_key="test-key")
 
         # 创建原始信号映射
-        signal_map = {
+        signal_map: dict[str, Signal] = {
             "commit-0": Signal(
                 id="commit-0",
                 title="Commit 1",
@@ -176,7 +176,7 @@ class TestTrendAnalyzerSourceConsistency:
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
 
-        signal_map = {}
+        signal_map: dict[str, Signal] = {}
 
         from trendpluse.models.signal import DailyReport
 
@@ -206,3 +206,84 @@ class TestTrendAnalyzerSourceConsistency:
         # 当没有 source_signal_ids 时，应该尝试验证 LLM 返回的 sources
         trend = resolved_report.engineering_signals[0]
         assert len(trend.sources) == 1
+
+    def test_aggregate_and_generate_report_builds_signal_map(self):
+        """测试：aggregate_and_generate_report 正确构建 signal_map"""
+        # Arrange
+        from unittest.mock import patch
+
+        analyzer = TrendAnalyzer(api_key="test-key")
+
+        pr_signals: list[Signal] = [
+            Signal(
+                id="pr-1",
+                title="PR 信号",
+                type="capability",
+                category="engineering",
+                impact_score=4,
+                why_it_matters="测试",
+                sources=["https://github.com/test/repo/pull/1"],
+                related_repos=["test/repo"],
+            )
+        ]
+
+        commit_signals: list[Signal] = [
+            Signal(
+                id="commit-1",
+                title="Commit 信号",
+                type="commit",
+                category="engineering",
+                impact_score=3,
+                why_it_matters="测试",
+                sources=["https://github.com/test/repo/commit/abc123"],
+                related_repos=["test/repo"],
+            )
+        ]
+
+        release_signals: list[Signal] = []
+
+        # Mock LLM 响应，返回带有 source_signal_ids 的聚合信号
+        mock_report = DailyReport(
+            date="2026-01-05",
+            summary_brief="测试聚合",
+            engineering_signals=[
+                Signal(
+                    id="trend-1",
+                    title="聚合趋势",
+                    type="capability",
+                    category="engineering",
+                    impact_score=5,
+                    why_it_matters="聚合信号",
+                    sources=[],
+                    related_repos=[],
+                    source_signal_ids=["pr-0", "commit-0"],
+                )
+            ],
+            stats={},
+        )
+
+        # Mock client.chat.completions.create 返回我们的 mock_report
+        with patch.object(
+            analyzer.client.chat.completions, "create", return_value=mock_report
+        ):
+            # Act
+            result = analyzer.aggregate_and_generate_report(
+                pr_signals=pr_signals,
+                commit_signals=commit_signals,
+                release_signals=release_signals,
+                date="2026-01-05",
+            )
+
+        # Assert
+        # 应该调用 LLM
+        assert result.date == "2026-01-05"
+        assert len(result.engineering_signals) == 1
+
+        # 验证 sources 已通过后处理正确解析
+        trend = result.engineering_signals[0]
+        assert len(trend.sources) == 2
+        assert "https://github.com/test/repo/pull/1" in trend.sources
+        assert "https://github.com/test/repo/commit/abc123" in trend.sources
+
+        # 验证 related_repos 也正确解析
+        assert "test/repo" in trend.related_repos
