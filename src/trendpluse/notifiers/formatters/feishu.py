@@ -370,11 +370,11 @@ class FeishuFormatter:
         lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
         lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
 
-        # 详细 Release 列表（最多 5 个，飞书卡片不宜过长）
+        # 详细 Release 列表（最多 10 个，飞书卡片不宜过长）
         if releases.releases:
             lines.append("\n**最新发布**\n\n")
 
-            for release in releases.releases[:5]:
+            for release in releases.releases[:10]:
                 repo_name = release.repo.replace("_", "\\_")
                 version = release.version
                 author = release.author

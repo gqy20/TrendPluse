@@ -58,6 +58,7 @@ class MarkdownReporter:
 **相关仓库**: {repos_md}
 
 **来源**:
+
 {sources_md}
 """
 
@@ -330,11 +331,11 @@ class MarkdownReporter:
         lines.append(f"- **新发布版本**: {releases.total_count} 个\n")
         lines.append(f"- **涉及仓库**: {releases.unique_repos_count} 个\n")
 
-        # 详细 Release 列表（最多 10 个）
+        # 详细 Release 列表（显示所有版本）
         if releases.releases:
             lines.append("\n### 最新发布\n\n")
 
-            for release in releases.releases[:10]:
+            for release in releases.releases:
                 repo_name = release.repo.replace("_", "\\_")
                 version = release.version
                 author = release.author
@@ -364,7 +365,7 @@ class MarkdownReporter:
                     lines.append(
                         f"**变更类型**: {change_emoji} {ai_summary.change_type}\n\n"
                     )
-                    lines.append("**变更摘要**:\n")
+                    lines.append("**变更摘要**:\n\n")
 
                     for change in ai_summary.key_changes:
                         lines.append(f"- {change}\n")
