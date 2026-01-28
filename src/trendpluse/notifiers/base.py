@@ -24,4 +24,4 @@ class BaseNotifier(ABC):
         Returns:
             是否发送成功
         """
-        pass
+        ...

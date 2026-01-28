@@ -9,6 +9,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
 
@@ -25,7 +26,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
     def __init__(
         self,
         api_key: str,
-        model: str = "glm-4.7",
+        model: str = DEFAULT_ANTHROPIC_MODEL,
         base_url: str | None = None,
     ):
         """初始化分析器

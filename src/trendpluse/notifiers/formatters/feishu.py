@@ -4,7 +4,6 @@
 """
 
 import re
-from typing import TYPE_CHECKING
 
 from trendpluse.models.signal import (
     ActivityData,
@@ -20,8 +19,8 @@ from trendpluse.utils.formatters import (
     get_release_type_emoji,
 )
 
-if TYPE_CHECKING:
-    pass
+# 默认报告 URL 模板
+DEFAULT_REPORT_URL_TEMPLATE = "https://home.gqy20.top/TrendPluse/reports/report-{date}/"
 
 
 class FeishuFormatter:
@@ -36,9 +35,7 @@ class FeishuFormatter:
         Args:
             report_url_template: 报告 URL 模板，使用 {date} 作为占位符
         """
-        self.report_url_template = report_url_template or (
-            "https://home.gqy20.top/TrendPluse/reports/report-{date}/"
-        )
+        self.report_url_template = report_url_template or DEFAULT_REPORT_URL_TEMPLATE
 
     def format_card(self, report: DailyReport) -> dict:
         """将日报格式化为飞书卡片

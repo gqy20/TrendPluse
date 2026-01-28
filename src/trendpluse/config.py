@@ -6,6 +6,16 @@
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# 默认模型名称（供分析器使用）
+DEFAULT_ANTHROPIC_MODEL = "glm-4.7"
+
+# 默认 API 基础 URL
+DEFAULT_ANTHROPIC_BASE_URL = "https://open.bigmodel.cn/api/anthropic"
+
+# 数据文件路径
+DEFAULT_SIGNAL_HISTORY_PATH = "data/signal_history.json"
+DEFAULT_SNAPSHOT_DIR = "data/snapshots"
+
 
 class Settings(BaseSettings):
     """配置管理类，支持环境变量和 .env 文件"""
@@ -93,11 +103,12 @@ class Settings(BaseSettings):
         description="Anthropic/智谱 AI API Key (支持 ANTHROPIC_API_KEY 或 ANTHROPIC_AUTH_KEY)",  # noqa: E501
     )
     anthropic_base_url: str = Field(
-        default="https://open.bigmodel.cn/api/anthropic",
+        default=DEFAULT_ANTHROPIC_BASE_URL,
         description="API Base URL (智谱AI: https://open.bigmodel.cn/api/anthropic)",
     )
     anthropic_model: str = Field(
-        default="glm-4.7", description="模型名称 (glm-4.7, claude-sonnet-4-20250514 等)"
+        default=DEFAULT_ANTHROPIC_MODEL,
+        description="模型名称 (glm-4.7, claude-sonnet-4-20250514 等)",
     )
     anthropic_max_tokens: int = 8000
     anthropic_timeout: int = 120
@@ -155,7 +166,7 @@ class Settings(BaseSettings):
 
     # 输出配置
     output_dir: str = "reports/daily"
-    snapshot_dir: str = "data/snapshots"
+    snapshot_dir: str = DEFAULT_SNAPSHOT_DIR
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

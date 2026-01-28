@@ -9,7 +9,10 @@ from datetime import datetime
 
 from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.collectors.parallel import parallel_map
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import ActivityData, RepoActivity
+
+logger = get_logger(__name__)
 
 # GraphQL 查询模板
 # 注意：history.since 参数需要 GitTimestamp 类型，而不是 DateTime
@@ -202,8 +205,8 @@ class ActivityCollector(BaseGitHubCollector):
                     contributor_commits[author_login] = (
                         contributor_commits.get(author_login, 0) + 1
                     )
-                    # 简化处理：暂时假设所有贡献者都是新的
-                    # TODO: 实现更精确的新贡献者检测
+                    # 当前实现：统计时间窗口内的所有贡献者
+                    # 如需精确检测新贡献者，需要对比历史数据
                     new_contributors_set.add(author_login)
 
             new_contributors_count = len(new_contributors_set)
@@ -215,7 +218,7 @@ class ActivityCollector(BaseGitHubCollector):
             top_contributors = [login for login, _ in sorted_contributors]
 
         except Exception as e:
-            print(f"处理仓库 {repo_name} GraphQL 查询失败: {e}")
+            logger.error(f"处理仓库 {repo_name} GraphQL 查询失败: {e}")
 
         # 构建 RepoActivity 对象
         repo_activity = RepoActivity(

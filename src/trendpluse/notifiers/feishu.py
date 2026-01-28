@@ -15,9 +15,12 @@ from tenacity import (
     wait_exponential,
 )
 
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport
 from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.formatters import FeishuFormatter
+
+logger = get_logger(__name__)
 
 
 class FeishuNotifier(BaseNotifier):
@@ -174,12 +177,12 @@ class FeishuNotifier(BaseNotifier):
             data = response.json()
             code = data.get("code", -1)
             if code != 0:
-                print(f"[DEBUG] 飞书返回错误: code={code}, msg={data.get('msg')}")
+                logger.debug(f"飞书返回错误: code={code}, msg={data.get('msg')}")
                 return False
 
             return True
         except httpx.HTTPError as e:
-            print(f"[DEBUG] HTTP 请求失败: {e}")
+            logger.debug(f"HTTP 请求失败: {e}")
             return False
 
     def _gen_sign(self, timestamp: str, secret: str) -> str:

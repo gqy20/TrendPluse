@@ -6,8 +6,10 @@ class TestGitHubActionsConfig:
 
     def test_anthropic_api_key_required(self, monkeypatch):
         """测试：ANTHROPIC_API_KEY 有默认值（空字符串）"""
-        # Arrange - 移除环境变量
+        # Arrange - 移除所有相关环境变量（包括备选变量）
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+        monkeypatch.delenv("ANTHROPIC_AUTH_KEY", raising=False)
+        monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
 
         # Act & Assert - 不会抛出异常，使用默认值
         from trendpluse.config import Settings

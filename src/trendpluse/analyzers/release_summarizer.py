@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import anthropic
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import ReleaseSummary
 from trendpluse.utils.retry import create_anthropic_retry_decorator
@@ -31,8 +32,8 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
     def __init__(
         self,
         api_key: str,
-        model: str = "glm-4.7",
-        base_url: str = "https://open.bigmodel.cn/api/anthropic",
+        model: str = DEFAULT_ANTHROPIC_MODEL,
+        base_url: str = DEFAULT_ANTHROPIC_BASE_URL,
     ):
         """初始化总结器
 

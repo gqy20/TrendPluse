@@ -9,6 +9,9 @@ from github import GithubException
 
 from trendpluse.collectors.base import BaseGitHubCollector
 from trendpluse.collectors.parallel import parallel_execute
+from trendpluse.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class GitHubEventsCollector(BaseGitHubCollector):
@@ -81,7 +84,7 @@ class GitHubEventsCollector(BaseGitHubCollector):
 
             except GithubException as e:
                 # 记录错误但继续处理其他仓库
-                print(f"获取仓库 {repo_name} 事件失败: {e}")
+                logger.error(f"获取仓库 {repo_name} 事件失败: {e}")
 
             return events
 

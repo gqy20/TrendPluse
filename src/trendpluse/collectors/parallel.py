@@ -7,6 +7,10 @@ from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
+from trendpluse.logger import get_logger
+
+logger = get_logger(__name__)
+
 
 def parallel_map[T](
     func: Callable[..., T],
@@ -52,9 +56,11 @@ def parallel_map[T](
                 # 记录错误但继续处理其他任务
                 errors.append((index, e))
 
-    # 如果有错误，打印出来
+    # 如果有错误，记录日志
     for index, error in errors:
-        print(f"处理项目 {items[index] if index < len(items) else index} 失败: {error}")
+        logger.warning(
+            f"处理项目 {items[index] if index < len(items) else index} 失败: {error}"
+        )
 
     # 返回结果（按原始顺序）
     sorted_results = [results[i] for i in sorted(results.keys())]
@@ -97,6 +103,6 @@ def parallel_execute[T](
                 if not ignore_errors:
                     raise
                 item = futures[future]
-                print(f"处理失败: {item}, 错误: {e}")
+                logger.warning(f"处理失败: {item}, 错误: {e}")
 
     return results

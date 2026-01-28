@@ -100,26 +100,6 @@ def get_logger(name: str = "trendpluse") -> logging.Logger:
 logger = setup_logger()
 
 
-def debug(message: str, **kwargs) -> None:
-    logger.debug(message, **kwargs)
-
-
-def info(message: str, **kwargs) -> None:
-    logger.info(message, **kwargs)
-
-
-def warning(message: str, **kwargs) -> None:
-    logger.warning(message, **kwargs)
-
-
-def error(message: str, **kwargs) -> None:
-    logger.error(message, **kwargs)
-
-
-def critical(message: str, **kwargs) -> None:
-    logger.critical(message, **kwargs)
-
-
 def print_success(message: str) -> None:
     console.print(f"[bold green]✓[/bold green] {message}")
 

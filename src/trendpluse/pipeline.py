@@ -21,7 +21,8 @@ from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.collectors.github_events import GitHubEventsCollector
 from trendpluse.collectors.releases import ReleaseCollector
-from trendpluse.config import Settings
+from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH, Settings
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
@@ -29,6 +30,8 @@ from trendpluse.models.signal import (
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
+
+logger = get_logger(__name__)
 
 
 class TrendPulsePipeline:
@@ -86,7 +89,8 @@ class TrendPulsePipeline:
         self.deduplicator = SignalDeduplicator(
             llm_client=llm_client,
             lookback_days=self.settings.days_to_lookback,  # 与 PR 回溯天数一致
-            history_path="data/signal_history.json",
+            history_path=DEFAULT_SIGNAL_HISTORY_PATH,
+            model=self.settings.anthropic_model,
         )
         self.reporter = MarkdownReporter()
 
@@ -96,8 +100,8 @@ class TrendPulsePipeline:
             self.notifier = FeishuNotifier(
                 webhook_url=self.settings.feishu_webhook_url,
                 at_mobiles=self.settings.feishu_at_mobiles_list,
-                max_signals=getattr(self.settings, "feishu_max_signals", 5),
-                secret=getattr(self.settings, "feishu_secret", "") or None,
+                max_signals=self.settings.feishu_max_signals,
+                secret=self.settings.feishu_secret or None,
             )
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:
@@ -129,7 +133,7 @@ class TrendPulsePipeline:
         releases_data, detailed_releases = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
             since=day_ago,
-            include_prereleases=getattr(self.settings, "include_prereleases", False),
+            include_prereleases=self.settings.include_prereleases,
             max_workers=self.settings.max_parallel_workers,
         )
 
@@ -348,9 +352,9 @@ class TrendPulsePipeline:
         if self.notifier:
             try:
                 self.notifier.send_report(report)
-            except Exception:
-                # 通知失败不影响主流程
-                pass
+            except Exception as e:
+                # 通知失败不影响主流程，但记录日志以便排查
+                logger.warning(f"发送飞书通知失败: {e}")
 
     def _get_output_path(self, date: datetime) -> str:
         """获取报告输出路径

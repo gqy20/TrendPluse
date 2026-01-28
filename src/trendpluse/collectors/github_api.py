@@ -122,7 +122,7 @@ class GitHubDetailFetcher(BaseGitHubCollector):
                     details_list.append(details)
                 except GithubException as e:
                     # 记录错误但继续处理其他 PR
-                    print(f"获取 PR {repo_name}#{pr_number} 失败: {e}")
+                    logger.error(f"获取 PR {repo_name}#{pr_number} 失败: {e}")
                     continue
 
         return details_list

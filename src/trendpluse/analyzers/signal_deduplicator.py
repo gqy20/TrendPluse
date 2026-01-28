@@ -9,6 +9,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH
 from trendpluse.models.signal import Signal
 
 
@@ -22,7 +23,8 @@ class SignalDeduplicator:
         self,
         llm_client,
         lookback_days: int = 7,
-        history_path: str = "data/signal_history.json",
+        history_path: str = DEFAULT_SIGNAL_HISTORY_PATH,
+        model: str = "glm-4.7",
     ):
         """初始化去重器
 
@@ -30,12 +32,14 @@ class SignalDeduplicator:
             llm_client: Anthropic 客户端
             lookback_days: 历史信号时间窗口（天）
             history_path: 历史信号存储路径
+            model: 使用的模型名称
         """
         self.llm_client = llm_client
         self.lookback_days = lookback_days
         self.history_path_str = history_path
         self.history_path = Path(history_path)
         self.history_path.parent.mkdir(parents=True, exist_ok=True)
+        self.model = model
 
     def compute_fingerprint(self, signal: Signal) -> str:
         """计算信号指纹
@@ -257,7 +261,7 @@ class SignalDeduplicator:
 
         # 调用 LLM
         message = self.llm_client.messages.create(
-            model="glm-4.7",
+            model=self.model,
             max_tokens=10,
             temperature=0,
             messages=[{"role": "user", "content": prompt}],
