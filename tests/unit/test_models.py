@@ -172,13 +172,11 @@ class TestRepoActivity:
         activity = RepoActivity(
             repo="test/repo",
             commits=10,
-            new_contributors=0,
             top_contributors=["user1", "user2"],
         )
 
         assert activity.repo == "test/repo"
         assert activity.commits == 10
-        assert activity.new_contributors == 0
         assert len(activity.top_contributors) == 2
 
 
@@ -217,18 +215,13 @@ class TestActivityData:
         from trendpluse.models.signal import ActivityData, RepoActivity
 
         activities = [
-            RepoActivity(
-                repo="repo1", commits=10, new_contributors=0, top_contributors=[]
-            ),
-            RepoActivity(
-                repo="repo2", commits=5, new_contributors=1, top_contributors=[]
-            ),
+            RepoActivity(repo="repo1", commits=10, top_contributors=[]),
+            RepoActivity(repo="repo2", commits=5, top_contributors=[]),
         ]
 
         activity_data = ActivityData(
             total_commits=15,
             active_repos_count=2,
-            new_contributors=1,
             top_repos=activities,
         )
 

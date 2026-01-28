@@ -152,7 +152,6 @@ class TestTrendPulsePipeline:
         mock_activity_data = ActivityData(
             total_commits=5,
             active_repos_count=1,
-            new_contributors=2,
             top_repos=[],
         )
         detailed_commits = [
@@ -306,7 +305,6 @@ class TestTrendPulsePipeline:
         mock_activity_data = ActivityData(
             total_commits=5,
             active_repos_count=1,
-            new_contributors=2,
             top_repos=[],
         )
         detailed_commits = [
@@ -450,7 +448,6 @@ class TestTrendPulsePipeline:
         mock_activity_data = ActivityData(
             total_commits=5,
             active_repos_count=1,
-            new_contributors=2,
             top_repos=[],
         )
         mock_activity_collector_instance.collect_activity_graphql.return_value = (
@@ -551,7 +548,6 @@ class TestTrendPulsePipeline:
         mock_activity_data = ActivityData(
             total_commits=0,
             active_repos_count=0,
-            new_contributors=0,
             top_repos=[],
         )
         mock_activity_collector_instance.collect_activity_graphql.return_value = (
@@ -653,7 +649,6 @@ class TestTrendPulsePipeline:
         mock_activity_data = ActivityData(
             total_commits=0,
             active_repos_count=0,
-            new_contributors=0,
             top_repos=[],
         )
         mock_activity_collector_instance.collect_activity_graphql.return_value = (

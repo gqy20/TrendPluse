@@ -106,7 +106,7 @@ class TestSignalCategorization:
 
         # Mock 活跃度数据
         mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, new_contributors=2, top_repos=[]
+            total_commits=100, active_repos_count=5, top_repos=[]
         )
 
         # Mock 详细 commits 数据

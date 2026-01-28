@@ -317,30 +317,25 @@ def sample_report() -> DailyReport:
         activity=ActivityData(
             total_commits=500,
             active_repos_count=23,
-            new_contributors=5,
             top_repos=[
                 RepoActivity(
                     repo="anthropics/claude-code",
                     commits=127,
-                    new_contributors=3,
                     top_contributors=["user1", "user2", "user3"],
                 ),
                 RepoActivity(
                     repo="cline/cline",
                     commits=45,
-                    new_contributors=1,
                     top_contributors=["user4"],
                 ),
                 RepoActivity(
                     repo="openai/swarm",
                     commits=32,
-                    new_contributors=0,
                     top_contributors=[],
                 ),
                 RepoActivity(
                     repo="significant-gravitas/autogpt",
                     commits=20,
-                    new_contributors=2,
                     top_contributors=["user5", "user6"],
                 ),
             ],

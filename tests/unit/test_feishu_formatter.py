@@ -76,24 +76,20 @@ class TestFeishuFormatter:
         activity = ActivityData(
             total_commits=100,
             active_repos_count=5,
-            new_contributors=2,
             top_repos=[
                 RepoActivity(
                     repo="owner/repo1",
                     commits=50,
-                    new_contributors=1,
                     top_contributors=[],
                 ),
                 RepoActivity(
                     repo="owner/repo2",
                     commits=30,
-                    new_contributors=0,
                     top_contributors=[],
                 ),
                 RepoActivity(
                     repo="owner/repo3",
                     commits=20,
-                    new_contributors=1,
                     top_contributors=[],
                 ),
             ],
@@ -247,24 +243,20 @@ class TestFeishuFormatter:
         activity = ActivityData(
             total_commits=150,
             active_repos_count=3,
-            new_contributors=1,
             top_repos=[
                 RepoActivity(
                     repo="owner/repo1",
                     commits=80,
-                    new_contributors=1,
                     top_contributors=[],
                 ),
                 RepoActivity(
                     repo="owner/repo2",
                     commits=50,
-                    new_contributors=0,
                     top_contributors=[],
                 ),
                 RepoActivity(
                     repo="owner/repo3",
                     commits=20,
-                    new_contributors=0,
                     top_contributors=[],
                 ),
             ],
@@ -564,12 +556,10 @@ class TestFeishuFormatter:
         activity = ActivityData(
             total_commits=150,
             active_repos_count=3,
-            new_contributors=1,
             top_repos=[
                 RepoActivity(
                     repo="owner/repo1",
                     commits=80,
-                    new_contributors=1,
                     top_contributors=[],
                 ),
             ],

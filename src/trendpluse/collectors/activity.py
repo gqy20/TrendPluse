@@ -99,11 +99,10 @@ class ActivityCollector(BaseGitHubCollector):
         # 按活跃度排序
         top_repos.sort(key=lambda x: -x.commits)
 
-        # 构建 ActivityData（new_contributors 始终为 0，已废弃）
+        # 构建 ActivityData
         activity_data = ActivityData(
             total_commits=total_commits,
             active_repos_count=active_repos_count,
-            new_contributors=0,
             top_repos=top_repos,
         )
 
@@ -143,21 +142,15 @@ class ActivityCollector(BaseGitHubCollector):
             # 解析响应
             repository = result.get("repository", {})
             if not repository:
-                return RepoActivity(
-                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
-                ), []
+                return RepoActivity(repo=repo_name, commits=0, top_contributors=[]), []
 
             default_branch_ref = repository.get("defaultBranchRef")
             if not default_branch_ref:
-                return RepoActivity(
-                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
-                ), []
+                return RepoActivity(repo=repo_name, commits=0, top_contributors=[]), []
 
             target = default_branch_ref.get("target")
             if not target:
-                return RepoActivity(
-                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
-                ), []
+                return RepoActivity(repo=repo_name, commits=0, top_contributors=[]), []
 
             # 注意：target 就是 Commit 类型（通过 ... on Commit 投影）
             # 不需要检查 __typename，直接处理
@@ -166,9 +159,7 @@ class ActivityCollector(BaseGitHubCollector):
             nodes = history.get("nodes", [])
 
             if not nodes:
-                return RepoActivity(
-                    repo=repo_name, commits=0, new_contributors=0, top_contributors=[]
-                ), []
+                return RepoActivity(repo=repo_name, commits=0, top_contributors=[]), []
 
             # 统计贡献者
             contributor_commits: dict[str, int] = {}
@@ -211,11 +202,10 @@ class ActivityCollector(BaseGitHubCollector):
         except Exception as e:
             logger.error(f"处理仓库 {repo_name} GraphQL 查询失败: {e}")
 
-        # 构建 RepoActivity 对象（new_contributors 始终为 0，已废弃）
+        # 构建 RepoActivity 对象
         repo_activity = RepoActivity(
             repo=repo_name,
             commits=commits_count,
-            new_contributors=0,
             top_contributors=top_contributors,
         )
 

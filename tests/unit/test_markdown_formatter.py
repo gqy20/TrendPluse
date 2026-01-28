@@ -22,18 +22,15 @@ class TestMarkdownFormatterActivity:
         activity = ActivityData(
             total_commits=100,
             active_repos_count=5,
-            new_contributors=2,
             top_repos=[
                 RepoActivity(
                     repo="owner/repo1",
                     commits=50,
-                    new_contributors=1,
                     top_contributors=["user1", "user2"],
                 ),
                 RepoActivity(
                     repo="owner/repo2",
                     commits=30,
-                    new_contributors=0,
                     top_contributors=["user3"],
                 ),
             ],
@@ -108,12 +105,10 @@ class TestMarkdownFormatterFullReport:
         activity = ActivityData(
             total_commits=50,
             active_repos_count=2,
-            new_contributors=1,
             top_repos=[
                 RepoActivity(
                     repo="test/repo",
                     commits=30,
-                    new_contributors=1,
                     top_contributors=[],
                 )
             ],

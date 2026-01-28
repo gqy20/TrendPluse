@@ -102,7 +102,6 @@ class TestCommitSignalsClearing:
         mock_activity_data = ActivityData(
             total_commits=5,
             active_repos_count=1,
-            new_contributors=0,
             top_repos=[],
         )
         detailed_commits = [

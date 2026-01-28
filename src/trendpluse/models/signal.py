@@ -108,12 +108,6 @@ class RepoActivity(BaseModel):
 
     repo: str = Field(description="仓库名称 owner/repo")
     commits: int = Field(description="Commit 数量", ge=0)
-    # 新贡献者功能已废弃，始终为 0
-    new_contributors: int = Field(
-        default=0,
-        description="[已废弃] 新贡献者数量，始终为 0",
-        ge=0,
-    )
     top_contributors: list[str] = Field(
         description="Top 贡献者列表", default_factory=list
     )
@@ -124,12 +118,6 @@ class ActivityData(BaseModel):
 
     total_commits: int = Field(description="总 Commit 数", ge=0)
     active_repos_count: int = Field(description="活跃仓库数量", ge=0)
-    # 新贡献者功能已废弃，始终为 0
-    new_contributors: int = Field(
-        default=0,
-        description="[已废弃] 新贡献者总数，始终为 0",
-        ge=0,
-    )
     top_repos: list[RepoActivity] = Field(description="TOP 活跃仓库列表")
 
 
