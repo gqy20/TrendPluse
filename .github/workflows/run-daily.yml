@@ -1,17 +1,16 @@
 name: Run Daily Analysis
 
 on:
-  # schedule:
-  #   # 每天 UTC 0:10 运行 (北京时间 8:10)
-  #   - cron: '10 0 * * *'
-  # 注意：schedule 已禁用，使用本地 cron 定时触发（每天 08:05）
+  schedule:
+    # 每天 UTC 23:53 运行 (北京时间 07:53)
+    - cron: '53 23 * * *'
   workflow_dispatch:
     inputs:
       send_notification:
         description: '是否发送飞书通知'
         required: false
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write
