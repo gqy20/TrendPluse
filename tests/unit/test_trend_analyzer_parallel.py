@@ -126,22 +126,25 @@ class TestTrendAnalyzerParallel:
 
     def test_analyze_prs_handles_individual_failures_gracefully(self, mock_signal):
         """测试：单个 PR 失败不应影响其他 PRs"""
+        # 使用索引来确定哪些 PR 失败（确定性好于共享计数器）
+        # 让 PR #2 失败
+        failed_repo = "test/repo2"
+
         mock_client = MagicMock()
-
-        call_count = [0]
-
-        def mock_create_sometimes_fails(*args, **kwargs):
-            call_count[0] += 1
-            time.sleep(0.02)  # 模拟 API 延迟
-            # 第 3 个调用失败
-            if call_count[0] == 3:
-                raise Exception("模拟 API 失败")
-            return mock_signal
-
-        mock_client.chat.completions.create.side_effect = mock_create_sometimes_fails
+        mock_client.chat.completions.create.return_value = mock_signal
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+
+        # 使用 patch 来控制 analyze_pr 的行为
+        from unittest.mock import patch
+
+        def mock_analyze_pr(pr_details):
+            """模拟分析：特定 PR 失败"""
+            if pr_details.get("repo_name") == failed_repo:
+                raise Exception("模拟 API 失败")
+            # 调用原始方法
+            return TrendAnalyzer.analyze_pr(analyzer, pr_details)
 
         prs = [
             {
@@ -155,10 +158,14 @@ class TestTrendAnalyzerParallel:
             for i in range(5)
         ]
 
-        signals = analyzer.analyze_prs(prs, max_workers=3)
+        with patch.object(analyzer, "analyze_pr", side_effect=mock_analyze_pr):
+            signals = analyzer.analyze_prs(prs, max_workers=3)
 
-        # 应该成功处理至少 4 个（1 个失败）
-        assert len(signals) >= 4
+        # 应该成功处理 4 个（1 个失败）
+        assert len(signals) == 4, f"期望 4 个信号，实际返回 {len(signals)} 个"
+        # 验证失败的 PR 不在结果中
+        signal_repos = [s.related_repos[0] for s in signals if s.related_repos]
+        assert failed_repo not in signal_repos, f"失败的 PR {failed_repo} 不应在结果中"
 
     def test_analyze_prs_default_max_workers(self, sample_prs, mock_signal):
         """测试：不提供 max_workers 时应使用默认值"""
