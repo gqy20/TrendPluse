@@ -595,7 +595,6 @@ class TestFeishuFormatter:
         # 应该包含总览指标（注意：活跃度现在在折叠面板中）
         assert self._content_contains(elements, "**总 Commit 数**: 150")
         assert self._content_contains(elements, "**活跃仓库数**: 3")
-        assert self._content_contains(elements, "**新贡献者数**: 1")
 
     def test_format_releases_includes_ai_summary(self):
         """测试：版本发布包含 AI 总结（与 Markdown 一致）"""

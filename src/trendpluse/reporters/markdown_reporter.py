@@ -246,19 +246,17 @@ class MarkdownReporter:
         lines.append("### 总览\n\n")
         lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
         lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
-        lines.append(f"- **新贡献者数**: {activity.new_contributors}\n")
 
         # 活跃仓库详情（最多 10 个）
         if activity.top_repos:
             lines.append("\n### 活跃仓库 TOP 10\n\n")
-            lines.append("| 仓库 | Commits | 新贡献者 | Top 贡献者 |\n")
-            lines.append("|------|--------|---------|------------|\n")
+            lines.append("| 仓库 | Commits | Top 贡献者 |\n")
+            lines.append("|------|---------|------------|\n")
 
             for repo in activity.top_repos[:10]:
                 repo_name = repo.repo.replace("_", "\\_")
                 repo_link = f"[{repo_name}](https://github.com/{repo.repo})"
                 commits = repo.commits
-                new_contribs = repo.new_contributors
 
                 # Top 贡献者（最多 3 个）
                 top_contribs = repo.top_contributors[:3]
@@ -267,9 +265,7 @@ class MarkdownReporter:
                 else:
                     contrib_list = "-"
 
-                table_row = (
-                    f"| {repo_link} | {commits} | {new_contribs} | {contrib_list} |\n"
-                )
+                table_row = f"| {repo_link} | {commits} | {contrib_list} |\n"
                 lines.append(table_row)
 
         return "".join(lines)

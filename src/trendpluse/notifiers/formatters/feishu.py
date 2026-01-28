@@ -547,7 +547,6 @@ class FeishuFormatter:
         lines.append("**总览**\n\n")
         lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
         lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
-        lines.append(f"- **新贡献者数**: {activity.new_contributors}\n")
 
         # 活跃仓库 TOP 3（飞书卡片不宜过长，显示 TOP 3）
         if activity.top_repos:

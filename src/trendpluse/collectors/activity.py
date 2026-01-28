@@ -86,7 +86,6 @@ class ActivityCollector(BaseGitHubCollector):
 
         total_commits = 0
         active_repos_count = 0
-        total_new_contributors = 0
 
         for repo_activity, repo_commits in results:
             if repo_activity:
@@ -96,16 +95,15 @@ class ActivityCollector(BaseGitHubCollector):
                 if repo_activity.commits > 0:
                     active_repos_count += 1
                     total_commits += repo_activity.commits
-                    total_new_contributors += repo_activity.new_contributors
 
         # 按活跃度排序
         top_repos.sort(key=lambda x: -x.commits)
 
-        # 构建 ActivityData
+        # 构建 ActivityData（new_contributors 始终为 0，已废弃）
         activity_data = ActivityData(
             total_commits=total_commits,
             active_repos_count=active_repos_count,
-            new_contributors=total_new_contributors,
+            new_contributors=0,
             top_repos=top_repos,
         )
 
@@ -130,7 +128,6 @@ class ActivityCollector(BaseGitHubCollector):
             (RepoActivity 对象, 详细 commit 列表)
         """
         commits_count = 0
-        new_contributors_count = 0
         top_contributors: list[str] = []
         detailed_commits: list[dict] = []
 
@@ -175,7 +172,6 @@ class ActivityCollector(BaseGitHubCollector):
 
             # 统计贡献者
             contributor_commits: dict[str, int] = {}
-            new_contributors_set = set()
 
             for node in nodes:
                 commits_count += 1
@@ -205,11 +201,6 @@ class ActivityCollector(BaseGitHubCollector):
                     contributor_commits[author_login] = (
                         contributor_commits.get(author_login, 0) + 1
                     )
-                    # 当前实现：统计时间窗口内的所有贡献者
-                    # 如需精确检测新贡献者，需要对比历史数据
-                    new_contributors_set.add(author_login)
-
-            new_contributors_count = len(new_contributors_set)
 
             # Top 贡献者（最多 5 个）
             sorted_contributors = sorted(
@@ -220,11 +211,11 @@ class ActivityCollector(BaseGitHubCollector):
         except Exception as e:
             logger.error(f"处理仓库 {repo_name} GraphQL 查询失败: {e}")
 
-        # 构建 RepoActivity 对象
+        # 构建 RepoActivity 对象（new_contributors 始终为 0，已废弃）
         repo_activity = RepoActivity(
             repo=repo_name,
             commits=commits_count,
-            new_contributors=new_contributors_count,
+            new_contributors=0,
             top_contributors=top_contributors,
         )
 
