@@ -3,6 +3,8 @@
 使用 pydantic-settings 管理配置，支持环境变量和 .env 文件。
 """
 
+from typing import Any
+
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -113,25 +115,28 @@ class Settings(BaseSettings):
     anthropic_max_tokens: int = 8000
     anthropic_timeout: int = 120
 
-    @model_validator(mode="after")  # type: ignore[misc]
-    def load_alternative_api_key(self) -> None:
+    @model_validator(mode="before")
+    @classmethod
+    def load_alternative_api_key(cls, data: Any) -> Any:
         """当 ANTHROPIC_API_KEY 为空时，尝试使用备选环境变量
 
         支持的备选变量名（按优先级）：
         1. ANTHROPIC_AUTH_KEY
         2. ANTHROPIC_AUTH_TOKEN
         """
-        if not self.anthropic_api_key:
-            import os
+        if isinstance(data, dict):
+            api_key = data.get("anthropic_api_key", "")
+            if not api_key:
+                import os
 
-            # 按优先级尝试多个备选环境变量
-            fallback_key = (
-                os.getenv("ANTHROPIC_AUTH_KEY")
-                or os.getenv("ANTHROPIC_AUTH_TOKEN")
-                or ""
-            )
-            # 需要通过 object.__setattr__ 来绕过 frozen 实例限制
-            object.__setattr__(self, "anthropic_api_key", fallback_key)
+                # 按优先级尝试多个备选环境变量
+                fallback_key = (
+                    os.getenv("ANTHROPIC_AUTH_KEY")
+                    or os.getenv("ANTHROPIC_AUTH_TOKEN")
+                    or ""
+                )
+                data["anthropic_api_key"] = fallback_key
+        return data
 
     # 筛选规则
     candidate_labels: list[str] = [
