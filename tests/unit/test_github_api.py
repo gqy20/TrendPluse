@@ -3,6 +3,7 @@
 from unittest.mock import Mock, patch
 
 import pytest
+from github import Auth
 
 from trendpluse.collectors.github_api import GitHubDetailFetcher
 
@@ -18,7 +19,11 @@ class TestGitHubDetailFetcher:
 
         # Assert
         assert fetcher is not None
-        mock_github.assert_called_once_with(login_or_token="test_token")
+        # 验证调用时使用了 auth 参数且值为 Auth.Token 类型
+        mock_github.assert_called_once()
+        call_kwargs = mock_github.call_args.kwargs
+        assert "auth" in call_kwargs
+        assert isinstance(call_kwargs["auth"], Auth.Token)
 
     @patch("trendpluse.collectors.base.Github")
     def test_fetch_pr_details(self, mock_github_class):

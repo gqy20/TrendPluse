@@ -3,6 +3,8 @@
 from datetime import UTC, datetime, timedelta
 from unittest.mock import MagicMock, Mock, patch
 
+from github import Auth
+
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.models.signal import ReleaseInfo, ReleasesData
 
@@ -25,7 +27,11 @@ class TestReleaseCollector:
         ReleaseCollector(token="test_token")
 
         # Assert
-        mock_github.assert_called_once_with(login_or_token="test_token")
+        # 验证调用时使用了 auth 参数且值为 Auth.Token 类型
+        mock_github.assert_called_once()
+        call_kwargs = mock_github.call_args.kwargs
+        assert "auth" in call_kwargs
+        assert isinstance(call_kwargs["auth"], Auth.Token)
 
     @patch("trendpluse.collectors.base.Github")
     def test_collect_releases_returns_dict_with_expected_keys(self, mock_github):
