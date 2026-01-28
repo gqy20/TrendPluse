@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from threading import local
 from typing import Any, cast
 
-from github import Github
+from github import Auth, Github
 from gql import Client, gql
 from gql.transport.requests import RequestsHTTPTransport
 
@@ -41,7 +41,7 @@ class BaseGitHubCollector(ABC):
 
         # 初始化 REST API 客户端
         if token:
-            self.client = Github(login_or_token=token)
+            self.client = Github(auth=Auth.Token(token))
         else:
             # 无 token 时仍然可以访问公开仓库，但有速率限制
             self.client = Github()
