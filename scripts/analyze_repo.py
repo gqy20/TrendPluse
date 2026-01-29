@@ -102,7 +102,7 @@ def analyze_repository(
     print("📊 采集活跃度数据...")
     try:
         activity_collector = ActivityCollector(token=github_token)
-        activity_data, _ = activity_collector.collect_activity(
+        activity_data, _ = activity_collector.collect_activity_graphql(
             repos=[repo_path],
             since=since,
         )
@@ -258,7 +258,11 @@ def _generate_summary(
         messages=[{"role": "user", "content": prompt}],
     )
 
-    return response.content[0].text  # type: ignore[no-any-return]
+    # 确保 content 是 TextBlock 类型并获取 text 属性
+    content = response.content[0]
+    if hasattr(content, "text"):
+        return content.text
+    return ""
 
 
 def generate_markdown_report(data: dict) -> str:
