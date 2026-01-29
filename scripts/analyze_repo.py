@@ -110,12 +110,10 @@ def analyze_repository(
             repo_act = activity_data.top_repos[0]
             result["activity"] = {
                 "commits": repo_act.commits,
-                "new_contributors": repo_act.new_contributors,
                 "top_contributors": repo_act.top_contributors,
             }
             print(
-                f"  ✓ Commits: {result['activity']['commits']}, "  # type: ignore[index]
-                f"New Contributors: {result['activity']['new_contributors']}"  # type: ignore[index]
+                f"  ✓ Commits: {result['activity']['commits']}"  # type: ignore[index]
             )
         else:
             result["activity"] = None
@@ -213,7 +211,6 @@ def _generate_summary(
         context_parts.append(
             f"- 活跃度数据：\n"
             f"  - 总提交数: {act.get('commits', 0)}\n"
-            f"  - 新贡献者: {act.get('new_contributors', 0)}\n"
             f"  - Top 贡献者: {top_contribs or 'N/A'}\n"
         )
 
@@ -306,7 +303,6 @@ def generate_markdown_report(data: dict) -> str:
         lines.append("| 指标 | 数值 |")
         lines.append("|------|------|")
         lines.append(f"| 💚 总提交数 | {act.get('commits', 0)} |")
-        lines.append(f"| 👥 新贡献者 | {act.get('new_contributors', 0)} |")
         top_contribs = ", ".join(act.get("top_contributors", [])[:5])
         lines.append(f"| 🏆 Top 贡献者 | {top_contribs or 'N/A'} |")
     else:

@@ -111,8 +111,7 @@ def main():
             result_text += (
                 f"\n\n[bold cyan]仓库活跃度:[/bold cyan]\n"
                 f"  总 Commit 数: {report.activity.total_commits}\n"
-                f"  活跃仓库数: {report.activity.active_repos_count}\n"
-                f"  新贡献者数: {report.activity.new_contributors}"
+                f"  活跃仓库数: {report.activity.active_repos_count}"
             )
 
         console.print(
