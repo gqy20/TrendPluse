@@ -2,8 +2,8 @@ name: Run Daily Analysis
 
 on:
   schedule:
-    # 每天 UTC 1:50 运行 (北京时间 9:50)
-    - cron: '50 1 * * *'
+    # 每天 UTC 0:07 运行 (北京时间 8:07)
+    - cron: '07 0 * * *'
   workflow_dispatch:
     inputs:
       send_notification:
