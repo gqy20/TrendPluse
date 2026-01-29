@@ -212,12 +212,18 @@ PR 描述: {pr_details.get("body", "")}
 
 ## 输出要求
 
-返回一份 DailyReport，其中：
-1. engineering_signals 包含**聚合后的高层次趋势**
-2. 每个聚合趋势必须包含 `source_signal_ids` 字段，列出支持该趋势的原始信号 ID
-   （例如 ["pr-0", "commit-1", "release-0"]）
-3. summary_brief 提供整体概览
-4. stats 包含统计信息
+返回一份 DailyReport，只包含以下字段：
+1. date: 日期字符串
+2. summary_brief: 当日总览（2-3 句话）
+3. engineering_signals: 聚合后的高层次工程趋势列表
+4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
+5. stats: 统计信息字典
+
+**以下字段由代码自动填充，无需返回**：
+- activity: 仓库活跃度数据（代码采集）
+- releases: Release 数据（代码采集）
+- breaking_changes: 不兼容变更（代码检测）
+- monitored_repos: 监控仓库列表（代码配置）
 
 重要：
 - **source_signal_ids 字段必须填写**，用于后续溯源
@@ -289,7 +295,17 @@ PR 描述: {pr_details.get("body", "")}
 研究信号:
 {self._format_signals(categorized["research"])}
 
-请生成一份简洁的每日报告。
+## 输出要求
+
+返回 DailyReport，只包含：
+- date: 日期字符串
+- summary_brief: 当日总览（2-3 句话）
+- engineering_signals: 工程信号列表
+- research_signals: 研究信号列表（目前可为空）
+- stats: 统计信息
+
+**无需返回以下字段**（由代码自动填充）：
+- activity, releases, breaking_changes, monitored_repos
 """
 
         report = self.client.chat.completions.create(
