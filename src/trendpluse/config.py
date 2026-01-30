@@ -236,17 +236,3 @@ def get_settings() -> Settings:
     if _settings_instance is None:
         _settings_instance = Settings()
     return _settings_instance
-
-
-# 为了向后兼容，保留 settings 属性
-class _SettingsProxy:
-    """Settings 代理，支持延迟初始化"""
-
-    def __getattr__(self, name: str):
-        return getattr(get_settings(), name)
-
-    def __setattr__(self, name: str, value):
-        setattr(get_settings(), name, value)
-
-
-settings = _SettingsProxy()
