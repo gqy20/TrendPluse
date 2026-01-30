@@ -1,5 +1,5 @@
 # 趋势报告归档
-!!! note
+!!! note 
     所有报告按时间倒序排列，最新的报告在最前面。
 
 ## 最新周报
@@ -13,7 +13,7 @@
 ## 最新日报
 ### [2026-01-30](report-2026-01-30.md)
 
-今日 AI 编程工具生态迎来多项里程碑：Anthropic 官方全平台 SDK（Python/TypeScript/Go/Java）同步推出 Structured Outputs 功能，标志着 JSON Schema 约束已成为 AI 编程工具的标准配置。同时，Claude Code Action v1.0 正式发布，统一了交互与自动化模式，大幅简化了 CI/CD 流程中集成 AI 的配置复杂度。在工具层面，Model Context Protocol（MCP）生态持续扩展，多个项目开始显式支持模型的推理模式，"人在回路"协作模式逐渐成为主流。
+今日最显著的趋势是 LLM 输出格式控制达到生产级标准：Anthropic 官方 SDK（Go/Java/Python/TypeScript）全面引入 Structured Outputs 支持，Cline 和 gptme 分别推出模型特定的提示词变体和推理内容支持，显示 AI 编程工具正从通用对话转向精确可控的代码生成。同时，"人在回路"协作模式加速落地，gptme 引入配置命名空间化和 CLI 重构，DeepAgents 支持自定义子代理，反映 Agent 系统向模块化、可扩展架构演进。
 
 *发布时间: 2026-01-30*
 
@@ -70,12 +70,6 @@ AI Agent 工作流编排能力显著增强，多个框架（Agno、CrewAI）同�
 今日 (2026-01-20) 发现 10 个 Commit 信号，6 个 Release 信号。
 
 *发布时间: 2026-01-20*
-
-### [2026-01-19](report-2026-01-19.md)
-
-今日 (2026-01-19) 发现 8 个 Commit 信号，2 个 Release 信号。
-
-*发布时间: 2026-01-19*
 
 
 ## 统计信息
