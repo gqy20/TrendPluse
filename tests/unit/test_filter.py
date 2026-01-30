@@ -181,7 +181,7 @@ class TestEventFilter:
                 },
             },
         ]
-        filter = EventFilter(enable_open_prs=True)  # type: ignore[call-arg]
+        filter = EventFilter(enable_open_prs=True)
 
         # Act
         candidates = filter.filter_candidates(events)
@@ -223,7 +223,7 @@ class TestEventFilter:
                 },
             },
         ]
-        filter = EventFilter(enable_open_prs=False)  # type: ignore[call-arg]
+        filter = EventFilter(enable_open_prs=False)
 
         # Act
         candidates = filter.filter_candidates(events)
@@ -269,7 +269,7 @@ class TestEventFilter:
                 },
             },
         ]
-        filter = EventFilter(enable_open_prs=True, open_pr_min_changed_files=3)  # type: ignore[call-arg]
+        filter = EventFilter(enable_open_prs=True, open_pr_min_changed_files=3)
 
         # Act
         candidates = filter.filter_candidates(events)
@@ -317,7 +317,7 @@ class TestEventFilter:
                 },
             },
         ]
-        filter = EventFilter(enable_open_prs=True, labels=["feature"])  # type: ignore[call-arg]
+        filter = EventFilter(enable_open_prs=True, labels=["feature"])
 
         # Act
         candidates = filter.filter_candidates(events)
