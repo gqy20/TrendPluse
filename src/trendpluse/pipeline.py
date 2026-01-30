@@ -27,6 +27,9 @@ from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
     ReleasesData,
+    RepoActivity,
+    WeeklyActivity,
+    WeeklyReport,
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
@@ -383,4 +386,231 @@ class TrendPulsePipeline:
         # Pydantic 模型支持 .model_dump_json() 直接序列化为 JSON
         json_data = report.model_dump_json(indent=2, ensure_ascii=False)
 
+        Path(json_path).write_text(json_data, encoding="utf-8")
+
+    def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
+        """运行周报生成流程
+
+        Args:
+            date: 参考日期，None 则使用今天
+
+        Returns:
+            周报
+        """
+        if date is None:
+            date = datetime.now()
+
+        # 计算上周的时间范围（周一到周日）
+        start_date, end_date = self._get_last_week_range(date)
+
+        # 加载上周的所有日报
+        daily_reports = self._load_daily_reports(start_date, end_date)
+
+        if not daily_reports:
+            raise ValueError(
+                f"没有找到 {start_date.strftime('%Y-%m-%d')} "
+                f"到 {end_date.strftime('%Y-%m-%d')} 的日报数据"
+            )
+
+        # 聚合生成周报
+        weekly_report = self._aggregate_weekly_report(daily_reports, start_date, end_date)
+
+        # 保存报告
+        output_path = self._get_weekly_output_path(end_date)
+        self.reporter.save_weekly_report(weekly_report, output_path)
+        self._save_weekly_report_json(weekly_report, output_path)
+
+        return weekly_report
+
+    def _get_last_week_range(self, date: datetime) -> tuple[datetime, datetime]:
+        """获取上周的时间范围（周一 00:00:00 到 周日 23:59:59）
+
+        Args:
+            date: 参考日期
+
+        Returns:
+            (开始日期, 结束日期)
+        """
+        # 获取本周一
+        weekday = date.weekday()  # 0=周一, 6=周日
+        this_monday = date - timedelta(days=weekday)
+
+        # 上周一是本周一减 7 天
+        last_monday = this_monday - timedelta(days=7)
+
+        # 上周日是本周一减 1 天
+        last_sunday = this_monday - timedelta(days=1)
+
+        # 设置时间边界
+        start_date = last_monday.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = last_sunday.replace(hour=23, minute=59, second=59, microsecond=999999)
+
+        return start_date, end_date
+
+    def _load_daily_reports(
+        self, start_date: datetime, end_date: datetime
+    ) -> list[DailyReport]:
+        """加载指定时间范围内的日报
+
+        Args:
+            start_date: 开始日期
+            end_date: 结束日期
+
+        Returns:
+            日报列表
+        """
+        reports = []
+        current_date = start_date
+
+        while current_date <= end_date:
+            json_path = (
+                Path("reports") / f"report-{current_date.strftime('%Y-%m-%d')}.json"
+            )
+
+            if json_path.exists():
+                try:
+                    content = json_path.read_text(encoding="utf-8")
+                    report = DailyReport.model_validate_json(content)
+                    reports.append(report)
+                except Exception as e:
+                    logger.warning(f"加载日报失败 {json_path}: {e}")
+
+            current_date += timedelta(days=1)
+
+        return reports
+
+    def _aggregate_weekly_report(
+        self, daily_reports: list[DailyReport], start_date: datetime, end_date: datetime
+    ) -> WeeklyReport:
+        """聚合日报生成周报
+
+        Args:
+            daily_reports: 日报列表
+            start_date: 开始日期
+            end_date: 结束日期
+
+        Returns:
+            周报
+        """
+        # 周标识
+        week_id = WeeklyReport.get_week_id(end_date)
+
+        # 收集所有信号（去重）
+        all_signals = []
+        seen_signal_ids = set()
+
+        for report in daily_reports:
+            for signal in (
+                report.engineering_signals
+                + report.research_signals
+                + report.commit_signals
+                + report.release_signals
+            ):
+                if signal.id not in seen_signal_ids:
+                    seen_signal_ids.add(signal.id)
+                    all_signals.append(signal)
+
+        # 按分类整理
+        engineering_signals = [s for s in all_signals if s.category == "engineering"]
+        research_signals = [s for s in all_signals if s.category == "research"]
+
+        # 统计数据
+        total_prs = sum(r.stats.get("total_prs_analyzed", 0) for r in daily_reports)
+        high_impact = sum(1 for s in all_signals if s.impact_score >= 4)
+        total_commits = sum(
+            r.activity.total_commits for r in daily_reports if r.activity
+        )
+        total_releases = sum(r.stats.get("total_releases", 0) for r in daily_reports)
+
+        # 聚合活跃度
+        weekly_activity = self._aggregate_activity(daily_reports)
+
+        # 生成摘要（简单统计）
+        summary_brief = (
+            f"第 {week_id.split('-W')[1]} 周共分析 {len(daily_reports)} 天数据，"
+            f"发现 {len(all_signals)} 个趋势信号，"
+            f"{high_impact} 个高影响信号。"
+        )
+
+        return WeeklyReport(
+            week_id=week_id,
+            start_date=start_date.strftime("%Y-%m-%d"),
+            end_date=end_date.strftime("%Y-%m-%d"),
+            summary_brief=summary_brief,
+            engineering_signals=engineering_signals,
+            research_signals=research_signals,
+            daily_reports_count=len(daily_reports),
+            total_prs_analyzed=total_prs,
+            high_impact_signals=high_impact,
+            total_commits=total_commits,
+            total_releases=total_releases,
+            weekly_activity=weekly_activity,
+        )
+
+    def _aggregate_activity(self, daily_reports: list[DailyReport]) -> WeeklyActivity:
+        """聚合活跃度数据
+
+        Args:
+            daily_reports: 日报列表
+
+        Returns:
+            周活跃度
+        """
+        # 累积所有仓库的 commits
+        repo_commits: dict[str, int] = {}
+        repo_contributors: dict[str, set[str]] = {}
+
+        for report in daily_reports:
+            if report.activity and report.activity.top_repos:
+                for repo in report.activity.top_repos:
+                    if repo.repo not in repo_commits:
+                        repo_commits[repo.repo] = 0
+                        repo_contributors[repo.repo] = set()
+
+                    repo_commits[repo.repo] += repo.commits
+
+                    for contributor in repo.top_contributors:
+                        repo_contributors[repo.repo].add(contributor)
+
+        # 构建 top repos
+        top_repos = [
+            RepoActivity(
+                repo=repo_name,
+                commits=commits,
+                top_contributors=list(repo_contributors[repo_name])[:3],
+            )
+            for repo_name, commits in sorted(
+                repo_commits.items(), key=lambda x: x[1], reverse=True
+            )
+        ]
+
+        return WeeklyActivity(
+            total_commits=sum(repo_commits.values()),
+            active_repos_count=len(repo_commits),
+            top_repos=top_repos,
+        )
+
+    def _get_weekly_output_path(self, date: datetime) -> str:
+        """获取周报输出路径: reports/weekly-YYYY-Www.md
+
+        Args:
+            date: 日期（用于计算周数）
+
+        Returns:
+            输出文件路径
+        """
+        reports_dir = Path("reports")
+        week_id = WeeklyReport.get_week_id(date)
+        filename = f"weekly-{week_id}.md"
+        return str(reports_dir / filename)
+
+    def _save_weekly_report_json(self, report: WeeklyReport, output_path: str) -> None:
+        """保存周报 JSON 数据
+
+        Args:
+            report: 周报对象
+            output_path: Markdown 输出路径（用于推断 JSON 路径）
+        """
+        json_path = str(Path(output_path).with_suffix(".json"))
+        json_data = report.model_dump_json(indent=2, ensure_ascii=False)
         Path(json_path).write_text(json_data, encoding="utf-8")

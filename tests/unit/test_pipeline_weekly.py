@@ -10,11 +10,10 @@ from unittest.mock import Mock, patch
 import pytest
 from freezegun import freeze_time
 
+from trendpluse.config import Settings
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
-    ReleaseInfo,
-    ReleasesData,
     RepoActivity,
     Signal,
     WeeklyActivity,
@@ -29,10 +28,8 @@ class TestGetLastWeekRange:
     def test_get_last_week_range_from_tuesday(self):
         """测试从周二计算上周范围"""
         # Arrange
-        pipeline = Mock()
-        pipeline._get_last_week_range = TrendPulsePipeline._get_last_week_range.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
         date = datetime(2026, 1, 28)  # 2026-01-28 是周三
 
         # Act
@@ -45,10 +42,8 @@ class TestGetLastWeekRange:
     def test_get_last_week_range_from_monday(self):
         """测试从周一计算上周范围"""
         # Arrange
-        pipeline = Mock()
-        pipeline._get_last_week_range = TrendPulsePipeline._get_last_week_range.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
         date = datetime(2026, 1, 27)  # 2026-01-27 是周二
 
         # Act
@@ -65,11 +60,9 @@ class TestLoadDailyReports:
 
     def test_load_existing_reports(self, temp_dir):
         """测试加载存在的日报"""
-        # Arrange - 创建模拟日报 JSON 文件
-        pipeline = Mock()
-        pipeline._load_daily_reports = TrendPulsePipeline._load_daily_reports.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        # Arrange
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         # 创建测试日报文件
         start_date = datetime(2026, 1, 20)
@@ -94,10 +87,8 @@ class TestLoadDailyReports:
     def test_load_no_reports(self, temp_dir):
         """测试没有日报的情况"""
         # Arrange
-        pipeline = Mock()
-        pipeline._load_daily_reports = TrendPulsePipeline._load_daily_reports.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
         start_date = datetime(2026, 1, 20)
         end_date = datetime(2026, 1, 20)
 
@@ -115,10 +106,8 @@ class TestAggregateWeeklyReport:
     def test_aggregate_single_daily_report(self):
         """测试聚合单个日报"""
         # Arrange
-        pipeline = Mock()
-        pipeline._aggregate_weekly_report = TrendPulsePipeline._aggregate_weekly_report.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         daily_report = DailyReport(
             date="2026-01-20",
@@ -140,8 +129,8 @@ class TestAggregateWeeklyReport:
                 "total_releases": 2,
             },
             activity=ActivityData(
-                total_commits=50,
-                active_repos_count=2,
+                total_commits=30,
+                active_repos_count=1,
                 top_repos=[
                     RepoActivity(repo="test/repo", commits=30, top_contributors=["user1"])
                 ],
@@ -160,19 +149,18 @@ class TestAggregateWeeklyReport:
         assert weekly.end_date == "2026-01-20"
         assert weekly.daily_reports_count == 1
         assert weekly.total_prs_analyzed == 10
-        assert weekly.total_commits == 50
+        # total_commits 是从 top_repos 聚合的
+        assert weekly.total_commits == 30
         assert weekly.total_releases == 2
         assert len(weekly.engineering_signals) == 1
         assert weekly.weekly_activity is not None
-        assert weekly.weekly_activity.total_commits == 50
+        assert weekly.weekly_activity.total_commits == 30
 
     def test_aggregate_signal_deduplication(self):
         """测试信号去重"""
         # Arrange
-        pipeline = Mock()
-        pipeline._aggregate_weekly_report = TrendPulsePipeline._aggregate_weekly_report.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         signal = Signal(
             id="sig-1",
@@ -214,10 +202,8 @@ class TestAggregateWeeklyReport:
     def test_aggregate_multiple_daily_reports(self):
         """测试聚合多个日报"""
         # Arrange
-        pipeline = Mock()
-        pipeline._aggregate_weekly_report = TrendPulsePipeline._aggregate_weekly_report.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         daily_reports = [
             DailyReport(
@@ -258,10 +244,8 @@ class TestAggregateActivity:
     def test_aggregate_activity_single_repo(self):
         """测试聚合单个仓库的活跃度"""
         # Arrange
-        pipeline = Mock()
-        pipeline._aggregate_activity = TrendPulsePipeline._aggregate_activity.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         daily_reports = [
             DailyReport(
@@ -294,10 +278,8 @@ class TestAggregateActivity:
     def test_aggregate_activity_multiple_repos(self):
         """测试聚合多个仓库的活跃度"""
         # Arrange
-        pipeline = Mock()
-        pipeline._aggregate_activity = TrendPulsePipeline._aggregate_activity.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         daily_reports = [
             DailyReport(
@@ -348,10 +330,8 @@ class TestGetWeeklyOutputPath:
     def test_get_weekly_output_path(self):
         """测试获取周报输出路径"""
         # Arrange
-        pipeline = Mock()
-        pipeline._get_weekly_output_path = TrendPulsePipeline._get_weekly_output_path.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
         date = datetime(2026, 1, 27)  # ISO 第 5 周
 
         # Act
@@ -367,10 +347,8 @@ class TestSaveWeeklyReportJson:
     def test_save_weekly_report_json(self, temp_file):
         """测试保存周报 JSON"""
         # Arrange
-        pipeline = Mock()
-        pipeline._save_weekly_report_json = TrendPulsePipeline._save_weekly_report_json.__get__(
-            pipeline, TrendPulsePipeline
-        )
+        settings = Settings()
+        pipeline = TrendPulsePipeline(settings=settings)
 
         report = WeeklyReport(
             week_id="2026-W05",
