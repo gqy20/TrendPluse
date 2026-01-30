@@ -105,7 +105,28 @@ class WeeklyAggregator:
 
 5. **周报摘要**：生成 1-2 句话的本周总览
 
-请以 JSON 格式返回，遵循 WeeklyAggregationResult 模型。
+## 返回格式要求
+
+请直接返回 JSON 格式（不要使用 markdown 代码块），遵循以下结构：
+
+```json
+{
+            "core_trends": [
+    {
+                "title": "趋势标题",
+      "theme": "architecture/tooling/research等",
+      "description": "趋势描述",
+      "signal_ids": ["sig-1", "sig-2"],
+      "impact_level": 5
+    }
+  ],
+  "summary_brief": "本周总览（1-2句话）"
+}
+```
+
+**重要**：
+- 必须包含 `core_trends` 和 `summary_brief` 两个字段
+- 不要使用 markdown 代码块（```json），直接返回原始 JSON
 """
 
         response = self._client.messages.create(
@@ -126,7 +147,30 @@ class WeeklyAggregator:
         # 清理可能的 markdown 代码块标记
         result_text = self._extract_json_from_markdown(result_text)
 
-        result = WeeklyAggregationResult.model_validate_json(result_text)
+        # 尝试验证 JSON，如果失败则尝试使用 Python 模式解析
+        try:
+            result = WeeklyAggregationResult.model_validate_json(result_text)
+        except Exception:
+            # 尝试使用 Python eval 模式解析（LLM 可能返回 Python 字典格式）
+            import json
+
+            # 尝试直接解析
+            try:
+                data = json.loads(result_text)
+            except json.JSONDecodeError:
+                # 如果失败，尝试移除可能的 Python 格式问题
+                cleaned = result_text.strip()
+                if cleaned.startswith("{") and cleaned.endswith("}"):
+                    # 尝试替换 Python 特有的格式
+                    cleaned = cleaned.replace("True", "true").replace("False", "false")
+                    cleaned = cleaned.replace("'", '"')
+                    data = json.loads(cleaned)
+                else:
+                    raise
+
+            # 验证并创建结果
+            result = WeeklyAggregationResult.model_validate(data)
+
         result.total_signals = len(signals)
         return result
 
