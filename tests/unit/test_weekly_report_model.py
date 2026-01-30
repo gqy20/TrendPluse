@@ -5,10 +5,7 @@
 
 from datetime import datetime
 
-import pytest
-
 from trendpluse.models.signal import (
-    ActivityData,
     RepoActivity,
     Signal,
     WeeklyActivity,
@@ -89,25 +86,25 @@ class TestWeeklyReport:
     def test_get_week_id_with_date(self):
         """测试从日期生成周标识"""
         # Arrange
-        date = datetime(2026, 1, 27)  # 2026年1月27日是周二，周数应该是 W04
+        date = datetime(2026, 1, 27)  # 2026年1月27日是周二，ISO 第 5 周
 
         # Act
         week_id = WeeklyReport.get_week_id(date)
 
         # Assert
-        # ISO 8601: 2026-01-27 周二，属于第 4 周
-        assert week_id == "2026-W04"
+        # ISO 8601: 2026-01-27 周二，属于第 5 周
+        assert week_id == "2026-W05"
 
     def test_get_week_id_monday(self):
         """测试周一日期的周标识"""
         # Arrange
-        date = datetime(2026, 1, 27)  # 2026-01-27 是周二
+        date = datetime(2026, 1, 27)  # 2026-01-27 是周二，ISO 第 5 周
 
         # Act
         week_id = WeeklyReport.get_week_id(date)
 
         # Assert
-        assert week_id == "2026-W04"
+        assert week_id == "2026-W05"
 
     def test_get_week_id_year_boundary(self):
         """测试年份边界的周标识"""

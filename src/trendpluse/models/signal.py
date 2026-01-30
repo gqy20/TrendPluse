@@ -3,6 +3,7 @@
 定义趋势信号和日报的数据结构。
 """
 
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -177,3 +178,51 @@ class DailyReport(BaseModel):
         default=None,
         description="监控的仓库列表（可选）",
     )
+
+
+class WeeklyActivity(BaseModel):
+    """周活跃度汇总数据"""
+
+    total_commits: int = Field(description="总 Commit 数", ge=0)
+    active_repos_count: int = Field(description="活跃仓库数量", ge=0)
+    top_repos: list[RepoActivity] = Field(description="TOP 活跃仓库列表")
+
+
+class WeeklyReport(BaseModel):
+    """周报数据模型"""
+
+    week_id: str = Field(description="周标识，如 2026-W05")
+    start_date: str = Field(description="开始日期 YYYY-MM-DD")
+    end_date: str = Field(description="结束日期 YYYY-MM-DD")
+    summary_brief: str = Field(description="本周总览（2-3 句话）")
+
+    # 聚合信号
+    engineering_signals: list[Signal] = Field(default_factory=list)
+    research_signals: list[Signal] = Field(default_factory=list)
+
+    # 统计数据
+    daily_reports_count: int = Field(default=0, description="包含的日报数量", ge=0)
+    total_prs_analyzed: int = Field(default=0, description="总分析 PR 数", ge=0)
+    high_impact_signals: int = Field(default=0, description="高影响信号数", ge=0)
+    total_commits: int = Field(default=0, description="总 Commit 数", ge=0)
+    total_releases: int = Field(default=0, description="总 Release 数", ge=0)
+
+    # 活跃度数据（聚合）
+    weekly_activity: WeeklyActivity | None = Field(default=None)
+
+    @classmethod
+    def get_week_id(cls, date: datetime) -> str:
+        """获取周标识，如 2026-W05
+
+        使用 ISO 8601 标准：
+        - 周一为一周的第一天
+        - 第一周包含该年 1 月 4 日
+
+        Args:
+            date: 日期对象
+
+        Returns:
+            周标识，如 "2026-W05"
+        """
+        year, week, _ = date.isocalendar()
+        return f"{year}-W{week:02d}"
