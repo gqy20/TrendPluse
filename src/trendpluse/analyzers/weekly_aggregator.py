@@ -107,26 +107,19 @@ class WeeklyAggregator:
 
 ## 返回格式要求
 
-请直接返回 JSON 格式（不要使用 markdown 代码块），遵循以下结构：
+请直接返回 JSON 格式（不要使用 markdown 代码块），
+必须包含以下字段：
 
-```json
-{
-            "core_trends": [
-    {
-                "title": "趋势标题",
-      "theme": "architecture/tooling/research等",
-      "description": "趋势描述",
-      "signal_ids": ["sig-1", "sig-2"],
-      "impact_level": 5
-    }
-  ],
-  "summary_brief": "本周总览（1-2句话）"
-}
-```
+- core_trends: 核心趋势数组，每个趋势包含 title, theme,
+  description, signal_ids, impact_level
+- summary_brief: 周报摘要（1-2句话）
 
-**重要**：
-- 必须包含 `core_trends` 和 `summary_brief` 两个字段
-- 不要使用 markdown 代码块（```json），直接返回原始 JSON
+示例结构：
+core_trends=[{{"title":"趋势标题","theme":"architecture",
+"description":"趋势描述","signal_ids":["sig-1"],"impact_level":5}}]
+summary_brief="本周总览"
+
+**重要**：直接返回原始 JSON 字符串，不要使用 markdown 代码块。
 """
 
         response = self._client.messages.create(
