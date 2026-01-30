@@ -4,6 +4,7 @@
 """
 
 from trendpluse.models.signal import (
+    CoreTrend,
     RepoActivity,
     Signal,
     WeeklyActivity,
@@ -120,7 +121,7 @@ class TestRenderWeeklyReport:
         assert "| 总 Release 数 | 3 |" in stats
 
     def test_render_core_trends(self):
-        """测试渲染核心趋势"""
+        """测试渲染核心趋势（使用 AI 分组）"""
         # Arrange
         reporter = MarkdownReporter()
 
@@ -129,6 +130,48 @@ class TestRenderWeeklyReport:
             start_date="2026-01-20",
             end_date="2026-01-26",
             summary_brief="测试",
+            core_trends=[
+                CoreTrend(
+                    title="异步架构普及",
+                    theme="architecture",
+                    description="多个项目采用异步架构",
+                    signal_ids=["sig-1", "sig-2"],
+                    impact_level=5,
+                ),
+                CoreTrend(
+                    title="AI 工具链创新",
+                    theme="tooling",
+                    description="AI 辅助开发工具快速迭代",
+                    signal_ids=["sig-3"],
+                    impact_level=4,
+                ),
+            ],
+        )
+
+        # Act
+        trends = reporter._render_core_trends(report)
+
+        # Assert
+        assert "## 🔥 核心趋势" in trends
+        assert "### 1. 异步架构普及" in trends
+        assert "### 2. AI 工具链创新" in trends
+        assert "**主题**: 🏗️ `architecture`" in trends
+        assert "**主题**: 🛠️ `tooling`" in trends
+        assert "**影响**: ⭐⭐⭐⭐⭐" in trends
+        assert "**相关信号数**: 2" in trends
+        assert "**相关信号数**: 1" in trends
+
+    def test_render_core_trends_fallback_to_signals(self):
+        """测试核心趋势降级到信号列表（无 AI 分组时）"""
+        # Arrange
+        reporter = MarkdownReporter()
+
+        report = WeeklyReport(
+            week_id="2026-W05",
+            start_date="2026-01-20",
+            end_date="2026-01-26",
+            summary_brief="测试",
+            core_trends=[],  # 空 AI 分组
             engineering_signals=[
                 Signal(
                     id="sig-1",
@@ -140,17 +183,31 @@ class TestRenderWeeklyReport:
                     sources=["https://github.com/test/pr/1"],
                     related_repos=["test/repo"],
                 ),
-                Signal(
-                    id="sig-2",
-                    title="趋势B",
-                    type="workflow",
-                    category="research",
-                    impact_score=4,
-                    why_it_matters="较重要",
-                    sources=["https://github.com/test/pr/2"],
-                    related_repos=["test/repo2"],
-                ),
             ],
+        )
+
+        # Act
+        trends = reporter._render_core_trends(report)
+
+        # Assert - 应该降级到信号列表
+        assert "## 🔥 核心趋势" in trends
+        assert "### 1. 趋势A" in trends
+        assert "**类型**: 🚀 `capability`" in trends
+        assert "**影响**: ⭐⭐⭐⭐⭐" in trends
+
+    def test_render_core_trends_empty(self):
+        """测试空核心趋势"""
+        # Arrange
+        reporter = MarkdownReporter()
+
+        report = WeeklyReport(
+            week_id="2026-W05",
+            start_date="2026-01-20",
+            end_date="2026-01-26",
+            summary_brief="测试",
+            core_trends=[],
+            engineering_signals=[],
+            research_signals=[],
         )
 
         # Act
@@ -158,10 +215,7 @@ class TestRenderWeeklyReport:
 
         # Assert
         assert "## 🔥 核心趋势" in trends
-        assert "### 1. 趋势A" in trends
-        assert "### 2. 趋势B" in trends
-        assert "**类型**: 🚀 `capability`" in trends
-        assert "**影响**: ⭐⭐⭐⭐⭐" in trends
+        assert "本周暂无核心趋势" in trends
 
     def test_render_weekly_activity(self):
         """测试渲染周活跃度"""

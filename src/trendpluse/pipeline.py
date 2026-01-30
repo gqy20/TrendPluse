@@ -547,6 +547,7 @@ class TrendPulsePipeline:
             start_date=start_date.strftime("%Y-%m-%d"),
             end_date=end_date.strftime("%Y-%m-%d"),
             summary_brief=ai_result.summary_brief,
+            core_trends=ai_result.core_trends,
             engineering_signals=engineering_signals[:10],
             research_signals=research_signals[:10],
             daily_reports_count=len(daily_reports),

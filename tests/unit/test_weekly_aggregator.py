@@ -8,11 +8,10 @@ from unittest.mock import patch
 import pytest
 
 from trendpluse.analyzers.weekly_aggregator import (
-    CoreTrend,
     WeeklyAggregationResult,
     WeeklyAggregator,
 )
-from trendpluse.models.signal import Signal
+from trendpluse.models.signal import CoreTrend, Signal
 
 
 class TestWeeklyAggregationResult:

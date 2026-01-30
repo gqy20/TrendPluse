@@ -7,20 +7,7 @@ from anthropic import Anthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, Field
 
-
-class CoreTrend(BaseModel):
-    """核心趋势
-
-    AI 识别出的本周核心技术趋势，包含相关信号。
-    """
-
-    title: str = Field(description="趋势标题")
-    theme: str = Field(description="主题分类，如 architecture, tooling, research 等")
-    description: str = Field(description="趋势描述")
-    signal_ids: list[str] = Field(
-        description="组成此趋势的信号 ID 列表", default_factory=list
-    )
-    impact_level: int = Field(description="影响级别 1-5", ge=1, le=5, default=3)
+from trendpluse.models.signal import CoreTrend
 
 
 class WeeklyAggregationResult(BaseModel):

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from trendpluse.models.signal import (
     ActivityData,
+    CoreTrend,  # noqa: F401 (used in WeeklyReport.core_trends type annotation)
     DailyReport,
     ReleasesData,
     ReleaseSummary,
@@ -576,7 +577,7 @@ class MarkdownReporter:
         return "".join(lines)
 
     def _render_core_trends(self, report: WeeklyReport) -> str:
-        """渲染核心趋势（Top 5 高影响信号）
+        """渲染核心趋势（AI 语义分组）
 
         Args:
             report: 周报对象
@@ -586,27 +587,60 @@ class MarkdownReporter:
         """
         lines = ["## 🔥 核心趋势\n\n"]
 
-        # 取前 5 个高影响信号作为核心趋势
-        all_signals = sorted(
-            report.engineering_signals + report.research_signals,
-            key=lambda s: s.impact_score,
-            reverse=True,
-        )[:5]
+        # 优先使用 AI 生成的 core_trends
+        if report.core_trends:
+            for i, trend in enumerate(report.core_trends, 1):
+                impact_stars = "⭐" * trend.impact_level
+                theme_emoji = self._get_theme_emoji(trend.theme)
 
-        if not all_signals:
-            return lines[0] + "本周暂无核心趋势。\n"
+                lines.append(f"### {i}. {trend.title}\n\n")
+                lines.append(f"**主题**: {theme_emoji} `{trend.theme}` | ")
+                lines.append(f"**影响**: {impact_stars}\n\n")
+                lines.append(f"{trend.description}\n\n")
+                lines.append(f"**相关信号数**: {len(trend.signal_ids)}\n\n")
+        else:
+            # 降级：取前 5 个高影响信号
+            all_signals = sorted(
+                report.engineering_signals + report.research_signals,
+                key=lambda s: s.impact_score,
+                reverse=True,
+            )[:5]
 
-        for i, signal in enumerate(all_signals, 1):
-            type_emoji = self.get_type_emoji(signal.type)
-            impact_stars = "⭐" * signal.impact_score
+            if not all_signals:
+                return lines[0] + "本周暂无核心趋势。\n"
 
-            lines.append(f"### {i}. {signal.title}\n\n")
-            lines.append(
-                f"**类型**: {type_emoji} `{signal.type}` | **影响**: {impact_stars}\n\n"
-            )
-            lines.append(f"{signal.why_it_matters}\n\n")
+            for i, signal in enumerate(all_signals, 1):
+                type_emoji = self.get_type_emoji(signal.type)
+                impact_stars = "⭐" * signal.impact_score
+
+                lines.append(f"### {i}. {signal.title}\n\n")
+                lines.append(
+                    f"**类型**: {type_emoji} `{signal.type}` | "
+                    f"**影响**: {impact_stars}\n\n"
+                )
+                lines.append(f"{signal.why_it_matters}\n\n")
 
         return "".join(lines)
+
+    def _get_theme_emoji(self, theme: str) -> str:
+        """获取主题表情
+
+        Args:
+            theme: 主题名称
+
+        Returns:
+            主题表情
+        """
+        theme_emojis = {
+            "architecture": "🏗️",
+            "tooling": "🛠️",
+            "performance": "⚡",
+            "safety": "🛡️",
+            "research": "🔬",
+            "workflow": "⚙️",
+            "ecosystem": "🌐",
+        }
+        return theme_emojis.get(theme, "📌")
 
     def _render_weekly_activity(self, activity: WeeklyActivity) -> str:
         """渲染周活跃度
