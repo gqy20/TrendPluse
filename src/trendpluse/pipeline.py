@@ -16,6 +16,7 @@ from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
+from trendpluse.analyzers.weekly_aggregator import WeeklyAggregator
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
@@ -488,6 +489,8 @@ class TrendPulsePipeline:
     ) -> WeeklyReport:
         """聚合日报生成周报
 
+        使用 AI 聚合器对信号进行整合分析，识别核心技术趋势。
+
         Args:
             daily_reports: 日报列表
             start_date: 开始日期
@@ -514,9 +517,20 @@ class TrendPulsePipeline:
                     seen_signal_ids.add(signal.id)
                     all_signals.append(signal)
 
-        # 按分类整理
+        # 使用 AI 聚合器分析信号
+        aggregator = WeeklyAggregator(
+            api_key=self.settings.anthropic_api_key,
+            base_url=self.settings.anthropic_base_url,
+            use_llm=True,
+        )
+        ai_result = aggregator.aggregate(all_signals)
+
+        # 按 impact_score 降序排序，用于显示
         engineering_signals = [s for s in all_signals if s.category == "engineering"]
         research_signals = [s for s in all_signals if s.category == "research"]
+
+        engineering_signals.sort(key=lambda s: s.impact_score, reverse=True)
+        research_signals.sort(key=lambda s: s.impact_score, reverse=True)
 
         # 统计数据
         total_prs = sum(r.stats.get("total_prs_analyzed", 0) for r in daily_reports)
@@ -529,20 +543,13 @@ class TrendPulsePipeline:
         # 聚合活跃度
         weekly_activity = self._aggregate_activity(daily_reports)
 
-        # 生成摘要（简单统计）
-        summary_brief = (
-            f"第 {week_id.split('-W')[1]} 周共分析 {len(daily_reports)} 天数据，"
-            f"发现 {len(all_signals)} 个趋势信号，"
-            f"{high_impact} 个高影响信号。"
-        )
-
         return WeeklyReport(
             week_id=week_id,
             start_date=start_date.strftime("%Y-%m-%d"),
             end_date=end_date.strftime("%Y-%m-%d"),
-            summary_brief=summary_brief,
-            engineering_signals=engineering_signals,
-            research_signals=research_signals,
+            summary_brief=ai_result.summary_brief,
+            engineering_signals=engineering_signals[:10],
+            research_signals=research_signals[:10],
             daily_reports_count=len(daily_reports),
             total_prs_analyzed=total_prs,
             high_impact_signals=high_impact,

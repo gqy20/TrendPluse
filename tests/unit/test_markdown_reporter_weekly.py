@@ -3,10 +3,6 @@
 测试 MarkdownReporter 的周报渲染功能。
 """
 
-from datetime import datetime
-
-import pytest
-
 from trendpluse.models.signal import (
     RepoActivity,
     Signal,
@@ -28,7 +24,9 @@ class TestRenderWeeklyReport:
             week_id="2026-W05",
             start_date="2026-01-20",
             end_date="2026-01-26",
-            summary_brief="第 05 周共分析 7 天数据，发现 10 个趋势信号，3 个高影响信号。",
+            summary_brief=(
+                "第 05 周共分析 7 天数据，发现 10 个趋势信号，3 个高影响信号。"
+            ),
             engineering_signals=[
                 Signal(
                     id="sig-1",
@@ -51,7 +49,9 @@ class TestRenderWeeklyReport:
                 total_commits=100,
                 active_repos_count=3,
                 top_repos=[
-                    RepoActivity(repo="test/repo", commits=50, top_contributors=["user1"])
+                    RepoActivity(
+                        repo="test/repo", commits=50, top_contributors=["user1"]
+                    )
                 ],
             ),
         )
