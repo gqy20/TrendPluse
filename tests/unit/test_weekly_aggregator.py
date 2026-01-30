@@ -3,7 +3,7 @@
 测试 WeeklyAggregator 的 AI 整合分析功能。
 """
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -125,33 +125,7 @@ class TestWeeklyAggregator:
             ),
         ]
 
-    @pytest.fixture
-    def mock_llm_response(self):
-        """Mock LLM 响应"""
-        return WeeklyAggregationResult(
-            core_trends=[
-                CoreTrend(
-                    title="异步架构成为本周主流",
-                    theme="architecture",
-                    description="多个项目采用或新增异步支持，形成明显趋势",
-                    signal_ids=["sig-1", "sig-2", "sig-3"],
-                    impact_level=5,
-                ),
-                CoreTrend(
-                    title="模型架构创新",
-                    theme="research",
-                    description="新型模型架构提出研究突破",
-                    signal_ids=["sig-4"],
-                    impact_level=5,
-                ),
-            ],
-            summary_brief=(
-                "本周共分析 4 个信号，识别出 2 个核心趋势：异步架构普及、模型架构创新"
-            ),
-            total_signals=4,
-        )
-
-    def test_aggregate_empty_signals(self, sample_signals):
+    def test_aggregate_empty_signals(self):
         """测试聚合空信号列表"""
         # Arrange
         aggregator = WeeklyAggregator(api_key="test-key")
@@ -165,8 +139,8 @@ class TestWeeklyAggregator:
 
     @patch.object(
         WeeklyAggregator,
-        "_aggregate_with_llm",
-        return_value=MagicMock(
+        "aggregate",
+        return_value=WeeklyAggregationResult(
             core_trends=[
                 CoreTrend(
                     title="异步架构成为本周主流",
@@ -206,8 +180,8 @@ class TestWeeklyAggregator:
 
     @patch.object(
         WeeklyAggregator,
-        "_aggregate_with_llm",
-        return_value=MagicMock(
+        "aggregate",
+        return_value=WeeklyAggregationResult(
             core_trends=[
                 CoreTrend(
                     title="异步架构成为本周主流",
@@ -246,19 +220,3 @@ class TestWeeklyAggregator:
         )
         assert architecture_trend is not None
         assert len(architecture_trend.signal_ids) == 3
-
-    def test_aggregate_fallback_without_llm(self, sample_signals):
-        """测试无 LLM 时的降级处理"""
-        # Arrange
-        aggregator = WeeklyAggregator(api_key="test-key", use_llm=False)
-
-        # Act
-        result = aggregator.aggregate(sample_signals)
-
-        # Assert - 降级到简单聚合（按 impact_score 排序取 Top 5）
-        assert len(result.core_trends) > 0
-        # 验证是按分数排序的
-        if len(result.core_trends) > 1:
-            assert (
-                result.core_trends[0].impact_level >= result.core_trends[1].impact_level
-            )

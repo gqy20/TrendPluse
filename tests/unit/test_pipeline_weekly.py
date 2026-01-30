@@ -6,6 +6,9 @@
 from datetime import datetime
 from unittest.mock import patch
 
+from trendpluse.analyzers.weekly_aggregator import (
+    WeeklyAggregationResult,
+)
 from trendpluse.config import Settings
 from trendpluse.models.signal import (
     ActivityData,
@@ -98,7 +101,15 @@ class TestLoadDailyReports:
 class TestAggregateWeeklyReport:
     """测试 _aggregate_weekly_report 方法"""
 
-    def test_aggregate_single_daily_report(self):
+    @patch(
+        "trendpluse.pipeline.WeeklyAggregator.aggregate",
+        return_value=WeeklyAggregationResult(
+            core_trends=[],
+            summary_brief="测试摘要",
+            total_signals=1,
+        ),
+    )
+    def test_aggregate_single_daily_report(self, mock_aggregator):
         """测试聚合单个日报"""
         # Arrange
         settings = Settings()
@@ -153,7 +164,15 @@ class TestAggregateWeeklyReport:
         assert weekly.weekly_activity is not None
         assert weekly.weekly_activity.total_commits == 30
 
-    def test_aggregate_signal_deduplication(self):
+    @patch(
+        "trendpluse.pipeline.WeeklyAggregator.aggregate",
+        return_value=WeeklyAggregationResult(
+            core_trends=[],
+            summary_brief="测试摘要",
+            total_signals=1,
+        ),
+    )
+    def test_aggregate_signal_deduplication(self, mock_aggregator):
         """测试信号去重"""
         # Arrange
         settings = Settings()
@@ -196,7 +215,15 @@ class TestAggregateWeeklyReport:
         assert len(weekly.engineering_signals) == 1
         assert weekly.engineering_signals[0].id == "sig-1"
 
-    def test_aggregate_multiple_daily_reports(self):
+    @patch(
+        "trendpluse.pipeline.WeeklyAggregator.aggregate",
+        return_value=WeeklyAggregationResult(
+            core_trends=[],
+            summary_brief="测试摘要",
+            total_signals=3,
+        ),
+    )
+    def test_aggregate_multiple_daily_reports(self, mock_aggregator):
         """测试聚合多个日报"""
         # Arrange
         settings = Settings()

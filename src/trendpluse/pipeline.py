@@ -521,7 +521,6 @@ class TrendPulsePipeline:
         aggregator = WeeklyAggregator(
             api_key=self.settings.anthropic_api_key,
             base_url=self.settings.anthropic_base_url,
-            use_llm=True,
         )
         ai_result = aggregator.aggregate(all_signals)
 
