@@ -413,7 +413,9 @@ class TrendPulsePipeline:
             )
 
         # 聚合生成周报
-        weekly_report = self._aggregate_weekly_report(daily_reports, start_date, end_date)
+        weekly_report = self._aggregate_weekly_report(
+            daily_reports, start_date, end_date
+        )
 
         # 保存报告
         output_path = self._get_weekly_output_path(end_date)
@@ -443,7 +445,9 @@ class TrendPulsePipeline:
 
         # 设置时间边界
         start_date = last_monday.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_date = last_sunday.replace(hour=23, minute=59, second=59, microsecond=999999)
+        end_date = last_sunday.replace(
+            hour=23, minute=59, second=59, microsecond=999999
+        )
 
         return start_date, end_date
 

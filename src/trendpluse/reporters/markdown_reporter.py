@@ -11,6 +11,8 @@ from trendpluse.models.signal import (
     ReleasesData,
     ReleaseSummary,
     Signal,
+    WeeklyActivity,
+    WeeklyReport,
 )
 from trendpluse.utils.formatters import (
     format_source_url,
@@ -500,3 +502,150 @@ class MarkdownReporter:
 <div class="bento-grid">
 {cards_html}
 </div>"""
+
+    def render_weekly_report(self, report: WeeklyReport) -> str:
+        """渲染周报
+
+        Args:
+            report: 周报对象
+
+        Returns:
+            Markdown 格式的周报
+        """
+        header = f"""# TrendPulse 周报 ({report.week_id}: {report.start_date} ~
+{report.end_date})
+
+> {report.summary_brief}
+
+"""
+
+        stats_section = self._render_weekly_stats(report)
+        core_trends_section = self._render_core_trends(report)
+
+        # 工程信号（限制显示数量）
+        engineering_section = "\n"
+        if report.engineering_signals:
+            engineering_section = self.render_signals(
+                report.engineering_signals[:10], "工程"
+            )
+            engineering_section = "\n\n" + engineering_section
+
+        # 研究信号（限制显示数量）
+        research_section = ""
+        if report.research_signals:
+            research_section = "\n\n" + self.render_signals(
+                report.research_signals[:10], "研究"
+            )
+
+        # 活跃度
+        activity_section = ""
+        if report.weekly_activity:
+            activity_section = "\n\n" + self._render_weekly_activity(
+                report.weekly_activity
+            )
+
+        return (
+            header
+            + stats_section
+            + "\n\n"
+            + core_trends_section
+            + engineering_section
+            + research_section
+            + activity_section
+        )
+
+    def _render_weekly_stats(self, report: WeeklyReport) -> str:
+        """渲染周报统计
+
+        Args:
+            report: 周报对象
+
+        Returns:
+            Markdown 格式的统计概览
+        """
+        lines = [
+            "## 📊 本周总览\n\n",
+            "| 指标 | 数值 |\n",
+            "|------|------|\n",
+            f"| 包含日报数 | {report.daily_reports_count} 天 |\n",
+            f"| 分析 PR 数 | {report.total_prs_analyzed} |\n",
+            f"| 高影响信号 | {report.high_impact_signals} |\n",
+            f"| 总 Commit 数 | {report.total_commits} |\n",
+            f"| 总 Release 数 | {report.total_releases} |\n",
+        ]
+        return "".join(lines)
+
+    def _render_core_trends(self, report: WeeklyReport) -> str:
+        """渲染核心趋势（Top 5 高影响信号）
+
+        Args:
+            report: 周报对象
+
+        Returns:
+            Markdown 格式的核心趋势
+        """
+        lines = ["## 🔥 核心趋势\n\n"]
+
+        # 取前 5 个高影响信号作为核心趋势
+        all_signals = sorted(
+            report.engineering_signals + report.research_signals,
+            key=lambda s: s.impact_score,
+            reverse=True,
+        )[:5]
+
+        if not all_signals:
+            return lines[0] + "本周暂无核心趋势。\n"
+
+        for i, signal in enumerate(all_signals, 1):
+            type_emoji = self.get_type_emoji(signal.type)
+            impact_stars = "⭐" * signal.impact_score
+
+            lines.append(f"### {i}. {signal.title}\n\n")
+            lines.append(
+                f"**类型**: {type_emoji} `{signal.type}` | **影响**: {impact_stars}\n\n"
+            )
+            lines.append(f"{signal.why_it_matters}\n\n")
+
+        return "".join(lines)
+
+    def _render_weekly_activity(self, activity: WeeklyActivity) -> str:
+        """渲染周活跃度
+
+        Args:
+            activity: 周活跃度对象
+
+        Returns:
+            Markdown 格式的活跃度排名
+        """
+        lines = ["---\n", "\n## 🏆 活跃度排名\n\n"]
+
+        # 总览
+        lines.append("### 总览\n\n")
+        lines.append(f"- **总 Commit 数**: {activity.total_commits}\n")
+        lines.append(f"- **活跃仓库数**: {activity.active_repos_count}\n")
+
+        # TOP 10
+        if activity.top_repos:
+            lines.append("\n### TOP 10\n\n")
+            lines.append("| 排名 | 仓库 | Commits |\n")
+            lines.append("|------|------|--------|\n")
+
+            for i, repo in enumerate(activity.top_repos[:10], 1):
+                repo_name = repo.repo.replace("_", "\\_")
+                repo_link = f"[{repo_name}](https://github.com/{repo.repo})"
+                table_row = f"| {i} | {repo_link} | {repo.commits} |\n"
+                lines.append(table_row)
+
+        return "".join(lines)
+
+    def save_weekly_report(self, report: WeeklyReport, output_path: str) -> None:
+        """保存周报到文件
+
+        Args:
+            report: 周报对象
+            output_path: 输出文件路径
+        """
+        markdown = self.render_weekly_report(report)
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        output_file.write_text(markdown, encoding="utf-8")

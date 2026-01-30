@@ -4,11 +4,7 @@
 """
 
 from datetime import datetime
-from pathlib import Path
-from unittest.mock import Mock, patch
-
-import pytest
-from freezegun import freeze_time
+from unittest.mock import patch
 
 from trendpluse.config import Settings
 from trendpluse.models.signal import (
@@ -16,7 +12,6 @@ from trendpluse.models.signal import (
     DailyReport,
     RepoActivity,
     Signal,
-    WeeklyActivity,
     WeeklyReport,
 )
 from trendpluse.pipeline import TrendPulsePipeline
@@ -132,7 +127,9 @@ class TestAggregateWeeklyReport:
                 total_commits=30,
                 active_repos_count=1,
                 top_repos=[
-                    RepoActivity(repo="test/repo", commits=30, top_contributors=["user1"])
+                    RepoActivity(
+                        repo="test/repo", commits=30, top_contributors=["user1"]
+                    )
                 ],
             ),
         )
@@ -207,7 +204,7 @@ class TestAggregateWeeklyReport:
 
         daily_reports = [
             DailyReport(
-                date=f"2026-01-{20+i}",
+                date=f"2026-01-{20 + i}",
                 summary_brief=f"测试日报{i}",
                 engineering_signals=[
                     Signal(
@@ -256,7 +253,9 @@ class TestAggregateActivity:
                     active_repos_count=1,
                     top_repos=[
                         RepoActivity(
-                            repo="test/repo", commits=30, top_contributors=["user1", "user2"]
+                            repo="test/repo",
+                            commits=30,
+                            top_contributors=["user1", "user2"],
                         )
                     ],
                 ),
@@ -289,8 +288,12 @@ class TestAggregateActivity:
                     total_commits=50,
                     active_repos_count=2,
                     top_repos=[
-                        RepoActivity(repo="repo1", commits=30, top_contributors=["user1"]),
-                        RepoActivity(repo="repo2", commits=20, top_contributors=["user2"]),
+                        RepoActivity(
+                            repo="repo1", commits=30, top_contributors=["user1"]
+                        ),
+                        RepoActivity(
+                            repo="repo2", commits=20, top_contributors=["user2"]
+                        ),
                     ],
                 ),
             ),
@@ -301,8 +304,12 @@ class TestAggregateActivity:
                     total_commits=50,
                     active_repos_count=2,
                     top_repos=[
-                        RepoActivity(repo="repo1", commits=25, top_contributors=["user3"]),
-                        RepoActivity(repo="repo2", commits=25, top_contributors=["user1"]),
+                        RepoActivity(
+                            repo="repo1", commits=25, top_contributors=["user3"]
+                        ),
+                        RepoActivity(
+                            repo="repo2", commits=25, top_contributors=["user1"]
+                        ),
                     ],
                 ),
             ),
