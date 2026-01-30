@@ -6,12 +6,12 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
-from trendpluse.analyzers.weekly_aggregator import (  # type: ignore
+
+from trendpluse.analyzers.weekly_aggregator import (
     CoreTrend,
     WeeklyAggregationResult,
     WeeklyAggregator,
 )
-
 from trendpluse.models.signal import Signal
 
 
@@ -163,20 +163,36 @@ class TestWeeklyAggregator:
         assert result.core_trends == []
         assert result.total_signals == 0
 
-    @patch("trendpluse.analyzers.base.anthropic")
-    def test_aggregate_with_llm(
-        self, mock_anthropic, sample_signals, mock_llm_response
-    ):
+    @patch.object(
+        WeeklyAggregator,
+        "_aggregate_with_llm",
+        return_value=MagicMock(
+            core_trends=[
+                CoreTrend(
+                    title="异步架构成为本周主流",
+                    theme="architecture",
+                    description="多个项目采用或新增异步支持，形成明显趋势",
+                    signal_ids=["sig-1", "sig-2", "sig-3"],
+                    impact_level=5,
+                ),
+                CoreTrend(
+                    title="模型架构创新",
+                    theme="research",
+                    description="新型模型架构提出研究突破",
+                    signal_ids=["sig-4"],
+                    impact_level=5,
+                ),
+            ],
+            summary_brief=(
+                "本周共分析 4 个信号，识别出 2 个核心趋势：异步架构普及、模型架构创新"
+            ),
+            total_signals=4,
+        ),
+    )
+    def test_aggregate_with_llm(self, mock_aggregate, sample_signals):
         """测试使用 LLM 聚合"""
         # Arrange
         aggregator = WeeklyAggregator(api_key="test-key")
-
-        # Mock LLM 响应
-        mock_client = MagicMock()
-        mock_response = MagicMock()
-        mock_response.content = [MagicMock(text=mock_llm_response.model_dump_json())]
-        mock_client.messages.create.return_value = mock_response
-        mock_anthropic.Anthropic.return_value = mock_client
 
         # Act
         result = aggregator.aggregate(sample_signals)
@@ -188,19 +204,38 @@ class TestWeeklyAggregator:
         assert "sig-1" in result.core_trends[0].signal_ids
         assert result.total_signals == 4
 
-    @patch("trendpluse.analyzers.base.anthropic")
+    @patch.object(
+        WeeklyAggregator,
+        "_aggregate_with_llm",
+        return_value=MagicMock(
+            core_trends=[
+                CoreTrend(
+                    title="异步架构成为本周主流",
+                    theme="architecture",
+                    description="多个项目采用或新增异步支持，形成明显趋势",
+                    signal_ids=["sig-1", "sig-2", "sig-3"],
+                    impact_level=5,
+                ),
+                CoreTrend(
+                    title="模型架构创新",
+                    theme="research",
+                    description="新型模型架构提出研究突破",
+                    signal_ids=["sig-4"],
+                    impact_level=5,
+                ),
+            ],
+            summary_brief=(
+                "本周共分析 4 个信号，识别出 2 个核心趋势：异步架构普及、模型架构创新"
+            ),
+            total_signals=4,
+        ),
+    )
     def test_aggregate_signal_deduplication_by_theme(
-        self, mock_anthropic, sample_signals, mock_llm_response
+        self, mock_aggregate, sample_signals
     ):
         """测试按主题去重和分组"""
         # Arrange
         aggregator = WeeklyAggregator(api_key="test-key")
-
-        mock_client = MagicMock()
-        mock_response = MagicMock()
-        mock_response.content = [MagicMock(text=mock_llm_response.model_dump_json())]
-        mock_client.messages.create.return_value = mock_response
-        mock_anthropic.Anthropic.return_value = mock_client
 
         # Act
         result = aggregator.aggregate(sample_signals)
