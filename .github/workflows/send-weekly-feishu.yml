@@ -1,0 +1,46 @@
+name: Send Weekly Feishu Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: '周标识 (YYYY-Www)，默认上周'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  send_notification:
+    name: Send Weekly Feishu Notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Send weekly feishu notification
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+          FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
+          WEEK_ID: ${{ inputs.week_id || '' }}
+        run: uv run python scripts/send_weekly_feishu.py

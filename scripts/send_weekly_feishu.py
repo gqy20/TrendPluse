@@ -60,11 +60,15 @@ def main():
     webhook_url = os.getenv("FEISHU_WEBHOOK_URL", "")
     secret = os.getenv("FEISHU_SECRET", "")
     at_mobiles_str = os.getenv("FEISHU_AT_MOBILES", "")
+    week_id_input = os.getenv("WEEK_ID", "")
 
-    # 计算上周的 week_id
-    today = datetime.now()
-    year, week, _ = today.isocalendar()
-    week_id = f"{year}-W{week:02d}"
+    # 计算上周的 week_id（如果没有指定）
+    if week_id_input:
+        week_id = week_id_input
+    else:
+        today = datetime.now()
+        year, week, _ = today.isocalendar()
+        week_id = f"{year}-W{week:02d}"
 
     # 检查 webhook URL
     if not webhook_url:
