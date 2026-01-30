@@ -1,40 +1,123 @@
 {
   "date": "2026-01-30",
-  "summary_brief": "今日见证了 AI 开发生态系统的重大结构性升级。Anthropic SDK 全面支持 Structured Outputs 和 Computer Use v5，标志着 AI Agent 交互模式进入生产级标准化阶段。同时，可视化多模态界面（Interactive Artifacts）和 CI/CD 深度集成（Claude Code Action GA）展现了 AI 工具从命令行向企业级平台的全面演进。",
+  "summary_brief": "今日 AI 编程工具生态迎来多项里程碑：Anthropic 官方全平台 SDK（Python/TypeScript/Go/Java）同步推出 Structured Outputs 功能，标志着 JSON Schema 约束已成为 AI 编程工具的标准配置。同时，Claude Code Action v1.0 正式发布，统一了交互与自动化模式，大幅简化了 CI/CD 流程中集成 AI 的配置复杂度。在工具层面，Model Context Protocol（MCP）生态持续扩展，多个项目开始显式支持模型的推理模式，\"人在回路\"协作模式逐渐成为主流。",
   "engineering_signals": [
     {
-      "id": "eng-structured-outputs",
-      "title": "结构化输出成为跨语言 SDK 的生产级标准",
+      "id": "trend-structured-outputs-2026-01-30",
+      "title": "结构化输出成为 AI 编程工具标准配置",
       "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "Anthropic 四大官方 SDK（Python/Java/Go/TS）同步引入 Structured Outputs，将模型输出格式控制从实验性功能提升为跨语言的标准能力，大幅降低了 LLM 应用与企业后端集成的复杂度，为 AI Agent 在生产环境中的可靠运行奠定了基础。",
+      "why_it_matters": "Anthropic 官方 SDK（Python/TypeScript/Go/Java）同步推出 Structured Outputs 功能，并统一迁移至 output_config 参数，这一跨语言、跨平台的同步升级表明 JSON Schema 约束已从实验性特性演进为生产环境标准，显著提升了工具调用的可靠性与一致性。",
       "sources": [
-        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.25",
-        "https://github.com/anthropics/claude-code/releases/tag/v2.1.25",
-        "https://github.com/anthropics/anthropic-sdk-java/commit/43758425607103a1469681c0e14d3d836309d3cc"
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.25",
+        "https://github.com/anthropics/anthropic-sdk-go/commit/8d73be9503a10a6ba3f64c9eb6b1d9bf2f2d2820"
       ],
       "related_repos": [
-        "anthropics/claude-code",
-        "anthropics/claude-agent-sdk-python",
         "anthropics/anthropic-sdk-python",
-        "anthropics/anthropic-sdk-java",
         "anthropics/anthropic-sdk-go",
-        "anthropics/anthropic-sdk-typescript"
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/anthropic-sdk-typescript",
+        "anthropics/anthropic-sdk-java"
       ],
       "source_signal_ids": [
         "commit-0",
-        "release-0",
-        "release-2"
+        "release-1"
       ]
     },
     {
-      "id": "eng-visual-multimodal-ui",
-      "title": "AI 助手从纯文本对话向可视化多模态界面演进",
+      "id": "trend-mcp-protocol-2026-01-30",
+      "title": "MCP 协议生态持续扩展与标准化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "TypeScript SDK 新增 MCP Helper 函数降低集成门槛，OpenCodex 和 OpenDevin 深度集成 MCP 协议支持技能注册，表明通过标准化协议扩展 AI 能力已成为构建可扩展 AI IDE 的共识。协议层标准化是实现 AI 工具互操作性的关键路径。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.72.1",
+        "https://github.com/anomalyco/opencode/commit/45ec3105b18c7c0700f05cdb82ea733e584c17fc"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "openai/codex",
+        "anthropics/anthropic-sdk-typescript",
+        "OpenDevin/OpenDevin"
+      ],
+      "source_signal_ids": [
+        "commit-3",
+        "release-3"
+      ]
+    },
+    {
+      "id": "trend-human-in-loop-2026-01-30",
+      "title": "AI 编程助手从全自动转向人在回路协作模式",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 引入 Human Input Node，OpenCodex 实现外部认证模式，显示 AI 编程助手正从'全自动代理'转向'人在回路'协作模式。这种演进反映了复杂任务中对安全性与准确性的重视，以及人类专家在 AI 流程中的不可替代价值。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/03e3acfc710750e18cc30d9cd0b8af3d93a26e2b"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langgenius/dify"
+      ],
+      "source_signal_ids": [
+        "commit-1"
+      ]
+    },
+    {
+      "id": "trend-reasoning-models-2026-01-30",
+      "title": "推理模型的标准化交互接口正在形成",
       "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "Claude Plugins 推出 Interactive Artifacts 可视化交互界面，将复杂 AI 交互转化为图形化工具（设计原型、数据查询、知识地图），大幅降低了用户使用门槛。配合 Artifact 浏览器自动打开等 UX 优化，标志着 AI 助手正从命令行工具向多模态应用平台转型。",
+      "why_it_matters": "Cline 推出 Trinity Large 专用提示变体，gptme 修复 OpenRouter 推理模型的工具调用支持，多个工具开始显式支持模型的 thinking/reasoning 配置。表明业界正在为 OpenAI o1 等推理模型的特殊交互模式建立标准接口，模型特定的提示工程正在成为最佳实践模板。",
+      "sources": [
+        "https://github.com/cline/cline/commit/e018199fefa7425c5dbded887664fe58b1c7a9be",
+        "https://github.com/cline/cline/pull/8952",
+        "https://github.com/gptme/gptme/pull/1187"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anomalyco/opencode",
+        "gptme/gptme",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "pr-8",
+        "commit-2"
+      ]
+    },
+    {
+      "id": "trend-plugin-architecture-2026-01-30",
+      "title": "插件化架构成为 AI 工具扩展能力的核心模式",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme 新增插件专用配置命名空间支持，Claude 推出 Artifact 插件架构并重命名为 Playground 以明确与 Claude.ai 的区别，两个独立项目同时优化插件系统，表明插件化架构正在成为 AI 工具扩展能力的标准模式，插件生态的独立性和可配置性受到重视。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1197",
+        "https://github.com/anthropics/claude-plugins-official/pull/304",
+        "https://github.com/anthropics/claude-plugins-official/pull/308"
+      ],
+      "related_repos": [
+        "anthropics/claude-plugins-official",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "pr-3",
+        "pr-0"
+      ]
+    },
+    {
+      "id": "trend-interactive-artifacts-2026-01-30",
+      "title": "交互式 HTML 工件成为 AI 生成内容的新载体",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Claude Artifact 插件引入交互式 HTML 工件架构，支持实时预览、可视化控制和可重用模板，并自动在浏览器中打开生成的文件。这一功能演进表明 AI 生成内容正从静态文本/代码转向可交互的富媒体应用，设计、数据和内容创建工作流正在重新定义。",
       "sources": [
         "https://github.com/anthropics/claude-plugins-official/pull/307",
         "https://github.com/anthropics/claude-plugins-official/pull/304"
@@ -43,122 +126,32 @@
         "anthropics/claude-plugins-official"
       ],
       "source_signal_ids": [
-        "pr-0",
-        "pr-1"
+        "pr-3",
+        "pr-5"
       ]
     },
     {
-      "id": "eng-cicd-deep-integration",
-      "title": "AI 辅助编程深度融入 CI/CD 流水线",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Claude Code Action v1.0 GA 统一了交互式与自动化模式，同时在多个 SDK 仓库引入 AI 代码审查工作流，表明 AI 能力正从开发辅助工具转变为 CI/CD 流水线的原生组件，自动化代码审查和 PR 处理成为企业开发流程的新标准。",
-      "sources": [
-        "https://github.com/anthropics/anthropic-sdk-go/commit/c58a2e8ddf101f3dcc7a2c97b860002fdb59ea22",
-        "https://github.com/anthropics/claude-code/releases/tag/v2.1.23"
-      ],
-      "related_repos": [
-        "anthropics/claude-code",
-        "anthropics/claude-code-action",
-        "anthropics/anthropic-sdk-java",
-        "anthropics/anthropic-sdk-go"
-      ],
-      "source_signal_ids": [
-        "release-1",
-        "commit-3"
-      ]
-    },
-    {
-      "id": "eng-agent-framework-maturity",
-      "title": "Agent 框架向企业级可配置性与安全性演进",
+      "id": "trend-safety-security-2026-01-30",
+      "title": "AI 工具安全加固与企业级合规成为刚需",
       "type": "safety",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "多个项目（gptme、OpenCode）引入企业部署配置、技能权限管理和密钥重构机制，同时采用 Hook 机制重构工具确认逻辑，显示 AI Agent 框架正从原型工具向支持大规模企业部署、安全可控的生产级系统转型。",
+      "why_it_matters": "Dify 修复 WordExtractor 中的 SSRF 漏洞，OpenCodex 新增托管设置支持，Claude Code Action v1.0 正式发布强调生产可用性。这些同步变化表明 AI 编程工具正从开发者玩具向企业级协作平台演进，安全加固和权限控制已成为不可忽视的投入重点。",
       "sources": [
-        "https://github.com/OpenHands/OpenHands/pull/12664",
-        "https://github.com/gptme/gptme/pull/1197",
         "https://github.com/anomalyco/opencode/commit/b5ffa997dad94f87e68d557631de174ea09f6b77",
-        "https://github.com/ErikBjare/gptme/commit/a23d89333e950b6be7256566022cc2f10ebba7bf"
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.25",
+        "https://github.com/langgenius/dify/commit/dbfc47e8b01919afbb6e83a54fe582483652db51"
       ],
       "related_repos": [
+        "anthropics/claude-code-action",
         "anomalyco/opencode",
-        "ErikBjare/gptme",
-        "gptme/gptme",
-        "OpenHands/OpenHands"
+        "anthropics/claude-code",
+        "langgenius/dify"
       ],
       "source_signal_ids": [
-        "commit-2",
-        "commit-4",
-        "pr-3",
-        "pr-19"
-      ]
-    },
-    {
-      "id": "eng-multi-model-optimization",
-      "title": "多模型兼容性与专用提示工程成为趋势",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "多个工具（gptme、Cline）在支持 OpenRouter 多模态推理模型的同时，开始采用模型特定的提示工程变体（如 Trinity 专用工具调用优化），显示从'一刀切'的模型处理策略向针对不同推理模型定制化交互模式的转变。",
-      "sources": [
-        "https://github.com/gptme/gptme/pull/1187",
-        "https://github.com/cline/cline/pull/8952",
-        "https://github.com/gptme/gptme/pull/1188",
-        "https://github.com/ErikBjare/gptme/commit/fd1db2d287969720abfa4130be4a5cb62bbd9743"
-      ],
-      "related_repos": [
-        "ErikBjare/gptme",
-        "gptme/gptme",
-        "cline/cline"
-      ],
-      "source_signal_ids": [
-        "commit-1",
-        "pr-12",
-        "pr-6",
-        "pr-8"
-      ]
-    },
-    {
-      "id": "eng-observability-and-debug",
-      "title": "AI 应用可观测性与调试能力系统化",
-      "type": "eval",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "引入 SQLite 日志数据库、日志客户端和 TypedDict 类型安全增强，显示 AI 工具正在建立系统化的可观测性基础设施（日志持久化、自动清理、运行时错误检测），这对于 AI Agent 在生产环境中的调试和监控至关重要。",
-      "sources": [
-        "https://github.com/openai/codex/commit/780482da84e2bb14b9900e75b04ca2e4f65dfddb",
-        "https://github.com/gptme/gptme/pull/1195",
-        "https://github.com/gptme/gptme-webui/pull/122",
-        "https://github.com/gptme/gptme/pull/1190"
-      ],
-      "related_repos": [
-        "gptme/gptme-webui",
-        "gptme/gptme",
-        "openai/codex"
-      ],
-      "source_signal_ids": [
-        "commit-5",
-        "pr-15",
-        "pr-7"
-      ]
-    },
-    {
-      "id": "eng-ide-deep-integration",
-      "title": "AI Agent 能力与编辑器深度集成",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Zed 编辑器增强 Agent UI 支持终端输出上下文引用和思考模式切换，体现了 AI 能力正从外部插件工具转变为 IDE 的原生组件，实现无缝的开发体验。",
-      "sources": [
-        "https://github.com/zed-industries/zed/commit/52182e43cdee1b60d07f877aba86805b25176e5f"
-      ],
-      "related_repos": [
-        "zed-industries/zed"
-      ],
-      "source_signal_ids": [
-        "commit-8"
+        "commit-9",
+        "commit-7",
+        "release-0"
       ]
     }
   ],
@@ -166,31 +159,29 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_pr_signals": 20,
-    "total_commit_signals": 10,
-    "total_release_signals": 5,
-    "total_signals_analyzed": 35,
-    "active_repos_count": 14,
+    "total_prs": 20,
+    "total_commits": 10,
+    "total_releases": 18,
+    "high_impact_signals": 5,
+    "cross_type_trends": 7,
     "total_prs_analyzed": 20,
-    "total_commits_analyzed": 330,
-    "total_releases": 21,
-    "high_impact_signals": 4,
-    "total_releases_analyzed": 21,
-    "total_breaking_changes": 5
+    "total_commits_analyzed": 321,
+    "total_releases_analyzed": 18,
+    "total_breaking_changes": 4
   },
   "activity": {
-    "total_commits": 330,
+    "total_commits": 321,
     "active_repos_count": 27,
     "top_repos": [
       {
         "repo": "anomalyco/opencode",
-        "commits": 55,
+        "commits": 64,
         "top_contributors": [
-          "rekram1-node",
           "thdxr",
+          "rekram1-node",
           "actions-user",
-          "fwang",
-          "goniz"
+          "adamdotdevin",
+          "neriousy"
         ]
       },
       {
@@ -209,10 +200,10 @@
         "commits": 35,
         "top_contributors": [
           "jif-oai",
-          "dylan-hurd-oai",
-          "bolinfest",
           "joshka-oai",
-          "natea-oai"
+          "bolinfest",
+          "dylan-hurd-oai",
+          "owenlin0"
         ]
       },
       {
@@ -227,13 +218,24 @@
       },
       {
         "repo": "google-gemini/gemini-cli",
-        "commits": 25,
+        "commits": 24,
         "top_contributors": [
           "sehoon38",
           "alisa-alisa",
           "jackwotherspoon",
-          "g-samroberts",
-          "SandyTao520"
+          "Thomas-Shephard",
+          "g-samroberts"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 23,
+        "top_contributors": [
+          "BeautyyuYanli",
+          "hyoban",
+          "laipz8200",
+          "QuantumGhost",
+          "WTW0313"
         ]
       },
       {
@@ -244,18 +246,7 @@
           "cole-miller",
           "Anthony-Eid",
           "JosephTLyons",
-          "osiewicz"
-        ]
-      },
-      {
-        "repo": "langgenius/dify",
-        "commits": 21,
-        "top_contributors": [
-          "BeautyyuYanli",
-          "hyoban",
-          "laipz8200",
-          "iamjoel",
-          "yihong0618"
+          "MrSubidubi"
         ]
       },
       {
@@ -268,28 +259,20 @@
       },
       {
         "repo": "anthropics/claude-plugins-official",
-        "commits": 12,
+        "commits": 10,
         "top_contributors": [
-          "ThariqS",
-          "noahzweben"
+          "ThariqS"
         ]
       },
       {
         "repo": "cline/cline",
-        "commits": 9,
+        "commits": 8,
         "top_contributors": [
           "BarreiroT",
           "arafatkatze",
           "YuriNachos",
           "mariamjabara",
           "robinnewhouse"
-        ]
-      },
-      {
-        "repo": "continuedev/continue",
-        "commits": 7,
-        "top_contributors": [
-          "RomneyDa"
         ]
       },
       {
@@ -322,29 +305,6 @@
         ]
       },
       {
-        "repo": "agno-agi/agno",
-        "commits": 5,
-        "top_contributors": [
-          "ashpreetbedi",
-          "willemcdejongh"
-        ]
-      },
-      {
-        "repo": "anthropics/claude-agent-sdk-python",
-        "commits": 4,
-        "top_contributors": [
-          "actions-user",
-          "github-actions[bot]"
-        ]
-      },
-      {
-        "repo": "anthropics/claude-code",
-        "commits": 3,
-        "top_contributors": [
-          "actions-user"
-        ]
-      },
-      {
         "repo": "run-llama/llama_index",
         "commits": 3,
         "top_contributors": [
@@ -362,24 +322,38 @@
         ]
       },
       {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 2,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 2,
+        "top_contributors": [
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
         "repo": "anthropics/claude-agent-sdk-typescript",
-        "commits": 2,
+        "commits": 1,
         "top_contributors": [
           "actions-user"
-        ]
-      },
-      {
-        "repo": "anthropics/claude-code-action",
-        "commits": 2,
-        "top_contributors": [
-          "actions-user"
-        ]
-      },
-      {
-        "repo": "crewAIInc/crewAI",
-        "commits": 2,
-        "top_contributors": [
-          "lorenzejay"
         ]
       },
       {
@@ -390,10 +364,10 @@
         ]
       },
       {
-        "repo": "anthropics/anthropic-sdk-typescript",
+        "repo": "anthropics/claude-code-action",
         "commits": 1,
         "top_contributors": [
-          "stainless-app[bot]"
+          "actions-user"
         ]
       },
       {
@@ -408,6 +382,20 @@
         "commits": 1,
         "top_contributors": [
           "Osier-Yi"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "top_contributors": [
+          "willemcdejongh"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 1,
+        "top_contributors": [
+          "xunliu"
         ]
       },
       {
@@ -523,17 +511,17 @@
         "top_contributors": []
       },
       {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "huggingface/smolagents",
         "commits": 0,
         "top_contributors": []
       },
       {
         "repo": "ruvnet/claude-flow",
-        "commits": 0,
-        "top_contributors": []
-      },
-      {
-        "repo": "bytedance/deer-flow",
         "commits": 0,
         "top_contributors": []
       },
@@ -545,9 +533,47 @@
     ]
   },
   "releases": {
-    "total_count": 21,
-    "unique_repos_count": 12,
+    "total_count": 18,
+    "unique_repos_count": 10,
     "releases": [
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "version": "sdk-v0.72.1",
+        "author": "stainless-app[bot]",
+        "date": "2026-01-30",
+        "summary": "## 0.72.1 (2026-01-30)\n\nFull Changelog: [sdk-v0.72.0...sdk-v0.72.1](https://github.com/anthropics/anthropic-sdk-typescript/compare/sdk-v0.72.0...sdk-v0.72.1)\n\n### Bug Fixes\n\n* **client:** remove OutputFormat exports from index.ts ([bf2cf08](https://github.com/anthropics/anthropic-sdk-typescript/commit/bf2cf081eedb1fef7270c042ba24dfc9f474cab0))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.72.1",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复客户端模块从 index.ts 中移除了 OutputFormat 导出",
+            "清理不必要的类型导出，优化 API 结构",
+            "这是一个补丁版本更新，解决导出问题"
+          ],
+          "summary_cn": "这是一个补丁版本更新，主要修复了客户端模块的导出问题。具体是从 index.ts 中移除了 OutputFormat 的导出，用于优化 API 结构和清理不必要的类型暴露。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.43",
+        "author": "github-actions[bot]",
+        "date": "2026-01-30",
+        "summary": "No notable changes",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.43",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无显著功能变更或错误修复",
+            "常规小版本迭代",
+            "可能包含依赖库更新或内部优化"
+          ],
+          "summary_cn": "opencode v1.1.43 是一个常规的维护版本，未引入显著的功能变更或错误修复。该版本主要涉及内部优化和依赖更新，对现有功能无影响，用户可以安全升级。",
+          "impact_level": 1
+        }
+      },
       {
         "repo": "anthropics/claude-code",
         "version": "v2.1.25",
@@ -559,52 +585,12 @@
         "ai_summary": {
           "change_type": "fix",
           "key_changes": [
-            "修复了 Bedrock 和 Vertex 网关用户的 beta 头部验证错误",
-            "确保环境变量 CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1 能正确规避错误",
-            "解决了网关用户在禁用实验性 beta 功能时遇到的问题"
+            "修复 Bedrock 和 Vertex 网关用户的 beta 头部验证错误",
+            "确保 CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1 环境变量可以正确规避错误",
+            "改进了网关服务在禁用实验性功能时的兼容性"
           ],
-          "summary_cn": "此版本修复了 Bedrock 和 Vertex 网关用户在使用实验性 beta 功能时遇到的头部验证错误。通过设置环境变量 CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1，现在可以正确规避该错误，改善了网关用户的使用体验。",
-          "impact_level": 2
-        }
-      },
-      {
-        "repo": "anthropics/claude-code",
-        "version": "v2.1.23",
-        "author": "ashwin-ant",
-        "date": "2026-01-29",
-        "summary": "## What's changed\n\n- Added customizable spinner verbs setting (`spinnerVerbs`)\n- Fixed mTLS and proxy connectivity for users behind corporate proxies or using client certificates\n- Fixed per-user temp directory isolation to prevent permission conflicts on shared systems\n- Fixed a race condition that could cause 400 errors when prompt caching scope was enabled\n- Fixed pending async hooks not being cancelled when headless streaming sessions ended\n- Fixed tab completion not updating the input field when accepting a suggestion\n- Fixed ripgrep search timeouts silently returning empty results instead of reporting errors\n- Improved terminal rendering performance with optimized screen data layout\n- Changed Bash commands to show timeout duration alongside elapsed time\n- Changed merged pull requests to show a purple status indicator in the prompt footer\n- [IDE] Fixed model options displaying incorrect region strings for Bedrock users in headless mode\n",
-        "assets_count": 0,
-        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.23",
-        "ai_summary": {
-          "change_type": "other",
-          "key_changes": [
-            "新增可自定义的 spinner 动词设置 (spinnerVerbs)",
-            "修复 mTLS 和代理连接问题，改善企业网络环境下的用户体验",
-            "修复多用户临时目录隔离问题，防止共享系统上的权限冲突",
-            "修复启用提示缓存作用域时可能导致 400 错误的竞态条件",
-            "修复多个终端交互问题，包括异步钩子取消、Tab 补全和 ripgrep 搜索超时"
-          ],
-          "summary_cn": "此版本主要包含一项新功能（可自定义 spinner 动词）和多项关键修复，重点改善了企业网络环境下的代理连接和共享系统的多用户隔离。同时修复了提示缓存竞态条件、异步钩子取消、Tab 补全等多个终端交互问题，并优化了终端渲染性能。",
-          "impact_level": 2
-        }
-      },
-      {
-        "repo": "anthropics/claude-agent-sdk-python",
-        "version": "v0.1.25",
-        "author": "github-actions[bot]",
-        "date": "2026-01-29",
-        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.23\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.25/\n\n```bash\npip install claude-agent-sdk==0.1.25\n```\n",
-        "assets_count": 0,
-        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.25",
-        "ai_summary": {
-          "change_type": "other",
-          "key_changes": [
-            "升级内置的 Claude CLI 工具至 2.1.23 版本",
-            "这是一个内部依赖更新版本",
-            "未包含其他功能或修复变更"
-          ],
-          "summary_cn": "这是一个内部依赖更新版本，主要将内置的 Claude CLI 工具从之前版本升级到了 2.1.23 版本。此次更新不涉及新增功能、bug 修复或破坏性变更，主要保持与 CLI 工具版本同步。",
-          "impact_level": 1
+          "summary_cn": "此版本修复了 Bedrock 和 Vertex 网关用户在使用时遇到的 beta 头部验证错误。用户现在可以通过设置 CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1 环境变量来正确规避该错误，提升了网关服务的稳定性。",
+          "impact_level": 3
         }
       },
       {
@@ -618,29 +604,11 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "同步至 Claude Code v2.1.25 版本",
-            "保持与 Claude Code 功能对齐",
-            "修复并优化内部实现"
+            "同步更新至 Claude Code v2.1.25 版本",
+            "保持与 Claude Code 代码库的 parity 一致性",
+            "提供完整的包管理器安装支持（npm/yarn/pnpm/bun）"
           ],
-          "summary_cn": "这是一个小版本更新，主要将 SDK 同步至与 Claude Code v2.1.25 版本对齐。此次更新确保了 TypeScript SDK 与 Claude Code 的功能一致性和兼容性，可能包含内部的修复和优化改进。",
-          "impact_level": 2
-        }
-      },
-      {
-        "repo": "anthropics/claude-agent-sdk-typescript",
-        "version": "v0.2.23",
-        "author": "ashwin-ant",
-        "date": "2026-01-29",
-        "summary": "## What's changed\n\n- Fixed structured output validation errors not being reported correctly\n- Updated to parity with Claude Code v2.1.23\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.23\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.23\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.23\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.23\n```\n",
-        "assets_count": 0,
-        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.23",
-        "ai_summary": {
-          "change_type": "fix",
-          "key_changes": [
-            "修复结构化输出验证错误未正确报告的问题",
-            "更新至与 Claude Code v2.1.23 版本同步"
-          ],
-          "summary_cn": "这是一个修复版本，主要解决了结构化输出验证错误未正确报告的问题。同时更新至与 Claude Code v2.1.23 版本保持一致。",
+          "summary_cn": "本次 v0.2.25 版本更新主要与 Claude Code v2.1.25 保持 parity 同步，确保 SDK 与主代码库功能一致。这是一个维护性更新，主要目的是版本对齐，未引入新的功能特性或破坏性变更。",
           "impact_level": 2
         }
       },
@@ -655,14 +623,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "Messages API 新增结构化输出（Structured Outputs）支持",
-            "将输出格式参数从 output_format 迁移到 output_config",
+            "Messages API 新增结构化输出支持",
+            "将输出格式迁移到 output_config 配置",
             "客户端添加自定义 JSON 编码器以支持扩展类型",
-            "修复结构化输出中缺失 output_format 时的 beta header 问题",
-            "移除导致破坏性变更的类（#1333）"
+            "修复结构化输出中缺少 output_format 时的 beta header 问题",
+            "移除导致破坏性变更的类"
           ],
-          "summary_cn": "v0.77.0 版本主要为 Messages API 增加了结构化输出（Structured Outputs）支持，并调整了相关配置参数格式（从 output_format 迁移到 output_config）。同时修复了多项 bug，包括移除了可能导致破坏性变更的类，并增强了客户端对扩展类型的 JSON 编码支持。",
-          "impact_level": 4
+          "summary_cn": "v0.77.0 是一个重要的功能更新版本，核心是为 Messages API 添加了结构化输出支持，并将相关配置迁移到 output_config 中。同时修复了多个 bug，包括移除会导致破坏性变更的类，以及优化了 beta header 的处理逻辑。",
+          "impact_level": 3
         }
       },
       {
@@ -676,11 +644,10 @@
         "ai_summary": {
           "change_type": "other",
           "key_changes": [
-            "版本号更新至 v0.14.2",
-            "更新 README 文档，添加 Claude 品牌标识",
-            "内部版本调整"
+            "内部版本号更新",
+            "README 文档更新，添加 Claude 品牌标识"
           ],
-          "summary_cn": "这是一个小版本发布（vertex-sdk-v0.14.2），主要包含文档更新和内部版本调整。变更内容较为轻微，核心功能未发生变化，仅更新了 README 中的 Claude 品牌信息。",
+          "summary_cn": "这是一个小版本更新（v0.14.2），主要包含内部版本号更新和 README 文档的品牌标识更新。变更内容较轻量，不涉及功能变更或修复，属于文档和版本维护性质的更新。",
           "impact_level": 1
         }
       },
@@ -695,13 +662,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "Messages API 新增结构化输出支持",
-            "将输出格式从 output_format 迁移至 output_config",
-            "新增 MCP SDK 辅助函数",
-            "修复 MCP 代码工具 API 端点错误",
-            "添加破坏性变更检测工作流"
+            "为 Messages API 添加 Structured Outputs 支持",
+            "添加 MCP SDK 辅助函数",
+            "迁移结构化输出格式到 output_config 参数",
+            "修复 MCP 相关的代码工具 API 端点和错误返回问题",
+            "新增破坏性变更检测工作流和 Claude Code GitHub 工作流"
           ],
-          "summary_cn": "此版本为 Messages API 引入了结构化输出支持，并将消息发送格式从 output_format 迁移到 output_config。同时新增了 MCP SDK 辅助函数和破坏性变更检测工作流，并修复了 MCP 相关的代码工具端点和 TypeScript 错误处理问题。",
+          "summary_cn": "此版本主要引入了 Messages API 的 Structured Outputs 功能支持，这是一个重要的新特性，能够帮助开发者更好地结构化 AI 输出内容。同时添加了 MCP SDK 辅助函数，优化了输出配置参数格式，并修复了 MCP 相关的 bug，增强了 CI/CD 流程。",
           "impact_level": 3
         }
       },
@@ -716,10 +683,10 @@
         "ai_summary": {
           "change_type": "other",
           "key_changes": [
-            "更新 README 文档，加入 Claude 品牌标识",
-            "内部版本号调整"
+            "内部版本号更新（chore）",
+            "更新 README 文档，添加 Claude 品牌标识"
           ],
-          "summary_cn": "这是一个小的维护版本发布 (v0.2.2)，主要包含文档更新和内部版本调整。该版本更新了 README 文档以反映 Claude 品牌标识，对用户功能无实质性影响。",
+          "summary_cn": "这是一个维护性版本更新，主要包含文档更新和内部版本调整。变更仅限于 README 中添加 Claude 品牌标识以及内部版本号的小幅调整，不涉及功能改动或问题修复。",
           "impact_level": 1
         }
       },
@@ -732,12 +699,12 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/bedrock-sdk-v0.26.2",
         "ai_summary": {
-          "change_type": "improvement",
+          "change_type": "other",
           "key_changes": [
-            "内部版本号更新（版本升级）",
-            "README 文档更新，添加 Claude 品牌标识"
+            "内部版本号更新",
+            "README 更新：添加 Claude 品牌标识"
           ],
-          "summary_cn": "这是一个小版本更新（v0.26.2），主要包含内部版本号更新和 README 文档优化。文档更新中新增了 Claude 品牌标识，属于常规的维护性更新，不涉及功能变更或问题修复。",
+          "summary_cn": "这是一个 minor 版本更新（bedrock-sdk-v0.26.2），主要包含内部版本号升级和 README 文档更新。变更将 README 中的品牌标识更新为 Claude，属于文档类优化，不涉及功能性变更或破坏性更新。",
           "impact_level": 1
         }
       },
@@ -752,13 +719,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "在 Messages API 中添加结构化输出（Structured Outputs）支持",
+            "Messages API 新增结构化输出（Structured Outputs）支持",
             "新增便捷的 param.SetJSON 辅助方法",
-            "修复多个流式处理问题（累加器、错误传递、请求体设置）",
-            "修复 MCP 代码工具 API 端点错误",
-            "支持表单数据对象成员的括号编码"
+            "修复多个流式传输相关的问题",
+            "修复 accumulator 在 stop 事件时的序列化问题",
+            "支持方括号编码的表单数据对象成员"
           ],
-          "summary_cn": "v1.20.0 版本主要引入了 Messages API 的结构化输出支持，并新增了便捷的 JSON 设置辅助方法。同时修复了多个流式处理相关的 Bug，包括累加器、错误传递和请求体设置等问题，以及 MCP 工具端点的修正。",
+          "summary_cn": "v1.20.0 版本主要为 Messages API 新增了结构化输出支持，增强了 API 的输出控制能力。同时修复了多个流式传输和参数处理的 bug，改进了稳定性和开发体验。该版本还新增了 SetJSON 辅助方法和改进了表单数据编码支持。",
           "impact_level": 3
         }
       },
@@ -773,13 +740,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "Messages API 新增 Structured Outputs 结构化输出支持",
-            "新增 Claude Opus 4.5、Effort、高级工具使用功能、自动压缩和 Computer Use v5 支持",
-            "消息创建参数新增 output_config 配置项",
-            "支持在 Microsoft Foundry 上使用 Anthropic 模型",
-            "客户端新增可配置 dispatcher executor 服务和版本头信息"
+            "在 Messages API 中新增 Structured Outputs 支持",
+            "添加 Claude Opus 4.5、Effort、高级工具使用、自动压缩和 Computer Use v5 支持",
+            "在消息创建参数中添加 output_config 配置项",
+            "客户端支持 Microsoft Foundry 上的 Anthropic 模型",
+            "允许配置 dispatcher executor 服务并添加 X-Stainless-Kotlin-Version 请求头"
           ],
-          "summary_cn": "这是一个重要的功能更新版本，主要在 Messages API 中新增了 Structured Outputs（结构化输出）支持，并引入了 Claude Opus 4.5、高级工具使用、自动压缩和 Computer Use v5 等多项新特性。同时优化了客户端配置能力，支持 Microsoft Foundry 平台集成，改进了输出参数的传递方式（从 output_format 迁移到 output_config）。",
+          "summary_cn": "v2.12.0 版本主要增强了 Messages API 的功能，新增了 Structured Outputs 支持和 output_config 配置。同时引入了对 Claude Opus 4.5、Effort、高级工具使用、自动压缩和 Computer Use v5 的全面支持，并在客户端层面添加了多项配置增强功能。",
           "impact_level": 3
         }
       },
@@ -792,32 +759,13 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.39",
         "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "版本从 v1 升级至 v1.0.39",
-            "累积了 39 个小版本的功能迭代和优化",
-            "包含多个功能增强和稳定性改进",
-            "为 claude-code-action 项目引入持续的功能完善"
-          ],
-          "summary_cn": "这是 claude-code-action 项目从 v1 到 v1.0.39 的重要版本升级，累积了 39 个小版本的迭代更新。此次发布主要包含多项功能增强和稳定性改进，持续完善 Claude Code Action 的核心能力和用户体验。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "anthropics/claude-code-action",
-        "version": "v1.0.38",
-        "author": "github-actions[bot]",
-        "date": "2026-01-29",
-        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.38",
-        "assets_count": 0,
-        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.38",
-        "ai_summary": {
           "change_type": "other",
           "key_changes": [
-            "版本从 v1 更新至 v1.0.38",
-            "完整的变更内容请参考 GitHub 上的 Full Changelog"
+            "版本 v1.0.39 发布",
+            "未提供详细变更说明",
+            "查看 Full Changelog 链接获取详细信息"
           ],
-          "summary_cn": "此版本为补丁版本升级（v1.0.38），具体的变更内容未在 Release Notes 中详细描述。建议查看 GitHub 上的 Full Changelog 链接获取完整的变更信息。",
+          "summary_cn": "这是一个补丁版本更新(v1.0.39)，但 Release Notes 未提供具体的变更内容详情。建议查看 Full Changelog 链接以获取详细的 commit 变更信息。",
           "impact_level": 1
         }
       },
@@ -832,32 +780,14 @@
         "ai_summary": {
           "change_type": "breaking",
           "key_changes": [
-            "统一简化的配置接口：自动模式检测，所有提示通过单一 prompt 输入，所有 CLI 选项通过 claude_args 传递",
-            "破坏性 API 变更：废弃 mode、direct_prompt、custom_instructions、model 等多个旧输入参数，采用更直观的统一 API",
-            "完整的 CLI 能力访问：通过 claude_args 支持自定义系统提示、工具配置、模型选择，以及 AWS Bedrock 和 Google Vertex AI 兼容性增强",
-            "新增多种使用场景示例：自动化 PR 审查、CI 失败修复、Issue 分类和文档生成等工作流"
+            "统一输入接口：将 mode、direct_prompt、override_prompt 等多个输入合并为单个 prompt 参数",
+            "自动模式检测：无需手动配置 mode，系统智能判断交互/自动化模式",
+            "全面 CLI 能力：通过 claude_args 直接访问所有 Claude Code CLI 功能",
+            "配置项重构：custom_instructions、model、allowed_tools 等迁移至 claude_args",
+            "新增实用场景：PR 自动评审、CI 失败修复、Issue 分类、文档生成"
           ],
-          "summary_cn": "Claude Code GitHub Action v1.0 重大版本发布，带来显著简化的配置方式和更强大的灵活性。此版本包含破坏性 API 变更，将多个旧输入参数统一为 prompt 和 claude_args，并自动检测运行模式。新版本支持完整的 Claude Code CLI 能力，兼容更多云服务提供商，并提供了 PR 审查、CI 修复等多种自动化工作流示例。",
+          "summary_cn": "Claude Code GitHub Action 发布 v1.0 正式版本，通过简化配置和统一接口大幅提升了易用性。本次更新包含重大 Breaking Changes，将多个分散的输入参数整合为 prompt 和 claude_args 两个核心参数，并新增自动模式检测和扩展的 CLI 集成。",
           "impact_level": 5
-        }
-      },
-      {
-        "repo": "crewAIInc/crewAI",
-        "version": "1.9.2",
-        "author": "lorenzejay",
-        "date": "2026-01-29",
-        "summary": "## What's Changed\r\n* fix: ensure verbosity flag is applied b\r\n* fix: use response_json_schema \r\n* fix: tool response pt2\r\n\r\n\r\n",
-        "assets_count": 0,
-        "url": "https://github.com/crewAIInc/crewAI/releases/tag/1.9.2",
-        "ai_summary": {
-          "change_type": "fix",
-          "key_changes": [
-            "修复 verbosity 标志未正确应用的问题",
-            "修复使用 response_json_schema 的问题",
-            "修复工具响应相关的第二部分问题"
-          ],
-          "summary_cn": "这是一个修复版本（v1.9.2），主要修复了三个问题：确保 verbosity 标志能够正确应用、修复 response_json_schema 的使用问题，以及解决了工具响应功能的部分问题。这些修复旨在提升框架的稳定性和功能完整性。",
-          "impact_level": 2
         }
       },
       {
@@ -871,10 +801,10 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "发布 CLI 版本 0.0.15",
-            "新增自定义子代理（custom subagents）功能"
+            "新增自定义子代理（custom subagents）功能",
+            "CLI 版本从 0.0.14 升级至 0.0.15"
           ],
-          "summary_cn": "deepagents-cli 0.0.15 版本正式发布，主要引入了自定义子代理（custom subagents）功能，使用户能够创建和使用自定义的子代理。这是一个新功能版本，为 CLI 工具带来了更强的灵活性和扩展性。",
+          "summary_cn": "deepagents-cli 0.0.15 版本主要引入了自定义子代理功能，允许用户根据需求定制子代理行为。这是一个功能性更新，提升了 CLI 工具的灵活性和可扩展性。",
           "impact_level": 2
         }
       },
@@ -889,14 +819,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "CLI 支持 VertexAI 提供商",
-            "修复 CLI 中 TUI 工具渲染问题",
+            "CLI 新增 VertexAI 提供商支持",
             "SDK 新增模型能力验证功能",
-            "修复滚动包装和运行工具加载动画问题",
-            "支持延迟添加 trace 链接到 banner"
+            "修复 CLI TUI 工具渲染和输入滚动问题",
+            "修复 SDK 摘要卸载功能",
+            "改进 CLI 工具运行时的加载动画显示"
           ],
-          "summary_cn": "此版本主要新增了 CLI 对 VertexAI 提供商的支持，并添加了 SDK 模型能力验证功能。同时修复了多处 CLI 界面问题，包括 TUI 工具渲染、滚动包装及运行工具加载动画等用户体验改进。",
-          "impact_level": 2
+          "summary_cn": "deepagents-cli v0.0.14 是一个重要的功能更新版本，主要增强了 CLI 工具的易用性并新增了对 VertexAI 的支持。同时 SDK 层面也进行了多项改进，包括模型能力验证和摘要卸载功能的修复，整体提升了框架的稳定性和功能完整性。",
+          "impact_level": 3
         }
       },
       {
@@ -908,15 +838,15 @@
         "assets_count": 28,
         "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.42",
         "ai_summary": {
-          "change_type": "improvement",
+          "change_type": "feature",
           "key_changes": [
-            "回退至 Anthropic completions 接口以解决 Copilot 速率限制问题",
+            "恢复使用 Anthropic completions 端点以避免速率限制问题",
             "修复 frontmatter 添加换行符导致模型 ID 无效的问题",
-            "为分叉会话标题添加序号功能",
-            "增加 TUI 超时竞态条件保护机制",
-            "CLI 统计信息中新增缓存 tokens 显示"
+            "为分叉的会话标题添加顺序编号功能",
+            "在 CLI 统计信息中包含缓存令牌计数",
+            "为超时回调添加销毁输入字段的保护机制"
           ],
-          "summary_cn": "此版本主要修复了 API 速率限制和模型 ID 格式问题，并引入了社区贡献的分叉会话序号和缓存 token 统计功能。同时增强了 TUI 的超时处理稳定性，共包含 2 位社区贡献者的 5 项改进。",
+          "summary_cn": "这是一个功能增强版本，主要优化了与 AI 服务的交互稳定性和用户体验。核心改进包括恢复 Anthropic API 端点以解决速率限制问题、修复 frontmatter 处理 bug，以及新增分叉会话标题编号和缓存令牌统计功能。TUI 层面也加强了超时处理的健壮性，共包含 2 位社区贡献者的代码提交。",
           "impact_level": 2
         }
       },
@@ -931,14 +861,14 @@
         "ai_summary": {
           "change_type": "fix",
           "key_changes": [
-            "修复 Copilot 模型的 maxTokens 配置问题，解决 kimi-k2.5 在部分推理提供商上的兼容性问题",
-            "在 SDK 缓存键中引入提供商 ID 以防止缓存冲突",
-            "为 Ripgrep.files() 和 GlobTool 添加 AbortSignal 支持以优化工具的可中断性",
-            "改进桌面端响应式体验和文件标签页交互（自动滚动和鼠标滚轮支持）",
-            "完善中文本地化支持（标准化标点符号和补充缺失翻译）"
+            "修复 maxOutputTokens 硬编码问题，解决 kimi-k2.5 模型在某些推理提供商上的兼容性问题",
+            "为 Ripgrep.files() 和 GlobTool 添加 AbortSignal 支持以优化文件搜索操作",
+            "移除导致 TypeScript 编译失败的重复键",
+            "改进桌面应用设置在小屏幕和移动端的响应式体验",
+            "完善中文本地化：填充缺失的翻译键并规范化中文标点符号"
           ],
-          "summary_cn": "此版本主要修复了 AI 模型配置和兼容性问题，包括 Copilot 模型的 maxTokens 处理和缓存冲突问题。同时改进了桌面端用户体验，优化文件标签页交互并完善中文本地化支持。共计 12 位社区贡献者参与。",
-          "impact_level": 3
+          "summary_cn": "v1.1.41 版本主要修复了 Copilot 模型的 tokens 配置问题，解决 kimi-k2.5 在部分推理提供商上的兼容性故障。同时引入 AbortSignal 支持优化文件搜索，移除了 TypeScript 重复键，并显著改进了桌面应用的响应式体验和中文本地化支持。",
+          "impact_level": 2
         }
       },
       {
@@ -952,10 +882,10 @@
         "ai_summary": {
           "change_type": "fix",
           "key_changes": [
-            "修复了通过设置界面登录 Copilot 的问题",
-            "修复了 ACP 注册表 URL 博客文章链接中的拼写错误"
+            "修复通过设置 UI 登录 Copilot 的问题",
+            "修复 ACP 注册表 URL 博客文章链接中的拼写错误"
           ],
-          "summary_cn": "这是一个小版本更新（v0.221.5），主要包含两个修复。第一个修复解决了用户在设置界面中登录 GitHub Copilot 时遇到的问题，提升了 AI 助手功能的可用性；第二个修复修正了 ACP 注册表相关博客文章链接中的拼写错误。",
+          "summary_cn": "这是一个小版本更新，主要包含两个 Bug 修复。修复了通过设置 UI 登录 GitHub Copilot 时遇到的问题，同时更正了 ACP 注册表相关文档中的链接拼写错误。",
           "impact_level": 1
         }
       }
@@ -968,12 +898,24 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "结构化输出格式迁移：发送格式从 `output_format` 变更为 `output_config`",
+          "description": "移除了导致不兼容变更的类（remove class causing breaking change）",
           "impact": "high",
           "category": "API"
         },
         {
-          "description": "移除了导致破坏性变更的类（commit 81ee953）",
+          "description": "结构化输出格式从 `output_format` 迁移至 `output_config`",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/anthropic-sdk-typescript",
+      "tag_name": "sdk-v0.72.1",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "从 index.ts 中移除了 `OutputFormat` 导出",
           "impact": "medium",
           "category": "API"
         }
@@ -985,48 +927,9 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "结构化输出格式迁移：发送格式从 `output_format` 变更为 `output_config`",
-          "impact": "high",
-          "category": "API"
-        },
-        {
-          "description": "更新了 beta helpers 的导入路径",
+          "description": "结构化输出格式从 `output_format` 迁移至 `output_config`",
           "impact": "medium",
           "category": "API"
-        }
-      ]
-    },
-    {
-      "repo": "anthropics/anthropic-sdk-go",
-      "tag_name": "v1.20.0",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "结构化输出格式迁移：发送格式从 `output_format` 变更为 `output_config`",
-          "impact": "high",
-          "category": "API"
-        },
-        {
-          "description": "重命名参数以避免命名冲突",
-          "impact": "low",
-          "category": "API"
-        }
-      ]
-    },
-    {
-      "repo": "anthropics/anthropic-sdk-java",
-      "tag_name": "v2.12.0",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "结构化输出格式迁移：发送格式从 `output_format` 变更为 `output_config`",
-          "impact": "high",
-          "category": "API"
-        },
-        {
-          "description": "禁止从 float 类型强制转换为 int 类型",
-          "impact": "medium",
-          "category": "Behavior"
         }
       ]
     },
@@ -1036,17 +939,17 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "配置输入重构：`mode`, `direct_prompt`, `override_prompt` 合并为统一的 `prompt` 输入",
+          "description": "输入参数重构：`mode`, `direct_prompt`, `override_prompt` 合并为 `prompt`",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "配置输入迁移：`custom_instructions`, `model`, `allowed_tools` 等迁移至 `claude_args`",
+          "description": "配置参数迁移：`custom_instructions`, `model`, `allowed_tools` 等移至 `claude_args`",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "废弃配置移除：`disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes` 被移除",
+          "description": "移除废弃参数：`disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`",
           "impact": "medium",
           "category": "Config"
         }
