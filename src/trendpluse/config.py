@@ -151,6 +151,18 @@ class Settings(BaseSettings):
     max_candidates: int = 20
     days_to_lookback: int = 7  # PR 和 Release 回溯天数
 
+    # Open PR 筛选配置
+    enable_open_prs: bool = Field(
+        default=False,
+        description="是否包含 open PR（默认 False，只包含已合并的 PR）",
+    )
+    open_pr_min_changed_files: int = Field(
+        default=3,
+        ge=1,
+        le=50,
+        description="open PR 最小改动文件数阈值（1-50，默认3）",
+    )
+
     # Release 监控配置
     monitor_releases: bool = Field(default=True, description="是否监控 Releases")
     include_prereleases: bool = Field(

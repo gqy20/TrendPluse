@@ -82,7 +82,11 @@ class TrendPulsePipeline:
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
         )
-        self.filter = EventFilter(max_count=self.settings.max_candidates)
+        self.filter = EventFilter(
+            max_count=self.settings.max_candidates,
+            enable_open_prs=self.settings.enable_open_prs,
+            open_pr_min_changed_files=self.settings.open_pr_min_changed_files,
+        )
         self.fetcher = GitHubDetailFetcher(token=self.settings.github_token)
         self.analyzer = TrendAnalyzer(
             api_key=self.settings.anthropic_api_key,
