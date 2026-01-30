@@ -67,7 +67,9 @@ def main():
         week_id = week_id_input
     else:
         today = datetime.now()
-        year, week, _ = today.isocalendar()
+        # 减去 7 天获取上周的日期
+        last_week = today - __import__("datetime").timedelta(days=7)
+        year, week, _ = last_week.isocalendar()
         week_id = f"{year}-W{week:02d}"
 
     # 检查 webhook URL
