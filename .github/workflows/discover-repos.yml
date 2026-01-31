@@ -1,0 +1,75 @@
+name: 发现热门项目
+
+on:
+  # 每周 UTC 周一 00:10 运行 (北京时间周一 08:10)
+  schedule:
+    - cron: "10 0 * * 1"
+
+  # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "回溯天数"
+        required: false
+        type: number
+        default: 30
+      min_quality:
+        description: "最低质量分数"
+        required: false
+        type: number
+        default: 60.0
+
+  # 允许从其他 workflow 调用
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    name: 发现热门项目
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          uv sync --frozen --no-dev
+
+      - name: Discover projects
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DAYS=${{ github.event.inputs.days || 30 }}
+          MIN_QUALITY=${{ github.event.inputs.min_quality || 60.0 }}
+          uv run python scripts/discover_projects.py \
+            --days $DAYS \
+            --min-quality $MIN_QUALITY \
+            --output-dir data/discovery/reports
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-reports
+          path: data/discovery/reports/*.md
+          retention-days: 30
+
+      - name: Upload JSON reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-reports-json
+          path: data/discovery/reports/*.json
+          retention-days: 30
