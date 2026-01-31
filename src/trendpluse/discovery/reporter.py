@@ -28,15 +28,17 @@ class DiscoveryReporter:
             Markdown 格式报告
         """
         lines = [
-            f"# 项目发现报告 ({report.date})\n",
-            "## 发现概览\n",
+            f"# 项目发现报告 ({report.date})",
+            "",
+            "## 发现概览",
+            "",
             "| 指标 | 数值 |",
             "|------|------|",
             f"| 总发现数 | {report.total_discovered} |",
             f"| 通过质量评估 | {report.passed_quality} |",
             f"| 高优先级 | {report.high_priority} |",
             f"| 去重移除 | {report.duplicates_removed} |",
-            f"| 已在监控 | {report.already_monitored} |\n",
+            f"| 已在监控 | {report.already_monitored} |",
         ]
 
         # 按优先级分组
@@ -52,19 +54,19 @@ class DiscoveryReporter:
 
         # 高优先级推荐
         if high_priority:
-            lines.extend(["## 🌟 高优先级推荐\n"])
+            lines.extend(["", "## 🌟 高优先级推荐"])
             for i, project in enumerate(high_priority, 1):
                 lines.extend(self._format_project(project, i))
 
         # 中优先级推荐
         if medium_priority:
-            lines.extend(["## ⭐ 中优先级推荐\n"])
+            lines.extend(["", "## ⭐ 中优先级推荐"])
             for i, project in enumerate(medium_priority, 1):
                 lines.extend(self._format_project(project, i))
 
         # 低优先级
         if low_priority:
-            lines.extend(["## 低优先级\n"])
+            lines.extend(["", "## 低优先级"])
             for i, project in enumerate(low_priority, 1):
                 lines.extend(self._format_project(project, i))
 
@@ -85,12 +87,17 @@ class DiscoveryReporter:
             格式化的文本行列表
         """
         lines = [
-            f"### {index}. {project.repo}\n",
-            f"**描述**: {project.description}  \n",
-            f"**发现来源**: {project.discovery_source}  \n",
-            f"**发现原因**: {project.discovery_reason}  \n",
-            f"**质量评分**: {project.quality_score:.0f}/100  \n",
-            f"**活跃度**: {project.activity_level}  \n",
+            f"### {index}. {project.repo}",
+            "",
+            f"**描述**: {project.description}",
+            "",
+            f"**发现来源**: {project.discovery_source}",
+            "",
+            f"**发现原因**: {project.discovery_reason}",
+            "",
+            f"**质量评分**: {project.quality_score:.0f}/100",
+            "",
+            f"**活跃度**: {project.activity_level}",
             "",
             "| 指标 | 数值 |",
             "|------|------|",
