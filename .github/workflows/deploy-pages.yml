@@ -16,9 +16,9 @@ on:
         required: false
         type: boolean
         default: false
-  # 当 daily-analysis workflow 成功完成后自动部署
+  # 当 workflow 成功完成后自动部署
   workflow_run:
-    workflows: ["Daily Trend Analysis"]
+    workflows: ["Daily Trend Analysis", "Discover Projects"]
     types: [completed]
     branches: [main]
 

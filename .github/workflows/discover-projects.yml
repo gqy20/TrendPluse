@@ -1,4 +1,4 @@
-name: 发现热门项目
+name: Discover Projects
 
 on:
   # 每天 UTC 19:00 运行 (北京时间凌晨 3:00)
@@ -27,7 +27,7 @@ permissions:
 
 jobs:
   discover:
-    name: 发现热门项目
+    name: Discover Projects
     runs-on: ubuntu-latest
     timeout-minutes: 30
 

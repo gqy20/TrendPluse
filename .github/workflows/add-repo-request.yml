@@ -1,4 +1,4 @@
-name: 处理仓库添加请求
+name: Add Repo Request
 
 on:
   issues:
