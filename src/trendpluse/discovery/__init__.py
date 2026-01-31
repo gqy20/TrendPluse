@@ -4,5 +4,6 @@
 """
 
 from trendpluse.discovery.base import BaseDiscoverer
+from trendpluse.discovery.trending import TrendingCollector
 
-__all__ = ["BaseDiscoverer"]
+__all__ = ["BaseDiscoverer", "TrendingCollector"]
