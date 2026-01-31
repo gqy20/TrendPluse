@@ -430,7 +430,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         "## 最新报告\n",
         "\n",
         f"### [{date}](discovery-reports/discovery-{date}.md)\n",
-        "<br/>\n",
         "\n",
         "**发现概览**:<br/>\n",
     ]
@@ -441,8 +440,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         f"- 通过质量评估: {stats.get('passed_quality', 'N/A')}<br/>\n",
         f"- 高优先级: {stats.get('high_priority', 'N/A')}<br/>\n",
         f"- 去重移除: {stats.get('duplicates_removed', 'N/A')}<br/>\n",
-        f"- 已在监控: {stats.get('already_monitored', 'N/A')}\n",
-        "\n",
+        f"- 已在监控: {stats.get('already_monitored', 'N/A')}<br/>\n",
         "\n",
         "**高优先级推荐 Top 5**:<br/>\n",
         "\n",
