@@ -9,6 +9,18 @@ from datetime import datetime
 from pathlib import Path
 
 
+def ensure_reports_structure(reports_dir: Path) -> None:
+    """确保 reports 目录结构存在
+
+    Args:
+        reports_dir: 报告根目录
+    """
+    (reports_dir / "daily").mkdir(parents=True, exist_ok=True)
+    (reports_dir / "weekly").mkdir(parents=True, exist_ok=True)
+    (reports_dir / "discovery").mkdir(parents=True, exist_ok=True)
+    print(f"目录结构已创建: {reports_dir}")
+
+
 def extract_report_info(report_path: Path) -> dict | None:
     """从报告文件中提取信息
 
@@ -73,10 +85,10 @@ def extract_weekly_report_info(weekly_path: Path) -> dict | None:
     try:
         content = weekly_path.read_text(encoding="utf-8")
 
-        # 提取日期范围和周标识
+        # 提取日期范围和周标识（支持多行标题）
         week_match = re.search(
             r"# TrendPulse 周报 "
-            r"\((\d{4}-W\d+): (\d{4}-\d{2}-\d{2}) ~\n"
+            r"\((\d{4}-W\d+): (\d{4}-\d{2}-\d{2}) ~\s*"
             r"(\d{4}-\d{2}-\d{2})\)",
             content,
         )
@@ -116,9 +128,18 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         reports_dir: 报告目录
         output_path: 输出文件路径
     """
-    # 查找日报和周报文件
-    daily_files = sorted(reports_dir.glob("report-*.md"), reverse=True)
-    weekly_files = sorted(reports_dir.glob("weekly-*.md"), reverse=True)
+    # 从子目录查找日报和周报文件
+    daily_dir = reports_dir / "daily"
+    weekly_dir = reports_dir / "weekly"
+
+    daily_files = []
+    weekly_files = []
+
+    if daily_dir.exists():
+        daily_files = sorted(daily_dir.glob("report-*.md"), reverse=True)
+
+    if weekly_dir.exists():
+        weekly_files = sorted(weekly_dir.glob("weekly-*.md"), reverse=True)
 
     # 提取日报信息
     daily_reports = []
@@ -231,14 +252,43 @@ def sync_reports_to_docs(reports_dir: Path, docs_reports_dir: Path) -> None:
     """
     docs_reports_dir.mkdir(parents=True, exist_ok=True)
 
-    # 复制日报和周报文件
-    for pattern in ["report-*.md", "weekly-*.md"]:
-        for report_file in reports_dir.glob(pattern):
+    # 从子目录复制日报和周报文件
+    daily_dir = reports_dir / "daily"
+    weekly_dir = reports_dir / "weekly"
+
+    if daily_dir.exists():
+        for report_file in daily_dir.glob("report-*.md"):
             dest_file = docs_reports_dir / report_file.name
             dest_file.write_text(
                 report_file.read_text(encoding="utf-8"), encoding="utf-8"
             )
-            print(f"已复制: {report_file.name}")
+            print(f"已复制日报: {report_file.name}")
+
+    if weekly_dir.exists():
+        for report_file in weekly_dir.glob("weekly-*.md"):
+            dest_file = docs_reports_dir / report_file.name
+            dest_file.write_text(
+                report_file.read_text(encoding="utf-8"), encoding="utf-8"
+            )
+            print(f"已复制周报: {report_file.name}")
+
+
+def sync_discovery_reports_to_docs(reports_dir: Path, docs_dir: Path) -> None:
+    """同步发现报告到 docs 目录
+
+    Args:
+        reports_dir: 源报告目录
+        docs_dir: 目标文档目录
+    """
+    discovery_dir = reports_dir / "discovery"
+    if not discovery_dir.exists():
+        return
+
+    # 复制发现报告
+    for report_file in discovery_dir.glob("discovery-*.md"):
+        dest_file = docs_dir / report_file.name
+        dest_file.write_text(report_file.read_text(encoding="utf-8"), encoding="utf-8")
+        print(f"已复制发现报告: {report_file.name}")
 
 
 def main():
@@ -246,15 +296,17 @@ def main():
     project_root = Path(__file__).parent.parent
     reports_dir = project_root / "reports"
     docs_reports_dir = project_root / "docs" / "reports"
+    docs_dir = project_root / "docs"
     index_path = docs_reports_dir / "index.md"
 
-    # 检查报告目录
-    if not reports_dir.exists():
-        print(f"报告目录不存在: {reports_dir}")
-        return
+    # 确保目录结构存在
+    ensure_reports_structure(reports_dir)
 
     # 同步报告文件
     sync_reports_to_docs(reports_dir, docs_reports_dir)
+
+    # 同步发现报告
+    sync_discovery_reports_to_docs(reports_dir, docs_dir)
 
     # 生成索引
     generate_index(reports_dir, index_path)

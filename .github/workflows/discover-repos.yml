@@ -58,18 +58,18 @@ jobs:
           uv run python scripts/discover_projects.py \
             --days $DAYS \
             --min-quality $MIN_QUALITY \
-            --output-dir data/discovery/reports
+            --output-dir reports
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
           name: discovery-reports
-          path: data/discovery/reports/*.md
+          path: reports/discovery/discovery-*.md
           retention-days: 30
 
       - name: Upload JSON reports
         uses: actions/upload-artifact@v4
         with:
           name: discovery-reports-json
-          path: data/discovery/reports/*.json
+          path: reports/discovery/discovery-*.json
           retention-days: 30

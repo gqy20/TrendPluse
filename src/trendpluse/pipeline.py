@@ -373,8 +373,8 @@ class TrendPulsePipeline:
         Returns:
             输出文件路径
         """
-        # 默认输出到 reports 目录
-        reports_dir = Path("reports")
+        # 输出到 reports/daily 子目录
+        reports_dir = Path("reports/daily")
         filename = f"report-{date.strftime('%Y-%m-%d')}.md"
         return str(reports_dir / filename)
 

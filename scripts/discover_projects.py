@@ -127,6 +127,9 @@ def discover(
     # 9. 保存报告
     if output_dir:
         output_dir = Path(output_dir)
+        # 确保输出目录是 discovery 子目录
+        if output_dir.name == "reports":
+            output_dir = output_dir / "discovery"
         output_dir.mkdir(parents=True, exist_ok=True)
 
         reporter = DiscoveryReporter()
@@ -186,7 +189,7 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/discovery/reports"),
+        default=Path("reports"),
         help="报告输出目录",
     )
     parser.add_argument(

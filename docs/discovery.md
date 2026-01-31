@@ -1,0 +1,74 @@
+# 项目发现历史
+
+自动发现的 GitHub 热门项目报告，每周一更新。
+
+## 最新报告
+
+### [2026-01-31](discovery-2026-01-31.md)
+
+**发现概览**:
+- 总发现数: 200
+- 通过质量评估: 200
+- 高优先级: 147
+- 去重移除: 35
+- 已在监控: 18
+
+**高优先级推荐 Top 5**:
+1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,454 ⭐
+2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,477 ⭐
+3. [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) - 66,655 ⭐
+4. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,117 ⭐
+5. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,573 ⭐
+
+## 历史报告
+
+| 日期 | 总发现 | 高优先级 | 报告 |
+|------|--------|----------|------|
+| 2026-01-31 | 200 | 147 | [查看](discovery-2026-01-31.md) |
+
+## 关于发现功能
+
+### 发现来源
+
+项目通过以下方式自动发现：
+
+1. **GitHub Trending** - 爬取各语言的 Trending 页面
+2. **关键词搜索** - 基于 AI 相关关键词搜索
+
+### 质量评估
+
+每个发现的项目会经过多维度质量评估：
+
+- **Stars 指标** (20分): 项目受欢迎程度
+- **活跃度指标** (30分): 最近提交时间
+- **社区指标** (20分): Forks 和 Watchers 数量
+- **代码质量** (20分): License 和 Open Issues 比例
+- **相关性** (15分): 与 AI/LLM 主题的相关度
+
+**总质量分**: 0-100 分，≥60 分为推荐
+
+### 推荐优先级
+
+- **高优先级** (high): 质量分数 ≥ 85
+- **中优先级** (medium): 70 ≤ 质量分数 < 85
+- **低优先级** (low): 60 ≤ 质量分数 < 70
+
+### 运行方式
+
+```bash
+# 本地运行发现
+uv run python scripts/discover_projects.py
+
+# 自定义参数
+uv run python scripts/discover_projects.py \
+  --days 7 \
+  --min-quality 60.0 \
+  --languages python typescript go \
+  --keywords "AI agent" "LLM" "Claude" "RAG"
+```
+
+### 自动运行
+
+项目发现通过 GitHub Actions 每周一 UTC 00:10 (北京时间 08:10) 自动运行。
+
+查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)

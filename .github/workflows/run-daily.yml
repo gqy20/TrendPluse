@@ -62,7 +62,7 @@ jobs:
       - name: Check if report exists
         id: check_report
         run: |
-          if ls reports/report-*.md 1> /dev/null 2>&1; then
+          if ls reports/daily/report-*.md 1> /dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
@@ -74,8 +74,8 @@ jobs:
         with:
           name: trend-report-${{ steps.report_date.outputs.date }}
           path: |
-            reports/report-*.md
-            reports/report-*.json
+            reports/daily/report-*.md
+            reports/daily/report-*.json
           retention-days: 30
 
       - name: Sync reports to docs
@@ -91,8 +91,8 @@ jobs:
           git stash
           git pull --rebase origin main
           git stash pop || true
-          # 添加报告文件（包括 JSON 数据）
-          git add reports/*.md reports/*.json docs/reports/*.md
+          # 添加报告文件（包括 JSON 数据）- 使用子目录结构
+          git add reports/daily/*.md reports/daily/*.json docs/reports/*.md docs/discovery*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push
 

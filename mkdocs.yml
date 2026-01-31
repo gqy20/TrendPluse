@@ -152,6 +152,7 @@ extra:
 nav:
   - 首页: index.md
   - 趋势报告: reports/index.md
+  - 项目发现: discovery.md
   - 项目说明:
       - 功能概述: features.md
       - 快速开始: quickstart.md
