@@ -15,10 +15,10 @@
 
 **高优先级推荐 Top 5**:<br/>
 
-1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,463 ⭐<br/>
-2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,484 ⭐<br/>
-3. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,126 ⭐<br/>
-4. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,602 ⭐<br/>
+1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,464 ⭐<br/>
+2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,486 ⭐<br/>
+3. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,127 ⭐<br/>
+4. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,610 ⭐<br/>
 5. [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) - 54,014 ⭐<br/>
 
 ## 历史报告
