@@ -148,10 +148,6 @@ extra:
           data: 3
           note: 感谢您的反馈！我们会继续改进。
 
-# 排除不需要构建的文件
-exclude_docs: |
-  discovery-reports/*.md
-
 # 导航结构
 nav:
   - 首页: index.md

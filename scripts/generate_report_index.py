@@ -429,7 +429,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         "\n",
         "## 最新报告\n",
         "\n",
-        f"### [{date}](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-{date}.md)\n",
+        f"### [{date}](discovery-reports/discovery-{date}.md)\n",
         "<br/>\n",
         "\n",
         "**发现概览**:<br/>\n",
@@ -472,10 +472,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
             date = info["date"]
             total = info["stats"].get("total_discovered", "N/A")
             high = info["stats"].get("high_priority", "N/A")
-            report_url = (
-                "https://github.com/gqy20/TrendPluse/blob/main/"
-                f"reports/discovery/discovery-{date}.md"
-            )
+            report_url = f"discovery-reports/discovery-{date}.md"
             lines.append(f"| {date} | {total} | {high} | [查看]({report_url}) |\n")
 
     # 添加说明部分

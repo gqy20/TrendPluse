@@ -4,7 +4,7 @@
 
 ## 最新报告
 
-### [2026-01-31](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-2026-01-31.md)
+### [2026-01-31](discovery-reports/discovery-2026-01-31.md)
 <br/>
 
 **发现概览**:<br/>
@@ -27,7 +27,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
-| 2026-01-31 | 200 | 147 | [查看](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-2026-01-31.md) |
+| 2026-01-31 | 200 | 147 | [查看](discovery-reports/discovery-2026-01-31.md) |
 
 ## 关于发现功能
 
@@ -72,6 +72,7 @@ uv run python scripts/discover_projects.py \
 
 ### 自动运行
 
-项目发现通过 GitHub Actions 每周一 UTC 00:10 (北京时间 08:10) 自动运行。
+项目发现通过 GitHub Actions 每周一 UTC 00:10
+(北京时间 08:10) 自动运行。
 
 查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)
