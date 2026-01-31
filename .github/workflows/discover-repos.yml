@@ -23,7 +23,7 @@ on:
   workflow_call:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   discover:
@@ -73,3 +73,11 @@ jobs:
           name: discovery-reports-json
           path: reports/discovery/discovery-*.json
           retention-days: 30
+
+      - name: Commit and push reports
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add reports/discovery/*.md reports/discovery/*.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "docs: update discovery reports [skip ci]"
+          git push
