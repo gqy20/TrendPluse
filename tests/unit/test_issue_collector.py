@@ -22,7 +22,7 @@ class TestIssueCollector:
 
         # Assert
         assert collector.token == "test_token"
-        assert collector.CREATE_WINDOW_DAYS == 90
+        assert collector.CREATE_WINDOW_DAYS == 30
         assert collector.ACTIVE_WINDOW_DAYS == 3
 
     def test_create_collector_with_custom_snapshot_dir(self, temp_dir):
@@ -54,7 +54,7 @@ class TestIssueCollector:
         collector = IssueCollector(token="test_token")
         now = datetime.now(UTC)
         recent_issue = mock_github.create_issue(
-            created_at=now - timedelta(days=30),  # 90天内创建
+            created_at=now - timedelta(days=30),  # 30天内创建
             updated_at=now - timedelta(days=1),
         )
 
@@ -71,7 +71,7 @@ class TestIssueCollector:
         collector = IssueCollector(token="test_token")
         now = datetime.now(UTC)
         old_issue = mock_github.create_issue(
-            created_at=now - timedelta(days=100),  # 超过90天
+            created_at=now - timedelta(days=100),  # 超过30天
             updated_at=now - timedelta(days=1),  # 但3天内有更新
         )
 
@@ -88,7 +88,7 @@ class TestIssueCollector:
         collector = IssueCollector(token="test_token")
         now = datetime.now(UTC)
         old_issue = mock_github.create_issue(
-            created_at=now - timedelta(days=100),  # 超过90天
+            created_at=now - timedelta(days=100),  # 超过30天
             updated_at=now - timedelta(days=10),  # 超过3天无更新
         )
 
@@ -99,13 +99,13 @@ class TestIssueCollector:
         assert should is False
 
     @freeze_time("2026-01-31")
-    def test_should_analyze_exactly_90_days_old(self, mock_github):
-        """测试刚好90天的 Issue 应该被分析"""
+    def test_should_analyze_exactly_30_days_old(self, mock_github):
+        """测试刚好30天的 Issue 应该被分析"""
         # Arrange
         collector = IssueCollector(token="test_token")
         now = datetime.now(UTC)
         issue = mock_github.create_issue(
-            created_at=now - timedelta(days=90),  # 刚好90天
+            created_at=now - timedelta(days=30),  # 刚好30天
             updated_at=now - timedelta(days=1),
         )
 

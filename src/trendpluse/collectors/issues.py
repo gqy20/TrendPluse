@@ -3,7 +3,7 @@
 从 GitHub API 采集 Issues，支持快照去重和时间窗口过滤。
 """
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from github import GithubException
 
@@ -22,8 +22,8 @@ class IssueCollector(BaseGitHubCollector):
     从指定仓库采集 Issues，支持快照去重和时间窗口过滤。
     """
 
-    # 时间窗口配置（按 Issue #39 要求）
-    CREATE_WINDOW_DAYS = 90  # 90天内创建的 Issue
+    # 时间窗口配置（优化为 30 天，减少 API 请求）
+    CREATE_WINDOW_DAYS = 30  # 30天内创建的 Issue
     ACTIVE_WINDOW_DAYS = 3  # 3天内有新回复
 
     def __init__(self, token: str, snapshot_dir: str = "data/issue_snapshots"):
@@ -93,14 +93,18 @@ class IssueCollector(BaseGitHubCollector):
         try:
             repo = self.client.get_repo(repo_name)
 
-            # 获取 Issues（包含已关闭的）
+            # 计算时间窗口（使用 since 参数减少 API 请求）
+            now = datetime.now(UTC)
+            since_date = now - timedelta(days=self.CREATE_WINDOW_DAYS)
+
+            # 获取 Issues（使用 since 参数进行服务端过滤）
+            # 这会大幅减少 API 请求次数，避免 403 错误
             github_issues = repo.get_issues(
                 state="all",
+                since=since_date,  # ← 关键优化：服务端过滤
                 sort="created",
                 direction="desc",
             )
-
-            now = datetime.now(UTC)
 
             for issue in github_issues:
                 # 跳过 PR（GitHub API 把 PR 也当作 Issue）
@@ -128,9 +132,12 @@ class IssueCollector(BaseGitHubCollector):
     def _should_analyze(self, issue, now: datetime) -> bool:
         """判断 Issue 是否需要分析
 
-        实现双时间窗口逻辑（按 Issue #39 要求）：
-        1. 最近 CREATE_WINDOW_DAYS (90) 天内创建
+        实现双时间窗口逻辑：
+        1. 最近 CREATE_WINDOW_DAYS (30) 天内创建
         2. 或最近 ACTIVE_WINDOW_DAYS (3) 天有新回复
+
+        注意：由于已使用 since 参数过滤，这里的条件1几乎总是满足。
+        条件2主要用于捕获旧 Issue 的最近活动。
 
         Args:
             issue: GitHub Issue 对象
