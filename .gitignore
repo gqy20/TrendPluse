@@ -137,6 +137,9 @@ Thumbs.db
 uv.lock
 logs/
 
+# Issue 快照数据
+data/issue_snapshots/
+
 # 现代工具
 .ruff_cache/
 .hatch/
