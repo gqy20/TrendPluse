@@ -4,7 +4,13 @@
 """
 
 from trendpluse.discovery.base import BaseDiscoverer
+from trendpluse.discovery.evaluator import QualityEvaluator
 from trendpluse.discovery.keyword_searcher import KeywordSearcher
 from trendpluse.discovery.trending import TrendingCollector
 
-__all__ = ["BaseDiscoverer", "TrendingCollector", "KeywordSearcher"]
+__all__ = [
+    "BaseDiscoverer",
+    "TrendingCollector",
+    "KeywordSearcher",
+    "QualityEvaluator",
+]
