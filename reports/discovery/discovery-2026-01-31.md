@@ -180,7 +180,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,639 |
+| Stars | 71,640 |
 | 语言 | TypeScript |
 | Forks | 14,565 |
 | Issues | 1,201 |
@@ -290,9 +290,9 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,581 |
+| Stars | 35,586 |
 | 语言 | JavaScript |
-| Forks | 4,376 |
+| Forks | 4,377 |
 | Issues | 4 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
@@ -468,7 +468,7 @@
 |------|------|
 | Stars | 91,298 |
 | 语言 | Python |
-| Forks | 13,177 |
+| Forks | 13,176 |
 | Issues | 10 |
 | Topics | agents, llms, python, rag |
 | 许可证 | Apache License 2.0 |
@@ -512,7 +512,7 @@
 |------|------|
 | Stars | 67,315 |
 | 语言 | Python |
-| Forks | 8,380 |
+| Forks | 8,379 |
 | Issues | 291 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
@@ -576,7 +576,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 26,352 |
+| Stars | 26,354 |
 | 语言 | TypeScript |
 | Forks | 1,908 |
 | Issues | 360 |
@@ -622,7 +622,7 @@
 |------|------|
 | Stars | 77,485 |
 | 语言 | Python |
-| Forks | 9,173 |
+| Forks | 9,172 |
 | Issues | 220 |
 | Topics | ai-agents, ai-tools, browser-automation, browser-use, llm, playwright, python |
 | 许可证 | MIT License |
@@ -666,7 +666,7 @@
 |------|------|
 | Stars | 48,702 |
 | 语言 | TypeScript |
-| Forks | 23,656 |
+| Forks | 23,655 |
 | Issues | 766 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
@@ -689,7 +689,7 @@
 | Stars | 36,187 |
 | 语言 | Python |
 | Forks | 5,644 |
-| Issues | 338 |
+| Issues | 339 |
 | Topics | algorithmic-trading, auto-quant, deep-learning, finance, fintech, investment, machine-learning, paper, platform, python, quant, quant-dataset, quant-models, quantitative-finance, quantitative-trading, research, research-paper, stock-data |
 | 许可证 | MIT License |
 
@@ -710,7 +710,7 @@
 |------|------|
 | Stars | 27,377 |
 | 语言 | C# |
-| Forks | 3,005 |
+| Forks | 3,004 |
 | Issues | 11 |
 | Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
 | 许可证 | MIT License |
@@ -732,7 +732,7 @@
 |------|------|
 | Stars | 19,877 |
 | 语言 | Rust |
-| Forks | 1,857 |
+| Forks | 1,856 |
 | Issues | 321 |
 | Topics | agent, ai-agents, kanban, management, task-manager |
 | 许可证 | Apache License 2.0 |
@@ -755,7 +755,7 @@
 | Stars | 42,543 |
 | 语言 | Go |
 | Forks | 3,794 |
-| Issues | 955 |
+| Issues | 954 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
@@ -774,7 +774,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,738 |
+| Stars | 28,742 |
 | 语言 | JavaScript |
 | Forks | 4,642 |
 | Issues | 29 |
@@ -861,10 +861,10 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,093 |
+| Stars | 69,094 |
 | 语言 | Python |
 | Forks | 13,048 |
-| Issues | 3,179 |
+| Issues | 3,178 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
 
@@ -905,9 +905,9 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 123,466 |
+| Stars | 123,517 |
 | 语言 | TypeScript |
-| Forks | 17,563 |
+| Forks | 17,572 |
 | Issues | 1,790 |
 | Topics | ai, assistant, crustacean, molty, openclaw, own-your-data, personal |
 | 许可证 | MIT License |
@@ -927,7 +927,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 25,400 |
+| Stars | 25,402 |
 | 语言 | Python |
 | Forks | 2,573 |
 | Issues | 44 |
@@ -1037,7 +1037,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,676 |
+| Stars | 49,677 |
 | 语言 | Jupyter Notebook |
 | Forks | 17,357 |
 | Issues | 9 |
@@ -1104,7 +1104,7 @@
 |------|------|
 | Stars | 28,421 |
 | 语言 | Python |
-| Forks | 2,740 |
+| Forks | 2,739 |
 | Issues | 70 |
 | Topics | anthropic, anthropic-ai, anthropic-skills, awesome, awesome-lists, claude, claude-4, claude-4-5-sonnet, claude-4-opus, claude-api, claude-code, claude-desktop, claude-skills, claude-skills-hub, skills |
 
@@ -1123,9 +1123,9 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 102,016 |
+| Stars | 102,017 |
 | 语言 | Python |
-| Forks | 11,564 |
+| Forks | 11,563 |
 | Issues | 3,615 |
 | Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
 | 许可证 | GNU General Public License v3.0 |
@@ -1148,7 +1148,7 @@
 | Stars | 97,069 |
 | 语言 | Python |
 | Forks | 26,698 |
-| Issues | 17,989 |
+| Issues | 17,988 |
 | Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
 | 许可证 | Other |
 
@@ -1387,7 +1387,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 53,482 |
+| Stars | 53,483 |
 | 语言 | Go |
 | Forks | 6,361 |
 | Issues | 2,855 |
@@ -1475,7 +1475,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,096 |
+| Stars | 59,097 |
 | 语言 | Python |
 | Forks | 1,577 |
 | Issues | 31 |
@@ -1497,7 +1497,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 280,718 |
+| Stars | 280,719 |
 | 语言 | Python |
 | Forks | 27,153 |
 | Issues | 18 |
@@ -1695,7 +1695,7 @@
 |------|------|
 | Stars | 71,282 |
 | 语言 | Python |
-| Forks | 33,982 |
+| Forks | 33,983 |
 | Issues | 9,215 |
 | 许可证 | Other |
 
@@ -1824,7 +1824,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 137,277 |
+| Stars | 137,278 |
 | 语言 | TypeScript |
 | Forks | 16,407 |
 | Issues | 56 |
@@ -2638,7 +2638,7 @@
 | Stars | 52,751 |
 | 语言 | JavaScript |
 | Forks | 10,573 |
-| Issues | 497 |
+| Issues | 498 |
 | 许可证 | Apache License 2.0 |
 
 
@@ -2810,7 +2810,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 163,867 |
+| Stars | 163,868 |
 | 语言 | Go |
 | Forks | 12,933 |
 | Issues | 165 |
@@ -2922,7 +2922,7 @@
 |------|------|
 | Stars | 79,481 |
 | 语言 | Go |
-| Forks | 4,906 |
+| Forks | 4,905 |
 | Issues | 395 |
 | Topics | go, p2p, peer-to-peer, synchronization |
 | 许可证 | Mozilla Public License 2.0 |
@@ -3073,7 +3073,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 56,298 |
+| Stars | 56,299 |
 | 语言 | Go |
 | Forks | 4,031 |
 | Issues | 60 |
@@ -3227,8 +3227,8 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 141,761 |
+| Stars | 141,762 |
 | 语言 | Python |
-| Forks | 11,085 |
+| Forks | 11,086 |
 | Issues | 257 |
 | Topics | awesome, github, hellogithub, python |
