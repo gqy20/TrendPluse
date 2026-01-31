@@ -17,11 +17,11 @@
 
 **高优先级推荐 Top 5**:<br/>
 
-1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,458 ⭐<br/>
-2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,480 ⭐<br/>
-3. [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) - 66,657 ⭐<br/>
-4. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,120 ⭐<br/>
-5. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,582 ⭐<br/>
+1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,460 ⭐<br/>
+2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,481 ⭐<br/>
+3. [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) - 66,658 ⭐<br/>
+4. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,122 ⭐<br/>
+5. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,586 ⭐<br/>
 
 ## 历史报告
 

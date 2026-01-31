@@ -86,11 +86,14 @@ class DiscoveryReporter:
         Returns:
             格式化的文本行列表
         """
+        # 转义描述中的 HTML 特殊字符，避免 Markdown 解析错误
+        description = project.description.replace("<", "&lt;").replace(">", "&gt;")
+
         lines = [
             "",
             f"### {index}. {project.repo}",
             "",
-            f"**描述**: {project.description}",
+            f"**描述**: {description}",
             "",
             f"**发现来源**: {project.discovery_source}",
             "",
