@@ -418,24 +418,6 @@ class FeishuFormatter:
 
         return "".join(lines)
 
-    def _create_releases_section(self, releases: ReleasesData) -> dict:
-        """创建版本发布部分（与 MarkdownReporter 一致，包含详细信息）
-
-        Args:
-            releases: ReleasesData 对象
-
-        Returns:
-            版本发布部分元素
-        """
-        content = self._generate_releases_content(releases)
-        return {
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": content,
-            },
-        }
-
     def _create_release_signals_section(self, signals: list[Signal]) -> list[dict]:
         """创建 Release 信号部分（与 MarkdownReporter 一致）
 
@@ -513,25 +495,6 @@ class FeishuFormatter:
 
         return "".join(lines)
 
-    def _create_breaking_changes_section(self, breaking_changes: list[dict]) -> dict:
-        """创建 Breaking Changes 部分（已弃用，建议使用折叠面板）
-
-        为了向后兼容保留此方法，内部调用折叠面板方法。
-
-        Args:
-            breaking_changes: breaking changes 列表
-
-        Returns:
-            Breaking Changes 部分元素
-        """
-        content = self._generate_breaking_changes_content(breaking_changes)
-        return self._create_collapsible_panel(
-            title=f"⚠️ Breaking Changes ({len(breaking_changes)}个)",
-            content=content,
-            expanded=False,
-            icon="down-small-ccm_outlined",
-        )
-
     def _generate_activity_content(self, activity: ActivityData) -> str:
         """生成活跃度内容（不包含外层标题，用于折叠面板）
 
@@ -556,24 +519,6 @@ class FeishuFormatter:
 
         return "".join(lines)
 
-    def _create_activity_section(self, activity: ActivityData) -> dict:
-        """创建活跃度部分（与 MarkdownReporter 一致，包含总览）
-
-        Args:
-            activity: ActivityData 对象
-
-        Returns:
-            活跃度部分元素
-        """
-        content = self._generate_activity_content(activity)
-        return {
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": content,
-            },
-        }
-
     def _generate_stats_content(self, stats: dict) -> str:
         """生成统计信息内容（不包含外层标题，用于折叠面板）
 
@@ -590,24 +535,6 @@ class FeishuFormatter:
         content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
         content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}"
         return content
-
-    def _create_stats_section(self, stats: dict) -> dict:
-        """创建统计信息部分
-
-        Args:
-            stats: 统计数据字典
-
-        Returns:
-            统计信息部分元素
-        """
-        content = self._generate_stats_content(stats)
-        return {
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": content,
-            },
-        }
 
     def _get_type_emoji(self, signal_type: str) -> str:
         """获取信号类型的表情

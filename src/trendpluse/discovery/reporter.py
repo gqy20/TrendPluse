@@ -232,8 +232,8 @@ class DiscoveryReporter:
         Returns:
             格式化的文本行列表
         """
-        # 转义描述中的 HTML 特殊字符，避免 Markdown 解析错误
-        description = project.description.replace("<", "&lt;").replace(">", "&gt;")
+        # 项目描述（无需 HTML 转义，GitHub 描述不包含 HTML 标签）
+        description = project.description
 
         lines = [
             "",
