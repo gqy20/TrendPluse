@@ -7,6 +7,14 @@
 import re
 from datetime import datetime
 from pathlib import Path
+from typing import TypedDict
+
+
+class _ProjectInfo(TypedDict):
+    """项目信息"""
+
+    repo: str
+    stars: int
 
 
 def ensure_reports_structure(reports_dir: Path) -> None:
@@ -297,6 +305,239 @@ def sync_discovery_reports_to_docs(reports_dir: Path, docs_dir: Path) -> None:
         print(f"已复制发现报告: {report_file.name}")
 
 
+def extract_discovery_report_info(report_path: Path) -> dict | None:
+    """从发现报告中提取信息
+
+    Args:
+        report_path: 发现报告文件路径
+
+    Returns:
+        包含报告信息的字典，如果解析失败返回 None
+    """
+    try:
+        content = report_path.read_text(encoding="utf-8")
+
+        # 提取日期
+        date_match = re.search(r"# 项目发现报告 \((\d{4}-\d{2}-\d{2})\)", content)
+        if not date_match:
+            return None
+        date_str = date_match.group(1)
+
+        # 提取概览数据
+        stats = {}
+        stats_pattern = r"\|\s*(.+?)\s*\|\s*(\d+)\s*\|"
+        in_overview = False
+        for line in content.split("\n"):
+            if "## 发现概览" in line:
+                in_overview = True
+                continue
+            if in_overview:
+                if line.startswith("|") and "---" not in line:
+                    match = re.search(stats_pattern, line)
+                    if match:
+                        key = match.group(1).strip()
+                        value = match.group(2)
+                        stats[key] = value
+                elif line.startswith("##"):
+                    break
+
+        # 映射中文字段名
+        key_mapping = {
+            "总发现数": "total_discovered",
+            "通过质量评估": "passed_quality",
+            "高优先级": "high_priority",
+            "去重移除": "duplicates_removed",
+            "已在监控": "already_monitored",
+        }
+        mapped_stats = {}
+        for cn_key, en_key in key_mapping.items():
+            if cn_key in stats:
+                mapped_stats[en_key] = stats[cn_key]
+
+        # 提取高优先级推荐 Top 5
+        top_projects: list[_ProjectInfo] = []
+        in_high_priority = False
+        project_header_pattern = (
+            r"###\s+\d+\.\s+([/\w.-]+)"  # 匹配 "### 1. owner/repo" (包含 .)
+        )
+        stars_pattern = r"\|\s*Stars\s*\|\s*([\d,]+)\s*\|"  # 匹配表格中的 Stars 行
+
+        for line in content.split("\n"):
+            if "## 🌟 高优先级推荐" in line or "## 高优先级推荐" in line:
+                in_high_priority = True
+                continue
+            if in_high_priority:
+                if line.startswith("###"):
+                    match = re.search(project_header_pattern, line)
+                    if match:
+                        repo = match.group(1)
+                        top_projects.append({"repo": repo, "stars": 0})
+                elif top_projects and "| Stars |" in line:
+                    match = re.search(stars_pattern, line)
+                    if match:
+                        stars_str = match.group(1).replace(",", "")
+                        if top_projects and top_projects[-1]["stars"] == 0:
+                            top_projects[-1]["stars"] = int(stars_str)
+                elif line.startswith("##") and "高优先级" not in line:
+                    break
+                if len(top_projects) >= 5 and all(p["stars"] > 0 for p in top_projects):
+                    break
+
+        return {
+            "date": date_str,
+            "stats": mapped_stats,
+            "top_projects": top_projects,
+        }
+    except Exception as e:
+        print(f"解析发现报告失败 {report_path}: {e}")
+        return None
+
+
+def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
+    """生成发现历史索引页面
+
+    Args:
+        reports_dir: 报告目录
+        docs_dir: 文档目录
+    """
+    discovery_dir = reports_dir / "discovery"
+    if not discovery_dir.exists():
+        return
+
+    # 查找最新的发现报告
+    discovery_files = sorted(discovery_dir.glob("discovery-*.md"), reverse=True)
+    if not discovery_files:
+        print("没有找到发现报告文件")
+        return
+
+    latest_report = discovery_files[0]
+    info = extract_discovery_report_info(latest_report)
+
+    if not info:
+        print(f"无法解析最新的发现报告: {latest_report}")
+        return
+
+    date = info["date"]
+    stats = info["stats"]
+    top_projects = info["top_projects"]
+
+    # 生成内容
+    lines = [
+        "# 项目发现历史\n",
+        "\n",
+        "自动发现的 GitHub 热门项目报告，每周一更新。\n",
+        "\n",
+        "## 最新报告\n",
+        "\n",
+        f"### [{date}](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-{date}.md)\n",
+        "<br/>\n",
+        "\n",
+        "**发现概览**:<br/>\n",
+    ]
+
+    # 添加概览数据
+    overview_lines = [
+        f"- 总发现数: {stats.get('total_discovered', 'N/A')}<br/>\n",
+        f"- 通过质量评估: {stats.get('passed_quality', 'N/A')}<br/>\n",
+        f"- 高优先级: {stats.get('high_priority', 'N/A')}<br/>\n",
+        f"- 去重移除: {stats.get('duplicates_removed', 'N/A')}<br/>\n",
+        f"- 已在监控: {stats.get('already_monitored', 'N/A')}\n",
+        "\n",
+        "\n",
+        "**高优先级推荐 Top 5**:<br/>\n",
+        "\n",
+    ]
+
+    # 添加 Top 5 项目
+    for i, project in enumerate(top_projects, 1):
+        repo_link = f"[{project['repo']}](https://github.com/{project['repo']})"
+        overview_lines.append(f"{i}. {repo_link} - {project['stars']:,} ⭐<br/>\n")
+
+    lines.extend(overview_lines)
+
+    # 添加历史报告表格（包含所有报告）
+    lines.extend(
+        [
+            "\n",
+            "## 历史报告\n",
+            "\n",
+            "| 日期 | 总发现 | 高优先级 | 报告 |\n",
+            "|------|--------|----------|------|\n",
+        ]
+    )
+
+    for report_file in discovery_files[:10]:  # 显示最近 10 个
+        info = extract_discovery_report_info(report_file)
+        if info:
+            date = info["date"]
+            total = info["stats"].get("total_discovered", "N/A")
+            high = info["stats"].get("high_priority", "N/A")
+            report_url = (
+                "https://github.com/gqy20/TrendPluse/blob/main/"
+                f"reports/discovery/discovery-{date}.md"
+            )
+            lines.append(f"| {date} | {total} | {high} | [查看]({report_url}) |\n")
+
+    # 添加说明部分
+    lines.extend(
+        [
+            "\n",
+            "## 关于发现功能\n",
+            "\n",
+            "### 发现来源\n",
+            "\n",
+            "项目通过以下方式自动发现：\n",
+            "\n",
+            "1. **GitHub Trending** - 爬取各语言的 Trending 页面\n",
+            "2. **关键词搜索** - 基于 AI 相关关键词搜索\n",
+            "\n",
+            "### 质量评估\n",
+            "\n",
+            "每个发现的项目会经过多维度质量评估：\n",
+            "\n",
+            "- **Stars 指标** (20分): 项目受欢迎程度\n",
+            "- **活跃度指标** (30分): 最近提交时间\n",
+            "- **社区指标** (20分): Forks 和 Watchers 数量\n",
+            "- **代码质量** (20分): License 和 Open Issues 比例\n",
+            "- **相关性** (15分): 与 AI/LLM 主题的相关度\n",
+            "\n",
+            "**总质量分**: 0-100 分，≥60 分为推荐\n",
+            "\n",
+            "### 推荐优先级\n",
+            "\n",
+            "- **高优先级** (high): 质量分数 ≥ 85\n",
+            "- **中优先级** (medium): 70 ≤ 质量分数 < 85\n",
+            "- **低优先级** (low): 60 ≤ 质量分数 < 70\n",
+            "\n",
+            "### 运行方式\n",
+            "\n",
+            "```bash\n",
+            "# 本地运行发现\n",
+            "uv run python scripts/discover_projects.py\n",
+            "\n",
+            "# 自定义参数\n",
+            "uv run python scripts/discover_projects.py \\\n",
+            "  --days 7 \\\n",
+            "  --min-quality 60.0 \\\n",
+            "  --languages python typescript go \\\n",
+            '  --keywords "AI agent" "LLM" "Claude" "RAG"\n',
+            "```\n",
+            "\n",
+            "### 自动运行\n",
+            "\n",
+            "项目发现通过 GitHub Actions 每周一 UTC 00:10\n",
+            "(北京时间 08:10) 自动运行。\n",
+            "\n",
+            "查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)\n",
+        ]
+    )
+
+    # 写入文件
+    discovery_index_path = docs_dir / "discovery.md"
+    discovery_index_path.write_text("".join(lines), encoding="utf-8")
+    print(f"发现索引已生成: {discovery_index_path}")
+
+
 def main():
     """主函数"""
     project_root = Path(__file__).parent.parent
@@ -313,6 +554,9 @@ def main():
 
     # 同步发现报告
     sync_discovery_reports_to_docs(reports_dir, docs_dir)
+
+    # 生成发现历史索引
+    generate_discovery_index(reports_dir, docs_dir)
 
     # 生成索引
     generate_index(reports_dir, index_path)
