@@ -147,11 +147,12 @@ ignore_missing_imports = true
 module = "tests.*"
 disallow_untyped_defs = false
 ignore_missing_imports = true  # 测试中可能导入不存在的模块
-disable_error_code = ["abstract"]  # 测试中故意实例化抽象类
+disable_error_code = ["abstract", "arg-type"]  # 测试中故意实例化抽象类，简化类型
 
 [[tool.mypy.overrides]]
 module = "trendpluse.analyzers.*"
 warn_unused_ignores = false  # instructor 返回类型复杂，需要 type: ignore
+disable_error_code = ["no-any-return"]  # instructor 返回 Any
 
 # GraphQL 相关代码允许 Any 返回类型
 [[tool.mypy.overrides]]
