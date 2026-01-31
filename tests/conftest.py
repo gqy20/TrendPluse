@@ -2,9 +2,16 @@
 
 import os
 import tempfile
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+
+
+@pytest.fixture
+def now_utc():
+    """返回当前 UTC aware datetime"""
+    return datetime.now(UTC)
 
 
 @pytest.fixture

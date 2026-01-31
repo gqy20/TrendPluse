@@ -3,7 +3,7 @@
 测试完整的项目发现流程。
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 from unittest.mock import Mock, patch
 
 import pytest
@@ -44,7 +44,7 @@ class TestDiscoverProjectsIntegration:
                 open_issues=20,
                 forks=100,
                 watchers=50,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="trending",
                 discovery_reason="Trending",
             ),
@@ -59,7 +59,7 @@ class TestDiscoverProjectsIntegration:
                 open_issues=10,
                 forks=50,
                 watchers=20,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="trending",
                 discovery_reason="Trending",
             ),
@@ -80,7 +80,7 @@ class TestDiscoverProjectsIntegration:
                 open_issues=10,
                 forks=30,
                 watchers=15,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="keyword",
                 discovery_reason="Keyword: AI",
             ),
@@ -208,7 +208,7 @@ class TestDiscoverProjectsIntegration:
             open_issues=5,
             forks=20,
             watchers=10,
-            last_commit_at=datetime.now(),
+            last_commit_at=datetime.now(UTC),
             discovery_source="trending",
             discovery_reason="Trending",
         )
@@ -231,7 +231,7 @@ class TestDiscoverProjectsIntegration:
             open_issues=5,
             forks=22,
             watchers=11,
-            last_commit_at=datetime.now(),
+            last_commit_at=datetime.now(UTC),
             discovery_source="keyword",
             discovery_reason="Keyword: AI",
         )

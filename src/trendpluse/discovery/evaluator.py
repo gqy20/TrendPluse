@@ -3,7 +3,7 @@
 根据多维度指标评估项目质量。
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Literal
 
 from trendpluse.logger import get_logger
@@ -120,7 +120,7 @@ class QualityEvaluator:
         if last_commit is None:
             return 0
 
-        days_since = (datetime.now() - last_commit).days
+        days_since = (datetime.now(UTC) - last_commit).days
 
         if days_since <= 7:
             return 30

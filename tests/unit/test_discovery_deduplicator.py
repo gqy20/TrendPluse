@@ -3,7 +3,7 @@
 测试项目去重功能。
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -30,7 +30,7 @@ class TestDeduplicator:
                 open_issues=10,
                 forks=50,
                 watchers=20,
-                last_commit_at=datetime.now() - timedelta(days=5),
+                last_commit_at=datetime.now(UTC) - timedelta(days=5),
                 discovery_source="trending",
                 discovery_reason="Trending",
             ),
@@ -45,7 +45,7 @@ class TestDeduplicator:
                 open_issues=12,
                 forks=55,
                 watchers=22,
-                last_commit_at=datetime.now() - timedelta(days=3),
+                last_commit_at=datetime.now(UTC) - timedelta(days=3),
                 discovery_source="keyword",
                 discovery_reason="Keyword: AI",
             ),
@@ -60,7 +60,7 @@ class TestDeduplicator:
                 open_issues=5,
                 forks=30,
                 watchers=15,
-                last_commit_at=datetime.now() - timedelta(days=10),
+                last_commit_at=datetime.now(UTC) - timedelta(days=10),
                 discovery_source="keyword",
                 discovery_reason="Keyword: web",
             ),
@@ -75,7 +75,7 @@ class TestDeduplicator:
                 open_issues=0,
                 forks=5,
                 watchers=2,
-                last_commit_at=datetime.now() - timedelta(days=1),
+                last_commit_at=datetime.now(UTC) - timedelta(days=1),
                 discovery_source="trending",
                 discovery_reason="Trending",
             ),
@@ -134,7 +134,7 @@ class TestDeduplicator:
             open_issues=0,
             forks=1,
             watchers=1,
-            last_commit_at=datetime.now(),
+            last_commit_at=datetime.now(UTC),
             discovery_source="trending",
             discovery_reason="Test",
         )
@@ -159,7 +159,7 @@ class TestDeduplicator:
                 open_issues=0,
                 forks=1,
                 watchers=1,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="keyword",
                 discovery_reason=f"Keyword{i}",
             )

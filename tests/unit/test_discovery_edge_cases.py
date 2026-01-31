@@ -3,7 +3,7 @@
 补充边界和异常情况的测试。
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from unittest.mock import Mock, patch
 
 import pytest  # noqa: F401 (used for @pytest.mark)
@@ -35,7 +35,7 @@ class TestEdgeCases:
             open_issues=10,
             forks=50,
             watchers=20,
-            last_commit_at=datetime.now() - timedelta(days=5),
+            last_commit_at=datetime.now(UTC) - timedelta(days=5),
             discovery_source="trending",
             discovery_reason="Trending",
         )
@@ -51,7 +51,7 @@ class TestEdgeCases:
             open_issues=12,
             forks=55,
             watchers=22,
-            last_commit_at=datetime.now() - timedelta(days=3),
+            last_commit_at=datetime.now(UTC) - timedelta(days=3),
             discovery_source="keyword",
             discovery_reason="",  # 空 reason
         )
@@ -79,7 +79,7 @@ class TestEdgeCases:
             open_issues=10,
             forks=50,
             watchers=20,
-            last_commit_at=datetime.now(),
+            last_commit_at=datetime.now(UTC),
             discovery_source="keyword",
             discovery_reason="AI",
         )
@@ -105,7 +105,7 @@ class TestEdgeCases:
             mock_repo.open_issues_count = 5
             mock_repo.forks_count = 10
             mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now()
+            mock_repo.pushed_at = datetime.now(UTC)
 
             # topics 属性抛出异常
             type(mock_repo).topics = property(
@@ -140,7 +140,7 @@ class TestEdgeCases:
             mock_repo.open_issues_count = 5
             mock_repo.forks_count = 10
             mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now()
+            mock_repo.pushed_at = datetime.now(UTC)
 
             # topics 和 get_topics 都抛出异常
             type(mock_repo).topics = property(
@@ -219,7 +219,7 @@ class TestEdgeCases:
             mock_repo.open_issues_count = 5
             mock_repo.forks_count = 10
             mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now()
+            mock_repo.pushed_at = datetime.now(UTC)
 
             # topics 属性抛出异常
             type(mock_repo).topics = property(
@@ -254,7 +254,7 @@ class TestEdgeCases:
             mock_repo.open_issues_count = 5
             mock_repo.forks_count = 10
             mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now()
+            mock_repo.pushed_at = datetime.now(UTC)
 
             # topics 和 get_topics 都抛出异常
             type(mock_repo).topics = property(
@@ -289,7 +289,7 @@ class TestEdgeCases:
             open_issues=10,
             forks=50,
             watchers=20,
-            last_commit_at=datetime.now(),
+            last_commit_at=datetime.now(UTC),
             discovery_source="keyword",
             discovery_reason="AI",
         )
@@ -325,7 +325,7 @@ class TestEdgeCases:
                     open_issues=5,
                     forks=10,
                     watchers=5,
-                    last_commit_at=datetime.now() - timedelta(days=i % 30),
+                    last_commit_at=datetime.now(UTC) - timedelta(days=i % 30),
                     discovery_source="keyword",
                     discovery_reason=f"Keyword{i}",
                 )
@@ -354,7 +354,7 @@ class TestEdgeCases:
             open_issues=0,
             forks=0,
             watchers=0,
-            last_commit_at=datetime.now() - timedelta(days=365),  # 很久没更新
+            last_commit_at=datetime.now(UTC) - timedelta(days=365),  # 很久没更新
             discovery_source="keyword",
             discovery_reason="Test",
         )
@@ -378,7 +378,7 @@ class TestEdgeCases:
             open_issues=50,
             forks=500,
             watchers=200,
-            last_commit_at=datetime.now(),  # 最近更新
+            last_commit_at=datetime.now(UTC),  # 最近更新
             discovery_source="trending",
             discovery_reason="Trending",
         )

@@ -3,7 +3,7 @@
 测试项目质量评分功能。
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -28,7 +28,7 @@ class TestQualityEvaluator:
             open_issues=20,
             forks=100,
             watchers=50,
-            last_commit_at=datetime.now() - timedelta(days=5),
+            last_commit_at=datetime.now(UTC) - timedelta(days=5),
             discovery_source="trending",
             discovery_reason="Test",
         )
@@ -61,7 +61,7 @@ class TestQualityEvaluator:
             open_issues=50,
             forks=500,
             watchers=200,
-            last_commit_at=datetime.now() - timedelta(days=3),
+            last_commit_at=datetime.now(UTC) - timedelta(days=3),
             discovery_source="trending",
             discovery_reason="Test",
         )
@@ -87,7 +87,7 @@ class TestQualityEvaluator:
             open_issues=0,
             forks=2,
             watchers=1,
-            last_commit_at=datetime.now() - timedelta(days=180),
+            last_commit_at=datetime.now(UTC) - timedelta(days=180),
             discovery_source="keyword",
             discovery_reason="Test",
         )
@@ -113,7 +113,7 @@ class TestQualityEvaluator:
             open_issues=10,
             forks=30,
             watchers=15,
-            last_commit_at=datetime.now() - timedelta(days=30),
+            last_commit_at=datetime.now(UTC) - timedelta(days=30),
             discovery_source="keyword",
             discovery_reason="AI agent",
         )
@@ -139,7 +139,7 @@ class TestQualityEvaluator:
                 open_issues=5,
                 forks=10,
                 watchers=5,
-                last_commit_at=datetime.now() - timedelta(days=10),
+                last_commit_at=datetime.now(UTC) - timedelta(days=10),
                 discovery_source="keyword",
                 discovery_reason=f"Keyword{i}",
             )
@@ -171,19 +171,19 @@ class TestQualityEvaluator:
 
         # 不同活跃时间对应的分数（传入 datetime 对象）
         assert (
-            evaluator._calculate_activity_score(datetime.now() - timedelta(days=3))
+            evaluator._calculate_activity_score(datetime.now(UTC) - timedelta(days=3))
             == 30
         )
         assert (
-            evaluator._calculate_activity_score(datetime.now() - timedelta(days=14))
+            evaluator._calculate_activity_score(datetime.now(UTC) - timedelta(days=14))
             == 20
         )
         assert (
-            evaluator._calculate_activity_score(datetime.now() - timedelta(days=60))
+            evaluator._calculate_activity_score(datetime.now(UTC) - timedelta(days=60))
             == 10
         )
         assert (
-            evaluator._calculate_activity_score(datetime.now() - timedelta(days=120))
+            evaluator._calculate_activity_score(datetime.now(UTC) - timedelta(days=120))
             == 0
         )
 
@@ -245,7 +245,7 @@ class TestQualityEvaluator:
             open_issues=10,
             forks=100,
             watchers=50,
-            last_commit_at=datetime.now() - timedelta(days=3),
+            last_commit_at=datetime.now(UTC) - timedelta(days=3),
             discovery_source="trending",
             discovery_reason="Test",
         )
@@ -267,7 +267,7 @@ class TestQualityEvaluator:
             open_issues=20,
             forks=80,
             watchers=40,
-            last_commit_at=datetime.now() - timedelta(days=7),
+            last_commit_at=datetime.now(UTC) - timedelta(days=7),
             discovery_source="trending",
             discovery_reason="Test",
         )

@@ -156,7 +156,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--token",
-        default=lambda: get_settings().github_token,
+        default=None,
         help="GitHub 访问令牌 (默认从 GITHUB_TOKEN 环境变量读取)",
     )
     parser.add_argument(
@@ -197,6 +197,10 @@ def main() -> int:
     )
 
     args = parser.parse_args()
+
+    # 如果没有提供 token，从配置中获取
+    if args.token is None:
+        args.token = get_settings().github_token
 
     # 设置日志级别
     setup_logger("DEBUG" if args.verbose else "INFO")

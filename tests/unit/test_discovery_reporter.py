@@ -3,7 +3,7 @@
 测试报告生成功能。
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pytest
 
@@ -29,7 +29,7 @@ class TestDiscoveryReporter:
                 open_issues=20,
                 forks=200,
                 watchers=100,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="trending",
                 discovery_reason="Trending",
                 quality_score=85.0,
@@ -48,7 +48,7 @@ class TestDiscoveryReporter:
                 open_issues=10,
                 forks=50,
                 watchers=25,
-                last_commit_at=datetime.now(),
+                last_commit_at=datetime.now(UTC),
                 discovery_source="keyword",
                 discovery_reason="Keyword: web",
                 quality_score=65.0,
