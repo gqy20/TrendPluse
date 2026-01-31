@@ -1,173 +1,176 @@
 {
   "date": "2026-01-31",
-  "summary_brief": "今日 AI Agent 生态呈现两大核心趋势：多 Agent 协作框架（CrewAI、AgentScope）在 A2A 通信、文件传输、工具超时等基础设施方向集体突破；AI 编程助手在 DevOps 集成方面加速成熟，Claude Code Action v1.0、Cline 无头 CI 认证、Codex 计划流式渲染等能力推动工作流自动化深入发展。同时，系统可观测性和安全性增强成为普遍关注点，多个项目同时强化了错误处理、遥测追踪、状态持久化及逃逸防护能力。",
+  "summary_brief": "今日AI代理系统朝向工程化成熟方向演进，多项目集中增强稳定性保障与可观测性基础设施。Agent间通信协议、超时控制机制和智能审批功能成为跨项目共同重点，显示行业正从功能原型转向生产级可靠性建设。同时，Claude生态工具链v1.0发布和SDK会话管理能力提升，标志着AI辅助编程工作流进入标准化阶段。",
   "engineering_signals": [
     {
-      "id": "trend-2025-01-31-001",
-      "title": "多 Agent 协作基础设施演进",
-      "type": "workflow",
+      "id": "signal-mcp-timeout-reliability",
+      "title": "MCP工具超时控制成为可靠性保障标配",
+      "type": "safety",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "CrewAI 引入 LiteAgent 概念与 A2A 通信文件传输、AgentScope 添加 MCP 工具超时机制，两者共同指向多 Agent 系统向分布式、高可靠架构演进。A2A 通信解耦了 Agent 间协作，而超时控制确保了系统在生产环境的稳定性，为构建大规模 Agent 网络奠定基础。",
+      "impact_score": 4,
+      "why_it_matters": "AgentScope和多个项目同时为MCP协议工具添加超时机制，防止外部工具调用挂起导致系统阻塞，这是AI代理系统从实验环境走向生产部署的关键工程实践，显著提升系统鲁棒性。",
       "sources": [
         "https://github.com/agentscope-ai/agentscope/pull/1176",
-        "https://github.com/cline/cline/releases/tag/v3.56.2",
-        "https://github.com/crewAIInc/crewAI/commit/102b6ae8552965ca5e4a372f2b3ab2d431a045ca"
+        "https://github.com/agentscope-ai/agentscope/commit/7cc368aa3b6b6784bc5159e8f8e1df5b81d3af79"
       ],
       "related_repos": [
-        "crewAIInc/crewAI",
-        "cline/cline",
         "agentscope-ai/agentscope"
       ],
       "source_signal_ids": [
-        "commit-4",
-        "pr-12",
-        "release-5"
+        "pr-6",
+        "commit-12"
       ]
     },
     {
-      "id": "trend-2025-01-31-002",
-      "title": "AI 编程助手 DevOps 自动化成熟",
-      "type": "workflow",
+      "id": "signal-agent-communication-protocol",
+      "title": "Agent间通信协议标准化推进",
+      "type": "capability",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "Claude Code Action 发布 v1.0 正式版、Codex 实现计划流式渲染与智能审批机制、Cline 支持无头 CI 认证，三项能力联动标志着 AI 编程助手已从单点工具演进为深度集成 CI/CD 流程的自动化基础设施。流式计划增强可控性，智能审批平衡自动化与安全，无头认证解决自动化最后一公里。",
+      "impact_score": 4,
+      "why_it_matters": "CrewAI 1.9.3版本和代码提交同时引入A2A（Agent-to-Agent）通信机制和文件传输支持，反映多代理协作正从单体架构转向分布式对等通信模式，这是构建复杂代理生态系统的基础设施升级。",
       "sources": [
-        "https://github.com/anthropics/claude-agent-sdk-python/commit/e514a889d09ed118768b617f09ee01aba4369582",
-        "https://github.com/anthropics/claude-code/releases/tag/v2.1.27",
-        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.40",
-        "https://github.com/openai/codex/commit/ec4a2d07e411d11f4de13b4e09aa7386c914df6d"
+        "https://github.com/crewAIInc/crewAI/commit/102b6ae8552965ca5e4a372f2b3ab2d431a045ca",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1",
+        "https://github.com/crewAIInc/crewAI/pull/4316"
       ],
       "related_repos": [
-        "anthropics/claude-code",
-        "anthropics/claude-agent-sdk-python",
+        "crewAIInc/crewai-files",
+        "crewAIInc/crewAI",
         "anthropics/claude-code-action",
-        "cline/cline",
+        "crewAIInc/crewai-devtools",
+        "crewAIInc/crewai-tools"
+      ],
+      "source_signal_ids": [
+        "pr-13",
+        "commit-4",
+        "release-4"
+      ]
+    },
+    {
+      "id": "signal-observability-runtime-metrics",
+      "title": "可观测性从Traces扩展到实时运行时指标",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex引入OTEL运行时指标收集与TUI可视化，同时gptme增强遥测分类能力，显示行业正从传统链路追踪转向细粒度性能监控，为生产环境的AI代理提供实时性能透明度和调试能力。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1200",
+        "https://github.com/openai/codex/pull/10278"
+      ],
+      "related_repos": [
+        "gptme/gptme",
         "openai/codex"
       ],
       "source_signal_ids": [
-        "release-0",
-        "release-3",
+        "pr-19",
+        "pr-4"
+      ]
+    },
+    {
+      "id": "signal-planning-transparency-user-experience",
+      "title": "规划透明度与用户交互体验成为竞争焦点",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex引入计划模式流式渲染和TL;DR检查点，Gemini CLI实现后台命令执行避免阻塞，两个领先项目同时优化任务执行前的信息呈现和交互流畅度，反映用户体验正成为代理系统差异化的关键维度。",
+      "sources": [
+        "https://github.com/openai/codex/commit/a8c9e386e723668957013dd137236f630e6d09f1",
+        "https://github.com/openai/codex/commit/ec4a2d07e411d11f4de13b4e09aa7386c914df6d",
+        "https://github.com/google-gemini/gemini-cli/commit/b611f9a519b1c9bc452629a6c361fcfb6a5127a8"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
         "commit-0",
+        "commit-2",
+        "commit-5"
+      ]
+    },
+    {
+      "id": "signal-sdk-session-management",
+      "title": "SDK会话管理能力升级支持复杂应用构建",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic TypeScript SDK新增listSessions API和工具注解功能，与OpenDevin规划代理状态管理修复形成呼应，表明Agent状态持久化和会话管理正成为构建多步骤AI应用的核心基础设施需求。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.26",
+        "https://github.com/OpenDevin/OpenDevin/commit/c8b867a634e0403d01ee49f8ef6b4357154d2b49"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "OpenDevin/OpenDevin",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "release-1",
         "commit-9"
       ]
     },
     {
-      "id": "trend-2025-01-31-003",
-      "title": "Agent 可观测性与状态管理强化",
-      "type": "capability",
+      "id": "signal-ci-cd-automation-maturity",
+      "title": "CI/CD自动化工具链成熟度显著提升",
+      "type": "workflow",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "GPTME 引入运行类型分类遥测、Codex 新增 PostToolUseFailure Hook、OpenDevin 实现规划状态持久化、Claude PR 工作流双向绑定，四个项目从不同维度共同强化 Agent 的可观测性。遥测细化有助于生产监控，Hook 提升错误诊断能力，状态持久化确保体验连续性，PR 集成增强开发透明度。",
+      "why_it_matters": "Claude Code Action发布v1.0稳定版，Cline增强无头CI认证，Agent SDK简化发布流程，多个项目同时优化CI/CD集成能力，显示AI辅助编程工作流已从实验阶段进入生产级标准化阶段。",
       "sources": [
-        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.26",
-        "https://github.com/anthropics/claude-agent-sdk-python/pull/535",
-        "https://github.com/anthropics/claude-cookbooks/commit/ce4c093127bb52ad79294bd433b2de5a19dab31f",
-        "https://github.com/gptme/gptme/pull/1200"
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.27",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/539",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.27"
       ],
       "related_repos": [
-        "anthropics/claude-agent-sdk-python",
-        "anthropics/claude-code",
-        "anthropics/claude-cookbooks",
-        "gptme/gptme"
-      ],
-      "source_signal_ids": [
-        "pr-9",
-        "pr-4",
-        "commit-3",
-        "release-1"
-      ]
-    },
-    {
-      "id": "trend-2025-01-31-004",
-      "title": "推理模型与长上下文支持扩展",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "OpenCode 添加推理令牌处理支持 OpenAI o1、Cline 集成 Kimi-K2.5 (262K context)、Gemini CLI 支持后台 Shell 执行，三者共同指向 AI 框架在推理模型适配和长上下文场景的技术突破。推理令牌解决计费兼容，超长上下文支持大型代码库分析，后台执行提升异步任务处理能力。",
-      "sources": [
-        "https://github.com/google-gemini/gemini-cli/commit/b611f9a519b1c9bc452629a6c361fcfb6a5127a8",
-        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.40",
-        "https://github.com/anomalyco/opencode/commit/d9f18e40067c806944a389afb018c484850dba84"
-      ],
-      "related_repos": [
-        "anomalyco/opencode",
+        "anthropics/claude-agent-sdk-typescript",
         "anthropics/claude-code-action",
-        "google-gemini/gemini-cli",
+        "anthropics/claude-code",
+        "anthropics/claude-agent-sdk-python",
         "cline/cline"
       ],
       "source_signal_ids": [
-        "commit-1",
-        "release-3",
-        "commit-2"
+        "release-0",
+        "release-2",
+        "pr-1"
       ]
     },
     {
-      "id": "trend-2025-01-31-005",
-      "title": "Agent 安全隔离与逃逸防护",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Auto-Claude 添加工作树隔离警告、AgentScope MCP 工具超时机制、OpenHands GitLab 认证检查、Anthropic 移除 OAuth 回归 API Key，四个项目从不同维度强化 Agent 安全防护。隔离防止逃逸，超时避免挂起，认证检查减少无效调用，OAuth 移除简化攻击面，共同提升 Agent 系统在生产环境的可靠性。",
-      "sources": [
-        "https://github.com/danielmiessler/Fabric/pull/1978",
-        "https://github.com/OpenHands/OpenHands/pull/12680",
-        "https://github.com/AndyMik90/Auto-Claude/commit/fe5cc582b86efabbf4885b33cf9bf153146dbdce",
-        "https://github.com/agentscope-ai/agentscope/pull/1176"
-      ],
-      "related_repos": [
-        "danielmiessler/Fabric",
-        "OpenHands/OpenHands",
-        "AndyMik90/Auto-Claude",
-        "agentscope-ai/agentscope"
-      ],
-      "source_signal_ids": [
-        "commit-5",
-        "pr-12",
-        "pr-19",
-        "pr-5"
-      ]
-    },
-    {
-      "id": "trend-2025-01-31-006",
-      "title": "CI/CD 流程简化与性能优化",
+      "id": "signal-performance-optimization-patterns",
+      "title": "连接池锁优化与并发性能调优",
       "type": "performance",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Claude SDK 固定 Python 3.13 移除版本矩阵、移除连接池锁提升并发、从 PR-based 转向直接推送发布流，多个项目在 CI 简化和性能优化方向形成共振。减少矩阵规模加快工作流，移除锁降低延迟，简化发布流程降低维护负担，共同提升开发迭代效率。",
+      "why_it_matters": "LangGraph在连接池场景移除不必要的锁机制，减少同步开销提升并发性能，这是高并发AI代理系统中常见的性能优化模式，对提升系统吞吐量有实质性帮助。",
       "sources": [
-        "https://github.com/anthropics/claude-agent-sdk-python/pull/539",
-        "https://github.com/anthropics/claude-agent-sdk-python/pull/537",
-        "https://github.com/langchain-ai/langgraph/pull/6734"
+        "https://github.com/langchain-ai/langgraph/pull/6734",
+        "https://github.com/langchain-ai/langgraph/commit/193e128c2023cc294ec2bf3ed2714dfd584f5c06"
       ],
       "related_repos": [
-        "anthropics/claude-agent-sdk-python",
         "langchain-ai/langgraph"
       ],
       "source_signal_ids": [
-        "pr-0",
-        "pr-6",
-        "pr-2"
+        "pr-2",
+        "commit-10"
       ]
     },
     {
-      "id": "trend-2025-01-31-007",
-      "title": "RAG 知识库索引与向量存储扩展",
-      "type": "capability",
+      "id": "signal-state-machine-pattern-adoption",
+      "title": "状态机模式在复杂任务管理中普及",
+      "type": "abstraction",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Dify 引入知识库摘要索引、LlamaIndex 集成 YugabyteDB 向量存储，两个 RAG 框架同时优化数据持久化和检索效率。摘要索引通过先行过滤提升大规模知识库响应速度，YugabyteDB 支持扩展分布式 SQL 场景，共同推动 RAG 系统在企业级应用的数据基础设施成熟。",
+      "why_it_matters": "Auto-Claude迁移到XState状态机管理前端任务状态，通过严格状态管理消除竞态条件，同时Dify修复工作流状态持久化，反映状态机模式正成为管理复杂多步骤AI任务的可靠性保障手段。",
       "sources": [
-        "https://github.com/run-llama/llama_index/commit/e7911a77e766b0cb81ee13679b8bdbde39b33dbe",
-        "https://github.com/langgenius/dify/commit/5a3ceb240e7e407c4f83c705f5b315ede9cd7950"
+        "https://github.com/langgenius/dify/commit/f90fa2b186aabe8925dbd57d39474b3ac86e2c06",
+        "https://github.com/AndyMik90/Auto-Claude/commit/e2f9abadbc4a80b2b4c72c3508ab14dd527167f1"
       ],
       "related_repos": [
-        "langgenius/dify",
-        "run-llama/llama_index"
+        "AndyMik90/Auto-Claude",
+        "langgenius/dify"
       ],
       "source_signal_ids": [
-        "commit-8",
-        "commit-6"
+        "commit-3",
+        "commit-7"
       ]
     }
   ],
@@ -175,54 +178,54 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_pr_signals": 20,
-    "total_commit_signals": 10,
-    "total_release_signals": 6,
-    "total_signals_analyzed": 36,
-    "engineering_trends_identified": 7,
-    "research_trends_identified": 0,
+    "total_signals": 39,
+    "pr_signals": 20,
+    "commit_signals": 14,
+    "release_signals": 5,
+    "engineering_trends": 8,
+    "research_trends": 0,
     "total_prs_analyzed": 20,
-    "total_commits_analyzed": 317,
-    "total_releases": 16,
-    "high_impact_signals": 5,
-    "total_releases_analyzed": 16,
-    "total_breaking_changes": 5
+    "total_commits_analyzed": 287,
+    "total_releases": 12,
+    "high_impact_signals": 6,
+    "total_releases_analyzed": 12,
+    "total_breaking_changes": 3
   },
   "activity": {
-    "total_commits": 317,
-    "active_repos_count": 24,
+    "total_commits": 287,
+    "active_repos_count": 23,
     "top_repos": [
       {
         "repo": "anomalyco/opencode",
-        "commits": 84,
+        "commits": 66,
         "top_contributors": [
           "thdxr",
-          "opencode-agent[bot]",
           "rekram1-node",
+          "opencode-agent[bot]",
           "IdrisGit",
           "neriousy"
         ]
       },
       {
         "repo": "openai/codex",
-        "commits": 44,
+        "commits": 47,
         "top_contributors": [
           "jif-oai",
           "gt-oai",
+          "dylan-hurd-oai",
           "bolinfest",
-          "pakrym-oai",
-          "charley-oai"
+          "pakrym-oai"
         ]
       },
       {
         "repo": "zed-industries/zed",
-        "commits": 28,
+        "commits": 29,
         "top_contributors": [
           "Veykril",
           "osyvokon",
-          "JosephTLyons",
           "probably-neb",
-          "Anthony-Eid"
+          "JosephTLyons",
+          "ozacod"
         ]
       },
       {
@@ -231,20 +234,9 @@
         "top_contributors": [
           "jacob314",
           "abhipatel12",
+          "bdmorgan",
           "sehoon38",
-          "jerop",
-          "g-samroberts"
-        ]
-      },
-      {
-        "repo": "langgenius/dify",
-        "commits": 20,
-        "top_contributors": [
-          "asukaminato0721",
-          "QuantumGhost",
-          "hyoban",
-          "BeautyyuYanli",
-          "majiayu000"
+          "jerop"
         ]
       },
       {
@@ -258,19 +250,19 @@
         ]
       },
       {
-        "repo": "cline/cline",
-        "commits": 13,
+        "repo": "langgenius/dify",
+        "commits": 14,
         "top_contributors": [
-          "candieduniverse",
-          "robinnewhouse",
-          "trupix",
-          "arafatkatze",
-          "YuriNachos"
+          "asukaminato0721",
+          "BeautyyuYanli",
+          "QuantumGhost",
+          "majiayu000",
+          "Cursx"
         ]
       },
       {
         "repo": "OpenDevin/OpenDevin",
-        "commits": 12,
+        "commits": 11,
         "top_contributors": [
           "hieptl",
           "tofarr",
@@ -280,23 +272,36 @@
         ]
       },
       {
-        "repo": "anthropics/claude-agent-sdk-python",
-        "commits": 8,
-        "top_contributors": [
-          "ashwin-ant",
-          "github-actions[bot]",
-          "actions-user"
-        ]
-      },
-      {
         "repo": "langchain-ai/langchain",
-        "commits": 8,
+        "commits": 9,
         "top_contributors": [
           "mdrxy",
           "wixarv",
+          "LouisAuneau",
           "lewisjwhitehill",
-          "zvibo",
-          "RohanDisa"
+          "zvibo"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 9,
+        "top_contributors": [
+          "mdrxy",
+          "vtrivedy",
+          "jkennedyvz",
+          "eyurtsev",
+          "trindadetiago"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 8,
+        "top_contributors": [
+          "robinnewhouse",
+          "trupix",
+          "YuriNachos",
+          "BarreiroT",
+          "arafatkatze"
         ]
       },
       {
@@ -319,22 +324,20 @@
         ]
       },
       {
-        "repo": "langchain-ai/deepagents",
-        "commits": 7,
-        "top_contributors": [
-          "mdrxy",
-          "vtrivedy",
-          "jkennedyvz",
-          "eyurtsev",
-          "trindadetiago"
-        ]
-      },
-      {
         "repo": "continuedev/continue",
         "commits": 6,
         "top_contributors": [
           "sestinj",
           "RomneyDa"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 6,
+        "top_contributors": [
+          "Otto-AGPT",
+          "0ubbe",
+          "ntindle"
         ]
       },
       {
@@ -357,19 +360,12 @@
         ]
       },
       {
-        "repo": "danielmiessler/fabric",
-        "commits": 4,
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 5,
         "top_contributors": [
-          "ksylvan",
-          "github-actions[bot]"
-        ]
-      },
-      {
-        "repo": "Significant-Gravitas/AutoGPT",
-        "commits": 4,
-        "top_contributors": [
-          "0ubbe",
-          "Otto-AGPT"
+          "github-actions[bot]",
+          "ashwin-ant",
+          "actions-user"
         ]
       },
       {
@@ -377,14 +373,6 @@
         "commits": 3,
         "top_contributors": [
           "actions-user"
-        ]
-      },
-      {
-        "repo": "agno-agi/agno",
-        "commits": 3,
-        "top_contributors": [
-          "kausmeows",
-          "willemcdejongh"
         ]
       },
       {
@@ -414,6 +402,13 @@
         "commits": 1,
         "top_contributors": [
           "actions-user"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 1,
+        "top_contributors": [
+          "willemcdejongh"
         ]
       },
       {
@@ -507,6 +502,11 @@
         "top_contributors": []
       },
       {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "TransformerOptimus/SuperAGI",
         "commits": 0,
         "top_contributors": []
@@ -559,8 +559,8 @@
     ]
   },
   "releases": {
-    "total_count": 16,
-    "unique_repos_count": 10,
+    "total_count": 12,
+    "unique_repos_count": 9,
     "releases": [
       {
         "repo": "langchain-ai/langgraph",
@@ -573,12 +573,12 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "优化连接池使用逻辑，在使用连接池时省略锁机制",
-            "升级项目依赖包，使用 uv lock --upgrade 进行依赖管理",
-            "更新项目中的 Twitter 链接地址"
+            "优化连接池使用时的锁机制，在连接池模式下省略锁操作以提升性能",
+            "使用 uv lock --upgrade 升级项目依赖包",
+            "更新项目中的 Twitter URL 链接"
           ],
-          "summary_cn": "checkpointpostgres 3.0.4 版本主要进行了代码维护和优化工作。核心改进是在使用连接池时优化锁机制，提升了性能；同时完成了依赖包升级和链接地址更新。这是一个小的维护版本，不包含新功能或破坏性变更。",
-          "impact_level": 1
+          "summary_cn": "这是一个 checkpointpostgres 的小版本更新，主要包含内部优化和依赖维护。核心改进是在使用连接池时省略锁机制，以提升性能表现。此外还进行了依赖升级和 URL 更新等常规维护工作。",
+          "impact_level": 2
         }
       },
       {
@@ -590,15 +590,15 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.27",
         "ai_summary": {
-          "change_type": "feature",
+          "change_type": "other",
           "key_changes": [
-            "新增 `--from-pr` 标志支持从 GitHub PR 恢复会话",
-            "改进权限系统：内容级 `ask` 优先于工具级 `allow`",
-            "修复 Windows 平台 bash 命令执行和控制台闪烁问题",
-            "修复 VSCode OAuth token 过期导致的 401 错误",
-            "修复网关用户上下文管理验证错误"
+            "新增 `--from-pr` 标志以恢复与特定 GitHub PR 关联的会话",
+            "通过 `gh pr create` 创建的会话自动关联 PR",
+            "修复 Gateway 用户的上下文管理验证错误，确保 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` 可避免错误",
+            "权限系统变更：内容级 `ask` 现在优先于工具级 `allow`，影响 Bash 等工具的权限提示行为",
+            "VSCode 集成增强：启用 Chrome 集成并修复 OAuth token 过期问题"
           ],
-          "summary_cn": "v2.1.27 版本主要带来了 PR 集成增强和权限系统改进。新增了从 GitHub PR 恢复会话的功能，并自动关联通过 `gh pr create` 创建的 PR；权限系统现在更加严格，内容级的 `ask` 规则将覆盖工具级的 `allow` 规则。同时修复了多个平台相关的问题，包括 Windows 的 bash 执行问题、VSCode 的 OAuth 过期错误以及上下文管理的验证错误。",
+          "summary_cn": "Claude Code v2.1.27 版本主要增强了 GitHub PR 集成功能，支持通过命令行标志恢复 PR 关联会话，并实现自动关联。同时修复了多个平台和集成问题，包括 Windows 平台的 Bash 执行、VSCode OAuth 认证以及权限系统的重要变更（内容级 ask 优先于工具级 allow）。",
           "impact_level": 3
         }
       },
@@ -613,11 +613,11 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 PostToolUseFailure 钩子事件，用于处理工具使用失败场景",
-            "引入 PostToolUseFailureHookInput 和 PostToolUseFailureHookSpecificOutput 类型",
-            "升级内置 Claude CLI 版本至 2.1.27"
+            "新增 PostToolUseFailure 钩子事件类型，用于处理工具使用失败场景",
+            "添加 PostToolUseFailureHookInput 和 PostToolUseFailureHookSpecificOutput 类型支持",
+            "升级内置 Claude CLI 至 2.1.27 版本"
           ],
-          "summary_cn": "此版本主要增强了工具使用失败场景的处理能力，新增了 PostToolUseFailure 钩子事件类型及相关输入输出类型，帮助开发者更好地捕获和处理工具调用失败的情况。同时更新了内置的 Claude CLI 到版本 2.1.27。",
+          "summary_cn": "此版本主要增强了错误处理能力，新增了 PostToolUseFailure 钩子事件，让开发者能够更好地捕获和响应工具使用失败的情况。同时将内置的 Claude CLI 升级到了 2.1.27 版本，确保了工具链的稳定性。",
           "impact_level": 2
         }
       },
@@ -633,12 +633,12 @@
           "change_type": "feature",
           "key_changes": [
             "新增 listSessions 函数，支持按项目、仓库或全局发现可恢复的会话",
-            "tool() 辅助函数新增 annotations 参数，支持 MCP 工具提示（readOnlyHint、destructiveHint 等）",
-            "修复 mcpServerStatus() 函数，现在包含 SDK 和动态添加的 MCP 服务器工具",
-            "更新至与 Claude Code v2.1.27 版本一致"
+            "tool() 助手函数支持可选的 annotations 参数，用于指定 MCP 工具提示（readOnlyHint、destructiveHint 等）",
+            "修复 mcpServerStatus() 函数，确保包含 SDK 工具和动态添加的 MCP 服务器",
+            "同步更新至 Claude Code v2.1.27 版本功能"
           ],
-          "summary_cn": "此版本主要增强了会话管理和 MCP 工具支持功能。新增了 listSessions 函数用于发现可恢复会话，同时为 tool() 函数添加了 annotations 支持，并修复了服务器状态检测问题。该更新与 Claude Code v2.1.27 保持一致。",
-          "impact_level": 3
+          "summary_cn": "此版本主要增强了会话管理能力，新增了 listSessions 函数用于发现可恢复的会话。同时优化了 MCP 工具支持，tool() 函数新增 annotations 参数用于指定工具行为提示，并修复了 mcpServerStatus() 函数的工具列表完整性问题。",
+          "impact_level": 2
         }
       },
       {
@@ -652,11 +652,11 @@
         "ai_summary": {
           "change_type": "other",
           "key_changes": [
-            "版本更新至 v1.0.40（具体变更内容需要查看完整 Changelog）",
-            "提供完整的变更日志对比链接（v1 到 v1.0.40）",
-            "由于未提供详细 Release Notes，无法提取具体的变更细节"
+            "版本 v1.0.40 的常规发布",
+            "完整的变更日志可通过 GitHub 比较链接查看",
+            "从 v1 版本到 v1.0.40 的增量更新"
           ],
-          "summary_cn": "此次版本更新至 v1.0.40，属于小幅版本迭代。由于 Release Notes 仅提供了完整变更日志的链接，未展示具体的变更详情，建议查看 v1 到 v1.0.40 的对比页面获取详细信息。",
+          "summary_cn": "这是 claude-code-action 项目的 v1.0.40 版本发布。Release Notes 中仅提供了完整的变更日志链接，未显示具体的功能更新、问题修复或破坏性变更详情。建议访问 GitHub 上的完整变更日志链接以获取详细的提交记录和变更信息。",
           "impact_level": 2
         }
       },
@@ -671,13 +671,12 @@
         "ai_summary": {
           "change_type": "breaking",
           "key_changes": [
-            "统一配置接口：自动模式检测，所有 prompts 通过单个 prompt 输入，CLI 选项通过 claude_args 统一管理",
-            "API 重大变更：废弃 mode、direct_prompt、custom_instructions 等多个输入参数，迁移至更简洁的新 API",
-            "增强 CLI 集成：通过 claude_args 直接访问所有 Claude Code CLI 功能，支持自定义系统提示和模型选择",
-            "扩展云服务兼容性：改进与 AWS Bedrock 和 Google Vertex AI 的兼容性",
-            "新增完整用例示例：包括 PR 自动审查、CI 失败修复、问题分类和文档生成等场景"
+            "简化配置：自动检测运行模式，统一 prompt 接口和 claude_args 参数",
+            "直接支持所有 Claude Code CLI 功能，增强与 AWS Bedrock 和 Google Vertex AI 兼容性",
+            "重大破坏性变更：废弃多个输入参数（mode、direct_prompt、custom_instructions 等）",
+            "新增完整用例示例：PR 自动审查、CI 失败修复、Issue 分类、文档生成"
           ],
-          "summary_cn": "Claude Code GitHub Action v1.0 正式发布，这是一个重大版本升级，带来简化的配置接口和更强的 CLI 集成能力。该版本包含破坏性变更，统一了 API 设计（所有输入通过 prompt 和 claude_args 参数），需要用户参考迁移指南进行升级。新版本支持自动模式检测、完整的 CLI 功能访问以及更广泛的云服务兼容性。",
+          "summary_cn": "Claude Code GitHub Action v1.0 正式发布，这是一个包含重大破坏性变更的主版本升级。新版本大幅简化了配置流程，统一了输入接口，并直接支持所有 CLI 功能，同时废弃了 v0.x 版本中的多个旧参数。需查阅迁移指南进行升级，新特性还包括自动模式检测和云平台增强兼容性。",
           "impact_level": 5
         }
       },
@@ -692,76 +691,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 CLI 认证功能，支持 Vercel AI Gateway 和 Cline API key provider，适用于无头 CI/自动化工作流",
-            "新增 Kimi-K2.5 模型支持（262K 上下文、图像支持、提示缓存）",
-            "新增 Trinity Large 提示变体以改进工具调用支持",
-            "修复 OpenTelemetry 端点路径处理问题并确保日志发送",
-            "调整默认设置：启用多根工作区、并行工具调用和技能，禁用严格计划模式"
-          ],
-          "summary_cn": "v3.56.2 版本主要增强了 CLI 自动化能力，新增 Vercel AI Gateway 和 Cline API key 认证支持，以及 Kimi-K2.5 模型集成。同时修复了 OpenTelemetry 端点处理和模型配置显示问题，并优化了默认设置和工作流体验。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "cline/cline",
-        "version": "v3.56.1",
-        "author": "github-actions[bot]",
-        "date": "2026-01-30",
-        "summary": "\n### Added\n\n- __CLI authentication:__ Added Vercel AI Gateway and Cline API key provider support for headless CI/automation workflows\n- __New model:__ Added Kimi-K2.5 model to Moonshot provider (262K context, image support, prompt caching)\n- __Prompt variant:__ Added Trinity Large prompt variant for improved tool-calling support\n- __OpenTelemetry:__ Added support for custom headers on metrics and logs endpoints\n- __Social links:__ Added community icons (X, Discord, GitHub, Reddit, LinkedIn) to the What's New modal\n\n### Fixed\n\n- __LiteLLM:__ Fixed thinking configuration not appearing for reasoning-capable models\n- __OpenTelemetry:__ Fixed endpoint path handling (no longer incorrectly appends `/v1/logs` or `/v1/metrics`) and ensured logs are sent regardless of VSCode telemetry settings\n- __CLI auth:__ Fixed `cline auth` displaying incorrect provider information after configuration\n\n### Changed\n\n- __Hooks:__ Hook scripts now run from the workspace repository root instead of filesystem root\n- __Default settings:__ Enabled multi-root workspaces, parallel tool calling, and skills by default; disabled strict plan mode by default\n- __Settings UI:__ Refreshed feature settings section with collapsible design\n\n**Full Changelog**: https://github.com/cline/cline/compare/v3.56.0...v3.56.1\n",
-        "assets_count": 1,
-        "url": "https://github.com/cline/cline/releases/tag/v3.56.1",
-        "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "新增 CLI 身份验证支持（Vercel AI Gateway 和 Cline API key）用于无头 CI/自动化工作流",
-            "新增 Kimi-K2.5 模型支持（262K 上下文，支持图像和提示缓存）",
-            "新增 Trinity Large 提示变体以改进工具调用支持",
-            "默认设置变更：启用多根工作区、并行工具调用和技能功能；禁用严格计划模式",
-            "修复 OpenTelemetry 端点路径处理和 LiteLLM 思考配置显示问题"
-          ],
-          "summary_cn": "cline v3.56.1 版本主要增强了 CI/CD 自动化能力，新增了 CLI 身份验证支持和 Kimi-K2.5 模型。同时改进了默认设置，启用了多根工作区、并行工具调用等功能，并修复了 OpenTelemetry 和 LiteLLM 的相关问题。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "cline/cline",
-        "version": "v3.56.0",
-        "author": "github-actions[bot]",
-        "date": "2026-01-30",
-        "summary": "\n### Added\n\n- __CLI authentication:__ Added Vercel AI Gateway and Cline API key provider support for headless CI/automation workflows\n- __New model:__ Added Kimi-K2.5 model to Moonshot provider (262K context, image support, prompt caching)\n- __Prompt variant:__ Added Trinity Large prompt variant for improved tool-calling support\n- __OpenTelemetry:__ Added support for custom headers on metrics and logs endpoints\n- __Social links:__ Added community icons (X, Discord, GitHub, Reddit, LinkedIn) to the What's New modal\n\n### Fixed\n\n- __LiteLLM:__ Fixed thinking configuration not appearing for reasoning-capable models\n- __OpenTelemetry:__ Fixed endpoint path handling (no longer incorrectly appends `/v1/logs` or `/v1/metrics`) and ensured logs are sent regardless of VSCode telemetry settings\n- __CLI auth:__ Fixed `cline auth` displaying incorrect provider information after configuration\n\n### Changed\n\n- __Hooks:__ Hook scripts now run from the workspace repository root instead of filesystem root\n- __Default settings:__ Enabled multi-root workspaces, parallel tool calling, and skills by default; disabled strict plan mode by default\n- __Settings UI:__ Refreshed feature settings section with collapsible design\n\n**Full Changelog**: https://github.com/cline/cline/compare/v3.55.0...v3.56.0\n",
-        "assets_count": 1,
-        "url": "https://github.com/cline/cline/releases/tag/v3.56.0",
-        "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "CLI 认证：新增 Vercel AI Gateway 和 Cline API 密钥提供商支持",
+            "CLI 新增 Vercel AI Gateway 和 Cline API 密钥认证支持，适用于无头 CI/自动化工作流",
             "新增 Kimi-K2.5 模型（262K 上下文、图像支持、提示缓存）",
-            "新增 Trinity Large 提示变体以改进工具调用支持",
-            "OpenTelemetry 端点路径处理修复及自定义头部支持",
-            "默认设置调整：启用多根工作区、并行工具调用和技能，默认禁用严格计划模式"
+            "新增 Trinity Large 提示变体以增强工具调用能力",
+            "调整默认设置：启用多根工作区、并行工具调用和技能功能，默认禁用严格计划模式",
+            "修复多个问题：LiteLLM 思维配置显示、OpenTelemetry 端点处理、CLI 认证信息显示"
           ],
-          "summary_cn": "v3.56.0 版本主要增强了 CLI 自动化工作流的认证能力，新增了 Vercel AI Gateway 和 Cline API 支持，以及 Kimi-K2.5 模型和 Trinity Large 提示变体。同时修复了 OpenTelemetry 端点路径处理问题，并优化了默认设置和 Settings UI。整体为功能增强版本，影响级别中等。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "danielmiessler/fabric",
-        "version": "v1.4.396",
-        "author": "github-actions[bot]",
-        "date": "2026-01-30",
-        "summary": "## Changes\n\n### PR [#1975](https://github.com/danielmiessler/Fabric/pull/1975) by [koriyoshi2041](https://github.com/koriyoshi2041): feat: add suggest_moltbot_command pattern for Moltbot (formerly Clawdbot) CLI\n\n- Added new pattern for suggesting Moltbot CLI commands based on natural language intent\n- Fixed multi-command output format inconsistency to preserve pipe-friendly behavior\n- Updated all CLI references and command examples to use new `moltbot` binary name\n- Added new dictionary words for VSCode spellcheck and fixed markdown table formatting\n\n### PR [#1978](https://github.com/danielmiessler/Fabric/pull/1978) by [ksylvan](https://github.com/ksylvan): chore: remove OAuth support from Anthropic client\n\n- Remove OAuth support from Anthropic client and delete related OAuth files\n- Simplify configuration handling to check only API key instead of OAuth credentials\n- Clean up imports and unused variables in anthropic.go\n- Update server configuration methods to remove OAuth references\n- Remove OAuth-related environment variables from configuration\n\n### Direct commits\n\n- Docs: fix ChangeLog snippet for PR 1975\n",
-        "assets_count": 9,
-        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.396",
-        "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "新增 Moltbot CLI 命令建议模式，支持基于自然语言意图生成命令",
-            "移除 Anthropic 客户端的 OAuth 支持，简化配置仅保留 API key 验证",
-            "修复多命令输出格式不一致问题，保持管道友好行为",
-            "更新所有 CLI 引用和命令示例使用新的 moltbot 二进制名称",
-            "清理 OAuth 相关代码、环境变量和未使用的导入"
-          ],
-          "summary_cn": "本次版本主要新增了 Moltbot CLI 命令建议功能，允许通过自然语言意图生成命令。同时进行了技术清理，移除了 Anthropic 客户端的 OAuth 支持并简化了配置逻辑。",
+          "summary_cn": "cline v3.56.2 是一个功能增强版本，重点新增了 CLI 认证支持和 Kimi-K2.5 模型，同时引入 Trinity Large 提示变体以改善工具调用能力。版本还调整了多项默认设置以提升用户体验，并修复了 LiteLLM、OpenTelemetry 和 CLI 认证等方面的多个问题。",
           "impact_level": 3
         }
       },
@@ -774,16 +710,16 @@
         "assets_count": 0,
         "url": "https://github.com/agentscope-ai/agentscope/releases/tag/v1.0.14",
         "ai_summary": {
-          "change_type": "improvement",
+          "change_type": "other",
           "key_changes": [
-            "新增流式模式下工具解析控制选项，支持通过 stream_tool_parsing=False 禁用工具输入解析",
-            "修复 Redis 内存和 mem0 长期内存的多项 bug（包括 bytes 数据作为键值、Ollama 事件循环关闭问题）",
-            "新增 Redis 会话存储支持和 MCP 工具执行超时功能",
-            "修复 OpenAI/Anthropic 格式化器相关 bug，修复长期内存中消息重复保存问题",
-            "新增 PowerPoint 文件读取器支持 RAG 功能，模型层支持传递 usage（如 cached_tokens）"
+            "新增流式模式工具解析开关 stream_tool_parsing 参数",
+            "修复 Redis 内存和 Mem0 长期记忆的多项 bug",
+            "新增 Redis 会话管理和 PowerPoint 文件读取功能",
+            "为 MCP 工具添加执行超时支持",
+            "修复 OpenAI/Anthropic 格式化和 a2ui 相关问题"
           ],
-          "summary_cn": "agentscope v1.0.14 版本主要优化了长期内存和流式工具使用体验，修复了 Redis 和 mem0 内存存储中的多个关键 bug，并新增了 Redis 会话支持。同时增强了 RAG 功能（支持 PPT 文件）和 MCP 工具（支持执行超时），提升了整体稳定性和功能性。",
-          "impact_level": 3
+          "summary_cn": "本次更新主要修复了 Redis 内存和 Mem0 长期记忆的多个关键 bug，同时增强了流式模式的灵活性，允许通过 stream_tool_parsing 参数禁用工具输入解析。新增功能包括基于 Redis 的会话管理、PowerPoint 文件读取器以及 MCP 工具的执行超时支持。",
+          "impact_level": 2
         }
       },
       {
@@ -798,12 +734,12 @@
           "change_type": "feature",
           "key_changes": [
             "新增 A2A LiteAgent 支持",
-            "添加身份认证和传输协商功能",
-            "增强文件支持能力",
-            "改进 Agent 的输出处理机制",
-            "优化响应模型集成"
+            "新增身份认证（Auth）功能",
+            "新增传输协商（Transport Negotiation）机制",
+            "新增文件支持能力",
+            "优化 Agent 输出处理和响应模型集成"
           ],
-          "summary_cn": "此版本主要引入 A2A LiteAgent 支持，并新增身份认证、传输协商及文件处理功能，扩展了智能体的协作能力。同时修复了 Agent 输出处理和响应模型集成的问题，提升了系统的稳定性和响应准确性。",
+          "summary_cn": "这是 crewAI 1.9.3 版本的更新，主要引入了 A2A LiteAgent 以及相关的认证、传输协商和文件支持功能，显著增强了代理协作能力。同时修复了 Agent 输出处理和响应模型集成的问题，提升了系统稳定性。",
           "impact_level": 3
         }
       },
@@ -818,11 +754,11 @@
         "ai_summary": {
           "change_type": "other",
           "key_changes": [
-            "Release Notes 内容缺失，无法识别具体变更",
-            "这是一个补丁版本升级（v1.1.47）",
-            "建议查看 Git 提交历史或单独的 Changelog 文件"
+            "Release Notes 内容不完整，缺少实际的变更信息",
+            "仅有占位符文本提示需要查看提交信息",
+            "无法提取具体的功能更新或修复内容"
           ],
-          "summary_cn": "此版本的 Release Notes 未包含有效内容，无法提取具体变更信息。从版本号 v1.1.47 推断可能是一次补丁级别的更新，建议查看项目的 Git 提交历史或独立维护的 Changelog 文件以获取详细变更内容。",
+          "summary_cn": "此版本的 Release Notes 不包含有效的变更信息，仅有占位符文本。无法确定实际的功能更新、问题修复或改进内容。建议查看 Git 提交历史以获取准确的变更详情。",
           "impact_level": 1
         }
       },
@@ -837,13 +773,13 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "移除 TUI 中未使用的实验性键位配置",
+            "移除 TUI 中未使用的实验性功能键",
             "修复 AI SDK 中间件问题，使 think 块能正常作为助手消息内容返回",
-            "桌面端增加过渡动画、间距优化、滚动淡出效果及提示区域更新",
-            "添加持续集成（CI）配置",
-            "优化应用语言测试"
+            "桌面端增加过渡动画、滚动渐变效果并优化间距和提示区域",
+            "新增持续集成配置以提升开发流程",
+            "改进应用语言测试用例"
           ],
-          "summary_cn": "v1.1.46 版本主要包含多项功能优化和问题修复。核心修复了 AI SDK 中间件导致 think 块无法正常返回的问题，桌面端增加了多项 UI/UX 改进（过渡动画、间距优化、滚动淡出效果等）。同时移除了 TUI 中未使用的实验性配置，并新增了持续集成支持。",
+          "summary_cn": "OpenCode v1.1.46 是一个主要优化版本，修复了 AI SDK 中间件导致 think 块无法正常返回的问题，并移除了 TUI 中未使用的实验性功能。同时桌面端体验得到显著提升，包括新增过渡动画、滚动渐变效果及界面间距和提示区域的优化，还加强了持续集成配置和测试用例。",
           "impact_level": 2
         }
       },
@@ -858,31 +794,11 @@
         "ai_summary": {
           "change_type": "improvement",
           "key_changes": [
-            "桌面应用 Free 模型的布局优化",
-            "改进了 Free 模型在应用中的界面布局",
-            "提升桌面端 Free 模型的用户体验"
+            "桌面应用中免费模型布局优化",
+            "提升免费模型在应用内的视觉展示效果"
           ],
-          "summary_cn": "此版本专注于桌面端 Free 模型的界面优化，改进了该模型在应用中的布局设计，旨在提升用户在桌面端使用 Free 模型时的视觉体验和操作便利性。",
+          "summary_cn": "此版本主要对桌面应用进行了体验优化，重点改进了免费模型在应用内的布局设计。这些调整旨在为用户提供更清晰、更易用的界面体验。",
           "impact_level": 2
-        }
-      },
-      {
-        "repo": "anomalyco/opencode",
-        "version": "v1.1.44",
-        "author": "github-actions[bot]",
-        "date": "2026-01-30",
-        "summary": "No notable changes",
-        "assets_count": 22,
-        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.44",
-        "ai_summary": {
-          "change_type": "other",
-          "key_changes": [
-            "本次发布无显著变更记录",
-            "版本号更新至 v1.1.44",
-            "可能包含内部优化或错误修复"
-          ],
-          "summary_cn": "这是一个无明显变更的版本发布。Release Notes 明确标注\"No notable changes\"，意味着该版本主要涉及内部维护性更新或版本号迭代，对用户使用影响较小。",
-          "impact_level": 1
         }
       }
     ]
@@ -894,7 +810,7 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "权限逻辑变更：content-level 的 `ask` 现在优先于 tool-level 的 `allow`。此前配置 `allow: [\"Bash\"], ask: [\"Bash(rm *)\"]`] 会允许所有 bash 命令，现在会对 `rm` 命令弹出权限提示。",
+          "description": "权限逻辑变更：内容级 `ask` 现在优先于工具级 `allow`。此前配置 `allow: [\"Bash\"], ask: [\"Bash(rm *)\"]` 会允许所有 bash 命令，现在会对 `rm` 命令触发权限提示。",
           "impact": "medium",
           "category": "Behavior"
         }
@@ -906,60 +822,36 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "移除多个已弃用的输入参数：`mode`, `direct_prompt`, `override_prompt`, `custom_instructions`, `model`, `allowed_tools`, `mcp_config`, `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`。",
+          "description": "配置输入重构：废弃 `mode`, `direct_prompt`, `override_prompt`，统一迁移至 `prompt` 输入。",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "配置接口变更：所有 prompts 现在统一通过 `prompt` 输入，所有 CLI 选项通过 `claude_args` 输入。",
+          "description": "配置输入重构：废弃 `custom_instructions`, `model`, `allowed_tools`, `mcp_config`，迁移至 `claude_args` 并使用 CLI 格式。",
           "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "移除废弃的配置项：`disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`。",
+          "impact": "medium",
           "category": "Config"
         }
       ]
     },
     {
       "repo": "cline/cline",
-      "tag_name": "v3.56.0",
+      "tag_name": "v3.56.2",
       "has_breaking": true,
       "changes": [
         {
-          "description": "Hook 脚本执行目录变更：现在从工作区仓库根目录运行，而非文件系统根目录。",
+          "description": "Hook 脚本执行路径变更：现在从工作区根目录运行，而非文件系统根目录。",
           "impact": "medium",
           "category": "Behavior"
         },
         {
-          "description": "默认设置变更：默认启用多根工作区、并行工具调用和技能，默认禁用严格计划模式。",
+          "description": "默认设置变更：默认启用多根工作区、并行工具调用和 Skills 功能；默认禁用严格计划模式。",
           "impact": "low",
           "category": "Config"
-        }
-      ]
-    },
-    {
-      "repo": "danielmiessler/fabric",
-      "tag_name": "v1.4.396",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "移除 Anthropic 客户端的 OAuth 支持，仅保留 API Key 认证方式。",
-          "impact": "medium",
-          "category": "API"
-        },
-        {
-          "description": "CLI 二进制文件名称变更：所有 `clawdbot` 相关引用和示例更新为 `moltbot`。",
-          "impact": "low",
-          "category": "Config"
-        }
-      ]
-    },
-    {
-      "repo": "anomalyco/opencode",
-      "tag_name": "v1.1.46",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "移除了阻止 think blocks 作为助手消息内容返回的 AI SDK 中间件，改变了流式输出的消息处理行为。",
-          "impact": "medium",
-          "category": "Behavior"
         }
       ]
     }
