@@ -9,23 +9,23 @@
 **发现概览**:<br/>
 - 总发现数: 200<br/>
 - 通过质量评估: 200<br/>
-- 高优先级: 147<br/>
-- 去重移除: 35<br/>
-- 已在监控: 18<br/>
+- 高优先级: 134<br/>
+- 去重移除: 36<br/>
+- 已在监控: 19<br/>
 
 **高优先级推荐 Top 5**:<br/>
 
-1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,460 ⭐<br/>
-2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,481 ⭐<br/>
-3. [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) - 66,658 ⭐<br/>
-4. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,122 ⭐<br/>
-5. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,586 ⭐<br/>
+1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,462 ⭐<br/>
+2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,483 ⭐<br/>
+3. [f/prompts.chat](https://github.com/f/prompts.chat) - 144,124 ⭐<br/>
+4. [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - 78,596 ⭐<br/>
+5. [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) - 54,014 ⭐<br/>
 
 ## 历史报告
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
-| 2026-01-31 | 200 | 147 | [查看](discovery-reports/discovery-2026-01-31.md) |
+| 2026-01-31 | 200 | 134 | [查看](discovery-reports/discovery-2026-01-31.md) |
 
 ## 关于发现功能
 

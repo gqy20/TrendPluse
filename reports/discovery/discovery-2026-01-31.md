@@ -6,9 +6,9 @@
 |------|------|
 | 总发现数 | 200 |
 | 通过质量评估 | 200 |
-| 高优先级 | 147 |
-| 去重移除 | 35 |
-| 已在监控 | 18 |
+| 高优先级 | 134 |
+| 去重移除 | 36 |
+| 已在监控 | 19 |
 
 ## 🌟 高优先级推荐
 
@@ -26,9 +26,9 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,460 |
+| Stars | 122,462 |
 | 语言 | Python |
-| Forks | 17,288 |
+| Forks | 17,286 |
 | Issues | 259 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
@@ -48,7 +48,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,481 |
+| Stars | 72,483 |
 | 语言 | Python |
 | Forks | 8,021 |
 | Issues | 3,150 |
@@ -56,29 +56,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 3. hiyouga/LlamaFactory
-
-**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in Python
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 66,658 |
-| 语言 | Python |
-| Forks | 8,119 |
-| Issues | 883 |
-| Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
-| 许可证 | Apache License 2.0 |
-
-
-### 4. f/prompts.chat
+### 3. f/prompts.chat
 
 **描述**: a.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-host for your organization with complete privacy.
 
@@ -92,7 +70,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 144,122 |
+| Stars | 144,124 |
 | 语言 | TypeScript |
 | Forks | 19,064 |
 | Issues | 5 |
@@ -100,7 +78,7 @@
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 
-### 5. firecrawl/firecrawl
+### 4. firecrawl/firecrawl
 
 **描述**: 🔥 The Web Data API for AI - Turn entire websites into LLM-ready markdown or structured data
 
@@ -114,15 +92,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,586 |
+| Stars | 78,596 |
 | 语言 | TypeScript |
-| Forks | 5,881 |
+| Forks | 5,882 |
 | Issues | 152 |
 | Topics | ai, ai-agents, ai-crawler, ai-scraping, ai-search, crawler, data-extraction, html-to-markdown, llm, markdown, scraper, scraping, web-crawler, web-data, web-data-extraction, web-scraper, web-scraping, web-search, webscraping |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 
-### 6. Mintplex-Labs/anything-llm
+### 5. Mintplex-Labs/anything-llm
 
 **描述**: The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, No-code agent builder, MCP compatibility,  and more.
 
@@ -136,7 +114,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,013 |
+| Stars | 54,014 |
 | 语言 | JavaScript |
 | Forks | 5,806 |
 | Issues | 270 |
@@ -144,7 +122,7 @@
 | 许可证 | MIT License |
 
 
-### 7. mudler/LocalAI
+### 6. mudler/LocalAI
 
 **描述**: :robot: The free, Open Source alternative to OpenAI, Claude and others. Self-hosted and local-first. Drop-in replacement,  running on consumer-grade hardware. No GPU required. Runs gguf, transformers, diffusers and many more. Features: Generate Text, MCP, Audio, Video, Images, Voice Cloning, Distributed, P2P and decentralized inference
 
@@ -166,7 +144,7 @@
 | 许可证 | MIT License |
 
 
-### 8. lobehub/lobehub
+### 7. lobehub/lobehub
 
 **描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
 
@@ -180,12 +158,34 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,648 |
+| Stars | 71,657 |
 | 语言 | TypeScript |
 | Forks | 14,566 |
-| Issues | 1,201 |
+| Issues | 1,202 |
 | Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
 | 许可证 | Other |
+
+
+### 8. hiyouga/LlamaFactory
+
+**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 66,659 |
+| 语言 | Python |
+| Forks | 8,119 |
+| Issues | 883 |
+| Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
+| 许可证 | Apache License 2.0 |
 
 
 ### 9. OpenBB-finance/OpenBB
@@ -224,7 +224,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,135 |
+| Stars | 45,136 |
 | 语言 | Java |
 | Forks | 15,797 |
 | Issues | 44 |
@@ -246,7 +246,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 84,090 |
+| Stars | 84,092 |
 | 语言 | Jupyter Notebook |
 | Forks | 12,708 |
 | Issues | 0 |
@@ -268,7 +268,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 40,886 |
+| Stars | 40,887 |
 | 语言 | Python |
 | Forks | 9,694 |
 | Issues | 357 |
@@ -290,9 +290,9 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,634 |
+| Stars | 35,677 |
 | 语言 | JavaScript |
-| Forks | 4,388 |
+| Forks | 4,390 |
 | Issues | 4 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
@@ -337,122 +337,12 @@
 | Stars | 27,046 |
 | 语言 | TypeScript |
 | Forks | 6,922 |
-| Issues | 177 |
+| Issues | 178 |
 | Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
 | 许可证 | Other |
 
 
-### 16. hesreallyhim/awesome-claude-code
-
-**描述**: A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 22,399 |
-| 语言 | Python |
-| Forks | 1,275 |
-| Issues | 88 |
-| Topics | agent-skills, agentic-code, agentic-coding, ai-workflow-optimization, ai-workflows, anthropic, anthropic-claude, awesome, awesome-list, awesome-lists, awesome-resources, claude, claude-code, coding-agent, coding-agents, coding-assistant, coding-assistants, llm |
-| 许可证 | Other |
-
-
-### 17. yamadashy/repomix
-
-**描述**: 📦 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perfect for when you need to feed your codebase to Large Language Models (LLMs) or other AI tools like Claude, ChatGPT, DeepSeek, Perplexity, Gemini, Gemma, Llama, Grok, and more.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 21,590 |
-| 语言 | TypeScript |
-| Forks | 1,004 |
-| Issues | 142 |
-| Topics | ai, anthropic, artificial-intelligence, chatbot, chatgpt, claude, deepseek, developer-tools, gemini, genai, generative-ai, gpt, javascript, language-model, llama, llm, mcp, nodejs, openai, typescript |
-| 许可证 | MIT License |
-
-
-### 18. patchy631/ai-engineering-hub
-
-**描述**: In-depth tutorials on LLMs, RAGs and real-world AI agent applications.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 27,562 |
-| 语言 | Jupyter Notebook |
-| Forks | 4,512 |
-| Issues | 119 |
-| Topics | agents, ai, llms, machine-learning, mcp, rag |
-| 许可证 | MIT License |
-
-
-### 19. simstudioai/sim
-
-**描述**: Open-source platform to build and deploy AI agent workflows.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,288 |
-| 语言 | TypeScript |
-| Forks | 3,273 |
-| Issues | 145 |
-| Topics | agent-workflow, agentic-workflow, agents, ai, aiagents, anthropic, artificial-intelligence, automation, chatbot, deepseek, gemini, low-code, nextjs, no-code, openai, rag, react, typescript |
-| 许可证 | Apache License 2.0 |
-
-
-### 20. chroma-core/chroma
-
-**描述**: Open-source search and retrieval database for AI applications.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 25,866 |
-| 语言 | Rust |
-| Forks | 2,030 |
-| Issues | 498 |
-| Topics | ai, database, document-retrieval, embeddings, llm, llms, rag, rust, rust-lang, vector-database |
-| 许可证 | Apache License 2.0 |
-
-
-### 21. Shubhamsaboo/awesome-llm-apps
+### 16. Shubhamsaboo/awesome-llm-apps
 
 **描述**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.
 
@@ -466,7 +356,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,309 |
+| Stars | 91,325 |
 | 语言 | Python |
 | Forks | 13,178 |
 | Issues | 10 |
@@ -474,9 +364,9 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 22. huggingface/transformers
+### 17. huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
 
 **发现来源**: trending
 
@@ -488,7 +378,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 155,966 |
+| Stars | 155,968 |
 | 语言 | Python |
 | Forks | 31,911 |
 | Issues | 2,198 |
@@ -496,7 +386,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 23. OpenHands/OpenHands
+### 18. OpenHands/OpenHands
 
 **描述**: 🙌 OpenHands: AI-Driven Development
 
@@ -510,7 +400,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,315 |
+| Stars | 67,316 |
 | 语言 | Python |
 | Forks | 8,379 |
 | Issues | 291 |
@@ -518,7 +408,7 @@
 | 许可证 | Other |
 
 
-### 24. supabase/supabase
+### 19. supabase/supabase
 
 **描述**: The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI applications.
 
@@ -532,7 +422,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,990 |
+| Stars | 96,993 |
 | 语言 | TypeScript |
 | Forks | 11,415 |
 | Issues | 802 |
@@ -540,51 +430,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 25. photoprism/photoprism
-
-**描述**: AI-Powered Photos App for the Decentralized Web 🌈💎✨
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 98/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,187 |
-| 语言 | Go |
-| Forks | 2,200 |
-| Issues | 442 |
-| Topics | ai, golang, google-photos, machine-learning, photography, private-cloud, self-hosted, tensorflow |
-| 许可证 | Other |
-
-
-### 26. code-yeongyu/oh-my-opencode
-
-**描述**: The Best Agent Harness. Meet Sisyphus: The Batteries-Included Agent that codes like you.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 98/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,365 |
-| 语言 | TypeScript |
-| Forks | 1,908 |
-| Issues | 361 |
-| Topics | ai, ai-agents, amp, anthropic, chatgpt, claude, claude-code, claude-skills, cursor, gemini, ide, openai, opencode, orchestration, tui, typescript |
-| 许可证 | Other |
-
-
-### 27. mindsdb/mindsdb
+### 20. mindsdb/mindsdb
 
 **描述**: Federated Query Engine for AI - The only MCP Server you'll ever need
 
@@ -606,7 +452,7 @@
 | 许可证 | Other |
 
 
-### 28. browser-use/browser-use
+### 21. browser-use/browser-use
 
 **描述**: 🌐 Make websites accessible for AI agents. Automate tasks online with ease.
 
@@ -620,7 +466,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,487 |
+| Stars | 77,490 |
 | 语言 | Python |
 | Forks | 9,172 |
 | Issues | 221 |
@@ -628,7 +474,7 @@
 | 许可证 | MIT License |
 
 
-### 29. PaddlePaddle/PaddleOCR
+### 22. PaddlePaddle/PaddleOCR
 
 **描述**: Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.
 
@@ -642,7 +488,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,409 |
+| Stars | 69,412 |
 | 语言 | Python |
 | Forks | 9,746 |
 | Issues | 261 |
@@ -650,7 +496,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 30. FlowiseAI/Flowise
+### 23. FlowiseAI/Flowise
 
 **描述**: Build AI Agents, Visually
 
@@ -664,7 +510,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,702 |
+| Stars | 48,704 |
 | 语言 | TypeScript |
 | Forks | 23,655 |
 | Issues | 766 |
@@ -672,29 +518,7 @@
 | 许可证 | Other |
 
 
-### 31. microsoft/qlib
-
-**描述**: Qlib is an AI-oriented Quant investment platform that aims to use AI tech to empower Quant Research, from exploring ideas to implementing productions. Qlib supports diverse ML modeling paradigms, including supervised learning, market dynamics modeling, and RL, and is now equipped with https://github.com/microsoft/RD-Agent to automate R&D process.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 96/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 36,188 |
-| 语言 | Python |
-| Forks | 5,644 |
-| Issues | 341 |
-| Topics | algorithmic-trading, auto-quant, deep-learning, finance, fintech, investment, machine-learning, paper, platform, python, quant, quant-dataset, quant-models, quantitative-finance, quantitative-trading, research, research-paper, stock-data |
-| 许可证 | MIT License |
-
-
-### 32. wshobson/agents
+### 24. wshobson/agents
 
 **描述**: Intelligent automation and multi-agent orchestration for Claude Code
 
@@ -708,37 +532,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,381 |
+| Stars | 27,383 |
 | 语言 | C# |
-| Forks | 3,004 |
+| Forks | 3,005 |
 | Issues | 11 |
 | Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
 | 许可证 | MIT License |
 
 
-### 33. BloopAI/vibe-kanban
-
-**描述**: Get 10X more out of Claude Code, Codex or any coding agent
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 96/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 19,880 |
-| 语言 | Rust |
-| Forks | 1,856 |
-| Issues | 321 |
-| Topics | agent, ai-agents, kanban, management, task-manager |
-| 许可证 | Apache License 2.0 |
-
-
-### 34. milvus-io/milvus
+### 25. milvus-io/milvus
 
 **描述**: Milvus is a high-performance, cloud-native vector database built for scalable vector ANN search
 
@@ -760,7 +562,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 35. asgeirtj/system_prompts_leaks
+### 26. asgeirtj/system_prompts_leaks
 
 **描述**: Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini
 
@@ -774,14 +576,14 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,765 |
+| Stars | 28,783 |
 | 语言 | JavaScript |
-| Forks | 4,644 |
+| Forks | 4,646 |
 | Issues | 29 |
 | Topics | ai, anthropic, chatbots, chatgpt, claude, gemini, generative-ai, google-deepmind, large-language-models, llm, openai, prompt-engineering, prompt-injection, prompts |
 
 
-### 36. microsoft/graphrag
+### 27. microsoft/graphrag
 
 **描述**: A modular graph-based Retrieval-Augmented Generation (RAG) system
 
@@ -795,7 +597,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 30,638 |
+| Stars | 30,639 |
 | 语言 | Python |
 | Forks | 3,229 |
 | Issues | 95 |
@@ -803,51 +605,7 @@
 | 许可证 | MIT License |
 
 
-### 37. HKUDS/LightRAG
-
-**描述**: [EMNLP2025] "LightRAG: Simple and Fast Retrieval-Augmented Generation"
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 95/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 27,781 |
-| 语言 | Python |
-| Forks | 3,968 |
-| Issues | 187 |
-| Topics | genai, gpt, gpt-4, graphrag, knowledge-graph, large-language-models, llm, rag, retrieval-augmented-generation |
-| 许可证 | MIT License |
-
-
-### 38. CherryHQ/cherry-studio
-
-**描述**: AI Agent + Coding Agent + 300+ assistants: agentic AI desktop with autonomous coding, intelligent automation, and unified access to frontier LLMs.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 94/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 38,993 |
-| 语言 | TypeScript |
-| Forks | 3,588 |
-| Issues | 623 |
-| Topics | ai-agent, claude-code, clawdbot, code-agent, codex, moltbot, opencode, skills, supermemory, vibe-coding |
-| 许可证 | GNU Affero General Public License v3.0 |
-
-
-### 39. vllm-project/vllm
+### 28. vllm-project/vllm
 
 **描述**: A high-throughput and memory-efficient inference and serving engine for LLMs
 
@@ -861,7 +619,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,094 |
+| Stars | 69,099 |
 | 语言 | Python |
 | Forks | 13,048 |
 | Issues | 3,177 |
@@ -869,7 +627,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 40. n8n-io/n8n
+### 29. n8n-io/n8n
 
 **描述**: Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.
 
@@ -883,17 +641,17 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 172,245 |
+| Stars | 172,249 |
 | 语言 | TypeScript |
-| Forks | 54,341 |
-| Issues | 1,289 |
+| Forks | 54,342 |
+| Issues | 1,290 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
 
-### 41. openclaw/openclaw
+### 30. openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
 
 **发现来源**: trending
 
@@ -905,59 +663,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 123,985 |
+| Stars | 124,481 |
 | 语言 | TypeScript |
-| Forks | 17,644 |
-| Issues | 1,815 |
+| Forks | 17,727 |
+| Issues | 1,829 |
 | Topics | ai, assistant, crustacean, molty, openclaw, own-your-data, personal |
 | 许可证 | MIT License |
 
 
-### 42. nextlevelbuilder/ui-ux-pro-max-skill
-
-**描述**: An AI SKILL that provide design intelligence for building professional UI/UX multiple platforms
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 93/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 25,414 |
-| 语言 | Python |
-| Forks | 2,575 |
-| Issues | 44 |
-| Topics | ai-skills, antigravity, claude, claude-code, codex, command-line, copilot, cursor-ai, html5, kiro, landing-page, mobile-ui, qoder, react, tailwindcss, trae, ui-design, uikit, windsurf-ai |
-| 许可证 | MIT License |
-
-
-### 43. eyaltoledano/claude-task-master
-
-**描述**: An AI-powered task-management system you can drop into Cursor, Lovable, Windsurf, Roo, and others.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 93/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 25,170 |
-| 语言 | JavaScript |
-| Forks | 2,410 |
-| Issues | 155 |
-| Topics | ai, cursor, cursor-ai, cursorai, lovable, lovable-dev, roocode, task-manager, tasks, tasks-list, windsurf, windsurf-ai |
-| 许可证 | Other |
-
-
-### 44. langflow-ai/langflow
+### 31. langflow-ai/langflow
 
 **描述**: Langflow is a powerful tool for building and deploying AI-powered agents and workflows.
 
@@ -979,7 +693,7 @@
 | 许可证 | MIT License |
 
 
-### 45. binary-husky/gpt_academic
+### 32. binary-husky/gpt_academic
 
 **描述**: 为GPT/GLM等LLM大语言模型提供实用化交互接口，特别优化论文阅读/润色/写作体验，模块化设计，支持自定义快捷按钮&函数插件，支持Python和C++等项目剖析&自译解功能，PDF/LaTex论文翻译&总结功能，支持并行问询多种LLM模型，支持chatglm3等本地模型。接入通义千问, deepseekcoder, 讯飞星火, 文心一言, llama2, rwkv, claude2, moss等。
 
@@ -1001,7 +715,7 @@
 | 许可证 | GNU General Public License v3.0 |
 
 
-### 46. ansible/ansible
+### 33. ansible/ansible
 
 **描述**: Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
 
@@ -1015,7 +729,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,838 |
+| Stars | 67,839 |
 | 语言 | Python |
 | Forks | 24,212 |
 | Issues | 840 |
@@ -1023,7 +737,7 @@
 | 许可证 | GNU General Public License v3.0 |
 
 
-### 47. microsoft/ai-agents-for-beginners
+### 34. microsoft/ai-agents-for-beginners
 
 **描述**: 12 Lessons to Get Started Building AI Agents
 
@@ -1037,37 +751,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,677 |
+| Stars | 49,679 |
 | 语言 | Jupyter Notebook |
-| Forks | 17,357 |
+| Forks | 17,356 |
 | Issues | 9 |
 | Topics | agentic-ai, agentic-framework, agentic-rag, ai-agents, ai-agents-framework, autogen, generative-ai, semantic-kernel |
 | 许可证 | MIT License |
 
 
-### 48. ToolJet/ToolJet
-
-**描述**: ToolJet is the open-source foundation of ToolJet AI - the AI-native platform for building internal tools, dashboard, business applications, workflows and AI agents 🚀
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 91/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 37,363 |
-| 语言 | JavaScript |
-| Forks | 4,938 |
-| Issues | 968 |
-| Topics | ai-app-builder, docker, hacktoberfest, internal-applications, internal-project, internal-tool, internal-tools, javascript, kubernetes, low-code, low-code-development-platform, low-code-framework, no-code, nodejs, reactjs, self-hosted, typescript, web-development-tools, workflow-automation |
-| 许可证 | GNU Affero General Public License v3.0 |
-
-
-### 49. unclecode/crawl4ai
+### 35. unclecode/crawl4ai
 
 **描述**: 🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN
 
@@ -1081,14 +773,14 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,245 |
+| Stars | 59,246 |
 | 语言 | Python |
-| Forks | 6,049 |
+| Forks | 6,048 |
 | Issues | 299 |
 | 许可证 | Apache License 2.0 |
 
 
-### 50. ComposioHQ/awesome-claude-skills
+### 36. ComposioHQ/awesome-claude-skills
 
 **描述**: A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows
 
@@ -1102,14 +794,14 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,438 |
+| Stars | 28,447 |
 | 语言 | Python |
-| Forks | 2,740 |
+| Forks | 2,742 |
 | Issues | 70 |
 | Topics | anthropic, anthropic-ai, anthropic-skills, awesome, awesome-lists, claude, claude-4, claude-4-5-sonnet, claude-4-opus, claude-api, claude-code, claude-desktop, claude-skills, claude-skills-hub, skills |
 
 
-### 51. Comfy-Org/ComfyUI
+### 37. Comfy-Org/ComfyUI
 
 **描述**: The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface.
 
@@ -1123,15 +815,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 102,019 |
+| Stars | 102,024 |
 | 语言 | Python |
-| Forks | 11,564 |
-| Issues | 3,616 |
+| Forks | 11,565 |
+| Issues | 3,617 |
 | Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
 | 许可证 | GNU General Public License v3.0 |
 
 
-### 52. pytorch/pytorch
+### 38. pytorch/pytorch
 
 **描述**: Tensors and Dynamic neural networks in Python with strong GPU acceleration
 
@@ -1145,15 +837,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,071 |
+| Stars | 97,072 |
 | 语言 | Python |
 | Forks | 26,699 |
-| Issues | 17,991 |
+| Issues | 17,992 |
 | Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
 | 许可证 | Other |
 
 
-### 53. ollama/ollama
+### 39. ollama/ollama
 
 **描述**: Get up and running with GLM-4.7, DeepSeek, gpt-oss, Qwen, Gemma and other models.
 
@@ -1167,15 +859,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 161,202 |
+| Stars | 161,206 |
 | 语言 | Go |
-| Forks | 14,360 |
+| Forks | 14,361 |
 | Issues | 2,417 |
 | Topics | deepseek, gemma, gemma3, gemma3n, go, golang, gpt-oss, llama, llama2, llama3, llava, llm, llms, mistral, ollama, phi4, qwen |
 | 许可证 | MIT License |
 
 
-### 54. etcd-io/etcd
+### 40. etcd-io/etcd
 
 **描述**: Distributed reliable key-value store for the most critical data of a distributed system
 
@@ -1197,29 +889,51 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 55. pingcap/tidb
+### 41. dair-ai/Prompt-Engineering-Guide
 
-**描述**: TiDB - the open-source, cloud-native, distributed SQL database designed for modern applications.
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: Trending in Go
+**发现原因**: Keyword: AI agent
 
 **质量评分**: 90/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 39,661 |
-| 语言 | Go |
-| Forks | 6,105 |
-| Issues | 5,556 |
-| Topics | cloud-native, database, distributed-database, distributed-transactions, go, hacktoberfest, htap, mysql, mysql-compatibility, scale, serverless, sql, tidb |
-| 许可证 | Apache License 2.0 |
+| Stars | 69,751 |
+| 语言 | MDX |
+| Forks | 7,448 |
+| Issues | 242 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
 
 
-### 56. tw93/Pake
+### 42. FoundationAgents/MetaGPT
+
+**描述**: 🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 63,670 |
+| 语言 | Python |
+| Forks | 8,000 |
+| Issues | 64 |
+| Topics | agent, gpt, llm, metagpt, multi-agent |
+| 许可证 | MIT License |
+
+
+### 43. tw93/Pake
 
 **描述**: 🤱🏻 Turn any webpage into a desktop app with one command.
 
@@ -1241,7 +955,117 @@
 | 许可证 | MIT License |
 
 
-### 57. EbookFoundation/free-programming-books
+### 44. khoj-ai/khoj
+
+**描述**: Your AI second brain. Self-hostable. Get answers from the web or your docs. Build custom agents, schedule automations, do deep research. Turn any online or local LLM into your personal, autonomous AI (gpt, claude, gemini, llama, qwen, mistral). Get started - free.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 32,357 |
+| 语言 | Python |
+| Forks | 1,947 |
+| Issues | 90 |
+| Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
+| 许可证 | GNU Affero General Public License v3.0 |
+
+
+### 45. pathwaycom/llm-app
+
+**描述**: Ready-to-run cloud templates for RAG, AI pipelines, and enterprise search with live data. 🐳Docker-friendly.⚡Always in sync with Sharepoint, Google Drive, S3, Kafka, PostgreSQL, real-time data APIs, and more.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 55,759 |
+| 语言 | Jupyter Notebook |
+| Forks | 1,312 |
+| Issues | 8 |
+| Topics | chatbot, hugging-face, llm, llm-local, llm-prompting, llm-security, llmops, machine-learning, open-ai, pathway, rag, real-time, retrieval-augmented-generation, vector-database, vector-index |
+| 许可证 | MIT License |
+
+
+### 46. ItzCrazyKns/Perplexica
+
+**描述**: Perplexica is an AI-powered answering engine.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 28,652 |
+| 语言 | TypeScript |
+| Forks | 3,047 |
+| Issues | 218 |
+| Topics | ai-agents, ai-search-engine, answering-engine, artificial-intelligence, llm, machine-learning, open-source-ai-search-engine, perplexica, rag, search-engine, searxng, searxng-copilot, self-hosted-ai |
+| 许可证 | MIT License |
+
+
+### 47. x1xhlol/system-prompts-and-models-of-ai-tools
+
+**描述**: FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, Lovable, Manus, NotionAI, Orchids.app, Perplexity, Poke, Qoder, Replit, Same.dev, Trae, Traycer AI, VSCode Agent, Warp.dev, Windsurf, Xcode, Z.ai Code, Dia & v0. (And other Open Sourced) System Prompts, Internal Tools & AI Models
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 89/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 112,201 |
+| 语言 | Unknown |
+| Forks | 29,229 |
+| Issues | 119 |
+| Topics | ai, bolt, cluely, copilot, cursor, cursorai, devin, github-copilot, lovable, open-source, perplexity, replit, system-prompts, trae, trae-ai, trae-ide, v0, vscode, windsurf, windsurf-ai |
+| 许可证 | GNU General Public License v3.0 |
+
+
+### 48. songquanpeng/one-api
+
+**描述**: LLM API 管理 & 分发系统，支持 OpenAI、Azure、Anthropic Claude、Google Gemini、DeepSeek、字节豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等主流模型，统一 API 适配，可用于 key 管理与二次分发。单可执行文件，提供 Docker 镜像，一键部署，开箱即用。LLM API management & key redistribution system, unifying multiple providers under a single API. Single binary, Docker-ready, with an English UI.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 89/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 29,404 |
+| 语言 | JavaScript |
+| Forks | 5,694 |
+| Issues | 981 |
+| Topics | api, api-gateway, azure-openai-api, chatgpt, claude, ernie-bot, gemini, gpt, openai, openai-api, proxy |
+| 许可证 | MIT License |
+
+
+### 49. EbookFoundation/free-programming-books
 
 **描述**: :books: Freely available programming books
 
@@ -1255,7 +1079,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 381,471 |
+| Stars | 381,473 |
 | 语言 | Python |
 | Forks | 65,818 |
 | Issues | 108 |
@@ -1263,7 +1087,7 @@
 | 许可证 | Creative Commons Attribution 4.0 International |
 
 
-### 58. iptv-org/iptv
+### 50. iptv-org/iptv
 
 **描述**: Collection of publicly available IPTV channels from all over the world
 
@@ -1277,7 +1101,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 110,789 |
+| Stars | 110,792 |
 | 语言 | TypeScript |
 | Forks | 5,482 |
 | Issues | 320 |
@@ -1285,7 +1109,7 @@
 | 许可证 | The Unlicense |
 
 
-### 59. clash-verge-rev/clash-verge-rev
+### 51. clash-verge-rev/clash-verge-rev
 
 **描述**: A modern GUI client based on Tauri, designed to run in Windows, macOS and Linux for tailored proxy experience
 
@@ -1299,37 +1123,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,152 |
+| Stars | 95,157 |
 | 语言 | TypeScript |
 | Forks | 6,976 |
-| Issues | 125 |
+| Issues | 126 |
 | Topics | clash, clash-meta, clash-verge, linux, mac, mihomo, tauri-app, windows |
 | 许可证 | GNU General Public License v3.0 |
 
 
-### 60. serverless/serverless
-
-**描述**: ⚡ Serverless Framework – Effortlessly build apps that auto-scale, incur zero costs when idle, and require minimal maintenance using AWS Lambda and other managed cloud services.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 46,944 |
-| 语言 | JavaScript |
-| Forks | 5,738 |
-| Issues | 1,215 |
-| Topics | aws, aws-dynamodb, aws-lambda, azure-functions, google-cloud-functions, microservice, serverless, serverless-architectures, serverless-framework |
-| 许可证 | Other |
-
-
-### 61. kubernetes/kubernetes
+### 52. kubernetes/kubernetes
 
 **描述**: Production-Grade Container Scheduling and Management
 
@@ -1343,15 +1145,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 120,186 |
+| Stars | 120,187 |
 | 语言 | Go |
 | Forks | 42,343 |
-| Issues | 2,601 |
+| Issues | 2,600 |
 | Topics | cncf, containers, go, kubernetes |
 | 许可证 | Apache License 2.0 |
 
 
-### 62. moby/moby
+### 53. moby/moby
 
 **描述**: The Moby Project - a collaborative project for the container ecosystem to assemble container-based systems
 
@@ -1373,7 +1175,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 63. go-gitea/gitea
+### 54. go-gitea/gitea
 
 **描述**: Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD
 
@@ -1387,7 +1189,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 53,485 |
+| Stars | 53,487 |
 | 语言 | Go |
 | Forks | 6,362 |
 | Issues | 2,855 |
@@ -1395,7 +1197,7 @@
 | 许可证 | MIT License |
 
 
-### 64. hashicorp/terraform
+### 55. hashicorp/terraform
 
 **描述**: Terraform enables you to safely and predictably create, change, and improve infrastructure. It is a source-available tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -1409,7 +1211,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,566 |
+| Stars | 47,567 |
 | 语言 | Go |
 | Forks | 10,198 |
 | Issues | 1,923 |
@@ -1417,7 +1219,7 @@
 | 许可证 | Other |
 
 
-### 65. gogs/gogs
+### 56. gogs/gogs
 
 **描述**: Gogs is a painless self-hosted Git service
 
@@ -1439,29 +1241,7 @@
 | 许可证 | MIT License |
 
 
-### 66. go-gorm/gorm
-
-**描述**: The fantastic ORM library for Golang, aims to be developer friendly
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,449 |
-| 语言 | Go |
-| Forks | 4,130 |
-| Issues | 517 |
-| Topics | go, golang, gorm, orm, web |
-| 许可证 | MIT License |
-
-
-### 67. ggml-org/llama.cpp
+### 57. ggml-org/llama.cpp
 
 **描述**: LLM inference in C/C++
 
@@ -1475,7 +1255,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 94,057 |
+| Stars | 94,058 |
 | 语言 | C++ |
 | Forks | 14,695 |
 | Issues | 1,048 |
@@ -1483,7 +1263,7 @@
 | 许可证 | MIT License |
 
 
-### 68. pathwaycom/pathway
+### 58. pathwaycom/pathway
 
 **描述**: Python ETL framework for stream processing, real-time analytics, LLM pipelines, and RAG.
 
@@ -1497,7 +1277,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,102 |
+| Stars | 59,105 |
 | 语言 | Python |
 | Forks | 1,577 |
 | Issues | 31 |
@@ -1505,7 +1285,7 @@
 | 许可证 | Other |
 
 
-### 69. vinta/awesome-python
+### 59. vinta/awesome-python
 
 **描述**: An opinionated list of awesome Python frameworks, libraries, software and resources.
 
@@ -1519,15 +1299,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 280,720 |
+| Stars | 280,725 |
 | 语言 | Python |
-| Forks | 27,153 |
+| Forks | 27,154 |
 | Issues | 18 |
 | Topics | awesome, collections, python, python-framework, python-library, python-resources |
 | 许可证 | Other |
 
 
-### 70. TheAlgorithms/Python
+### 60. TheAlgorithms/Python
 
 **描述**: All Algorithms implemented in Python
 
@@ -1541,7 +1321,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 217,338 |
+| Stars | 217,340 |
 | 语言 | Python |
 | Forks | 50,017 |
 | Issues | 881 |
@@ -1549,7 +1329,7 @@
 | 许可证 | MIT License |
 
 
-### 71. yt-dlp/yt-dlp
+### 61. yt-dlp/yt-dlp
 
 **描述**: A feature-rich command-line audio/video downloader
 
@@ -1563,15 +1343,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 145,063 |
+| Stars | 145,067 |
 | 语言 | Python |
 | Forks | 11,743 |
-| Issues | 2,267 |
+| Issues | 2,268 |
 | Topics | cli, downloader, python, sponsorblock, youtube-dl, youtube-downloader, yt-dlp |
 | 许可证 | The Unlicense |
 
 
-### 72. fastapi/fastapi
+### 62. fastapi/fastapi
 
 **描述**: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 
@@ -1585,7 +1365,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 94,644 |
+| Stars | 94,645 |
 | 语言 | Python |
 | Forks | 8,608 |
 | Issues | 214 |
@@ -1593,7 +1373,7 @@
 | 许可证 | MIT License |
 
 
-### 73. django/django
+### 63. django/django
 
 **描述**: The Web framework for perfectionists with deadlines.
 
@@ -1615,7 +1395,7 @@
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 
-### 74. home-assistant/core
+### 64. home-assistant/core
 
 **描述**: :house_with_garden: Open source home automation that puts local control and privacy first.
 
@@ -1632,12 +1412,12 @@
 | Stars | 84,487 |
 | 语言 | Python |
 | Forks | 36,638 |
-| Issues | 3,217 |
+| Issues | 3,219 |
 | Topics | asyncio, hacktoberfest, home-automation, internet-of-things, iot, mqtt, python, raspberry-pi |
 | 许可证 | Apache License 2.0 |
 
 
-### 75. tensorflow/models
+### 65. tensorflow/models
 
 **描述**: Models and examples built with TensorFlow
 
@@ -1653,12 +1433,12 @@
 |------|------|
 | Stars | 77,685 |
 | 语言 | Python |
-| Forks | 45,320 |
-| Issues | 1,274 |
+| Forks | 45,319 |
+| Issues | 1,273 |
 | 许可证 | Other |
 
 
-### 76. sherlock-project/sherlock
+### 66. sherlock-project/sherlock
 
 **描述**: Hunt down social media accounts by username across social networks
 
@@ -1672,15 +1452,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,310 |
+| Stars | 72,311 |
 | 语言 | Python |
-| Forks | 8,564 |
+| Forks | 8,565 |
 | Issues | 184 |
 | Topics | cli, cti, cybersecurity, forensics, hacktoberfest, information-gathering, infosec, linux, osint, pentesting, python, python3, reconnaissance, redteam, sherlock, tools |
 | 许可证 | MIT License |
 
 
-### 77. josephmisiti/awesome-machine-learning
+### 67. josephmisiti/awesome-machine-learning
 
 **描述**: A curated list of awesome Machine Learning frameworks, libraries and software.
 
@@ -1701,7 +1481,7 @@
 | 许可证 | Other |
 
 
-### 78. python/cpython
+### 68. python/cpython
 
 **描述**: The Python programming language
 
@@ -1722,7 +1502,7 @@
 | 许可证 | Other |
 
 
-### 79. pallets/flask
+### 69. pallets/flask
 
 **描述**: The Python micro framework for building web applications.
 
@@ -1744,29 +1524,7 @@
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 
-### 80. xtekky/gpt4free
-
-**描述**: The official gpt4free repository | various collection of powerful language models | o4, o3 and deepseek r1, gpt-4.1, gemini 2.5
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 65,715 |
-| 语言 | Python |
-| Forks | 13,686 |
-| Issues | 10 |
-| Topics | chatbot, chatbots, chatgpt, chatgpt-4, chatgpt-api, chatgpt-free, chatgpt4, deepseek, deepseek-api, deepseek-r1, gpt, gpt-4, gpt-4o, gpt4, gpt4-api, language-model, openai, openai-api, openai-chatgpt, reverse-engineering |
-| 许可证 | GNU General Public License v3.0 |
-
-
-### 81. freeCodeCamp/freeCodeCamp
+### 70. freeCodeCamp/freeCodeCamp
 
 **描述**: freeCodeCamp.org's open-source codebase and curriculum. Learn math, programming, and computer science for free.
 
@@ -1780,7 +1538,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 436,545 |
+| Stars | 436,551 |
 | 语言 | TypeScript |
 | Forks | 43,259 |
 | Issues | 326 |
@@ -1788,7 +1546,7 @@
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 
-### 82. kamranahmedse/developer-roadmap
+### 71. kamranahmedse/developer-roadmap
 
 **描述**: Interactive roadmaps, guides and other educational content to help developers grow in their careers.
 
@@ -1810,7 +1568,7 @@
 | 许可证 | Other |
 
 
-### 83. microsoft/vscode
+### 72. microsoft/vscode
 
 **描述**: Visual Studio Code
 
@@ -1824,15 +1582,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 181,202 |
+| Stars | 181,201 |
 | 语言 | TypeScript |
-| Forks | 37,668 |
-| Issues | 13,308 |
+| Forks | 37,669 |
+| Issues | 13,310 |
 | Topics | editor, electron, microsoft, typescript, visual-studio-code |
 | 许可证 | MIT License |
 
 
-### 84. yangshun/tech-interview-handbook
+### 73. yangshun/tech-interview-handbook
 
 **描述**: Curated coding interview preparation materials for busy software engineers
 
@@ -1848,13 +1606,13 @@
 |------|------|
 | Stars | 137,278 |
 | 语言 | TypeScript |
-| Forks | 16,407 |
+| Forks | 16,408 |
 | Issues | 56 |
 | Topics | algorithm, algorithm-interview, algorithm-interview-questions, algorithms, behavioral-interviews, coding-interviews, interview-practice, interview-preparation, interview-questions, system-design |
 | 许可证 | MIT License |
 
 
-### 85. excalidraw/excalidraw
+### 74. excalidraw/excalidraw
 
 **描述**: Virtual whiteboard for sketching hand-drawn like diagrams
 
@@ -1868,15 +1626,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,727 |
+| Stars | 115,730 |
 | 语言 | TypeScript |
-| Forks | 12,350 |
+| Forks | 12,352 |
 | Issues | 2,763 |
 | Topics | canvas, collaboration, diagrams, drawing, hacktoberfest, productivity, whiteboard |
 | 许可证 | MIT License |
 
 
-### 86. microsoft/TypeScript
+### 75. microsoft/TypeScript
 
 **描述**: TypeScript is a superset of JavaScript that compiles to clean JavaScript output.
 
@@ -1890,7 +1648,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 107,621 |
+| Stars | 107,620 |
 | 语言 | TypeScript |
 | Forks | 13,215 |
 | Issues | 5,473 |
@@ -1898,7 +1656,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 87. shadcn-ui/ui
+### 76. shadcn-ui/ui
 
 **描述**: A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.
 
@@ -1912,7 +1670,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 105,847 |
+| Stars | 105,850 |
 | 语言 | TypeScript |
 | Forks | 7,776 |
 | Issues | 1,804 |
@@ -1920,7 +1678,7 @@
 | 许可证 | MIT License |
 
 
-### 88. angular/angular
+### 77. angular/angular
 
 **描述**: Deliver web apps with confidence 🚀
 
@@ -1942,7 +1700,7 @@
 | 许可证 | MIT License |
 
 
-### 89. ant-design/ant-design
+### 78. ant-design/ant-design
 
 **描述**: An enterprise-class UI design language and React UI library
 
@@ -1956,7 +1714,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,387 |
+| Stars | 97,388 |
 | 语言 | TypeScript |
 | Forks | 54,451 |
 | Issues | 1,376 |
@@ -1964,7 +1722,7 @@
 | 许可证 | MIT License |
 
 
-### 90. puppeteer/puppeteer
+### 79. puppeteer/puppeteer
 
 **描述**: JavaScript API for Chrome and Firefox
 
@@ -1981,12 +1739,12 @@
 | Stars | 93,451 |
 | 语言 | TypeScript |
 | Forks | 9,370 |
-| Issues | 294 |
+| Issues | 293 |
 | Topics | automation, chrome, chromium, developer-tools, firefox, headless-chrome, node-module, testing, web |
 | 许可证 | Apache License 2.0 |
 
 
-### 91. tailwindlabs/tailwindcss
+### 80. tailwindlabs/tailwindcss
 
 **描述**: A utility-first CSS framework for rapid UI development.
 
@@ -2008,7 +1766,7 @@
 | 许可证 | MIT License |
 
 
-### 92. immich-app/immich
+### 81. immich-app/immich
 
 **描述**: High performance self-hosted photo and video management solution.
 
@@ -2022,7 +1780,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,156 |
+| Stars | 91,161 |
 | 语言 | TypeScript |
 | Forks | 4,824 |
 | Issues | 748 |
@@ -2030,7 +1788,7 @@
 | 许可证 | GNU Affero General Public License v3.0 |
 
 
-### 93. storybookjs/storybook
+### 82. storybookjs/storybook
 
 **描述**: Storybook is the industry standard workshop for building, documenting, and testing UI components in isolation
 
@@ -2047,12 +1805,12 @@
 | Stars | 89,164 |
 | 语言 | TypeScript |
 | Forks | 9,840 |
-| Issues | 2,232 |
+| Issues | 2,233 |
 | Topics | angular, components, design-systems, documentation, html, javascript, react, react-native, stories, storybook, styleguide, svelte, testing, typescript, ui, vite, vue, web-components, webpack, workshop |
 | 许可证 | MIT License |
 
 
-### 94. mermaid-js/mermaid
+### 83. mermaid-js/mermaid
 
 **描述**: Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown
 
@@ -2074,7 +1832,7 @@
 | 许可证 | MIT License |
 
 
-### 95. realworld-apps/realworld
+### 84. realworld-apps/realworld
 
 **描述**: "The mother of all demo apps" — Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more
 
@@ -2095,9 +1853,9 @@
 | 许可证 | MIT License |
 
 
-### 96. microsoft/playwright
+### 85. microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
 
 **发现来源**: trending
 
@@ -2109,15 +1867,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 81,927 |
+| Stars | 81,928 |
 | 语言 | TypeScript |
 | Forks | 5,066 |
-| Issues | 581 |
+| Issues | 582 |
 | Topics | automation, chrome, chromium, e2e-testing, electron, end-to-end-testing, firefox, javascript, playwright, test, test-automation, testing, testing-tools, web, webkit |
 | 许可证 | Apache License 2.0 |
 
 
-### 97. vitejs/vite
+### 86. vitejs/vite
 
 **描述**: Next generation frontend tooling. It's fast!
 
@@ -2131,7 +1889,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,887 |
+| Stars | 77,888 |
 | 语言 | TypeScript |
 | Forks | 7,761 |
 | Issues | 607 |
@@ -2139,7 +1897,7 @@
 | 许可证 | MIT License |
 
 
-### 98. hoppscotch/hoppscotch
+### 87. hoppscotch/hoppscotch
 
 **描述**: Open-Source API Development Ecosystem • https://hoppscotch.io • Offline, On-Prem & Cloud • Web, Desktop & CLI • Open-Source Alternative to Postman, Insomnia
 
@@ -2161,7 +1919,7 @@
 | 许可证 | MIT License |
 
 
-### 99. modelcontextprotocol/servers
+### 88. modelcontextprotocol/servers
 
 **描述**: Model Context Protocol Servers
 
@@ -2175,14 +1933,14 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,626 |
+| Stars | 77,629 |
 | 语言 | TypeScript |
 | Forks | 9,400 |
 | Issues | 290 |
 | 许可证 | MIT License |
 
 
-### 100. coder/code-server
+### 89. coder/code-server
 
 **描述**: VS Code in the browser
 
@@ -2204,7 +1962,7 @@
 | 许可证 | MIT License |
 
 
-### 101. facebook/react
+### 90. facebook/react
 
 **描述**: The library for web and native user interfaces.
 
@@ -2226,7 +1984,7 @@
 | 许可证 | MIT License |
 
 
-### 102. vercel/next.js
+### 91. vercel/next.js
 
 **描述**: The React Framework
 
@@ -2248,7 +2006,7 @@
 | 许可证 | MIT License |
 
 
-### 103. nodejs/node
+### 92. nodejs/node
 
 **描述**: Node.js JavaScript runtime ✨🐢🚀✨
 
@@ -2262,7 +2020,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,472 |
+| Stars | 115,473 |
 | 语言 | JavaScript |
 | Forks | 34,558 |
 | Issues | 2,422 |
@@ -2270,7 +2028,7 @@
 | 许可证 | Other |
 
 
-### 104. mrdoob/three.js
+### 93. mrdoob/three.js
 
 **描述**: JavaScript 3D Library.
 
@@ -2284,15 +2042,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 110,640 |
+| Stars | 110,642 |
 | 语言 | JavaScript |
-| Forks | 36,258 |
+| Forks | 36,259 |
 | Issues | 607 |
 | Topics | 3d, augmented-reality, canvas, html5, javascript, svg, virtual-reality, webaudio, webgl, webgl2, webgpu, webxr |
 | 许可证 | MIT License |
 
 
-### 105. axios/axios
+### 94. axios/axios
 
 **描述**: Promise based HTTP client for the browser and node.js
 
@@ -2308,13 +2066,13 @@
 |------|------|
 | Stars | 108,564 |
 | 语言 | JavaScript |
-| Forks | 11,505 |
+| Forks | 11,504 |
 | Issues | 314 |
 | Topics | hacktoberfest, http-client, javascript, nodejs, promise |
 | 许可证 | MIT License |
 
 
-### 106. jaywcjlove/awesome-mac
+### 95. jaywcjlove/awesome-mac
 
 **描述**:  Now we have become very big, Different from the original idea. Collect premium software in various categories.
 
@@ -2328,7 +2086,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,303 |
+| Stars | 98,306 |
 | 语言 | JavaScript |
 | Forks | 7,350 |
 | Issues | 179 |
@@ -2336,7 +2094,7 @@
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 
-### 107. mui/material-ui
+### 96. mui/material-ui
 
 **描述**: Material UI: Comprehensive React component library that implements Google's Material Design. Free forever.
 
@@ -2350,7 +2108,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,733 |
+| Stars | 97,734 |
 | 语言 | JavaScript |
 | Forks | 32,783 |
 | Issues | 1,739 |
@@ -2358,7 +2116,7 @@
 | 许可证 | MIT License |
 
 
-### 108. microsoft/Web-Dev-For-Beginners
+### 97. microsoft/Web-Dev-For-Beginners
 
 **描述**: 24 Lessons, 12 Weeks, Get Started as a Web Developer
 
@@ -2372,7 +2130,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,199 |
+| Stars | 95,200 |
 | 语言 | JavaScript |
 | Forks | 15,082 |
 | Issues | 68 |
@@ -2380,7 +2138,7 @@
 | 许可证 | MIT License |
 
 
-### 109. sveltejs/svelte
+### 98. sveltejs/svelte
 
 **描述**: web development for the rest of us
 
@@ -2402,7 +2160,7 @@
 | 许可证 | MIT License |
 
 
-### 110. louislam/uptime-kuma
+### 99. louislam/uptime-kuma
 
 **描述**: A fancy self-hosted monitoring tool
 
@@ -2416,7 +2174,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,163 |
+| Stars | 82,162 |
 | 语言 | JavaScript |
 | Forks | 7,332 |
 | Issues | 674 |
@@ -2424,7 +2182,7 @@
 | 许可证 | MIT License |
 
 
-### 111. anuraghazra/github-readme-stats
+### 100. anuraghazra/github-readme-stats
 
 **描述**: :zap: Dynamically generated stats for your github readmes
 
@@ -2440,13 +2198,13 @@
 |------|------|
 | Stars | 78,147 |
 | 语言 | JavaScript |
-| Forks | 29,820 |
+| Forks | 29,821 |
 | Issues | 237 |
 | Topics | dynamic, profile-readme, readme-generator, readme-stats, serverless |
 | 许可证 | MIT License |
 
 
-### 112. typicode/json-server
+### 101. typicode/json-server
 
 **描述**: Get a full fake REST API with zero coding in less than 30 seconds (seriously)
 
@@ -2467,7 +2225,7 @@
 | 许可证 | Other |
 
 
-### 113. hakimel/reveal.js
+### 102. hakimel/reveal.js
 
 **描述**: The HTML Presentation Framework
 
@@ -2483,13 +2241,13 @@
 |------|------|
 | Stars | 70,495 |
 | 语言 | JavaScript |
-| Forks | 16,815 |
-| Issues | 884 |
+| Forks | 16,814 |
+| Issues | 882 |
 | Topics | presentations, slides, slideshow |
 | 许可证 | MIT License |
 
 
-### 114. juliangarnier/anime
+### 103. juliangarnier/anime
 
 **描述**: JavaScript animation engine
 
@@ -2511,7 +2269,29 @@
 | 许可证 | MIT License |
 
 
-### 115. webpack/webpack
+### 104. leonardomso/33-js-concepts
+
+**描述**: 📜 33 JavaScript concepts every developer should know.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 66,215 |
+| 语言 | JavaScript |
+| Forks | 9,197 |
+| Issues | 0 |
+| Topics | angular, concepts, es6, es6-javascript, hacktoberfest, javascript, javascript-closures, javascript-engines, javascript-programming, nodejs, primitive-types, programming, react |
+| 许可证 | MIT License |
+
+
+### 105. webpack/webpack
 
 **描述**: A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through "loaders", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.
 
@@ -2533,7 +2313,7 @@
 | 许可证 | MIT License |
 
 
-### 116. lodash/lodash
+### 106. lodash/lodash
 
 **描述**: A modern JavaScript utility library delivering modularity, performance, & extras.
 
@@ -2555,7 +2335,7 @@
 | 许可证 | Other |
 
 
-### 117. gorhill/uBlock
+### 107. gorhill/uBlock
 
 **描述**: uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
 
@@ -2577,7 +2357,7 @@
 | 许可证 | GNU General Public License v3.0 |
 
 
-### 118. jquery/jquery
+### 108. jquery/jquery
 
 **描述**: jQuery JavaScript Library
 
@@ -2599,7 +2379,7 @@
 | 许可证 | MIT License |
 
 
-### 119. jgraph/drawio-desktop
+### 109. jgraph/drawio-desktop
 
 **描述**: Official electron build of draw.io
 
@@ -2621,7 +2401,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 120. gatsbyjs/gatsby
+### 110. gatsbyjs/gatsby
 
 **描述**: The best React-based framework with performance, scalability and security built in.
 
@@ -2643,7 +2423,7 @@
 | 许可证 | MIT License |
 
 
-### 121. mozilla/pdf.js
+### 111. mozilla/pdf.js
 
 **描述**: PDF Reader in JavaScript
 
@@ -2664,7 +2444,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 122. TryGhost/Ghost
+### 112. TryGhost/Ghost
 
 **描述**: Independent technology for modern publishing, memberships, subscriptions and newsletters.
 
@@ -2686,7 +2466,7 @@
 | 许可证 | MIT License |
 
 
-### 123. prettier/prettier
+### 113. prettier/prettier
 
 **描述**: Prettier is an opinionated code formatter.
 
@@ -2700,7 +2480,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,491 |
+| Stars | 51,492 |
 | 语言 | JavaScript |
 | Forks | 4,641 |
 | Issues | 1,427 |
@@ -2708,7 +2488,7 @@
 | 许可证 | MIT License |
 
 
-### 124. poteto/hiring-without-whiteboards
+### 114. poteto/hiring-without-whiteboards
 
 **描述**: ⭐️  Companies that don't have a broken hiring process
 
@@ -2730,95 +2510,7 @@
 | 许可证 | MIT License |
 
 
-### 125. bigskysoftware/htmx
-
-**描述**: &lt;/&gt; htmx - high power tools for HTML
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 47,312 |
-| 语言 | JavaScript |
-| Forks | 1,562 |
-| Issues | 653 |
-| Topics | hateoas, html, htmx, hyperscript, javascript, rest |
-| 许可证 | Other |
-
-
-### 126. microsoft/monaco-editor
-
-**描述**: A browser based code editor
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 45,462 |
-| 语言 | JavaScript |
-| Forks | 3,972 |
-| Issues | 788 |
-| Topics | browser, editor, monaco-editor, typescript, vscode |
-| 许可证 | MIT License |
-
-
-### 127. google/zx
-
-**描述**: A tool for writing better scripts
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 45,103 |
-| 语言 | JavaScript |
-| Forks | 1,194 |
-| Issues | 29 |
-| Topics | bash, child-process, cli, exec, javascript, nodejs, pipe, shell, spawn |
-| 许可证 | Apache License 2.0 |
-
-
-### 128. meteor/meteor
-
-**描述**: Meteor, the JavaScript App Platform
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 44,769 |
-| 语言 | JavaScript |
-| Forks | 5,261 |
-| Issues | 328 |
-| Topics | build-system, framework, hacktoberfest, javascript, meteor, mongodb, nodejs, npm, react, reactive-programming, realtime, rpc, zero-configuration |
-| 许可证 | Other |
-
-
-### 129. avelino/awesome-go
+### 115. avelino/awesome-go
 
 **描述**: A curated list of awesome Go frameworks, libraries and software
 
@@ -2832,15 +2524,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 163,869 |
+| Stars | 163,870 |
 | 语言 | Go |
-| Forks | 12,933 |
+| Forks | 12,935 |
 | Issues | 165 |
 | Topics | awesome, awesome-list, go, golang, golang-library, hacktoberfest |
 | 许可证 | MIT License |
 
 
-### 130. golang/go
+### 116. golang/go
 
 **描述**: The Go programming language
 
@@ -2862,7 +2554,7 @@
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 
-### 131. fatedier/frp
+### 117. fatedier/frp
 
 **描述**: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
 
@@ -2876,7 +2568,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 104,046 |
+| Stars | 104,047 |
 | 语言 | Go |
 | Forks | 14,849 |
 | Issues | 45 |
@@ -2884,7 +2576,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 132. gin-gonic/gin
+### 118. gin-gonic/gin
 
 **描述**: Gin is a high-performance HTTP web framework written in Go. It provides a Martini-like API but with significantly better performance—up to 40 times faster—thanks to httprouter. Gin is designed for building REST APIs, web applications, and microservices.
 
@@ -2898,7 +2590,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 87,857 |
+| Stars | 87,858 |
 | 语言 | Go |
 | Forks | 8,546 |
 | Issues | 881 |
@@ -2906,7 +2598,7 @@
 | 许可证 | MIT License |
 
 
-### 133. gohugoio/hugo
+### 119. gohugoio/hugo
 
 **描述**: The world’s fastest framework for building websites.
 
@@ -2928,7 +2620,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 134. syncthing/syncthing
+### 120. syncthing/syncthing
 
 **描述**: Open Source Continuous File Synchronization
 
@@ -2942,7 +2634,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 79,482 |
+| Stars | 79,483 |
 | 语言 | Go |
 | Forks | 4,905 |
 | Issues | 395 |
@@ -2950,7 +2642,7 @@
 | 许可证 | Mozilla Public License 2.0 |
 
 
-### 135. junegunn/fzf
+### 121. junegunn/fzf
 
 **描述**: :cherry_blossom: A command-line fuzzy finder
 
@@ -2964,7 +2656,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,402 |
+| Stars | 77,403 |
 | 语言 | Go |
 | Forks | 2,682 |
 | Issues | 324 |
@@ -2972,7 +2664,7 @@
 | 许可证 | MIT License |
 
 
-### 136. jesseduffield/lazygit
+### 122. jesseduffield/lazygit
 
 **描述**: simple terminal UI for git commands
 
@@ -2986,7 +2678,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,398 |
+| Stars | 71,402 |
 | 语言 | Go |
 | Forks | 2,473 |
 | Issues | 873 |
@@ -2994,7 +2686,7 @@
 | 许可证 | MIT License |
 
 
-### 137. caddyserver/caddy
+### 123. caddyserver/caddy
 
 **描述**: Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
 
@@ -3008,7 +2700,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,524 |
+| Stars | 69,523 |
 | 语言 | Go |
 | Forks | 4,616 |
 | Issues | 252 |
@@ -3016,7 +2708,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 138. base/node
+### 124. base/node
 
 **描述**: Everything required to run your own Base node
 
@@ -3037,7 +2729,7 @@
 | 许可证 | MIT License |
 
 
-### 139. prometheus/prometheus
+### 125. prometheus/prometheus
 
 **描述**: The Prometheus monitoring system and time series database.
 
@@ -3059,7 +2751,7 @@
 | 许可证 | Apache License 2.0 |
 
 
-### 140. traefik/traefik
+### 126. traefik/traefik
 
 **描述**: The Cloud Native Application Proxy
 
@@ -3073,7 +2765,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 61,362 |
+| Stars | 61,364 |
 | 语言 | Go |
 | Forks | 5,789 |
 | Issues | 737 |
@@ -3081,7 +2773,7 @@
 | 许可证 | MIT License |
 
 
-### 141. usememos/memos
+### 127. usememos/memos
 
 **描述**: An open-source, self-hosted note-taking service. Your thoughts, your data, your control — no tracking, no ads, no subscription fees.
 
@@ -3103,7 +2795,7 @@
 | 许可证 | MIT License |
 
 
-### 142. pocketbase/pocketbase
+### 128. pocketbase/pocketbase
 
 **描述**: Open Source realtime backend in 1 file
 
@@ -3117,7 +2809,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,693 |
+| Stars | 55,694 |
 | 语言 | Go |
 | Forks | 3,065 |
 | Issues | 20 |
@@ -3125,7 +2817,7 @@
 | 许可证 | MIT License |
 
 
-### 143. rclone/rclone
+### 129. rclone/rclone
 
 **描述**: "rsync for cloud storage" - Google Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic, Wasabi, Google Cloud Storage, Azure Blob, Azure Files, Yandex Files
 
@@ -3139,15 +2831,15 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,218 |
+| Stars | 55,219 |
 | 语言 | Go |
-| Forks | 4,870 |
-| Issues | 1,125 |
+| Forks | 4,871 |
+| Issues | 1,126 |
 | Topics | azure-blob, azure-blob-storage, azure-files, backblaze-b2, cloud-storage, dropbox, encryption, ftp, fuse-filesystem, go, golang, google-cloud-storage, google-drive, onedrive, openstack-swift, rclone, s3, sftp, sync, webdav |
 | 许可证 | MIT License |
 
 
-### 144. ethereum/go-ethereum
+### 130. ethereum/go-ethereum
 
 **描述**: Go implementation of the Ethereum protocol
 
@@ -3163,13 +2855,13 @@
 |------|------|
 | Stars | 50,754 |
 | 语言 | Go |
-| Forks | 21,771 |
+| Forks | 21,772 |
 | Issues | 377 |
 | Topics | blockchain, ethereum, geth, go, p2p |
 | 许可证 | GNU Lesser General Public License v3.0 |
 
 
-### 145. cli/cli
+### 131. cli/cli
 
 **描述**: GitHub’s official command line tool
 
@@ -3183,37 +2875,59 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,291 |
+| Stars | 42,292 |
 | 语言 | Go |
-| Forks | 7,845 |
+| Forks | 7,846 |
 | Issues | 940 |
 | Topics | cli, git, github-api-v4, golang |
 | 许可证 | MIT License |
 
 
-### 146. gofiber/fiber
+### 132. chatboxai/chatbox
 
-**描述**: ⚡️ Express inspired web framework written in Go
+**描述**: Powerful AI Client
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: Trending in Go
+**发现原因**: Keyword: Claude
 
-**质量评分**: 85/100
+**质量评分**: 83/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 39,061 |
-| 语言 | Go |
-| Forks | 1,945 |
+| Stars | 38,349 |
+| 语言 | TypeScript |
+| Forks | 3,880 |
+| Issues | 1,033 |
+| Topics | assistant, chatbot, chatgpt, claude, copilot, deepseek, gemini, gpt, gpt-5, ollama, openai |
+| 许可证 | GNU General Public License v3.0 |
+
+
+### 133. chatanywhere/GPT_API_free
+
+**描述**: Free ChatGPT&DeepSeek API Key，免费ChatGPT&DeepSeek API。免费接入DeepSeek API和GPT4 API，支持 gpt | deepseek | claude | gemini | grok 等排名靠前的常用大模型。
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 83/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 35,856 |
+| 语言 | Python |
+| Forks | 2,532 |
 | Issues | 55 |
-| Topics | express, expressjs, fast, fiber, flexible, framework, friendly, go, golang, hacktoberfest, hacktoberfest2020, nodejs, performance, rest-api, web |
+| Topics | api, chatgpt, claude, deepseek, gemini, gpt, grok |
 | 许可证 | MIT License |
 
 
-### 147. 521xueweihan/HelloGitHub
+### 134. 521xueweihan/HelloGitHub
 
 **描述**: :octocat: 分享 GitHub 上有趣、入门级的开源项目。Share interesting, entry-level open source projects on GitHub.
 
@@ -3227,8 +2941,251 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 141,763 |
+| Stars | 141,766 |
 | 语言 | Python |
 | Forks | 11,085 |
 | Issues | 257 |
 | Topics | awesome, github, hellogithub, python |
+
+
+## ⭐ 中优先级推荐
+
+### 1. microsoft/markitdown
+
+**描述**: Python tool for converting files and office documents to Markdown.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 86,077 |
+| 语言 | Python |
+| Forks | 4,975 |
+| Issues | 423 |
+| Topics | autogen, autogen-extension, langchain, markdown, microsoft-office, openai, pdf |
+| 许可证 | MIT License |
+
+
+### 2. swisskyrepo/PayloadsAllTheThings
+
+**描述**: A list of useful payloads and bypass for Web Application Security and Pentest/CTF
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 74,813 |
+| 语言 | Python |
+| Forks | 16,565 |
+| Issues | 14 |
+| Topics | bounty, bugbounty, bypass, cheatsheet, enumeration, hacking, hacktoberfest, methodology, payload, payloads, penetration-testing, pentest, privilege-escalation, redteam, security, vulnerability, web-application |
+| 许可证 | MIT License |
+
+
+### 3. trekhleb/javascript-algorithms
+
+**描述**: 📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 195,447 |
+| 语言 | JavaScript |
+| Forks | 31,122 |
+| Issues | 387 |
+| Topics | algorithm, algorithms, computer-science, data-structures, interview, interview-preparation, javascript, javascript-algorithms |
+| 许可证 | MIT License |
+
+
+### 4. Chalarangelo/30-seconds-of-code
+
+**描述**: Coding articles to level up your development skills
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 126,588 |
+| 语言 | JavaScript |
+| Forks | 12,424 |
+| Issues | 2 |
+| Topics | astro, awesome-list, css, education, es6-javascript, git, html, javascript, learn-to-code, learning-resources, nodejs, programming, snippets |
+| 许可证 | Creative Commons Attribution 4.0 International |
+
+
+### 5. expressjs/express
+
+**描述**: Fast, unopinionated, minimalist web framework for node.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,629 |
+| 语言 | JavaScript |
+| Forks | 22,333 |
+| Issues | 183 |
+| Topics | express, javascript, nodejs, server |
+| 许可证 | MIT License |
+
+
+### 6. h5bp/html5-boilerplate
+
+**描述**: A professional front-end template for building fast, robust, and adaptable web apps or sites.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 57,386 |
+| 语言 | JavaScript |
+| Forks | 12,320 |
+| Issues | 22 |
+| Topics | best-practices, css, html, html5, html5-boilerplate, javascript, robust |
+| 许可证 | MIT License |
+
+
+### 7. nektos/act
+
+**描述**: Run your GitHub Actions locally 🚀
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,446 |
+| 语言 | Go |
+| Forks | 1,833 |
+| Issues | 281 |
+| Topics | ci, devops, github-actions, golang |
+| 许可证 | MIT License |
+
+
+### 8. minio/minio
+
+**描述**: MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 60,005 |
+| 语言 | Go |
+| Forks | 6,933 |
+| Issues | 79 |
+| Topics | amazon-s3, cloud, cloudnative, cloudstorage, go, k8s, kubernetes, multi-cloud, multi-cloud-kubernetes, objectstorage, s3, storage |
+| 许可证 | GNU Affero General Public License v3.0 |
+
+
+### 9. jesseduffield/lazydocker
+
+**描述**: The lazier way to manage everything docker
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 49,445 |
+| 语言 | Go |
+| Forks | 1,565 |
+| Issues | 256 |
+| 许可证 | MIT License |
+
+
+### 10. AlistGo/alist
+
+**描述**: 🗂️A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs. / 一个支持多存储的文件列表/WebDAV程序，使用 Gin 和 Solidjs。
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 48,943 |
+| 语言 | Go |
+| Forks | 7,993 |
+| Issues | 579 |
+| Topics | file-server, gin, golang, onedrive, solidjs, webdav |
+| 许可证 | GNU Affero General Public License v3.0 |
+
+
+### 11. voideditor/void
+
+**描述**: 
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 28,167 |
+| 语言 | TypeScript |
+| Forks | 2,294 |
+| Issues | 309 |
+| Topics | chatgpt, claude, copilot, cursor, developer-tools, editor, llm, open-source, openai, visual-studio-code, vscode, vscode-extension |
+| 许可证 | Apache License 2.0 |
