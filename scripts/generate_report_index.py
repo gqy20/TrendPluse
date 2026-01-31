@@ -276,19 +276,17 @@ def sync_reports_to_docs(reports_dir: Path, docs_reports_dir: Path) -> None:
 def sync_discovery_reports_to_docs(reports_dir: Path, docs_dir: Path) -> None:
     """同步发现报告到 docs 目录
 
+    注意：发现报告不再复制到 docs 目录，只保留在 reports/discovery/。
+    docs/discovery.md 索引页面提供历史记录的概述。
+
     Args:
         reports_dir: 源报告目录
-        docs_dir: 目标文档目录
+        docs_dir: 目标文档目录（未使用，保留参数以兼容）
     """
-    discovery_dir = reports_dir / "discovery"
-    if not discovery_dir.exists():
-        return
-
-    # 复制发现报告
-    for report_file in discovery_dir.glob("discovery-*.md"):
-        dest_file = docs_dir / report_file.name
-        dest_file.write_text(report_file.read_text(encoding="utf-8"), encoding="utf-8")
-        print(f"已复制发现报告: {report_file.name}")
+    # 不再同步发现报告到 docs 目录
+    # 发现报告内容较大，不适合作为 MkDocs 页面
+    # 详情请查看 reports/discovery/ 目录中的 JSON 文件
+    pass
 
 
 def main():
