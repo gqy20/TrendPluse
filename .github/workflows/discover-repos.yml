@@ -1,9 +1,9 @@
 name: 发现热门项目
 
 on:
-  # 每周 UTC 周一 00:10 运行 (北京时间周一 08:10)
+  # 每天 UTC 19:00 运行 (北京时间凌晨 3:00)
   schedule:
-    - cron: "10 0 * * 1"
+    - cron: "0 19 * * *"
 
   # 支持手动触发
   workflow_dispatch:

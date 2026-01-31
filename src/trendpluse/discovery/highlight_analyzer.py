@@ -34,7 +34,7 @@ class ProjectHighlight(BaseModel):
     )
     use_cases: list[str] = Field(
         description="适用场景列表",
-        min_length=0,
+        min_length=1,
         max_length=5,
     )
 
@@ -142,12 +142,12 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
 请分析并返回 ProjectHighlight，包含以下字段：
 1. recommendation_reason: 推荐理由（1-2句话，说明为什么推荐这个项目及其独特价值）
 2. technical_highlights: 技术亮点列表（3-5个bullet points，突出技术特色）
-3. use_cases: 适用场景列表（2-3个bullet points，说明适合什么场景使用）
+3. use_cases: 适用场景列表（必须包含 1-3个bullet points，说明适合什么场景使用）
 
 注意：
 - 推荐理由要具体，避免空泛
 - 技术亮点要基于项目描述和Topics推断
-- 适用场景要实用，考虑企业/个人开发者
+- **适用场景必须至少提供 1 个**，考虑企业/个人开发者场景
 - 用中文回复
 """
 
