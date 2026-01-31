@@ -87,6 +87,7 @@ class DiscoveryReporter:
             格式化的文本行列表
         """
         lines = [
+            "",
             f"### {index}. {project.repo}",
             "",
             f"**描述**: {project.description}",
