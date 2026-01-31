@@ -5,6 +5,9 @@
 
 import re
 
+# Issue 数据需要延迟导入以避免循环导入
+from typing import TYPE_CHECKING
+
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
@@ -18,6 +21,9 @@ from trendpluse.utils.formatters import (
     get_impact_emoji,
     get_release_type_emoji,
 )
+
+if TYPE_CHECKING:
+    from trendpluse.models.issue import IssueData
 
 # 默认报告 URL 模板
 DEFAULT_REPORT_URL_TEMPLATE = "https://home.gqy20.top/TrendPluse/reports/report-{date}/"
@@ -111,7 +117,20 @@ class FeishuFormatter:
                 )
             )
 
-        # 7. 统计信息 - 使用折叠面板
+        # 7. Issue 分析（如果有）- 使用折叠面板
+        if report.issues:
+            elements.append({"tag": "hr"})
+            issues_content = self._generate_issues_content(report.issues)
+            elements.append(
+                self._create_collapsible_panel(
+                    title=f"🐛 Issue 分析 ({report.issues.total_count}个)",
+                    content=issues_content,
+                    expanded=False,
+                    icon="down-small-ccm_outlined",
+                )
+            )
+
+        # 8. 统计信息 - 使用折叠面板
         elements.append({"tag": "hr"})
         stats_content = self._generate_stats_content(report.stats)
         elements.append(
@@ -519,6 +538,69 @@ class FeishuFormatter:
 
         return "".join(lines)
 
+    def _generate_issues_content(self, issues: "IssueData") -> str:
+        """生成 Issue 分析内容（不包含外层标题，用于折叠面板）
+
+        Args:
+            issues: IssueData 对象
+
+        Returns:
+            Markdown 格式的内容字符串
+        """
+        lines: list[str] = []
+
+        # 总览
+        lines.append("**总览**\n\n")
+        lines.append(f"- **总 Issue 数**: {issues.total_count}\n")
+        analyzed_count = (
+            issues.bug_reports
+            + issues.feature_requests
+            + issues.questions
+            + issues.discussions
+        )
+        lines.append(f"- **已分析**: {analyzed_count}\n")
+        lines.append(f"  - Bug 报告: {issues.bug_reports}\n")
+        lines.append(f"  - 功能请求: {issues.feature_requests}\n")
+        lines.append(f"  - 问题: {issues.questions}\n")
+        lines.append(f"  - 讨论: {issues.discussions}\n")
+
+        # 情绪分布
+        if issues.sentiment_distribution:
+            lines.append("\n**情绪分布**\n\n")
+            positive = issues.sentiment_distribution.get("positive", 0)
+            neutral = issues.sentiment_distribution.get("neutral", 0)
+            negative = issues.sentiment_distribution.get("negative", 0)
+
+            lines.append(f"- 😊 正面: {positive}\n")
+            lines.append(f"- 😐 中性: {neutral}\n")
+            lines.append(f"- 😞 负面: {negative}\n")
+
+        # 痛点排行（显示 TOP 3）
+        if issues.top_pain_points:
+            lines.append("\n**用户痛点 TOP 3**\n\n")
+            for i, pain_point in enumerate(issues.top_pain_points[:3], 1):
+                # 计算情绪 emoji
+                avg_sentiment = pain_point.avg_sentiment
+                if avg_sentiment > 0.3:
+                    sentiment_emoji = "😊"
+                elif avg_sentiment < -0.3:
+                    sentiment_emoji = "😞"
+                else:
+                    sentiment_emoji = "😐"
+
+                # 格式化仓库名称（最多显示 2 个）
+                repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
+                if len(pain_point.affected_repos) > 2:
+                    repos_str += f" (+{len(pain_point.affected_repos) - 2})"
+
+                lines.append(
+                    f"{i}. **{pain_point.topic}** ({pain_point.count}次, "
+                    f"{sentiment_emoji} {avg_sentiment:.2f})\n"
+                )
+                lines.append(f"   受影响: {repos_str}\n")
+
+        return "".join(lines)
+
     def _generate_stats_content(self, stats: dict) -> str:
         """生成统计信息内容（不包含外层标题，用于折叠面板）
 
@@ -533,7 +615,9 @@ class FeishuFormatter:
         content += f"• 分析 PR 数: {stats.get('total_prs_analyzed', 0)}\n"
         content += f"• 高影响信号: {stats.get('high_impact_signals', 0)}\n"
         content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
-        content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}"
+        content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}\n"
+        content += f"• Issue 总数: {stats.get('total_issues', 0)}\n"
+        content += f"• 已分析 Issue 数: {stats.get('total_issues_analyzed', 0)}"
         return content
 
     def _get_type_emoji(self, signal_type: str) -> str:
