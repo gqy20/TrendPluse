@@ -118,6 +118,11 @@ warn_no_return = true
 follow_imports = "normal"
 strict_optional = true
 
+# 忽略 freezegun 的类型问题（第三方库没有类型存根）
+[[tool.mypy.overrides]]
+module = "freezegun"
+ignore_missing_imports = true
+
 # 忽略没有 stubs 的第三方库
 [[tool.mypy.overrides]]
 module = [
