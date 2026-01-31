@@ -4,7 +4,7 @@
 
 ## 最新报告
 
-### [2026-01-31](discovery-reports/discovery-2026-01-31.md)
+### [2026-01-31](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-2026-01-31.md)
 
 **发现概览**:
 - 总发现数: 200
@@ -24,7 +24,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
-| 2026-01-31 | 200 | 147 | [查看](discovery-reports/discovery-2026-01-31.md) |
+| 2026-01-31 | 200 | 147 | [查看](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-2026-01-31.md) |
 
 ## 关于发现功能
 
