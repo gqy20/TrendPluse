@@ -6,7 +6,7 @@
 |------|------|
 | 总发现数 | 200 |
 | 通过质量评估 | 200 |
-| 高优先级 | 134 |
+| 高优先级 | 133 |
 | 去重移除 | 36 |
 | 已在监控 | 19 |
 
@@ -15,13 +15,17 @@
 
 | 分类 | 数量 |
 |------|------|
-| 🤖 AI Agents | 21 |
+| 🤖 AI Agents | 25 |
 | 🔍 RAG/检索 | 18 |
 | 💬 LLM 界面 | 28 |
+| 🧠 机器学习框架 | 12 |
 | 🛠️ 开发工具 | 17 |
-| 📊 数据/基础设施 | 7 |
+| ⚙️ DevOps/基础设施 | 14 |
+| 📈 监控/观测 | 2 |
+| 🌐 Web 框架 | 14 |
+| 📊 数据/基础设施 | 5 |
 | 📚 学习资源 | 8 |
-| 📁 其他 | 84 |
+| 📁 其他 | 62 |
 
 ## 📑 快速导航
 
@@ -29,13 +33,17 @@
 - [🤖 AI Agents](#ai agents)
 - [🔍 RAG/检索](#rag-检索)
 - [💬 LLM 界面](#llm 界面)
+- [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
+- [⚙️ DevOps/基础设施](#devops-基础设施)
+- [📈 监控/观测](#监控-观测)
+- [🌐 Web 框架](#web 框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (21 个项目)
+## 🤖 AI Agents (25 个项目)
 
 
 ### 🌟 高优先级
@@ -55,28 +63,28 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,465 |
+| Stars | 122,491 |
 | 语言 | Python |
-| Forks | 17,286 |
-| Issues | 259 |
+| Forks | 17,294 |
+| Issues | 265 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标），提供类似 ChatGPT 的现代化交互体验，支持 Ollama、OpenAI API 等多种后端。其核心优势在于完全自托管部署、开箱即用的 RAG 能力以及企业级功能（用户管理、权限控制），是企业和个人开发者构建私有 AI 应用的理想选择。
+Open WebUI 是目前最热门的开源 LLM Web 界面之一，拥有超过 12.2 万 Stars。它的独特价值在于提供 ChatGPT 风格的友好交互体验，同时支持完全本地化部署（搭配 Ollama）和企业级功能（如 RAG 和 MCP 集成），是自托管 AI 界面的最佳选择。
 
 **技术亮点**:
-- 🔌 多后端支持：原生支持 Ollama、OpenAI API、MCP（模型上下文协议）等多种 LLM 后端，灵活切换
-- 🔍 内置 RAG 引擎：开箱即用的检索增强生成能力，支持文档上传、知识库构建和智能检索
-- 🏢 企业级功能：完整的用户认证、权限管理、多租户支持，适合团队协作场景
-- 🎨 现代化 UI/UX：ChatGPT 风格的对话界面，支持代码高亮、流式输出、语音输入等
-- 🚀 自托管部署：完全本地化运行，数据私有可控，支持 Docker 一键部署
+- 🤖 多模型后端支持：兼容 Ollama、OpenAI API 等多种 LLM 服务提供商
+- 🔒 完全自托管：可本地部署，数据隐私可控，无需依赖云端服务
+- 📚 内置 RAG 能力：支持文档上传与检索增强生成，实现知识库问答
+- 🎨 ChatGPT 级 UI 体验：现代化、响应式的 Web 界面，支持会话管理
+- 🔌 MCP 与 OpenAPI 集成：支持模型上下文协议和第三方 API 扩展
 
 **适用场景**:
-- 🏢 企业私有 AI 助手：在私有服务器部署，利用企业内部知识库（通过 RAG）构建安全的 AI 对话系统
-- 👨‍💻 个人 AI 实验平台：开发者本地运行 Ollama 等开源模型，测试和调试 LLM 应用
-- 🎓 教育/培训场景：学校或培训机构构建受控的 AI 学习环境，支持多用户管理和内容审核
+- 🏢 企业内部 AI 知识库：结合 RAG 功能，构建企业私有文档问答系统
+- 💻 个人开发者本地 LLM 工作台：搭配 Ollama 在本地运行大模型，保护数据隐私
+- 🎓 教育/研究机构：为学生或研究人员提供统一的 AI 实验环境，无需暴露敏感数据
 
 
 
@@ -94,28 +102,28 @@ Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标）
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,488 |
+| Stars | 72,507 |
 | 语言 | Python |
-| Forks | 8,022 |
-| Issues | 3,150 |
+| Forks | 8,024 |
+| Issues | 3,151 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, deep-learning, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, multi-agent, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融合了先进的 RAG 技术与 Agent 能力，为大语言模型构建了卓越的上下文层。该项目拥有超过 7.2 万颗星标，集成了文档解析、GraphRAG、多智能体协作等前沿技术，是构建企业级 AI 应用和知识库系统的理想选择。
+RAGFlow 是一款领先的开源 RAG（检索增强生成）引擎，它将先进的 RAG 技术与 Agent 能力深度融合，为 LLM 构建卓越的上下文层。拥有超过 7.2 万颗星标，支持 GraphRAG、多智能体协作、深度研究等前沿特性，是企业构建智能知识库和 AI 应用的理想选择。
 
 **技术亮点**:
-- 深度文档解析与理解能力，支持复杂文档的智能处理
-- 融合 RAG 与 Agent 技术，提供增强的检索增强生成能力
-- 支持 GraphRAG 知识图谱技术，提升知识关联与推理能力
-- 集成多智能体系统（Multi-Agent），支持复杂的 Agentic 工作流
-- 广泛的生态兼容性，支持 OpenAI、Ollama、DeepSeek、MCP 等主流 LLM 平台
+- 将 RAG 与 Agent 能力深度融合，支持多智能体协作工作流
+- 集成 GraphRAG 技术，提供更强大的知识图谱增强检索能力
+- 强大的文档解析与理解能力，支持复杂文档格式处理
+- 深度研究（Deep Research）模式，结合 DeepSeek R1 等先进模型
+- 支持 MCP 协议和 Ollama，兼容 OpenAI 等多种 LLM 后端
 
 **适用场景**:
-- 企业级智能知识库系统构建，实现文档智能检索与问答
-- AI 助手与智能客服开发，提供基于企业文档的精准回答
-- 复杂研究与深度分析场景，利用 GraphRAG 和多智能体协作处理复杂任务
+- 企业知识库构建：企业可利用 RAGFlow 构建智能文档检索系统，让员工通过自然语言快速获取企业内部知识
+- 智能客服与问答系统：将产品文档、FAQ 等接入 RAGFlow，实现准确、基于事实的智能客户服务
+- 智能研究助手：研究人员可使用深度研究模式，快速检索和分析大量学术文献、报告等资料
 
 
 
@@ -133,28 +141,28 @@ RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,617 |
+| Stars | 78,712 |
 | 语言 | TypeScript |
-| Forks | 5,882 |
-| Issues | 152 |
+| Forks | 5,891 |
+| Issues | 153 |
 | Topics | ai, ai-agents, ai-crawler, ai-scraping, ai-search, crawler, data-extraction, html-to-markdown, llm, markdown, scraper, scraping, web-crawler, web-data, web-data-extraction, web-scraper, web-scraping, web-search, webscraping |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Firecrawl 是一个强大的 Web 数据 API，专门为 AI 应用设计。它能够将整个网站转换为 LLM 可用的 Markdown 或结构化数据，解决了 AI 应用在处理 Web 内容时的数据获取和格式化难题。凭借 78k+ stars 的社区认可，它填补了 Web 抓取与 AI 应用之间的关键空白。
+Firecrawl 是专为 AI 和 LLM 设计的网页数据提取 API，能将整个网站转换为 LLM 友好的 Markdown 或结构化数据。凭借 7.8万+ stars 的热度，它是目前 AI 代理和数据提取领域最受欢迎的开源解决方案，完美填补了非结构化网页数据与 AI 应用之间的鸿沟。
 
 **技术亮点**:
-- 专为 AI/LLM 应用设计，直接输出 LLM-ready 格式的 Markdown 或结构化数据
-- 支持将整个网站（包括多页面）批量转换为统一格式，而非单页面抓取
-- 提供完整的 Web 数据处理管道：爬取 → 清理 → 转换 → 结构化
-- TypeScript 构建的现代化 API，易于集成到 AI agents 和 AI 应用中
-- 开源且采用 AGPL v3.0 许可证，适合需要透明性和可控性的 AI 项目
+- 专为 LLM 优化的数据输出格式（Markdown/结构化数据），无需额外清洗即可输入大语言模型
+- 支持整站爬取和批量处理，可处理复杂的 JavaScript 渲染页面和动态内容
+- 内置 HTML 到 Markdown 的高质量转换引擎，保留文档结构和语义信息
+- 提供 RESTful API 和多种语言 SDK，易于集成到 AI 代理和工作流中
+- 支持智能数据提取和网页搜索功能，超越传统爬虫工具的局限
 
 **适用场景**:
-- 企业 AI 应用开发：构建需要基于 Web 内容训练或检索的 RAG 系统和 AI Agent
-- 个人 AI 项目：开发者快速集成 Web 数据源到自己的 LLM 应用或 Chatbot 中
-- 数据分析与研究：将网站内容转换为结构化数据进行自然语言处理和知识图谱构建
+- 构建 AI 代理和聊天机器人：快速获取网页知识库，为 RAG 系统提供高质量训练数据
+- 企业数据采集与分析：将竞争对手网站、行业报告等网页内容转换为可分析的结构化数据
+- 自动化内容聚合：为新闻聚合、市场监控等应用提供实时的网页数据源
 
 
 
@@ -172,28 +180,28 @@ Firecrawl 是一个强大的 Web 数据 API，专门为 AI 应用设计。它能
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,014 |
+| Stars | 54,027 |
 | 语言 | JavaScript |
-| Forks | 5,807 |
-| Issues | 270 |
+| Forks | 5,809 |
+| Issues | 271 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
 
 ---
 
-AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检索增强生成）、AI 智能体、无代码构建器和 MCP 兼容性等企业级特性。作为拥有 5.4 万+ star 的明星项目，它既支持桌面端又支持 Docker 部署，既可连接本地大模型（Ollama、LM Studio 等）也能使用云端 API，为企业与个人开发者提供了一站式私有化 AI 解决方案。
+AnythingLLM 是一个功能完备的开源 AI 应用平台，将 RAG、AI Agents、向量数据库等核心能力集成于一体，同时支持本地部署和云端多种 LLM。其独特价值在于提供了开箱即用的企业级 AI 解决方案，54k+ stars 证明了其在开发者社区中的高度认可和可靠性，适合快速搭建私有化 AI 助手而无需从零开发各个模块。
 
 **技术亮点**:
-- 内置 RAG 引擎和向量数据库，支持文档上传、网页抓取和知识库管理
-- 无代码 AI Agent 构建器，支持拖拽式创建自定义智能体和工作流
-- 广泛的模型兼容性：支持 Ollama、DeepSeek、Llama3、Qwen3、Kimi、Moonshot 等主流本地及云端模型
-- MCP（Model Context Protocol）服务器兼容，支持与 AI 助手进行工具集成
-- 提供 Desktop 应用和 Docker 容器多种部署方式，支持完全离线的本地化运行
+- ✅ 内置 RAG (检索增强生成) 引擎，支持向量数据库和网页抓取，可轻松构建知识库问答系统
+- ✅ No-code Agent 构建器，零代码即可创建和定制 AI 智能体，降低 AI 应用开发门槛
+- ✅ MCP (Model Context Protocol) 兼容性，支持丰富的 MCP 服务器生态，扩展能力强
+- ✅ 多模态支持 & 多 LLM 集成，兼容 Ollama、DeepSeek、Kimi、Llama3、Qwen3 等主流模型
+- ✅ 灵活部署方式，支持桌面应用和 Docker 容器化部署，满足本地化与云端不同需求
 
 **适用场景**:
-- 企业知识管理：搭建企业级 AI 知识库和客服助手，支持文档上传、网页抓取和私有化部署
-- 开发者工具链：通过 MCP 兼容性集成 AI Agent 到现有工作流，构建自动化开发助手
-- 个人 AI 助手：在本地部署个人 AI 聊天机器人，支持多模态交互和本地 LLM 完全离线使用
+- 🏢 **企业知识库搭建**：利用 RAG 能力快速构建企业内部文档、知识库的智能问答系统，支持私有化部署保障数据安全
+- 💼 **个人开发者 AI 助手**：通过 No-code 构建器快速创建个性化的 AI Agents，集成到工作流中提升效率
+- 🔧 **本地 LLM 应用开发**：结合 Ollama、LM Studio 等本地模型，构建完全离线的 AI 应用，保护隐私且无 API 调用成本
 
 
 
@@ -211,28 +219,28 @@ AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,494 |
+| Stars | 42,503 |
 | 语言 | Go |
-| Forks | 3,500 |
-| Issues | 156 |
+| Forks | 3,503 |
+| Issues | 159 |
 | Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
 ---
 
-LocalAI 是目前最完整的开源 OpenAI 替代方案之一，无需 GPU 即可在消费级硬件上运行，支持文本、图像、音频、视频等多种 AI 模型的本地化部署，为企业和开发者提供了完全自主可控的 AI 基础设施，既保护数据隐私又大幅降低使用成本。
+LocalAI 是一个极具价值的开源项目，它提供了 OpenAI、Claude 等商业 AI 服务的完全免费替代方案。作为 OpenAI API 的即插即用替代品，它支持在消费级硬件上本地运行，无需 GPU，大大降低了 AI 应用的部署门槛和成本，特别适合注重数据隐私和成本控制的场景。
 
 **技术亮点**:
-- 零 GPU 依赖：在普通消费级硬件上运行，支持 gguf、transformers、diffusers 等多种模型格式
-- OpenAI API 兼容：作为即插即用的替代品，无需修改现有代码即可迁移
-- 全模态 AI 支持：涵盖文本生成（LLaMA、Mistral、Gemma 等）、图像生成（Stable Diffusion）、音频生成（MusicGen、TTS）、语音克隆、视频生成及目标检测
-- 分布式与去中心化：基于 libp2p 实现 P2P 推理和分布式计算，支持 MCP 协议
-- 开源与可扩展：MIT 许可证，架构轻量，易于扩展和定制
+- ● 完全兼容 OpenAI API，可作为 Drop-in replacement 无缝替换现有代码，无需修改调用逻辑
+- ● 支持消费级硬件运行，无需 GPU，大幅降低硬件成本和部署门槛
+- ● 多模态 AI 能力：支持文本、音频、图像、视频生成，以及语音克隆、目标检测等
+- ● 丰富的模型生态：兼容 gguf、transformers、diffusers 等多种模型格式，支持 Llama、Mistral、Stable Diffusion 等主流模型
+- ● 分布式与去中心化架构：支持 P2P、libp2p、分布式推理和 MCP 协议，可实现边缘计算和集群部署
 
 **适用场景**:
-- 企业内部 AI 应用部署：在本地或私有云环境中构建智能客服、文档分析、代码辅助等应用，确保数据不外泄且无 API 调用成本
-- 个人开发者 AI 工具开发：快速搭建本地 AI 创作工具（如文本生成、图像编辑、音频合成），无需依赖外部服务
-- 离线/边缘 AI 场景：在无网络或网络受限环境（如工控设备、边缘节点）部署 AI 能力，支持分布式推理
+- ● 企业私有化部署：在本地服务器运行 AI 服务，确保敏感数据不外泄，满足合规要求
+- ● 个人开发者本地开发：在个人电脑上测试和开发 AI 应用，无需调用付费 API，节省开发成本
+- ● 边缘计算场景：在资源受限的设备上部署 AI 能力，无需依赖云端服务
 
 
 
@@ -250,28 +258,28 @@ LocalAI 是目前最完整的开源 OpenAI 替代方案之一，无需 GPU 即�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,678 |
+| Stars | 71,745 |
 | 语言 | TypeScript |
-| Forks | 14,567 |
-| Issues | 1,199 |
+| Forks | 14,571 |
+| Issues | 1,174 |
 | Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
 | 许可证 | Other |
 
 ---
 
-LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现、构建到协作的完整 AI Agent 生态系统。凭借 7.1 万+ GitHub Stars 的社区认可度和对 GPT、Claude、DeepSeek 等主流大模型的全面支持，它为个人和企业提供了未来工作方式的最佳实践。
+LobeHub是一个创新的AI智能体协作平台，拥有超过7万颗星标，证明了其在AI Agent领域的卓越影响力。该项目提供了企业级的智能体生态系统，让个人和企业都能轻松构建、发现和协作AI智能体团队，是AI时代的工作与生活必备工具。
 
 **技术亮点**:
-- 多智能体协作系统：支持多个 AI Agent 作为工作单元协同工作，实现复杂任务的自动化处理和团队化作业
-- 零门槛 Agent 团队设计：提供直观的可视化配置界面，让非技术用户也能轻松构建和管理专属的 Agent 团队
-- 多模型深度集成：原生支持 ChatGPT、Claude、Gemini、DeepSeek、OpenAI 等主流 AI 模型，实现模型间的无缝切换和协同
-- MCP（Model Context Protocol）协议支持：采用标准化协议实现知识库和工具的统一管理与扩展
-- TypeScript 技术栈：基于现代化 TypeScript 构建的高性能、类型安全的前端架构
+- • 多智能体协作系统 - 支持多个AI Agent协同工作，实现复杂任务的自动化处理
+- • 智能体团队设计 - 提供直观的界面让用户轻松构建和管理AI智能体团队
+- • 全方位AI模型支持 - 集成ChatGPT、Claude、DeepSeek、Gemini、GPT、OpenAI等主流大语言模型
+- • TypeScript技术栈 - 采用现代化的TypeScript开发，确保代码质量和可维护性
+- • 知识库与MCP协议 - 内置知识库管理系统，支持MCP协议实现更强大的智能体交互能力
 
 **适用场景**:
-- 企业级 AI 团队构建：为企业打造专属的 AI Agent 协作团队，自动化处理客服、数据分析、文档生成等业务场景
-- 个人 AI 工作助手：个人用户可配置多个专业 Agent（如编程助手、写作助手、学习助手），提升日常工作效率
-- 知识库集成与智能问答：结合 MCP 协议和知识库功能，快速构建企业内部智能知识管理和检索系统
+- • 企业级AI智能体团队部署 - 企业可以构建专属的AI智能体协作系统，自动化处理业务流程、客户服务、数据分析等任务
+- • 个人开发者AI工具集成 - 开发者可以利用该平台快速集成多种AI模型，构建个人AI助手和自动化工作流
+- • 知识管理与智能问答 - 组织可以构建基于知识库的智能问答系统，实现企业知识的智能化检索和应用
 
 
 
@@ -289,28 +297,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 66,659 |
+| Stars | 66,673 |
 | 语言 | Python |
-| Forks | 8,119 |
+| Forks | 8,120 |
 | Issues | 883 |
 | Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-LlamaFactory 是 ACL 2024 认可的统一高效微调框架，支持 100+ 种大语言模型和视觉语言模型，是目前最全面的企业级 LLM 微调解决方案。其独特价值在于整合了完整的微调生态系统（训练、推理、评估、部署）并采用模块化设计，大幅降低了企业和个人开发者使用 SOTA 技术的门槛。
+LlamaFactory 是一个统一高效的LLM/VLM微调框架，入选ACL 2024，支持100+种大语言模型的微调。该项目最大的独特价值在于通过单一框架整合了从模型训练到RLHF的全流程，支持LoRA、QLoRA、MoE、量化等多种先进技术，同时提供了Web UI和命令行两种操作方式，极大降低了大模型微调的技术门槛，适合从科研到生产的各种场景。
 
 **技术亮点**:
-- 统一支持 100+ LLMs 和 VLMs，包括 Llama3、Qwen、Gemma、DeepSeek 等主流模型
-- 集成多种高效微调技术：LoRA、QLoRA、MoE、量化、PEFT 等前沿方法
-- 提供完整工作流支持：指令微调、Agent 训练、RLHF 强化学习对齐
-- 模块化架构设计，支持零代码 GUI 和命令行两种操作方式
-- 经过 ACL 2024 学术验证的技术方案，具备工业级的可靠性和性能表现
+- 支持100+种LLM和VLM模型，包括Llama 3、Gemma、Qwen、DeepSeek等主流开源模型
+- 集成多种高效微调技术：LoRA、QLoRA、全参数微调、MoE混合专家模型
+- 完整覆盖训练流程：指令微调、偏好对齐、RLHF强化学习、DPO/PPO等
+- 支持多种量化方案和推理加速，降低显存需求，适配消费级显卡
+- 提供可视化Web UI界面和灵活的API接口，开箱即用，无需编码即可微调
 
 **适用场景**:
-- 企业级应用：需要针对特定领域（如医疗、金融、法律）定制大模型的企业，可快速进行专业数据微调
-- 个人开发者/研究者：想要实验不同模型架构和微调方法的研究人员，提供统一的实验平台
-- LLM 应用开发：构建基于 LLM 的智能应用（如 Agent 系统），需要进行模型定制和优化的开发团队
+- 企业开发者：快速基于开源大模型（如Llama 3、Qwen）微调垂直领域的专属模型，用于客服机器人、知识问答、代码助手等业务场景
+- 科研人员：进行大模型指令微调、对齐和RLHF研究，探索新型训练方法，发表学术论文
+- 个人开发者/AI爱好者：在消费级显卡上通过QLoRA和量化技术低成本微调7B/13B等模型，构建个人AI助手或特定任务模型
 
 
 
@@ -328,28 +336,28 @@ LlamaFactory 是 ACL 2024 认可的统一高效微调框架，支持 100+ 种大
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,136 |
+| Stars | 45,141 |
 | 语言 | Java |
-| Forks | 15,797 |
+| Forks | 15,798 |
 | Issues | 44 |
 | Topics | activiti, agent, ai, aiflow, ant-design-vue, antd, codegenerator, deepseek, flowable, langchain4j, llm, low-code, mcp, mybatis-plus, rag, spring-ai, springboot, springboot3, springcloud, vue3 |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 证明其企业级实力。该项目将低代码开发与 AI 技术深度融合，通过强大的代码生成器和全栈 AI 应用能力，帮助企业在保持开发灵活性的同时显著降低开发成本（60%+），是目前市场上少有的真正落地的 AI 低代码企业级解决方案。
+JeecgBoot 是国内领先的开源 AI 低代码平台，凭借 45k+ stars 的强大社区基础，首创性地将 AI 能力与企业级低代码开发完美融合。它不仅能通过代码生成器实现前后端一键生成提升开发效率，更集成了 LLM、RAG、AI 助手等前沿 AI 技术，为企业构建智能化应用提供了完整解决方案，是目前少有的将 AI 赋能真正落实的开发平台。
 
 **技术亮点**:
-- 【AI 全栈能力】集成 LangChain4j、Spring AI、DeepSeek 等 LLM 技术，提供 AI 模型、RAG 知识库、AI 助手、MCP 协议、流程编排（AI Flow）等完整 AI 应用生态
-- 【强大代码生成器】支持前后端一键生成，无需手写代码即可快速构建业务系统，配合 MyBatis-Plus 等持久层框架实现高效开发
-- 【现代化技术栈】基于 SpringBoot 3、Spring Cloud、Vue 3 + Ant Design Vue 构建微服务架构，支持 Flowable/Activiti 工作流引擎
-- 【智能交互体验】创新性实现聊天式业务操作，通过对话完成复杂业务流程，降低系统使用门槛
-- 【企业级特性】支持知识库管理、Agent 智能体、插件系统、MCP 协议扩展，满足企业复杂场景需求
+- AI 全栈集成：内置 LLM、RAG、知识库、AI 流程编排、MCP 等能力，支持 DeepSeek、LangChain4j、Spring AI 等主流 AI 框架，实现聊天式业务操作
+- 智能代码生成器：前后端一键生成，无需手写代码，显著提升开发效率，降低 80% 以上重复性工作
+- 现代化技术栈：基于 Spring Boot 3 + Vue 3 + Ant Design Vue，支持 MyBatis-Plus，前后端分离架构，紧跟技术前沿
+- 强大的流程引擎：集成 Activiti 和 Flowable 工作流引擎，支持复杂的业务流程编排和 AI 流程设计
+- 企业级特性：支持 Spring Cloud 微服务架构，提供完善的权限管理、代码模板定制、插件化扩展等企业级功能
 
 **适用场景**:
-- 【企业数字化中台】快速搭建企业管理系统（如 OA、ERP、CRM、BPM），通过低代码能力缩短 60%+ 开发周期，特别适合中大型企业快速迭代业务
-- 【AI 应用快速构建】企业无需从零开发 AI 功能，可直接集成智能客服、知识库问答、流程自动化等 AI 能力到现有系统中，大幅降低 AI 应用门槛
-- 【独立开发者/小团队创业】利用代码生成器和 AI 辅助能力，小团队也能快速开发出功能完善的 SaaS 产品，显著降低人力成本
+- 企业快速开发：中大型企业需要快速构建内部管理系统、业务应用，通过低代码+AI 能力缩短 50% 以上开发周期
+- AI 应用构建：企业需要开发智能客服、知识库问答、AI 助手、RAG 检索增强等 AI 应用场景
+- 传统系统智能化升级：现有业务系统需要集成 AI 能力（如智能表单填充、智能审批、智能数据分析），通过平台可快速实现 AI 赋能
 
 
 
@@ -367,28 +375,28 @@ JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 40,888 |
+| Stars | 40,893 |
 | 语言 | Python |
-| Forks | 9,693 |
+| Forks | 9,690 |
 | Issues | 357 |
 | Topics | ai, ai-agent, chatgpt, claude-4, deepseek, dingtalk, feishu-bot, gemini, gpt-4, kimi, linkai, llm, mcp, multi-agent, openai, python3, qwen, rag, wechat, wechat-bot |
 | 许可证 | MIT License |
 
 ---
 
-这是一个极具实用价值的开源AI项目，成功打通了多个主流企业协作平台（微信/飞书/钉钉/企业微信）与顶级大模型之间的桥梁，让企业能够以零代码方式快速部署智能客服和AI助手。项目的独特价值在于"一次部署，多平台接入"，大幅降低了企业AI应用的开发门槛和成本。
+这是国内最受欢迎的开源 AI 机器人项目之一，star 超 4 万，支持微信/飞书/钉钉等主流国内平台，接入 ChatGPT/Claude/DeepSeek/文心一言等 10+ 国内外大模型，支持 RAG 知识库、MCP 协议、语音图片处理，覆盖文本/语音/图片/联网等全场景，非常适合快速搭建企业级智能客服或个人 AI 助手。
 
 **技术亮点**:
-- 支持多模型接入：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI等10+主流大模型
-- 多平台覆盖：支持微信公众号、企业微信、飞书、钉钉等主流协作平台，实现一次部署多端使用
-- 多媒体处理能力：支持文本、语音和图片的输入输出，提供自然的人机交互体验
-- 企业级能力：支持RAG知识库定制、MCP协议、Multi-Agent系统，访问操作系统和互联网，满足复杂业务需求
-- 高可用性：40.8k+ GitHub stars，活跃的开源社区，MIT许可证，企业可安全商用
+- 多平台适配：支持微信公众号、企业微信、飞书、钉钉等主流国内 IM 平台接入
+- 大模型灵活切换：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI 等 10+ 模型可选
+- 全模态交互：支持文本、语音、图片处理，支持 MCP 访问操作系统和互联网能力
+- RAG 知识库：基于自有知识库进行定制，支持企业智能客服场景
+- AI Agent/Multi-Agent：支持 MCP 协议、多 Agent 协同，可扩展能力强
 
 **适用场景**:
-- 企业智能客服系统：基于公司知识库快速部署微信/钉钉等渠道的AI客服，提升响应效率，降低人工成本
-- 个人AI助手开发：开发者在个人微信公众号或企业内部搭建AI助手，提升工作效率和自动化水平
-- 企业内部知识管理：接入企业知识库，构建内部问答系统，帮助员工快速检索信息
+- 企业智能客服：接入微信/飞书/钉钉，基于公司知识库（RAG）搭建智能客服机器人
+- 个人 AI 助手：在个人微信或办公软件中接入大模型，实现智能对话与任务自动化
+- 多平台 AI Bot：为不同平台快速部署统一的 AI 机器人，统一接入体验
 
 
 
@@ -406,28 +414,28 @@ JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,757 |
+| Stars | 36,164 |
 | 语言 | JavaScript |
-| Forks | 4,404 |
-| Issues | 4 |
+| Forks | 4,455 |
+| Issues | 5 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个由 Anthropic 黑客松获奖者打造的 Claude Code 全栈配置库，收录了经过实战验证的 agents、skills、hooks、commands、rules 和 MCPs 等完整配置。作为开箱即用的生产级工具集，它能显著降低开发者配置 Claude Code 的学习成本，35k+ stars 证明了其在社区中的高认可度和实用性。
+这是来自Anthropic黑客松获胜者的实战级Claude Code配置合集，汇聚了agents、skills、hooks、MCPs等全套配置方案。项目拥有3.6万+GitHub Stars，经过实战验证，能为开发者提供开箱即用的Claude Code生产力工具集，大幅降低AI辅助开发的配置门槛。
 
 **技术亮点**:
-- 完整配置生态：集成 agents 智能代理、skills 技能集、hooks 钩子、commands 命令、rules 规则和 MCPs 协议等全要素
-- 实战验证品质：源自 Anthropic 黑客松获奖项目，所有配置均经过真实场景测试和优化
-- 开发者友好：基于 JavaScript 构建，采用 MIT 许可证，易于定制和二次开发
-- AI 工具链整合：深度集成 LLM 能力，提供系统化的 Claude Code 开发工作流
-- 高度可扩展：模块化设计支持灵活组合各类配置组件，适应不同开发需求
+- 🤖 全栈AI Agent配置：集成agents、skills、hooks、commands、rules等完整组件体系
+- 🔌 MCP（Model Context Protocol）生态支持：提供经过实战检验的MCP服务器配置和集成方案
+- ⚙️ 开箱即用的命令与规则系统：包含battle-tested的commands配置和自定义rules，可直接用于生产环境
+- 🎯 Claude Code深度优化：专为Claude Code IDE定制，充分利用Anthropic AI能力增强开发效率
+- 🏆 黑客松获奖级别配置质量：来自Anthropic官方黑客松优胜者，配置经过真实场景严格验证
 
 **适用场景**:
-- 个人开发者：快速搭建 Claude Code 开发环境，提升 AI 辅助编程效率
-- 企业团队：标准化团队内部的 AI 编码助手配置，统一开发规范和最佳实践
-- AI 工具研究者：学习 Claude Code 的高级配置技巧和 MCP 协议应用案例
+- 💻 个人开发者快速搭建AI编程环境：无需从零配置，直接使用经过验证的Claude Code配置方案，快速上手AI辅助开发
+- 🏢 企业团队统一AI开发规范：为开发团队提供标准化的Claude Code配置模板，确保团队AI工具使用的一致性和最佳实践
+- 🔧 Claude Code深度定制与扩展学习：通过完整的配置示例和hooks/rules系统，学习如何深度定制和扩展Claude Code功能
 
 
 
@@ -445,28 +453,28 @@ JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,493 |
+| Stars | 33,501 |
 | 语言 | TypeScript |
-| Forks | 6,703 |
-| Issues | 386 |
+| Forks | 6,705 |
+| Issues | 390 |
 | Topics | ai, anthropic, artifacts, aws, azure, chatgpt, chatgpt-clone, claude, clone, deepseek, gemini, google, gpt-5, librechat, mcp, o1, openai, responses-api, vision, webui |
 | 许可证 | MIT License |
 
 ---
 
-LibreChat 是一个功能丰富且活跃的 ChatGPT 开源替代方案，支持 20+ 主流 AI 模型和多云服务集成。33k+ stars 和 MIT 许可证使其成为企业自建 AI 平台或开发者学习多模型集成的理想选择，特别是其独特的 Agents、MCP 协议和 Code Interpreter 功能在开源项目中极具竞争力。
+LibreChat 是功能最全面的开源 ChatGPT 克隆项目，聚合了包括 OpenAI、Anthropic、DeepSeek、Gemini、GPT-5 在内的 20+ 主流 AI 模型，支持 Agents、MCP 协议、Code Interpreter、Artifacts 等企业级功能。作为自托管的开源方案，它既提供了完整的多用户权限管理系统，又具备高度的可扩展性，是构建私有 AI 对话平台的理想选择。
 
 **技术亮点**:
-- 多云 AI 服务聚合：支持 OpenAI、Anthropic、AWS、Azure、Groq、DeepSeek、Gemini 等 20+ AI 模型的统一接入和切换
-- 高级 AI 功能集成：内置 Agents、MCP (Model Context Protocol)、Code Interpreter、OpenAPI Actions 和函数调用能力
-- 企业级特性：提供安全的多用户认证系统、消息搜索、预设配置和完整的权限管理
-- 现代化技术栈：基于 TypeScript 构建，支持 Artifacts 功能、DALL-E-3 图像生成和视觉模型
-- 开源自托管：MIT 许可证，可完全自部署，适合私有化部署和定制化开发
+- 全模型支持：集成 OpenAI、Anthropic、Azure、AWS Bedrock、Google Vertex AI、Gemini、DeepSeek、Mistral、Groq 等 20+ AI 提供商，支持 GPT-5、o1 等最新模型
+- 企业级功能栈：支持 Agents 智能体、MCP (Model Context Protocol)、Code Interpreter 代码解释器、Artifacts 工件、OpenAPI Actions、Functions 调用
+- 安全认证体系：内置多用户认证系统，支持权限管理和团队协作，适合企业私有化部署
+- 现代化技术栈：基于 TypeScript 构建，提供完整的 WebUI，支持预设配置、消息搜索、模型热切换等实用功能
+- 开源自托管：MIT 许可证，支持完全自主部署，数据隐私可控，API 密钥本地管理
 
 **适用场景**:
-- 企业内部 AI 平台：构建私有化、安全的多模型 AI 助手平台，统一管理多个 AI 服务提供商
-- 开发者 AI 应用原型：快速搭建支持多模型切换的聊天应用，无需从零开始集成各 AI 服务 API
-- AI 能力研究与实践：学习 MCP 协议、Agents、函数调用等高级 AI 功能的实现和最佳实践
+- 企业私有 AI 平台：适合需要数据隐私保护、支持多模型统一接入的企业级应用场景，提供完善的用户权限管理和团队协作功能
+- 个人 AI 工作台：开发者和 AI 爱好者可自托管作为个人全能 AI 助手，一键切换不同模型进行开发、写作、学习等任务
+- AI 应用原型开发：基于 LibreChat 快速构建定制化 AI 应用，利用其丰富的插件系统（Functions、Actions、Agents）扩展业务场景
 
 
 
@@ -484,28 +492,67 @@ LibreChat 是一个功能丰富且活跃的 ChatGPT 开源替代方案，支持 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,045 |
+| Stars | 27,048 |
 | 语言 | TypeScript |
-| Forks | 6,921 |
-| Issues | 178 |
+| Forks | 6,922 |
+| Issues | 179 |
 | Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
 | 许可证 | Other |
 
 ---
 
-FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其社区认可度。它提供了开箱即用的数据处理、RAG 检索和可视化工作流编排能力，让开发者无需复杂配置即可快速构建企业级问答系统，是搭建 AI 知识库和智能客服的绝佳选择。
+FastGPT 是一个功能完整的 LLM 知识库问答平台，基于大语言模型构建，提供了数据处理、RAG 检索、可视化 AI 工作流编排等开箱即用的能力。它让开发者无需繁琐的配置即可快速构建和部署复杂的问答系统，项目拥有 27k+ stars，技术栈采用 TypeScript/Next.js，支持 OpenAI、Claude、Qwen 等多种主流大模型，适合快速落地企业级 AI 应用。
 
 **技术亮点**:
-- 基于 RAG 技术的知识库问答系统，支持数据处理到检索的完整流程
-- 可视化 AI 工作流编排，通过拖拽方式快速构建复杂的问答逻辑
-- 集成主流 LLM 能力，支持 OpenAI、Claude、Qwen、DeepSeek 等多种大模型
-- 基于 Next.js + TypeScript 构建现代化 Web 应用，技术栈成熟稳定
-- 内置 Agent 和 MCP 协议支持，便于扩展智能体能力和生态集成
+- 基于 LLM 的知识库平台，提供数据处理、RAG 检索、可视化工作流编排等完整能力栈
+- 支持多种主流大模型集成：OpenAI、Claude、DeepSeek、Qwen 等，提供统一的模型接入层
+- 采用 TypeScript + Next.js 现代化技术栈，代码质量高，易于扩展和维护
+- 内置 Agent 能力和 MCP（Model Context Protocol）支持，可实现复杂的 AI 智能体应用
+- 提供可视化 AI 工作流编排器，通过低代码/无代码方式快速构建复杂问答系统
 
 **适用场景**:
-- 企业智能客服系统：快速搭建基于企业知识库的自动问答平台，提升客服效率
-- 个人/团队知识管理：将文档、笔记转化为可对话的知识库，实现智能检索
-- AI 应用快速原型开发：通过可视化工作流快速验证和部署复杂的 LLM 应用场景
+- 企业智能客服系统：基于企业知识库快速构建 AI 客服，自动回答用户问题，降低人工客服成本
+- 企业内部知识管理：将公司文档、API 文档、操作手册等转化为可检索的知识库，员工通过自然语言快速查询所需信息
+- 个人开发者快速原型验证：无需从零搭建 RAG 系统，快速验证 AI 问答应用想法，专注于业务逻辑而非基础设施
+
+
+
+### Shubhamsaboo/awesome-llm-apps
+
+**描述**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Python
+
+**质量评分**: 99/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 91,433 |
+| 语言 | Python |
+| Forks | 13,200 |
+| Issues | 11 |
+| Topics | agents, llms, python, rag |
+| 许可证 | Apache License 2.0 |
+
+---
+
+这是一个极具价值的LLM应用实践资源库，汇集了91,000+星标的开源项目，提供了涵盖OpenAI、Anthropic、Gemini及开源模型的完整AI应用生态系统。作为一站式学习与参考平台，它帮助开发者快速掌握AI智能体和RAG技术的实际应用，是目前最全面的LLM应用开发指南之一。
+
+**技术亮点**:
+- 🤖 多模态AI智能体集成：支持OpenAI GPT、Anthropic Claude、Google Gemini等主流LLM模型的完整实现方案
+- 📚 RAG检索增强生成架构：提供完整的文档检索、向量数据库集成和知识库构建最佳实践
+- 🔧 开源与闭源模型混合部署：展示如何在同一应用中灵活切换和组合使用不同AI模型
+- 🚀 Python全栈LLM应用开发：包含前后端完整实现，从API集成到用户界面的端到端解决方案
+- 📈 企业级生产就绪代码：所有示例均经过实战验证，可直接用于商业项目开发
+
+**适用场景**:
+- 🏢 企业级AI应用快速开发：为企业开发者提供可直接部署的客户服务机器人、企业知识库问答系统、智能助手等成熟方案，大幅缩短从原型到生产的时间
+- 👨‍💻 个人开发者学习与实践：适合希望深入学习LLM应用开发、AI智能体构建和RAG技术的开发者，通过丰富的实战案例快速掌握核心技术
+- 🎓 教学与培训资源：非常适合作为高校AI课程、企业内训的实战教材，涵盖从基础概念到高级应用的完整学习路径
 
 
 
@@ -523,28 +570,28 @@ FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,319 |
+| Stars | 67,332 |
 | 语言 | Python |
-| Forks | 8,379 |
-| Issues | 291 |
+| Forks | 8,384 |
+| Issues | 295 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
 
 ---
 
-OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67k 的 GitHub 星标，能够自动化处理软件开发全流程。其独特价值在于将 LLM 能力转化为实际的代码执行能力，通过 Agent 架构实现从需求分析到代码编写、测试、部署的完整闭环，是 AI 辅助编程领域的标杆项目。
+OpenHands 是目前最受欢迎的 AI 驱动开发工具之一（67K+ stars），它将 AI Agent 技术深度集成到软件开发流程中。该项目支持多种主流 LLM（GPT、Claude 等），能够自动化完成代码编写、调试、测试等开发任务，是开发者探索 AI 辅助编程的标杆项目，特别适合需要提升开发效率的个人和企业团队。
 
 **技术亮点**:
-- 基于多 LLM 支持（GPT/Claude/OpenAI 等）的 Agent 架构，具备强大的代码理解和生成能力
-- 提供 CLI 工具链，支持命令行交互式开发体验，无缝集成到开发者工作流
-- 完整的软件开发自动化能力，涵盖代码编写、调试、测试、Git 操作等全生命周期
-- 67k+ 社区验证的成熟项目，活跃的开源生态系统和丰富的集成能力
-- AI-Driven 理念践行者，展示了 LLM 在复杂任务场景下的实际应用落地
+- 支持多 LLM 集成：兼容 OpenAI GPT、Claude、ChatGPT 等多种大语言模型，提供灵活的模型选择
+- AI Agent 架构：采用智能代理模式，能够自主理解和执行复杂的多步骤开发任务
+- 命令行工具优先：提供 CLI 接口，方便开发者无缝集成到现有开发工作流中
+- 全流程自动化支持：覆盖代码生成、调试、测试、重构等完整的软件开发生命周期
+- 开源生态系统：活跃的开源社区支持，持续迭代更新，技术栈基于 Python 易于扩展
 
 **适用场景**:
-- 个人开发者提升编程效率：自动编写样板代码、调试错误、实现功能模块，显著缩短开发时间
-- 企业团队加速研发流程：快速原型验证、代码审查辅助、自动化测试编写，提升整体交付速度
-- 学习编程与技术探索：通过 AI 助手理解复杂代码逻辑、学习新技术栈、实践最佳编程实践
+- 个人开发者提升编程效率：借助 AI 自动完成重复性编码任务、生成样板代码、快速定位 Bug
+- 企业团队降低开发成本：通过 AI 辅助加速项目交付，减少人工编码工作量，特别适合原型开发和 MVP 构建
+- 学习与教育场景：初学者可以通过与 AI 交互学习最佳编码实践，理解不同编程范式和架构设计
 
 
 
@@ -562,28 +609,28 @@ OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 38,347 |
+| Stars | 38,351 |
 | 语言 | Python |
 | Forks | 6,093 |
-| Issues | 169 |
+| Issues | 176 |
 | Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
 | 许可证 | Other |
 
 ---
 
-MindsDB 是一个创新的联邦查询引擎，将 AI 能力直接集成到数据库工作流中。作为通用的 MCP (Model Context Protocol) 服务器，它打破了传统数据库与 AI 模型之间的壁垒，让开发者能用 SQL 直接查询和部署 AI 模型，极大降低了 AI 应用的开发门槛。
+MindsDB是一个强大的联邦AI查询引擎，它让开发者能够用简单的SQL查询直接在数据库中训练、部署和运行AI模型，无需数据迁移。作为MCP（Model Context Protocol）服务器，它架起了传统数据库与LLM和AI代理之间的桥梁，显著降低了AI应用的开发门槛。
 
 **技术亮点**:
-- 支持联邦查询：可直接连接 MySQL、PostgreSQL、MSSQL、BigQuery 等多种数据源
-- AI 模型数据库化：通过 SQL 训练、部署和查询 LLM 及机器学习模型，无需额外 MLOps 工具
-- MCP 服务器架构：作为通用 MCP 服务器，可无缝集成各种 AI Agent 和工具生态
-- RAG 原生支持：内置检索增强生成能力，轻松构建企业级知识库问答系统
-- 商业智能集成：连接 BI 工具实现智能数据分析和可视化
+- 支持使用标准SQL直接训练和部署机器学习模型，数据无需离开数据库
+- 作为MCP Server提供统一接口，集成GPT-4、Claude、Llama等主流LLM
+- 支持200+数据源集成（PostgreSQL、MySQL、MongoDB、BigQuery等），实现联邦查询
+- 内置RAG（检索增强生成）能力，可直接连接企业知识库进行智能问答
+- 提供自动化AI代理（Agents）框架，支持复杂任务的自主执行
 
 **适用场景**:
-- 企业数据智能分析：让业务分析师用 SQL 直接调用 AI 模型进行预测和洞察分析，无需编程背景
-- AI 应用快速开发：开发者通过熟悉的 SQL 接口快速构建 RAG 应用、智能客服、推荐系统等 AI 解决方案
-- 多源数据融合处理：统一查询跨不同数据库的数据源，结合 LLM 实现智能数据聚合与问答
+- 企业数据分析师使用熟悉的SQL快速构建预测模型，无需学习Python或机器学习框架
+- 开发者为现有数据库添加AI能力（如文本转SQL、语义搜索、智能客服），实现业务智能化
+- RAG应用开发：企业通过MCP协议快速构建连接内部知识库的智能问答系统
 
 
 
@@ -601,28 +648,107 @@ MindsDB 是一个创新的联邦查询引擎，将 AI 能力直接集成到数�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,497 |
+| Stars | 77,522 |
 | 语言 | Python |
-| Forks | 9,171 |
-| Issues | 221 |
+| Forks | 9,175 |
+| Issues | 223 |
 | Topics | ai-agents, ai-tools, browser-automation, browser-use, llm, playwright, python |
 | 许可证 | MIT License |
 
 ---
 
-这是一个爆款级的 AI 浏览器自动化项目，拥有 77,497+ Stars，填补了 LLM 与浏览器交互的关键空白。它让 AI 代理能够像人类一样操作网页，结合 Playwright 的强大能力和 LLM 的智能决策，是目前构建 AI Agent 的核心基础设施工具之一。
+browser-use 是一款突破性的AI智能体浏览器自动化工具，它将传统浏览器自动化与大语言模型（LLM）深度融合，让AI能够像人类一样理解和操作网页界面。该项目在GitHub上获得超过77,000颗星，凭借直观的API设计和强大的自然语言交互能力，极大地降低了AI Agent开发门槛，是构建智能化网页操作应用的理想选择。
 
 **技术亮点**:
-- 基于 Playwright 实现强大的浏览器自动化能力，支持复杂的网页交互
-- 将 LLM 的理解能力与浏览器操作深度集成，实现智能化的任务执行
-- 纯 Python 实现，易于集成到现有的 AI Agent 开发栈中
-- 开源活跃（MIT 许可），拥有庞大的社区支持和持续迭代
-- 支持多种 LLM 后端，灵活适配不同的 AI 能力需求
+- 🤖 LLM驱动的自然语言交互：通过大语言模型理解网页内容，用自然语言指令即可完成复杂操作，无需编写繁琐的选择器和脚本
+- 🎭 基于Playwright的可靠浏览器控制：利用成熟的Playwright引擎提供稳定的多浏览器支持、页面交互和内容提取能力
+- 🌐 智能化元素定位与理解：AI能够自主识别页面元素、理解业务逻辑，而非依赖脆弱的DOM选择器，具备更强的鲁棒性
+- 🔌 易于集成的Python框架：提供简洁的Python API，可快速集成到现有AI Agent工作流中，支持与LangChain、CrewAI等框架无缝对接
+- ⚡ 低代码自动化方案：用简单的文本描述替代复杂的自动化脚本编写，大幅提升开发效率和维护便利性
 
 **适用场景**:
-- 企业级 AI Agent 开发：为客服机器人、RPA 系统等添加真实网页操作能力
-- 自动化测试与数据采集：智能化的端到端测试和动态内容抓取
-- 个人开发者快速构建 AI 应用：快速开发能操作真实网站的 AI 助手和自动化工具
+- 🏢 企业RPA流程自动化：自动处理重复性的网页操作任务，如数据录入、报表下载、表单提交等，减少人工操作成本
+- 🤖 AI智能体开发：为AI Agent赋予真实的网页操作能力，使其能够执行在线研究、比价、预订、内容发布等复杂任务
+- 📊 数据采集与监控：智能化的网页数据抓取，可处理动态内容，适用于竞品分析、价格监控、舆情追踪等场景
+- 🧪 自动化测试：通过自然语言描述测试场景，AI自动在浏览器中执行端到端测试，验证用户交互流程
+
+
+
+### FlowiseAI/Flowise
+
+**描述**: Build AI Agents, Visually
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 96/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 48,711 |
+| 语言 | TypeScript |
+| Forks | 23,658 |
+| Issues | 767 |
+| Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
+| 许可证 | Other |
+
+---
+
+Flowise 是一个颠覆性的可视化 AI Agent 构建平台，让非技术用户也能通过拖拽方式快速创建复杂的 AI 工作流。它将 LangChain 的强大能力封装为直观的低代码界面，降低了 AI 应用开发门槛，48k+ 的 GitHub Stars 证明了其在开发者社区的热度和实用价值。
+
+**技术亮点**:
+- 基于 TypeScript + React 构建的现代化低代码平台，提供拖拽式可视化编辑器
+- 深度集成 LangChain 生态，支持 OpenAI、ChatGPT 等主流 LLM 和 RAG 技术
+- 原生支持 Multi-agent Systems 和 Agentic Workflow，可实现复杂的 AI 协作模式
+- 完全开源且支持自部署，提供 Node.js 自托管方案，保障数据隐私
+- 模块化的节点设计，可灵活扩展自定义节点，适配多样化的业务需求
+
+**适用场景**:
+- 企业快速搭建智能客服机器人和知识库问答系统（RAG 场景）
+- 个人开发者或小团队原型验证 AI 应用，无需编写复杂代码
+- 构建多 Agent 协作系统，实现自动化工作流程和任务编排
+
+
+
+### wshobson/agents
+
+**描述**: Intelligent automation and multi-agent orchestration for Claude Code
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 96/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 27,407 |
+| 语言 | C# |
+| Forks | 3,011 |
+| Issues | 12 |
+| Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
+| 许可证 | MIT License |
+
+---
+
+这是一个专为 Claude Code 设计的高星项目（27k+ stars），提供了强大的多代理编排和智能自动化能力。该项目填补了 Claude Code 生态在子代理、工作流编排和企业级自动化方面的空白，让开发者能够构建复杂的 AI 驱动自动化解决方案。
+
+**技术亮点**:
+- 基于 C# 构建的企业级多代理架构，支持子代理（sub-agents）编排和协同工作
+- 提供丰富的 Claude Code 插件系统，包含 skills、commands 和 workflows 扩展能力
+- 支持复杂的工作流编排（orchestration）和 anthropic-claude 深度集成
+- 完整的配置系统（claudecode-config）支持灵活的代理行为定制
+- MIT 开源许可，社区活跃，适合二次开发和商业化集成
+
+**适用场景**:
+- 企业级 AI 自动化：构建智能客服、文档处理、代码审查等自动化工作流
+- 个人开发者效率提升：通过自定义 skills 和 commands 扩展 Claude Code 能力，实现重复性任务的自动化处理
+- AI 应用开发：作为多代理系统基础框架，快速开发基于 Claude 的智能应用和服务
 
 
 
@@ -640,28 +766,67 @@ MindsDB 是一个创新的联邦查询引擎，将 AI 能力直接集成到数�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 172,267 |
+| Stars | 172,331 |
 | 语言 | TypeScript |
-| Forks | 54,341 |
-| Issues | 1,289 |
+| Forks | 54,362 |
+| Issues | 1,290 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
 ---
 
-n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视化低代码与自定义代码开发，支持自托管和云端部署。其原生 AI 能力、400+ 集成以及 MCP 协议支持，使其成为企业和开发者构建智能自动化解决方案的理想选择。
+n8n 是一款融合了低代码可视化与自定义代码的灵活工作流自动化平台，具备原生 AI 能力和 400+ 集成。作为开源且可自部署的解决方案，它为企业提供了数据主权控制，同时为开发者提供了极致的扩展性，是构建自动化工作流和 AI 应用的理想选择。
 
 **技术亮点**:
-- 原生 AI 能力集成，支持 AI 驱动的智能工作流自动化
-- 400+ 开箱即用的第三方集成，覆盖主流 SaaS 服务和 API
-- 混合开发模式：可视化拖拽构建 + TypeScript 自定义代码扩展
-- 支持 MCP (Model Context Protocol) 客户端和服务端，增强 AI 互操作性
-- 灵活部署选项：支持完全自托管或云端运行，满足数据隐私需求
+- 采用 TypeScript 开发，提供类型安全和更好的开发体验
+- 原生 AI 能力支持，可作为 MCP 客户端和服务端，无缝集成 AI 工作流
+- 混合架构设计：支持可视化拖拽构建与自定义代码扩展，平衡易用性与灵活性
+- 400+ 预置集成，覆盖主流 SaaS 服务和 API
+- 支持自托管和云端部署，满足不同规模的数据主权和成本控制需求
 
 **适用场景**:
-- 企业业务流程自动化：如跨系统数据同步、审批流自动化、客户数据管理等
-- AI 驱动的智能应用：集成 LLM 构建智能客服、内容生成、数据分析等 AI 应用
-- 开发者集成与编排：通过可视化界面快速 API 编排，降低开发门槛的同时保持代码灵活性
+- 企业级业务流程自动化：整合 CRM、ERP、营销工具等多个系统，实现跨平台数据同步和业务流程自动化
+- AI 应用开发与编排：构建 AI 聊天机器人、智能文档处理、自动化数据分析等 AI 驱动的应用
+- 开发者工作流优化：自动化 CI/CD 流程、API 测试、数据迁移和系统集成等开发任务
+
+
+
+### langflow-ai/langflow
+
+**描述**: Langflow is a powerful tool for building and deploying AI-powered agents and workflows.
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Python
+
+**质量评分**: 91/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 144,438 |
+| 语言 | Python |
+| Forks | 8,383 |
+| Issues | 987 |
+| Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
+| 许可证 | MIT License |
+
+---
+
+Langflow 是一个基于可视化拖拽的 AI 工作流构建平台，拥有 14 万+ 星标的高人气开源项目。它独特价值在于将复杂的 LLM 应用开发过程可视化，让开发者无需编写代码即可快速构建、部署和管理 AI 智能体及工作流，极大降低了 AI 应用开发门槛。
+
+**技术亮点**:
+- 可视化拖拽式界面，基于 React Flow 提供直观的工作流编排体验
+- 支持多智能体（Multiagent）架构，可构建复杂的协作式 AI 系统
+- 原生支持主流大语言模型（ChatGPT、LLaMA 等），提供统一的模型接入层
+- 基于 Python 构建，采用 MIT 开源协议，便于企业二次开发和集成
+- 提供完整的组件生态，支持自定义节点和扩展功能
+
+**适用场景**:
+- 企业快速搭建 AI 客服、知识库问答等智能助手系统
+- 开发者构建和实验多智能体协作的复杂 AI 工作流
+- AI 应用原型开发与验证，通过可视化界面快速迭代业务逻辑
 
 
 
@@ -679,28 +844,29 @@ n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,681 |
+| Stars | 49,717 |
 | 语言 | Jupyter Notebook |
-| Forks | 17,358 |
+| Forks | 17,371 |
 | Issues | 9 |
 | Topics | agentic-ai, agentic-framework, agentic-rag, ai-agents, ai-agents-framework, autogen, generative-ai, semantic-kernel |
 | 许可证 | MIT License |
 
 ---
 
-这是微软官方出品的AI Agent入门教程，系统性地涵盖12个核心课程，结合AutoGen和Semantic Kernel等主流框架，适合零基础开发者快速掌握AI Agent开发核心概念。该项目基于MIT开源协议，拥有近5万颗星的高社区认可度，理论实践并重，是当前学习Agentic AI技术的最佳起点之一。
+这是微软官方推出的AI Agent入门教程，涵盖12个系统化课程，为初学者提供从零开始构建AI Agent的完整学习路径。项目近5万星的超高人气和MIT开源许可，结合AutoGen和Semantic Kernel等实战框架，是学习Agent架构设计的最佳起点资源。
 
 **技术亮点**:
-- 12个结构化课程设计，从基础概念到实战应用循序渐进
-- 集成AutoGen和Semantic Kernel两大主流Agent框架
-- 覆盖Agentic RAG等前沿技术栈，紧跟生成式AI发展趋势
-- 基于Jupyter Notebook的交互式学习体验，代码可直接运行调试
-- 微软官方出品，内容权威性与实用性有保障
+- 系统化12课教程体系，覆盖AI Agent从基础概念到高级架构的完整知识链
+- 深度整合AutoGen和Semantic Kernel两大主流Agent框架，提供多框架实战对比
+- 完整涵盖Agentic RAG等前沿技术场景，理论与实践结合紧密
+- 基于Jupyter Notebook的交互式学习体验，即学即用的代码示例
+- 微软官方背书的技术内容质量保证，符合业界最佳实践标准
 
 **适用场景**:
-- 个人开发者：系统学习AI Agent开发，从零基础快速入门到实际项目应用
-- 企业团队：作为内部培训教材，帮助团队掌握最新的Agentic AI技术和框架选型
-- 教育机构：作为AI Agent课程的补充教材，提供完整的实验环境和代码示例
+- AI开发新手入门：适合没有Agent开发经验的程序员快速掌握核心概念和实现方法
+- 企业技术团队培训：作为内训教材帮助团队快速建立AI Agent技术栈认知
+- 架构选型评估：通过对比AutoGen和Semantic Kernel框架，辅助技术选型决策
+- 学术研究与教学：作为高校AI课程配套实验资源，理论与实践并重
 
 
 
@@ -718,28 +884,28 @@ n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,754 |
+| Stars | 69,771 |
 | 语言 | MDX |
-| Forks | 7,448 |
+| Forks | 7,452 |
 | Issues | 242 |
 | Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
 | 许可证 | MIT License |
 
 ---
 
-这是目前GitHub上最受欢迎的提示工程指南项目（69,754⭐），由DAIR AI维护的综合性学习资源库。它不仅是入门提示工程的绝佳起点，更涵盖了从基础到高级的RAG、AI Agents等前沿技术，是开发者快速掌握大模型应用开发的权威参考资料。
+这是GitHub上最受欢迎的提示词工程开源指南，汇集了从基础提示词设计到高级AI Agent开发的完整知识体系。项目涵盖学术论文、实战教程、Jupyter Notebook和最佳实践，是开发者快速掌握LLM应用开发核心技能的一站式资源库。
 
 **技术亮点**:
-- 全面的Prompt Engineering知识体系：包含指南、论文、课程和实战笔记本，覆盖从基础到高级的提示技巧
-- 前沿技术栈覆盖：涵盖RAG（检索增强生成）、Context Engineering、AI Agents等热门AI应用技术
-- 多框架支持：整合ChatGPT、OpenAI等多种大语言模型的实践经验
-- 理论与实践结合：提供学术论文、交互式笔记本和丰富的代码示例
-- 开源社区驱动：MIT许可证，持续更新，汇聚社区最佳实践
+- 🔥 全面覆盖四大核心领域：提示词工程、上下文工程、RAG检索增强生成、AI智能体开发
+- 📚 理论实践结合：包含精选论文列表、交互式Notebook教程和实战代码示例
+- 🤖 紧跟前沿技术：涵盖ChatGPT、OpenAI、大语言模型(LLMs)等最新AI技术应用
+- 📖 知识体系化：从基础概念到高级模式的完整学习路径，适合不同水平开发者
+- 🌐 社区驱动更新：持续更新的资源库，反映快速演进的AI应用开发最佳实践
 
 **适用场景**:
-- AI开发者快速入门：为想要学习提示工程、RAG和AI Agents的开发者提供系统性的学习路径和实战资源
-- 企业AI应用开发：企业技术团队可以参考项目中的最佳实践，快速搭建基于大语言模型的应用系统
-- 教育培训与学术研究：教师和学生可将其作为教材或参考资料，深入理解大模型的工程化应用
+- 🎯 **个人开发者学习**：系统学习提示词设计技巧和RAG实现方法，快速提升LLM应用开发能力
+- 💼 **企业AI应用开发**：作为团队参考手册，指导生产级AI Agent和智能问答系统架构设计
+- 🏫 **教育培训与学术研究**：高校AI课程教材配套资源，包含经典论文和实验代码
 
 
 
@@ -757,29 +923,28 @@ n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,677 |
+| Stars | 63,691 |
 | 语言 | Python |
-| Forks | 8,001 |
-| Issues | 64 |
+| Forks | 8,003 |
+| Issues | 66 |
 | Topics | agent, gpt, llm, metagpt, multi-agent |
 | 许可证 | MIT License |
 
 ---
 
-MetaGPT 是一个创新的多智能体框架，它将AI智能体角色化（产品经理、架构师、工程师等），构建了首个"AI软件公司"。其独特价值在于将自然语言编程从概念变为现实，通过多智能体协作自动化完成软件开发生命周期，Star数超6.3万证明了其在AI Agent领域的领先地位和开发者社区的广泛认可。
+MetaGPT 是一个颠覆性的多智能体框架项目，创新性地模拟真实软件公司运作模式，让多个 AI 智能体扮演不同角色（产品经理、架构师、工程师等）协同完成软件开发。该项目将自然语言编程理念付诸实践，具备 6.3 万+ Stars 的超高人气和 MIT 开源许可，是学习多智能体协作和企业级 AI 应用的绝佳范例。
 
 **技术亮点**:
-- 多智能体协作系统：模拟真实软件公司组织架构，将AI智能体赋予不同角色（产品经理、架构师、工程师、项目经理等）实现分工协作
-- 自然语言编程：通过LLM将人类需求直接转换为可执行的软件产品，降低编程门槛，实现从想法到代码的自动化
-- 完整的SOP工作流：内置标准化的软件开发流程，包括需求分析、系统设计、代码生成、测试和文档生成等全链路
-- 高度模块化设计：基于Python构建，易于扩展和定制，支持集成不同的LLM模型（GPT-4等）
-- 强大的代码生成能力：能够生成生产级别的代码，包含完整的项目结构和文档，而非简单的代码片段
+- 🏢 创新的多角色智能体协作架构：模拟真实软件公司组织结构，包含产品经理、架构师、项目经理、工程师等角色
+- 🔄 标准化的 SOP（标准作业程序）流程：将人类工作流程编码为可执行的 AI 协作流程，提高输出质量和一致性
+- 📝 完整的软件开发生命周期支持：从需求分析到代码生成、文档编写、测试的全流程自动化
+- 🤖 基于 GPT/LLM 的智能体通信机制：智能体间通过自然语言进行信息交换和任务协同
+- 📦 企业级代码生成能力：可生成包含完整文档、架构设计、可运行代码的完整软件项目
 
 **适用场景**:
-- 企业快速原型开发：IT公司和创业团队可利用MetaGPT快速将产品想法转化为可运行的原型系统，大幅缩短开发周期
-- 个人开发者项目：对于缺乏全栈技能的个人开发者，可通过自然语言描述完整实现Web应用、工具软件等项目
-- 教育和学习场景：计算机专业学生和初学者可以通过MetaGPT学习软件工程最佳实践，了解完整的开发流程和不同角色的职责
-- 自动化脚本工具：开发人员可快速生成数据处理、自动化运维、爬虫等实用工具的完整代码框架
+- 🏭 企业级软件开发自动化：适用于需要快速构建原型或完整项目的企业和开发团队，通过 AI 协作显著提升开发效率
+- 🎓 多智能体系统研究学习：为研究者和开发者提供了学习和实验多智能体协作模式的最佳实践平台
+- 💡 个人开发者快速项目实现：帮助独立开发者快速实现想法，自动生成完整的项目结构和文档
 
 
 
@@ -797,28 +962,28 @@ MetaGPT 是一个创新的多智能体框架，它将AI智能体角色化（产�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 32,359 |
+| Stars | 32,367 |
 | 语言 | Python |
-| Forks | 1,947 |
+| Forks | 1,948 |
 | Issues | 90 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检索增强生成）、智能体编排和多模态能力。它最大的独特价值在于既支持在线 LLM（GPT、Claude、Gemini 等），又能完全离线部署（Llama、Qwen 等），并且深度集成到工作流中（Obsidian、Emacs、WhatsApp）。对于注重隐私、需要构建个人知识库或企业私有 AI 助手的用户来说，这是一个不可多得的 self-hosted 解决方案。
+Khoj 是一个功能强大的 AI 第二大脑项目，支持完全自部署并可接入多种本地和在线 LLM。其独特价值在于将个人知识库与 AI 能力深度融合，提供从文档检索到自动化任务的完整解决方案，既保护数据隐私又赋予用户对 AI 助手的完全控制权。
 
 **技术亮点**:
-- 🔌 多模型支持：兼容 OpenAI、Anthropic、Google、本地 LLM（llama.cpp、Ollama）等，可自由切换在线/离线模型
-- 📚 RAG 架构：基于语义搜索的文档检索，支持 Obsidian、Emacs、在线文档和本地文件的知识库构建
-- 🤖 智能体与自动化：支持自定义 AI agents、定时任务编排、深度研究模式，能自主完成复杂工作流
-- 🌐 多平台集成：桌面端、Web、移动端全覆盖，深度集成 Obsidian、Emacs、WhatsApp 等常用工具
-- 🎯 多模态能力：支持语音转文字（STT）、图像生成、语音对话，提供丰富的交互方式
+- 支持多模型接入：兼容 GPT、Claude、Gemini、Llama、Qwen、Mistral 等主流 LLM，可灵活切换本地和在线模型
+- RAG + 语义搜索：基于个人文档和网页内容构建知识库，实现精准的语义检索和问答
+- 多平台生态集成：提供 Obsidian、Emacs、WhatsApp 等插件，无缝融入现有工作流
+- 高度可定制：支持构建自定义 AI Agent 和自动化任务调度，可根据个人需求定制 AI 助手能力
+- 离线优先设计：支持离线 LLM 和 STT（语音转文字），确保数据私密性和无网络环境可用性
 
 **适用场景**:
-- 🏢 企业/团队场景：构建企业私有知识库 AI 助手，员工可通过文档、聊天快速获取信息，同时支持自部署保证数据隐私
-- 👨‍💻 个人开发者/研究人员：搭建个人第二大脑，整合笔记、代码、文档进行深度研究和知识管理，支持离线使用
-- 📱 内容创作者：通过 WhatsApp/桌面端快速获取信息、生成内容、调度自动化任务，提升创作效率
+- 个人知识管理：为研究人员、学生或知识工作者构建个人第二大脑，快速从笔记、文档中检索信息并获得智能解答
+- 企业私有化部署：企业可部署内部 AI 助手，让员工安全地访问公司知识库，同时避免数据外泄风险
+- 开发者和 AI 爱好者：适合想要深度定制 AI Agent、实验不同 LLM 模型或构建自动化工作流的技术用户
 
 
 
@@ -836,7 +1001,7 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,655 |
+| Stars | 28,656 |
 | 语言 | TypeScript |
 | Forks | 3,047 |
 | Issues | 218 |
@@ -845,19 +1010,19 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 ---
 
-Perplexica 是一个开源的 AI 智能搜索引擎，为用户提供了类似 Perplexity AI 的对话式搜索体验。它结合了 LLM 和 RAG 技术，能够提供准确、带引用来源的智能回答，最重要的是完全开源且支持自托管，让用户可以掌控自己的数据和搜索隐私。
+Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity 的开源替代方案，能够理解用户查询的真实意图并提供精准答案。该项目采用先进的 RAG（检索增强生成）技术和 LLM 本地化部署方案，既保证了搜索质量，又实现了数据隐私和可控性，是企业和开发者构建自主 AI 搜索能力的理想选择。
 
 **技术亮点**:
-- 采用 RAG（检索增强生成）技术，提供准确的 AI 回答并附带引用来源
-- 支持多种搜索模式（普通搜索、特定网页搜索、新闻搜索、学术搜索等）
-- 深度集成 SearXNG 作为后端搜索引擎，支持多源搜索
-- 支持多种 LLM 模型（OpenAI、Ollama、LocalAI 等），灵活的模型选择
-- 完全自托管部署，数据完全由用户掌控，注重隐私保护
+- 🤖 基于 RAG（检索增强生成）架构，结合 LLM 大模型提供精准的 AI 答案生成能力
+- 🔐 支持本地化部署和 LLM 本地运行，确保数据隐私和完全自主可控
+- 🔍 集成 SearXNG 元搜索引擎，提供多样化的搜索数据源
+- ⚡ TypeScript 全栈开发，技术栈现代化且易于扩展维护
+- 🚀 自托管架构设计，无需依赖外部 API 服务，降低使用成本
 
 **适用场景**:
-- 企业内部知识库和智能问答系统，可私有化部署保护商业机密
-- 开发者和 AI 爱好者构建自己的 AI 搜索引擎应用，研究 RAG 技术实践
-- 个人用户打造私人 AI 助手，用于学习、研究和日常信息查询
+- 🏢 **企业知识管理系统**：企业可部署内部智能搜索引擎，集成私有文档和数据，为员工提供精准的企业知识查询服务
+- 🛡️ **隐私优先的搜索服务**：对数据隐私要求高的场景（如法律、医疗、金融领域），可在本地环境运行，避免数据外泄风险
+- 👨‍💻 **开发者构建 AI 应用**：开发者可作为基础框架，快速定制开发垂直领域的智能问答和搜索应用
 
 
 
@@ -881,28 +1046,28 @@ Perplexica 是一个开源的 AI 智能搜索引擎，为用户提供了类似 P
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,465 |
+| Stars | 122,491 |
 | 语言 | Python |
-| Forks | 17,286 |
-| Issues | 259 |
+| Forks | 17,294 |
+| Issues | 265 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标），提供类似 ChatGPT 的现代化交互体验，支持 Ollama、OpenAI API 等多种后端。其核心优势在于完全自托管部署、开箱即用的 RAG 能力以及企业级功能（用户管理、权限控制），是企业和个人开发者构建私有 AI 应用的理想选择。
+Open WebUI 是目前最热门的开源 LLM Web 界面之一，拥有超过 12.2 万 Stars。它的独特价值在于提供 ChatGPT 风格的友好交互体验，同时支持完全本地化部署（搭配 Ollama）和企业级功能（如 RAG 和 MCP 集成），是自托管 AI 界面的最佳选择。
 
 **技术亮点**:
-- 🔌 多后端支持：原生支持 Ollama、OpenAI API、MCP（模型上下文协议）等多种 LLM 后端，灵活切换
-- 🔍 内置 RAG 引擎：开箱即用的检索增强生成能力，支持文档上传、知识库构建和智能检索
-- 🏢 企业级功能：完整的用户认证、权限管理、多租户支持，适合团队协作场景
-- 🎨 现代化 UI/UX：ChatGPT 风格的对话界面，支持代码高亮、流式输出、语音输入等
-- 🚀 自托管部署：完全本地化运行，数据私有可控，支持 Docker 一键部署
+- 🤖 多模型后端支持：兼容 Ollama、OpenAI API 等多种 LLM 服务提供商
+- 🔒 完全自托管：可本地部署，数据隐私可控，无需依赖云端服务
+- 📚 内置 RAG 能力：支持文档上传与检索增强生成，实现知识库问答
+- 🎨 ChatGPT 级 UI 体验：现代化、响应式的 Web 界面，支持会话管理
+- 🔌 MCP 与 OpenAPI 集成：支持模型上下文协议和第三方 API 扩展
 
 **适用场景**:
-- 🏢 企业私有 AI 助手：在私有服务器部署，利用企业内部知识库（通过 RAG）构建安全的 AI 对话系统
-- 👨‍💻 个人 AI 实验平台：开发者本地运行 Ollama 等开源模型，测试和调试 LLM 应用
-- 🎓 教育/培训场景：学校或培训机构构建受控的 AI 学习环境，支持多用户管理和内容审核
+- 🏢 企业内部 AI 知识库：结合 RAG 功能，构建企业私有文档问答系统
+- 💻 个人开发者本地 LLM 工作台：搭配 Ollama 在本地运行大模型，保护数据隐私
+- 🎓 教育/研究机构：为学生或研究人员提供统一的 AI 实验环境，无需暴露敏感数据
 
 
 
@@ -920,28 +1085,28 @@ Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标）
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,488 |
+| Stars | 72,507 |
 | 语言 | Python |
-| Forks | 8,022 |
-| Issues | 3,150 |
+| Forks | 8,024 |
+| Issues | 3,151 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, deep-learning, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, multi-agent, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融合了先进的 RAG 技术与 Agent 能力，为大语言模型构建了卓越的上下文层。该项目拥有超过 7.2 万颗星标，集成了文档解析、GraphRAG、多智能体协作等前沿技术，是构建企业级 AI 应用和知识库系统的理想选择。
+RAGFlow 是一款领先的开源 RAG（检索增强生成）引擎，它将先进的 RAG 技术与 Agent 能力深度融合，为 LLM 构建卓越的上下文层。拥有超过 7.2 万颗星标，支持 GraphRAG、多智能体协作、深度研究等前沿特性，是企业构建智能知识库和 AI 应用的理想选择。
 
 **技术亮点**:
-- 深度文档解析与理解能力，支持复杂文档的智能处理
-- 融合 RAG 与 Agent 技术，提供增强的检索增强生成能力
-- 支持 GraphRAG 知识图谱技术，提升知识关联与推理能力
-- 集成多智能体系统（Multi-Agent），支持复杂的 Agentic 工作流
-- 广泛的生态兼容性，支持 OpenAI、Ollama、DeepSeek、MCP 等主流 LLM 平台
+- 将 RAG 与 Agent 能力深度融合，支持多智能体协作工作流
+- 集成 GraphRAG 技术，提供更强大的知识图谱增强检索能力
+- 强大的文档解析与理解能力，支持复杂文档格式处理
+- 深度研究（Deep Research）模式，结合 DeepSeek R1 等先进模型
+- 支持 MCP 协议和 Ollama，兼容 OpenAI 等多种 LLM 后端
 
 **适用场景**:
-- 企业级智能知识库系统构建，实现文档智能检索与问答
-- AI 助手与智能客服开发，提供基于企业文档的精准回答
-- 复杂研究与深度分析场景，利用 GraphRAG 和多智能体协作处理复杂任务
+- 企业知识库构建：企业可利用 RAGFlow 构建智能文档检索系统，让员工通过自然语言快速获取企业内部知识
+- 智能客服与问答系统：将产品文档、FAQ 等接入 RAGFlow，实现准确、基于事实的智能客户服务
+- 智能研究助手：研究人员可使用深度研究模式，快速检索和分析大量学术文献、报告等资料
 
 
 
@@ -959,28 +1124,28 @@ RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,014 |
+| Stars | 54,027 |
 | 语言 | JavaScript |
-| Forks | 5,807 |
-| Issues | 270 |
+| Forks | 5,809 |
+| Issues | 271 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
 
 ---
 
-AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检索增强生成）、AI 智能体、无代码构建器和 MCP 兼容性等企业级特性。作为拥有 5.4 万+ star 的明星项目，它既支持桌面端又支持 Docker 部署，既可连接本地大模型（Ollama、LM Studio 等）也能使用云端 API，为企业与个人开发者提供了一站式私有化 AI 解决方案。
+AnythingLLM 是一个功能完备的开源 AI 应用平台，将 RAG、AI Agents、向量数据库等核心能力集成于一体，同时支持本地部署和云端多种 LLM。其独特价值在于提供了开箱即用的企业级 AI 解决方案，54k+ stars 证明了其在开发者社区中的高度认可和可靠性，适合快速搭建私有化 AI 助手而无需从零开发各个模块。
 
 **技术亮点**:
-- 内置 RAG 引擎和向量数据库，支持文档上传、网页抓取和知识库管理
-- 无代码 AI Agent 构建器，支持拖拽式创建自定义智能体和工作流
-- 广泛的模型兼容性：支持 Ollama、DeepSeek、Llama3、Qwen3、Kimi、Moonshot 等主流本地及云端模型
-- MCP（Model Context Protocol）服务器兼容，支持与 AI 助手进行工具集成
-- 提供 Desktop 应用和 Docker 容器多种部署方式，支持完全离线的本地化运行
+- ✅ 内置 RAG (检索增强生成) 引擎，支持向量数据库和网页抓取，可轻松构建知识库问答系统
+- ✅ No-code Agent 构建器，零代码即可创建和定制 AI 智能体，降低 AI 应用开发门槛
+- ✅ MCP (Model Context Protocol) 兼容性，支持丰富的 MCP 服务器生态，扩展能力强
+- ✅ 多模态支持 & 多 LLM 集成，兼容 Ollama、DeepSeek、Kimi、Llama3、Qwen3 等主流模型
+- ✅ 灵活部署方式，支持桌面应用和 Docker 容器化部署，满足本地化与云端不同需求
 
 **适用场景**:
-- 企业知识管理：搭建企业级 AI 知识库和客服助手，支持文档上传、网页抓取和私有化部署
-- 开发者工具链：通过 MCP 兼容性集成 AI Agent 到现有工作流，构建自动化开发助手
-- 个人 AI 助手：在本地部署个人 AI 聊天机器人，支持多模态交互和本地 LLM 完全离线使用
+- 🏢 **企业知识库搭建**：利用 RAG 能力快速构建企业内部文档、知识库的智能问答系统，支持私有化部署保障数据安全
+- 💼 **个人开发者 AI 助手**：通过 No-code 构建器快速创建个性化的 AI Agents，集成到工作流中提升效率
+- 🔧 **本地 LLM 应用开发**：结合 Ollama、LM Studio 等本地模型，构建完全离线的 AI 应用，保护隐私且无 API 调用成本
 
 
 
@@ -998,28 +1163,28 @@ AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,678 |
+| Stars | 71,745 |
 | 语言 | TypeScript |
-| Forks | 14,567 |
-| Issues | 1,199 |
+| Forks | 14,571 |
+| Issues | 1,174 |
 | Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
 | 许可证 | Other |
 
 ---
 
-LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现、构建到协作的完整 AI Agent 生态系统。凭借 7.1 万+ GitHub Stars 的社区认可度和对 GPT、Claude、DeepSeek 等主流大模型的全面支持，它为个人和企业提供了未来工作方式的最佳实践。
+LobeHub是一个创新的AI智能体协作平台，拥有超过7万颗星标，证明了其在AI Agent领域的卓越影响力。该项目提供了企业级的智能体生态系统，让个人和企业都能轻松构建、发现和协作AI智能体团队，是AI时代的工作与生活必备工具。
 
 **技术亮点**:
-- 多智能体协作系统：支持多个 AI Agent 作为工作单元协同工作，实现复杂任务的自动化处理和团队化作业
-- 零门槛 Agent 团队设计：提供直观的可视化配置界面，让非技术用户也能轻松构建和管理专属的 Agent 团队
-- 多模型深度集成：原生支持 ChatGPT、Claude、Gemini、DeepSeek、OpenAI 等主流 AI 模型，实现模型间的无缝切换和协同
-- MCP（Model Context Protocol）协议支持：采用标准化协议实现知识库和工具的统一管理与扩展
-- TypeScript 技术栈：基于现代化 TypeScript 构建的高性能、类型安全的前端架构
+- • 多智能体协作系统 - 支持多个AI Agent协同工作，实现复杂任务的自动化处理
+- • 智能体团队设计 - 提供直观的界面让用户轻松构建和管理AI智能体团队
+- • 全方位AI模型支持 - 集成ChatGPT、Claude、DeepSeek、Gemini、GPT、OpenAI等主流大语言模型
+- • TypeScript技术栈 - 采用现代化的TypeScript开发，确保代码质量和可维护性
+- • 知识库与MCP协议 - 内置知识库管理系统，支持MCP协议实现更强大的智能体交互能力
 
 **适用场景**:
-- 企业级 AI 团队构建：为企业打造专属的 AI Agent 协作团队，自动化处理客服、数据分析、文档生成等业务场景
-- 个人 AI 工作助手：个人用户可配置多个专业 Agent（如编程助手、写作助手、学习助手），提升日常工作效率
-- 知识库集成与智能问答：结合 MCP 协议和知识库功能，快速构建企业内部智能知识管理和检索系统
+- • 企业级AI智能体团队部署 - 企业可以构建专属的AI智能体协作系统，自动化处理业务流程、客户服务、数据分析等任务
+- • 个人开发者AI工具集成 - 开发者可以利用该平台快速集成多种AI模型，构建个人AI助手和自动化工作流
+- • 知识管理与智能问答 - 组织可以构建基于知识库的智能问答系统，实现企业知识的智能化检索和应用
 
 
 
@@ -1037,28 +1202,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,136 |
+| Stars | 45,141 |
 | 语言 | Java |
-| Forks | 15,797 |
+| Forks | 15,798 |
 | Issues | 44 |
 | Topics | activiti, agent, ai, aiflow, ant-design-vue, antd, codegenerator, deepseek, flowable, langchain4j, llm, low-code, mcp, mybatis-plus, rag, spring-ai, springboot, springboot3, springcloud, vue3 |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 证明其企业级实力。该项目将低代码开发与 AI 技术深度融合，通过强大的代码生成器和全栈 AI 应用能力，帮助企业在保持开发灵活性的同时显著降低开发成本（60%+），是目前市场上少有的真正落地的 AI 低代码企业级解决方案。
+JeecgBoot 是国内领先的开源 AI 低代码平台，凭借 45k+ stars 的强大社区基础，首创性地将 AI 能力与企业级低代码开发完美融合。它不仅能通过代码生成器实现前后端一键生成提升开发效率，更集成了 LLM、RAG、AI 助手等前沿 AI 技术，为企业构建智能化应用提供了完整解决方案，是目前少有的将 AI 赋能真正落实的开发平台。
 
 **技术亮点**:
-- 【AI 全栈能力】集成 LangChain4j、Spring AI、DeepSeek 等 LLM 技术，提供 AI 模型、RAG 知识库、AI 助手、MCP 协议、流程编排（AI Flow）等完整 AI 应用生态
-- 【强大代码生成器】支持前后端一键生成，无需手写代码即可快速构建业务系统，配合 MyBatis-Plus 等持久层框架实现高效开发
-- 【现代化技术栈】基于 SpringBoot 3、Spring Cloud、Vue 3 + Ant Design Vue 构建微服务架构，支持 Flowable/Activiti 工作流引擎
-- 【智能交互体验】创新性实现聊天式业务操作，通过对话完成复杂业务流程，降低系统使用门槛
-- 【企业级特性】支持知识库管理、Agent 智能体、插件系统、MCP 协议扩展，满足企业复杂场景需求
+- AI 全栈集成：内置 LLM、RAG、知识库、AI 流程编排、MCP 等能力，支持 DeepSeek、LangChain4j、Spring AI 等主流 AI 框架，实现聊天式业务操作
+- 智能代码生成器：前后端一键生成，无需手写代码，显著提升开发效率，降低 80% 以上重复性工作
+- 现代化技术栈：基于 Spring Boot 3 + Vue 3 + Ant Design Vue，支持 MyBatis-Plus，前后端分离架构，紧跟技术前沿
+- 强大的流程引擎：集成 Activiti 和 Flowable 工作流引擎，支持复杂的业务流程编排和 AI 流程设计
+- 企业级特性：支持 Spring Cloud 微服务架构，提供完善的权限管理、代码模板定制、插件化扩展等企业级功能
 
 **适用场景**:
-- 【企业数字化中台】快速搭建企业管理系统（如 OA、ERP、CRM、BPM），通过低代码能力缩短 60%+ 开发周期，特别适合中大型企业快速迭代业务
-- 【AI 应用快速构建】企业无需从零开发 AI 功能，可直接集成智能客服、知识库问答、流程自动化等 AI 能力到现有系统中，大幅降低 AI 应用门槛
-- 【独立开发者/小团队创业】利用代码生成器和 AI 辅助能力，小团队也能快速开发出功能完善的 SaaS 产品，显著降低人力成本
+- 企业快速开发：中大型企业需要快速构建内部管理系统、业务应用，通过低代码+AI 能力缩短 50% 以上开发周期
+- AI 应用构建：企业需要开发智能客服、知识库问答、AI 助手、RAG 检索增强等 AI 应用场景
+- 传统系统智能化升级：现有业务系统需要集成 AI 能力（如智能表单填充、智能审批、智能数据分析），通过平台可快速实现 AI 赋能
 
 
 
@@ -1076,28 +1241,28 @@ JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 40,888 |
+| Stars | 40,893 |
 | 语言 | Python |
-| Forks | 9,693 |
+| Forks | 9,690 |
 | Issues | 357 |
 | Topics | ai, ai-agent, chatgpt, claude-4, deepseek, dingtalk, feishu-bot, gemini, gpt-4, kimi, linkai, llm, mcp, multi-agent, openai, python3, qwen, rag, wechat, wechat-bot |
 | 许可证 | MIT License |
 
 ---
 
-这是一个极具实用价值的开源AI项目，成功打通了多个主流企业协作平台（微信/飞书/钉钉/企业微信）与顶级大模型之间的桥梁，让企业能够以零代码方式快速部署智能客服和AI助手。项目的独特价值在于"一次部署，多平台接入"，大幅降低了企业AI应用的开发门槛和成本。
+这是国内最受欢迎的开源 AI 机器人项目之一，star 超 4 万，支持微信/飞书/钉钉等主流国内平台，接入 ChatGPT/Claude/DeepSeek/文心一言等 10+ 国内外大模型，支持 RAG 知识库、MCP 协议、语音图片处理，覆盖文本/语音/图片/联网等全场景，非常适合快速搭建企业级智能客服或个人 AI 助手。
 
 **技术亮点**:
-- 支持多模型接入：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI等10+主流大模型
-- 多平台覆盖：支持微信公众号、企业微信、飞书、钉钉等主流协作平台，实现一次部署多端使用
-- 多媒体处理能力：支持文本、语音和图片的输入输出，提供自然的人机交互体验
-- 企业级能力：支持RAG知识库定制、MCP协议、Multi-Agent系统，访问操作系统和互联网，满足复杂业务需求
-- 高可用性：40.8k+ GitHub stars，活跃的开源社区，MIT许可证，企业可安全商用
+- 多平台适配：支持微信公众号、企业微信、飞书、钉钉等主流国内 IM 平台接入
+- 大模型灵活切换：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI 等 10+ 模型可选
+- 全模态交互：支持文本、语音、图片处理，支持 MCP 访问操作系统和互联网能力
+- RAG 知识库：基于自有知识库进行定制，支持企业智能客服场景
+- AI Agent/Multi-Agent：支持 MCP 协议、多 Agent 协同，可扩展能力强
 
 **适用场景**:
-- 企业智能客服系统：基于公司知识库快速部署微信/钉钉等渠道的AI客服，提升响应效率，降低人工成本
-- 个人AI助手开发：开发者在个人微信公众号或企业内部搭建AI助手，提升工作效率和自动化水平
-- 企业内部知识管理：接入企业知识库，构建内部问答系统，帮助员工快速检索信息
+- 企业智能客服：接入微信/飞书/钉钉，基于公司知识库（RAG）搭建智能客服机器人
+- 个人 AI 助手：在个人微信或办公软件中接入大模型，实现智能对话与任务自动化
+- 多平台 AI Bot：为不同平台快速部署统一的 AI 机器人，统一接入体验
 
 
 
@@ -1115,28 +1280,28 @@ JeecgBoot 是国内领先的开源低代码平台，凭借 45,000+ GitHub Stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,045 |
+| Stars | 27,048 |
 | 语言 | TypeScript |
-| Forks | 6,921 |
-| Issues | 178 |
+| Forks | 6,922 |
+| Issues | 179 |
 | Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
 | 许可证 | Other |
 
 ---
 
-FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其社区认可度。它提供了开箱即用的数据处理、RAG 检索和可视化工作流编排能力，让开发者无需复杂配置即可快速构建企业级问答系统，是搭建 AI 知识库和智能客服的绝佳选择。
+FastGPT 是一个功能完整的 LLM 知识库问答平台，基于大语言模型构建，提供了数据处理、RAG 检索、可视化 AI 工作流编排等开箱即用的能力。它让开发者无需繁琐的配置即可快速构建和部署复杂的问答系统，项目拥有 27k+ stars，技术栈采用 TypeScript/Next.js，支持 OpenAI、Claude、Qwen 等多种主流大模型，适合快速落地企业级 AI 应用。
 
 **技术亮点**:
-- 基于 RAG 技术的知识库问答系统，支持数据处理到检索的完整流程
-- 可视化 AI 工作流编排，通过拖拽方式快速构建复杂的问答逻辑
-- 集成主流 LLM 能力，支持 OpenAI、Claude、Qwen、DeepSeek 等多种大模型
-- 基于 Next.js + TypeScript 构建现代化 Web 应用，技术栈成熟稳定
-- 内置 Agent 和 MCP 协议支持，便于扩展智能体能力和生态集成
+- 基于 LLM 的知识库平台，提供数据处理、RAG 检索、可视化工作流编排等完整能力栈
+- 支持多种主流大模型集成：OpenAI、Claude、DeepSeek、Qwen 等，提供统一的模型接入层
+- 采用 TypeScript + Next.js 现代化技术栈，代码质量高，易于扩展和维护
+- 内置 Agent 能力和 MCP（Model Context Protocol）支持，可实现复杂的 AI 智能体应用
+- 提供可视化 AI 工作流编排器，通过低代码/无代码方式快速构建复杂问答系统
 
 **适用场景**:
-- 企业智能客服系统：快速搭建基于企业知识库的自动问答平台，提升客服效率
-- 个人/团队知识管理：将文档、笔记转化为可对话的知识库，实现智能检索
-- AI 应用快速原型开发：通过可视化工作流快速验证和部署复杂的 LLM 应用场景
+- 企业智能客服系统：基于企业知识库快速构建 AI 客服，自动回答用户问题，降低人工客服成本
+- 企业内部知识管理：将公司文档、API 文档、操作手册等转化为可检索的知识库，员工通过自然语言快速查询所需信息
+- 个人开发者快速原型验证：无需从零搭建 RAG 系统，快速验证 AI 问答应用想法，专注于业务逻辑而非基础设施
 
 
 
@@ -1154,28 +1319,28 @@ FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,339 |
+| Stars | 91,433 |
 | 语言 | Python |
-| Forks | 13,180 |
-| Issues | 10 |
+| Forks | 13,200 |
+| Issues | 11 |
 | Topics | agents, llms, python, rag |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-这是一个优质的 LLM 应用学习资源集合项目，拥有超过 9 万 Stars，精选了多个基于 OpenAI、Anthropic、Gemini 和开源模型的 AI Agents 及 RAG 应用实战案例。对开发者极具参考价值，涵盖了从基础到前沿的大语言模型应用技术栈，是快速上手和深入学习 LLM 应用开发的绝佳资源库。
+这是一个极具价值的LLM应用实践资源库，汇集了91,000+星标的开源项目，提供了涵盖OpenAI、Anthropic、Gemini及开源模型的完整AI应用生态系统。作为一站式学习与参考平台，它帮助开发者快速掌握AI智能体和RAG技术的实际应用，是目前最全面的LLM应用开发指南之一。
 
 **技术亮点**:
-- 涵盖主流大模型平台：集成 OpenAI、Anthropic、Gemini 及开源模型的完整应用示例
-- 核心技术聚焦：深度展示 AI Agents（智能代理）和 RAG（检索增强生成）两大热门技术
-- Python 生态友好：基于 Python 语言构建，便于快速集成到现有开发环境
-- Apache 2.0 开源许可：商业友好，可直接用于企业项目和个人学习
-- 实战导向：提供可运行的完整应用代码，而非简单教程
+- 🤖 多模态AI智能体集成：支持OpenAI GPT、Anthropic Claude、Google Gemini等主流LLM模型的完整实现方案
+- 📚 RAG检索增强生成架构：提供完整的文档检索、向量数据库集成和知识库构建最佳实践
+- 🔧 开源与闭源模型混合部署：展示如何在同一应用中灵活切换和组合使用不同AI模型
+- 🚀 Python全栈LLM应用开发：包含前后端完整实现，从API集成到用户界面的端到端解决方案
+- 📈 企业级生产就绪代码：所有示例均经过实战验证，可直接用于商业项目开发
 
 **适用场景**:
-- 企业开发者：快速构建企业级 AI 应用和智能客服系统，参考成熟架构和最佳实践
-- 个人开发者/学习者：系统学习 LLM 应用开发技术，掌握 AI Agents 和 RAG 的实战经验
-- 技术决策者：了解主流大模型平台的应用特点和适用场景，为技术选型提供参考
+- 🏢 企业级AI应用快速开发：为企业开发者提供可直接部署的客户服务机器人、企业知识库问答系统、智能助手等成熟方案，大幅缩短从原型到生产的时间
+- 👨‍💻 个人开发者学习与实践：适合希望深入学习LLM应用开发、AI智能体构建和RAG技术的开发者，通过丰富的实战案例快速掌握核心技术
+- 🎓 教学与培训资源：非常适合作为高校AI课程、企业内训的实战教材，涵盖从基础概念到高级应用的完整学习路径
 
 
 
@@ -1193,28 +1358,28 @@ FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,996 |
+| Stars | 97,021 |
 | 语言 | TypeScript |
-| Forks | 11,418 |
-| Issues | 802 |
+| Forks | 11,422 |
+| Issues | 812 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Supabase 是 Firebase 的开源替代方案，它将 PostgreSQL 的强大功能与现代开发体验完美结合。该项目凭借 96k+ GitHub Stars 和活跃的社区生态，为开发者提供了一个功能完整的 Backend-as-a-Service 平台，既有 PostgreSQL 的企业级可靠性，又具备类似 Firebase 的易用性，特别适合需要数据主权和 AI 能力的现代化应用开发。
+Supabase 是 Firebase 的开源替代方案，基于成熟的 PostgreSQL 数据库构建，为企业提供完整的数据开发平台。它结合了强大的关系数据库、实时订阅、身份验证和对象存储等功能，让开发者既能获得 Firebase 的开发体验，又能完全掌控自己的数据和基础设施。
 
 **技术亮点**:
-- 🔌 PostgreSQL 原生集成：提供专用 Postgres 数据库，支持完整的 SQL 功能、扩展和 pgvector/pgpostgis 等高级特性
-- 🤖 AI 原生支持：内置向量嵌入（embeddings）、pgvector 向量搜索和 pgpostgis 地理空间分析，为 AI 应用提供开箱即用的数据基础设施
-- 🔐 企业级认证系统：完整的 OAuth2、多因素认证和行级安全策略（RLS），无需第三方认证服务
-- ⚡ Realtime 实时功能：基于 WebSockets 的实时数据同步，配合 Deno Edge Functions 实现高性能边缘计算
-- 🛠️ 开源与自托管：Apache 2.0 许可证，支持完全自托管和本地部署，避免供应商锁定
+- 基于 PostgreSQL 的完整后端平台，集成数据库、认证、实时订阅和存储功能
+- 提供 PostgREST 自动生成 RESTful API，支持 pgvector 进行向量检索和 AI 应用开发
+- 内置 Realtime 引擎支持 WebSocket 实时数据同步，兼容 pgpostGIS 地理位置功能
+- 使用 TypeScript 构建，深度集成 Deno Edge Functions，支持边缘计算和 Serverless 架构
+- 完全开源且自托管友好，提供从个人项目到企业级部署的灵活选择
 
 **适用场景**:
-- 🏢 企业级应用开发：需要数据主权、复杂查询能力和可控性的中大型企业应用，可私有化部署并充分利用 PostgreSQL 生态
-- 🚀 快速原型与 MVP：独立开发者或初创团队快速构建全栈应用，无需搭建后端基础设施，类似 Firebase 但更灵活
-- 🤖 AI 驱动应用：构建需要向量搜索、语义检索和 RAG（检索增强生成）能力的 AI 应用，如智能客服、知识库问答、推荐系统等
+- 需要完整后端解决方案的全栈应用开发，包括 Web 和移动应用
+- AI 和机器学习应用开发，利用 pgvector 进行向量嵌入存储和相似性搜索
+- 需要实时数据同步功能的协作应用，如聊天、文档协作和实时仪表盘
 
 
 
@@ -1232,28 +1397,28 @@ Supabase 是 Firebase 的开源替代方案，它将 PostgreSQL 的强大功能�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 38,347 |
+| Stars | 38,351 |
 | 语言 | Python |
 | Forks | 6,093 |
-| Issues | 169 |
+| Issues | 176 |
 | Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
 | 许可证 | Other |
 
 ---
 
-MindsDB 是一个创新的联邦查询引擎，将 AI 能力直接集成到数据库工作流中。作为通用的 MCP (Model Context Protocol) 服务器，它打破了传统数据库与 AI 模型之间的壁垒，让开发者能用 SQL 直接查询和部署 AI 模型，极大降低了 AI 应用的开发门槛。
+MindsDB是一个强大的联邦AI查询引擎，它让开发者能够用简单的SQL查询直接在数据库中训练、部署和运行AI模型，无需数据迁移。作为MCP（Model Context Protocol）服务器，它架起了传统数据库与LLM和AI代理之间的桥梁，显著降低了AI应用的开发门槛。
 
 **技术亮点**:
-- 支持联邦查询：可直接连接 MySQL、PostgreSQL、MSSQL、BigQuery 等多种数据源
-- AI 模型数据库化：通过 SQL 训练、部署和查询 LLM 及机器学习模型，无需额外 MLOps 工具
-- MCP 服务器架构：作为通用 MCP 服务器，可无缝集成各种 AI Agent 和工具生态
-- RAG 原生支持：内置检索增强生成能力，轻松构建企业级知识库问答系统
-- 商业智能集成：连接 BI 工具实现智能数据分析和可视化
+- 支持使用标准SQL直接训练和部署机器学习模型，数据无需离开数据库
+- 作为MCP Server提供统一接口，集成GPT-4、Claude、Llama等主流LLM
+- 支持200+数据源集成（PostgreSQL、MySQL、MongoDB、BigQuery等），实现联邦查询
+- 内置RAG（检索增强生成）能力，可直接连接企业知识库进行智能问答
+- 提供自动化AI代理（Agents）框架，支持复杂任务的自主执行
 
 **适用场景**:
-- 企业数据智能分析：让业务分析师用 SQL 直接调用 AI 模型进行预测和洞察分析，无需编程背景
-- AI 应用快速开发：开发者通过熟悉的 SQL 接口快速构建 RAG 应用、智能客服、推荐系统等 AI 解决方案
-- 多源数据融合处理：统一查询跨不同数据库的数据源，结合 LLM 实现智能数据聚合与问答
+- 企业数据分析师使用熟悉的SQL快速构建预测模型，无需学习Python或机器学习框架
+- 开发者为现有数据库添加AI能力（如文本转SQL、语义搜索、智能客服），实现业务智能化
+- RAG应用开发：企业通过MCP协议快速构建连接内部知识库的智能问答系统
 
 
 
@@ -1271,28 +1436,28 @@ MindsDB 是一个创新的联邦查询引擎，将 AI 能力直接集成到数�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,424 |
+| Stars | 69,526 |
 | 语言 | Python |
-| Forks | 9,746 |
-| Issues | 261 |
+| Forks | 9,750 |
+| Issues | 262 |
 | Topics | ai4science, chineseocr, document-parsing, document-translation, kie, ocr, paddleocr-vl, pdf-extractor-rag, pdf-parser, pdf2markdown, pp-ocr, pp-structure, rag |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-PaddleOCR 是 GitHub 上最受欢迎的 OCR 工具包（6.9万+ stars），能够将 PDF/图像文档转换为 LLM 可理解的结构化数据。它完美桥接了传统 OCR 与现代大语言模型，不仅支持 100+ 种语言的文本识别，还提供文档解析、版面分析、信息抽取等企业级功能，是构建 RAG 系统和智能文档处理应用的理想基础组件。
+PaddleOCR是GitHub上最受欢迎的OCR开源项目之一（Star数6.9万+），是连接非结构化文档与LLM应用的理想桥梁。作为飞桨生态的核心组件，它提供100+语言支持、完整的前沿算法实现（PP-OCR/PP-Structure系列模型），在工业级应用中久经验证，是构建RAG系统、文档智能处理等AI应用的理想选择。
 
 **技术亮点**:
-- 🌍 支持 100+ 种语言的多语言 OCR 识别能力，涵盖中英文主流语言
-- 🤖 专为 LLM 优化的文档解析 pipeline，可直接将 PDF/图片转为结构化数据
-- 📄 内置 PP-Structure 版面分析引擎，实现文档版面还原与信息抽取（KIE）
-- 🚀 轻量级部署方案，支持 CPU/GPU 推理，模型体积小但精度高
-- 🔗 与 RAG 系统无缝集成，提供 pdf-extractor-rag 等现成工具链
+- 超轻量级PP-OCR系列模型：提供80+中英文检测识别模型，在保证精度的同时实现超轻量化，支持CPU/GPU/多平台部署
+- PP-Structure文档结构化系统：支持版面分析、表格识别、关键信息提取(KIE)，能将PDF/图像转化为结构化Markdown或JSON数据
+- 100+语言支持：覆盖中英日韩等主要语言，适配多语言文档处理需求，内置多语言字典和预训练模型
+- 端到端RAG集成能力：内置PDF解析工具链，专为LLM优化输出格式，可直接接入RAG系统和大模型应用
+- 开源免费且工业级验证：Apache 2.0许可，已在金融、政务、医疗等行业广泛落地，提供丰富的二次开发文档和案例
 
 **适用场景**:
-- 📑 企业文档数字化：将历史 PDF 合同、发票、报表等非结构化文档转化为可检索的结构化数据，构建企业知识库
-- 🤖 LLM + RAG 应用开发：为对话机器人提供文档理解能力，实现智能问答、文档摘要、内容提取等功能
-- 🌐 多语言文档处理：跨境电商、国际化企业场景下的多语言票据、证件、合同自动识别与翻译
+- RAG知识库构建：从PDF文档、图像资料中提取结构化文本，为AI问答系统提供高质量数据源
+- 企业文档智能化处理：自动识别发票、合同、报表等文档中的关键信息，实现数字化归档和数据录入自动化
+- 多语言文档翻译与本地化：将扫描件或图片格式的多语言文档转换为可编辑文本，支持跨国业务文档处理
 
 
 
@@ -1310,28 +1475,28 @@ PaddleOCR 是 GitHub 上最受欢迎的 OCR 工具包（6.9万+ stars），能�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,704 |
+| Stars | 48,711 |
 | 语言 | TypeScript |
-| Forks | 23,655 |
-| Issues | 766 |
+| Forks | 23,658 |
+| Issues | 767 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
 
 ---
 
-Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖拽式可视化界面让开发者和非开发者都能快速构建 AI 智能体和聊天机器人。它基于 LangChain 构建但消除了编码门槛，完美平衡了灵活性与易用性，是目前最受欢迎的开源 LLM 应用开发平台之一（48.7k+ Stars），特别适合需要快速原型开发到生产部署的团队。
+Flowise 是一个颠覆性的可视化 AI Agent 构建平台，让非技术用户也能通过拖拽方式快速创建复杂的 AI 工作流。它将 LangChain 的强大能力封装为直观的低代码界面，降低了 AI 应用开发门槛，48k+ 的 GitHub Stars 证明了其在开发者社区的热度和实用价值。
 
 **技术亮点**:
-- 可视化拖拽式编辑器：基于 React 的直观 UI，无需编写代码即可连接 LLM、文档加载器、向量数据库等组件
-- LangChain 原生集成：完整支持 LangChain 生态，提供 100+ 内置集成（OpenAI、Pinecone、PostgreSQL 等）
-- 自定义节点扩展：支持 TypeScript 开发自定义节点和工具，满足复杂业务逻辑的扩展需求
-- 嵌入优先架构：可将构建的 AI 流程嵌入到任何网站或应用中，支持 REST API 和 WebSocket
-- 内置 RAG 引擎：开箱即用的检索增强生成功能，支持多种向量数据库和文档加载器
+- 基于 TypeScript + React 构建的现代化低代码平台，提供拖拽式可视化编辑器
+- 深度集成 LangChain 生态，支持 OpenAI、ChatGPT 等主流 LLM 和 RAG 技术
+- 原生支持 Multi-agent Systems 和 Agentic Workflow，可实现复杂的 AI 协作模式
+- 完全开源且支持自部署，提供 Node.js 自托管方案，保障数据隐私
+- 模块化的节点设计，可灵活扩展自定义节点，适配多样化的业务需求
 
 **适用场景**:
-- 企业智能客服系统：快速构建基于私有知识库的 RAG 聊天机器人，支持文档上传、网页爬取等多种数据源
-- AI 工作流自动化：通过可视化编排多个 Agent 协作完成复杂任务，如多步骤数据分析、内容生成流水线
-- 快速原型验证：开发者或产品经理可在数分钟内搭建 LLM 应用原型，验证产品想法后再考虑代码级开发
+- 企业快速搭建智能客服机器人和知识库问答系统（RAG 场景）
+- 个人开发者或小团队原型验证 AI 应用，无需编写复杂代码
+- 构建多 Agent 协作系统，实现自动化工作流程和任务编排
 
 
 
@@ -1349,29 +1514,28 @@ Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,545 |
+| Stars | 42,552 |
 | 语言 | Go |
-| Forks | 3,794 |
-| Issues | 954 |
+| Forks | 3,795 |
+| Issues | 952 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应用设计，具备云原生架构和分布式能力。在 AI 时代，它为企业提供了生产级的向量相似度搜索解决方案，技术成熟度高且社区活跃，是构建 AI 应用的理想基础设施选择。
+Milvus 是目前最成熟的开源向量数据库之一，专为处理海量向量数据和高性能相似度搜索而设计。它是 LLM 和 RAG 应用的基础设施首选，已有众多企业级成功案例，提供了云原生架构和多种索引算法（如 HNSW、DiskANN）的完整解决方案。
 
 **技术亮点**:
-- 高性能 ANN 搜索：集成 Faiss、HNSW、DiskANN 等多种索引算法，支持海量向量快速检索
-- 云原生架构：采用存储与计算分离设计，支持 Kubernetes 部署，具备弹性扩展能力
-- 分布式能力：支持水平扩展，可处理十亿级向量规模，满足大规模场景需求
-- AI 生态集成：完美适配 LLM、RAG 应用，支持 embedding 存储、向量相似度计算等核心功能
-- 多模态搜索：支持图像、文本、音频等多种数据类型的向量化和相似性检索
+- 云原生分布式架构，支持 Kubernetes 部署和水平扩展，可处理十亿级向量数据
+- 支持多种先进索引算法（HNSW、DiskANN、IVF 等），兼顾性能与内存效率
+- 存储计算分离架构，支持对象存储（S3、MinIO 等），实现弹性伸缩
+- 提供多语言 SDK（Go、Python、Java 等）和完善的 API，易于集成
+- 支持混合查询和标量过滤，适配复杂业务场景的向量检索需求
 
 **适用场景**:
-- 企业级 LLM 应用：为 RAG 系统、知识库问答、AI 助手提供高效的向量检索能力
-- 大规模图像/音视频检索：电商平台以图搜图、版权保护、内容审核等场景
-- 个性化推荐系统：基于用户行为向量进行相似度匹配，实现精准推荐
-- 生物信息学与科研：基因组搜索、分子结构相似度计算等专业领域应用
+- RAG（检索增强生成）应用：为大语言模型提供长期记忆和知识库检索能力
+- 图像和视频相似度搜索：如电商平台以图搜图、版权检测、推荐系统
+- 语义搜索与问答系统：构建智能文档检索、知识问答和个性化推荐引擎
 
 
 
@@ -1389,7 +1553,7 @@ Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 30,639 |
+| Stars | 30,647 |
 | 语言 | Python |
 | Forks | 3,229 |
 | Issues | 95 |
@@ -1398,19 +1562,19 @@ Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应
 
 ---
 
-这是由 Microsoft 开源的基于图结构的 RAG 系统，将知识图谱与大语言模型深度融合，通过社区摘要和图遍历等技术显著提升检索质量和全局理解能力，是构建企业级智能问答系统的理想解决方案。
+Microsoft GraphRAG 是微软开源的模块化图检索增强生成（RAG）系统，在传统 RAG 基础上引入知识图谱技术，通过构建实体关系图谱实现更深层的语义理解和上下文关联检索。该项目获得超过 3 万星标，是目前企业级 AI 应用中解决知识碎片化、提升检索准确性的前沿解决方案。
 
 **技术亮点**:
-- 模块化架构设计，可灵活集成不同的 LLM（如 GPT-4）和向量数据库
-- 基于社区检测的知识图谱构建，自动生成层次化的社区摘要结构
-- 支持多种检索策略：局部实体检索 + 全局社区遍历混合模式
-- 内置数据处理流水线，支持从原始文本自动提取实体和关系
-- 高性能图查询优化，支持大规模知识图谱的快速检索
+- 基于知识图谱的检索增强生成（Graph-based RAG）架构，将非结构化文本转化为结构化实体关系网络
+- 深度集成 GPT-4 和大语言模型（LLM），支持智能实体抽取、关系发现和社区检测
+- 模块化系统设计，支持灵活的索引构建、查询接口和可扩展的管道配置
+- 利用图谱层次结构实现全局性问题回答，相比传统向量检索能提供更全面的上下文信息
+- MIT 许可证开源，提供完整的企业级实现方案和最佳实践参考
 
 **适用场景**:
-- 企业级知识库问答系统：处理复杂跨文档查询，生成综合性的分析报告
-- 研究文献分析与洞察：从大量学术论文中提取关联信息并提供深度问答
-- 智能客服与决策支持：构建基于企业文档的结构化知识图谱，提供准确的多跳推理能力
+- 企业知识管理与智能问答系统：整合企业文档库，构建内部知识图谱，实现精准的企业级 AI 助手
+- 复杂数据源分析：处理多文档、多主题的复杂数据集，通过图谱关系挖掘深层关联和全局洞察
+- 研究与学术文献分析：对大量学术论文或研究报告进行知识图谱构建，支持跨文档的知识发现和趋势分析
 
 
 
@@ -1428,28 +1592,28 @@ Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,754 |
+| Stars | 69,771 |
 | 语言 | MDX |
-| Forks | 7,448 |
+| Forks | 7,452 |
 | Issues | 242 |
 | Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
 | 许可证 | MIT License |
 
 ---
 
-这是目前GitHub上最受欢迎的提示工程指南项目（69,754⭐），由DAIR AI维护的综合性学习资源库。它不仅是入门提示工程的绝佳起点，更涵盖了从基础到高级的RAG、AI Agents等前沿技术，是开发者快速掌握大模型应用开发的权威参考资料。
+这是GitHub上最受欢迎的提示词工程开源指南，汇集了从基础提示词设计到高级AI Agent开发的完整知识体系。项目涵盖学术论文、实战教程、Jupyter Notebook和最佳实践，是开发者快速掌握LLM应用开发核心技能的一站式资源库。
 
 **技术亮点**:
-- 全面的Prompt Engineering知识体系：包含指南、论文、课程和实战笔记本，覆盖从基础到高级的提示技巧
-- 前沿技术栈覆盖：涵盖RAG（检索增强生成）、Context Engineering、AI Agents等热门AI应用技术
-- 多框架支持：整合ChatGPT、OpenAI等多种大语言模型的实践经验
-- 理论与实践结合：提供学术论文、交互式笔记本和丰富的代码示例
-- 开源社区驱动：MIT许可证，持续更新，汇聚社区最佳实践
+- 🔥 全面覆盖四大核心领域：提示词工程、上下文工程、RAG检索增强生成、AI智能体开发
+- 📚 理论实践结合：包含精选论文列表、交互式Notebook教程和实战代码示例
+- 🤖 紧跟前沿技术：涵盖ChatGPT、OpenAI、大语言模型(LLMs)等最新AI技术应用
+- 📖 知识体系化：从基础概念到高级模式的完整学习路径，适合不同水平开发者
+- 🌐 社区驱动更新：持续更新的资源库，反映快速演进的AI应用开发最佳实践
 
 **适用场景**:
-- AI开发者快速入门：为想要学习提示工程、RAG和AI Agents的开发者提供系统性的学习路径和实战资源
-- 企业AI应用开发：企业技术团队可以参考项目中的最佳实践，快速搭建基于大语言模型的应用系统
-- 教育培训与学术研究：教师和学生可将其作为教材或参考资料，深入理解大模型的工程化应用
+- 🎯 **个人开发者学习**：系统学习提示词设计技巧和RAG实现方法，快速提升LLM应用开发能力
+- 💼 **企业AI应用开发**：作为团队参考手册，指导生产级AI Agent和智能问答系统架构设计
+- 🏫 **教育培训与学术研究**：高校AI课程教材配套资源，包含经典论文和实验代码
 
 
 
@@ -1467,28 +1631,28 @@ Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 32,359 |
+| Stars | 32,367 |
 | 语言 | Python |
-| Forks | 1,947 |
+| Forks | 1,948 |
 | Issues | 90 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检索增强生成）、智能体编排和多模态能力。它最大的独特价值在于既支持在线 LLM（GPT、Claude、Gemini 等），又能完全离线部署（Llama、Qwen 等），并且深度集成到工作流中（Obsidian、Emacs、WhatsApp）。对于注重隐私、需要构建个人知识库或企业私有 AI 助手的用户来说，这是一个不可多得的 self-hosted 解决方案。
+Khoj 是一个功能强大的 AI 第二大脑项目，支持完全自部署并可接入多种本地和在线 LLM。其独特价值在于将个人知识库与 AI 能力深度融合，提供从文档检索到自动化任务的完整解决方案，既保护数据隐私又赋予用户对 AI 助手的完全控制权。
 
 **技术亮点**:
-- 🔌 多模型支持：兼容 OpenAI、Anthropic、Google、本地 LLM（llama.cpp、Ollama）等，可自由切换在线/离线模型
-- 📚 RAG 架构：基于语义搜索的文档检索，支持 Obsidian、Emacs、在线文档和本地文件的知识库构建
-- 🤖 智能体与自动化：支持自定义 AI agents、定时任务编排、深度研究模式，能自主完成复杂工作流
-- 🌐 多平台集成：桌面端、Web、移动端全覆盖，深度集成 Obsidian、Emacs、WhatsApp 等常用工具
-- 🎯 多模态能力：支持语音转文字（STT）、图像生成、语音对话，提供丰富的交互方式
+- 支持多模型接入：兼容 GPT、Claude、Gemini、Llama、Qwen、Mistral 等主流 LLM，可灵活切换本地和在线模型
+- RAG + 语义搜索：基于个人文档和网页内容构建知识库，实现精准的语义检索和问答
+- 多平台生态集成：提供 Obsidian、Emacs、WhatsApp 等插件，无缝融入现有工作流
+- 高度可定制：支持构建自定义 AI Agent 和自动化任务调度，可根据个人需求定制 AI 助手能力
+- 离线优先设计：支持离线 LLM 和 STT（语音转文字），确保数据私密性和无网络环境可用性
 
 **适用场景**:
-- 🏢 企业/团队场景：构建企业私有知识库 AI 助手，员工可通过文档、聊天快速获取信息，同时支持自部署保证数据隐私
-- 👨‍💻 个人开发者/研究人员：搭建个人第二大脑，整合笔记、代码、文档进行深度研究和知识管理，支持离线使用
-- 📱 内容创作者：通过 WhatsApp/桌面端快速获取信息、生成内容、调度自动化任务，提升创作效率
+- 个人知识管理：为研究人员、学生或知识工作者构建个人第二大脑，快速从笔记、文档中检索信息并获得智能解答
+- 企业私有化部署：企业可部署内部 AI 助手，让员工安全地访问公司知识库，同时避免数据外泄风险
+- 开发者和 AI 爱好者：适合想要深度定制 AI Agent、实验不同 LLM 模型或构建自动化工作流的技术用户
 
 
 
@@ -1506,7 +1670,7 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,762 |
+| Stars | 55,815 |
 | 语言 | Jupyter Notebook |
 | Forks | 1,312 |
 | Issues | 8 |
@@ -1515,19 +1679,19 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 ---
 
-这是一个提供即用型云模板的高价值项目，专注于构建实时同步的企业级RAG应用和AI管道。凭借5.5万+星标和MIT许可证，它完美解决了企业最头疼的数据实时同步问题，能无缝连接SharePoint、Google Drive、Kafka等多种数据源，让开发者快速搭建生产级AI应用。
+Pathway 的 llm-app 是一个高星（55K+）企业级 LLM 应用模板库，专注于实时数据处理和 RAG 场景。其独特价值在于提供开箱即用的 Docker 化解决方案，支持与 SharePoint、Google Drive、Kafka、S3 等 20+ 数据源的实时同步，解决了传统 RAG 系统数据时效性差的痛点，特别适合需要处理实时业务数据的企业 AI 应用。
 
 **技术亮点**:
-- 实时数据同步能力：无缝集成SharePoint、Google Drive、S3、Kafka、PostgreSQL及实时API，确保数据始终最新
-- 企业级RAG框架：内置检索增强生成（RAG）和向量数据库支持，兼容OpenAI、Hugging Face等多种LLM
-- Docker友好设计：开箱即用的容器化模板，支持llm-ops完整工作流
-- 强大的生态集成：覆盖chatbot、向量索引、LLM安全等全栈技术栈
-- 高可扩展性：支持本地部署和云端部署，灵活适配不同规模需求
+- 🔄 实时数据管道：支持 SharePoint、Google Drive、Kafka、PostgreSQL、S3 等多种数据源的实时同步，确保 RAG 知识库始终保持最新
+- 🐳 Docker 友好架构：提供容器化部署方案，简化本地和生产环境部署流程，支持一键启动完整 LLM 应用栈
+- 🔍 企业级搜索与向量索引：内置向量数据库和向量索引功能，支持高性能语义检索和混合搜索
+- 🛡️ LLM 安全与合规：涵盖 LLM 安全、提示工程和 LLMOps 最佳实践，适合企业级生产环境部署
+- 🤖 多模型兼容性：支持 OpenAI、Hugging Face 等多种 LLM 后端，可灵活切换本地模型和云端 API
 
 **适用场景**:
-- 企业知识库搭建：快速构建实时同步的企业文档搜索和智能问答系统
-- 实时AI数据管道：为金融、电商等需要实时数据的场景构建流式AI应用
-- 多源数据融合：整合企业内部多个数据源（文档、数据库、消息队列）进行统一智能分析
+- 🏢 企业智能问答与知识管理：构建企业内部的 AI 助手，实时同步 SharePoint/Google Drive 文档，实现智能搜索和知识问答
+- 📊 实时数据分析与 AI Agent：结合 Kafka、PostgreSQL 等实时数据流，构建能够感知业务变化的智能监控和分析系统
+- 🚀 快速 RAG 应用原型开发：开发者利用现成模板快速搭建生产级 RAG 应用，大幅降低从原型到上线的时间和成本
 
 
 
@@ -1545,7 +1709,7 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,655 |
+| Stars | 28,656 |
 | 语言 | TypeScript |
 | Forks | 3,047 |
 | Issues | 218 |
@@ -1554,19 +1718,19 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 ---
 
-Perplexica 是一个开源的 AI 智能搜索引擎，为用户提供了类似 Perplexity AI 的对话式搜索体验。它结合了 LLM 和 RAG 技术，能够提供准确、带引用来源的智能回答，最重要的是完全开源且支持自托管，让用户可以掌控自己的数据和搜索隐私。
+Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity 的开源替代方案，能够理解用户查询的真实意图并提供精准答案。该项目采用先进的 RAG（检索增强生成）技术和 LLM 本地化部署方案，既保证了搜索质量，又实现了数据隐私和可控性，是企业和开发者构建自主 AI 搜索能力的理想选择。
 
 **技术亮点**:
-- 采用 RAG（检索增强生成）技术，提供准确的 AI 回答并附带引用来源
-- 支持多种搜索模式（普通搜索、特定网页搜索、新闻搜索、学术搜索等）
-- 深度集成 SearXNG 作为后端搜索引擎，支持多源搜索
-- 支持多种 LLM 模型（OpenAI、Ollama、LocalAI 等），灵活的模型选择
-- 完全自托管部署，数据完全由用户掌控，注重隐私保护
+- 🤖 基于 RAG（检索增强生成）架构，结合 LLM 大模型提供精准的 AI 答案生成能力
+- 🔐 支持本地化部署和 LLM 本地运行，确保数据隐私和完全自主可控
+- 🔍 集成 SearXNG 元搜索引擎，提供多样化的搜索数据源
+- ⚡ TypeScript 全栈开发，技术栈现代化且易于扩展维护
+- 🚀 自托管架构设计，无需依赖外部 API 服务，降低使用成本
 
 **适用场景**:
-- 企业内部知识库和智能问答系统，可私有化部署保护商业机密
-- 开发者和 AI 爱好者构建自己的 AI 搜索引擎应用，研究 RAG 技术实践
-- 个人用户打造私人 AI 助手，用于学习、研究和日常信息查询
+- 🏢 **企业知识管理系统**：企业可部署内部智能搜索引擎，集成私有文档和数据，为员工提供精准的企业知识查询服务
+- 🛡️ **隐私优先的搜索服务**：对数据隐私要求高的场景（如法律、医疗、金融领域），可在本地环境运行，避免数据外泄风险
+- 👨‍💻 **开发者构建 AI 应用**：开发者可作为基础框架，快速定制开发垂直领域的智能问答和搜索应用
 
 
 
@@ -1590,28 +1754,28 @@ Perplexica 是一个开源的 AI 智能搜索引擎，为用户提供了类似 P
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,465 |
+| Stars | 122,491 |
 | 语言 | Python |
-| Forks | 17,286 |
-| Issues | 259 |
+| Forks | 17,294 |
+| Issues | 265 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标），提供类似 ChatGPT 的现代化交互体验，支持 Ollama、OpenAI API 等多种后端。其核心优势在于完全自托管部署、开箱即用的 RAG 能力以及企业级功能（用户管理、权限控制），是企业和个人开发者构建私有 AI 应用的理想选择。
+Open WebUI 是目前最热门的开源 LLM Web 界面之一，拥有超过 12.2 万 Stars。它的独特价值在于提供 ChatGPT 风格的友好交互体验，同时支持完全本地化部署（搭配 Ollama）和企业级功能（如 RAG 和 MCP 集成），是自托管 AI 界面的最佳选择。
 
 **技术亮点**:
-- 🔌 多后端支持：原生支持 Ollama、OpenAI API、MCP（模型上下文协议）等多种 LLM 后端，灵活切换
-- 🔍 内置 RAG 引擎：开箱即用的检索增强生成能力，支持文档上传、知识库构建和智能检索
-- 🏢 企业级功能：完整的用户认证、权限管理、多租户支持，适合团队协作场景
-- 🎨 现代化 UI/UX：ChatGPT 风格的对话界面，支持代码高亮、流式输出、语音输入等
-- 🚀 自托管部署：完全本地化运行，数据私有可控，支持 Docker 一键部署
+- 🤖 多模型后端支持：兼容 Ollama、OpenAI API 等多种 LLM 服务提供商
+- 🔒 完全自托管：可本地部署，数据隐私可控，无需依赖云端服务
+- 📚 内置 RAG 能力：支持文档上传与检索增强生成，实现知识库问答
+- 🎨 ChatGPT 级 UI 体验：现代化、响应式的 Web 界面，支持会话管理
+- 🔌 MCP 与 OpenAPI 集成：支持模型上下文协议和第三方 API 扩展
 
 **适用场景**:
-- 🏢 企业私有 AI 助手：在私有服务器部署，利用企业内部知识库（通过 RAG）构建安全的 AI 对话系统
-- 👨‍💻 个人 AI 实验平台：开发者本地运行 Ollama 等开源模型，测试和调试 LLM 应用
-- 🎓 教育/培训场景：学校或培训机构构建受控的 AI 学习环境，支持多用户管理和内容审核
+- 🏢 企业内部 AI 知识库：结合 RAG 功能，构建企业私有文档问答系统
+- 💻 个人开发者本地 LLM 工作台：搭配 Ollama 在本地运行大模型，保护数据隐私
+- 🎓 教育/研究机构：为学生或研究人员提供统一的 AI 实验环境，无需暴露敏感数据
 
 
 
@@ -1629,28 +1793,28 @@ Open WebUI 是目前最受欢迎的开源 LLM Web 界面之一（12万+星标）
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,488 |
+| Stars | 72,507 |
 | 语言 | Python |
-| Forks | 8,022 |
-| Issues | 3,150 |
+| Forks | 8,024 |
+| Issues | 3,151 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, deep-learning, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, multi-agent, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融合了先进的 RAG 技术与 Agent 能力，为大语言模型构建了卓越的上下文层。该项目拥有超过 7.2 万颗星标，集成了文档解析、GraphRAG、多智能体协作等前沿技术，是构建企业级 AI 应用和知识库系统的理想选择。
+RAGFlow 是一款领先的开源 RAG（检索增强生成）引擎，它将先进的 RAG 技术与 Agent 能力深度融合，为 LLM 构建卓越的上下文层。拥有超过 7.2 万颗星标，支持 GraphRAG、多智能体协作、深度研究等前沿特性，是企业构建智能知识库和 AI 应用的理想选择。
 
 **技术亮点**:
-- 深度文档解析与理解能力，支持复杂文档的智能处理
-- 融合 RAG 与 Agent 技术，提供增强的检索增强生成能力
-- 支持 GraphRAG 知识图谱技术，提升知识关联与推理能力
-- 集成多智能体系统（Multi-Agent），支持复杂的 Agentic 工作流
-- 广泛的生态兼容性，支持 OpenAI、Ollama、DeepSeek、MCP 等主流 LLM 平台
+- 将 RAG 与 Agent 能力深度融合，支持多智能体协作工作流
+- 集成 GraphRAG 技术，提供更强大的知识图谱增强检索能力
+- 强大的文档解析与理解能力，支持复杂文档格式处理
+- 深度研究（Deep Research）模式，结合 DeepSeek R1 等先进模型
+- 支持 MCP 协议和 Ollama，兼容 OpenAI 等多种 LLM 后端
 
 **适用场景**:
-- 企业级智能知识库系统构建，实现文档智能检索与问答
-- AI 助手与智能客服开发，提供基于企业文档的精准回答
-- 复杂研究与深度分析场景，利用 GraphRAG 和多智能体协作处理复杂任务
+- 企业知识库构建：企业可利用 RAGFlow 构建智能文档检索系统，让员工通过自然语言快速获取企业内部知识
+- 智能客服与问答系统：将产品文档、FAQ 等接入 RAGFlow，实现准确、基于事实的智能客户服务
+- 智能研究助手：研究人员可使用深度研究模式，快速检索和分析大量学术文献、报告等资料
 
 
 
@@ -1668,28 +1832,28 @@ RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 144,131 |
+| Stars | 144,158 |
 | 语言 | TypeScript |
-| Forks | 19,066 |
+| Forks | 19,067 |
 | Issues | 5 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 ---
 
-这是一个拥有超过14万颗星的顶级开源项目，提供社区驱动的ChatGPT提示词共享和发现平台。独特价值在于支持完全隐私的组织级自托管部署，让企业能够安全地管理和复用高质量AI提示词，同时具备CC0开放许可，适合作为学习提示词工程的优秀范例。
+这是目前 GitHub 上最受欢迎的 ChatGPT 提示词开源项目（14.4万+ stars），提供社区驱动的提示词共享与发现平台。支持企业完全私有化部署，确保数据安全，同时支持 OpenAI、Claude、Gemini 等主流大语言模型，是提示词工程的标杆项目。
 
 **技术亮点**:
-- 基于TypeScript + Next.js的全栈现代化Web应用架构
-- 支持多模型兼容性，覆盖ChatGPT、Claude、Gemini、GPT-4等主流LLM平台
-- 可自托管的私密部署方案，确保组织内部提示词资产的安全性和隐私保护
-- 社区驱动的内容生态，支持提示词的分享、发现和收集功能
-- 采用Creative Commons Zero v1.0 Universal许可，完全开放可商用
+- 基于 Next.js + TypeScript 构建的现代化 Web 应用，采用高性能 React 框架
+- 支持多模型兼容性（OpenAI GPT-4、Claude、Gemini 等），实现提示词跨平台复用
+- 提供完整的企业级私有化部署方案，数据完全自主可控
+- 社区驱动的内容生态系统，持续更新的提示词库与分类体系
+- 采用 Creative Commons Zero 开源协议，无版权限制，自由使用与修改
 
 **适用场景**:
-- 企业知识管理：组织内部搭建专属提示词库，统一团队AI使用标准和最佳实践
-- AI学习与研究：作为提示词工程的参考案例库，学习各类场景的高效提问技巧
-- 个人开发者的AI辅助工具箱：快速检索和复用经过验证的优质提示词，提升AI交互效率
+- 企业内部知识管理：为团队搭建私有的 AI 提示词库，沉淀最佳实践，提升员工使用 AI 效率
+- 开发者快速上手：学习高质量提示词编写技巧，加速 AI 应用开发与集成
+- 教育与研究：作为提示词工程的教学资源库，帮助理解如何有效与大模型交互
 
 
 
@@ -1707,28 +1871,28 @@ RAGFlow 是一个领先的开源 RAG（检索增强生成）引擎，巧妙融�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,014 |
+| Stars | 54,027 |
 | 语言 | JavaScript |
-| Forks | 5,807 |
-| Issues | 270 |
+| Forks | 5,809 |
+| Issues | 271 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
 
 ---
 
-AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检索增强生成）、AI 智能体、无代码构建器和 MCP 兼容性等企业级特性。作为拥有 5.4 万+ star 的明星项目，它既支持桌面端又支持 Docker 部署，既可连接本地大模型（Ollama、LM Studio 等）也能使用云端 API，为企业与个人开发者提供了一站式私有化 AI 解决方案。
+AnythingLLM 是一个功能完备的开源 AI 应用平台，将 RAG、AI Agents、向量数据库等核心能力集成于一体，同时支持本地部署和云端多种 LLM。其独特价值在于提供了开箱即用的企业级 AI 解决方案，54k+ stars 证明了其在开发者社区中的高度认可和可靠性，适合快速搭建私有化 AI 助手而无需从零开发各个模块。
 
 **技术亮点**:
-- 内置 RAG 引擎和向量数据库，支持文档上传、网页抓取和知识库管理
-- 无代码 AI Agent 构建器，支持拖拽式创建自定义智能体和工作流
-- 广泛的模型兼容性：支持 Ollama、DeepSeek、Llama3、Qwen3、Kimi、Moonshot 等主流本地及云端模型
-- MCP（Model Context Protocol）服务器兼容，支持与 AI 助手进行工具集成
-- 提供 Desktop 应用和 Docker 容器多种部署方式，支持完全离线的本地化运行
+- ✅ 内置 RAG (检索增强生成) 引擎，支持向量数据库和网页抓取，可轻松构建知识库问答系统
+- ✅ No-code Agent 构建器，零代码即可创建和定制 AI 智能体，降低 AI 应用开发门槛
+- ✅ MCP (Model Context Protocol) 兼容性，支持丰富的 MCP 服务器生态，扩展能力强
+- ✅ 多模态支持 & 多 LLM 集成，兼容 Ollama、DeepSeek、Kimi、Llama3、Qwen3 等主流模型
+- ✅ 灵活部署方式，支持桌面应用和 Docker 容器化部署，满足本地化与云端不同需求
 
 **适用场景**:
-- 企业知识管理：搭建企业级 AI 知识库和客服助手，支持文档上传、网页抓取和私有化部署
-- 开发者工具链：通过 MCP 兼容性集成 AI Agent 到现有工作流，构建自动化开发助手
-- 个人 AI 助手：在本地部署个人 AI 聊天机器人，支持多模态交互和本地 LLM 完全离线使用
+- 🏢 **企业知识库搭建**：利用 RAG 能力快速构建企业内部文档、知识库的智能问答系统，支持私有化部署保障数据安全
+- 💼 **个人开发者 AI 助手**：通过 No-code 构建器快速创建个性化的 AI Agents，集成到工作流中提升效率
+- 🔧 **本地 LLM 应用开发**：结合 Ollama、LM Studio 等本地模型，构建完全离线的 AI 应用，保护隐私且无 API 调用成本
 
 
 
@@ -1746,28 +1910,28 @@ AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,678 |
+| Stars | 71,745 |
 | 语言 | TypeScript |
-| Forks | 14,567 |
-| Issues | 1,199 |
+| Forks | 14,571 |
+| Issues | 1,174 |
 | Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
 | 许可证 | Other |
 
 ---
 
-LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现、构建到协作的完整 AI Agent 生态系统。凭借 7.1 万+ GitHub Stars 的社区认可度和对 GPT、Claude、DeepSeek 等主流大模型的全面支持，它为个人和企业提供了未来工作方式的最佳实践。
+LobeHub是一个创新的AI智能体协作平台，拥有超过7万颗星标，证明了其在AI Agent领域的卓越影响力。该项目提供了企业级的智能体生态系统，让个人和企业都能轻松构建、发现和协作AI智能体团队，是AI时代的工作与生活必备工具。
 
 **技术亮点**:
-- 多智能体协作系统：支持多个 AI Agent 作为工作单元协同工作，实现复杂任务的自动化处理和团队化作业
-- 零门槛 Agent 团队设计：提供直观的可视化配置界面，让非技术用户也能轻松构建和管理专属的 Agent 团队
-- 多模型深度集成：原生支持 ChatGPT、Claude、Gemini、DeepSeek、OpenAI 等主流 AI 模型，实现模型间的无缝切换和协同
-- MCP（Model Context Protocol）协议支持：采用标准化协议实现知识库和工具的统一管理与扩展
-- TypeScript 技术栈：基于现代化 TypeScript 构建的高性能、类型安全的前端架构
+- • 多智能体协作系统 - 支持多个AI Agent协同工作，实现复杂任务的自动化处理
+- • 智能体团队设计 - 提供直观的界面让用户轻松构建和管理AI智能体团队
+- • 全方位AI模型支持 - 集成ChatGPT、Claude、DeepSeek、Gemini、GPT、OpenAI等主流大语言模型
+- • TypeScript技术栈 - 采用现代化的TypeScript开发，确保代码质量和可维护性
+- • 知识库与MCP协议 - 内置知识库管理系统，支持MCP协议实现更强大的智能体交互能力
 
 **适用场景**:
-- 企业级 AI 团队构建：为企业打造专属的 AI Agent 协作团队，自动化处理客服、数据分析、文档生成等业务场景
-- 个人 AI 工作助手：个人用户可配置多个专业 Agent（如编程助手、写作助手、学习助手），提升日常工作效率
-- 知识库集成与智能问答：结合 MCP 协议和知识库功能，快速构建企业内部智能知识管理和检索系统
+- • 企业级AI智能体团队部署 - 企业可以构建专属的AI智能体协作系统，自动化处理业务流程、客户服务、数据分析等任务
+- • 个人开发者AI工具集成 - 开发者可以利用该平台快速集成多种AI模型，构建个人AI助手和自动化工作流
+- • 知识管理与智能问答 - 组织可以构建基于知识库的智能问答系统，实现企业知识的智能化检索和应用
 
 
 
@@ -1785,28 +1949,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 84,095 |
+| Stars | 84,117 |
 | 语言 | Jupyter Notebook |
-| Forks | 12,708 |
+| Forks | 12,709 |
 | Issues | 0 |
 | Topics | ai, artificial-intelligence, chatbot, chatgpt, deep-learning, from-scratch, generative-ai, gpt, language-model, large-language-models, llm, machine-learning, neural-networks, python, pytorch, transformers |
 | 许可证 | Other |
 
 ---
 
-这是一个极其优秀的LLM入门实战项目，拥有84k+星标。项目以"从零开始"的方式，通过Jupyter Notebook形式，循序渐进地教读者如何用PyTorch实现一个类似ChatGPT的大语言模型。对于想要深入理解LLM底层原理的开发者来说，这是最好的实践教程之一，完美平衡了理论深度与代码可操作性。
+这是一个极具教育价值的项目，以循序渐进的方式从零开始实现类似ChatGPT的大语言模型，填补了理论与实践之间的鸿沟。该项目拥有超过8.4万颗星，是学习LLM内部工作原理的最佳实践教程之一，特别适合希望深入理解Transformer架构和GPT模型实现细节的开发者。
 
 **技术亮点**:
-- 从零实现类ChatGPT大语言模型，完整覆盖Transformer架构、注意力机制、前馈网络等核心组件
-- 基于PyTorch的Jupyter Notebook格式，交互式学习体验，每一步都可运行和调试
-- 循序渐进的step-by-step教学设计，从基础概念到完整模型搭建，降低学习门槛
-- 涵盖数据预处理、模型训练、文本生成等LLM开发全流程，实战性强
-- 纯Python/PyTorch实现，代码清晰易读，适合深入理解GPT模型的技术细节
+- 基于PyTorch从零构建完整LLM，涵盖数据预处理、模型架构、训练到推理的全流程
+- 详细拆解Transformer架构组件，包括注意力机制、层归一化、前馈网络等核心模块
+- 提供Jupyter Notebook格式，交互式学习体验，代码注释详尽易于理解
+- 涵盖LLM关键技术：预训练、指令微调、权重加载与推理优化
+- 配套丰富的理论说明和可视化，帮助理解复杂的神经网络概念
 
 **适用场景**:
-- AI/机器学习工程师希望系统理解LLM底层原理和Transformer架构的深度学习场景
-- 教育机构和培训讲师用于教授大语言模型技术的教学资源
-- 研究者和开发者需要快速搭建LLM原型或进行模型改进的研发场景
+- AI/ML学习者：系统学习大语言模型实现原理，从理论到实践的完整学习路径
+- 研究人员和工程师：深入理解LLM内部机制，为模型优化和自定义开发奠定基础
+- 教育工作者：作为深度学习和NLP课程的实践教材，提供完整的教学案例
 
 
 
@@ -1824,28 +1988,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 40,888 |
+| Stars | 40,893 |
 | 语言 | Python |
-| Forks | 9,693 |
+| Forks | 9,690 |
 | Issues | 357 |
 | Topics | ai, ai-agent, chatgpt, claude-4, deepseek, dingtalk, feishu-bot, gemini, gpt-4, kimi, linkai, llm, mcp, multi-agent, openai, python3, qwen, rag, wechat, wechat-bot |
 | 许可证 | MIT License |
 
 ---
 
-这是一个极具实用价值的开源AI项目，成功打通了多个主流企业协作平台（微信/飞书/钉钉/企业微信）与顶级大模型之间的桥梁，让企业能够以零代码方式快速部署智能客服和AI助手。项目的独特价值在于"一次部署，多平台接入"，大幅降低了企业AI应用的开发门槛和成本。
+这是国内最受欢迎的开源 AI 机器人项目之一，star 超 4 万，支持微信/飞书/钉钉等主流国内平台，接入 ChatGPT/Claude/DeepSeek/文心一言等 10+ 国内外大模型，支持 RAG 知识库、MCP 协议、语音图片处理，覆盖文本/语音/图片/联网等全场景，非常适合快速搭建企业级智能客服或个人 AI 助手。
 
 **技术亮点**:
-- 支持多模型接入：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI等10+主流大模型
-- 多平台覆盖：支持微信公众号、企业微信、飞书、钉钉等主流协作平台，实现一次部署多端使用
-- 多媒体处理能力：支持文本、语音和图片的输入输出，提供自然的人机交互体验
-- 企业级能力：支持RAG知识库定制、MCP协议、Multi-Agent系统，访问操作系统和互联网，满足复杂业务需求
-- 高可用性：40.8k+ GitHub stars，活跃的开源社区，MIT许可证，企业可安全商用
+- 多平台适配：支持微信公众号、企业微信、飞书、钉钉等主流国内 IM 平台接入
+- 大模型灵活切换：ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/Gemini/GLM-4/Kimi/LinkAI 等 10+ 模型可选
+- 全模态交互：支持文本、语音、图片处理，支持 MCP 访问操作系统和互联网能力
+- RAG 知识库：基于自有知识库进行定制，支持企业智能客服场景
+- AI Agent/Multi-Agent：支持 MCP 协议、多 Agent 协同，可扩展能力强
 
 **适用场景**:
-- 企业智能客服系统：基于公司知识库快速部署微信/钉钉等渠道的AI客服，提升响应效率，降低人工成本
-- 个人AI助手开发：开发者在个人微信公众号或企业内部搭建AI助手，提升工作效率和自动化水平
-- 企业内部知识管理：接入企业知识库，构建内部问答系统，帮助员工快速检索信息
+- 企业智能客服：接入微信/飞书/钉钉，基于公司知识库（RAG）搭建智能客服机器人
+- 个人 AI 助手：在个人微信或办公软件中接入大模型，实现智能对话与任务自动化
+- 多平台 AI Bot：为不同平台快速部署统一的 AI 机器人，统一接入体验
 
 
 
@@ -1863,28 +2027,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,757 |
+| Stars | 36,164 |
 | 语言 | JavaScript |
-| Forks | 4,404 |
-| Issues | 4 |
+| Forks | 4,455 |
+| Issues | 5 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个由 Anthropic 黑客松获奖者打造的 Claude Code 全栈配置库，收录了经过实战验证的 agents、skills、hooks、commands、rules 和 MCPs 等完整配置。作为开箱即用的生产级工具集，它能显著降低开发者配置 Claude Code 的学习成本，35k+ stars 证明了其在社区中的高认可度和实用性。
+这是来自Anthropic黑客松获胜者的实战级Claude Code配置合集，汇聚了agents、skills、hooks、MCPs等全套配置方案。项目拥有3.6万+GitHub Stars，经过实战验证，能为开发者提供开箱即用的Claude Code生产力工具集，大幅降低AI辅助开发的配置门槛。
 
 **技术亮点**:
-- 完整配置生态：集成 agents 智能代理、skills 技能集、hooks 钩子、commands 命令、rules 规则和 MCPs 协议等全要素
-- 实战验证品质：源自 Anthropic 黑客松获奖项目，所有配置均经过真实场景测试和优化
-- 开发者友好：基于 JavaScript 构建，采用 MIT 许可证，易于定制和二次开发
-- AI 工具链整合：深度集成 LLM 能力，提供系统化的 Claude Code 开发工作流
-- 高度可扩展：模块化设计支持灵活组合各类配置组件，适应不同开发需求
+- 🤖 全栈AI Agent配置：集成agents、skills、hooks、commands、rules等完整组件体系
+- 🔌 MCP（Model Context Protocol）生态支持：提供经过实战检验的MCP服务器配置和集成方案
+- ⚙️ 开箱即用的命令与规则系统：包含battle-tested的commands配置和自定义rules，可直接用于生产环境
+- 🎯 Claude Code深度优化：专为Claude Code IDE定制，充分利用Anthropic AI能力增强开发效率
+- 🏆 黑客松获奖级别配置质量：来自Anthropic官方黑客松优胜者，配置经过真实场景严格验证
 
 **适用场景**:
-- 个人开发者：快速搭建 Claude Code 开发环境，提升 AI 辅助编程效率
-- 企业团队：标准化团队内部的 AI 编码助手配置，统一开发规范和最佳实践
-- AI 工具研究者：学习 Claude Code 的高级配置技巧和 MCP 协议应用案例
+- 💻 个人开发者快速搭建AI编程环境：无需从零配置，直接使用经过验证的Claude Code配置方案，快速上手AI辅助开发
+- 🏢 企业团队统一AI开发规范：为开发团队提供标准化的Claude Code配置模板，确保团队AI工具使用的一致性和最佳实践
+- 🔧 Claude Code深度定制与扩展学习：通过完整的配置示例和hooks/rules系统，学习如何深度定制和扩展Claude Code功能
 
 
 
@@ -1902,28 +2066,28 @@ LobeHub 是一个引领多智能体协作范式的创新平台，提供从发现
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,493 |
+| Stars | 33,501 |
 | 语言 | TypeScript |
-| Forks | 6,703 |
-| Issues | 386 |
+| Forks | 6,705 |
+| Issues | 390 |
 | Topics | ai, anthropic, artifacts, aws, azure, chatgpt, chatgpt-clone, claude, clone, deepseek, gemini, google, gpt-5, librechat, mcp, o1, openai, responses-api, vision, webui |
 | 许可证 | MIT License |
 
 ---
 
-LibreChat 是一个功能丰富且活跃的 ChatGPT 开源替代方案，支持 20+ 主流 AI 模型和多云服务集成。33k+ stars 和 MIT 许可证使其成为企业自建 AI 平台或开发者学习多模型集成的理想选择，特别是其独特的 Agents、MCP 协议和 Code Interpreter 功能在开源项目中极具竞争力。
+LibreChat 是功能最全面的开源 ChatGPT 克隆项目，聚合了包括 OpenAI、Anthropic、DeepSeek、Gemini、GPT-5 在内的 20+ 主流 AI 模型，支持 Agents、MCP 协议、Code Interpreter、Artifacts 等企业级功能。作为自托管的开源方案，它既提供了完整的多用户权限管理系统，又具备高度的可扩展性，是构建私有 AI 对话平台的理想选择。
 
 **技术亮点**:
-- 多云 AI 服务聚合：支持 OpenAI、Anthropic、AWS、Azure、Groq、DeepSeek、Gemini 等 20+ AI 模型的统一接入和切换
-- 高级 AI 功能集成：内置 Agents、MCP (Model Context Protocol)、Code Interpreter、OpenAPI Actions 和函数调用能力
-- 企业级特性：提供安全的多用户认证系统、消息搜索、预设配置和完整的权限管理
-- 现代化技术栈：基于 TypeScript 构建，支持 Artifacts 功能、DALL-E-3 图像生成和视觉模型
-- 开源自托管：MIT 许可证，可完全自部署，适合私有化部署和定制化开发
+- 全模型支持：集成 OpenAI、Anthropic、Azure、AWS Bedrock、Google Vertex AI、Gemini、DeepSeek、Mistral、Groq 等 20+ AI 提供商，支持 GPT-5、o1 等最新模型
+- 企业级功能栈：支持 Agents 智能体、MCP (Model Context Protocol)、Code Interpreter 代码解释器、Artifacts 工件、OpenAPI Actions、Functions 调用
+- 安全认证体系：内置多用户认证系统，支持权限管理和团队协作，适合企业私有化部署
+- 现代化技术栈：基于 TypeScript 构建，提供完整的 WebUI，支持预设配置、消息搜索、模型热切换等实用功能
+- 开源自托管：MIT 许可证，支持完全自主部署，数据隐私可控，API 密钥本地管理
 
 **适用场景**:
-- 企业内部 AI 平台：构建私有化、安全的多模型 AI 助手平台，统一管理多个 AI 服务提供商
-- 开发者 AI 应用原型：快速搭建支持多模型切换的聊天应用，无需从零开始集成各 AI 服务 API
-- AI 能力研究与实践：学习 MCP 协议、Agents、函数调用等高级 AI 功能的实现和最佳实践
+- 企业私有 AI 平台：适合需要数据隐私保护、支持多模型统一接入的企业级应用场景，提供完善的用户权限管理和团队协作功能
+- 个人 AI 工作台：开发者和 AI 爱好者可自托管作为个人全能 AI 助手，一键切换不同模型进行开发、写作、学习等任务
+- AI 应用原型开发：基于 LibreChat 快速构建定制化 AI 应用，利用其丰富的插件系统（Functions、Actions、Agents）扩展业务场景
 
 
 
@@ -1941,28 +2105,28 @@ LibreChat 是一个功能丰富且活跃的 ChatGPT 开源替代方案，支持 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,045 |
+| Stars | 27,048 |
 | 语言 | TypeScript |
-| Forks | 6,921 |
-| Issues | 178 |
+| Forks | 6,922 |
+| Issues | 179 |
 | Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
 | 许可证 | Other |
 
 ---
 
-FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其社区认可度。它提供了开箱即用的数据处理、RAG 检索和可视化工作流编排能力，让开发者无需复杂配置即可快速构建企业级问答系统，是搭建 AI 知识库和智能客服的绝佳选择。
+FastGPT 是一个功能完整的 LLM 知识库问答平台，基于大语言模型构建，提供了数据处理、RAG 检索、可视化 AI 工作流编排等开箱即用的能力。它让开发者无需繁琐的配置即可快速构建和部署复杂的问答系统，项目拥有 27k+ stars，技术栈采用 TypeScript/Next.js，支持 OpenAI、Claude、Qwen 等多种主流大模型，适合快速落地企业级 AI 应用。
 
 **技术亮点**:
-- 基于 RAG 技术的知识库问答系统，支持数据处理到检索的完整流程
-- 可视化 AI 工作流编排，通过拖拽方式快速构建复杂的问答逻辑
-- 集成主流 LLM 能力，支持 OpenAI、Claude、Qwen、DeepSeek 等多种大模型
-- 基于 Next.js + TypeScript 构建现代化 Web 应用，技术栈成熟稳定
-- 内置 Agent 和 MCP 协议支持，便于扩展智能体能力和生态集成
+- 基于 LLM 的知识库平台，提供数据处理、RAG 检索、可视化工作流编排等完整能力栈
+- 支持多种主流大模型集成：OpenAI、Claude、DeepSeek、Qwen 等，提供统一的模型接入层
+- 采用 TypeScript + Next.js 现代化技术栈，代码质量高，易于扩展和维护
+- 内置 Agent 能力和 MCP（Model Context Protocol）支持，可实现复杂的 AI 智能体应用
+- 提供可视化 AI 工作流编排器，通过低代码/无代码方式快速构建复杂问答系统
 
 **适用场景**:
-- 企业智能客服系统：快速搭建基于企业知识库的自动问答平台，提升客服效率
-- 个人/团队知识管理：将文档、笔记转化为可对话的知识库，实现智能检索
-- AI 应用快速原型开发：通过可视化工作流快速验证和部署复杂的 LLM 应用场景
+- 企业智能客服系统：基于企业知识库快速构建 AI 客服，自动回答用户问题，降低人工客服成本
+- 企业内部知识管理：将公司文档、API 文档、操作手册等转化为可检索的知识库，员工通过自然语言快速查询所需信息
+- 个人开发者快速原型验证：无需从零搭建 RAG 系统，快速验证 AI 问答应用想法，专注于业务逻辑而非基础设施
 
 
 
@@ -1980,28 +2144,28 @@ FastGPT 是一个功能完整的 LLM 应用开发平台，27k+ stars 证明其�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,319 |
+| Stars | 67,332 |
 | 语言 | Python |
-| Forks | 8,379 |
-| Issues | 291 |
+| Forks | 8,384 |
+| Issues | 295 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
 
 ---
 
-OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67k 的 GitHub 星标，能够自动化处理软件开发全流程。其独特价值在于将 LLM 能力转化为实际的代码执行能力，通过 Agent 架构实现从需求分析到代码编写、测试、部署的完整闭环，是 AI 辅助编程领域的标杆项目。
+OpenHands 是目前最受欢迎的 AI 驱动开发工具之一（67K+ stars），它将 AI Agent 技术深度集成到软件开发流程中。该项目支持多种主流 LLM（GPT、Claude 等），能够自动化完成代码编写、调试、测试等开发任务，是开发者探索 AI 辅助编程的标杆项目，特别适合需要提升开发效率的个人和企业团队。
 
 **技术亮点**:
-- 基于多 LLM 支持（GPT/Claude/OpenAI 等）的 Agent 架构，具备强大的代码理解和生成能力
-- 提供 CLI 工具链，支持命令行交互式开发体验，无缝集成到开发者工作流
-- 完整的软件开发自动化能力，涵盖代码编写、调试、测试、Git 操作等全生命周期
-- 67k+ 社区验证的成熟项目，活跃的开源生态系统和丰富的集成能力
-- AI-Driven 理念践行者，展示了 LLM 在复杂任务场景下的实际应用落地
+- 支持多 LLM 集成：兼容 OpenAI GPT、Claude、ChatGPT 等多种大语言模型，提供灵活的模型选择
+- AI Agent 架构：采用智能代理模式，能够自主理解和执行复杂的多步骤开发任务
+- 命令行工具优先：提供 CLI 接口，方便开发者无缝集成到现有开发工作流中
+- 全流程自动化支持：覆盖代码生成、调试、测试、重构等完整的软件开发生命周期
+- 开源生态系统：活跃的开源社区支持，持续迭代更新，技术栈基于 Python 易于扩展
 
 **适用场景**:
-- 个人开发者提升编程效率：自动编写样板代码、调试错误、实现功能模块，显著缩短开发时间
-- 企业团队加速研发流程：快速原型验证、代码审查辅助、自动化测试编写，提升整体交付速度
-- 学习编程与技术探索：通过 AI 助手理解复杂代码逻辑、学习新技术栈、实践最佳编程实践
+- 个人开发者提升编程效率：借助 AI 自动完成重复性编码任务、生成样板代码、快速定位 Bug
+- 企业团队降低开发成本：通过 AI 辅助加速项目交付，减少人工编码工作量，特别适合原型开发和 MVP 构建
+- 学习与教育场景：初学者可以通过与 AI 交互学习最佳编码实践，理解不同编程范式和架构设计
 
 
 
@@ -2019,28 +2183,28 @@ OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,704 |
+| Stars | 48,711 |
 | 语言 | TypeScript |
-| Forks | 23,655 |
-| Issues | 766 |
+| Forks | 23,658 |
+| Issues | 767 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
 
 ---
 
-Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖拽式可视化界面让开发者和非开发者都能快速构建 AI 智能体和聊天机器人。它基于 LangChain 构建但消除了编码门槛，完美平衡了灵活性与易用性，是目前最受欢迎的开源 LLM 应用开发平台之一（48.7k+ Stars），特别适合需要快速原型开发到生产部署的团队。
+Flowise 是一个颠覆性的可视化 AI Agent 构建平台，让非技术用户也能通过拖拽方式快速创建复杂的 AI 工作流。它将 LangChain 的强大能力封装为直观的低代码界面，降低了 AI 应用开发门槛，48k+ 的 GitHub Stars 证明了其在开发者社区的热度和实用价值。
 
 **技术亮点**:
-- 可视化拖拽式编辑器：基于 React 的直观 UI，无需编写代码即可连接 LLM、文档加载器、向量数据库等组件
-- LangChain 原生集成：完整支持 LangChain 生态，提供 100+ 内置集成（OpenAI、Pinecone、PostgreSQL 等）
-- 自定义节点扩展：支持 TypeScript 开发自定义节点和工具，满足复杂业务逻辑的扩展需求
-- 嵌入优先架构：可将构建的 AI 流程嵌入到任何网站或应用中，支持 REST API 和 WebSocket
-- 内置 RAG 引擎：开箱即用的检索增强生成功能，支持多种向量数据库和文档加载器
+- 基于 TypeScript + React 构建的现代化低代码平台，提供拖拽式可视化编辑器
+- 深度集成 LangChain 生态，支持 OpenAI、ChatGPT 等主流 LLM 和 RAG 技术
+- 原生支持 Multi-agent Systems 和 Agentic Workflow，可实现复杂的 AI 协作模式
+- 完全开源且支持自部署，提供 Node.js 自托管方案，保障数据隐私
+- 模块化的节点设计，可灵活扩展自定义节点，适配多样化的业务需求
 
 **适用场景**:
-- 企业智能客服系统：快速构建基于私有知识库的 RAG 聊天机器人，支持文档上传、网页爬取等多种数据源
-- AI 工作流自动化：通过可视化编排多个 Agent 协作完成复杂任务，如多步骤数据分析、内容生成流水线
-- 快速原型验证：开发者或产品经理可在数分钟内搭建 LLM 应用原型，验证产品想法后再考虑代码级开发
+- 企业快速搭建智能客服机器人和知识库问答系统（RAG 场景）
+- 个人开发者或小团队原型验证 AI 应用，无需编写复杂代码
+- 构建多 Agent 协作系统，实现自动化工作流程和任务编排
 
 
 
@@ -2058,28 +2222,28 @@ Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,386 |
+| Stars | 27,407 |
 | 语言 | C# |
-| Forks | 3,007 |
-| Issues | 11 |
+| Forks | 3,011 |
+| Issues | 12 |
 | Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
 | 许可证 | MIT License |
 
 ---
 
-这是一个为 Claude Code CLI 提供智能自动化和多智能体编排能力的强大插件项目。它通过多智能体系统（sub-agents）和工作流编排功能，显著扩展了 Claude Code 的能力边界，让开发者能够构建复杂的自动化开发流程，是目前最活跃的 Claude Code 扩展生态项目之一，拥有近 3 万 Stars 和活跃的社区支持。
+这是一个专为 Claude Code 设计的高星项目（27k+ stars），提供了强大的多代理编排和智能自动化能力。该项目填补了 Claude Code 生态在子代理、工作流编排和企业级自动化方面的空白，让开发者能够构建复杂的 AI 驱动自动化解决方案。
 
 **技术亮点**:
-- 多智能体编排系统（Multi-Agent Orchestration）：支持创建和管理多个子智能体（sub-agents），实现任务分解和协作执行
-- 可扩展的插件架构：提供 Skills 和 Plugins 机制，允许开发者自定义和扩展 Claude Code 的功能
-- 工作流自动化引擎：通过 workflows 支持复杂的任务编排，将多个步骤串联成自动化流程
-- 深度集成 Claude Code CLI：专为 Anthropic Claude Code 设计，提供无缝的配置和命令扩展体验
-- 智能任务调度：基于 C# 构建的高性能任务执行引擎，支持并行和串行任务处理
+- 基于 C# 构建的企业级多代理架构，支持子代理（sub-agents）编排和协同工作
+- 提供丰富的 Claude Code 插件系统，包含 skills、commands 和 workflows 扩展能力
+- 支持复杂的工作流编排（orchestration）和 anthropic-claude 深度集成
+- 完整的配置系统（claudecode-config）支持灵活的代理行为定制
+- MIT 开源许可，社区活跃，适合二次开发和商业化集成
 
 **适用场景**:
-- 企业级开发团队：用于构建标准化的代码审查、测试自动化、CI/CD 集成等工作流，提升团队协作效率
-- 个人开发者：自动化日常开发任务（如代码生成、重构、文档编写），通过自定义 Skills 适配个人开发习惯
-- DevOps 工程师：集成到现有的开发工具链中，实现智能化的部署、监控和运维自动化流程
+- 企业级 AI 自动化：构建智能客服、文档处理、代码审查等自动化工作流
+- 个人开发者效率提升：通过自定义 skills 和 commands 扩展 Claude Code 能力，实现重复性任务的自动化处理
+- AI 应用开发：作为多代理系统基础框架，快速开发基于 Claude 的智能应用和服务
 
 
 
@@ -2097,27 +2261,28 @@ Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,821 |
+| Stars | 28,983 |
 | 语言 | JavaScript |
-| Forks | 4,649 |
+| Forks | 4,675 |
 | Issues | 29 |
 | Topics | ai, anthropic, chatbots, chatgpt, claude, gemini, generative-ai, google-deepmind, large-language-models, llm, openai, prompt-engineering, prompt-injection, prompts |
 
 ---
 
-这是一个极具价值的 AI 安全与提示工程研究资源库，汇集了 ChatGPT、Claude、Gemini 等主流大语言模型的系统提示词泄露案例。对于深入理解 LLM 的安全边界、提示注入攻击机制以及逆向工程技术，这是目前 GitHub 上最全面的实战参考集合。
+这是目前GitHub上最全面的大语言模型系统提示词收集仓库，汇集了ChatGPT、Claude、Gemini等主流AI助手的原始System Prompts。该项目为AI安全研究、Prompt工程学习和提示词注入防御提供了宝贵的实战素材，超过2.9万星标证明了其在AI开发者社区中的重要地位。
 
 **技术亮点**:
-- 涵盖 OpenAI ChatGPT、Anthropic Claude、Google Gemini 三大主流模型的完整系统提示词样本
-- 展示真实的提示注入攻击案例，揭示 AI 对话机器人的底层防御机制与安全漏洞
-- 提供原始系统提示词的提取技术与分析方法，助力 LLM 安全研究
-- 跨多个大语言模型平台的对比分析，便于理解不同厂商的安全设计差异
-- 包含超过 28,000+ Stars 的实战数据集，是提示工程与 AI 安全研究的重要参考资料
+- 涵盖三大主流LLM（ChatGPT/Claude/Gemini）的完整System Prompts提取集合
+- 基于提示词注入（Prompt Injection）技术提取真实系统指令，具有高度研究价值
+- 实时更新各大AI模型版本的系统提示词变化，追踪模型演进
+- 提供原生JavaScript实现，便于前端集成和自动化测试
+- 包含Generative AI领域的完整技术栈参考：OpenAI、Anthropic、Google DeepMind
 
 **适用场景**:
-- AI 安全研究员：用于分析提示注入攻击向量、测试 LLM 安全防御机制的实战数据集
-- 提示工程师：学习顶级模型的系统提示词设计模式，优化自己的提示词编写技巧
-- 大模型开发者：研究主流厂商如何设计系统提示词来控制模型行为，提升产品安全性与用户体验
+- AI安全研究：分析提示词注入漏洞，设计对抗性攻击防御方案
+- Prompt工程学习：研究顶级AI模型如何构建系统提示词，学习最佳实践
+- 企业AI产品开发：参考成熟LLM的系统提示词设计，优化自定义AI助手的指令工程
+- 学术研究：对比不同LLM厂商的提示词设计策略和安全性差异
 
 
 
@@ -2135,28 +2300,28 @@ Flowise 是一个开源的低代码/无代码 LLM 应用构建工具，通过拖
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,101 |
+| Stars | 69,124 |
 | 语言 | Python |
-| Forks | 13,048 |
-| Issues | 3,179 |
+| Forks | 13,049 |
+| Issues | 3,172 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-vLLM 是目前业界最前沿的 LLM 推理引擎之一，拥有 69k+ stars，被公认为大模型部署的性能标杆。其核心优势在于突破性的 PagedAttention 算法，将推理吞吐量提升 3-24 倍，同时显存利用率接近 100%，是生产环境部署 LLM 的首选方案。
+vLLM 是目前大模型推理领域的标杆级项目，凭借突破性的 PagedAttention 技术和 69K+ GitHub Stars，成为生产环境部署 LLM 的首选引擎。相比传统方案，它可将吞吐量提升 24 倍同时降低一半显存占用，显著降低企业 AI 部署成本。
 
 **技术亮点**:
-- PagedAttention 技术：创新性地将 KV Cache 分页管理，解决显存碎片化问题，实现接近完美的显存利用率
-- 连续批处理（Continuous Batching）：动态调度请求，支持同一批内不同序列长度和生成时长，大幅提升 GPU 利用率
-- 多硬件平台支持：兼容 CUDA、AMD ROCm、TPU 等多种加速器，并支持 Blackwell 等 NVIDIA 最新架构
-- 丰富模型生态：原生支持 GPT、Llama、Qwen、DeepSeek-V3、MoE 架构等 50+ 主流开源模型
-- OpenAI 兼容 API：提供与 OpenAI 完全兼容的服务接口，可无缝替换现有 OpenAI 调用，支持分布式推理和服务
+- ⚡ PagedAttention 核心专利技术：将 KV cache 分页管理，解决显存碎片化问题，实现显存利用率接近 100%
+- 🚀 连续批处理：动态优化请求调度，支持实时请求插入，吞吐量较 HuggingFace Transformers 提升 24 倍
+- 🎯 多后端支持：兼容 CUDA、ROCm(AMD)、TPU、Blackwell 等多种硬件加速平台，硬件适配性强
+- 🔗 OpenAI 兼容 API：提供与 OpenAI API 完全兼容的服务接口，零成本迁移现有应用
+- 📦 开箱即用的模型支持：原生支持 Llama、Qwen、DeepSeek、Kimi 等主流开源模型及 MoE 架构
 
 **适用场景**:
-- 企业级 LLM 服务部署：通过 OpenAI 兼容 API 快速搭建企业内部 AI 能力中心，支持高并发推理服务，降低运营成本
-- 大模型应用开发：为 Chatbot、RAG、Agent 等 AI 应用提供高性能推理后端，显著提升响应速度和用户体验
-- 本地模型推理：支持个人开发者在本地部署 Qwen、DeepSeek、Llama 等开源模型，构建隐私安全的 AI 助手
+- 🏢 企业级 LLM 服务部署：适合需要高并发、低延迟的生产环境，如智能客服、内容生成平台等商业场景
+- 🤖 模型微调后推理服务：为 HuggingFace 微调后的模型提供高性能推理能力，开箱即用
+- 💻 个人开发者本地部署：支持单卡运行，适合开发者在本地环境测试和运行大模型应用
 
 
 
@@ -2174,28 +2339,28 @@ vLLM 是目前业界最前沿的 LLM 推理引擎之一，拥有 69k+ stars，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 144,428 |
+| Stars | 144,438 |
 | 语言 | Python |
-| Forks | 8,380 |
+| Forks | 8,383 |
 | Issues | 987 |
 | Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
 | 许可证 | MIT License |
 
 ---
 
-Langflow 是一个备受瞩目的开源 AI 应用构建平台，拥有超 14.4 万颗星，填补了 LLM 应用开发中"无代码/低代码"工具的市场空白。它通过直观的可视化界面让开发者和非技术人员都能快速构建复杂的 AI Agent 和工作流，极大降低了 AI 应用开发门槛，是目前构建 ChatGPT 应用和智能体系统的首选工具之一。
+Langflow 是一个基于可视化拖拽的 AI 工作流构建平台，拥有 14 万+ 星标的高人气开源项目。它独特价值在于将复杂的 LLM 应用开发过程可视化，让开发者无需编写代码即可快速构建、部署和管理 AI 智能体及工作流，极大降低了 AI 应用开发门槛。
 
 **技术亮点**:
-- 基于 React Flow 构建的可视化拖拽式编程界面，无需编写代码即可设计复杂 AI 工作流
-- 原生支持多 Agent 系统(Multi-Agent)和大语言模型(LLM)集成，可快速构建智能对话和自动化流程
-- 采用 Python 后端架构，方便与现有 AI/ML 生态系统无缝集成和扩展
-- 提供灵活的组件化设计，支持自定义节点和工作流，满足个性化开发需求
-- MIT 开源许可证，完全开源免费，适合个人开发者、企业级部署和二次开发
+- 可视化拖拽式界面，基于 React Flow 提供直观的工作流编排体验
+- 支持多智能体（Multiagent）架构，可构建复杂的协作式 AI 系统
+- 原生支持主流大语言模型（ChatGPT、LLaMA 等），提供统一的模型接入层
+- 基于 Python 构建，采用 MIT 开源协议，便于企业二次开发和集成
+- 提供完整的组件生态，支持自定义节点和扩展功能
 
 **适用场景**:
-- 企业级 AI 应用快速原型开发：业务团队可快速构建客服机器人、智能助手、内容生成等应用，无需大量编码资源
-- 数据科学与 AI 研究：研究人员通过可视化方式实验和调试 LLM 提示词链、Agent 协作模式等，加速模型调优
-- 教育与培训场景：教学 LLM 和 AI Agent 开发概念，让学生通过拖拽组件直观理解 AI 工作流原理
+- 企业快速搭建 AI 客服、知识库问答等智能助手系统
+- 开发者构建和实验多智能体协作的复杂 AI 工作流
+- AI 应用原型开发与验证，通过可视化界面快速迭代业务逻辑
 
 
 
@@ -2213,7 +2378,7 @@ Langflow 是一个备受瞩目的开源 AI 应用构建平台，拥有超 14.4 �
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 70,051 |
+| Stars | 70,054 |
 | 语言 | Python |
 | Forks | 8,403 |
 | Issues | 296 |
@@ -2222,19 +2387,19 @@ Langflow 是一个备受瞩目的开源 AI 应用构建平台，拥有超 14.4 �
 
 ---
 
-gpt_academic是一款专为学术场景优化的LLM交互工具，填补了通用ChatGPT在论文阅读/写作场景的功能空白。其70k+的star数量和模块化插件设计证明了产品的实用价值，特别适合需要频繁处理学术文献、代码分析的研究人员和开发者。
+这是一个专为学术场景打造的GPT/GLM交互工具，在70k+星标加持下已成为学术界最热门的AI辅助工具之一。其独特价值在于将论文阅读、润色、写作等学术工作流深度整合，提供模块化插件系统，让复杂的AI能力通过简单的快捷按钮即可调用，大幅提升学术产出效率。
 
 **技术亮点**:
-- 【多模型统一接入】支持GPT/GLM/通义千问/DeepSeek/Llama2等20+主流LLM模型的并行问询，无需切换平台
-- 【学术场景深度优化】提供PDF/LaTeX论文翻译总结、论文润色、文献阅读等针对性功能，支持Latex公式渲染
-- 【代码智能分析】具备Python/C++等项目的代码剖析和自译解能力，可自动生成项目结构分析
-- 【模块化插件系统】支持自定义快捷按钮和函数插件，用户可根据需求扩展功能，灵活适配不同工作流
-- 【本地模型支持】支持ChatGLM3等本地模型部署，兼顾数据隐私与离线使用需求
+- 🔧 模块化插件架构：支持自定义快捷按钮和函数插件，可扩展性强，轻松添加新功能
+- 📚 深度学术优化：集成PDF/LaTex论文翻译、总结、润色等专用功能，支持论文阅读写作全流程
+- 🤖 多模型并行支持：同时接入ChatGPT、Claude2、通义千问、DeepSeekCoder、ChatGLM、Llama2等10+种主流LLM模型
+- 💻 代码智能分析：具备Python和C++项目自译解功能，能自动剖析代码结构并生成说明文档
+- 🌐 本地+云端混合：既支持GPT-4等云端API，也支持ChatGLM3等本地模型部署，灵活适应不同需求
 
 **适用场景**:
-- 🎓 科研人员和研究生：日常文献阅读、论文写作与润色、英文论文翻译与校对，大幅提升学术产出效率
-- 💻 开发者与程序员：代码库分析与理解、自动生成代码注释、项目文档生成、跨语言代码解析
-- 🏢 企业研发团队：集成多种LLM API进行技术调研、本地部署保障数据隐私、定制化插件开发以适配内部工具链
+- 👨‍🎓 学术研究人员：用于论文润色、文献阅读、数据分析和学术写作，显著提升科研效率
+- 🏢 教育培训机构：作为AI辅助教学工具，帮助学生和教师快速完成论文指导和学术写作任务
+- 💼 企业研发团队：用于技术文档编写、代码审查、项目剖析和知识沉淀，提升团队协作效率
 
 
 
@@ -2252,27 +2417,27 @@ gpt_academic是一款专为学术场景优化的LLM交互工具，填补了通�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,465 |
+| Stars | 28,587 |
 | 语言 | Python |
-| Forks | 2,743 |
-| Issues | 70 |
+| Forks | 2,753 |
+| Issues | 71 |
 | Topics | anthropic, anthropic-ai, anthropic-skills, awesome, awesome-lists, claude, claude-4, claude-4-5-sonnet, claude-4-opus, claude-api, claude-code, claude-desktop, claude-skills, claude-skills-hub, skills |
 
 ---
 
-这是目前最全面的 Claude AI 技能生态系统资源库，汇聚了 28k+ 开发者认可的技能、工具和最佳实践。对于想要深度定制 Claude AI 工作流的开发者来说，这是一站式参考指南，能显著降低学习和集成成本。
+这是一个精选的 Claude AI 技能和工具资源清单，收录了 28,000+ stars 的优质资源。该项目为开发者和企业提供了系统性、可落地的 Claude AI 定制化解决方案，是快速上手和深入掌握 Claude 工作流自动化的最佳入口。
 
 **技术亮点**:
-- 精选资源清单架构：覆盖 Claude Skills 全栈生态系统，包括 API 集成、Claude Desktop 定制、Claude Code 工具链等
-- 多代 Claude 模型支持：涵盖 Claude 4、Sonnet、Opus 等最新模型的技能和工具适配方案
-- 实用的技能开发模式：提供从基础 anthropic-skills 到高级工作流自动化的完整技术路径
-- 社区驱动的资源聚合：通过 awesome-lists 模式持续更新，确保收录的资源和工具始终保持最新状态
-- 端到端工作流示例：包含实际可用的 Claude AI 定制化场景实现，而非仅限于理论介绍
+- 精选资源清单：涵盖 Claude Skills、工具、API 集成等多维度资源
+- 支持多版本 Claude：包括 Claude 4 Opus、4.5 Sonnet 等最新模型
+- 强调工作流定制：提供 Claude Desktop 和 Claude Code 的定制化方案
+- 生态系统完善：整合了 Anthropic Skills Hub 和各类第三方工具
+- 实用性强：资源经过精心筛选，直接可用的代码示例和配置方案
 
 **适用场景**:
-- 企业开发者：构建定制化 Claude AI 工作流，将 Claude 集成到内部业务系统中（如客户服务、文档自动化、数据分析等场景）
-- 个人独立开发者：快速学习 Claude Skills 开发最佳实践，利用现成的技能模板和工具加速 AI 应用开发
-- AI 应用产品团队：评估和采用 Claude 生态系统中的成熟工具和技能，减少重复造轮子，快速推出 AI 功能产品
+- 开发者学习与参考：快速了解 Claude AI 定制化能力和最佳实践
+- 企业 AI 工作流集成：构建基于 Claude 的自动化业务流程和智能助手
+- AI 应用开发：利用 Claude API 和 Skills 开发垂直领域的 AI 应用和插件
 
 
 
@@ -2290,28 +2455,28 @@ gpt_academic是一款专为学术场景优化的LLM交互工具，填补了通�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 161,223 |
+| Stars | 161,263 |
 | 语言 | Go |
-| Forks | 14,361 |
-| Issues | 2,417 |
+| Forks | 14,365 |
+| Issues | 2,415 |
 | Topics | deepseek, gemma, gemma3, gemma3n, go, golang, gpt-oss, llama, llama2, llama3, llava, llm, llms, mistral, ollama, phi4, qwen |
 | 许可证 | MIT License |
 
 ---
 
-Ollama是目前最流行的本地大语言模型运行平台，支持GLM-4.7、DeepSeek、Qwen、Gemma、Llama等20+主流模型，单包拥有16万+Stars。其独特价值在于"一键部署+统一接口"，让开发者和企业无需复杂配置即可在本地运行多个LLM，兼顾隐私安全与使用便捷性，是目前本地LLM部署的事实标准。
+Ollama 是目前最流行的本地大模型部署工具，通过极简的一键安装体验，让开发者和企业能够在本地快速运行 GLM-4.7、DeepSeek、Qwen、Gemma 等主流开源大模型。项目拥有超过 16 万颗星，采用 Go 语言开发，性能优异且跨平台支持完善，是本地化 LLM 部署的事实标准工具，特别适合对数据隐私有要求或需要离线部署的场景。
 
 **技术亮点**:
-- 基于Go语言开发的高性能推理引擎，提供跨平台支持（macOS/Linux/Windows）
-- 统一API接口兼容OpenAI格式，无缝迁移现有LLM应用代码
-- 内置模型管理机制，支持自动下载、版本切换和多模型并行运行
-- 轻量化部署架构，无需Docker或复杂依赖环境即可运行
-- 丰富的模型生态支持，覆盖DeepSeek、Qwen、Llama、Gemma、Mistral、Phi-4等前沿模型
+- 统一模型管理：支持 Llama 2/3、Qwen、Gemma、DeepSeek、GLM-4.7 等多种主流大模型，提供一致的 API 接口和部署体验
+- Go 语言高性能实现：轻量级架构设计，资源占用低，支持 CPU/GPU 灵活切换，适合在本地环境高效运行
+- 开箱即用的开发者体验：提供简单的命令行工具和 RESTful API，快速集成到各类应用中，降低使用门槛
+- 企业级特性支持：MIT 开源许可，支持离线部署和本地推理，满足数据隐私和安全合规要求
+- 活跃的社区生态：持续更新最新开源模型，拥有庞大的用户社区和丰富的文档资源
 
 **适用场景**:
-- 企业级私有化部署：在本地服务器运行大模型，确保数据不出域，满足金融、医疗、政务等行业的严格隐私合规要求
-- 开发者本地调试环境：在个人电脑上快速测试和验证LLM应用，无需调用API产生费用，提升开发效率
-- 离线/边缘计算场景：支持在无网络或弱网络环境下运行AI应用，适用于野外作业、工业现场、嵌入式设备等场景
+- 企业私有化部署：在本地服务器运行大模型，保护敏感数据不外泄，满足金融、医疗、政务等行业的数据安全合规要求
+- 个人开发者学习实验：快速搭建本地 LLM 开发环境，低成本测试和调试各类开源大模型，无需依赖云端 API
+- 离线场景应用：在网络受限或隔离环境中使用 AI 能力，如嵌入式设备、内网环境、边缘计算节点等场景
 
 
 
@@ -2329,28 +2494,28 @@ Ollama是目前最流行的本地大语言模型运行平台，支持GLM-4.7、D
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,754 |
+| Stars | 69,771 |
 | 语言 | MDX |
-| Forks | 7,448 |
+| Forks | 7,452 |
 | Issues | 242 |
 | Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
 | 许可证 | MIT License |
 
 ---
 
-这是目前GitHub上最受欢迎的提示工程指南项目（69,754⭐），由DAIR AI维护的综合性学习资源库。它不仅是入门提示工程的绝佳起点，更涵盖了从基础到高级的RAG、AI Agents等前沿技术，是开发者快速掌握大模型应用开发的权威参考资料。
+这是GitHub上最受欢迎的提示词工程开源指南，汇集了从基础提示词设计到高级AI Agent开发的完整知识体系。项目涵盖学术论文、实战教程、Jupyter Notebook和最佳实践，是开发者快速掌握LLM应用开发核心技能的一站式资源库。
 
 **技术亮点**:
-- 全面的Prompt Engineering知识体系：包含指南、论文、课程和实战笔记本，覆盖从基础到高级的提示技巧
-- 前沿技术栈覆盖：涵盖RAG（检索增强生成）、Context Engineering、AI Agents等热门AI应用技术
-- 多框架支持：整合ChatGPT、OpenAI等多种大语言模型的实践经验
-- 理论与实践结合：提供学术论文、交互式笔记本和丰富的代码示例
-- 开源社区驱动：MIT许可证，持续更新，汇聚社区最佳实践
+- 🔥 全面覆盖四大核心领域：提示词工程、上下文工程、RAG检索增强生成、AI智能体开发
+- 📚 理论实践结合：包含精选论文列表、交互式Notebook教程和实战代码示例
+- 🤖 紧跟前沿技术：涵盖ChatGPT、OpenAI、大语言模型(LLMs)等最新AI技术应用
+- 📖 知识体系化：从基础概念到高级模式的完整学习路径，适合不同水平开发者
+- 🌐 社区驱动更新：持续更新的资源库，反映快速演进的AI应用开发最佳实践
 
 **适用场景**:
-- AI开发者快速入门：为想要学习提示工程、RAG和AI Agents的开发者提供系统性的学习路径和实战资源
-- 企业AI应用开发：企业技术团队可以参考项目中的最佳实践，快速搭建基于大语言模型的应用系统
-- 教育培训与学术研究：教师和学生可将其作为教材或参考资料，深入理解大模型的工程化应用
+- 🎯 **个人开发者学习**：系统学习提示词设计技巧和RAG实现方法，快速提升LLM应用开发能力
+- 💼 **企业AI应用开发**：作为团队参考手册，指导生产级AI Agent和智能问答系统架构设计
+- 🏫 **教育培训与学术研究**：高校AI课程教材配套资源，包含经典论文和实验代码
 
 
 
@@ -2368,28 +2533,28 @@ Ollama是目前最流行的本地大语言模型运行平台，支持GLM-4.7、D
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,502 |
+| Stars | 45,510 |
 | 语言 | Rust |
-| Forks | 8,942 |
-| Issues | 2 |
+| Forks | 8,944 |
+| Issues | 0 |
 | Topics | chatgpt, claude, desktop, gemini, hight-performance, linux, macos, no-electron, package, rust, tauri, windows, youtube |
 | 许可证 | MIT License |
 
 ---
 
-Pake是一个颠覆性的轻量级网页打包工具，凭借Rust和Tauri技术栈实现了"一条命令将任何网页转为桌面应用"的极简体验。相比Electron方案，它提供更小的体积（约20MB）、更低的内存占用和更快的启动速度，在GitHub获得超4.5万星，是macOS、Windows和Linux跨平台桌面应用快速开发的理想选择。
+Pake 是一个创新的轻量级打包工具，能够通过一条命令将任意网页转换为桌面应用。基于 Rust 和 Tauri 技术栈，相比 Electron 方案体积减少约 90%，资源占用极低，是构建高性能桌面应用的理想选择。
 
 **技术亮点**:
-- 基于Rust + Tauri技术栈，相比Electron体积减少90%以上，单个应用仅约20MB
-- 极致的性能优化：低内存占用、快速冷启动，完美替代臃肿的Electron应用
-- 一条命令即可完成打包，无需复杂配置，开箱即用的开发者体验
-- 完整的跨平台支持：统一代码库即可打包为macOS、Windows、Linux桌面应用
-- 内置热门服务优化：针对ChatGPT、Claude、Gemini、YouTube等网页应用做了特定适配
+- 🚀 基于 Rust + Tauri 技术栈，相比传统 Electron 应用体积减小约 90%，极致轻量化
+- ⚡️ 高性能架构，内存占用极低，运行速度快，系统资源消耗少
+- 🔧 一条命令即可完成打包，开箱即用，开发体验流畅，零学习成本
+- 🖥️ 跨平台支持：macOS、Linux、Windows 全平台覆盖
+- 🛡️ MIT 开源协议，代码完全开源透明，适合二次开发和企业集成
 
 **适用场景**:
-- 个人开发者：快速将常用的Web服务（如ChatGPT、Claude等AI工具、YouTube等）打包成独立桌面应用，避免浏览器标签页混乱
-- 企业/团队：将内部Web管理系统或SaaS产品打包为桌面客户端，提升用户体验和品牌专业度
-- 开源项目维护者：为Web项目提供轻量级桌面客户端分发方案，降低用户使用门槛
+- 💬 企业办公场景：快速打包 Web 版 ChatGPT、Claude、Gemini 等协作工具，无需安装完整浏览器，提升员工办公效率
+- 📺 个人开发者：将常用网页应用（如 YouTube Music、Gmail、Notion 等）打包为独立桌面应用，获得更清爽的使用体验
+- 🏢 ISV 软件厂商：将现有 Web 应用快速打包为桌面客户端，实现 Web + 桌面双端覆盖，降低开发成本
 
 
 
@@ -2407,28 +2572,28 @@ Pake是一个颠覆性的轻量级网页打包工具，凭借Rust和Tauri技术�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 32,359 |
+| Stars | 32,367 |
 | 语言 | Python |
-| Forks | 1,947 |
+| Forks | 1,948 |
 | Issues | 90 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检索增强生成）、智能体编排和多模态能力。它最大的独特价值在于既支持在线 LLM（GPT、Claude、Gemini 等），又能完全离线部署（Llama、Qwen 等），并且深度集成到工作流中（Obsidian、Emacs、WhatsApp）。对于注重隐私、需要构建个人知识库或企业私有 AI 助手的用户来说，这是一个不可多得的 self-hosted 解决方案。
+Khoj 是一个功能强大的 AI 第二大脑项目，支持完全自部署并可接入多种本地和在线 LLM。其独特价值在于将个人知识库与 AI 能力深度融合，提供从文档检索到自动化任务的完整解决方案，既保护数据隐私又赋予用户对 AI 助手的完全控制权。
 
 **技术亮点**:
-- 🔌 多模型支持：兼容 OpenAI、Anthropic、Google、本地 LLM（llama.cpp、Ollama）等，可自由切换在线/离线模型
-- 📚 RAG 架构：基于语义搜索的文档检索，支持 Obsidian、Emacs、在线文档和本地文件的知识库构建
-- 🤖 智能体与自动化：支持自定义 AI agents、定时任务编排、深度研究模式，能自主完成复杂工作流
-- 🌐 多平台集成：桌面端、Web、移动端全覆盖，深度集成 Obsidian、Emacs、WhatsApp 等常用工具
-- 🎯 多模态能力：支持语音转文字（STT）、图像生成、语音对话，提供丰富的交互方式
+- 支持多模型接入：兼容 GPT、Claude、Gemini、Llama、Qwen、Mistral 等主流 LLM，可灵活切换本地和在线模型
+- RAG + 语义搜索：基于个人文档和网页内容构建知识库，实现精准的语义检索和问答
+- 多平台生态集成：提供 Obsidian、Emacs、WhatsApp 等插件，无缝融入现有工作流
+- 高度可定制：支持构建自定义 AI Agent 和自动化任务调度，可根据个人需求定制 AI 助手能力
+- 离线优先设计：支持离线 LLM 和 STT（语音转文字），确保数据私密性和无网络环境可用性
 
 **适用场景**:
-- 🏢 企业/团队场景：构建企业私有知识库 AI 助手，员工可通过文档、聊天快速获取信息，同时支持自部署保证数据隐私
-- 👨‍💻 个人开发者/研究人员：搭建个人第二大脑，整合笔记、代码、文档进行深度研究和知识管理，支持离线使用
-- 📱 内容创作者：通过 WhatsApp/桌面端快速获取信息、生成内容、调度自动化任务，提升创作效率
+- 个人知识管理：为研究人员、学生或知识工作者构建个人第二大脑，快速从笔记、文档中检索信息并获得智能解答
+- 企业私有化部署：企业可部署内部 AI 助手，让员工安全地访问公司知识库，同时避免数据外泄风险
+- 开发者和 AI 爱好者：适合想要深度定制 AI Agent、实验不同 LLM 模型或构建自动化工作流的技术用户
 
 
 
@@ -2446,7 +2611,7 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,762 |
+| Stars | 55,815 |
 | 语言 | Jupyter Notebook |
 | Forks | 1,312 |
 | Issues | 8 |
@@ -2455,19 +2620,19 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 ---
 
-这是一个提供即用型云模板的高价值项目，专注于构建实时同步的企业级RAG应用和AI管道。凭借5.5万+星标和MIT许可证，它完美解决了企业最头疼的数据实时同步问题，能无缝连接SharePoint、Google Drive、Kafka等多种数据源，让开发者快速搭建生产级AI应用。
+Pathway 的 llm-app 是一个高星（55K+）企业级 LLM 应用模板库，专注于实时数据处理和 RAG 场景。其独特价值在于提供开箱即用的 Docker 化解决方案，支持与 SharePoint、Google Drive、Kafka、S3 等 20+ 数据源的实时同步，解决了传统 RAG 系统数据时效性差的痛点，特别适合需要处理实时业务数据的企业 AI 应用。
 
 **技术亮点**:
-- 实时数据同步能力：无缝集成SharePoint、Google Drive、S3、Kafka、PostgreSQL及实时API，确保数据始终最新
-- 企业级RAG框架：内置检索增强生成（RAG）和向量数据库支持，兼容OpenAI、Hugging Face等多种LLM
-- Docker友好设计：开箱即用的容器化模板，支持llm-ops完整工作流
-- 强大的生态集成：覆盖chatbot、向量索引、LLM安全等全栈技术栈
-- 高可扩展性：支持本地部署和云端部署，灵活适配不同规模需求
+- 🔄 实时数据管道：支持 SharePoint、Google Drive、Kafka、PostgreSQL、S3 等多种数据源的实时同步，确保 RAG 知识库始终保持最新
+- 🐳 Docker 友好架构：提供容器化部署方案，简化本地和生产环境部署流程，支持一键启动完整 LLM 应用栈
+- 🔍 企业级搜索与向量索引：内置向量数据库和向量索引功能，支持高性能语义检索和混合搜索
+- 🛡️ LLM 安全与合规：涵盖 LLM 安全、提示工程和 LLMOps 最佳实践，适合企业级生产环境部署
+- 🤖 多模型兼容性：支持 OpenAI、Hugging Face 等多种 LLM 后端，可灵活切换本地模型和云端 API
 
 **适用场景**:
-- 企业知识库搭建：快速构建实时同步的企业文档搜索和智能问答系统
-- 实时AI数据管道：为金融、电商等需要实时数据的场景构建流式AI应用
-- 多源数据融合：整合企业内部多个数据源（文档、数据库、消息队列）进行统一智能分析
+- 🏢 企业智能问答与知识管理：构建企业内部的 AI 助手，实时同步 SharePoint/Google Drive 文档，实现智能搜索和知识问答
+- 📊 实时数据分析与 AI Agent：结合 Kafka、PostgreSQL 等实时数据流，构建能够感知业务变化的智能监控和分析系统
+- 🚀 快速 RAG 应用原型开发：开发者利用现成模板快速搭建生产级 RAG 应用，大幅降低从原型到上线的时间和成本
 
 
 
@@ -2485,28 +2650,28 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 29,405 |
+| Stars | 29,413 |
 | 语言 | JavaScript |
-| Forks | 5,694 |
+| Forks | 5,696 |
 | Issues | 981 |
 | Topics | api, api-gateway, azure-openai-api, chatgpt, claude, ernie-bot, gemini, gpt, openai, openai-api, proxy |
 | 许可证 | MIT License |
 
 ---
 
-这是目前最流行的开源 LLM API 管理系统，聚合了国内外 15+ 主流 AI 模型提供商，通过统一接口实现多模型管理与 Key 二次分发。项目拥有 2.9万+ Stars，单可执行文件部署方案极其实用，是企业与个人开发者构建 AI 应用的理想中间件。
+这是目前最成熟的 LLM API 统一管理与分发系统，解决了多模型接入的痛点问题。通过统一的 OpenAI 兼容接口，支持国内外 20+ 主流大模型，不仅简化了开发流程，还提供了强大的 Key 管理、额度控制和用户管理系统，是企业进行 AI 能力集成和 API 二次分发的最佳选择。
 
 **技术亮点**:
-- 🔄 统一 API 适配：支持 OpenAI、Azure、Claude、Gemini、DeepSeek、豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等 15+ 主流 LLM 提供商
-- 🔑 智能 Key 管理：提供多 Key 轮询、负载均衡、配额管理、访问控制等企业级 API Key 管理与二次分发功能
-- 🚀 极简部署：单可执行文件（Go 编译）+ Docker 镜像，一键部署开箱即用，无需复杂依赖配置
-- 🌐 国际化支持：完整的中英文双语 UI 界面，满足国内外用户使用需求
-- ⚡ API 网关能力：作为反向代理中间层，统一接口标准，简化多模型集成复杂度
+- 多模型统一适配：支持 OpenAI、Claude、Gemini、DeepSeek、文心一言、通义千问等 20+ 国内外主流 LLM，通过单一接口调用
+- 开箱即用部署：提供单可执行文件和 Docker 镜像，支持一键部署，降低运维复杂度
+- 企业级功能完备：包含 API Key 管理、额度控制、用户管理、Token 计费、访问日志等完整功能
+- 高可用架构：支持负载均衡、多渠道切换、失败重试机制，确保 API 调用稳定性
+- 二次分发能力：可作为 API 网关进行 Key 转售和团队内部分发，支持多租户隔离
 
 **适用场景**:
-- 💼 企业 AI 应用开发：作为企业内部的 AI 能力中台，统一管理多个模型 API Key，按部门/项目进行配额分配与计费统计
-- 👨‍💻 个人开发者/创业团队：快速整合多厂商 AI 能力，避免逐一对接各平台差异，通过单一接口调用多种模型进行测试与开发
-- 🔁 SaaS 产品集成：为 AI 应用提供 Key 分发服务，让用户自带 Key 或通过平台统一调用，降低 API 密钥管理成本
+- 企业 AI 应用开发：统一接入多个 LLM 供应商，简化应用开发流程，降低模型切换成本
+- 团队 API 资源共享：集中管理团队的 API Keys，进行额度分配、计费统计和访问控制
+- API 转售服务：作为中间层进行 API 二次分发，为下游客户提供统一的 LLM 接口服务
 
 
 
@@ -2524,28 +2689,28 @@ Khoj 是一个功能强大的个人 AI 助力工具，完美结合了 RAG（检�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 38,350 |
+| Stars | 38,356 |
 | 语言 | TypeScript |
-| Forks | 3,880 |
-| Issues | 1,033 |
+| Forks | 3,882 |
+| Issues | 1,034 |
 | Topics | assistant, chatbot, chatgpt, claude, copilot, deepseek, gemini, gpt, gpt-5, ollama, openai |
 | 许可证 | GNU General Public License v3.0 |
 
 ---
 
-Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、Gemini、DeepSeek 等多家主流 AI 模型，拥有 3.8 万+ GitHub Stars 的社区认可。作为开源且跨平台的统一 AI 助手客户端，它为用户提供了多模型聚合、本地化部署（支持 Ollama）和企业级集成的完整解决方案，降低了使用多种 AI 服务的技术门槛。
+Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、Gemini、GPT-5、DeepSeek、Ollama 等多种主流 AI 模型。作为跨平台的开源项目，它为企业用户和个人开发者提供了统一的 AI 对话管理解决方案，让用户能够高效地使用不同的 AI 服务，具有良好的扩展性和跨平台支持。
 
 **技术亮点**:
-- 基于 TypeScript 开发的跨平台应用，提供桌面端和移动端多端支持
-- 支持 10+ 主流 AI 模型集成，包括 OpenAI GPT 系列、Claude、Gemini、DeepSeek、Ollama 等
-- 开源架构设计，采用 GPL-3.0 许可证，允许自由定制和二次开发
-- 支持本地化部署方案（Ollama），可离线使用满足数据隐私需求
-- 提供统一的 API 接口层，简化多模型调用的复杂度
+- TypeScript 开发，类型安全保障代码质量和维护性
+- 跨平台架构，支持多端部署（Web、桌面等）
+- 统一接口集成多种 AI 模型（OpenAI、Claude、Gemini、DeepSeek、Ollama 等）
+- 支持本地化部署（Ollama），满足数据隐私和离线使用需求
+- 开源 GPL 协议，社区活跃（38k+ Stars），持续更新迭代
 
 **适用场景**:
-- 个人用户需要同时使用多个 AI 模型进行对话、创作和编程辅助的场景
-- 企业开发者希望快速集成 AI 能力到内部业务系统，实现 AI 助手功能
-- 对数据隐私敏感的场景，可通过本地化部署（Ollama）实现离线 AI 对话
+- 企业级 AI 助手部署：企业可使用统一客户端管理员工对不同 AI 模型的访问，降低使用成本和复杂度
+- 开发者工具集成：开发者可通过 Chatbox 快速测试和调试不同 AI 模型的 API，提升开发效率
+- 个人 AI 生产力工具：个人用户可在一个应用中切换使用多种 AI 服务（如 ChatGPT 写作、Claude 编程、DeepSeek 搜素），无需切换多个平台
 
 
 
@@ -2563,7 +2728,7 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,856 |
+| Stars | 35,862 |
 | 语言 | Python |
 | Forks | 2,532 |
 | Issues | 55 |
@@ -2572,19 +2737,19 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 ---
 
-这是一个极具实用价值的免费大模型API聚合平台，为开发者提供免費接入ChatGPT、DeepSeek、Claude、Gemini、Grok等主流大模型的统一接口，35,856+星标证明了其受欢迎程度。该项目降低了AI应用开发门槛，特别适合预算有限的开发者和初创团队快速集成多个顶级大模型。
+这是一个极具实用价值的开源项目，为开发者提供了免费接入多种顶级大模型（ChatGPT、DeepSeek、Claude、Gemini、Grok等）的统一API接口。项目拥有超过35,000颗星，证明了其受欢迎程度和可靠性，极大降低了AI应用开发的成本门槛。
 
 **技术亮点**:
-- 多模型统一API接口：支持GPT、DeepSeek、Claude、Gemini、Grok等排名靠前的大模型，实现一处接入多模型调用
-- 完全免费使用：提供免费的API Key服务，无需支付昂贵的官方API费用，大幅降低开发成本
-- Python后端实现：基于Python开发，易于集成到现有的AI应用和自动化工作流中
-- MIT开源许可：宽松的许可证允许商业使用和二次开发
-- 多场景兼容：支持多种大模型生态，避免单一供应商依赖风险
+- 多模型统一接口：支持 GPT-4、DeepSeek、Claude、Gemini、Grok 等主流大模型的统一 API 调用
+- 完全免费：提供免费的 API Key 服务，打破大模型 API 使用的高昂成本限制
+- Python 实现：基于 Python 开发，易于集成和二次开发，适合快速原型开发
+- MIT 开源许可：宽松的开源协议，允许商业使用和自由修改
+- 高可用性：35,000+ GitHub Stars 表明项目经过大量用户验证，稳定性和社区支持有保障
 
 **适用场景**:
-- 个人开发者快速验证AI应用原型：在产品早期阶段免费使用多个顶级大模型进行功能验证和测试
-- 初创企业降低AI开发成本：预算有限的情况下，无需支付昂贵的官方API费用即可集成ChatGPT、Claude等主流模型
-- 企业多模型对比测试：在一个平台上快速测试不同大模型的效果，选择最适合业务需求的模型
+- 个人开发者学习与实验：想要学习和测试不同大模型能力，但预算有限的开发者
+- 初创企业产品验证：需要快速验证 AI 产品创意，暂时不想承担高额 API 费用的初创团队
+- 教育与研究场景：学校或研究机构用于教学演示、学术研究的大模型集成项目
 
 
 
@@ -2605,7 +2770,7 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 86,077 |
+| Stars | 86,093 |
 | 语言 | Python |
 | Forks | 4,975 |
 | Issues | 423 |
@@ -2614,19 +2779,19 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 ---
 
-这是微软官方开源的文档转换工具，在短时间内获得了超过8.6万颗星，体现了其强大的实用性和社区认可度。该项目填补了将多种办公文档格式统一转换为Markdown的空白，特别适合需要处理大量异构文档的AI应用场景，是LangChain、AutoGen等主流框架的官方推荐扩展。
+这是微软官方出品的文档转换工具，专门用于将各类文件和Office文档统一转换为Markdown格式。作为86k+star的热门项目，它在文档处理和AI应用预处理领域具有极高的实用价值，特别适合需要将非结构化文档转化为LLM可读格式的场景。
 
 **技术亮点**:
-- 支持多种文档格式转换：PDF、Word、PowerPoint、Excel等Office文档，以及音频、视频、图片等多种文件格式
-- 与主流AI框架深度集成：作为LangChain和AutoGen的官方扩展，可直接用于RAG系统和AI Agent开发
-- 由微软团队官方维护，代码质量高，采用MIT许可证，商业使用友好
-- 提供命令行工具和Python库两种使用方式，集成灵活
-- 支持从图像中提取文本（OCR），可处理包含表格、图表的复杂文档结构
+- 支持多种格式转换：PDF、Word、PowerPoint、Excel、图片、音频等多种文件格式转Markdown
+- Python工具设计：简洁易用的Python API，方便集成到现有开发工作流中
+- AI生态深度集成：与AutoGen、LangChain、OpenAI等主流AI框架无缝对接
+- 微软官方维护：MIT开源许可，技术保障和持续更新有保证
+- 统一文档标准化：将不同来源文档统一转为Markdown，便于后续处理和检索
 
 **适用场景**:
-- 企业知识库构建：将企业内部大量PDF、Word、PPT等文档统一转换为Markdown格式，便于向量化和检索，搭建RAG（检索增强生成）系统
-- AI应用开发：为ChatGPT、AutoGen等AI应用提供文档预处理能力，将各类文件转换为LLM易于理解和处理的Markdown格式
-- 文档自动化处理：个人开发者用于批量转换文档格式，实现文档归档、内容提取和自动化工作流
+- 企业文档预处理：将Office文档、PDF等企业文件转换为Markdown，供RAG系统或知识库使用
+- AI训练数据准备：为LLM应用准备标准化的文本输入，提升模型处理文档的效率
+- 个人知识管理：将各类文档统一转换为Markdown格式，便于笔记整理和Obsidian等工具管理
 
 
 
@@ -2644,28 +2809,502 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,167 |
+| Stars | 28,166 |
 | 语言 | TypeScript |
-| Forks | 2,294 |
+| Forks | 2,296 |
 | Issues | 309 |
 | Topics | chatgpt, claude, copilot, cursor, developer-tools, editor, llm, open-source, openai, visual-studio-code, vscode, vscode-extension |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Void 是一个革命性的 AI 开发工具，无缝集成了 ChatGPT、Claude、Copilot 等多个主流 AI 助手到编辑器中，为开发者提供统一的 AI 编程助手体验。该项目以 28K+ 星标证明其受欢迎程度，采用 Apache 2.0 开源协议，适合需要高效 AI 辅助编程的开发者使用，是目前 VS Code 生态中最受欢迎的多 LLM 集成解决方案之一。
+Void 是一个基于 VS Code 架构构建的新一代代码编辑器，专注于深度集成 AI 能力。它获得超过 28,000 Stars 的原因是填补了 VS Code 原生 AI 体验的空白，为开发者提供了开箱即用的 ChatGPT、Claude、Copilot 等多种 LLM 的一体化集成方案，大大提升了 AI 辅助编程的效率和体验。
 
 **技术亮点**:
-- 基于 TypeScript 构建的高性能 VS Code 扩展，与编辑器深度集成
-- 统一接入 OpenAI ChatGPT、Anthropic Claude、GitHub Copilot、Cursor 等多个主流 LLM 服务
-- 采用 Apache 2.0 开源协议，允许自由定制和企业级集成
-- 支持多种 AI 模型切换和智能编程辅助功能（代码补全、生成、优化等）
-- 活跃的开源社区支持，28K+ 星标验证项目稳定性和可靠性
+- 基于 TypeScript 和 VS Code Extension API 构建，继承了成熟的编辑器架构和插件生态
+- 深度集成多个主流 LLM（OpenAI ChatGPT、Anthropic Claude、GitHub Copilot），提供统一的 AI 编程接口
+- 类似 Cursor 的 AI 原生交互设计，支持智能代码补全、对话式编程和多文件编辑
+- 开源项目（Apache 2.0 许可证），允许开发者自由定制和扩展 AI 集成能力
+- 轻量级扩展形式，无需安装独立编辑器即可在现有 VS Code 环境中使用
 
 **适用场景**:
-- 企业开发团队：需要在统一开发环境中使用多个 AI 助手提高编码效率和代码质量
-- 个人开发者：希望整合 ChatGPT、Claude 等 AI 工具到日常编辑器工作流中的程序员
-- 技术团队评估：想要测试和对比不同 LLM 模型在实际开发场景中效果的组织
+- 个人开发者：提升日常编码效率，通过 AI 快速生成代码、解释复杂逻辑、重构优化代码片段
+- 企业开发团队：统一团队的 AI 辅助开发工具链，降低多 LLM 服务的集成成本，提升代码质量和开发速度
+- VS Code 用户：在保留现有编辑习惯和插件生态的前提下，获得类似 Cursor 的 AI 原生开发体验，无需切换编辑器
+
+
+
+## 🧠 机器学习框架 (12 个项目)
+
+
+### 🌟 高优先级
+
+
+### infiniflow/ragflow
+
+**描述**: RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior context layer for LLMs
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Python
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 72,507 |
+| 语言 | Python |
+| Forks | 8,024 |
+| Issues | 3,151 |
+| Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, deep-learning, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, multi-agent, ollama, openai, rag, retrieval-augmented-generation |
+| 许可证 | Apache License 2.0 |
+
+---
+
+RAGFlow 是一款领先的开源 RAG（检索增强生成）引擎，它将先进的 RAG 技术与 Agent 能力深度融合，为 LLM 构建卓越的上下文层。拥有超过 7.2 万颗星标，支持 GraphRAG、多智能体协作、深度研究等前沿特性，是企业构建智能知识库和 AI 应用的理想选择。
+
+**技术亮点**:
+- 将 RAG 与 Agent 能力深度融合，支持多智能体协作工作流
+- 集成 GraphRAG 技术，提供更强大的知识图谱增强检索能力
+- 强大的文档解析与理解能力，支持复杂文档格式处理
+- 深度研究（Deep Research）模式，结合 DeepSeek R1 等先进模型
+- 支持 MCP 协议和 Ollama，兼容 OpenAI 等多种 LLM 后端
+
+**适用场景**:
+- 企业知识库构建：企业可利用 RAGFlow 构建智能文档检索系统，让员工通过自然语言快速获取企业内部知识
+- 智能客服与问答系统：将产品文档、FAQ 等接入 RAGFlow，实现准确、基于事实的智能客户服务
+- 智能研究助手：研究人员可使用深度研究模式，快速检索和分析大量学术文献、报告等资料
+
+
+
+### f/prompts.chat
+
+**描述**: a.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-host for your organization with complete privacy.
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in TypeScript
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 144,158 |
+| 语言 | TypeScript |
+| Forks | 19,067 |
+| Issues | 5 |
+| Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
+| 许可证 | Creative Commons Zero v1.0 Universal |
+
+---
+
+这是目前 GitHub 上最受欢迎的 ChatGPT 提示词开源项目（14.4万+ stars），提供社区驱动的提示词共享与发现平台。支持企业完全私有化部署，确保数据安全，同时支持 OpenAI、Claude、Gemini 等主流大语言模型，是提示词工程的标杆项目。
+
+**技术亮点**:
+- 基于 Next.js + TypeScript 构建的现代化 Web 应用，采用高性能 React 框架
+- 支持多模型兼容性（OpenAI GPT-4、Claude、Gemini 等），实现提示词跨平台复用
+- 提供完整的企业级私有化部署方案，数据完全自主可控
+- 社区驱动的内容生态系统，持续更新的提示词库与分类体系
+- 采用 Creative Commons Zero 开源协议，无版权限制，自由使用与修改
+
+**适用场景**:
+- 企业内部知识管理：为团队搭建私有的 AI 提示词库，沉淀最佳实践，提升员工使用 AI 效率
+- 开发者快速上手：学习高质量提示词编写技巧，加速 AI 应用开发与集成
+- 教育与研究：作为提示词工程的教学资源库，帮助理解如何有效与大模型交互
+
+
+
+### hiyouga/LlamaFactory
+
+**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 66,673 |
+| 语言 | Python |
+| Forks | 8,120 |
+| Issues | 883 |
+| Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
+| 许可证 | Apache License 2.0 |
+
+---
+
+LlamaFactory 是一个统一高效的LLM/VLM微调框架，入选ACL 2024，支持100+种大语言模型的微调。该项目最大的独特价值在于通过单一框架整合了从模型训练到RLHF的全流程，支持LoRA、QLoRA、MoE、量化等多种先进技术，同时提供了Web UI和命令行两种操作方式，极大降低了大模型微调的技术门槛，适合从科研到生产的各种场景。
+
+**技术亮点**:
+- 支持100+种LLM和VLM模型，包括Llama 3、Gemma、Qwen、DeepSeek等主流开源模型
+- 集成多种高效微调技术：LoRA、QLoRA、全参数微调、MoE混合专家模型
+- 完整覆盖训练流程：指令微调、偏好对齐、RLHF强化学习、DPO/PPO等
+- 支持多种量化方案和推理加速，降低显存需求，适配消费级显卡
+- 提供可视化Web UI界面和灵活的API接口，开箱即用，无需编码即可微调
+
+**适用场景**:
+- 企业开发者：快速基于开源大模型（如Llama 3、Qwen）微调垂直领域的专属模型，用于客服机器人、知识问答、代码助手等业务场景
+- 科研人员：进行大模型指令微调、对齐和RLHF研究，探索新型训练方法，发表学术论文
+- 个人开发者/AI爱好者：在消费级显卡上通过QLoRA和量化技术低成本微调7B/13B等模型，构建个人AI助手或特定任务模型
+
+
+
+### OpenBB-finance/OpenBB
+
+**描述**: Financial data platform for analysts, quants and AI agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 59,676 |
+| 语言 | Python |
+| Forks | 5,812 |
+| Issues | 53 |
+| Topics | ai, crypto, derivatives, economics, equity, finance, fixed-income, machine-learning, openbb, options, python, quantitative-finance, stocks |
+| 许可证 | Other |
+
+---
+
+OpenBB 是一个功能全面且开源的金融数据平台，专为分析师、量化交易者和 AI 代理设计，整合了股票、加密货币、衍生品、固定收益等多领域金融数据。该项目拥有近 6 万星标，采用 Python 开发且支持机器学习应用，是金融科技领域极具价值的开源工具，为金融数据获取和分析提供了统一的 API 接口，降低了量化研究和 AI 金融应用的开发门槛。
+
+**技术亮点**:
+- 统一金融数据平台：整合股票、期权、加密货币、固定收益、宏观经济等多资产类数据源
+- Python 原生支持：提供完善的 Python SDK，无缝集成数据科学和机器学习工作流
+- AI 友好架构：专为 AI 代理设计，便于构建金融智能体和自动化分析系统
+- 开源与可扩展性：支持量化金融分析、衍生品定价、风险评估等高级功能
+- 59K+ 社区认可：活跃的开源社区，持续更新和丰富的金融工具生态
+
+**适用场景**:
+- 量化交易策略开发：为量化分析师提供多资产类数据回测和策略验证平台
+- 金融 AI 代理构建：集成到 AI 系统中，为金融智能体提供实时数据支持和分析能力
+- 个人投资者研究：为独立投资者提供专业级金融数据获取和分析工具
+
+
+
+### rasbt/LLMs-from-scratch
+
+**描述**: Implement a ChatGPT-like LLM in PyTorch from scratch, step by step
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 84,117 |
+| 语言 | Jupyter Notebook |
+| Forks | 12,709 |
+| Issues | 0 |
+| Topics | ai, artificial-intelligence, chatbot, chatgpt, deep-learning, from-scratch, generative-ai, gpt, language-model, large-language-models, llm, machine-learning, neural-networks, python, pytorch, transformers |
+| 许可证 | Other |
+
+---
+
+这是一个极具教育价值的项目，以循序渐进的方式从零开始实现类似ChatGPT的大语言模型，填补了理论与实践之间的鸿沟。该项目拥有超过8.4万颗星，是学习LLM内部工作原理的最佳实践教程之一，特别适合希望深入理解Transformer架构和GPT模型实现细节的开发者。
+
+**技术亮点**:
+- 基于PyTorch从零构建完整LLM，涵盖数据预处理、模型架构、训练到推理的全流程
+- 详细拆解Transformer架构组件，包括注意力机制、层归一化、前馈网络等核心模块
+- 提供Jupyter Notebook格式，交互式学习体验，代码注释详尽易于理解
+- 涵盖LLM关键技术：预训练、指令微调、权重加载与推理优化
+- 配套丰富的理论说明和可视化，帮助理解复杂的神经网络概念
+
+**适用场景**:
+- AI/ML学习者：系统学习大语言模型实现原理，从理论到实践的完整学习路径
+- 研究人员和工程师：深入理解LLM内部机制，为模型优化和自定义开发奠定基础
+- 教育工作者：作为深度学习和NLP课程的实践教材，提供完整的教学案例
+
+
+
+### huggingface/transformers
+
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Python
+
+**质量评分**: 98/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 155,988 |
+| 语言 | Python |
+| Forks | 31,917 |
+| Issues | 2,211 |
+| Topics | audio, deep-learning, deepseek, gemma, glm, hacktoberfest, llm, machine-learning, model-hub, natural-language-processing, nlp, pretrained-models, python, pytorch, pytorch-transformers, qwen, speech-recognition, transformer, vlm |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Transformers 是目前机器学习领域最流行的开源框架之一，拥有超过15.5万颗星和活跃的社区。它统一了文本、视觉、音频和多模态领域的最先进模型，为开发者提供了从预训练到推理的一站式解决方案，是目前构建 AI 应用的基础设施级项目。
+
+**技术亮点**:
+- 支持多模态模型处理，涵盖 NLP、计算机视觉、语音识别和视觉语言模型（VLM）等前沿领域
+- 深度集成 PyTorch 生态系统，提供统一的 API 设计，简化模型调用和微调流程
+- 内置模型中心（Model Hub）生态，直接接入海量预训练模型（如 BERT、GPT、Qwen、DeepSeek、Gemma、GLM 等）
+- 同时支持训练和推理场景，提供高效的性能优化和生产级部署方案
+- 开源生态丰富，覆盖 100+ 种模型架构，是 LLM 和深度学习开发的事实标准框架
+
+**适用场景**:
+- AI 应用快速开发：企业开发者可快速集成最先进的预训练大模型能力，节省从零开始训练的成本和时间
+- 科研与教学：学术界研究人员用于微调和实验前沿模型，进行自然语言处理、多模态学习等研究
+- 企业级 AI 产品构建：在搜索、对话系统、内容生成、语音识别等商业场景中部署生产级 AI 能力
+
+
+
+### vllm-project/vllm
+
+**描述**: A high-throughput and memory-efficient inference and serving engine for LLMs
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Python
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 69,124 |
+| 语言 | Python |
+| Forks | 13,049 |
+| Issues | 3,172 |
+| Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
+| 许可证 | Apache License 2.0 |
+
+---
+
+vLLM 是目前大模型推理领域的标杆级项目，凭借突破性的 PagedAttention 技术和 69K+ GitHub Stars，成为生产环境部署 LLM 的首选引擎。相比传统方案，它可将吞吐量提升 24 倍同时降低一半显存占用，显著降低企业 AI 部署成本。
+
+**技术亮点**:
+- ⚡ PagedAttention 核心专利技术：将 KV cache 分页管理，解决显存碎片化问题，实现显存利用率接近 100%
+- 🚀 连续批处理：动态优化请求调度，支持实时请求插入，吞吐量较 HuggingFace Transformers 提升 24 倍
+- 🎯 多后端支持：兼容 CUDA、ROCm(AMD)、TPU、Blackwell 等多种硬件加速平台，硬件适配性强
+- 🔗 OpenAI 兼容 API：提供与 OpenAI API 完全兼容的服务接口，零成本迁移现有应用
+- 📦 开箱即用的模型支持：原生支持 Llama、Qwen、DeepSeek、Kimi 等主流开源模型及 MoE 架构
+
+**适用场景**:
+- 🏢 企业级 LLM 服务部署：适合需要高并发、低延迟的生产环境，如智能客服、内容生成平台等商业场景
+- 🤖 模型微调后推理服务：为 HuggingFace 微调后的模型提供高性能推理能力，开箱即用
+- 💻 个人开发者本地部署：支持单卡运行，适合开发者在本地环境测试和运行大模型应用
+
+
+
+### Comfy-Org/ComfyUI
+
+**描述**: The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 90/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 102,062 |
+| 语言 | Python |
+| Forks | 11,571 |
+| Issues | 3,615 |
+| Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
+| 许可证 | GNU General Public License v3.0 |
+
+---
+
+ComfyUI 是目前最受欢迎的模块化 AI 绘图工具，采用创新的节点式工作流设计，让用户能够通过可视化拖拽方式灵活构建复杂的 Stable Diffusion 生成流程。10万+ GitHub Stars 证明了其强大的社区认可度，同时提供完整的 API 和后端支持，既适合个人创作者快速实现创意，也满足开发者深度定制和集成到企业级应用的需求。
+
+**技术亮点**:
+- 创新的节点图（Node Graph）界面：通过可视化拖拽组合节点，无需编程即可构建复杂的 AI 生成流程
+- 高度模块化架构：支持灵活扩展和自定义节点，易于集成新的 AI 模型和功能
+- 完整的 API 和后端支持：提供 RESTful API，方便集成到第三方应用和工作流中
+- 基于 PyTorch 的强大扩散模型支持：兼容 Stable Diffusion 等主流模型，性能优异
+- 开源且活跃的生态系统：GPL-3.0 许可证，拥有丰富的社区插件和节点库
+
+**适用场景**:
+- AI 内容创作者：快速搭建自定义的图像生成工作流，通过节点组合实现复杂的艺术效果
+- 企业应用集成：利用提供的 API 将 AI 图像生成能力集成到产品或服务中，如在线设计工具、游戏资产生成
+- 开发者与研究：基于模块化架构进行二次开发和实验，快速验证新的 AI 模型或生成算法
+
+
+
+### pytorch/pytorch
+
+**描述**: Tensors and Dynamic neural networks in Python with strong GPU acceleration
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 90/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 97,082 |
+| 语言 | Python |
+| Forks | 26,702 |
+| Issues | 17,994 |
+| Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
+| 许可证 | Other |
+
+---
+
+PyTorch 是当今最流行的深度学习框架之一，以其动态计算图（Define-by-Run）的直观设计和卓越的GPU加速能力而闻名。凭借超过97k的GitHub Stars和活跃的开源社区，它已成为学术界和工业界AI研究的首选工具，特别适合需要灵活原型开发和生产部署的场景。
+
+**技术亮点**:
+- 动态计算图（Dynamic Computation Graph）：支持即时执行和灵活的网络结构定义，便于调试和实验
+- 强大的GPU加速支持：利用CUDA实现高效的张量运算和神经网络训练
+- 自动微分系统（Autograd）：自动计算梯度，简化反向传播实现
+- 与NumPy无缝集成：提供类似NumPy的API，支持GPU张量操作，降低学习门槛
+- 丰富的生态系统：包含TorchVision、TorchText等扩展库，覆盖计算机视觉、NLP等多个领域
+
+**适用场景**:
+- 学术研究：研究人员可快速构建和实验新型神经网络架构，发表高质量论文
+- 企业生产部署：借助TorchScript和ONNX支持，将模型轻松部署到云端、边缘设备和移动端
+- 个人开发者学习：简洁的API设计使其成为深度学习入门的理想选择，配合官方教程快速上手
+
+
+
+### dair-ai/Prompt-Engineering-Guide
+
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 69,771 |
+| 语言 | MDX |
+| Forks | 7,452 |
+| Issues | 242 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
+
+---
+
+这是GitHub上最受欢迎的提示词工程开源指南，汇集了从基础提示词设计到高级AI Agent开发的完整知识体系。项目涵盖学术论文、实战教程、Jupyter Notebook和最佳实践，是开发者快速掌握LLM应用开发核心技能的一站式资源库。
+
+**技术亮点**:
+- 🔥 全面覆盖四大核心领域：提示词工程、上下文工程、RAG检索增强生成、AI智能体开发
+- 📚 理论实践结合：包含精选论文列表、交互式Notebook教程和实战代码示例
+- 🤖 紧跟前沿技术：涵盖ChatGPT、OpenAI、大语言模型(LLMs)等最新AI技术应用
+- 📖 知识体系化：从基础概念到高级模式的完整学习路径，适合不同水平开发者
+- 🌐 社区驱动更新：持续更新的资源库，反映快速演进的AI应用开发最佳实践
+
+**适用场景**:
+- 🎯 **个人开发者学习**：系统学习提示词设计技巧和RAG实现方法，快速提升LLM应用开发能力
+- 💼 **企业AI应用开发**：作为团队参考手册，指导生产级AI Agent和智能问答系统架构设计
+- 🏫 **教育培训与学术研究**：高校AI课程教材配套资源，包含经典论文和实验代码
+
+
+
+### pathwaycom/llm-app
+
+**描述**: Ready-to-run cloud templates for RAG, AI pipelines, and enterprise search with live data. 🐳Docker-friendly.⚡Always in sync with Sharepoint, Google Drive, S3, Kafka, PostgreSQL, real-time data APIs, and more.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 55,815 |
+| 语言 | Jupyter Notebook |
+| Forks | 1,312 |
+| Issues | 8 |
+| Topics | chatbot, hugging-face, llm, llm-local, llm-prompting, llm-security, llmops, machine-learning, open-ai, pathway, rag, real-time, retrieval-augmented-generation, vector-database, vector-index |
+| 许可证 | MIT License |
+
+---
+
+Pathway 的 llm-app 是一个高星（55K+）企业级 LLM 应用模板库，专注于实时数据处理和 RAG 场景。其独特价值在于提供开箱即用的 Docker 化解决方案，支持与 SharePoint、Google Drive、Kafka、S3 等 20+ 数据源的实时同步，解决了传统 RAG 系统数据时效性差的痛点，特别适合需要处理实时业务数据的企业 AI 应用。
+
+**技术亮点**:
+- 🔄 实时数据管道：支持 SharePoint、Google Drive、Kafka、PostgreSQL、S3 等多种数据源的实时同步，确保 RAG 知识库始终保持最新
+- 🐳 Docker 友好架构：提供容器化部署方案，简化本地和生产环境部署流程，支持一键启动完整 LLM 应用栈
+- 🔍 企业级搜索与向量索引：内置向量数据库和向量索引功能，支持高性能语义检索和混合搜索
+- 🛡️ LLM 安全与合规：涵盖 LLM 安全、提示工程和 LLMOps 最佳实践，适合企业级生产环境部署
+- 🤖 多模型兼容性：支持 OpenAI、Hugging Face 等多种 LLM 后端，可灵活切换本地模型和云端 API
+
+**适用场景**:
+- 🏢 企业智能问答与知识管理：构建企业内部的 AI 助手，实时同步 SharePoint/Google Drive 文档，实现智能搜索和知识问答
+- 📊 实时数据分析与 AI Agent：结合 Kafka、PostgreSQL 等实时数据流，构建能够感知业务变化的智能监控和分析系统
+- 🚀 快速 RAG 应用原型开发：开发者利用现成模板快速搭建生产级 RAG 应用，大幅降低从原型到上线的时间和成本
+
+
+
+### ItzCrazyKns/Perplexica
+
+**描述**: Perplexica is an AI-powered answering engine.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 28,656 |
+| 语言 | TypeScript |
+| Forks | 3,047 |
+| Issues | 218 |
+| Topics | ai-agents, ai-search-engine, answering-engine, artificial-intelligence, llm, machine-learning, open-source-ai-search-engine, perplexica, rag, search-engine, searxng, searxng-copilot, self-hosted-ai |
+| 许可证 | MIT License |
+
+---
+
+Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity 的开源替代方案，能够理解用户查询的真实意图并提供精准答案。该项目采用先进的 RAG（检索增强生成）技术和 LLM 本地化部署方案，既保证了搜索质量，又实现了数据隐私和可控性，是企业和开发者构建自主 AI 搜索能力的理想选择。
+
+**技术亮点**:
+- 🤖 基于 RAG（检索增强生成）架构，结合 LLM 大模型提供精准的 AI 答案生成能力
+- 🔐 支持本地化部署和 LLM 本地运行，确保数据隐私和完全自主可控
+- 🔍 集成 SearXNG 元搜索引擎，提供多样化的搜索数据源
+- ⚡ TypeScript 全栈开发，技术栈现代化且易于扩展维护
+- 🚀 自托管架构设计，无需依赖外部 API 服务，降低使用成本
+
+**适用场景**:
+- 🏢 **企业知识管理系统**：企业可部署内部智能搜索引擎，集成私有文档和数据，为员工提供精准的企业知识查询服务
+- 🛡️ **隐私优先的搜索服务**：对数据隐私要求高的场景（如法律、医疗、金融领域），可在本地环境运行，避免数据外泄风险
+- 👨‍💻 **开发者构建 AI 应用**：开发者可作为基础框架，快速定制开发垂直领域的智能问答和搜索应用
 
 
 
@@ -2689,28 +3328,28 @@ Void 是一个革命性的 AI 开发工具，无缝集成了 ChatGPT、Claude、
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,494 |
+| Stars | 42,503 |
 | 语言 | Go |
-| Forks | 3,500 |
-| Issues | 156 |
+| Forks | 3,503 |
+| Issues | 159 |
 | Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
 ---
 
-LocalAI 是目前最完整的开源 OpenAI 替代方案之一，无需 GPU 即可在消费级硬件上运行，支持文本、图像、音频、视频等多种 AI 模型的本地化部署，为企业和开发者提供了完全自主可控的 AI 基础设施，既保护数据隐私又大幅降低使用成本。
+LocalAI 是一个极具价值的开源项目，它提供了 OpenAI、Claude 等商业 AI 服务的完全免费替代方案。作为 OpenAI API 的即插即用替代品，它支持在消费级硬件上本地运行，无需 GPU，大大降低了 AI 应用的部署门槛和成本，特别适合注重数据隐私和成本控制的场景。
 
 **技术亮点**:
-- 零 GPU 依赖：在普通消费级硬件上运行，支持 gguf、transformers、diffusers 等多种模型格式
-- OpenAI API 兼容：作为即插即用的替代品，无需修改现有代码即可迁移
-- 全模态 AI 支持：涵盖文本生成（LLaMA、Mistral、Gemma 等）、图像生成（Stable Diffusion）、音频生成（MusicGen、TTS）、语音克隆、视频生成及目标检测
-- 分布式与去中心化：基于 libp2p 实现 P2P 推理和分布式计算，支持 MCP 协议
-- 开源与可扩展：MIT 许可证，架构轻量，易于扩展和定制
+- ● 完全兼容 OpenAI API，可作为 Drop-in replacement 无缝替换现有代码，无需修改调用逻辑
+- ● 支持消费级硬件运行，无需 GPU，大幅降低硬件成本和部署门槛
+- ● 多模态 AI 能力：支持文本、音频、图像、视频生成，以及语音克隆、目标检测等
+- ● 丰富的模型生态：兼容 gguf、transformers、diffusers 等多种模型格式，支持 Llama、Mistral、Stable Diffusion 等主流模型
+- ● 分布式与去中心化架构：支持 P2P、libp2p、分布式推理和 MCP 协议，可实现边缘计算和集群部署
 
 **适用场景**:
-- 企业内部 AI 应用部署：在本地或私有云环境中构建智能客服、文档分析、代码辅助等应用，确保数据不外泄且无 API 调用成本
-- 个人开发者 AI 工具开发：快速搭建本地 AI 创作工具（如文本生成、图像编辑、音频合成），无需依赖外部服务
-- 离线/边缘 AI 场景：在无网络或网络受限环境（如工控设备、边缘节点）部署 AI 能力，支持分布式推理
+- ● 企业私有化部署：在本地服务器运行 AI 服务，确保敏感数据不外泄，满足合规要求
+- ● 个人开发者本地开发：在个人电脑上测试和开发 AI 应用，无需调用付费 API，节省开发成本
+- ● 边缘计算场景：在资源受限的设备上部署 AI 能力，无需依赖云端服务
 
 
 
@@ -2728,28 +3367,28 @@ LocalAI 是目前最完整的开源 OpenAI 替代方案之一，无需 GPU 即�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,757 |
+| Stars | 36,164 |
 | 语言 | JavaScript |
-| Forks | 4,404 |
-| Issues | 4 |
+| Forks | 4,455 |
+| Issues | 5 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个由 Anthropic 黑客松获奖者打造的 Claude Code 全栈配置库，收录了经过实战验证的 agents、skills、hooks、commands、rules 和 MCPs 等完整配置。作为开箱即用的生产级工具集，它能显著降低开发者配置 Claude Code 的学习成本，35k+ stars 证明了其在社区中的高认可度和实用性。
+这是来自Anthropic黑客松获胜者的实战级Claude Code配置合集，汇聚了agents、skills、hooks、MCPs等全套配置方案。项目拥有3.6万+GitHub Stars，经过实战验证，能为开发者提供开箱即用的Claude Code生产力工具集，大幅降低AI辅助开发的配置门槛。
 
 **技术亮点**:
-- 完整配置生态：集成 agents 智能代理、skills 技能集、hooks 钩子、commands 命令、rules 规则和 MCPs 协议等全要素
-- 实战验证品质：源自 Anthropic 黑客松获奖项目，所有配置均经过真实场景测试和优化
-- 开发者友好：基于 JavaScript 构建，采用 MIT 许可证，易于定制和二次开发
-- AI 工具链整合：深度集成 LLM 能力，提供系统化的 Claude Code 开发工作流
-- 高度可扩展：模块化设计支持灵活组合各类配置组件，适应不同开发需求
+- 🤖 全栈AI Agent配置：集成agents、skills、hooks、commands、rules等完整组件体系
+- 🔌 MCP（Model Context Protocol）生态支持：提供经过实战检验的MCP服务器配置和集成方案
+- ⚙️ 开箱即用的命令与规则系统：包含battle-tested的commands配置和自定义rules，可直接用于生产环境
+- 🎯 Claude Code深度优化：专为Claude Code IDE定制，充分利用Anthropic AI能力增强开发效率
+- 🏆 黑客松获奖级别配置质量：来自Anthropic官方黑客松优胜者，配置经过真实场景严格验证
 
 **适用场景**:
-- 个人开发者：快速搭建 Claude Code 开发环境，提升 AI 辅助编程效率
-- 企业团队：标准化团队内部的 AI 编码助手配置，统一开发规范和最佳实践
-- AI 工具研究者：学习 Claude Code 的高级配置技巧和 MCP 协议应用案例
+- 💻 个人开发者快速搭建AI编程环境：无需从零配置，直接使用经过验证的Claude Code配置方案，快速上手AI辅助开发
+- 🏢 企业团队统一AI开发规范：为开发团队提供标准化的Claude Code配置模板，确保团队AI工具使用的一致性和最佳实践
+- 🔧 Claude Code深度定制与扩展学习：通过完整的配置示例和hooks/rules系统，学习如何深度定制和扩展Claude Code功能
 
 
 
@@ -2767,28 +3406,28 @@ LocalAI 是目前最完整的开源 OpenAI 替代方案之一，无需 GPU 即�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,319 |
+| Stars | 67,332 |
 | 语言 | Python |
-| Forks | 8,379 |
-| Issues | 291 |
+| Forks | 8,384 |
+| Issues | 295 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
 
 ---
 
-OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67k 的 GitHub 星标，能够自动化处理软件开发全流程。其独特价值在于将 LLM 能力转化为实际的代码执行能力，通过 Agent 架构实现从需求分析到代码编写、测试、部署的完整闭环，是 AI 辅助编程领域的标杆项目。
+OpenHands 是目前最受欢迎的 AI 驱动开发工具之一（67K+ stars），它将 AI Agent 技术深度集成到软件开发流程中。该项目支持多种主流 LLM（GPT、Claude 等），能够自动化完成代码编写、调试、测试等开发任务，是开发者探索 AI 辅助编程的标杆项目，特别适合需要提升开发效率的个人和企业团队。
 
 **技术亮点**:
-- 基于多 LLM 支持（GPT/Claude/OpenAI 等）的 Agent 架构，具备强大的代码理解和生成能力
-- 提供 CLI 工具链，支持命令行交互式开发体验，无缝集成到开发者工作流
-- 完整的软件开发自动化能力，涵盖代码编写、调试、测试、Git 操作等全生命周期
-- 67k+ 社区验证的成熟项目，活跃的开源生态系统和丰富的集成能力
-- AI-Driven 理念践行者，展示了 LLM 在复杂任务场景下的实际应用落地
+- 支持多 LLM 集成：兼容 OpenAI GPT、Claude、ChatGPT 等多种大语言模型，提供灵活的模型选择
+- AI Agent 架构：采用智能代理模式，能够自主理解和执行复杂的多步骤开发任务
+- 命令行工具优先：提供 CLI 接口，方便开发者无缝集成到现有开发工作流中
+- 全流程自动化支持：覆盖代码生成、调试、测试、重构等完整的软件开发生命周期
+- 开源生态系统：活跃的开源社区支持，持续迭代更新，技术栈基于 Python 易于扩展
 
 **适用场景**:
-- 个人开发者提升编程效率：自动编写样板代码、调试错误、实现功能模块，显著缩短开发时间
-- 企业团队加速研发流程：快速原型验证、代码审查辅助、自动化测试编写，提升整体交付速度
-- 学习编程与技术探索：通过 AI 助手理解复杂代码逻辑、学习新技术栈、实践最佳编程实践
+- 个人开发者提升编程效率：借助 AI 自动完成重复性编码任务、生成样板代码、快速定位 Bug
+- 企业团队降低开发成本：通过 AI 辅助加速项目交付，减少人工编码工作量，特别适合原型开发和 MVP 构建
+- 学习与教育场景：初学者可以通过与 AI 交互学习最佳编码实践，理解不同编程范式和架构设计
 
 
 
@@ -2806,28 +3445,28 @@ OpenHands 是目前最受关注的 AI 驱动开发工具之一，拥有超过 67
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 172,267 |
+| Stars | 172,331 |
 | 语言 | TypeScript |
-| Forks | 54,341 |
-| Issues | 1,289 |
+| Forks | 54,362 |
+| Issues | 1,290 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
 ---
 
-n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视化低代码与自定义代码开发，支持自托管和云端部署。其原生 AI 能力、400+ 集成以及 MCP 协议支持，使其成为企业和开发者构建智能自动化解决方案的理想选择。
+n8n 是一款融合了低代码可视化与自定义代码的灵活工作流自动化平台，具备原生 AI 能力和 400+ 集成。作为开源且可自部署的解决方案，它为企业提供了数据主权控制，同时为开发者提供了极致的扩展性，是构建自动化工作流和 AI 应用的理想选择。
 
 **技术亮点**:
-- 原生 AI 能力集成，支持 AI 驱动的智能工作流自动化
-- 400+ 开箱即用的第三方集成，覆盖主流 SaaS 服务和 API
-- 混合开发模式：可视化拖拽构建 + TypeScript 自定义代码扩展
-- 支持 MCP (Model Context Protocol) 客户端和服务端，增强 AI 互操作性
-- 灵活部署选项：支持完全自托管或云端运行，满足数据隐私需求
+- 采用 TypeScript 开发，提供类型安全和更好的开发体验
+- 原生 AI 能力支持，可作为 MCP 客户端和服务端，无缝集成 AI 工作流
+- 混合架构设计：支持可视化拖拽构建与自定义代码扩展，平衡易用性与灵活性
+- 400+ 预置集成，覆盖主流 SaaS 服务和 API
+- 支持自托管和云端部署，满足不同规模的数据主权和成本控制需求
 
 **适用场景**:
-- 企业业务流程自动化：如跨系统数据同步、审批流自动化、客户数据管理等
-- AI 驱动的智能应用：集成 LLM 构建智能客服、内容生成、数据分析等 AI 应用
-- 开发者集成与编排：通过可视化界面快速 API 编排，降低开发门槛的同时保持代码灵活性
+- 企业级业务流程自动化：整合 CRM、ERP、营销工具等多个系统，实现跨平台数据同步和业务流程自动化
+- AI 应用开发与编排：构建 AI 聊天机器人、智能文档处理、自动化数据分析等 AI 驱动的应用
+- 开发者工作流优化：自动化 CI/CD 流程、API 测试、数据迁移和系统集成等开发任务
 
 
 
@@ -2845,28 +3484,28 @@ n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 29,405 |
+| Stars | 29,413 |
 | 语言 | JavaScript |
-| Forks | 5,694 |
+| Forks | 5,696 |
 | Issues | 981 |
 | Topics | api, api-gateway, azure-openai-api, chatgpt, claude, ernie-bot, gemini, gpt, openai, openai-api, proxy |
 | 许可证 | MIT License |
 
 ---
 
-这是目前最流行的开源 LLM API 管理系统，聚合了国内外 15+ 主流 AI 模型提供商，通过统一接口实现多模型管理与 Key 二次分发。项目拥有 2.9万+ Stars，单可执行文件部署方案极其实用，是企业与个人开发者构建 AI 应用的理想中间件。
+这是目前最成熟的 LLM API 统一管理与分发系统，解决了多模型接入的痛点问题。通过统一的 OpenAI 兼容接口，支持国内外 20+ 主流大模型，不仅简化了开发流程，还提供了强大的 Key 管理、额度控制和用户管理系统，是企业进行 AI 能力集成和 API 二次分发的最佳选择。
 
 **技术亮点**:
-- 🔄 统一 API 适配：支持 OpenAI、Azure、Claude、Gemini、DeepSeek、豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等 15+ 主流 LLM 提供商
-- 🔑 智能 Key 管理：提供多 Key 轮询、负载均衡、配额管理、访问控制等企业级 API Key 管理与二次分发功能
-- 🚀 极简部署：单可执行文件（Go 编译）+ Docker 镜像，一键部署开箱即用，无需复杂依赖配置
-- 🌐 国际化支持：完整的中英文双语 UI 界面，满足国内外用户使用需求
-- ⚡ API 网关能力：作为反向代理中间层，统一接口标准，简化多模型集成复杂度
+- 多模型统一适配：支持 OpenAI、Claude、Gemini、DeepSeek、文心一言、通义千问等 20+ 国内外主流 LLM，通过单一接口调用
+- 开箱即用部署：提供单可执行文件和 Docker 镜像，支持一键部署，降低运维复杂度
+- 企业级功能完备：包含 API Key 管理、额度控制、用户管理、Token 计费、访问日志等完整功能
+- 高可用架构：支持负载均衡、多渠道切换、失败重试机制，确保 API 调用稳定性
+- 二次分发能力：可作为 API 网关进行 Key 转售和团队内部分发，支持多租户隔离
 
 **适用场景**:
-- 💼 企业 AI 应用开发：作为企业内部的 AI 能力中台，统一管理多个模型 API Key，按部门/项目进行配额分配与计费统计
-- 👨‍💻 个人开发者/创业团队：快速整合多厂商 AI 能力，避免逐一对接各平台差异，通过单一接口调用多种模型进行测试与开发
-- 🔁 SaaS 产品集成：为 AI 应用提供 Key 分发服务，让用户自带 Key 或通过平台统一调用，降低 API 密钥管理成本
+- 企业 AI 应用开发：统一接入多个 LLM 供应商，简化应用开发流程，降低模型切换成本
+- 团队 API 资源共享：集中管理团队的 API Keys，进行额度分配、计费统计和访问控制
+- API 转售服务：作为中间层进行 API 二次分发，为下游客户提供统一的 LLM 接口服务
 
 
 
@@ -2884,28 +3523,28 @@ n8n 是一款 Fair-code 许可的工作流自动化平台，完美融合可视�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 145,075 |
+| Stars | 145,134 |
 | 语言 | Python |
-| Forks | 11,743 |
-| Issues | 2,266 |
+| Forks | 11,750 |
+| Issues | 2,272 |
 | Topics | cli, downloader, python, sponsorblock, youtube-dl, youtube-downloader, yt-dlp |
 | 许可证 | The Unlicense |
 
 ---
 
-yt-dlp 是 youtube-dl 的强力继承者，拥有145k+ stars的开源项目。它不仅修复了原项目的维护停滞问题，还大幅提升了性能和功能，支持1000+网站，是命令行媒体下载器的黄金标准，特别适合需要自动化、批量下载和集成到工作流的开发者和运维人员。
+yt-dlp 是 youtube-dl 的活跃分支，拥有 14.5 万+ Stars 的开源视频下载神器。其核心价值在于持续活跃维护、支持 1000+ 网站、集成 SponsorBlock 等现代功能，是媒体下载领域最可靠的命令行工具选择。
 
 **技术亮点**:
-- 基于 Python 开发的跨平台命令行工具，支持 Windows/Linux/macOS
-- 集成 SponsorBlock 功能自动跳过视频赞助片段
-- 支持选择性下载（指定画质、音轨、字幕、时间段）
-- 强大的格式转换和后处理能力（FFmpeg集成）
-- 活跃的社区维护，快速修复网站反爬机制更新
+- 功能丰富性：支持 YouTube 及 1000+ 视频网站的下载，涵盖音频/视频提取、字幕下载、格式转换等
+- 现代特性集成：内置 SponsorBlock 自动跳过赞助片段、支持直播录制、代理配置和并发下载
+- 高度可定制：强大的命令行参数和配置文件系统，支持自定义格式选择、后处理操作和输出模板
+- 向后兼容性：fork 自 youtube-dl 并保持 API 兼容，同时修复了大量 bug 和性能问题
+- 活跃维护：相比停滞的 youtube-dl，yt-dlp 持续更新以应对网站反爬虫策略变更
 
 **适用场景**:
-- 个人用户：批量下载 YouTube/Netflix 等平台的视频课程、播客资源
-- 开发者：集成到自动化脚本或 CI/CD 流程中进行媒体资源采集
-- 企业应用：构建媒体归档系统或内容分发平台的后端服务
+- 内容创作者和媒体工作者批量下载素材进行二次创作和编辑
+- 企业构建媒体资源管理系统，自动化获取和归档在线视频内容
+- 个人用户离线收藏教育课程、音乐歌单等媒体资源
 
 
 
@@ -2923,7 +3562,7 @@ yt-dlp 是 youtube-dl 的强力继承者，拥有145k+ stars的开源项目。�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 94,650 |
+| Stars | 94,663 |
 | 语言 | Python |
 | Forks | 8,609 |
 | Issues | 214 |
@@ -2932,18 +3571,19 @@ yt-dlp 是 youtube-dl 的强力继承者，拥有145k+ stars的开源项目。�
 
 ---
 
-FastAPI 是现代 Python Web 开发的标杆框架，凭借自动生成 OpenAPI 文档、原生异步支持和类型验证三大特性，让 Python API 开发效率提升 50% 以上。94,000+ GitHub Stars 证明了其开发者友好性和生产就绪能力，是 Flask/Django 之后最值得学习的 Python Web 框架。
+FastAPI 是目前 Python 生态中最现代化的高性能 Web 框架，凭借其基于类型提示的自动 API 文档生成、原生异步支持和对 OpenAPI 标准的完整实现，已成为构建生产级 REST API 的首选方案。它完美结合了 Node.js 的性能和 Python 的开发效率，在 GitHub 上获得近 10 万星标，是 Python 后端开发的标杆项目。
 
 **技术亮点**:
-- 🚀 高性能异步架构：基于 Starlette 和 Pydantic，性能媲美 NodeJS 和 Go（异步请求处理能力是 Flask 的 3-5 倍）
-- 📝 自动 API 文档生成：内置 Swagger UI 和 ReDoc，无需手写文档即可获得交互式 API 规范（基于 OpenAPI 3.0）
-- ✅ 智能类型验证：利用 Python 类型提示和 Pydantic 实现请求/响应自动校验，大幅减少数据校验代码
-- 🔧 开发者友好：支持依赖注入、自动数据转换、WebSocket、后台任务等企业级特性，代码简洁易维护
+- 🚀 极致性能：基于 Starlette 和 Pydantic 构建，性能媲美 Node.js 和 Go 框架，是传统 Flask 框架的数倍
+- 📝 智能类型提示：利用 Python 类型注解自动实现数据验证、序列化和请求文档，大幅减少样板代码
+- 📚 自动文档生成：开箱即用的 Swagger UI 和 ReDoc 支持，遵循 OpenAPI 3.0 标准，零配置生成交互式 API 文档
+- ⚡ 原生异步支持：基于 asyncio 生态，与 Uvicorn ASGI 服务器深度集成，轻松处理高并发场景
+- 🔒 类型安全：Pydantic 模型提供运行时数据验证，配合编辑器智能提示，显著降低 bug 率
 
 **适用场景**:
-- 🏢 企业级 RESTful API 服务：构建高性能微服务、后端接口、BFF 层，适合需要自动文档和类型安全的生产环境
-- 🚀 异步高并发场景：实时数据处理、IoT 设备通信、聊天应用等需要处理大量并发连接的场景
-- 📊 快速原型开发：数据服务、机器学习模型部署、内部工具开发，用最少代码快速上线生产级 API
+- 🏢 企业级微服务架构：构建高性能 RESTful API 后端服务，支撑大规模生产环境和微服务系统
+- 🚀 快速原型开发：初创团队和独立开发者快速构建 MVP 产品，缩短从设计到部署的开发周期
+- 🔌 数据密集型应用：需要处理大量并发请求的现代 Web 应用，如实时数据处理、AI 模型服务接口等场景
 
 
 
@@ -2961,28 +3601,28 @@ FastAPI 是现代 Python Web 开发的标杆框架，凭借自动生成 OpenAPI 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,312 |
+| Stars | 72,326 |
 | 语言 | Python |
-| Forks | 8,565 |
+| Forks | 8,568 |
 | Issues | 184 |
 | Topics | cli, cti, cybersecurity, forensics, hacktoberfest, information-gathering, infosec, linux, osint, pentesting, python, python3, reconnaissance, redteam, sherlock, tools |
 | 许可证 | MIT License |
 
 ---
 
-Sherlock 是 GitHub 上最受欢迎的开源 OSINT 工具之一（72K+ Stars），专注于通过用户名跨 300+ 社交媒体平台进行账号追踪。其独特价值在于提供一站式信息收集能力，帮助安全研究人员、数字调查人员在社交媒体生态系统中快速定位目标足迹，是企业威胁情报、个人数字取证领域的必备工具。
+Sherlock 是一款强大的开源情报(OSINT)工具，支持在 300+ 个社交媒体平台上通过用户名快速追踪目标账号，是网络安全研究员、渗透测试师和数字取证人员的必备神器。凭借其活跃的社区支持(72k+ stars)和简洁的 CLI 设计，已成为开源情报收集领域的标杆项目，对学习网络侦察和 Python 自动化技术极具参考价值。
 
 **技术亮点**:
-- 支持 300+ 社交媒体平台的用户名检测，覆盖全球主流社交媒体和网络服务
-- 采用模块化架构设计，每个平台作为独立模块便于扩展和维护
-- 高性能并发处理机制，可快速批量扫描多个平台账号存在性
-- 开源情报（OSINT）工具的典范，集信息收集、账号追踪、数字取证于一体
-- 跨平台 CLI 工具，支持 Python 3 环境，适配 Linux/Windows/macOS 系统
+- 支持 300+ 个主流社交媒体平台的账号查询，覆盖面广且持续更新
+- 采用 Python 异步编程实现高效并发扫描，显著提升大规模查询性能
+- 提供灵活的 CLI 接口和模块化架构，易于集成到自动化工作流和 CI/CD 管道
+- 内置智能代理支持和请求速率控制，避免被目标平台封禁
+- 支持 JSON/TXT/CSV 多种输出格式，便于与其他安全工具联动分析
 
 **适用场景**:
-- 安全研究人员与渗透测试人员：在红队行动或情报收集中快速定位目标在社交平台的数字足迹，为后续社会工程学攻击提供信息支撑
-- 企业安全团队与数字取证专家：用于威胁情报分析、网络欺诈调查、品牌监控，追踪恶意分子或钓鱼账号的跨平台活动轨迹
-- 个人隐私保护与自我监控：帮助用户检测自己的用户名是否被他人滥用，发现潜在的账号冒用或身份盗用情况
+- 渗透测试人员在进行目标信息收集阶段，快速定位目标在社交平台的数字足迹，构建完整的用户画像
+- 数字取证与事件响应团队追踪恶意攻击者或威胁行为者的跨平台活动轨迹，辅助溯源分析
+- 企业安全团队进行自身品牌监控和数字资产审计，发现冒充账号或潜在的品牌滥用行为
 
 
 
@@ -3000,28 +3640,28 @@ Sherlock 是 GitHub 上最受欢迎的开源 OSINT 工具之一（72K+ Stars）�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 181,205 |
+| Stars | 181,218 |
 | 语言 | TypeScript |
-| Forks | 37,670 |
-| Issues | 13,314 |
+| Forks | 37,671 |
+| Issues | 13,304 |
 | Topics | editor, electron, microsoft, typescript, visual-studio-code |
 | 许可证 | MIT License |
 
 ---
 
-VS Code 是微软开发的开源代码编辑器，月活跃用户超千万，是当前最受欢迎的开发工具之一。其独特价值在于基于 Electron 架构实现了跨平台支持，通过强大的插件生态系统（数万款插件）可灵活扩展为任何语言的开发环境，是现代软件开发的标杆项目。
+这是微软开源的全球最受欢迎代码编辑器，结合了 Electron 跨平台架构与 TypeScript 强类型系统的优势，展现了桌面应用开发的最佳实践。作为拥有 18 万+ Stars 的现象级开源项目，它不仅是开发者的生产力工具，更是学习大型开源项目架构、插件系统设计和现代前端工程化的标杆案例。
 
 **技术亮点**:
-- 基于 Electron 框架实现跨平台桌面应用（Windows/macOS/Linux），使用 TypeScript 开发保证代码质量
-- 独创的 Monaco Editor 核心，提供高性能代码编辑体验，支持智能感知、代码导航、重构等企业级功能
-- 强大的扩展机制，支持数千款社区插件，从语言支持到主题、调试工具均可灵活定制
-- 内置 Git 集成、终端、调试器等开箱即用功能，无需额外配置即可开始高效开发
-- 采用 MIT 开源许可，拥有活跃的社区贡献和完善的文档体系
+- 基于 Electron + TypeScript 构建跨平台桌面应用的架构典范
+- 高度模块化的插件系统，支持丰富的扩展生态和第三方开发
+- 采用 Monaco Editor 核心编辑器组件，提供专业的代码编辑体验
+- MIT 许可证开源，适合深入学习和二次开发企业级编辑器产品
+- 集成 Language Server Protocol (LSP) 标准，实现多语言智能支持
 
 **适用场景**:
-- 企业开发团队：可作为统一的标准化开发环境，通过插件生态支持多种技术栈，降低团队协作成本
-- 个人开发者：免费、轻量、功能全面，适合日常代码编写、学习和个人项目开发
-- 特定语言开发：通过安装相应插件（如 Python、Go、Java 等），可快速定制为专业的语言开发环境
+- 企业级 IDE/编辑器产品研发：学习 VS Code 的架构设计、性能优化和插件机制，用于构建内部开发工具或商业化代码编辑产品
+- 插件开发者：基于 VS Code Extension API 开发语言支持、主题、调试器等插件，服务全球千万级开发者用户
+- Electron + TypeScript 技术栈学习：通过阅读源码学习跨平台桌面应用的工程化实践、状态管理和组件通信模式
 
 
 
@@ -3039,28 +3679,28 @@ VS Code 是微软开发的开源代码编辑器，月活跃用户超千万，是
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 93,451 |
+| Stars | 93,452 |
 | 语言 | TypeScript |
 | Forks | 9,370 |
-| Issues | 293 |
+| Issues | 292 |
 | Topics | automation, chrome, chromium, developer-tools, firefox, headless-chrome, node-module, testing, web |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Puppeteer 是由 Google Chrome 团队官方维护的 Node.js 库，提供强大的 DevTools 协议 API，可操控 Chrome 和 Firefox 进行浏览器自动化。作为自动化测试和爬虫领域的标杆项目，它拥有活跃的社区和完善的文档支持，经过 9.3 万+ stars 的验证，是业界最可靠的无头浏览器解决方案之一。
+Puppeteer 是 Node.js 生态中最流行的无头浏览器自动化工具，由 Google Chrome 团队官方维护，提供稳定、高性能的浏览器控制 API。其独特价值在于与 Chrome/Chromium 的深度集成，能够模拟真实用户行为，是目前 Web 自动化测试和爬虫领域的行业标准工具，拥有超过 9.3 万 stars 的庞大社区支持。
 
 **技术亮点**:
-- 支持 Chrome、Firefox 和 Chromium 的完整 DevTools 协议，提供精细的浏览器控制能力
-- 开箱即用的无头浏览器模式（Headless），性能优异且资源占用低
-- TypeScript 原生支持，提供完整的类型定义和出色的开发者体验
-- 支持页面截图、PDF 生成、网络请求拦截、性能测试等丰富的自动化操作
-- 支持并行执行和上下文隔离，适合大规模自动化测试场景
+- 官方支持的双浏览器兼容：同时支持 Chrome/Chromium 和 Firefox，提供统一的 API 接口
+- 无头浏览器模式：在无图形界面环境下运行，资源占用低，适合服务器端自动化任务
+- 强大的页面控制能力：支持页面截图、PDF 生成、表单自动填写、网络请求拦截等丰富功能
+- 事件驱动架构：基于异步/await 模式，提供流畅的异步操作体验和良好的 TypeScript 类型支持
+- 深度浏览器集成：可直接访问 DevTools Protocol，实现细粒度的浏览器行为控制
 
 **适用场景**:
-- 企业端到端自动化测试：替代 Selenium 构建更快、更稳定的 UI 测试套件
-- Web 爬虫与数据采集：通过完整浏览器环境抓取动态渲染的 SPA 应用数据
-- 自动化报告生成：批量生成网页截图或导出 PDF 文档
+- Web 自动化测试：端到端（E2E）测试、UI 回归测试、跨浏览器兼容性测试，适合企业级 QA 团队构建自动化测试体系
+- 网页数据抓取与爬虫：动态渲染页面的数据采集、SPA 应用的内容抓取，适合需要处理 JavaScript 渲染的场景
+- 自动 PDF 生成与截图：批量生成网页 PDF、自动化页面截图、视觉回归测试，适合报表生成和文档管理系统
 
 
 
@@ -3078,28 +3718,28 @@ Puppeteer 是由 Google Chrome 团队官方维护的 Node.js 库，提供强大�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,735 |
+| Stars | 77,736 |
 | 语言 | TypeScript |
-| Forks | 5,551 |
+| Forks | 5,552 |
 | Issues | 624 |
 | Topics | api, api-client, api-rest, api-testing, developer-tools, graphql, http, http-client, pwa, rest, rest-api, spa, testing, testing-tools, tools, vue, vuejs, websocket |
 | 许可证 | MIT License |
 
 ---
 
-Hoppscotch 是目前最受欢迎的开源 API 开发生态系统，拥有超过 7.7 万颗星。作为 Postman 和 Insomnia 的强大开源替代方案，它不仅提供离线/本地部署能力，还覆盖 Web、Desktop 和 CLI 全平台，让开发者拥有完全的数据控制权，同时具备现代化的开发体验和强大的功能集合。
+Hoppscotch 是最受欢迎的开源 API 开发生态系统（77K+ stars），作为 Postman 的理想替代品，提供完全离线可用、支持本地部署的开源方案，兼顾 Web、桌面和 CLI 全平台支持，既保障数据隐私又降低企业成本，是开发者进行 API 开发和测试的必备工具。
 
 **技术亮点**:
-- 基于 TypeScript + Vue.js 构建的现代化 SPA，支持 PWA 渐进式 Web 应用
-- 支持多种 API 协议：REST、GraphQL、WebSocket 全覆盖
-- 三端全覆盖架构：Web 应用、桌面客户端、命令行工具
-- 支持离线运行、本地部署和云端部署，数据完全自主可控
-- 开源免费（MIT 许可证），无功能限制且社区活跃
+- 基于 TypeScript + Vue.js 构建的现代化 PWA 应用，支持离线使用
+- 支持 REST、GraphQL、WebSocket 等多种 API 协议的统一测试平台
+- 提供 Web、Desktop（Electron）和 CLI 三种客户端形态，满足不同使用习惯
+- 支持 On-Premises 私有化部署和 Cloud 模式，企业可完全掌控数据安全
+- 采用 MIT 宽松许可证，允许自由定制和商业使用
 
 **适用场景**:
-- 个人开发者/小型团队：寻找免费、无需安装的 API 测试工具，通过浏览器快速开发和调试 REST、GraphQL 等 API 接口
-- 企业/安全敏感场景：需要数据私有化部署，在本地或内网环境中进行 API 开发和测试，避免数据外泄
-- 需要自动化集成的开发团队：使用 CLI 工具将 API 测试集成到 CI/CD 流水线中，实现自动化接口测试
+- 需要 API 调试和测试工具的个人开发者，寻找 Postman 的开源替代方案
+- 企业团队需要私有化部署 API 测试平台，以保障 API 密钥和敏感数据不外泄
+- 安全要求较高的金融、政务等领域，需离线使用且支持本地部署的 API 开发工具
 
 
 
@@ -3117,28 +3757,28 @@ Hoppscotch 是目前最受欢迎的开源 API 开发生态系统，拥有超过 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 76,052 |
+| Stars | 76,061 |
 | 语言 | TypeScript |
-| Forks | 6,487 |
+| Forks | 6,488 |
 | Issues | 160 |
 | Topics | browser-ide, dev-tools, development-environment, ide, remote-work, vscode, vscode-remote |
 | 许可证 | MIT License |
 
 ---
 
-code-server 是将微软 VS Code 完整移植到浏览器的开创性项目，使开发者能够在任何设备上通过浏览器访问完整的 IDE 开发环境。它打破了传统 IDE 的硬件和系统限制，为远程开发和云端编程提供了标准化解决方案，已获得超过 7.6 万星标，成为浏览器 IDE 领域的事实标准。
+code-server 是一个成熟的开源项目，它将 VS Code 完整运行在浏览器中，使开发者能够随时随地通过任何设备访问熟悉的开发环境。对于追求高效远程开发、需要统一团队开发环境或希望在受限设备上进行开发的团队和个人来说，这是一个极具实用价值的解决方案。
 
 **技术亮点**:
-- 基于 TypeScript 开发，完整复刻 VS Code 核心功能，支持几乎所有 VS Code 插件和扩展
-- 采用 MIT 开源许可证，支持自部署和私有化部署，可完全控制开发环境
-- 跨平台架构，可在 Linux、macOS、Windows 服务器上运行，通过浏览器访问不受客户端操作系统限制
-- 支持远程开发模式，可连接到远程服务器、容器或 WSL 环境，实现真正的云端开发体验
-- 提供企业级功能，包括身份认证、HTTPS 支持和资源访问控制，适合团队协作
+- 基于 TypeScript 开发，与 VS Code 核心体验保持一致
+- 完整的浏览器端 IDE 实现，支持跨平台跨设备访问
+- 提供 Remote-SSH、VS Code Remote 等远程开发能力
+- MIT 开源许可证，企业可自由集成和定制
+- 76,000+ GitHub Stars，社区活跃，生态成熟
 
 **适用场景**:
-- 云端远程开发：开发者可使用 iPad、Chromebook 等轻薄设备连接云服务器进行专业级开发，不受本地硬件性能限制
-- 企业统一开发环境：IT 部门可为团队统一部署标准化开发环境，避免「在我的机器上能跑」问题，降低新员工环境配置成本
-- 教育和培训场景：学校和培训机构可提供基于浏览器的编程学习环境，学生无需安装软件即可开始学习，降低学习门槛
+- 企业团队开发环境标准化：统一开发环境配置，降低新员工上手成本，确保开发环境一致性
+- 个人开发者远程办公：通过浏览器从任何设备（平板、Chromebook 等）访问完整的开发环境，无需配置本地环境
+- 教育和培训场景：学生无需安装软件即可开始编程学习，降低学习门槛
 
 
 
@@ -3156,28 +3796,28 @@ code-server 是将微软 VS Code 完整移植到浏览器的开创性项目，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,405 |
+| Stars | 77,418 |
 | 语言 | Go |
-| Forks | 2,682 |
+| Forks | 2,684 |
 | Issues | 324 |
 | Topics | bash, cli, fish, fzf, go, neovim, tmux, unix, vim, zsh |
 | 许可证 | MIT License |
 
 ---
 
-fzf是终端交互体验的革命性工具，作为77k+星的Go语言命令行模糊查找器，它以极简的交互方式彻底改变了开发者对历史命令、文件、进程等资源的检索效率。它是现代开发工具链中不可或缺的生产力倍增器，支持与vim/neovim、tmux等主流工具深度集成，是每个追求效率的开发者必装的神器。
+fzf 是终端命令行工具领域的标杆项目，凭借 77k+ Stars 成为最受欢迎的模糊查找器。它以极致的性能、优雅的交互设计和广泛的集成生态，将传统命令行的查找效率提升了一个数量级，是每个命令行用户必备的生产力工具。
 
 **技术亮点**:
-- Go语言编写的高性能模糊搜索引擎，支持毫秒级实时响应和海量数据处理
-- 跨平台通用集成能力，完美适配bash、zsh、fish等所有主流shell环境
-- 强大的生态兼容性，无缝集成Vim/Neovim、tmux等开发工具，支持扩展插件开发
-- 智能的多选模式和预览功能，支持交互式复杂操作和实时内容预览
-- 轻量级设计无依赖，单文件可执行程序，MIT开源协议，开箱即用
+- 纯 Go 语言实现，跨平台支持且性能卓越，处理海量文件列表依然流畅
+- 支持多行选择、实时预览、正则表达式匹配等高级交互功能
+- 可与任何命令组合使用（管道式集成），无缝支持 Bash/Zsh/Fish 等主流 Shell
+- 深度集成 Vim/Neovim/Tmux 等工具生态，提供完整 API 和插件支持
+- 零依赖设计，单个二进制文件即可运行，部署极其简单
 
 **适用场景**:
-- 日常开发命令历史快速检索：开发者需要频繁执行相似命令时，通过Ctrl+R快速定位和复用历史bash/zsh命令，避免重复输入
-- 代码库文件模糊定位：在大型项目中快速查找和打开特定文件，替代传统find+grep的低效工作流，提升导航效率
-- 多选批量操作场景：如批量删除Git分支、选择多个文件进行编辑、或批量终止进程等需要交互式多选的操作
+- 开发者快速查找并打开项目文件（如 git 文件、代码文件），替代低效的文件浏览
+- 系统运维在历史命令、进程列表、环境变量中快速定位目标项，提升 Shell 操作效率
+- 任何需要从大量选项中交互式选择的场景（如 git 分支切换、包管理器选择、Docker 容器操作）
 
 
 
@@ -3195,27 +3835,28 @@ fzf是终端交互体验的革命性工具，作为77k+星的Go语言命令行�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,404 |
+| Stars | 71,418 |
 | 语言 | Go |
-| Forks | 2,473 |
-| Issues | 873 |
+| Forks | 2,474 |
+| Issues | 875 |
 | Topics | cli, git, terminal |
 | 许可证 | MIT License |
 
 ---
 
-lazygit 是一款优秀的 Git 终端 UI 工具，拥有超 7.1 万星，在命令行高效性与可视化的易用性之间取得平衡。相比纯 CLI，它大幅降低 Git 操作认知负担；相比图形界面，它保持终端流畅体验，是提升开发者 Git 工作流的必备神器。
+lazygit 是一款极受欢迎的 Git 终端交互工具，拥有超过 7.1 万颗星，它通过优雅的 TUI 界面大幅简化了 Git 命令的复杂性，让开发者无需记忆繁琐的命令即可高效完成版本控制操作，特别适合追求效率的开发者使用。
 
 **技术亮点**:
-- 终端交互式 UI (TUI)，面向 Git 操作的直观可视化
-- 跨平台单文件二进制，依赖少、启动快，Go 编写
-- 键位驱动的快捷操作，批量处理、暂存/重置/交互式变基高效流畅
-- 丰富操作覆盖，分支管理、暂存/撤销、日志搜索、交互式提交等
+- 采用 Go 语言开发，性能优异且跨平台支持良好
+- 提供直观的终端用户界面（TUI），无需离开终端即可完成 Git 操作
+- 大幅降低 Git 使用门槛，通过可视化界面替代复杂的命令行操作
+- MIT 开源许可，社区活跃（7万+ stars），持续维护更新
+- 轻量级设计，专注于 Git 核心功能，无额外依赖
 
 **适用场景**:
-- 日常提交/暂存/分支管理的快速 Git 工作流
-- 交互式变基、暂存区精细调整等复杂操作
-- 纯终端环境需要图形化交互感的开发场景
+- 日常开发中的版本控制操作：提交、分支管理、冲突解决等
+- 需要频繁执行 Git 操作但不希望记忆复杂命令的开发者
+- 在终端环境中工作的用户，希望通过可视化界面提升 Git 操作效率
 
 
 
@@ -3233,28 +3874,28 @@ lazygit 是一款优秀的 Git 终端 UI 工具，拥有超 7.1 万星，在命�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,292 |
+| Stars | 42,297 |
 | 语言 | Go |
-| Forks | 7,847 |
+| Forks | 7,850 |
 | Issues | 940 |
 | Topics | cli, git, github-api-v4, golang |
 | 许可证 | MIT License |
 
 ---
 
-这是 GitHub 官方维护的命令行工具，由 Go 语言编写，拥有超过 4.2 万颗星，为开发者提供原生、高效的 GitHub 操作体验。作为官方工具，它不仅功能完整、稳定可靠，还能第一时间支持 GitHub 的最新特性，是提升开发工作流的必备利器。
+这是 GitHub 官方打造的命令行工具，提供了与 GitHub 平台无缝集成的原生 CLI 体验。作为官方维护的项目，它不仅确保了功能完整性和稳定性，还为开发者提供了比 Web 界面更高效的工作方式，是 GitHub 重度用户的必备工具。
 
 **技术亮点**:
-- 使用 Go 语言构建，性能优异且跨平台支持良好
-- 深度集成 GitHub API v4，提供完整的 REST 和 GraphQL 支持
-- 官方维护保障，与 GitHub 平台功能同步更新，安全可靠
-- 丰富的命令集，涵盖 issues、PRs、releases、actions 等核心功能
-- 支持自定义别名和脚本扩展，可集成到现有开发工作流中
+- 使用 Go 语言开发，提供高性能、跨平台的二进制执行文件，编译部署简单
+- 深度集成 GitHub GraphQL API v4，支持完整的 GitHub 功能访问和操作
+- 开源项目（MIT 许可证），拥有超过 4.2 万颗星，社区活跃度高，质量可靠
+- 提供丰富的命令集，涵盖 issues、PRs、仓库管理、CI/CD 等完整工作流
+- 官方持续维护，确保与 GitHub 平台新功能同步更新和安全补丁
 
 **适用场景**:
-- 适合需要频繁与 GitHub 交互的开发者，通过命令行快速创建 PR、管理 issues、查看 releases 等
-- 适用于 CI/CD 流程中的自动化脚本，无需浏览器即可完成 GitHub 操作
-- 适合企业团队标准化 GitHub 操作流程，通过统一的 CLI 工具提升协作效率
+- 开发者日常工作流：快速创建/管理 Pull Requests、查看 Issues、操作仓库，无需切换到浏览器，提升开发效率
+- DevOps/CI-CD 场景：在自动化脚本中集成 GitHub 操作，批量管理仓库、触发工作流、获取构建状态等
+- 开源项目维护者：高效处理大量 issue 和 PR，查看贡献者活动，分析项目数据和统计信息
 
 
 
@@ -3272,7 +3913,7 @@ lazygit 是一款优秀的 Git 终端 UI 工具，拥有超 7.1 万星，在命�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 35,856 |
+| Stars | 35,862 |
 | 语言 | Python |
 | Forks | 2,532 |
 | Issues | 55 |
@@ -3281,19 +3922,19 @@ lazygit 是一款优秀的 Git 终端 UI 工具，拥有超 7.1 万星，在命�
 
 ---
 
-这是一个极具实用价值的免费大模型API聚合平台，为开发者提供免費接入ChatGPT、DeepSeek、Claude、Gemini、Grok等主流大模型的统一接口，35,856+星标证明了其受欢迎程度。该项目降低了AI应用开发门槛，特别适合预算有限的开发者和初创团队快速集成多个顶级大模型。
+这是一个极具实用价值的开源项目，为开发者提供了免费接入多种顶级大模型（ChatGPT、DeepSeek、Claude、Gemini、Grok等）的统一API接口。项目拥有超过35,000颗星，证明了其受欢迎程度和可靠性，极大降低了AI应用开发的成本门槛。
 
 **技术亮点**:
-- 多模型统一API接口：支持GPT、DeepSeek、Claude、Gemini、Grok等排名靠前的大模型，实现一处接入多模型调用
-- 完全免费使用：提供免费的API Key服务，无需支付昂贵的官方API费用，大幅降低开发成本
-- Python后端实现：基于Python开发，易于集成到现有的AI应用和自动化工作流中
-- MIT开源许可：宽松的许可证允许商业使用和二次开发
-- 多场景兼容：支持多种大模型生态，避免单一供应商依赖风险
+- 多模型统一接口：支持 GPT-4、DeepSeek、Claude、Gemini、Grok 等主流大模型的统一 API 调用
+- 完全免费：提供免费的 API Key 服务，打破大模型 API 使用的高昂成本限制
+- Python 实现：基于 Python 开发，易于集成和二次开发，适合快速原型开发
+- MIT 开源许可：宽松的开源协议，允许商业使用和自由修改
+- 高可用性：35,000+ GitHub Stars 表明项目经过大量用户验证，稳定性和社区支持有保障
 
 **适用场景**:
-- 个人开发者快速验证AI应用原型：在产品早期阶段免费使用多个顶级大模型进行功能验证和测试
-- 初创企业降低AI开发成本：预算有限的情况下，无需支付昂贵的官方API费用即可集成ChatGPT、Claude等主流模型
-- 企业多模型对比测试：在一个平台上快速测试不同大模型的效果，选择最适合业务需求的模型
+- 个人开发者学习与实验：想要学习和测试不同大模型能力，但预算有限的开发者
+- 初创企业产品验证：需要快速验证 AI 产品创意，暂时不想承担高额 API 费用的初创团队
+- 教育与研究场景：学校或研究机构用于教学演示、学术研究的大模型集成项目
 
 
 
@@ -3314,32 +3955,1226 @@ lazygit 是一款优秀的 Git 终端 UI 工具，拥有超 7.1 万星，在命�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,167 |
+| Stars | 28,166 |
 | 语言 | TypeScript |
-| Forks | 2,294 |
+| Forks | 2,296 |
 | Issues | 309 |
 | Topics | chatgpt, claude, copilot, cursor, developer-tools, editor, llm, open-source, openai, visual-studio-code, vscode, vscode-extension |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Void 是一个革命性的 AI 开发工具，无缝集成了 ChatGPT、Claude、Copilot 等多个主流 AI 助手到编辑器中，为开发者提供统一的 AI 编程助手体验。该项目以 28K+ 星标证明其受欢迎程度，采用 Apache 2.0 开源协议，适合需要高效 AI 辅助编程的开发者使用，是目前 VS Code 生态中最受欢迎的多 LLM 集成解决方案之一。
+Void 是一个基于 VS Code 架构构建的新一代代码编辑器，专注于深度集成 AI 能力。它获得超过 28,000 Stars 的原因是填补了 VS Code 原生 AI 体验的空白，为开发者提供了开箱即用的 ChatGPT、Claude、Copilot 等多种 LLM 的一体化集成方案，大大提升了 AI 辅助编程的效率和体验。
 
 **技术亮点**:
-- 基于 TypeScript 构建的高性能 VS Code 扩展，与编辑器深度集成
-- 统一接入 OpenAI ChatGPT、Anthropic Claude、GitHub Copilot、Cursor 等多个主流 LLM 服务
-- 采用 Apache 2.0 开源协议，允许自由定制和企业级集成
-- 支持多种 AI 模型切换和智能编程辅助功能（代码补全、生成、优化等）
-- 活跃的开源社区支持，28K+ 星标验证项目稳定性和可靠性
+- 基于 TypeScript 和 VS Code Extension API 构建，继承了成熟的编辑器架构和插件生态
+- 深度集成多个主流 LLM（OpenAI ChatGPT、Anthropic Claude、GitHub Copilot），提供统一的 AI 编程接口
+- 类似 Cursor 的 AI 原生交互设计，支持智能代码补全、对话式编程和多文件编辑
+- 开源项目（Apache 2.0 许可证），允许开发者自由定制和扩展 AI 集成能力
+- 轻量级扩展形式，无需安装独立编辑器即可在现有 VS Code 环境中使用
 
 **适用场景**:
-- 企业开发团队：需要在统一开发环境中使用多个 AI 助手提高编码效率和代码质量
-- 个人开发者：希望整合 ChatGPT、Claude 等 AI 工具到日常编辑器工作流中的程序员
-- 技术团队评估：想要测试和对比不同 LLM 模型在实际开发场景中效果的组织
+- 个人开发者：提升日常编码效率，通过 AI 快速生成代码、解释复杂逻辑、重构优化代码片段
+- 企业开发团队：统一团队的 AI 辅助开发工具链，降低多 LLM 服务的集成成本，提升代码质量和开发速度
+- VS Code 用户：在保留现有编辑习惯和插件生态的前提下，获得类似 Cursor 的 AI 原生开发体验，无需切换编辑器
 
 
 
-## 📊 数据/基础设施 (7 个项目)
+## ⚙️ DevOps/基础设施 (14 个项目)
+
+
+### 🌟 高优先级
+
+
+### wshobson/agents
+
+**描述**: Intelligent automation and multi-agent orchestration for Claude Code
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 96/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 27,407 |
+| 语言 | C# |
+| Forks | 3,011 |
+| Issues | 12 |
+| Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
+| 许可证 | MIT License |
+
+---
+
+这是一个专为 Claude Code 设计的高星项目（27k+ stars），提供了强大的多代理编排和智能自动化能力。该项目填补了 Claude Code 生态在子代理、工作流编排和企业级自动化方面的空白，让开发者能够构建复杂的 AI 驱动自动化解决方案。
+
+**技术亮点**:
+- 基于 C# 构建的企业级多代理架构，支持子代理（sub-agents）编排和协同工作
+- 提供丰富的 Claude Code 插件系统，包含 skills、commands 和 workflows 扩展能力
+- 支持复杂的工作流编排（orchestration）和 anthropic-claude 深度集成
+- 完整的配置系统（claudecode-config）支持灵活的代理行为定制
+- MIT 开源许可，社区活跃，适合二次开发和商业化集成
+
+**适用场景**:
+- 企业级 AI 自动化：构建智能客服、文档处理、代码审查等自动化工作流
+- 个人开发者效率提升：通过自定义 skills 和 commands 扩展 Claude Code 能力，实现重复性任务的自动化处理
+- AI 应用开发：作为多代理系统基础框架，快速开发基于 Claude 的智能应用和服务
+
+
+
+### n8n-io/n8n
+
+**描述**: Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 172,331 |
+| 语言 | TypeScript |
+| Forks | 54,362 |
+| Issues | 1,290 |
+| Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
+| 许可证 | Other |
+
+---
+
+n8n 是一款融合了低代码可视化与自定义代码的灵活工作流自动化平台，具备原生 AI 能力和 400+ 集成。作为开源且可自部署的解决方案，它为企业提供了数据主权控制，同时为开发者提供了极致的扩展性，是构建自动化工作流和 AI 应用的理想选择。
+
+**技术亮点**:
+- 采用 TypeScript 开发，提供类型安全和更好的开发体验
+- 原生 AI 能力支持，可作为 MCP 客户端和服务端，无缝集成 AI 工作流
+- 混合架构设计：支持可视化拖拽构建与自定义代码扩展，平衡易用性与灵活性
+- 400+ 预置集成，覆盖主流 SaaS 服务和 API
+- 支持自托管和云端部署，满足不同规模的数据主权和成本控制需求
+
+**适用场景**:
+- 企业级业务流程自动化：整合 CRM、ERP、营销工具等多个系统，实现跨平台数据同步和业务流程自动化
+- AI 应用开发与编排：构建 AI 聊天机器人、智能文档处理、自动化数据分析等 AI 驱动的应用
+- 开发者工作流优化：自动化 CI/CD 流程、API 测试、数据迁移和系统集成等开发任务
+
+
+
+### etcd-io/etcd
+
+**描述**: Distributed reliable key-value store for the most critical data of a distributed system
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 90/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 51,429 |
+| 语言 | Go |
+| Forks | 10,307 |
+| Issues | 200 |
+| Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
+| 许可证 | Apache License 2.0 |
+
+---
+
+etcd 是云原生领域最核心的基础设施项目之一，作为 Kubernetes 集群的"大脑"负责存储所有集群状态数据。该项目在分布式系统领域具有标杆地位，采用 Raft 共识算法实现了强一致性保证，是学习和构建高可用分布式系统的最佳实践案例。
+
+**技术亮点**:
+- 基于 Raft 共识算法实现强一致性，在部分节点故障时仍能保证数据一致性和服务可用性
+- 提供事务支持、Watch 监听机制、版本控制和租约管理等丰富的键值操作特性
+- 具备强安全保障，支持 SSL/TLS 通信、基于角色的访问控制（RBAC）和认证机制
+- 提供 gRPC API 和高性能的客户端库，支持 Go、Java、Python 等多种编程语言
+- 采用 CNCF 维护的成熟开源项目架构，拥有完善的监控、日志和调试工具生态
+
+**适用场景**:
+- Kubernetes 集群的配置管理和服务发现，存储集群状态、元数据和配置信息
+- 分布式系统的服务注册与发现中心，微服务架构中的配置管理和服务协调
+- 分布式锁和 leader 选举场景，用于构建高可用的分布式应用
+
+
+
+### kubernetes/kubernetes
+
+**描述**: Production-Grade Container Scheduling and Management
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 120,197 |
+| 语言 | Go |
+| Forks | 42,348 |
+| Issues | 2,603 |
+| Topics | cncf, containers, go, kubernetes |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Kubernetes 是云原生时代的"操作系统"，作为 CNCF 毕业项目，它是容器编排领域的事实标准和生产级解决方案。该项目拥有超过 12 万颗星和全球最大的开源容器社区之一，掌握它对于理解现代云原生架构和容器化技术至关重要。
+
+**技术亮点**:
+- 生产级容器编排引擎，支持自动化部署、扩展和管理容器化应用
+- 强大的服务发现和负载均衡机制，内置 DNS 和服务网格集成能力
+- 声明式 API 设计和自我修复能力，确保应用高可用性和一致性
+- 支持多云和混合云部署，提供统一的资源管理和调度平台
+- 丰富的生态系统，包含 Helm、Prometheus、Istio 等云原生工具链
+
+**适用场景**:
+- 企业级微服务架构的容器编排和自动化运维
+- 云端应用的弹性扩缩容和高可用部署
+- CI/CD 流水线中的容器化应用自动部署与管理
+
+
+
+### moby/moby
+
+**描述**: The Moby Project - a collaborative project for the container ecosystem to assemble container-based systems
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,434 |
+| 语言 | Go |
+| Forks | 18,889 |
+| Issues | 3,782 |
+| Topics | containers, docker, go, golang |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Moby 是容器生态系统的基础设施项目，是 Docker 的上游开源项目。它提供了模块化的组件库，让开发者能够自由组合定制容器系统，是学习容器底层技术和构建自定义容器平台的核心参考实现。
+
+**技术亮点**:
+- 模块化架构设计，提供可插拔的组件系统（容器运行时、网络、存储等）
+- 基于 Go 语言实现的高性能容器编排和管理能力
+- 作为 Docker 的上游项目，代码质量高且社区活跃（71k+ stars）
+- 完整的容器生命周期管理，从镜像构建到容器运行的端到端解决方案
+- 支持多种容器运行时接口（OCI）标准，兼容性和扩展性强
+
+**适用场景**:
+- 企业开发者：构建定制化的容器平台和PaaS解决方案，集成到现有基础设施
+- 个人开发者：深入学习容器底层原理，参与容器生态开源贡献
+- DevOps 工程师：基于 Moby 组件搭建 CI/CD 流水线和容器化部署环境
+
+
+
+### go-gitea/gitea
+
+**描述**: Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 53,494 |
+| 语言 | Go |
+| Forks | 6,363 |
+| Issues | 2,853 |
+| Topics | bitbucket, cicd, devops, docker-registry-v2, git, git-gui, git-server, gitea, github, github-actions, gitlab, go, golang, hacktoberfest, maven-server, npm-registry, vue |
+| 许可证 | MIT License |
+
+---
+
+Gitea 是一款轻量级、开源的自托管代码协作平台，提供从 Git 托管、代码审查、团队协作到 CI/CD 的一站式解决方案。相比 GitLab 和 GitHub，它部署简单、资源占用低，是企业和个人开发者构建私有代码托管服务的理想选择，支持 Docker 镜像仓库、NPM/Maven 仓库等多种 DevOps 工具链。
+
+**技术亮点**:
+- 轻量级架构：基于 Go 语言开发，单个二进制文件即可运行，可在低配置服务器上稳定运行
+- 全功能 DevOps 平台：集成 Git 托管、代码审查、CI/CD、包 registry（支持 Docker、NPM、Maven 等多种格式）
+- 强大的兼容性：兼容 GitHub API、GitLab 等主流平台，支持 GitHub Actions 工作流迁移
+- 高度可定制：采用 MIT 开源协议，支持插件扩展，提供 Vue.js 构建的现代化 Web 界面
+- 企业级特性：支持 LDAP/OAuth 认证、多组织管理、权限控制、Webhook 等 Team Collaboration 功能
+
+**适用场景**:
+- 企业内部私有 Git 服务器：需要搭建私有代码托管平台的中小型企业和团队，提供完整的开发协作能力
+- 个人开发者自托管服务：技术爱好者或独立开发者在 NAS 或个人服务器上搭建私有代码仓库
+- CI/CD 流水线集成场景：需要代码托管、持续集成、包管理一体化的 DevOps 工具链
+- 替代 GitHub/GitLab 的本地化方案：受限于数据主权、网络隔离或成本考虑，需要本地化部署的场景
+
+
+
+### gogs/gogs
+
+**描述**: Gogs is a painless self-hosted Git service
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 47,507 |
+| 语言 | Go |
+| Forks | 5,075 |
+| Issues | 958 |
+| Topics | docker, git, go, gogs, mysql, postgresql, raspberry-pi, self-hosted, sqlite3, version-control |
+| 许可证 | MIT License |
+
+---
+
+Gogs 是一款轻量级、易部署的自托管 Git 服务，相比 GitLab 等重型方案更简单高效。其独特价值在于占用资源极低（可在树莓派上流畅运行）且支持多种数据库，非常适合追求简单高效的团队和个人开发者快速搭建私有代码托管平台。
+
+**技术亮点**:
+- Go 语言编写，单一二进制文件部署，支持跨平台
+- 轻量级设计，内存占用低，支持在树莓派等资源受限设备运行
+- 支持 MySQL、PostgreSQL、SQLite3 等多种数据库后端，灵活适配不同环境
+- 提供 Docker 部署支持，容器化部署简单快捷
+- MIT 开源许可证，完全免费且可自由修改和分发
+
+**适用场景**:
+- 中小企业或团队搭建内部 Git 代码托管平台，无需依赖第三方服务
+- 个人开发者或小型团队在本地服务器或树莓派上搭建私有代码仓库
+- 对数据安全和隐私有要求的企业/组织，需要完全自主控制的代码管理方案
+
+
+
+### puppeteer/puppeteer
+
+**描述**: JavaScript API for Chrome and Firefox
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 93,452 |
+| 语言 | TypeScript |
+| Forks | 9,370 |
+| Issues | 292 |
+| Topics | automation, chrome, chromium, developer-tools, firefox, headless-chrome, node-module, testing, web |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Puppeteer 是 Node.js 生态中最流行的无头浏览器自动化工具，由 Google Chrome 团队官方维护，提供稳定、高性能的浏览器控制 API。其独特价值在于与 Chrome/Chromium 的深度集成，能够模拟真实用户行为，是目前 Web 自动化测试和爬虫领域的行业标准工具，拥有超过 9.3 万 stars 的庞大社区支持。
+
+**技术亮点**:
+- 官方支持的双浏览器兼容：同时支持 Chrome/Chromium 和 Firefox，提供统一的 API 接口
+- 无头浏览器模式：在无图形界面环境下运行，资源占用低，适合服务器端自动化任务
+- 强大的页面控制能力：支持页面截图、PDF 生成、表单自动填写、网络请求拦截等丰富功能
+- 事件驱动架构：基于异步/await 模式，提供流畅的异步操作体验和良好的 TypeScript 类型支持
+- 深度浏览器集成：可直接访问 DevTools Protocol，实现细粒度的浏览器行为控制
+
+**适用场景**:
+- Web 自动化测试：端到端（E2E）测试、UI 回归测试、跨浏览器兼容性测试，适合企业级 QA 团队构建自动化测试体系
+- 网页数据抓取与爬虫：动态渲染页面的数据采集、SPA 应用的内容抓取，适合需要处理 JavaScript 渲染的场景
+- 自动 PDF 生成与截图：批量生成网页 PDF、自动化页面截图、视觉回归测试，适合报表生成和文档管理系统
+
+
+
+### microsoft/playwright
+
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 81,937 |
+| 语言 | TypeScript |
+| Forks | 5,066 |
+| Issues | 585 |
+| Topics | automation, chrome, chromium, e2e-testing, electron, end-to-end-testing, firefox, javascript, playwright, test, test-automation, testing, testing-tools, web, webkit |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Playwright 是微软官方开发的下一代 Web 自动化测试框架，凭借跨浏览器支持（Chromium、Firefox、WebKit）的统一 API 和强大的自动等待机制，已经成为 8 万+ 开发者首选的 E2E 测试工具。其独特的浏览器多引擎架构、零配置的并行测试能力以及完善的调试工具，使其在测试稳定性、执行速度和开发者体验方面远超同类工具。
+
+**技术亮点**:
+- 跨浏览器统一 API：通过单一 API 即可测试 Chromium、Firefox 和 WebKit 三大浏览器引擎，无需编写多套代码
+- 自动等待机制：智能等待元素可操作、可点击，大幅减少因时序导致的测试失败，提高测试稳定性
+- 原生支持并行测试：零配置即可实现测试并行执行，大幅缩短整体测试时间，特别适合大型测试套件
+- 强大的网络拦截能力：支持请求/响应的 Mock、修改和监控，可轻松模拟各种网络场景和测试边界情况
+- 完善的调试工具：提供 Trace Viewer、Codegen、Inspector 等工具，支持录制回放、可视化调试和详细错误定位
+
+**适用场景**:
+- 端到端 Web 应用测试：适用于企业级 Web 应用的完整用户流程测试，确保跨浏览器兼容性和关键功能稳定性
+- UI 自动化回归测试：适合 CI/CD 流水线集成，通过并行执行快速验证代码变更对 UI 的影响，大幅缩短回归测试周期
+- API 测试和网络场景模拟：利用网络拦截能力进行前后端接口测试、Mock 第三方服务、测试弱网和离线场景
+
+
+
+### louislam/uptime-kuma
+
+**描述**: A fancy self-hosted monitoring tool
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 82,180 |
+| 语言 | JavaScript |
+| Forks | 7,334 |
+| Issues | 674 |
+| Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
+| 许可证 | MIT License |
+
+---
+
+Uptime Kuma 是一款功能强大且用户友好的自托管监控工具，以其精美的现代化界面和丰富的监控功能著称。相比传统监控工具，它提供了开箱即用的多协议支持、实时状态监控和灵活的通知系统，是企业和个人开发者构建私有监控解决方案的首选项目，GitHub 上超过 8.2 万颗星充分证明了其受欢迎程度。
+
+**技术亮点**:
+- 基于 WebSocket (Socket.IO) 实现实时双向通信，提供毫秒级的监控状态更新体验
+- 采用单页应用 (SPA) 架构，配合响应式设计，支持桌面和移动端无缝访问
+- 支持 HTTP(s)、TCP、HTTP Keyword、Ping、DNS Push 等多种监控协议类型
+- 提供 Docker 容器化部署方案，简化安装和运维流程，支持自托管部署
+- 集成 90+ 种通知服务（Telegram、Discord、Email 等），支持自定义通知规则
+
+**适用场景**:
+- 企业内部服务监控：用于监控公司内部服务器、API 接口、数据库等关键服务的可用性和性能，保障业务稳定性
+- 个人开发者项目监控：适合开源项目作者或独立开发者监控个人网站、博客、SaaS 应用的运行状态
+- 私有化部署需求：对数据安全有要求的企业或组织，可在内网环境中自建完整的监控平台，避免数据泄露风险
+
+
+
+### traefik/traefik
+
+**描述**: The Cloud Native Application Proxy
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 61,373 |
+| 语言 | Go |
+| Forks | 5,788 |
+| Issues | 737 |
+| Topics | consul, docker, etcd, go, golang, kubernetes, letsencrypt, load-balancer, marathon, mesos, microservice, reverse-proxy, traefik, zookeeper |
+| 许可证 | MIT License |
+
+---
+
+Traefik 是云原生时代的入口级开源项目，作为全球领先的反向代理与负载均衡器，凭借自动化配置、动态服务发现和内置 Let's Encrypt 集成等特性，已成为 Kubernetes 和微服务架构的事实标准之一。其61K+的 GitHub Stars 和活跃的开源生态证明了技术成熟度与可靠性，是企业构建云原生应用基础设施的首选方案。
+
+**技术亮点**:
+- 零配置动态服务发现：自动监听 Docker、Kubernetes、Consul、Etcd、Zookeeper 等服务注册表，服务更新时自动重载配置无需重启
+- 自动化 HTTPS 证书管理：原生集成 Let's Encrypt，自动为路由域名申请和续期 SSL/TLS 证书，实现全站 HTTPS 零运维
+- 云原生深度集成：专为容器和微服务设计，与 Kubernetes Ingress、Docker Swarm、Mesos 等平台无缝对接
+- 强大的中间件生态：提供丰富的中间件（限流、熔断、重试、认证等），支持链式组合，灵活控制流量治理策略
+- 实时监控与可观测性：内置 Web UI 仪表板，支持 Prometheus、StatsD、InfluxDB 等监控指标导出，全面掌握路由与健康状态
+
+**适用场景**:
+- 微服务架构统一入口：作为 API 网关统一管理多个微服务的路由、负载均衡和流量控制，简化服务间调用复杂度
+- Kubernetes 集群 Ingress 控制器：在 K8s 环境中作为标准 Ingress Controller，管理南北向流量，自动处理服务暴露和 HTTPS 证书
+- 容器化应用自动代理：配合 Docker/Docker Swarm 使用，容器启动即可自动接入负载均衡，无需手动配置路由规则
+
+
+
+### usememos/memos
+
+**描述**: An open-source, self-hosted note-taking service. Your thoughts, your data, your control — no tracking, no ads, no subscription fees.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 56,341 |
+| 语言 | Go |
+| Forks | 4,037 |
+| Issues | 53 |
+| Topics | docker, foss, go, markdown, memo, microblog, note-taking, notecard, react, self-hosted, social-network, sqlite |
+| 许可证 | MIT License |
+
+---
+
+Memos 是一个开源、自托管的笔记服务项目，拥有 56k+ Stars，倡导"你的思想、你的数据、你的掌控"的理念。它完全去广告、无追踪、无订阅费用，是追求数据隐私和数字主权用户和团队的理想选择，同时提供类似社交网络的微博客功能，融合了笔记记录和知识分享的双重价值。
+
+**技术亮点**:
+- 采用 Go 语言后端 + React 前端架构，提供轻量级、高性能的部署方案
+- 支持 Docker 容器化部署，开箱即用，极大降低自托管门槛
+- 基于 SQLite 轻量级数据库，无需额外数据库服务，简化运维复杂度
+- 原生支持 Markdown 格式，提供流畅的富文本编辑体验
+- MIT 开源许可证，代码完全开放，支持二次开发和定制
+
+**适用场景**:
+- 个人知识管理：作为个人的数字笔记本，记录日常想法、备忘和学习笔记，完全掌控自己的数据
+- 企业团队协作：企业内部自部署的团队知识库和微博客系统，保护敏感数据不外泄
+- 技术开发者搭建个人博客/微站：基于自托管特性，开发者可快速搭建个性化的公开或私密的内容发布平台
+
+
+
+### ⭐ 中优先级
+
+
+### nektos/act
+
+**描述**: Run your GitHub Actions locally 🚀
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,455 |
+| 语言 | Go |
+| Forks | 1,834 |
+| Issues | 281 |
+| Topics | ci, devops, github-actions, golang |
+| 许可证 | MIT License |
+
+---
+
+act 是一个让开发者能够在本地运行 GitHub Actions 的强大工具，解决了开发 CI/CD 流水线时必须推送到远程仓库才能测试的痛点。它通过完全兼容 GitHub Actions 语法，提供了从本地开发到生产环境的无缝衔接体验，显著提升了 DevOps 工作效率并降低了测试成本。
+
+**技术亮点**:
+- 使用 Go 语言开发，性能优异且跨平台支持完善，能够快速执行复杂的 CI/CD 工作流
+- 完全兼容 GitHub Actions 语法和规范，支持主流的 actions、工作流配置和 secrets 管理
+- 支持 Docker 容器化执行环境，可以模拟真实的 GitHub Actions 运行环境
+- 开源活跃度高（68K+ stars），社区支持强大，持续迭代更新且采用 MIT 宽松许可
+
+**适用场景**:
+- 开发者本地调试 CI/CD 流水线，避免每次修改都需要推送到 GitHub 触发测试，大幅提升开发迭代速度
+- 企业 DevOps 团队在迁移到 GitHub Actions 前进行本地验证和 POC 测试，降低迁移风险
+- 在无网络或受限环境中提前验证 GitHub Actions 工作流的正确性和可行性
+
+
+
+### minio/minio
+
+**描述**: MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 60,010 |
+| 语言 | Go |
+| Forks | 6,934 |
+| Issues | 79 |
+| Topics | amazon-s3, cloud, cloudnative, cloudstorage, go, k8s, kubernetes, multi-cloud, multi-cloud-kubernetes, objectstorage, s3, storage |
+| 许可证 | GNU Affero General Public License v3.0 |
+
+---
+
+MinIO 是业界领先的开源对象存储解决方案，完全兼容 Amazon S3 API，在 60K+ Stars 的社区支持下，为云原生环境提供高性能、可扩展的分布式存储能力，是构建私有云对象存储和实现多云策略的最佳选择。
+
+**技术亮点**:
+- 完全兼容 Amazon S3 API，零成本迁移现有 S3 应用程序
+- 采用 Go 语言开发，专为云原生架构设计，高性能低延迟
+- 支持 Kubernetes 部署和多云环境，实现真正的混合云存储
+- 基于纠删码的分布式架构，提供企业级数据可靠性和可用性
+- 支持最小化部署到超大规模扩展，灵活适配不同规模需求
+
+**适用场景**:
+- 企业私有云对象存储：构建符合数据主权要求的内部 S3 兼容存储系统
+- 边缘计算和混合云场景：在边缘节点部署轻量级对象存储，实现本地数据处理与云端同步
+- AI/ML 数据湖：作为机器学习训练数据的海量存储后端，与 Kubeflow、MLflow 等平台无缝集成
+
+
+
+## 📈 监控/观测 (2 个项目)
+
+
+### 🌟 高优先级
+
+
+### louislam/uptime-kuma
+
+**描述**: A fancy self-hosted monitoring tool
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 82,180 |
+| 语言 | JavaScript |
+| Forks | 7,334 |
+| Issues | 674 |
+| Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
+| 许可证 | MIT License |
+
+---
+
+Uptime Kuma 是一款功能强大且用户友好的自托管监控工具，以其精美的现代化界面和丰富的监控功能著称。相比传统监控工具，它提供了开箱即用的多协议支持、实时状态监控和灵活的通知系统，是企业和个人开发者构建私有监控解决方案的首选项目，GitHub 上超过 8.2 万颗星充分证明了其受欢迎程度。
+
+**技术亮点**:
+- 基于 WebSocket (Socket.IO) 实现实时双向通信，提供毫秒级的监控状态更新体验
+- 采用单页应用 (SPA) 架构，配合响应式设计，支持桌面和移动端无缝访问
+- 支持 HTTP(s)、TCP、HTTP Keyword、Ping、DNS Push 等多种监控协议类型
+- 提供 Docker 容器化部署方案，简化安装和运维流程，支持自托管部署
+- 集成 90+ 种通知服务（Telegram、Discord、Email 等），支持自定义通知规则
+
+**适用场景**:
+- 企业内部服务监控：用于监控公司内部服务器、API 接口、数据库等关键服务的可用性和性能，保障业务稳定性
+- 个人开发者项目监控：适合开源项目作者或独立开发者监控个人网站、博客、SaaS 应用的运行状态
+- 私有化部署需求：对数据安全有要求的企业或组织，可在内网环境中自建完整的监控平台，避免数据泄露风险
+
+
+
+### prometheus/prometheus
+
+**描述**: The Prometheus monitoring system and time series database.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 62,488 |
+| 语言 | Go |
+| Forks | 10,135 |
+| Issues | 761 |
+| Topics | alerting, graphing, hacktoberfest, metrics, monitoring, prometheus, time-series |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Prometheus 是云原生监控领域的开源事实标准，被 CNCF 纳入并成为 Kubernetes 生态系统的核心组件。它通过创新的拉取式架构和强大的 PromQL 查询语言，重新定义了现代监控系统的标准，62,000+ 星标证明了其在业界的广泛认可度和可靠性。
+
+**技术亮点**:
+- 基于时序数据库的高效多维数据采集与存储架构
+- 强大的 PromQL 查询语言，支持灵活的数据聚合和实时分析
+- 原生支持多维数据模型，通过标签进行细粒度指标管理
+- 内置强大的告警规则引擎和 AlertManager 集成
+- 云原生设计，完美适配 Kubernetes 和容器化环境
+
+**适用场景**:
+- 企业级 IT 基础设施监控（服务器、容器、微服务集群的性能指标采集）
+- 应用性能监控（APM）与业务指标追踪（实时监控服务可用性、响应时间、吞吐量等）
+- DevOps 团队的可观测性平台构建（统一监控告警、可视化展示和容量规划）
+
+
+
+## 🌐 Web 框架 (14 个项目)
+
+
+### 🌟 高优先级
+
+
+### mudler/LocalAI
+
+**描述**: :robot: The free, Open Source alternative to OpenAI, Claude and others. Self-hosted and local-first. Drop-in replacement,  running on consumer-grade hardware. No GPU required. Runs gguf, transformers, diffusers and many more. Features: Generate Text, MCP, Audio, Video, Images, Voice Cloning, Distributed, P2P and decentralized inference
+
+**发现来源**: trending
+
+**发现原因**: [keyword, trending] Trending in Go
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 42,503 |
+| 语言 | Go |
+| Forks | 3,503 |
+| Issues | 159 |
+| Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
+| 许可证 | MIT License |
+
+---
+
+LocalAI 是一个极具价值的开源项目，它提供了 OpenAI、Claude 等商业 AI 服务的完全免费替代方案。作为 OpenAI API 的即插即用替代品，它支持在消费级硬件上本地运行，无需 GPU，大大降低了 AI 应用的部署门槛和成本，特别适合注重数据隐私和成本控制的场景。
+
+**技术亮点**:
+- ● 完全兼容 OpenAI API，可作为 Drop-in replacement 无缝替换现有代码，无需修改调用逻辑
+- ● 支持消费级硬件运行，无需 GPU，大幅降低硬件成本和部署门槛
+- ● 多模态 AI 能力：支持文本、音频、图像、视频生成，以及语音克隆、目标检测等
+- ● 丰富的模型生态：兼容 gguf、transformers、diffusers 等多种模型格式，支持 Llama、Mistral、Stable Diffusion 等主流模型
+- ● 分布式与去中心化架构：支持 P2P、libp2p、分布式推理和 MCP 协议，可实现边缘计算和集群部署
+
+**适用场景**:
+- ● 企业私有化部署：在本地服务器运行 AI 服务，确保敏感数据不外泄，满足合规要求
+- ● 个人开发者本地开发：在个人电脑上测试和开发 AI 应用，无需调用付费 API，节省开发成本
+- ● 边缘计算场景：在资源受限的设备上部署 AI 能力，无需依赖云端服务
+
+
+
+### songquanpeng/one-api
+
+**描述**: LLM API 管理 & 分发系统，支持 OpenAI、Azure、Anthropic Claude、Google Gemini、DeepSeek、字节豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等主流模型，统一 API 适配，可用于 key 管理与二次分发。单可执行文件，提供 Docker 镜像，一键部署，开箱即用。LLM API management & key redistribution system, unifying multiple providers under a single API. Single binary, Docker-ready, with an English UI.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 89/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 29,413 |
+| 语言 | JavaScript |
+| Forks | 5,696 |
+| Issues | 981 |
+| Topics | api, api-gateway, azure-openai-api, chatgpt, claude, ernie-bot, gemini, gpt, openai, openai-api, proxy |
+| 许可证 | MIT License |
+
+---
+
+这是目前最成熟的 LLM API 统一管理与分发系统，解决了多模型接入的痛点问题。通过统一的 OpenAI 兼容接口，支持国内外 20+ 主流大模型，不仅简化了开发流程，还提供了强大的 Key 管理、额度控制和用户管理系统，是企业进行 AI 能力集成和 API 二次分发的最佳选择。
+
+**技术亮点**:
+- 多模型统一适配：支持 OpenAI、Claude、Gemini、DeepSeek、文心一言、通义千问等 20+ 国内外主流 LLM，通过单一接口调用
+- 开箱即用部署：提供单可执行文件和 Docker 镜像，支持一键部署，降低运维复杂度
+- 企业级功能完备：包含 API Key 管理、额度控制、用户管理、Token 计费、访问日志等完整功能
+- 高可用架构：支持负载均衡、多渠道切换、失败重试机制，确保 API 调用稳定性
+- 二次分发能力：可作为 API 网关进行 Key 转售和团队内部分发，支持多租户隔离
+
+**适用场景**:
+- 企业 AI 应用开发：统一接入多个 LLM 供应商，简化应用开发流程，降低模型切换成本
+- 团队 API 资源共享：集中管理团队的 API Keys，进行额度分配、计费统计和访问控制
+- API 转售服务：作为中间层进行 API 二次分发，为下游客户提供统一的 LLM 接口服务
+
+
+
+### fastapi/fastapi
+
+**描述**: FastAPI framework, high performance, easy to learn, fast to code, ready for production
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 94,663 |
+| 语言 | Python |
+| Forks | 8,609 |
+| Issues | 214 |
+| Topics | api, async, asyncio, fastapi, framework, json, json-schema, openapi, openapi3, pydantic, python, python-types, python3, redoc, rest, starlette, swagger, swagger-ui, uvicorn, web |
+| 许可证 | MIT License |
+
+---
+
+FastAPI 是目前 Python 生态中最现代化的高性能 Web 框架，凭借其基于类型提示的自动 API 文档生成、原生异步支持和对 OpenAPI 标准的完整实现，已成为构建生产级 REST API 的首选方案。它完美结合了 Node.js 的性能和 Python 的开发效率，在 GitHub 上获得近 10 万星标，是 Python 后端开发的标杆项目。
+
+**技术亮点**:
+- 🚀 极致性能：基于 Starlette 和 Pydantic 构建，性能媲美 Node.js 和 Go 框架，是传统 Flask 框架的数倍
+- 📝 智能类型提示：利用 Python 类型注解自动实现数据验证、序列化和请求文档，大幅减少样板代码
+- 📚 自动文档生成：开箱即用的 Swagger UI 和 ReDoc 支持，遵循 OpenAPI 3.0 标准，零配置生成交互式 API 文档
+- ⚡ 原生异步支持：基于 asyncio 生态，与 Uvicorn ASGI 服务器深度集成，轻松处理高并发场景
+- 🔒 类型安全：Pydantic 模型提供运行时数据验证，配合编辑器智能提示，显著降低 bug 率
+
+**适用场景**:
+- 🏢 企业级微服务架构：构建高性能 RESTful API 后端服务，支撑大规模生产环境和微服务系统
+- 🚀 快速原型开发：初创团队和独立开发者快速构建 MVP 产品，缩短从设计到部署的开发周期
+- 🔌 数据密集型应用：需要处理大量并发请求的现代 Web 应用，如实时数据处理、AI 模型服务接口等场景
+
+
+
+### django/django
+
+**描述**: The Web framework for perfectionists with deadlines.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 86,633 |
+| 语言 | Python |
+| Forks | 33,577 |
+| Issues | 398 |
+| Topics | apps, django, framework, models, orm, python, templates, views, web |
+| 许可证 | BSD 3-Clause "New" or "Revised" License |
+
+---
+
+Django是Python生态系统中最成熟、最完善的企业级Web框架，采用"batteries-included"设计理念，提供了从数据库ORM、模板引擎到用户认证系统等完整解决方案。它凭借"快速开发、清晰架构、安全性高"的核心优势，成为Python开发者构建Web应用的首选框架，拥有活跃社区和86k+星标印证其卓越品质。
+
+**技术亮点**:
+- 强大的ORM系统，支持多种数据库后端，提供优雅的数据模型定义和查询API
+- MTV架构模式（Model-Template-View），分离关注点，代码结构清晰易维护
+- 内置丰富的企业级功能：用户认证、Admin管理后台、表单处理、国际化和安全防护
+- 成熟的模板系统，支持模板继承和复用，前后端分离或传统渲染都灵活适配
+- 遵循DRY原则和Django REST Framework扩展，轻松构建RESTful API
+
+**适用场景**:
+- 企业级Web应用开发，如内容管理系统、电商平台、企业管理后台等需要快速上线且功能完善的项目
+- 数据驱动的网站和内部工具系统，利用Django Admin快速构建数据管理界面
+- RESTful API服务开发，结合Django REST Framework构建前后端分离的后端服务
+
+
+
+### pallets/flask
+
+**描述**: The Python micro framework for building web applications.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,123 |
+| 语言 | Python |
+| Forks | 16,683 |
+| Issues | 2 |
+| Topics | flask, jinja, pallets, python, web-framework, werkzeug, wsgi |
+| 许可证 | BSD 3-Clause "New" or "Revised" License |
+
+---
+
+Flask 是 Python 生态系统中最受欢迎的轻量级 Web 框架，拥有超过 7.1 万颗星和庞大的开发者社区。它采用"微框架"设计理念，核心精简但可扩展性极强，既能满足快速原型开发需求，又能支撑企业级复杂应用架构，是 Python Web 开发的首选框架之一。
+
+**技术亮点**:
+- 微框架设计 - 核心简洁轻量，开发者可根据需求自由选择组件，避免过度工程化
+- 内置开发服务器和调试器，集成 Jinja2 模板引擎和 Werkzeug WSGI 工具箱，开箱即用
+- 灵活的扩展系统 - 支持丰富的第三方扩展（如 Flask-SQLAlchemy、Flask-Login 等），轻松增强功能
+- BSD 3-Clause 友好开源许可证，允许商业和自由使用
+- 遵循 WSGI 标准，与各种 Python Web 服务器和部署方案无缝集成
+
+**适用场景**:
+- 个人开发者快速构建 Web 应用原型、小型项目和 RESTful API 服务
+- 企业开发团队构建可扩展的中大型 Web 应用和微服务架构
+- 学习和教学 Python Web 开发的理想入门框架，社区资源丰富且文档完善
+
+
+
+### angular/angular
+
+**描述**: Deliver web apps with confidence 🚀
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 99,778 |
+| 语言 | TypeScript |
+| Forks | 27,037 |
+| Issues | 1,152 |
+| Topics | angular, javascript, pwa, typescript, web, web-framework, web-performance |
+| 许可证 | MIT License |
+
+---
+
+Angular 是 Google 支持的企业级 Web 应用框架，拥有 99k+ Stars 和成熟的生态系统。它提供完整的开发解决方案（路由、状态管理、表单、HTTP 客户端等内置），TypeScript 原生支持带来卓越的开发体验和代码可维护性，特别适合大型团队协作开发复杂应用。
+
+**技术亮点**:
+- ✨ 完整的全功能框架：内置路由、依赖注入、表单验证、HTTP 客户端、测试工具等，开箱即用
+- 🔧 TypeScript 原生支持：提供强类型和 IntelliSense，大幅提升代码质量和开发效率
+- ⚡ 高性能渲染：基于 Ivy 编译器，实现更小的包体积和更快的运行时性能
+- 📱 PWA 原生支持：内置 Progressive Web App 能力，轻松构建离线优先的现代 Web 应用
+- 🏗️ 企业级架构：模块化设计、依赖注入、RxJS 响应式编程，适合构建可扩展的大型应用
+
+**适用场景**:
+- 🏢 企业级复杂业务系统：ERP、CRM、后台管理系统等需要长期维护的大型应用
+- 👥 中大型团队协作项目：统一的代码规范和架构模式，便于团队协作和知识传承
+- 📱 需要离线能力的 PWA 应用：电商、工具类应用等需要离线场景支持的 Web 应用
+
+
+
+### hoppscotch/hoppscotch
+
+**描述**: Open-Source API Development Ecosystem • https://hoppscotch.io • Offline, On-Prem & Cloud • Web, Desktop & CLI • Open-Source Alternative to Postman, Insomnia
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 77,736 |
+| 语言 | TypeScript |
+| Forks | 5,552 |
+| Issues | 624 |
+| Topics | api, api-client, api-rest, api-testing, developer-tools, graphql, http, http-client, pwa, rest, rest-api, spa, testing, testing-tools, tools, vue, vuejs, websocket |
+| 许可证 | MIT License |
+
+---
+
+Hoppscotch 是最受欢迎的开源 API 开发生态系统（77K+ stars），作为 Postman 的理想替代品，提供完全离线可用、支持本地部署的开源方案，兼顾 Web、桌面和 CLI 全平台支持，既保障数据隐私又降低企业成本，是开发者进行 API 开发和测试的必备工具。
+
+**技术亮点**:
+- 基于 TypeScript + Vue.js 构建的现代化 PWA 应用，支持离线使用
+- 支持 REST、GraphQL、WebSocket 等多种 API 协议的统一测试平台
+- 提供 Web、Desktop（Electron）和 CLI 三种客户端形态，满足不同使用习惯
+- 支持 On-Premises 私有化部署和 Cloud 模式，企业可完全掌控数据安全
+- 采用 MIT 宽松许可证，允许自由定制和商业使用
+
+**适用场景**:
+- 需要 API 调试和测试工具的个人开发者，寻找 Postman 的开源替代方案
+- 企业团队需要私有化部署 API 测试平台，以保障 API 密钥和敏感数据不外泄
+- 安全要求较高的金融、政务等领域，需离线使用且支持本地部署的 API 开发工具
+
+
+
+### gatsbyjs/gatsby
+
+**描述**: The best React-based framework with performance, scalability and security built in.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 55,974 |
+| 语言 | JavaScript |
+| Forks | 10,246 |
+| Issues | 357 |
+| Topics | blog, compiler, gatsby, graphql, react, static-site-generator, web-app |
+| 许可证 | MIT License |
+
+---
+
+Gatsby 是 React 生态中最受欢迎的静态站点生成器，拥有近 6 万颗星，完美结合了性能、可扩展性和安全性。它采用现代化的构建方式，通过 GraphQL 数据层和编译器技术，为开发者提供卓越的开发体验和极致的网站性能，是构建现代 Web 应用的理想选择。
+
+**技术亮点**:
+- 基于 React 构建的现代框架，拥有组件化开发优势
+- 集成 GraphQL 数据层，实现统一高效的数据管理
+- 智能编译系统，自动优化代码并生成静态资源
+- 内置性能优化（图片懒加载、代码分割、预加载等）
+- 安全性和可扩展性强，支持大规模应用部署
+
+**适用场景**:
+- 个人博客和作品集网站 - 快速搭建 SEO 友好的个人展示站点
+- 企业官网和营销页面 - 高性能、易维护的企业级站点
+- 文档系统和知识库 - 支持大规模内容管理的静态文档平台
+
+
+
+### prettier/prettier
+
+**描述**: Prettier is an opinionated code formatter.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 51,494 |
+| 语言 | JavaScript |
+| Forks | 4,643 |
+| Issues | 1,428 |
+| Topics | angular, ast, css, flow, formatter, graphql, html, javascript, json, jsx, less, markdown, prettier, printer, scss, typescript, vue, yaml |
+| 许可证 | MIT License |
+
+---
+
+Prettier 是目前最流行的代码格式化工具之一，通过强制统一的代码风格消除团队协作中的格式争议。它支持15+种编程语言，与主流编辑器和CI/CD流程无缝集成，已被数百万开发者采纳作为项目的"强制门禁"，显著提升代码可读性和维护效率。
+
+**技术亮点**:
+- 多语言支持：覆盖JavaScript、TypeScript、CSS、HTML、Markdown、JSON、YAML、GraphQL、Vue、Angular等15+种语言和框架
+- 零配置体验：开箱即用，无需繁琐配置，通过严格的格式规则消除代码风格分歧
+- 智能AST解析：基于抽象语法树进行代码格式化，而非简单的正则替换，确保格式化的准确性和安全性
+- 强大的编辑器集成：支持VS Code、Atom、Sublime、WebStorm等主流编辑器，支持保存时自动格式化
+- 可与Lint工具互补：与ESLint、TSLint等工具完美配合，各司其职（Prettier负责格式，Lint负责质量）
+
+**适用场景**:
+- 团队协作开发：多人开发项目时，统一代码风格，避免无意义的格式争议和code review干扰
+- CI/CD自动化流程：在代码提交或部署前自动检查和修复格式问题，确保代码库的一致性
+- 个人项目规范化：快速提升个人项目代码质量，养成良好编码习惯
+
+
+
+### gin-gonic/gin
+
+**描述**: Gin is a high-performance HTTP web framework written in Go. It provides a Martini-like API but with significantly better performance—up to 40 times faster—thanks to httprouter. Gin is designed for building REST APIs, web applications, and microservices.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 87,859 |
+| 语言 | Go |
+| Forks | 8,546 |
+| Issues | 881 |
+| Topics | framework, gin, go, middleware, performance, router, server |
+| 许可证 | MIT License |
+
+---
+
+Gin 是 Go 语言生态中最受欢迎的高性能 HTTP Web 框架，拥有近 9 万 Stars 和活跃的社区支持。其基于 httprouter 实现的性能优势显著（比 Martini 快 40 倍），同时提供简洁优雅的 API 设计，是构建高性能 REST API 和微服务的理想选择。
+
+**技术亮点**:
+- 高性能路由：基于 Radix Tree 的 httprouter 实现，性能提升 40 倍，适合高并发场景
+- 中间件生态：提供丰富的内置中间件（JSON 验证、日志、恢复等），支持灵活的自定义中间件链
+- 开发友好：Martini 风格的 API 设计，简洁直观，支持 JSON/YAML/XML 等多种数据格式
+- 生产就绪：经过大规模生产环境验证，拥有完善的文档、测试覆盖和错误处理机制
+- 轻量高效：无反射依赖，内存占用低，启动速度快，适合微服务架构
+
+**适用场景**:
+- 企业级 REST API 和微服务开发：适合构建高并发、低延迟的后端服务和分布式系统
+- Web 应用和单体应用：适用于中小型 Web 应用、SaaS 平台和内容管理系统
+- 性能敏感型服务：适合对响应速度要求较高的电商、金融、游戏等实时应用场景
+
+
+
+### caddyserver/caddy
+
+**描述**: Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 69,536 |
+| 语言 | Go |
+| Forks | 4,616 |
+| Issues | 253 |
+| Topics | acme, automatic-https, caddy, caddyfile, go, golang, http, http-server, http3, https, privacy, reverse-proxy, security, tls, web-server |
+| 许可证 | Apache License 2.0 |
+
+---
+
+Caddy 是一款极具创新性的现代化 Web 服务器，其独特的零配置自动 HTTPS 功能让开发者无需手动申请和续期 SSL 证书，极大地降低了 HTTPS 部署门槛。凭借超过 69,000+ Stars 的社区认可和 Go 语言的高性能实现，它已成为 Nginx 和 Apache 的强大替代方案，特别适合追求自动化、安全性和开发效率的现代 Web 应用场景。
+
+**技术亮点**:
+- 🔒 自动 HTTPS：内置 ACME 客户端（支持 Let's Encrypt），自动申请、续期和配置 TLS 证书，实现零配置 HTTPS 部署
+- 🚀 HTTP/3 支持：原生支持最新的 HTTP/3 协议（基于 QUIC），提供更快的连接建立和更好的网络性能
+- 🔌 强扩展性：插件化架构，通过中间件机制轻松扩展功能（反向代理、负载均衡、访问控制等）
+- 📝 简化配置：Caddyfile 语法简洁直观，比传统 Nginx/Apache 配置更易读易写
+- 🌐 跨平台支持：使用 Go 语言编写，单一二进制文件，支持 Windows/Linux/macOS 等多平台部署
+
+**适用场景**:
+- 🏢 企业级 Web 应用：需要快速搭建 HTTPS 网站和服务器的企业，省去证书管理的繁琐工作
+- 🔄 反向代理与负载均衡：作为 API 网关或微服务架构中的反向代理，提供安全的 TLS 终止
+- 🛒 个人开发者和中小型项目：个人博客、SaaS 产品、静态网站托管等场景，快速实现安全访问
+
+
+
+### pocketbase/pocketbase
+
+**描述**: Open Source realtime backend in 1 file
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 55,702 |
+| 语言 | Go |
+| Forks | 3,067 |
+| Issues | 20 |
+| Topics | authentication, backend, golang, realtime |
+| 许可证 | MIT License |
+
+---
+
+PocketBase 是一个革命性的开源后端解决方案，以单一二进制文件实现了完整的后端功能，极大降低了后端开发门槛和运维复杂度。它的独特价值在于将认证、实时数据库、文件存储等核心后端功能打包到一个可执行文件中，非常适合快速原型开发、小型项目和独立开发者使用，同时保持了 Go 语言带来的高性能特性。
+
+**技术亮点**:
+- 单一可执行文件部署 - 无需复杂的依赖管理和配置，开箱即用
+- 内置认证系统 - 支持多种认证方式，包括邮箱密码、OAuth 等
+- 实时数据同步 - 基于 WebSocket 的实时订阅和更新机制
+- 嵌入式数据库 - 使用 SQLite 作为默认数据库，支持在线备份和恢复
+- Go 语言开发 - 高性能、跨平台编译，适合各种部署环境
+
+**适用场景**:
+- 快速原型开发和 MVP 构建 - 独立开发者或初创团队快速验证产品想法
+- 中小型 Web/移动应用 - 适合需要后端支持但不希望维护复杂服务器的应用场景
+- 个人项目和副业开发 - 零运维成本，专注于前端业务逻辑实现
+
+
+
+### chatanywhere/GPT_API_free
+
+**描述**: Free ChatGPT&DeepSeek API Key，免费ChatGPT&DeepSeek API。免费接入DeepSeek API和GPT4 API，支持 gpt | deepseek | claude | gemini | grok 等排名靠前的常用大模型。
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 83/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 35,862 |
+| 语言 | Python |
+| Forks | 2,532 |
+| Issues | 55 |
+| Topics | api, chatgpt, claude, deepseek, gemini, gpt, grok |
+| 许可证 | MIT License |
+
+---
+
+这是一个极具实用价值的开源项目，为开发者提供了免费接入多种顶级大模型（ChatGPT、DeepSeek、Claude、Gemini、Grok等）的统一API接口。项目拥有超过35,000颗星，证明了其受欢迎程度和可靠性，极大降低了AI应用开发的成本门槛。
+
+**技术亮点**:
+- 多模型统一接口：支持 GPT-4、DeepSeek、Claude、Gemini、Grok 等主流大模型的统一 API 调用
+- 完全免费：提供免费的 API Key 服务，打破大模型 API 使用的高昂成本限制
+- Python 实现：基于 Python 开发，易于集成和二次开发，适合快速原型开发
+- MIT 开源许可：宽松的开源协议，允许商业使用和自由修改
+- 高可用性：35,000+ GitHub Stars 表明项目经过大量用户验证，稳定性和社区支持有保障
+
+**适用场景**:
+- 个人开发者学习与实验：想要学习和测试不同大模型能力，但预算有限的开发者
+- 初创企业产品验证：需要快速验证 AI 产品创意，暂时不想承担高额 API 费用的初创团队
+- 教育与研究场景：学校或研究机构用于教学演示、学术研究的大模型集成项目
+
+
+
+### ⭐ 中优先级
+
+
+### expressjs/express
+
+**描述**: Fast, unopinionated, minimalist web framework for node.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,632 |
+| 语言 | JavaScript |
+| Forks | 22,338 |
+| Issues | 183 |
+| Topics | express, javascript, nodejs, server |
+| 许可证 | MIT License |
+
+---
+
+Express.js 是 Node.js 生态系统中最成熟、应用最广泛的 Web 框架之一，凭借其 6.8 万+ 的 GitHub Stars 和超过十年的社区积累，成为构建后端服务和 API 的事实标准。其"unopinionated"（不拘泥于特定架构）的设计哲学让开发者拥有完全的架构选择自由，同时提供了强大的路由、中间件生态系统和极简的核心，是学习 Node.js 后端开发的首选框架。
+
+**技术亮点**:
+- ✓ 极简主义设计：核心精简，仅提供 Web 应用基础功能，保持轻量级和高性能
+- ✓ 灵活的中间件机制：采用中间件链模式，可轻松扩展请求处理流程（如日志、认证、解析等）
+- ✓ 强大的路由系统：支持动态路由参数、RESTful 风格路由和路由模块化，便于构建复杂应用
+- ✓ 无架构限制：不强制 MVC 或其他特定架构模式，开发者可根据项目需求自由选择技术栈
+- ✓ 成熟的生态系统：拥有丰富的第三方中间件支持，与 NPM 生态完美集成
+
+**适用场景**:
+- 🏢 企业级 RESTful API 和微服务开发：Express 的稳定性和性能使其成为构建生产环境后端服务的理想选择
+- 🚀 全栈 JavaScript 项目：作为前端开发者转向后端的最佳切入点，配合 React/Vue 等框架实现同语言全栈开发
+- 📚 Node.js 后端学习入门：凭借简洁的 API 和丰富的文档资源，是学习服务器端 JavaScript 开发的标准教材
+
+
+
+## 📊 数据/基础设施 (5 个项目)
 
 
 ### 🌟 高优先级
@@ -3359,28 +5194,28 @@ Void 是一个革命性的 AI 开发工具，无缝集成了 ChatGPT、Claude、
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,014 |
+| Stars | 54,027 |
 | 语言 | JavaScript |
-| Forks | 5,807 |
-| Issues | 270 |
+| Forks | 5,809 |
+| Issues | 271 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
 
 ---
 
-AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检索增强生成）、AI 智能体、无代码构建器和 MCP 兼容性等企业级特性。作为拥有 5.4 万+ star 的明星项目，它既支持桌面端又支持 Docker 部署，既可连接本地大模型（Ollama、LM Studio 等）也能使用云端 API，为企业与个人开发者提供了一站式私有化 AI 解决方案。
+AnythingLLM 是一个功能完备的开源 AI 应用平台，将 RAG、AI Agents、向量数据库等核心能力集成于一体，同时支持本地部署和云端多种 LLM。其独特价值在于提供了开箱即用的企业级 AI 解决方案，54k+ stars 证明了其在开发者社区中的高度认可和可靠性，适合快速搭建私有化 AI 助手而无需从零开发各个模块。
 
 **技术亮点**:
-- 内置 RAG 引擎和向量数据库，支持文档上传、网页抓取和知识库管理
-- 无代码 AI Agent 构建器，支持拖拽式创建自定义智能体和工作流
-- 广泛的模型兼容性：支持 Ollama、DeepSeek、Llama3、Qwen3、Kimi、Moonshot 等主流本地及云端模型
-- MCP（Model Context Protocol）服务器兼容，支持与 AI 助手进行工具集成
-- 提供 Desktop 应用和 Docker 容器多种部署方式，支持完全离线的本地化运行
+- ✅ 内置 RAG (检索增强生成) 引擎，支持向量数据库和网页抓取，可轻松构建知识库问答系统
+- ✅ No-code Agent 构建器，零代码即可创建和定制 AI 智能体，降低 AI 应用开发门槛
+- ✅ MCP (Model Context Protocol) 兼容性，支持丰富的 MCP 服务器生态，扩展能力强
+- ✅ 多模态支持 & 多 LLM 集成，兼容 Ollama、DeepSeek、Kimi、Llama3、Qwen3 等主流模型
+- ✅ 灵活部署方式，支持桌面应用和 Docker 容器化部署，满足本地化与云端不同需求
 
 **适用场景**:
-- 企业知识管理：搭建企业级 AI 知识库和客服助手，支持文档上传、网页抓取和私有化部署
-- 开发者工具链：通过 MCP 兼容性集成 AI Agent 到现有工作流，构建自动化开发助手
-- 个人 AI 助手：在本地部署个人 AI 聊天机器人，支持多模态交互和本地 LLM 完全离线使用
+- 🏢 **企业知识库搭建**：利用 RAG 能力快速构建企业内部文档、知识库的智能问答系统，支持私有化部署保障数据安全
+- 💼 **个人开发者 AI 助手**：通过 No-code 构建器快速创建个性化的 AI Agents，集成到工作流中提升效率
+- 🔧 **本地 LLM 应用开发**：结合 Ollama、LM Studio 等本地模型，构建完全离线的 AI 应用，保护隐私且无 API 调用成本
 
 
 
@@ -3398,28 +5233,28 @@ AnythingLLM 是一款功能全面的开源 AI 应用平台，集成了 RAG（检
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,996 |
+| Stars | 97,021 |
 | 语言 | TypeScript |
-| Forks | 11,418 |
-| Issues | 802 |
+| Forks | 11,422 |
+| Issues | 812 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Supabase 是 Firebase 的开源替代方案，它将 PostgreSQL 的强大功能与现代开发体验完美结合。该项目凭借 96k+ GitHub Stars 和活跃的社区生态，为开发者提供了一个功能完整的 Backend-as-a-Service 平台，既有 PostgreSQL 的企业级可靠性，又具备类似 Firebase 的易用性，特别适合需要数据主权和 AI 能力的现代化应用开发。
+Supabase 是 Firebase 的开源替代方案，基于成熟的 PostgreSQL 数据库构建，为企业提供完整的数据开发平台。它结合了强大的关系数据库、实时订阅、身份验证和对象存储等功能，让开发者既能获得 Firebase 的开发体验，又能完全掌控自己的数据和基础设施。
 
 **技术亮点**:
-- 🔌 PostgreSQL 原生集成：提供专用 Postgres 数据库，支持完整的 SQL 功能、扩展和 pgvector/pgpostgis 等高级特性
-- 🤖 AI 原生支持：内置向量嵌入（embeddings）、pgvector 向量搜索和 pgpostgis 地理空间分析，为 AI 应用提供开箱即用的数据基础设施
-- 🔐 企业级认证系统：完整的 OAuth2、多因素认证和行级安全策略（RLS），无需第三方认证服务
-- ⚡ Realtime 实时功能：基于 WebSockets 的实时数据同步，配合 Deno Edge Functions 实现高性能边缘计算
-- 🛠️ 开源与自托管：Apache 2.0 许可证，支持完全自托管和本地部署，避免供应商锁定
+- 基于 PostgreSQL 的完整后端平台，集成数据库、认证、实时订阅和存储功能
+- 提供 PostgREST 自动生成 RESTful API，支持 pgvector 进行向量检索和 AI 应用开发
+- 内置 Realtime 引擎支持 WebSocket 实时数据同步，兼容 pgpostGIS 地理位置功能
+- 使用 TypeScript 构建，深度集成 Deno Edge Functions，支持边缘计算和 Serverless 架构
+- 完全开源且自托管友好，提供从个人项目到企业级部署的灵活选择
 
 **适用场景**:
-- 🏢 企业级应用开发：需要数据主权、复杂查询能力和可控性的中大型企业应用，可私有化部署并充分利用 PostgreSQL 生态
-- 🚀 快速原型与 MVP：独立开发者或初创团队快速构建全栈应用，无需搭建后端基础设施，类似 Firebase 但更灵活
-- 🤖 AI 驱动应用：构建需要向量搜索、语义检索和 RAG（检索增强生成）能力的 AI 应用，如智能客服、知识库问答、推荐系统等
+- 需要完整后端解决方案的全栈应用开发，包括 Web 和移动应用
+- AI 和机器学习应用开发，利用 pgvector 进行向量嵌入存储和相似性搜索
+- 需要实时数据同步功能的协作应用，如聊天、文档协作和实时仪表盘
 
 
 
@@ -3437,29 +5272,28 @@ Supabase 是 Firebase 的开源替代方案，它将 PostgreSQL 的强大功能�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,545 |
+| Stars | 42,552 |
 | 语言 | Go |
-| Forks | 3,794 |
-| Issues | 954 |
+| Forks | 3,795 |
+| Issues | 952 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应用设计，具备云原生架构和分布式能力。在 AI 时代，它为企业提供了生产级的向量相似度搜索解决方案，技术成熟度高且社区活跃，是构建 AI 应用的理想基础设施选择。
+Milvus 是目前最成熟的开源向量数据库之一，专为处理海量向量数据和高性能相似度搜索而设计。它是 LLM 和 RAG 应用的基础设施首选，已有众多企业级成功案例，提供了云原生架构和多种索引算法（如 HNSW、DiskANN）的完整解决方案。
 
 **技术亮点**:
-- 高性能 ANN 搜索：集成 Faiss、HNSW、DiskANN 等多种索引算法，支持海量向量快速检索
-- 云原生架构：采用存储与计算分离设计，支持 Kubernetes 部署，具备弹性扩展能力
-- 分布式能力：支持水平扩展，可处理十亿级向量规模，满足大规模场景需求
-- AI 生态集成：完美适配 LLM、RAG 应用，支持 embedding 存储、向量相似度计算等核心功能
-- 多模态搜索：支持图像、文本、音频等多种数据类型的向量化和相似性检索
+- 云原生分布式架构，支持 Kubernetes 部署和水平扩展，可处理十亿级向量数据
+- 支持多种先进索引算法（HNSW、DiskANN、IVF 等），兼顾性能与内存效率
+- 存储计算分离架构，支持对象存储（S3、MinIO 等），实现弹性伸缩
+- 提供多语言 SDK（Go、Python、Java 等）和完善的 API，易于集成
+- 支持混合查询和标量过滤，适配复杂业务场景的向量检索需求
 
 **适用场景**:
-- 企业级 LLM 应用：为 RAG 系统、知识库问答、AI 助手提供高效的向量检索能力
-- 大规模图像/音视频检索：电商平台以图搜图、版权保护、内容审核等场景
-- 个性化推荐系统：基于用户行为向量进行相似度匹配，实现精准推荐
-- 生物信息学与科研：基因组搜索、分子结构相似度计算等专业领域应用
+- RAG（检索增强生成）应用：为大语言模型提供长期记忆和知识库检索能力
+- 图像和视频相似度搜索：如电商平台以图搜图、版权检测、推荐系统
+- 语义搜索与问答系统：构建智能文档检索、知识问答和个性化推荐引擎
 
 
 
@@ -3477,28 +5311,28 @@ Milvus 是目前最流行的开源向量数据库之一，专为 LLM 和 RAG 应
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,428 |
+| Stars | 51,429 |
 | 语言 | Go |
-| Forks | 10,308 |
-| Issues | 199 |
+| Forks | 10,307 |
+| Issues | 200 |
 | Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-etcd 是云原生计算基金会（CNCF）的毕业项目，Kubernetes 的核心存储底座，采用 Raft 共识算法实现强一致性的分布式键值存储。作为工业级分布式系统的标杆项目，它提供了经过大规模生产环境验证的高可用、高可靠数据存储解决方案，是学习分布式系统和现代云原生架构的必读项目。
+etcd 是云原生领域最核心的基础设施项目之一，作为 Kubernetes 集群的"大脑"负责存储所有集群状态数据。该项目在分布式系统领域具有标杆地位，采用 Raft 共识算法实现了强一致性保证，是学习和构建高可用分布式系统的最佳实践案例。
 
 **技术亮点**:
-- 基于 Raft 共识算法实现强一致性，保证分布式环境下数据的安全性和可靠性
-- 提供 gRPC API 和 JSON/HTTP 接口，支持高效的键值查询、事务处理和 Watch 监听机制
-- 内置服务发现和分布式锁功能，天然支持 Leader 选举和配置管理
-- 作为 Kubernetes 集群的核心存储引擎，支撑全球最大规模的容器编排系统
-- 完善的快照备份、WAL 预写日志和 TLS 安全传输机制，保障数据持久化和通信安全
+- 基于 Raft 共识算法实现强一致性，在部分节点故障时仍能保证数据一致性和服务可用性
+- 提供事务支持、Watch 监听机制、版本控制和租约管理等丰富的键值操作特性
+- 具备强安全保障，支持 SSL/TLS 通信、基于角色的访问控制（RBAC）和认证机制
+- 提供 gRPC API 和高性能的客户端库，支持 Go、Java、Python 等多种编程语言
+- 采用 CNCF 维护的成熟开源项目架构，拥有完善的监控、日志和调试工具生态
 
 **适用场景**:
-- Kubernetes 集群配置存储：作为 K8s 所有集群状态和元数据的唯一事实来源，是生产环境部署容器化应用的基础设施
-- 微服务配置中心：替代传统的配置文件管理，实现配置的集中存储、版本控制和实时推送，支持动态配置更新
-- 分布式协调服务：提供 Leader 选举、分布式锁、服务发现等原语，解决微服务架构下的节点协调和故障转移问题
+- Kubernetes 集群的配置管理和服务发现，存储集群状态、元数据和配置信息
+- 分布式系统的服务注册与发现中心，微服务架构中的配置管理和服务协调
+- 分布式锁和 leader 选举场景，用于构建高可用的分布式应用
 
 
 
@@ -3516,7 +5350,7 @@ etcd 是云原生计算基金会（CNCF）的毕业项目，Kubernetes 的核心
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,762 |
+| Stars | 55,815 |
 | 语言 | Jupyter Notebook |
 | Forks | 1,312 |
 | Issues | 8 |
@@ -3525,97 +5359,19 @@ etcd 是云原生计算基金会（CNCF）的毕业项目，Kubernetes 的核心
 
 ---
 
-这是一个提供即用型云模板的高价值项目，专注于构建实时同步的企业级RAG应用和AI管道。凭借5.5万+星标和MIT许可证，它完美解决了企业最头疼的数据实时同步问题，能无缝连接SharePoint、Google Drive、Kafka等多种数据源，让开发者快速搭建生产级AI应用。
+Pathway 的 llm-app 是一个高星（55K+）企业级 LLM 应用模板库，专注于实时数据处理和 RAG 场景。其独特价值在于提供开箱即用的 Docker 化解决方案，支持与 SharePoint、Google Drive、Kafka、S3 等 20+ 数据源的实时同步，解决了传统 RAG 系统数据时效性差的痛点，特别适合需要处理实时业务数据的企业 AI 应用。
 
 **技术亮点**:
-- 实时数据同步能力：无缝集成SharePoint、Google Drive、S3、Kafka、PostgreSQL及实时API，确保数据始终最新
-- 企业级RAG框架：内置检索增强生成（RAG）和向量数据库支持，兼容OpenAI、Hugging Face等多种LLM
-- Docker友好设计：开箱即用的容器化模板，支持llm-ops完整工作流
-- 强大的生态集成：覆盖chatbot、向量索引、LLM安全等全栈技术栈
-- 高可扩展性：支持本地部署和云端部署，灵活适配不同规模需求
+- 🔄 实时数据管道：支持 SharePoint、Google Drive、Kafka、PostgreSQL、S3 等多种数据源的实时同步，确保 RAG 知识库始终保持最新
+- 🐳 Docker 友好架构：提供容器化部署方案，简化本地和生产环境部署流程，支持一键启动完整 LLM 应用栈
+- 🔍 企业级搜索与向量索引：内置向量数据库和向量索引功能，支持高性能语义检索和混合搜索
+- 🛡️ LLM 安全与合规：涵盖 LLM 安全、提示工程和 LLMOps 最佳实践，适合企业级生产环境部署
+- 🤖 多模型兼容性：支持 OpenAI、Hugging Face 等多种 LLM 后端，可灵活切换本地模型和云端 API
 
 **适用场景**:
-- 企业知识库搭建：快速构建实时同步的企业文档搜索和智能问答系统
-- 实时AI数据管道：为金融、电商等需要实时数据的场景构建流式AI应用
-- 多源数据融合：整合企业内部多个数据源（文档、数据库、消息队列）进行统一智能分析
-
-
-
-### louislam/uptime-kuma
-
-**描述**: A fancy self-hosted monitoring tool
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 82,164 |
-| 语言 | JavaScript |
-| Forks | 7,332 |
-| Issues | 674 |
-| Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
-| 许可证 | MIT License |
-
----
-
-Uptime Kuma 是一款现代化的开源监控工具，以其精美的可视化界面和强大的监控能力脱颖而出。相比传统监控工具，它提供了直观的仪表盘、多样化的监控类型（HTTP、Ping、端口等）以及灵活的告警通知渠道，是目前最受欢迎的自托管监控解决方案之一（GitHub Stars 超 8.2 万）。
-
-**技术亮点**:
-- 现代化的单页应用（SPA）架构，响应式设计适配多终端设备
-- 基于 WebSocket 和 Socket.IO 实现实时状态更新，无需手动刷新页面
-- 完善的 Docker 支持，一键部署且开箱即用
-- 支持多种监控类型：HTTP/HTTPS、Ping、TCP 端口、DNS、数据库等
-- 丰富的告警通知渠道：Telegram、Discord、Slack、Email、Webhook 等多种集成
-
-**适用场景**:
-- 中小企业和个人开发者的服务器与应用监控（替代 UptimeRobot、Pingdom 等付费服务）
-- 家庭实验室（Homelab）环境的内部系统监控，支持局域网设备监控
-- 技术团队的自托管基础设施监控仪表盘，统一监控多个项目的运行状态
-
-
-
-### prometheus/prometheus
-
-**描述**: The Prometheus monitoring system and time series database.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 62,477 |
-| 语言 | Go |
-| Forks | 10,133 |
-| Issues | 758 |
-| Topics | alerting, graphing, hacktoberfest, metrics, monitoring, prometheus, time-series |
-| 许可证 | Apache License 2.0 |
-
----
-
-Prometheus 是云原生监控领域的标杆项目，已从 CNCF 毕业并被全球企业广泛采用。其独创的 Pull 采集模式、强大的 PromQL 查询语言以及与 Kubernetes 的深度集成，使其成为现代可观测性栈的核心组件，拥有 62k+ Stars 足以证明其行业影响力和成熟度。
-
-**技术亮点**:
-- 高性能时间序列数据库：采用多维数据模型和高效的本地存储，支持海量指标采集和长期存储
-- Pull 采集架构：创新的拉取式监控模式，结合服务发现机制，无需依赖被监控端主动推送
-- PromQL 查询语言：专门为时间序列数据设计的强大查询语言，支持灵活的数据聚合、告警规则定义和可视化
-- 云原生深度集成：原生支持 Kubernetes 服务发现，完美契合容器化、微服务架构的监控需求
-- 多维告警系统：内置灵活的告警规则引擎，支持与 AlertManager 集成实现智能告警路由和分组
-
-**适用场景**:
-- 云原生/容器环境监控：特别适合 Kubernetes 集群、容器化应用和微服务架构的全方位监控
-- 大规模分布式系统：适用于需要采集和分析海量指标的企业级应用，提供实时性能洞察
-- 混合基础设施监控：统一监控传统服务器、云服务和容器化应用，构建一站式可观测性平台
+- 🏢 企业智能问答与知识管理：构建企业内部的 AI 助手，实时同步 SharePoint/Google Drive 文档，实现智能搜索和知识问答
+- 📊 实时数据分析与 AI Agent：结合 Kafka、PostgreSQL 等实时数据流，构建能够感知业务变化的智能监控和分析系统
+- 🚀 快速 RAG 应用原型开发：开发者利用现成模板快速搭建生产级 RAG 应用，大幅降低从原型到上线的时间和成本
 
 
 
@@ -3639,28 +5395,28 @@ Prometheus 是云原生监控领域的标杆项目，已从 CNCF 毕业并被全
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 144,131 |
+| Stars | 144,158 |
 | 语言 | TypeScript |
-| Forks | 19,066 |
+| Forks | 19,067 |
 | Issues | 5 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 ---
 
-这是一个拥有超过14万颗星的顶级开源项目，提供社区驱动的ChatGPT提示词共享和发现平台。独特价值在于支持完全隐私的组织级自托管部署，让企业能够安全地管理和复用高质量AI提示词，同时具备CC0开放许可，适合作为学习提示词工程的优秀范例。
+这是目前 GitHub 上最受欢迎的 ChatGPT 提示词开源项目（14.4万+ stars），提供社区驱动的提示词共享与发现平台。支持企业完全私有化部署，确保数据安全，同时支持 OpenAI、Claude、Gemini 等主流大语言模型，是提示词工程的标杆项目。
 
 **技术亮点**:
-- 基于TypeScript + Next.js的全栈现代化Web应用架构
-- 支持多模型兼容性，覆盖ChatGPT、Claude、Gemini、GPT-4等主流LLM平台
-- 可自托管的私密部署方案，确保组织内部提示词资产的安全性和隐私保护
-- 社区驱动的内容生态，支持提示词的分享、发现和收集功能
-- 采用Creative Commons Zero v1.0 Universal许可，完全开放可商用
+- 基于 Next.js + TypeScript 构建的现代化 Web 应用，采用高性能 React 框架
+- 支持多模型兼容性（OpenAI GPT-4、Claude、Gemini 等），实现提示词跨平台复用
+- 提供完整的企业级私有化部署方案，数据完全自主可控
+- 社区驱动的内容生态系统，持续更新的提示词库与分类体系
+- 采用 Creative Commons Zero 开源协议，无版权限制，自由使用与修改
 
 **适用场景**:
-- 企业知识管理：组织内部搭建专属提示词库，统一团队AI使用标准和最佳实践
-- AI学习与研究：作为提示词工程的参考案例库，学习各类场景的高效提问技巧
-- 个人开发者的AI辅助工具箱：快速检索和复用经过验证的优质提示词，提升AI交互效率
+- 企业内部知识管理：为团队搭建私有的 AI 提示词库，沉淀最佳实践，提升员工使用 AI 效率
+- 开发者快速上手：学习高质量提示词编写技巧，加速 AI 应用开发与集成
+- 教育与研究：作为提示词工程的教学资源库，帮助理解如何有效与大模型交互
 
 
 
@@ -3678,27 +5434,28 @@ Prometheus 是云原生监控领域的标杆项目，已从 CNCF 毕业并被全
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 28,821 |
+| Stars | 28,983 |
 | 语言 | JavaScript |
-| Forks | 4,649 |
+| Forks | 4,675 |
 | Issues | 29 |
 | Topics | ai, anthropic, chatbots, chatgpt, claude, gemini, generative-ai, google-deepmind, large-language-models, llm, openai, prompt-engineering, prompt-injection, prompts |
 
 ---
 
-这是一个极具价值的 AI 安全与提示工程研究资源库，汇集了 ChatGPT、Claude、Gemini 等主流大语言模型的系统提示词泄露案例。对于深入理解 LLM 的安全边界、提示注入攻击机制以及逆向工程技术，这是目前 GitHub 上最全面的实战参考集合。
+这是目前GitHub上最全面的大语言模型系统提示词收集仓库，汇集了ChatGPT、Claude、Gemini等主流AI助手的原始System Prompts。该项目为AI安全研究、Prompt工程学习和提示词注入防御提供了宝贵的实战素材，超过2.9万星标证明了其在AI开发者社区中的重要地位。
 
 **技术亮点**:
-- 涵盖 OpenAI ChatGPT、Anthropic Claude、Google Gemini 三大主流模型的完整系统提示词样本
-- 展示真实的提示注入攻击案例，揭示 AI 对话机器人的底层防御机制与安全漏洞
-- 提供原始系统提示词的提取技术与分析方法，助力 LLM 安全研究
-- 跨多个大语言模型平台的对比分析，便于理解不同厂商的安全设计差异
-- 包含超过 28,000+ Stars 的实战数据集，是提示工程与 AI 安全研究的重要参考资料
+- 涵盖三大主流LLM（ChatGPT/Claude/Gemini）的完整System Prompts提取集合
+- 基于提示词注入（Prompt Injection）技术提取真实系统指令，具有高度研究价值
+- 实时更新各大AI模型版本的系统提示词变化，追踪模型演进
+- 提供原生JavaScript实现，便于前端集成和自动化测试
+- 包含Generative AI领域的完整技术栈参考：OpenAI、Anthropic、Google DeepMind
 
 **适用场景**:
-- AI 安全研究员：用于分析提示注入攻击向量、测试 LLM 安全防御机制的实战数据集
-- 提示工程师：学习顶级模型的系统提示词设计模式，优化自己的提示词编写技巧
-- 大模型开发者：研究主流厂商如何设计系统提示词来控制模型行为，提升产品安全性与用户体验
+- AI安全研究：分析提示词注入漏洞，设计对抗性攻击防御方案
+- Prompt工程学习：研究顶级AI模型如何构建系统提示词，学习最佳实践
+- 企业AI产品开发：参考成熟LLM的系统提示词设计，优化自定义AI助手的指令工程
+- 学术研究：对比不同LLM厂商的提示词设计策略和安全性差异
 
 
 
@@ -3716,28 +5473,28 @@ Prometheus 是云原生监控领域的标杆项目，已从 CNCF 毕业并被全
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,754 |
+| Stars | 69,771 |
 | 语言 | MDX |
-| Forks | 7,448 |
+| Forks | 7,452 |
 | Issues | 242 |
 | Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
 | 许可证 | MIT License |
 
 ---
 
-这是目前GitHub上最受欢迎的提示工程指南项目（69,754⭐），由DAIR AI维护的综合性学习资源库。它不仅是入门提示工程的绝佳起点，更涵盖了从基础到高级的RAG、AI Agents等前沿技术，是开发者快速掌握大模型应用开发的权威参考资料。
+这是GitHub上最受欢迎的提示词工程开源指南，汇集了从基础提示词设计到高级AI Agent开发的完整知识体系。项目涵盖学术论文、实战教程、Jupyter Notebook和最佳实践，是开发者快速掌握LLM应用开发核心技能的一站式资源库。
 
 **技术亮点**:
-- 全面的Prompt Engineering知识体系：包含指南、论文、课程和实战笔记本，覆盖从基础到高级的提示技巧
-- 前沿技术栈覆盖：涵盖RAG（检索增强生成）、Context Engineering、AI Agents等热门AI应用技术
-- 多框架支持：整合ChatGPT、OpenAI等多种大语言模型的实践经验
-- 理论与实践结合：提供学术论文、交互式笔记本和丰富的代码示例
-- 开源社区驱动：MIT许可证，持续更新，汇聚社区最佳实践
+- 🔥 全面覆盖四大核心领域：提示词工程、上下文工程、RAG检索增强生成、AI智能体开发
+- 📚 理论实践结合：包含精选论文列表、交互式Notebook教程和实战代码示例
+- 🤖 紧跟前沿技术：涵盖ChatGPT、OpenAI、大语言模型(LLMs)等最新AI技术应用
+- 📖 知识体系化：从基础概念到高级模式的完整学习路径，适合不同水平开发者
+- 🌐 社区驱动更新：持续更新的资源库，反映快速演进的AI应用开发最佳实践
 
 **适用场景**:
-- AI开发者快速入门：为想要学习提示工程、RAG和AI Agents的开发者提供系统性的学习路径和实战资源
-- 企业AI应用开发：企业技术团队可以参考项目中的最佳实践，快速搭建基于大语言模型的应用系统
-- 教育培训与学术研究：教师和学生可将其作为教材或参考资料，深入理解大模型的工程化应用
+- 🎯 **个人开发者学习**：系统学习提示词设计技巧和RAG实现方法，快速提升LLM应用开发能力
+- 💼 **企业AI应用开发**：作为团队参考手册，指导生产级AI Agent和智能问答系统架构设计
+- 🏫 **教育培训与学术研究**：高校AI课程教材配套资源，包含经典论文和实验代码
 
 
 
@@ -3755,28 +5512,28 @@ Prometheus 是云原生监控领域的标杆项目，已从 CNCF 毕业并被全
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,164 |
+| Stars | 89,166 |
 | 语言 | TypeScript |
-| Forks | 9,840 |
-| Issues | 2,233 |
+| Forks | 9,843 |
+| Issues | 2,242 |
 | Topics | angular, components, design-systems, documentation, html, javascript, react, react-native, stories, storybook, styleguide, svelte, testing, typescript, ui, vite, vue, web-components, webpack, workshop |
 | 许可证 | MIT License |
 
 ---
 
-Storybook 是 UI 组件开发的行业标准工具，已被全球 89,000+ 项目验证。它提供独立开发、文档化和测试 UI 组件的完整工作流，支持 React、Vue、Angular、Svelte 等主流框架，是构建设计系统和组件库的必备工具。
+Storybook 是 UI 组件开发的行业标准工具，拥有近 9 万颗星，被全球数百万开发者信赖。它通过隔离式开发模式，让开发者能够在独立环境中构建、文档化和测试 UI 组件，无需依赖整个应用程序上下文，极大地提升了组件开发效率和可维护性。
 
 **技术亮点**:
-- 框架无关的多框架支持：涵盖 React、Vue、Angular、Svelte、React Native、Web Components 等主流技术栈
-- 构建工具集成：原生支持 Webpack、Vite 等现代构建工具，无缝集成到现有开发环境
-- 组件隔离开发：允许在独立环境中开发 UI 组件，无需依赖应用上下文，提高开发效率
-- 自动化测试能力：支持组件的视觉回归测试、交互测试和单元测试，保证组件质量
-- 交互式文档：自动生成交互式组件文档，支持设计师、开发者协作，降低沟通成本
+- 支持 React、Vue、Angular、Svelte、Web Components 等所有主流前端框架，实现跨技术栈的统一开发体验
+- 提供强大的可视化文档生成能力，自动生成交互式组件文档，助力设计系统构建
+- 内置组件测试套件，支持快照测试、视觉回归测试和可访问性测试，确保组件质量
+- 与 Vite、Webpack 等构建工具深度集成，支持热模块替换，开发体验流畅
+- 丰富的插件生态系统，包含 1000+ 插件，可扩展测试、文档、自动化等功能
 
 **适用场景**:
-- 企业级设计系统构建：中大型团队搭建统一的组件库和设计规范，实现跨项目组件复用
-- UI 组件库开发与维护：开源项目或商业产品开发独立的组件库，提供完整的文档和示例
-- 前端组件测试与质量保障：实施组件级自动化测试，确保 UI 在各种场景下的稳定性和一致性
+- 企业级设计系统搭建：帮助团队构建和维护统一的组件库，确保产品视觉和交互的一致性
+- 团队协作开发：前端开发者可独立开发组件，设计师通过 Storybook 预览和评审，减少沟通成本
+- 组件驱动的敏捷开发：适合采用组件化架构的团队，支持并行开发和快速迭代
 
 
 
@@ -3794,28 +5551,28 @@ Storybook 是 UI 组件开发的行业标准工具，已被全球 89,000+ 项目
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,697 |
+| Stars | 85,706 |
 | 语言 | TypeScript |
-| Forks | 8,561 |
+| Forks | 8,563 |
 | Issues | 1,607 |
 | Topics | diagrams, diagrams-as-code, documentation, flowchart, javascript, mindmap, typescript, uml-diagrams |
 | 许可证 | MIT License |
 
 ---
 
-Mermaid 是"图表即代码"(Diagrams-as-Code)领域的标杆项目，拥有超过 8.5 万颗星，独特价值在于让开发者能像写 Markdown 一样用简单的文本语法生成流程图、时序图、思维导图等多种图表，无需学习复杂的绘图工具，完美融入技术文档和代码库，大幅提升了文档编写效率和可维护性。
+Mermaid 是将"图表即代码"理念发挥到极致的开源项目，让开发者能用简单的文本语法生成流程图、时序图、甘特图等10余种图表。它已成为 Markdown 文档生态的标准工具，被 GitHub、GitLab、Notion 等平台原生支持，85K+ 星标证明了其作为技术文档可视化首选方案的独特价值。
 
 **技术亮点**:
-- 纯 TypeScript 实现，轻量级无依赖，可在浏览器和 Node.js 环境中运行，支持服务端渲染
-- 提供简洁的类 Markdown 文本语法，学习曲线平缓，支持实时渲染和预览
-- 支持 10+ 种图表类型（流程图、时序图、类图、状态图、甘特图、ER图、思维导图等）
-- 与主流工具深度集成，已被 GitHub、GitLab、Notion、Obsidian 等平台原生支持
-- 采用 MIT 开源许可证，生态活跃，拥有丰富的插件和扩展支持
+- 纯 TypeScript 实现，可轻松集成到任何 JavaScript/TypeScript 项目
+- 支持 15+ 种图表类型：流程图、时序图、类图、状态图、甘特图、思维导图、ER图等
+- 零配置即可在 Markdown 中使用，兼容 GitHub/GitLab/Notion 等主流平台
+- 采用 MIT 许可证，企业友好，可自由商用和二次开发
+- 语法简洁直观，学习曲线平缓，非技术人员也能快速上手
 
 **适用场景**:
-- 技术文档编写：为 README、API 文档、架构设计文档添加可视化流程图和架构图，提升文档可读性
-- 开发团队协作：在 Pull Request 描述、Issue 评论中快速绘制时序图和状态图，帮助团队理解业务逻辑
-- 个人知识管理：在 Obsidian、Notion 等笔记软件中用文本快速构建思维导图和知识体系图谱
+- 技术团队编写 API 文档、架构设计文档和系统说明时，用代码方式维护流程图和架构图，避免传统绘图工具版本管理的痛点
+- 个人开发者或企业在 GitHub/GitLab 仓库中直接嵌入动态图表，实现文档与图表同步更新，提升文档可维护性
+- 开发团队在项目 Wiki、知识库和需求文档中快速创建可视化图表，无需依赖专业绘图工具
 
 
 
@@ -3833,7 +5590,7 @@ Mermaid 是"图表即代码"(Diagrams-as-Code)领域的标杆项目，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,308 |
+| Stars | 98,326 |
 | 语言 | JavaScript |
 | Forks | 7,349 |
 | Issues | 179 |
@@ -3842,19 +5599,19 @@ Mermaid 是"图表即代码"(Diagrams-as-Code)领域的标杆项目，拥有超�
 
 ---
 
-这是目前最受关注的 macOS 软件精选推荐项目，拥有超过 9.8 万颗星，为 Mac 用户提供了一个高质量的软件发现平台。项目持续更新维护，涵盖了生产力、开发、设计等多个领域的优质应用，是 Mac 用户探索和发现优秀软件的最佳入口。
+这是 macOS 生态系统中最受欢迎的软件精选列表，拥有近 10 万 Stars，为 Mac 用户提供了一个经过精心筛选的优质软件集合。该项目不仅帮助用户发现各领域的顶级应用，更是 macOS 开发者了解生态竞品和用户偏好的重要参考资源。
 
 **技术亮点**:
-- 采用 CC0 开放许可，允许自由使用和分享内容，降低使用门槛
-- 社区驱动的内容维护模式，确保软件列表的时效性和质量
-- 结构化的分类体系，涵盖应用、开发工具、系统工具等多个维度
-- 高活跃度的开源社区，持续的 PR 贡献和 Issue 讨论保证内容更新
-- 跨平台 Markdown 文档格式，易于在不同平台和工具中阅读和贡献
+- 超大规模社区协作维护：98K+ Stars 持续更新，体现了强大的社区活跃度和内容质量保证
+- 全生态覆盖：涵盖生产力、开发工具、设计软件、系统工具等多个垂直领域的精选应用
+- 结构化组织：采用 Awesome List 标准格式，方便用户快速检索和发现所需软件
+- 开源生态贡献：使用 CC0 许可证，鼓励自由分享和二次创作，降低了知识传播门槛
+- 跨平台适应性：虽然专注 macOS，但其组织模式可复用于其他平台的软件列表构建
 
 **适用场景**:
-- Mac 用户快速发现优质软件，避免在海量应用中浪费时间筛选
-- 开发者寻找 Mac 平台开发工具和环境配置的最佳实践参考
-- 企业和 IT 管理员为团队配置标准化的 macOS 软件工具集
+- Mac 用户寻找优质软件：无论是普通用户还是专业人士，都能在各分类下找到最适合的工具，避免在海量应用中迷失
+- 开发者生态研究：macOS 应用开发者可以了解市场竞品、用户需求和热门应用趋势，辅助产品定位和功能规划
+- 企业和团队工具选型：IT 管理者和团队负责人可以快速评估和推荐合适的 Mac 软件工具，提升团队协作效率
 
 
 
@@ -3872,28 +5629,28 @@ Mermaid 是"图表即代码"(Diagrams-as-Code)领域的标杆项目，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 163,873 |
+| Stars | 163,903 |
 | 语言 | Go |
-| Forks | 12,935 |
+| Forks | 12,933 |
 | Issues | 165 |
 | Topics | awesome, awesome-list, go, golang, golang-library, hacktoberfest |
 | 许可证 | MIT License |
 
 ---
 
-这是Go语言生态系统中最权威、维护最活跃的精选资源导航站，收录了超过100个类别的优质框架、库和软件。作为Go社区公认的"知识地图"，它为开发者提供了一站式的技术选型指南，极大提升了开发效率和项目质量。
+这是 Go 语言生态系统中最权威、最全面的资源导航库，由社区精心策划并持续维护，收录了从 Web 框架到 CLI 工具的数千个优质项目，是每位 Go 开发者必备的发现和学习平台，堪称 Go 世界的"藏宝图"。
 
 **技术亮点**:
-- 涵盖100+技术分类，包括Web框架、数据库、CLI工具、并发处理等全方位Go生态资源
-- 采用社区协作维护模式，确保资源质量和时效性，紧跟Go语言发展趋势
-- 严格的资源筛选标准，每个条目都经过实际验证，提供可靠的第三方库选择参考
-- 支持Hacktoberfest开源贡献活动，拥有活跃的社区参与度（16.3万+ Stars）
-- MIT开源许可，可自由用于商业和个人项目，无法律风险
+- 收录覆盖 Go 生态全领域：Web 框架、数据库、CLI 工具、并发、测试等 50+ 分类
+- 社区驱动的高质量内容筛选机制，确保收录的都是经过实践验证的优秀项目
+- 持续活跃维护，及时跟进 Go 语言新特性与生态发展趋势
+- 16.3k+ Stars 证明了其在 Go 社区的广泛认可度和影响力
+- 提供清晰的分类体系和项目链接，极大降低开发者寻找合适工具的时间成本
 
 **适用场景**:
-- 企业技术选型：技术团队评估和选择Go语言技术栈时的权威参考指南
-- 个人开发者学习：初学者快速了解Go生态系统全貌，系统学习各类库和工具
-- 项目架构设计：开发者在项目初期调研合适的框架和库，避免重复造轮子
+- Go 新手开发者：通过分类浏览快速学习 Go 生态系统的核心工具和最佳实践
+- 技术选型决策：在项目初期快速对比不同领域的解决方案，避免重复造轮子
+- 技术团队知识沉淀：团队内部参考和分享优质 Go 资源，统一技术栈选择标准
 
 
 
@@ -3914,113 +5671,35 @@ Mermaid 是"图表即代码"(Diagrams-as-Code)领域的标杆项目，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 126,589 |
+| Stars | 126,598 |
 | 语言 | JavaScript |
-| Forks | 12,424 |
+| Forks | 12,425 |
 | Issues | 2 |
 | Topics | astro, awesome-list, css, education, es6-javascript, git, html, javascript, learn-to-code, learning-resources, nodejs, programming, snippets |
 | 许可证 | Creative Commons Attribution 4.0 International |
 
 ---
 
-这是一个拥有12.6万+星标的超实用JavaScript代码片段精选库，专为开发者日常编码实践打造。项目以"30秒可理解"为核心理念，提供大量高质量、可直接复制使用的代码片段，是提升编码效率和技能的绝佳学习资源，适合从初学者到资深开发者的各个层级。
+这是目前 GitHub 上最受欢迎的 JavaScript 代码片段合集之一（超12.6万星标），提供了大量高质量的 JavaScript/TypeScript/CSS 简洁代码片段，每个都能在30秒内阅读理解并应用到实际项目中。该项目不仅是学习资源宝库，更是日常开发的实用代码参考手册，特别适合快速查找常见问题的优雅解决方案。
 
 **技术亮点**:
-- 涵盖ES6+现代JavaScript语法、Node.js、CSS和HTML等多个前端技术栈
-- 每个代码片段都经过精心设计，可在30秒内阅读和理解
-- 提供完整的代码示例和使用说明，便于快速集成到实际项目中
-- 覆盖数组操作、函数式编程、日期处理、字符串操作等常用开发场景
-- 采用Creative Commons许可，支持自由学习和分享
+- 涵盖 JavaScript ES6+、Node.js、CSS、HTML、Git 等多技术领域的实用代码片段库
+- 每个代码片段都经过精心设计，可在30秒内快速理解和掌握，符合现代开发最佳实践
+- 采用 Creative Commons 许可证，支持教育用途和代码重用
+- 代码片段分类清晰，包含数组操作、字符串处理、DOM 操作、算法实现等多个实用类别
+- 配套 Astro 构建的现代化文档网站，提供良好的学习和检索体验
 
 **适用场景**:
-- 日常开发中快速查找和复用常用代码片段，提升编码效率
-- JavaScript/前端开发者系统学习现代语法和最佳实践的学习资料
-- 技术面试前快速复习和巩固核心编程概念的知识库
+- 个人开发者日常开发时的代码参考库：快速查找数组操作、字符串处理、数据验证等常见功能的简洁实现方案，提升编码效率
+- 编程教育机构或培训课程的补充教材：通过简短易懂的代码示例帮助初学者理解 JavaScript 核心概念和现代语法特性
+- 企业团队开发规范制定参考：学习最佳实践的代码片段，建立团队的代码规范和常用工具函数库
 
 
 
-## 📁 其他 (84 个项目)
+## 📁 其他 (62 个项目)
 
 
 ### 🌟 高优先级
-
-
-### OpenBB-finance/OpenBB
-
-**描述**: Financial data platform for analysts, quants and AI agents.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 59,656 |
-| 语言 | Python |
-| Forks | 5,811 |
-| Issues | 53 |
-| Topics | ai, crypto, derivatives, economics, equity, finance, fixed-income, machine-learning, openbb, options, python, quantitative-finance, stocks |
-| 许可证 | Other |
-
----
-
-OpenBB是金融数据分析和量化研究的标杆级开源项目，为金融分析师、量化研究员和AI智能体提供统一的金融数据平台。其独特价值在于整合了股票、加密货币、衍生品、固定收益、宏观经济等多维度数据源，结合Python生态系统和机器学习工具，大幅降低金融数据获取和分析的门槛，是59,000+星标的金融科技领域必备工具。
-
-**技术亮点**:
-- 统一API接口整合多源金融数据（股票、期权、期货、加密货币、宏观经济等）
-- 原生支持AI Agent集成，为大语言模型提供实时金融数据查询能力
-- 强大的Python工具链，适配Pandas、NumPy、Scikit-learn等主流数据科学库
-- 灵活的命令行界面(CLI)和Python SDK，支持Jupyter Notebook交互式分析
-- 量化策略友好设计，内置回测和技术指标计算功能
-
-**适用场景**:
-- 量化交易策略开发与回测：量化研究员可快速获取多资产类别历史数据和实时行情，构建并测试交易策略
-- AI金融智能体开发：为LLM和Agent应用提供结构化金融数据接口，构建智能投顾、财报分析、市场预测等AI应用
-- 金融数据可视化与报告生成：分析师批量处理市场数据，生成自动化图表和PDF报告，提升工作效率
-
-
-
-### huggingface/transformers
-
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in Python
-
-**质量评分**: 98/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 155,970 |
-| 语言 | Python |
-| Forks | 31,911 |
-| Issues | 2,201 |
-| Topics | audio, deep-learning, deepseek, gemma, glm, hacktoberfest, llm, machine-learning, model-hub, natural-language-processing, nlp, pretrained-models, python, pytorch, pytorch-transformers, qwen, speech-recognition, transformer, vlm |
-| 许可证 | Apache License 2.0 |
-
----
-
-Transformers 是 Hugging Face 推出的全球最流行的深度学习框架之一，拥有超过 15.5 万颗星，是现代 NLP 和多模态 AI 开发的行业标准工具。它提供了统一的 API 接口，支持 PyTorch、JAX 和 TensorFlow，让开发者能够轻松访问和使用数万个预训练模型，极大地降低了 AI 应用的开发门槛。
-
-**技术亮点**:
-- 支持文本、视觉、音频和多模态等多种 AI 任务类型的一体化框架
-- 提供 10 万+ 预训练模型的 Model Hub 生态系统，包括 BERT、GPT、LLaMA、DeepSeek、Gemma、Qwen 等主流模型
-- 同时兼容 PyTorch、TensorFlow 和 JAX 三大主流深度学习框架
-- 涵盖自然语言处理、语音识别、计算机视觉、大型语言模型 (LLM) 和视觉语言模型 (VLM) 等前沿技术
-- 采用 Apache 2.0 开源许可证，社区活跃，文档完善，适合商业和学术研究
-
-**适用场景**:
-- 企业 AI 应用开发：快速构建聊天机器人、智能客服、文档分析、内容生成等企业级应用，利用预训练模型显著降低训练成本和开发周期
-- 学术研究与实验：研究人员可以快速复现 SOTA 论文结果，进行模型微调和对比实验，支持从 NLP 到多模态的各类研究任务
-- 个人开发者与初创团队：通过简单 API 快速集成先进 AI 能力到个人项目或产品中，无需从头训练模型，加速产品迭代和上市
-
 
 
 ### openclaw/openclaw
@@ -4037,28 +5716,28 @@ Transformers 是 Hugging Face 推出的全球最流行的深度学习框架之�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 125,530 |
+| Stars | 130,764 |
 | 语言 | TypeScript |
-| Forks | 17,874 |
-| Issues | 1,854 |
+| Forks | 18,847 |
+| Issues | 2,089 |
 | Topics | ai, assistant, crustacean, molty, openclaw, own-your-data, personal |
 | 许可证 | MIT License |
 
 ---
 
-OpenClaw 是一个拥有超过12.5万星的顶尖开源AI助手项目，采用TypeScript构建，完全遵循MIT开源协议。它的核心价值在于"Any OS. Any Platform"的跨平台特性和"own-your-data"的数据主权理念，让用户能够在任何操作系统和平台上部署专属的AI助手，同时完全掌控自己的数据，完美平衡了便利性与隐私安全。
+OpenClaw 是一个跨平台的个人 AI 助手项目，拥有超过 13 万 stars 的超高人气。其独特价值在于"Any OS. Any Platform"的跨平台兼容性，以及"Own Your Data"的数据主权理念，让用户可以在任何操作系统上部署属于自己的 AI 助手，完全掌控个人数据隐私。
 
 **技术亮点**:
-- 🎯 跨平台架构设计：支持任意操作系统和平台，实现真正意义上的无处不在的AI助手体验
-- 🔒 数据主权优先：基于'own-your-data'理念，确保用户数据完全本地化掌控，隐私安全无忧
-- 💎 TypeScript技术栈：采用现代TypeScript开发，提供类型安全和卓越的开发体验
-- 🦞 独特的Lobster主题：项目具有鲜明的品牌特色和社区文化（crustacean/molty主题）
-- 📦 MIT开源许可：采用最宽松的MIT协议，允许自由使用、修改和商业化集成
+- 🔒 Own Your Data：数据所有权在用户手中，隐私可控
+- 🌐 跨平台架构：支持 Any OS. Any Platform，一次开发多端运行
+- 💪 TypeScript 技术栈：类型安全 + 现代化开发体验
+- 🦞 独特的龙虾主题设计：个性鲜明的产品定位（Molty & Crustacean）
+- 🚀 高活跃度社区：130K+ stars 表明强大的社区认可度和持续迭代能力
 
 **适用场景**:
-- 🏠 个人智能助手：在家用电脑、笔记本等多种设备上部署私有AI助手，管理日常任务、自动化工作流，同时确保个人隐私数据完全本地化
-- 🏢 企业数据安全方案：为企业提供内部AI助手解决方案，确保敏感业务数据不出企业内部网络，符合数据合规要求
-- 🔧 开发者定制平台：基于开源代码进行二次开发和深度定制，集成到自有产品或服务中，打造品牌化AI助手体验
+- 🏠 个人用户：在本地设备（Windows/macOS/Linux）部署专属 AI 助手，保护聊天记录和个人数据隐私
+- 🏢 企业团队：搭建内部私有化 AI 助手系统，确保商业数据不外泄至第三方服务
+- 🛠️ 开发者学习：基于 TypeScript 和 AI 助手架构的实践学习平台，适合二次开发定制化需求
 
 
 
@@ -4076,28 +5755,28 @@ OpenClaw 是一个拥有超过12.5万星的顶尖开源AI助手项目，采用Ty
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,839 |
+| Stars | 67,847 |
 | 语言 | Python |
-| Forks | 24,212 |
+| Forks | 24,213 |
 | Issues | 840 |
 | Topics | ansible, python |
 | 许可证 | GNU General Public License v3.0 |
 
 ---
 
-Ansible 是 IT 自动化领域的标杆项目，拥有 67,839+ 星标和庞大的开源社区支持。其最大的独特价值在于：零代理架构 + 接近自然英语的 YAML 语法，让自动化变得极其简单，无需在被管理节点安装任何软件即可通过 SSH 实现全方位自动化管理。
+Ansible 是全球领先的 IT 自动化平台，以其"代理无依赖"和"类人语言"的设计哲学独树一帜。拥有近 6.8 万颗星证明其被广泛认可，特别适合需要快速上手、统一管理混合云基础设施的团队，能将复杂的运维工作转化为可读性强的自动化脚本。
 
 **技术亮点**:
-- 零代理（Agentless）架构：使用 SSH 进行远程连接，无需在目标系统安装任何代理软件，降低了安全风险和维护成本
-- 声明式 YAML 语法：采用易于阅读和编写的 Playbook 格式，接近自然英语表达，学习曲线平缓
-- 跨平台支持：可自动化管理 Linux、Windows、网络设备、云平台等多种异构环境
-- 幂等性设计：重复执行相同操作不会产生副作用，确保系统状态的一致性和可预测性
-- 模块化扩展：提供 5,000+ 内置模块覆盖各种操作场景，同时支持自定义模块开发
+- • 采用纯 Python 开发，基于 SSH 协议实现无代理（Agentless）架构，无需在远程系统安装额外组件
+- • 使用接近自然英语的 YAML 语法编写 Playbook，降低自动化脚本的编写门槛和维护成本
+- • 幂等性设计确保重复执行操作的安全性，避免重复部署带来的副作用
+- • 模块化架构支持从代码部署、网络配置到云管理的全栈自动化能力
+- • 开源社区活跃，拥有丰富的模块生态系统和完善的官方文档
 
 **适用场景**:
-- 配置管理自动化：统一管理服务器配置、软件安装、系统服务状态，确保环境一致性
-- 应用部署与 CI/CD：从代码部署到滚动更新，实现应用的自动化交付流程
-- 网络与基础设施自动化：自动化网络设备配置（路由器、交换机）、云资源编排（AWS/Azure/GCP）
+- • 企业级 DevOps 团队用于统一管理混合云环境和多地域服务器集群
+- • 运维工程师批量配置网络设备、部署应用和实施系统更新
+- • 开发者通过 CI/CD 流水线集成实现基础设施即代码（IaC）的自动化交付
 
 
 
@@ -4115,105 +5794,27 @@ Ansible 是 IT 自动化领域的标杆项目，拥有 67,839+ 星标和庞大�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,246 |
+| Stars | 59,262 |
 | 语言 | Python |
-| Forks | 6,048 |
+| Forks | 6,050 |
 | Issues | 299 |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Crawl4AI 是一款专为 AI 应用场景设计的现代化网络爬虫工具，以其独特的大模型友好特性脱颖而出。项目拥有近6万星的惊人人气，提供了智能内容提取、多模态支持和零配置部署等创新功能，是构建 LLM 应用的理想数据采集基础设施。
+Crawl4AI 是一款专为 LLM 优化的开源网页爬虫与数据抓取工具，拥有超过 5.9 万颗星，是目前最受欢迎的 AI 数据采集解决方案。该项目独特之处在于直接面向大语言模型需求设计，能够智能提取、清洗和结构化网页内容，为 RAG 系统、知识库构建提供高质量的数据源，解决了传统爬虫无法直接适配 AI 应用的痛点。
 
 **技术亮点**:
-- LLM 友好设计：自动提取结构化数据（Markdown、JSON），优化输出格式直接适配大模型输入
-- 智能多模态支持：集成 OCR、屏幕截图和媒体提取功能，可爬取图文混合的复杂网页内容
-- 零代码操作：提供 CLI 工具和简单的 Python API，无需复杂配置即可快速启动爬取任务
-- AI 驱动的智能提取：内置 CSS 选择器生成、内容清洗和去重等智能化功能
-- 现代化架构：异步高性能设计，支持并发爬取，适配最新的网页技术栈
+- 🤖 LLM 原生设计：输出格式专门针对大语言模型优化，直接生成 Markdown、JSON 等 AI 友好的结构化数据
+- 🧠 智能内容提取：自动识别和提取网页核心内容，过滤广告、导航栏等噪音，保留有价值的信息
+- 🔄 多模态支持：支持文本、图片、表格等多种内容类型的抓取和转换
+- ⚡ 高性能异步架构：基于 Python 异步编程实现，支持并发爬取，提升大规模数据采集效率
+- 🛡️ 企业级特性：提供反爬虫策略处理、代理支持、错误重试等生产环境必需功能
 
 **适用场景**:
-- AI 应用开发：为 RAG 系统、知识库构建、聊天机器人训练等场景提供高质量网页数据源
-- 企业数据采集：用于竞品分析、舆情监控、市场研究等业务场景的结构化数据获取
-- 内容聚合平台：快速构建新闻聚合、行业资讯追踪等内容抓取和分析系统
-
-
-
-### Comfy-Org/ComfyUI
-
-**描述**: The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 90/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 102,030 |
-| 语言 | Python |
-| Forks | 11,565 |
-| Issues | 3,616 |
-| Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
-| 许可证 | GNU General Public License v3.0 |
-
----
-
-ComfyUI 是目前最强大、最模块化的扩散模型图形界面框架，凭借其创新的节点/图（node/graph）设计，彻底改变了AI图像生成的工作流程。其超过10万颗星的惊人人气和高度可扩展的架构，使其成为AI创作者、研究人员和企业级应用开发者的首选工具，完美平衡了易用性与灵活性。
-
-**技术亮点**:
-- 🎨 独创的节点式（Node-based）图形界面，通过可视化拖拽构建复杂AI工作流，无需编码即可实现高级功能
-- 🔧 高度模块化的后端架构，支持灵活自定义节点和插件，可轻松扩展功能
-- 🚀 强大的API和后端支持，既可独立运行GUI，也可作为服务集成到其他应用中
-- ⚡️ 基于PyTorch和Stable Diffusion深度优化，提供业界领先的性能和推理速度
-- 🌐 开源GPL v3.0许可，拥有活跃的社区生态系统，持续迭代更新
-
-**适用场景**:
-- 💡 个人创作者：插画师、设计师、艺术家可快速搭建个性化AI图像生成工作流，创作高质量视觉作品
-- 🏢 企业开发：可基于ComfyUI的API和后端构建企业级AI图像服务，集成到内容平台、营销工具等产品中
-- 🔬 AI研究：研究人员可利用其模块化架构快速搭建实验环境，测试和优化扩散模型算法
-
-
-
-### pytorch/pytorch
-
-**描述**: Tensors and Dynamic neural networks in Python with strong GPU acceleration
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 90/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 97,073 |
-| 语言 | Python |
-| Forks | 26,701 |
-| Issues | 17,996 |
-| Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
-| 许可证 | Other |
-
----
-
-PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图和直观的 Pythonic 设计，已成为学术研究和工业界的首选工具。该项目拥有超过 9.7 万颗星，拥有庞大的开源社区支持，提供从研究原型到生产部署的完整解决方案，是任何从事 AI/ML 开发者必备的核心工具。
-
-**技术亮点**:
-- 动态计算图（Define-by-Run）机制，支持灵活的网络构建和实时调试，相比静态图框架更符合 Python 编程习惯
-- 强大的自动微分系统（autograd），自动计算梯度并支持复杂的反向传播逻辑
-- 原生 GPU 加速支持，通过 CUDA 和相关后端实现高效的张量运算和神经网络训练
-- 与 NumPy 无缝集成的张量操作接口，提供熟悉的 API 设计和丰富的数学运算函数
-- 完整的深度学习生态系统，包含 torchvision、torchaudio 等扩展库，支持计算机视觉、NLP 等多种任务
-
-**适用场景**:
-- 学术研究与论文复现：研究人员可快速构建和实验新型神经网络架构，动态图特性便于调试和迭代
-- 工业级 AI 应用开发：企业开发者可利用其生产部署工具（如 TorchServe）构建大规模机器学习服务
-- 深度学习教育与培训：学生和初学者通过直观的 API 学习深度学习原理，社区提供丰富的教程和示例代码
+- 📚 RAG 系统构建：为大语言模型应用爬取和准备训练数据、知识库内容，构建检索增强生成系统的数据基础
+- 🔍 企业数据采集：企业用于竞品分析、市场调研、舆情监控等，自动化采集和结构化处理公开网页数据
+- 🎓 学术研究与知识管理：研究人员和学生用于收集论文、文章等学术资源，构建个人或机构的知识库
 
 
 
@@ -4231,28 +5832,28 @@ PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,210 |
+| Stars | 112,310 |
 | 语言 | Unknown |
-| Forks | 29,230 |
+| Forks | 29,245 |
 | Issues | 119 |
 | Topics | ai, bolt, cluely, copilot, cursor, cursorai, devin, github-copilot, lovable, open-source, perplexity, replit, system-prompts, trae, trae-ai, trae-ide, v0, vscode, windsurf, windsurf-ai |
 | 许可证 | GNU General Public License v3.0 |
 
 ---
 
-这是一个收集了30+主流AI开发工具的系统提示词、内部工具和AI模型的宝贵资源库，包含Cursor、Claude Code、Devin AI、Windsurf等热门工具的完整配置。该项目具有极高的参考价值和实用性，帮助开发者深入了解各AI工具的核心设计逻辑和实现细节。
+这是目前最全面的 AI 编程工具系统提示词合集，收录了 30+ 主流 AI 开发工具（包括 Cursor、Replit、v0、Devin AI 等）的核心 System Prompts 和内部配置。对于 AI 工具研究者、开发者和技术团队来说，这是一份极具参考价值的"内部文档"，能够深入理解各工具的底层实现逻辑和提示工程策略，具有不可替代的研究价值和实践意义。
 
 **技术亮点**:
-- 覆盖30+个主流AI开发工具的系统提示词和内部配置，包括Cursor、Windsurf、Devin AI、Replit、v0等热门工具
-- 提供了AI工具背后的底层模型架构和系统提示词的完整实现细节
-- 包含多个开源AI工具的完整源代码和技术实现方案
-- 持续更新的综合性资源库，收录最新的AI开发工具和IDE配置
-- 开源且采用GPL v3.0许可证，便于学习和二次开发
+- 收录 30+ 主流 AI 编程工具的完整 System Prompts，涵盖 Cursor、Windsurf、Devin AI、Replit、v0.dev 等热门平台
+- 提供 AI 工具的内部工具配置和模型架构信息，揭示各产品的技术实现细节
+- 开源 GPL-3.0 许可，允许自由研究、学习和二次开发
+- 持续更新的资源库，包含最新 AI 编程工具（如 Trae IDE、Windsurf 等）的系统提示词
+- 涵盖从代码生成（Bolt.new、Lovable）到 AI 助手（Cluely、Perplexity）等多个细分领域的工具配置
 
 **适用场景**:
-- AI开发者研究：深入了解主流AI工具的系统提示词设计模式和最佳实践
-- 产品开发参考：为构建自己的AI编码助手或AI开发工具提供设计灵感和技术参考
-- 企业内部工具开发：学习和借鉴成熟AI工具的架构设计，提升企业内部AI工具开发效率
+- AI 工具开发者可研究竞品的 System Prompts 设计模式，优化自身产品的提示工程策略
+- 技术团队和研究者可深入分析各 AI 编程工具的能力边界和实现机制，为技术选型提供依据
+- 个人开发者可学习顶尖 AI 工具的提示词工程最佳实践，提升自己的 AI 编程效率
 
 
 
@@ -4270,7 +5871,7 @@ PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 381,478 |
+| Stars | 381,507 |
 | 语言 | Python |
 | Forks | 65,819 |
 | Issues | 109 |
@@ -4279,19 +5880,19 @@ PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图
 
 ---
 
-这是全球最大的免费编程书籍精选集合项目，拥有38万+星标。项目通过社区协作维护，涵盖从入门到精通的完整编程学习资源，是所有开发者和学习者不可或缺的知识宝库，其独特价值在于高质量、免费且持续更新的系统性学习资源聚合。
+这是一个拥有超38万星的传奇项目，聚合了全球免费的编程学习资源，涵盖各种编程语言和技术领域。其独特价值在于系统性、持续更新的精选书单，为开发者提供零成本的高质量学习路径，是开源教育领域的标杆项目。
 
 **技术亮点**:
-- 基于Python构建的自动化资源管理系统，支持大规模书籍元数据维护
-- 社区驱动的协作模式，采用Markdown结构化组织便于贡献和更新
-- 完善的分类体系，涵盖多种编程语言、框架和计算机科学领域
-- Creative Commons CC BY 4.0开源许可证，确保资源自由分享和再利用
-- 持续维护的Issue和PR工作流，保证资源质量和时效性
+- 规模超38万星，是GitHub上最受欢迎的教育类仓库之一
+- 采用Python自动化脚本维护，确保资源列表的持续更新和高质量
+- 使用Creative Commons许可证，完全开放共享，促进知识自由传播
+- 涵盖数百种编程语言和技术领域，资源分类清晰系统
+- 社区驱动的协作模式，接受PR贡献，保持资源与时俱进
 
 **适用场景**:
-- 个人开发者自学：为初学者到高级开发者提供系统化的免费学习路径，涵盖从Python、JavaScript到机器学习等全技术栈
-- 企业培训资源：技术团队可利用该项目的精选书籍作为员工技术培训和学习参考，降低培训成本
-- 教育机构补充材料：学校和培训机构可将该资源库作为计算机科学课程的辅助教材和参考书目
+- 个人开发者自学：零成本获取高质量编程书籍，系统学习新技术栈
+- 教育培训机构：作为推荐书单或课程参考资源，降低教学材料成本
+- 企业技术团队：构建内部学习资源库，提升团队技术能力
 
 
 
@@ -4309,28 +5910,28 @@ PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 110,792 |
+| Stars | 110,812 |
 | 语言 | TypeScript |
-| Forks | 5,484 |
-| Issues | 321 |
+| Forks | 5,488 |
+| Issues | 343 |
 | Topics | iptv, m3u, playlist, streams, tv |
 | 许可证 | The Unlicense |
 
 ---
 
-这是一个独特的**全球公开IPTV频道资源库项目**，拥有超过11万星标，为开发者提供了来自世界各地的免费电视流媒体频道集合。项目采用开源协作模式维护频道列表，是构建IPTV应用、测试流媒体功能或学习M3U播放列表格式的最佳参考资源库。
+这是全球最大的开源 IPTV 频道合集项目，拥有超过 11 万星标，提供了来自世界各地的免费电视频道资源。项目采用 The Unlicense 开源许可，完全免费且无使用限制，为开发者和用户提供了高质量的 M3U 播放列表资源，是 IPTV 领域的标杆项目。
 
 **技术亮点**:
-- 使用TypeScript构建，采用现代化的静态类型系统确保代码质量和可维护性
-- 基于标准M3U播放列表格式，兼容性强，支持各类流媒体播放器和应用
-- 采用自动化CI/CD流程验证频道可用性，确保资源库质量和更新频率
-- 提供结构化的频道分类系统（按国家、语言、类型等维度组织）
-- 采用The Unlicense许可证，提供最大限度的自由使用权限，无版权限制
+- 采用 TypeScript 开发，提供类型安全的代码基础和维护性
+- 标准化 M3U 播放列表格式，兼容主流媒体播放器（VLC、Kodi、PotPlayer 等）
+- 持续的自动化频道验证和更新机制，确保链接可用性
+- 按国家/地区/语言分类管理全球 10000+ 频道资源
+- GitHub Actions 自动化工作流，实现频道列表的动态维护和质量监控
 
 **适用场景**:
-- 个人开发者：快速构建IPTV播放器原型，或开发基于免费频道的流媒体聚合应用
-- 企业团队：作为测试数据源验证视频播放SDK、CDN分发或流媒体处理引擎的兼容性
-- 教育/研究：学习M3U格式规范、研究IPTV协议实现，或作为流媒体技术课程的实践案例
+- 个人媒体中心搭建：配合 Jellyfin、Plex、Kodi 等媒体服务器，免费观看全球电视频道
+- 流媒体应用开发：为 IPTV 播放器应用提供现成的频道数据源，快速构建产品原型
+- 跨地区内容测试：为企业或开发者提供多地区直播流测试资源，验证媒体应用的兼容性和稳定性
 
 
 
@@ -4348,145 +5949,28 @@ PyTorch 是当今最流行的深度学习框架之一，凭借其动态计算图
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,166 |
+| Stars | 95,234 |
 | 语言 | TypeScript |
-| Forks | 6,975 |
-| Issues | 123 |
+| Forks | 6,980 |
+| Issues | 121 |
 | Topics | clash, clash-meta, clash-verge, linux, mac, mihomo, tauri-app, windows |
 | 许可证 | GNU General Public License v3.0 |
 
 ---
 
-Clash Verge Rev 是一款基于 Tauri 构建的现代化跨平台代理客户端，拥有近 10 万星标，以其轻量高效、跨平台支持和强大的代理功能而备受推崇，是目前 Clash 生态中最受欢迎的 GUI 客户端之一。
+Clash Verge Rev 是目前最受欢迎的跨平台代理客户端之一，拥有超9.5万颗星。它基于现代化 Tauri 框架构建，相比传统 Electron 应用更轻量高效，同时完美支持 Clash Meta (Mihomo) 内核，为 Windows、macOS 和 Linux 用户提供统一、流畅且功能强大的代理管理体验。
 
 **技术亮点**:
-- 基于 Tauri 框架构建，相比 Electron 更轻量高效，内存占用更低，启动速度更快
-- 支持 Clash Meta（Mihomo）核心，提供更强大的规则引擎和协议支持（如 VLESS、Reality 等）
-- 跨平台支持 Windows、macOS 和 Linux，提供一致的用户体验
-- 采用 TypeScript 开发，类型安全保证代码质量和维护性
-- 支持订阅管理、规则分流、TCP/UDP over TUN 等高级代理功能
+- 基于 Tauri 框架开发，相比 Electron 实现更小的安装包体积和更低的内存占用
+- 完整支持 Clash Meta (Mihomo) 内核，提供最新的代理协议支持和规则引擎
+- 使用 TypeScript 编写，代码类型安全，易于维护和社区贡献
+- 跨平台统一体验：原生支持 Windows、macOS 和 Linux 三大操作系统
+- 现代化的图形界面设计，提供流畅的用户交互和可视化配置管理
 
 **适用场景**:
-- 企业开发团队的统一代理客户端：支持 Windows/macOS/Linux 多平台，适合团队标准化部署，访问内网资源或海外 API
-- 个人开发者的网络加速工具：轻松配置规则分流，支持 GitHub、Stack Overflow 等开发资源的稳定访问
-- 内网渗透测试与网络调试：提供 TUN 模式和高级路由规则，适合安全研究人员进行网络流量分析
-
-
-
-### kubernetes/kubernetes
-
-**描述**: Production-Grade Container Scheduling and Management
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 120,188 |
-| 语言 | Go |
-| Forks | 42,344 |
-| Issues | 2,601 |
-| Topics | cncf, containers, go, kubernetes |
-| 许可证 | Apache License 2.0 |
-
----
-
-Kubernetes是云原生领域的行业标准，由Google发起并贡献给CNCF，已成为容器编排的事实标准。作为生产级容器调度和管理平台，Kubernetes提供了企业所需的可靠性、可扩展性和丰富生态系统，是现代云原生应用基础设施的首选解决方案。
-
-**技术亮点**:
-- 生产级容器编排引擎，支持大规模容器集群的自动化部署、扩展和管理
-- 强大的服务发现和负载均衡机制，内置DNS和Ingress控制器
-- 声明式API和控制器模式，实现自我修复和状态自动协调
-- 丰富的资源管理能力：支持Pod、Service、Deployment、StatefulSet等多种工作负载
-- CNCF毕业项目，拥有活跃的社区支持和庞大的第三方插件生态系统
-
-**适用场景**:
-- 企业级微服务架构部署与治理：适合大型企业将单体应用拆分为微服务并进行统一管理
-- 云原生应用平台构建：作为云服务商或企业内部PaaS平台的核心基础设施
-- 混合云和多云环境管理：统一管理跨不同云提供商和本地数据中心的容器化工作负载
-
-
-
-### moby/moby
-
-**描述**: The Moby Project - a collaborative project for the container ecosystem to assemble container-based systems
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 71,432 |
-| 语言 | Go |
-| Forks | 18,888 |
-| Issues | 3,780 |
-| Topics | containers, docker, go, golang |
-| 许可证 | Apache License 2.0 |
-
----
-
-Moby 是容器生态系统的核心项目，为 Docker 提供了底层技术支持。作为 71k+ stars 的顶级开源项目，它是学习容器架构、参与容器技术发展的最佳入口，特别适合希望深入理解容器化技术的开发者。
-
-**技术亮点**:
-- 模块化组件架构，可灵活组装自定义容器系统
-- 提供完整的容器生态系统工具链和库
-- 基于 Go 语言开发，性能优异且易于扩展
-- 遵循 Apache 2.0 许可证，企业级友好开源协议
-- Docker 官方底层实现，行业标准技术参考
-
-**适用场景**:
-- 企业级容器平台构建：基于 Moby 组件开发定制化容器解决方案
-- 容器技术学习与研究：深入理解容器底层原理和实现机制
-- 云原生应用开发：构建微服务架构和容器化部署系统
-
-
-
-### go-gitea/gitea
-
-**描述**: Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 53,489 |
-| 语言 | Go |
-| Forks | 6,362 |
-| Issues | 2,854 |
-| Topics | bitbucket, cicd, devops, docker-registry-v2, git, git-gui, git-server, gitea, github, github-actions, gitlab, go, golang, hacktoberfest, maven-server, npm-registry, vue |
-| 许可证 | MIT License |
-
----
-
-Gitea 是一款轻量级的自托管 Git 服务，兼具 GitHub/GitLab 的核心功能与出色的易部署性。其采用 Go 语言构建，性能优异且资源占用极低，特别适合寻求私有化代码托管与 DevOps 一体化解决方案的团队，是开源替代商业平台的首选项目。
-
-**技术亮点**:
-- 采用 Go 语言开发，单二进制文件部署，性能优异且资源占用低（最低可运行在树莓派上）
-- 提供完整的一站式开发服务：Git 托管、代码审查、团队协作、包Registry（npm/maven/Docker等）以及 CI/CD
-- 支持 GitHub/GitLab 迁移和 API 兼容，采用 MIT 宽松许可证，53k+ Stars 社区活跃
-- 前端使用 Vue.js 构建，后端 Go 实现可扩展架构，支持 PostgreSQL/MySQL/SQLite/ MSSQL 多种数据库
-- 内置 Docker Registry v2、GitHub Actions 工作流兼容，支持 Actions 插件生态系统
-
-**适用场景**:
-- 企业私有化代码托管与协作平台：替代 GitHub/GitLab，数据自主可控
-- 个人开发者或小团队的轻量级自托管 Git 服务：资源占用低，部署简单
-- 一体化 DevOps 平台：集成代码管理、CI/CD 流水线和包管理 Registry
+- 个人开发者或技术爱好者需要稳定、高效的代理工具进行网络访问和调试
+- 企业IT部门统一管理多平台员工设备的网络代理配置
+- 跨平台开发者在不同操作系统间保持一致的网络代理环境和工作流
 
 
 
@@ -4504,67 +5988,28 @@ Gitea 是一款轻量级的自托管 Git 服务，兼具 GitHub/GitLab 的核心
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,568 |
+| Stars | 47,571 |
 | 语言 | Go |
-| Forks | 10,198 |
+| Forks | 10,197 |
 | Issues | 1,923 |
 | Topics | cloud, cloud-management, graph, infrastructure-as-code, terraform |
 | 许可证 | Other |
 
 ---
 
-Terraform 是基础设施即代码(IaC)领域的行业标准工具，拥有47k+ stars和庞大的社区支持。它独特的声明式配置语言和跨云平台能力，让团队能够像管理应用代码一样安全、可预测地管理基础设施，是现代DevOps和云原生架构的必备工具。
+Terraform是基础设施即代码(IaC)领域的行业标准工具，拥有47K+星标和庞大的社区支持。它独特的声明式配置语言让团队能够安全、可预测地管理跨云平台的基础设施，同时通过状态管理和执行计划等机制确保了基础设施变更的可控性和安全性。
 
 **技术亮点**:
-- 声明式配置语法：通过HCL语言描述期望状态，自动计算执行计划
-- 多云平台支持：统一的DSL抽象层，支持AWS、Azure、GCP等数百个云服务商
-- 状态管理与依赖图：内置有向图系统，智能解析资源依赖关系
-- 基础设施即代码：支持版本控制、代码审查、CI/CD集成
-- 源可用工具：开源生态系统丰富，拥有庞大的社区贡献的Provider插件
+- 声明式配置语言：通过HCL（HashiCorp Configuration Language）以代码方式定义基础设施，简化复杂环境管理
+- 强大的状态管理：维护资源状态映射，实现变更预览和依赖关系自动解析
+- 多云平台支持：统一管理AWS、Azure、GCP等数百个云服务提供商的资源
+- 执行计划机制：dry-run模式让用户在实际应用变更前预览影响范围
+- 模块化架构：支持可复用的模块创建，便于团队共享和标准化基础设施代码
 
 **适用场景**:
-- 企业云基础设施管理：统一管理多云、混合云资源，提升运维效率
-- DevOps自动化部署：与CI/CD流水线集成，实现基础设施的自动化创建和变更
-- 开发测试环境搭建：快速创建和销毁开发/测试环境，降低资源成本
-
-
-
-### gogs/gogs
-
-**描述**: Gogs is a painless self-hosted Git service
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 47,509 |
-| 语言 | Go |
-| Forks | 5,074 |
-| Issues | 957 |
-| Topics | docker, git, go, gogs, mysql, postgresql, raspberry-pi, scip-enabled, self-hosted, sqlite3 |
-| 许可证 | MIT License |
-
----
-
-Gogs 是一款极轻量级、易部署的自托管 Git 服务，相比 GitHub Enterprise 和 GitLab 具有显著优势。它的独特价值在于能够在低至 Raspberry Pi 这样的资源受限设备上运行，完美平衡了功能完整性与部署简洁性，是追求轻量和自主可控团队的最佳选择。
-
-**技术亮点**:
-- 采用 Go 语言编写，单一二进制文件即可运行，部署极其简单
-- 支持多种主流数据库后端（SQLite3、MySQL、PostgreSQL），灵活适配不同规模需求
-- 超低资源占用，可在树莓派等轻量级设备上流畅运行
-- 完全开源且 MIT 许可证，代码透明度高，支持 SCIP 语义协议
-- 自托管架构，数据完全自主可控，无需依赖第三方云服务
-
-**适用场景**:
-- 中小型团队或企业的内部代码仓库托管平台，需要完全自主可控且预算有限
-- 个人开发者或小团队在 Raspberry Pi 或低配置服务器上搭建私有 Git 服务
-- 对数据隐私和安全要求较高的组织，需要在内网环境部署自托管的代码协作平台
+- 企业多云环境管理：统一管理跨多个云平台的基础设施资源，实现一致性和可维护性
+- DevOps自动化流程：集成到CI/CD流水线，实现基础设施的自动化部署和版本控制
+- 开发测试环境快速搭建：开发人员通过配置文件快速创建和销毁临时环境，降低成本
 
 
 
@@ -4582,28 +6027,28 @@ Gogs 是一款极轻量级、易部署的自托管 Git 服务，相比 GitHub En
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 94,061 |
+| Stars | 94,090 |
 | 语言 | C++ |
-| Forks | 14,695 |
-| Issues | 1,047 |
+| Forks | 14,698 |
+| Issues | 1,049 |
 | Topics | ggml |
 | 许可证 | MIT License |
 
 ---
 
-llama.cpp 是最受欢迎的开源 LLM 推理引擎之一，通过纯 C/C++ 实现实现了轻量级、高性能的大模型本地部署方案。该项目打破了 Python 生态依赖，让在 CPU/Apple Silicon 甚至低端 GPU 上运行大语言模型成为可能，是个人开发者、边缘计算场景的首选方案。
+llama.cpp是当前最受欢迎的LLM推理框架之一，以纯C/C++实现实现了在消费级硬件上高效运行大语言模型的突破。该项目通过ggml张量库优化了内存使用和计算效率，让个人开发者和企业能够在普通CPU甚至Apple Silicon芯片上流畅运行大模型，极大降低了AI应用的部署门槛和成本。
 
 **技术亮点**:
-- 纯 C/C++ 实现，无需 Python 依赖，极大降低部署复杂度和资源占用
-- 基于 ggml 张量库，提供高效的矩阵运算和量化支持（支持 4-bit、5-bit 等量化方案）
-- 优秀的硬件兼容性：原生支持 CPU、Apple Metal (MPS)、CUDA、ROCm 等多种计算平台
-- 极致的内存优化，通过模型量化让消费级硬件也能运行大参数模型
-- 简单易用的 API 设计，提供命令行工具和 C++ API 两种使用方式
+- 纯C/C++实现，无复杂依赖，编译和部署极其简单
+- 基于ggml张量运算库，针对CPU和Apple Silicon进行了深度优化
+- 支持多种量化格式（4-bit/5-bit/8-bit），显著降低内存占用
+- 提供完整的推理能力，包括KV缓存、多批处理、流式生成等核心功能
+- 活跃的社区支持，已集成数十种主流开源模型（Llama、Mistral、Qwen等）
 
 **适用场景**:
-- 个人开发者在本地电脑（MacBook、普通 PC）上运行大语言模型进行离线开发和测试
-- 边缘计算和嵌入式场景，在资源受限设备上部署 AI 推理能力
-- 企业内部部署私有化 LLM 服务，满足数据隐私和本地化需求
+- 个人开发者在本机部署和运行大语言模型，进行AI应用开发
+- 企业在自有服务器或边缘设备上部署私有化LLM推理服务
+- 资源受限环境（如嵌入式设备、ARM平台）的高效AI推理场景
 
 
 
@@ -4621,28 +6066,28 @@ llama.cpp 是最受欢迎的开源 LLM 推理引擎之一，通过纯 C/C++ 实�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,109 |
+| Stars | 59,160 |
 | 语言 | Python |
-| Forks | 1,576 |
-| Issues | 31 |
+| Forks | 1,577 |
+| Issues | 32 |
 | Topics | batch-processing, data-analytics, data-pipelines, data-processing, dataflow, etl, etl-framework, iot-analytics, kafka, machine-learning-algorithms, pathway, python, real-time, rust, stream-processing, streaming, time-series-analysis |
 | 许可证 | Other |
 
 ---
 
-Pathway 是一个高性能的 Python ETL 框架，采用 Rust 编写核心引擎，兼具 Python 易用性与流式处理的实时性。其独特价值在于统一了批处理和流处理范式，特别针对 LLM 和 RAG 场景优化，在数据密集型实时应用场景中表现卓越。
+Pathway 是一个强大的 Python ETL 框架，专为流处理和实时分析而设计。其独特之处在于结合了 Python 的易用性与 Rust 的高性能，特别适合构建 LLM 管道和 RAG 应用，是目前少数真正支持实时数据处理的现代化 ETL 工具，在 AI 时代的数据处理领域具有重要价值。
 
 **技术亮点**:
-- Rust + Python 混合架构，提供接近 Rust 的执行性能与 Python 的开发便利性
-- 统一的批处理和流处理编程模型，无需切换框架即可处理两种数据模式
-- 原生支持 LLM pipelines 和 RAG 应用，内置向量化检索和实时数据更新能力
-- 强大的连接性，支持 Kafka、时间序列数据库、IoT 设备等多种数据源
-- 内置实时数据变换、聚合和机器学习算法支持，适合复杂的数据分析场景
+- 🚀 高性能架构：使用 Rust 实现核心引擎，提供 Python API，兼具易用性与极致性能
+- ⚡ 实时流处理：原生支持流式数据处理和批处理统一，无需切换不同框架
+- 🤖 AI/LLM 原生支持：专为 LLM 管道和 RAG 应用优化，简化 AI 数据管道构建
+- 📊 丰富集成能力：支持 Kafka、时序分析、IoT 数据接入等企业级数据源
+- 🔄 统一数据处理：将批处理、流处理、实时分析整合在单一框架内，降低技术复杂度
 
 **适用场景**:
-- 实时 LLM 应用：构建 RAG 系统时，需要实时更新知识库并对查询进行即时响应，Pathway 可以实现毫秒级的向量检索和内容更新
-- IoT 实时监控：在物联网场景中处理传感器数据流，进行实时分析、异常检测和告警，支持大规模并发设备的数据处理
-- 实时数据分析平台：企业构建实时数据仓库或仪表板，需要从 Kafka 等消息队列消费数据并进行实时聚合、计算和可视化
+- 🏢 企业实时数据分析平台：构建实时 BI、IoT 数据监控、时序数据分析系统
+- 🤖 AI/LLM 应用开发：构建 RAG 系统、向量数据库管道、实时知识库更新
+- 📈 数据工程与 ETL 项目：替代传统批处理 ETL，实现准实时的数据同步与转换
 
 
 
@@ -4660,28 +6105,27 @@ Pathway 是一个高性能的 Python ETL 框架，采用 Rust 编写核心引擎
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 280,739 |
+| Stars | 280,811 |
 | 语言 | Python |
-| Forks | 27,155 |
-| Issues | 18 |
+| Forks | 27,162 |
+| Issues | 17 |
 | Topics | awesome, collections, python, python-framework, python-library, python-resources |
 | 许可证 | Other |
 
 ---
 
-vinta/awesome-python 是 Python 生态中最权威的资源索引仓库之一，拥有超过 28 万颗星。它精心整理了 Python 领域最优质的框架、库、软件和学习资源，为开发者提供了一份经过时间检验的精选清单，是 Python 开发者不可或缺的导航地图和工具箱。
+这是 Python 生态中最权威、维护最活跃的资源索引项目之一，汇聚了 28 万+ 开发者的集体智慧。它为开发者提供了一个经过严格筛选的 Python 框架、库和资源清单，是每位 Python 开发者必备的技术导航宝库，无论是新手学习还是企业选型都能快速找到优质方案。
 
 **技术亮点**:
-- 收录全面：涵盖 Python 生态从 Web 框架、数据分析、机器学习、自动化测试到运维部署等 20+ 个技术领域的优质资源
-- 严格筛选：采用「Awesome」标准，所有入库资源都经过社区验证和筛选，确保质量可靠
-- 社区驱动：活跃的开源社区持续更新维护，紧跟 Python 技术发展脉搏，保持资源列表的时效性
-- 分类科学：按照功能场景清晰分类，每个类别下包含项目名称、简介和 GitHub 链接，便于快速查找
-- 跨领域覆盖：不仅包含技术库，还涵盖书籍、教程、播客等学习资源，适合不同水平开发者
+- 精心策划的 Awesome List，涵盖从 Web 框架到数据科学、测试、部署等全方位 Python 资源
+- 拥有 28 万+ GitHub Stars，是 Python 生态系统中最具影响力的社区驱动项目之一
+- 持续活跃维护，确保收录的框架和库都是当前最新且被广泛使用的主流技术
+- 分类清晰、结构合理，按照不同应用领域（如 HTTP、数据库、GUI、异步编程等）系统化组织资源
 
 **适用场景**:
-- 个人开发者：快速发现和选择适合项目需求的 Python 库和工具，避免在海量资源中迷失方向
-- 企业团队：作为技术选型参考手册，评估和对比不同 Python 解决方案的优劣，辅助架构决策
-- Python 学习者：系统了解 Python 生态全景，获取权威的学习资源和最佳实践指南
+- 开发者快速查找特定领域（如 Web 开发、数据科学、机器学习）的最佳 Python 库和框架
+- 技术团队进行技术选型时，对比评估不同框架的优缺点，找到最适合项目需求的技术栈
+- Python 初学者系统了解 Python 生态系统，学习主流工具和最佳实践
 
 
 
@@ -4699,68 +6143,29 @@ vinta/awesome-python 是 Python 生态中最权威的资源索引仓库之一，
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 217,342 |
+| Stars | 217,365 |
 | 语言 | Python |
-| Forks | 50,018 |
-| Issues | 881 |
+| Forks | 50,020 |
+| Issues | 883 |
 | Topics | algorithm, algorithm-competitions, algorithms-implemented, algos, community-driven, education, hacktoberfest, interview, learn, practice, python, searches, sorting-algorithms, sorts |
 | 许可证 | MIT License |
 
 ---
 
-这是一个拥有21.7万+星的顶级教育开源项目，由社区驱动的算法实现库，涵盖了从基础到高级的各类算法。其独特价值在于提供纯Python实现的算法示例，代码简洁易读且注释详尽，是学习数据结构与算法、准备面试和参加算法竞赛的最佳实践资源库。
+TheAlgorithms/Python 是GitHub上最受欢迎的算法学习资源之一，拥有21万+星标和2000+贡献者。这是一个社区驱动的算法实现库，将所有算法用纯Python实现，代码简洁易读且带有详细注释和单元测试，非常适合初学者理解算法原理，同时也是开发者面试准备和算法竞赛的优质参考资料。
 
 **技术亮点**:
-- ✨ 覆盖全面的算法类型：包括搜索、排序、图论、动态规划、数学运算等30+个类别，几乎所有常见算法都有Python实现
-- 🎯 纯Python实现：每个算法都是独立Python文件，代码结构清晰，带详细注释和文档字符串，便于理解核心逻辑
-- 🧪 可运行测试用例：每个算法都包含测试代码，可以直接运行验证正确性，支持边学边练
-- 🤝 社区活跃维护：拥有3000+贡献者持续优化算法实现，代码质量高，符合Python最佳实践
-- 🔍 分类清晰易查找：按算法类型和功能模块化组织，支持快速定位所需算法实现
+- 涵盖完整的算法分类：搜索、排序、图算法、动态规划、数学算法等多个领域
+- 每个算法都包含清晰的实现代码、详细注释和单元测试，确保代码质量和可理解性
+- 社区驱动开发模式，持续更新和优化，保持代码的现代Python风格
+- 支持多种难度级别，从基础的冒泡排序到复杂的机器学习算法，循序渐进
+- 提供算法时间复杂度和空间复杂度分析，帮助理解性能特征
 
 **适用场景**:
-- 📚 **算法学习与教育**：适合学生、初学者系统学习数据结构与算法，每段代码都是优秀的教学示例
-- 💼 **技术面试准备**：覆盖常见面试算法题，可直接参考实现思路和代码模板，帮助准备Google、Amazon等大厂面试
-- 🏆 **算法竞赛训练**：提供标准算法实现参考，适合ACM/ICPC、LeetCode等竞赛选手学习和训练
-- 🛠️ **项目开发参考**：开发者可以快速查找和复用成熟的算法实现，避免重复造轮子，提高开发效率
-
-
-
-### django/django
-
-**描述**: The Web framework for perfectionists with deadlines.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 86,627 |
-| 语言 | Python |
-| Forks | 33,574 |
-| Issues | 401 |
-| Topics | apps, django, framework, models, orm, python, templates, views, web |
-| 许可证 | BSD 3-Clause "New" or "Revised" License |
-
----
-
-Django 是 Python 生态系统中最成熟的 Web 框架，拥有 86,000+ stars 的社区验证。其独特价值在于"batteries-included"设计理念，提供完整的全栈开发解决方案，内置 ORM、模板引擎、Admin 后台等企业级组件，让开发者专注于业务逻辑而非重复造轮子。
-
-**技术亮点**:
-- 强大的 ORM 系统：支持数据库迁移、关系映射和多种数据库后端，无需编写 SQL 即可完成数据建模
-- 自动化 Admin 管理后台：基于模型自动生成功能完善的管理界面，大幅节省后台开发时间
-- MTV 架构模式：Models（模型）-Templates（模板）-Views（视图）分离，清晰的代码组织结构
-- 企业级安全特性：内置 CSRF 防护、SQL 注入防护、XSS 过滤等安全机制，符合 OWASP 标准
-- 丰富的生态系统：拥有海量的第三方应用（apps）和可复用组件，如 Django REST Framework、Celery 等
-
-**适用场景**:
-- 企业级 Web 应用开发：如内容管理系统（CMS）、企业资源规划系统（ERP）、客户关系管理平台等需要快速交付和稳定性的场景
-- 数据驱动的后台管理平台：利用 Django Admin 快速构建多租户管理后台，适合 SaaS 产品和内部工具开发
-- RESTful API 服务：结合 Django REST Framework 构建高性能后端 API，为移动应用、单页应用（SPA）提供数据接口
+- 程序员面试准备：系统学习和练习常见的面试算法题，提升算法思维和编码能力
+- 计算机科学教育：学生和教师作为算法课程的辅助教材，直观理解算法实现原理
+- 算法竞赛训练：参与ACM、LeetCode等竞赛时参考标准实现，学习最佳实践
+- 项目开发参考：在实际开发中需要用到特定算法时，可以快速查找和借鉴成熟的实现方案
 
 
 
@@ -4778,28 +6183,28 @@ Django 是 Python 生态系统中最成熟的 Web 框架，拥有 86,000+ stars 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 84,488 |
+| Stars | 84,496 |
 | 语言 | Python |
-| Forks | 36,638 |
-| Issues | 3,219 |
+| Forks | 36,647 |
+| Issues | 3,207 |
 | Topics | asyncio, hacktoberfest, home-automation, internet-of-things, iot, mqtt, python, raspberry-pi |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Home Assistant 是全球最强大的开源智能家居自动化平台，拥有超过 8.4 万颗星的社区支持。其独特价值在于将本地控制和隐私优先作为核心理念，让用户完全掌控自己的智能家居数据，不依赖云服务，同时提供极致的灵活性和可扩展性。
+Home Assistant 是全球最大的开源智能家居自动化平台，拥有超过 8.4 万颗星，致力于将本地控制和隐私保护放在首位。它提供了一个强大且灵活的框架，让用户可以完全掌控自己的智能家居设备，避免依赖云服务，是 IoT 和家庭自动化领域的标杆项目，特别适合关注数据隐私和想要深度定制智能家居体验的开发者和用户。
 
 **技术亮点**:
-- 基于 Python 异步编程（asyncio）的高性能架构，支持高效的并发设备管理和事件处理
-- 本地优先的隐私保护设计，所有自动化逻辑和数据处理均在本地运行，无需云服务依赖
-- 支持 1500+ 设备和服务的广泛集成能力，涵盖 IoT、MQTT、Zigbee 等多种协议
-- 低资源占用，可在 Raspberry Pi 等边缘设备上流畅运行，适合家庭部署
-- 活跃的开源生态系统，基于 Apache 2.0 许可证，允许商业友好的二次开发
+- 基于 Python 和 asyncio 构建的异步事件驱动架构，支持高性能的并发设备管理和实时自动化
+- 拥有庞大的设备集成生态系统，支持 2000+ 种不同的智能家居设备和协议（包括 MQTT、Zigbee、Z-Wave 等）
+- 提供低代码自动化引擎，用户可以通过 YAML 配置或可视化界面创建复杂的自动化规则和场景
+- 采用插件化架构设计，支持自定义组件开发，易于扩展和集成新的设备功能
+- 支持多种部署方式（树莓派、Docker、本地服务器），并提供强大的 API 接口用于二次开发
 
 **适用场景**:
-- 个人家庭智能改造：DIY 爱好者可部署在 Raspberry Pi 上，统一管理不同品牌的智能设备，打造个性化的智能家居系统
-- 企业 IoT 解决方案：为企业提供可定制的物联网管理平台，集成现有办公设备，实现能源管理和自动化控制
-- 开发学习与二次开发：Python 和异步编程学习者可基于此项目深入理解 IoT 系统架构，或开发自定义集成组件
+- 个人智能家居改造：适合想要构建私有智能家居系统的个人用户，可以在树莓派或家庭服务器上部署，统一管理不同品牌的智能设备
+- IoT 开发者学习平台：非常适合学习物联网、异步编程、MQTT 协议和智能家居系统架构，是研究 IoT 自动化的绝佳实践项目
+- 企业级智能空间管理：可用于小型商业场所、办公室的智能化改造，通过本地化部署保障数据安全，支持定制化开发满足特定业务需求
 
 
 
@@ -4817,27 +6222,26 @@ Home Assistant 是全球最强大的开源智能家居自动化平台，拥有�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,685 |
+| Stars | 77,686 |
 | 语言 | Python |
-| Forks | 45,318 |
+| Forks | 45,317 |
 | Issues | 1,273 |
 | 许可证 | Other |
 
 ---
 
-这是 TensorFlow 官方维护的模型库，拥有 77K+ stars，汇集了 Google 团队和社区贡献的众多高质量深度学习模型。作为 TensorFlow 生态的核心项目，它提供了从研究到生产的完整解决方案，是学习最先进 AI 架构和快速构建应用的权威参考。
+TensorFlow Models 是 Google 官方维护的深度学习模型库，汇集了 77,000+ Stars 的超高人气。它提供经过工业级验证的 SOTA 模型实现和完整训练流程，是学习和部署生产级 AI 应用的权威资源库，特别适合需要快速集成先进模型的开发者和企业团队。
 
 **技术亮点**:
-- 包含 BERT、ResNet、YOLO 等经典 SOTA 模型的官方实现，代码质量高且持续更新
-- 提供完整的训练、评估和推理流程，支持 TPU/GPU 加速和分布式训练
-- 覆盖计算机视觉、NLP、推荐系统等多个领域，包含预训练模型可直接使用
-- 采用模块化设计，模型组件可复用，便于自定义和扩展
-- 配套详细的 Colab 教程和文档，适合学习和生产部署
+- 包含计算机视觉(NLP、CV)、推荐系统等多个领域的最新 SOTA 预训练模型(如 BERT、ResNet、YOLO 等)
+- 提供完整的训练、评估、导出和 TFLite 转换工具链，支持从研究到生产的全流程开发
+- 内置 TensorFlow Hub 集成，可便捷加载预训练权重并进行迁移学习
+- 官方团队持续维护，代码质量高，文档完善，拥有活跃的全球开发者社区支持
 
 **适用场景**:
-- 企业和研究团队：快速搭建原型系统，使用预训练模型进行迁移学习，加速产品开发
-- AI 学习者：通过阅读官方代码和运行教程，深入理解主流深度学习架构的实现细节
-- 开发者：在生产环境中部署成熟的模型，节省从零开发的时间成本
+- 企业快速落地 AI 能力：电商智能推荐、工业质检、内容审核等业务场景的模型快速开发和部署
+- 个人开发者学习与研究：通过运行官方示例和论文复现代码，深入理解前沿深度学习算法和最佳实践
+- 学术研究与论文复现：提供标准化实现基准，加速算法对比和改进实验的迭代效率
 
 
 
@@ -4855,27 +6259,27 @@ Home Assistant 是全球最强大的开源智能家居自动化平台，拥有�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,521 |
+| Stars | 71,531 |
 | 语言 | Python |
-| Forks | 15,288 |
+| Forks | 15,289 |
 | Issues | 5 |
 | 许可证 | Other |
 
 ---
 
-这是 GitHub 上最受欢迎的机器学习资源导航项目（71K+ stars），汇集了全球最全面的机器学习框架、库和软件清单。作为一份精心策划的资源目录，它为开发者提供了一站式技术选型参考，被誉为机器学习领域的"圣经级"资源地图，极具学习和参考价值。
+这是 GitHub 上最全面的机器学习资源导航库之一，涵盖深度学习、计算机视觉、自然语言处理等多个领域的框架和工具。作为高质量的资源聚合平台，它为开发者提供了一条快速定位和比较不同 ML 技术栈的捷径，是机器学习从业者必备的收藏夹。
 
 **技术亮点**:
-- 超大规模资源库：涵盖机器学习各个领域的框架、库和软件，包括 Python、C++、Java 等多种语言实现
-- 分类体系完善：按照机器学习、深度学习、数据科学等维度系统分类，便于快速定位所需技术栈
-- 社区高度认可：71K+ GitHub stars，全球开发者持续贡献和维护，保证了资源的时效性和质量
-- 技术栈全覆盖：从传统机器学习算法到最新的深度学习框架，涵盖学术界和工业界的各类工具
-- 开放协作模式：作为开源项目，鼓励社区提交 PR 持续更新，确保与时俱进
+- 按语言分类的全面资源库（支持 Python、C++、Java、JavaScript、Go 等 20+ 语言）
+- 多领域技术栈覆盖（包括深度学习、NLP、计算机视觉、强化学习、数据可视化等）
+- 精选高质量项目资源，每个条目都经过社区筛选和验证
+- 持续更新的活跃维护，紧跟 ML 领域最新技术趋势
+- 提供开源工具、数据集、教程和论文等多元化学习资源
 
 **适用场景**:
-- 开发者技术选型：当企业或个人开发者需要评估和选择机器学习框架、库或工具时，可通过此清单快速了解各技术栈的优劣势，做出明智的技术决策
-- 学习路径规划：初学者或进阶开发者可根据分类系统性地了解机器学习生态系统，制定从基础到高级的学习路线
-- 团队资源共享：企业技术团队可利用此目录建立内部技术雷达，帮助团队成员了解行业最佳实践和主流技术趋势
+- 个人开发者快速查找适合的 ML 框架和工具，避免重复造轮子
+- 企业技术团队进行机器学习技术栈选型时的决策参考
+- 初学者入门机器学习领域的系统性学习路线图
 
 
 
@@ -4893,66 +6297,27 @@ Home Assistant 是全球最强大的开源智能家居自动化平台，拥有�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,282 |
+| Stars | 71,288 |
 | 语言 | Python |
-| Forks | 33,983 |
-| Issues | 9,214 |
+| Forks | 33,985 |
+| Issues | 9,218 |
 | 许可证 | Other |
 
 ---
 
-这是 Python 语言的官方实现仓库，作为全球最受欢迎的编程语言之一，拥有 7 万+ Stars 的超高人气。对于深入理解 Python 内部机制、参与语言核心开发、或学习顶级开源项目架构设计来说，这是最具权威性和价值的学习资源。
+这是 Python 语言的官方源代码仓库，作为世界上最受欢迎的编程语言之一，它拥有超过 71k Stars 和庞大的开发者社区。对于想要深入理解 Python 内部机制、参与语言核心开发或学习高质量 C/Python 混合编程的开发者来说，这是最具参考价值的权威项目。
 
 **技术亮点**:
-- 完整的 Python 解释器核心实现（解释器、编译器、标准库）
-- 成熟的项目架构和代码规范，展示大型 C/Python 混合项目的最佳实践
-- 活跃的社区维护和严格的代码审查流程
-- 丰富的标准库实现，涵盖网络、IO、数据结构等各个领域
-- 详尽的开发文档和贡献者指南，适合学习开源项目协作流程
+- 完整的 Python 解释器实现（CPython），包含词法分析、语法分析、编译器和字节码执行引擎
+- 混合代码库架构，核心使用 C 语言实现性能关键部分，同时展示如何用 C 扩展 Python 功能
+- 完善的内存管理系统（引用计数 + 垃圾回收机制）和对象模型实现
+- 丰富的标准库实现，涵盖网络、文件 I/O、数据处理、并发编程等各个领域
+- 详尽的测试套件和文档规范，展示大型开源项目的工程最佳实践
 
 **适用场景**:
-- 个人开发者：深入学习 Python 内部工作原理、提升系统编程能力、学习顶级开源项目代码风格
-- 企业团队：参考大型项目的工程实践和代码规范、培训高级工程师的技术视野
-- 教育机构：作为编程语言设计和实现的教学案例、研究现代解释器架构
-
-
-
-### pallets/flask
-
-**描述**: The Python micro framework for building web applications.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 71,120 |
-| 语言 | Python |
-| Forks | 16,683 |
-| Issues | 2 |
-| Topics | flask, jinja, pallets, python, web-framework, werkzeug, wsgi |
-| 许可证 | BSD 3-Clause "New" or "Revised" License |
-
----
-
-Flask 是 Python 生态中最受欢迎的轻量级 Web 框架之一，以"微框架"的设计理念著称。它提供了极简的核心功能，同时通过丰富的扩展生态系统满足从简单 API 到复杂企业级应用的各种需求，是 Python 开发者构建 Web 应用的首选框架之一。
-
-**技术亮点**:
-- 轻量级微框架设计，核心简洁灵活，开发者可按需选择组件
-- 集成强大的 Jinja2 模板引擎，支持高效的模板渲染和页面生成
-- 基于 Werkzeug WSGI 工具箱，提供稳健的 HTTP 请求处理和路由系统
-- 高度可扩展的插件架构，拥有庞大的第三方扩展生态系统
-- 采用宽松的 BSD 3-Clause 许可证，适合商业和个人项目自由使用
-
-**适用场景**:
-- 快速构建 RESTful API 和微服务后端系统
-- 开发中小型 Web 应用和内容管理系统
-- 企业级应用原型验证和 MVP 产品快速迭代
+- 语言学习与教学：深入理解 Python 解释器工作原理，适合高级开发者学习语言设计和实现细节
+- 核心开发与贡献：为 Python 语言本身贡献代码，参与语言特性的设计与实现
+- 解释器研究：作为自定义语言或解释器开发的参考实现，学习如何构建高性能虚拟机
 
 
 
@@ -4970,28 +6335,29 @@ Flask 是 Python 生态中最受欢迎的轻量级 Web 框架之一，以"微框
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 436,552 |
+| Stars | 436,574 |
 | 语言 | TypeScript |
-| Forks | 43,260 |
-| Issues | 327 |
+| Forks | 43,261 |
+| Issues | 319 |
 | Topics | careers, certification, community, curriculum, d3, education, freecodecamp, javascript, learn-to-code, math, nodejs, nonprofits, programming, react, teachers |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 ---
 
-freeCodeCamp 是全球最大的免费编程学习平台之一，拥有超过 43.6 万颗星，采用开源方式提供完整的编程课程体系和认证系统。该项目不仅帮助数百万人学习编程，更是非营利教育与技术社区结合的典范，非常适合学习现代 Web 技术栈（TypeScript、React、Node.js）的最佳实践。
+freeCodeCamp 是全球最大、最成功的免费编程教育平台之一，拥有超过43.6万颗星的超高人气。该项目独特价值在于开源全栈课程体系与企业认证模式，不仅帮助数百万学习者免费掌握编程技能并实现职业转型，更为教育工作者和非营利组织提供了可复用的开源教育资源平台。
 
 **技术亮点**:
-- 基于 TypeScript 构建的大型项目，展示类型安全在前端教育平台中的应用
-- 采用 React 构建现代化用户界面，配合 D3.js 实现数据可视化学习体验
-- 完整的在线课程管理系统，包含学习路径、进度追踪和认证颁发功能
-- Node.js 后端架构，支持大规模并发用户的学习需求
-- 活跃的开源社区驱动，拥有持续的贡献者和完善的文档体系
+- 全栈技术栈：采用 TypeScript + React + Node.js + D3.js 构建现代化教育平台
+- 完整课程体系：涵盖数学、编程、计算机科学等多学科内容，提供系统化学习路径
+- 认证系统：内置项目评估与认证机制，学习者可完成实际项目获得行业认可证书
+- 社区驱动：拥有活跃的开源社区，持续更新课程内容与技术栈
+- 可扩展架构：支持教师和教育机构基于此平台定制化部署自己的在线教育系统
 
 **适用场景**:
-- 初学者免费学习编程技能并获得行业认可认证
-- 开发者贡献开源项目，学习大型 TypeScript/React 项目的代码结构和最佳实践
-- 教育机构和教师使用其课程体系作为教学资源和参考资料
+- 个人学习者：免费系统学习前端、后端、数据科学等全栈技能，通过项目实战积累作品集并获取认证
+- 教育机构/教师：作为开源LMS（学习管理系统）基础，低成本搭建在线编程课程平台
+- 企业培训：利用其标准化课程体系为企业员工提供内部技术培训，或参考其认证模式构建企业内训体系
+- 开源贡献者：参与大型开源项目开发，提升 TypeScript/React 技术实战经验，为全球教育公益事业做贡献
 
 
 
@@ -5009,28 +6375,28 @@ freeCodeCamp 是全球最大的免费编程学习平台之一，拥有超过 43.
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 348,321 |
+| Stars | 348,352 |
 | 语言 | TypeScript |
-| Forks | 43,689 |
+| Forks | 43,695 |
 | Issues | 28 |
 | Topics | angular-roadmap, backend-roadmap, blockchain-roadmap, computer-science, dba-roadmap, developer-roadmap, devops-roadmap, frontend-roadmap, go-roadmap, java-roadmap, javascript-roadmap, nodejs-roadmap, python-roadmap, qa-roadmap, react-roadmap, roadmap, software-architect-roadmap, vue-roadmap |
 | 许可证 | Other |
 
 ---
 
-这是 GitHub 上最受欢迎的开发者学习路线图项目，拥有超过 34 万颗星。它为开发者提供了全面、系统化的技术学习路径，涵盖前端、后端、DevOps、架构等 10+ 个技术领域，是开发者职业规划和技术成长的权威指南。
+这是全球最受欢迎的开发者学习路线图项目（34.8万+ Stars），提供从前端、后端、DevOps到软件架构等16+条完整的职业发展路径，涵盖JavaScript、Python、Go、Java等主流技术栈。作为开源教育资源的典范，它采用交互式可视化设计，帮助开发者系统性规划学习路径，无论初学者还是资深工程师都能找到清晰的成长方向。
 
 **技术亮点**:
-- 🗺️ 全覆盖技术路线图：涵盖前端、后端、DevOps、架构师、QA、区块链等 10+ 个专业领域
-- 🎯 系统化学习路径：从零基础到高级专家的清晰进阶路线，避免学习迷茫
-- 📚 交互式可视化体验：采用现代化技术栈构建，提供直观的路线图展示和交互功能
-- 🌍 社区驱动持续更新：拥有庞大的社区支持，内容紧跟技术发展趋势
-- 🔧 多语言技术栈支持：涵盖 JavaScript、Python、Go、Java、React、Vue、Angular 等主流技术
+- TypeScript技术栈构建现代化交互式Web应用
+- 覆盖16+技术领域路线图：前端/后端/DevOps/区块链/软件架构/数据库管理等
+- 提供角色定制化路径：Angular/React/Vue/Node.js/Python/Go/Java工程师、QA、DBA等
+- 计算机科学基础理论与工程实践相结合的完整知识体系
+- 开源协作驱动的持续更新机制，紧跟技术发展趋势
 
 **适用场景**:
-- 👨‍💻 个人开发者职业规划：帮助开发者明确学习方向，系统化掌握技术栈，规划从初级到高级的成长路径
-- 🏢 企业技术团队建设：作为团队技能培训参考标准，统一技术认知，帮助制定内部培养计划
-- 🎓 教育机构和培训课程：作为课程设计参考，帮助构建系统化的教学大纲和实训内容
+- 个人开发者：系统化规划职业发展路径，按图索骥学习新技术栈，从初级工程师进阶到架构师
+- 技术团队/企业：作为内部培训参考标准和技能评估框架，帮助团队成员明确成长方向
+- 教育机构/培训机构：作为课程设计蓝图，构建符合行业标准的教学大纲
 
 
 
@@ -5048,28 +6414,27 @@ freeCodeCamp 是全球最大的免费编程学习平台之一，拥有超过 43.
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 137,280 |
+| Stars | 137,299 |
 | 语言 | TypeScript |
-| Forks | 16,408 |
+| Forks | 16,413 |
 | Issues | 56 |
 | Topics | algorithm, algorithm-interview, algorithm-interview-questions, algorithms, behavioral-interviews, coding-interviews, interview-practice, interview-preparation, interview-questions, system-design |
 | 许可证 | MIT License |
 
 ---
 
-这是一个专为忙碌软件工程师精心策划的编程面试准备资源库，拥有超过13.7万颗星的社区认可。该项目独特之处在于它将算法知识、行为面试和系统设计三大核心面试领域系统化整合，提供了一套高效、实用的面试准备路径，特别适合时间有限但需要快速提升面试能力的开发者。
+这是GitHub上最受欢迎的技术面试准备资源之一（13.7万+ Stars），专为忙碌的软件工程师量身定制的面试指南。项目涵盖算法、系统设计、行为面试等全方位内容，帮助求职者系统化准备技术面试，提高通过率，是每位开发者职业发展的实用工具箱。
 
 **技术亮点**:
-- 全面覆盖面试知识体系：整合算法题库、行为面试技巧和系统设计三大核心领域，一站式解决面试准备需求
-- TypeScript技术栈：使用TypeScript构建，展示现代前端开发最佳实践，代码质量高且易于维护
-- 精心策划的内容结构：从137,280+ stars可以看出其内容经过大量开发者验证，提供了经过筛选的高质量面试材料而非简单的资源堆砌
-- 算法与实战并重：涵盖algorithm-interview-questions和coding-interviews，既注重理论基础又强调实战练习
-- 社区驱动的持续更新：开源项目由社区贡献和反馈，确保内容与时俱进，贴合当前面试趋势
+- 采用TypeScript开发，提供类型安全和现代化的代码示例
+- 全面覆盖算法、系统设计、行为面试三大核心领域，提供结构化的知识体系
+- 精选优质面试题目和最佳实践，节省求职者从海量资料中筛选的时间
+- MIT开源许可，支持自由使用和二次开发，活跃社区持续更新维护
 
 **适用场景**:
-- 个人开发者面试准备：适合正在准备技术面试的软件工程师快速系统复习算法、行为面试和系统设计知识点
-- 企业内训资源：HR或技术负责人可将其作为员工面试培训的标准化教材，提升团队面试表现
-- 编程培训机构：可作为面试辅导课程的参考教材和练习题库，帮助学员掌握高频面试考点
+- 个人求职准备：为正在准备Google、Meta、字节跳动等大厂面试的程序员提供系统化学习路径
+- 企业技术招聘：HR和技术团队可参考面试题目标准，优化内部面试流程和题目设计
+- 教育培训：编程培训机构和高校可作为面试课程教材，帮助学生提升就业竞争力
 
 
 
@@ -5087,28 +6452,28 @@ freeCodeCamp 是全球最大的免费编程学习平台之一，拥有超过 43.
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,738 |
+| Stars | 115,762 |
 | 语言 | TypeScript |
-| Forks | 12,353 |
+| Forks | 12,358 |
 | Issues | 2,763 |
 | Topics | canvas, collaboration, diagrams, drawing, hacktoberfest, productivity, whiteboard |
 | 许可证 | MIT License |
 
 ---
 
-Excalidraw 是一个极具创新性的开源虚拟白板工具，其独特的"手绘风格"呈现方式让技术图表和草图更自然、更易理解。该项目在 GitHub 上拥有超过 11.5 万颗星，证明其在开发者社区中极高的受欢迎度，采用 TypeScript 构建且基于 MIT 许可证，既保证了代码质量又允许商业自由使用。
+Excalidraw 是一个独特的开源虚拟白板项目，拥有超过 11.5 万颗星，开创了手绘风格在线协作工具的先河。它完美结合了手绘草图的自然感与现代 Web 技术的便利性，既适合个人快速原型设计，也支持团队实时协作，是开源领域最具影响力的生产力工具之一。
 
 **技术亮点**:
-- 使用 TypeScript 构建，提供完整的类型安全保障和更好的开发体验
-- 基于 Canvas 技术实现高性能绘图，支持流畅的手绘风格渲染
-- 内置实时协作功能，支持多人同时编辑和白板共享
-- 提供组件化架构，易于集成到现有应用中或进行二次开发
-- 采用 MIT 开源许可，允许商业使用和自由定制
+- 基于 TypeScript 和 Canvas 技术栈构建，保证了类型安全和高性能渲染
+- 原生支持实时协作功能，多人可同时在线编辑同一画布
+- 独特的"手绘风格"渲染引擎，让数字化图表保持手绘草图的自然质感
+- 完全开源且 MIT 许可，支持自由定制和二次开发
+- 端到端加密支持，保障协作过程中的数据安全性和隐私保护
 
 **适用场景**:
-- 远程团队协作：在敏捷开发、需求讨论和头脑风暴时进行实时协作绘图
-- 技术文档编写：为 API 文档、架构设计文档添加手绘风格的流程图和示意图，使内容更生动
-- 原型设计和草图绘制：快速绘制产品原型、UI/UX 设计草图或系统架构图
+- 产品经理和 UX 设计师快速绘制线框图、用户流程图和产品原型
+- 开发团队进行远程头脑风暴、架构设计和系统图解讨论
+- 教育工作者和学生在在线教学中绘制思维导图和概念图
 
 
 
@@ -5126,28 +6491,28 @@ Excalidraw 是一个极具创新性的开源虚拟白板工具，其独特的"�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 107,620 |
+| Stars | 107,623 |
 | 语言 | TypeScript |
 | Forks | 13,215 |
-| Issues | 5,473 |
+| Issues | 5,474 |
 | Topics | javascript, language, typechecker, typescript |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-TypeScript 是微软开发的 JavaScript 超集，凭借超过 10.7 万星和活跃社区支持，已成为现代前端开发的事实标准。它为 JavaScript 添加静态类型系统，让开发者提前发现错误、提升代码可维护性，同时保持与现有 JavaScript 生态完全兼容，是大型项目和企业级应用的首选开发语言。
+TypeScript 是微软开发的开源编程语言，作为 JavaScript 的超集，在保留 JavaScript 灵活性的同时引入了强大的静态类型系统，拥有超过 10.7 万颗星，是全球开发者社区中最受欢迎的类型安全解决方案之一，已成为现代前端工程化的标准配置。
 
 **技术亮点**:
-- 静态类型检查系统，在编译阶段捕获类型错误，大幅减少运行时 bug
-- 渐进式类型系统，允许从 JavaScript 代码逐步迁移，学习曲线平滑
-- 强大的 IDE 和编辑器支持，提供智能代码补全、重构和导航功能
-- 完全兼容 JavaScript 生态，编译输出为纯净的 JavaScript 代码
-- 支持最新的 ECMAScript 特性，可配置目标版本以适配不同运行环境
+- 静态类型检查系统，在编译时捕获类型错误，大幅提升代码质量和可维护性
+- 完整的 JavaScript 超集兼容性，所有 JavaScript 代码都是合法的 TypeScript 代码
+- 出色的 IDE 智能提示和自动补全支持，显著提升开发效率
+- 编译生成干净、标准化的 JavaScript 代码，可在任何浏览器或 Node.js 环境运行
+- 支持最新的 ECMAScript 特性，并提供向下兼容的降级编译能力
 
 **适用场景**:
-- 企业级大型应用开发 - 复杂业务逻辑需要类型安全保障和团队协作
-- 前端框架开发 - 如 Angular、Vue 3、React 等现代框架的官方推荐语言
-- 跨平台开发 - 使用 React Native、Electron 等技术构建移动端和桌面应用
+- 企业级大型前端项目开发，如管理后台、电商平台等需要长期维护的复杂应用
+- 团队协作开发项目，通过类型约束提升代码可读性，降低沟通和维护成本
+- 需要高可靠性的 Node.js 后端服务，利用类型系统减少运行时错误
 
 
 
@@ -5165,67 +6530,28 @@ TypeScript 是微软开发的 JavaScript 超集，凭借超过 10.7 万星和活
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 105,856 |
+| Stars | 105,880 |
 | 语言 | TypeScript |
-| Forks | 7,776 |
+| Forks | 7,779 |
 | Issues | 1,804 |
 | Topics | base-ui, components, nextjs, radix-ui, react, shadcn, tailwindcss, ui |
 | 许可证 | MIT License |
 
 ---
 
-shadcn/ui 是革命性的组件库方案，它颠覆传统"安装即用"模式，采用"复制代码到项目"的创新分发方式。这意味着你拥有组件的完全控制权和所有权，无需担心包依赖和版本锁定，同时获得 Radix UI + Tailwind CSS + TypeScript 的企业级质量保证。
+shadcn/ui 是现代 React UI 开发的革命性项目，它不是传统组件库而是可复制的代码组件集合，让开发者完全掌控代码。其独特价值在于将设计系统、可访问性和开发自由度完美结合，已成为 10 万+ 星标的行业标准，真正实现了"既是组件库也是设计资产"的双重价值。
 
 **技术亮点**:
-- 创新分发模式：直接复制代码而非 npm 安装，用户拥有组件完全控制权
-- 技术栈三剑客：Radix UI（无障碍访问）+ Tailwind CSS（样式）+ TypeScript（类型安全）
-- 框架无关设计：官方支持 React/Next.js，也可适配 Vue/Svelte 等其他框架
-- 开箱即用的设计系统：提供 Dark Mode、响应式设计、完整主题定制能力
-- 106k+ Stars 社区验证：活跃的生态系统和丰富的第三方组件扩展
+- ✨ 非传统 npm 包：组件代码直接复制到项目中，开发者拥有完整控制权和定制能力
+- ♿ 可访问性优先：基于 Radix UI Primitives 构建，原生支持 WAI-ARIA 标准
+- 🎨 完美技术栈整合：与 React、Next.js、Tailwind CSS 无缝集成，符合现代开发范式
+- 📦 代码分发平台：内置 CLI 工具实现组件快速安装和版本管理
+- 🎯 设计系统一致性：提供精心设计的主题系统，支持深色模式和完全自定义
 
 **适用场景**:
-- 需要深度定制组件的 SaaS/企业级应用：团队可完全掌控组件代码，无黑盒依赖风险
-- 现代技术栈项目：使用 React/Next.js + Tailwind CSS 的快速开发场景
-- 对可访问性（a11y）有严格要求的 Web 应用：基于 Radix UI 构建，符合 WCAG 标准
-
-
-
-### angular/angular
-
-**描述**: Deliver web apps with confidence 🚀
-
-**发现来源**: trending
-
-**发现原因**: Trending in TypeScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 99,779 |
-| 语言 | TypeScript |
-| Forks | 27,035 |
-| Issues | 1,153 |
-| Topics | angular, javascript, pwa, typescript, web, web-framework, web-performance |
-| 许可证 | MIT License |
-
----
-
-Angular 是 Google 维护的企业级前端框架，凭借完整的开发生态系统（CLI、路由、状态管理等）和 TypeScript 深度集成，为构建可扩展的大型 Web 应用提供了端到端解决方案，特别适合需要长期维护和团队协作的项目。
-
-**技术亮点**:
-- 基于 TypeScript 构建，提供强类型支持和优秀的开发体验
-- 内置 PWA（渐进式 Web 应用）支持，开箱即用
-- 提供完整的 CLI 工具链和脚手架，大幅提升开发效率
-- 采用组件化架构和依赖注入系统，便于构建可维护的复杂应用
-- 注重 Web 性能优化，内置懒加载、AOT 编译等性能优化机制
-
-**适用场景**:
-- 企业级后台管理系统和大型单页应用（SPA）开发
-- 需要长期维护和多团队协作的商业 Web 项目
-- 构建高性能的渐进式 Web 应用（PWA）
+- 🏢 企业级应用开发：需要高度定制化和可维护性 UI 系统的中大型企业项目
+- 💻 SaaS 产品快速构建：初创团队快速搭建美观、专业的用户界面
+- 🎨 设计系统实施：作为企业设计系统的基础架构，支持品牌定制和组件扩展
 
 
 
@@ -5243,28 +6569,28 @@ Angular 是 Google 维护的企业级前端框架，凭借完整的开发生态�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,387 |
+| Stars | 97,389 |
 | 语言 | TypeScript |
-| Forks | 54,452 |
+| Forks | 54,451 |
 | Issues | 1,376 |
 | Topics | ant-design, antd, design-systems, react, typescript, ui-kit, ui-library |
 | 许可证 | MIT License |
 
 ---
 
-Ant Design 是阿里巴巴开源的企业级 UI 设计语言和 React 组件库，拥有近 10 万 Stars，是 React 生态中最成熟、最受欢迎的组件库之一。它提供完整的设计体系、高质量的组件和完善的 TypeScript 支持，特别适合需要快速构建专业级企业应用的开发团队。
+Ant Design 是蚂蚁集团开源的企业级 UI 设计语言和 React 组件库，拥有超过 9.7 万颗星，是前端领域最受欢迎的组件库之一。其独特价值在于提供完整的设计体系规范（设计语言）+ 高质量组件实现的双重保障，特别适合追求界面一致性和工程化规范的企业级项目。
 
 **技术亮点**:
-- 🎨 完整的企业级设计语言体系，提供统一的设计规范和组件标准
-- ⚛️ 基于 React + TypeScript 构建，提供完整的类型定义和优秀的开发体验
-- 📦 60+ 高质量开箱即用的组件，覆盖复杂业务场景需求
-- 🌍 国际化支持完善，内置多语言方案，适合全球化应用
-- 🔧 高度可定制，支持主题定制和按需加载，性能优化出色
+- 基于 TypeScript 构建，提供完整的类型定义和出色的 IDE 智能提示体验
+- 提供 60+ 个高质量 React 组件，覆盖企业应用 90% 的 UI 场景
+- 包含完整的设计语言规范（Design Tokens），确保视觉和交互的一致性
+- 强大的主题定制能力，支持 CSS-in-JS 和 Design Tokens 灵活配置
+- 成熟的国际化支持和完善的文档体系，降低学习成本
 
 **适用场景**:
-- 🏢 企业级后台管理系统、SaaS 平台、数据可视化大屏等 B 端应用开发
-- 🚀 需要快速搭建、UI 一致性要求高的中大型项目
-- 🌐 面向全球用户的国际化应用（内置中文/英文等多语言支持）
+- 企业级后台管理系统（Admin Dashboard）- 中台系统、SaaS 平台、OA 系统等
+- 快速原型开发和个人项目 - 利用丰富组件库快速搭建 MVP 和个人作品
+- 大型前端工程化项目 - 需要统一设计规范和组件团队协作的复杂场景
 
 
 
@@ -5282,28 +6608,29 @@ Ant Design 是阿里巴巴开源的企业级 UI 设计语言和 React 组件库�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 93,255 |
+| Stars | 93,264 |
 | 语言 | TypeScript |
-| Forks | 5,020 |
-| Issues | 82 |
+| Forks | 5,022 |
+| Issues | 83 |
 | Topics | css, css-framework, functional-css, postcss, responsive, tailwindcss, utility-classes |
 | 许可证 | MIT License |
 
 ---
 
-Tailwind CSS 是目前最受欢迎的实用优先CSS框架，拥有超过9.3万颗星。它革命性地改变了前端开发方式，通过原子化的工具类实现快速UI构建，让开发者无需离开HTML即可完成复杂样式设计，极大地提升了开发效率并解决了传统CSS维护难题。
+Tailwind CSS 是一款革命性的实用优先（Utility-First）CSS 框架，凭借 93K+ stars 的强大社区支持和 MIT 许可证，它彻底改变了现代前端开发方式。通过提供高度可定制的原子类系统，让开发者无需离开 HTML 即可快速构建复杂 UI，相比传统 CSS 方法可提升 50%+ 的开发效率。
 
 **技术亮点**:
-- 实用优先（Utility-first）设计理念：提供预定义的原子化工具类，避免编写自定义CSS，减少样式代码量
-- PostCSS插件架构：基于PostCSS构建，支持完整的CSS转换和优化，易于集成到现有构建流程
-- 高度可定制化：通过配置文件灵活定制设计系统（颜色、间距、断点等），满足不同品牌需求
-- 响应式设计优先：提供简洁的响应式修饰符语法（如 md:, lg:），轻松实现多端适配
-- 出色的性能优化：支持JIT模式、PurgeCSS自动清除未使用样式，生产环境体积极小
+- 实用优先（Utility-First）设计理念，提供丰富的原子类组合，极大减少自定义 CSS 编写需求
+- 基于 PostCSS 构建，支持完全可配置的设计系统，可通过配置文件自定义主题和断点
+- 开箱即用的响应式设计支持，简化移动优先的开发流程
+- 内置 JIT（Just-In-Time）编译引擎，按需生成 CSS，显著减小最终打包体积
+- 支持悬停、焦点、暗黑模式等状态变体，无需编写复杂的选择器
 
 **适用场景**:
-- 企业级Web应用快速开发：特别适合需要快速迭代、品牌定制化要求高的B端/SaaS产品开发
-- 组件库和设计系统构建：为团队提供统一的设计token和样式规范，确保产品视觉一致性
-- 个人项目与MVP原型：开发者可快速构建美观的界面原型，无需纠结CSS架构设计
+- 企业级 SaaS 应用开发：快速构建可维护、一致性强的大型 Web 应用界面
+- 设计系统/组件库开发：作为基础框架构建统一的设计规范和可复用组件
+- 独立开发者/初创公司产品：以最小开发成本快速迭代和发布 MVP 产品
+- 营销落地页制作：无需设计师配合即可快速搭建专业的展示页面
 
 
 
@@ -5321,28 +6648,28 @@ Tailwind CSS 是目前最受欢迎的实用优先CSS框架，拥有超过9.3万�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,168 |
+| Stars | 91,232 |
 | 语言 | TypeScript |
-| Forks | 4,826 |
-| Issues | 749 |
+| Forks | 4,827 |
+| Issues | 752 |
 | Topics | backup-tool, flutter, google-photos, google-photos-alternative, javascript, mobile-app, nestjs, nodejs, photo-gallery, photos, photos-management, self-hosted, svelte, sveltekit, typescript, videos |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Immich 是一个高性能自托管照片和视频管理解决方案，作为 Google Photos 的优秀开源替代品，拥有超过 9.1 万颗星的高度认可。它提供完整的数据隐私控制权，让用户能够在自己的服务器上安全存储和管理珍贵的照片视频，无需依赖第三方云服务。
+Immich 是目前最优秀的自托管照片和视频管理解决方案之一，拥有超过9万星标，堪称"自托管版 Google Photos"。它完美解决了个人隐私保护与照片管理需求的矛盾，采用现代技术栈构建，性能优异且体验流畅，是自托管云存储领域的标杆项目，特别适合注重数据隐私的家庭和小型团队使用。
 
 **技术亮点**:
-- 全栈 TypeScript 架构，前端采用 Flutter（移动端）和 SvelteKit（Web），后端基于 NestJS 框架构建
-- 高性能的媒体处理引擎，支持大规模照片和视频库的快速索引与检索
-- 完整的移动应用支持（iOS/Android），提供原生级用户体验和自动备份功能
-- 现代化技术栈整合，包括 Node.js 运行时和响应式 Web 界面设计
-- 采用 AGPL-3.0 开源许可证，确保软件的开放性和社区驱动的持续创新
+- 全栈 TypeScript 架构：后端采用 NestJS 框架（Node.js 生态），前端使用 SvelteKit，移动端基于 Flutter 开发，技术栈现代且统一
+- 高性能媒体处理：专为大量照片和视频管理优化，支持自动备份、智能搜索和人脸识别等高级功能
+- 跨平台支持：提供 Web 界面、iOS 和 Android 移动应用，实现无缝的多端同步和管理体验
+- 自托管与隐私优先：数据完全存储在私有服务器上，支持 AGPL-3.0 开源协议，适合对隐私敏感的用户
+- 现代化 UI/UX：界面简洁优雅，操作流畅，体验媲美商业产品如 Google Photos，摆脱传统自托管应用的粗糙感
 
 **适用场景**:
-- 个人或家庭数字资产管理：搭建私有云相册，完全掌控照片视频数据，避免隐私泄露风险
-- 企业和团队媒体协作：为公司内部活动、产品素材等提供集中管理和共享平台
-- 技术爱好者自托管服务实践：学习和实践现代全栈开发、容器化部署及服务器运维技能
+- 个人及家庭照片备份与管理：适合不想将私人照片上传到第三方云服务（如 Google Photos、iCloud）的用户，可在家庭服务器或 NAS 上部署，完全掌控自己的照片数据
+- 小型团队/企业的媒体资产管理：创意工作室、摄影团队等可以使用 Immich 作为内部照片和视频的集中管理平台，支持多用户协作和权限控制
+- 技术爱好者搭建私有云服务：适合喜欢折腾自托管服务的开发者，用于学习现代全栈技术架构（NestJS + SvelteKit + Flutter）或作为 NAS 软件栈的一部分
 
 
 
@@ -5360,7 +6687,7 @@ Immich 是一个高性能自托管照片和视频管理解决方案，作为 Goo
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,780 |
+| Stars | 82,781 |
 | 语言 | TypeScript |
 | Forks | 7,557 |
 | Issues | 40 |
@@ -5368,59 +6695,19 @@ Immich 是一个高性能自托管照片和视频管理解决方案，作为 Goo
 
 ---
 
-RealWorld 是开发者社区公认的"典范级"全栈应用项目，被誉为演示应用的"终极基准"。它不是传统的入门教程，而是通过 Medium.com 克隆展示了生产级别的真实应用架构，为不同技术栈提供统一的实现规范，已累计 8.2万+ 星标，成为全球开发者学习全栈开发的首选参考项目。
+这是"示例应用之母"，一个多技术栈实现的Medium.com克隆项目。它不仅是一个功能完整的全栈应用示例，更是学习不同技术栈集成和架构设计的绝佳资源，拥有超过8万颗星，是GitHub上最受认可的实战学习项目之一。
 
 **技术亮点**:
-- 多技术栈统一实现：同一应用需求提供 React、Angular、Vue、Node、Django、Spring 等 60+ 种技术栈的实现版本
-- 生产级完整功能：涵盖 JWT 身份认证、CRUD 操作、分页、标签过滤、文章点赞、关注用户等真实业务场景
-- RESTful API 标准化：前后端完全分离，遵循统一 API 规范，便于技术栈混合搭配
-- TypeScript 类型安全：采用 TypeScript 构建，提供完整的类型定义和最佳实践
-- 真实世界最佳实践：代码结构清晰，注释完善，遵循各框架的社区规范和设计模式
+- 多技术栈实现：包含React、Angular、Vue、Node、Django、Spring等多种前端和后端框架的实现方案
+- 完整的全栈功能：实现用户认证、文章CRUD、评论系统、标签管理、用户关注等Medium核心功能
+- 标准化规范：统一的API规范和数据模型，便于对比不同技术栈的实现差异
+- 实战级代码质量：可作为真实生产环境的参考实现，展示最佳实践和架构模式
+- 活跃的社区生态：多种实现方案持续更新，技术覆盖面广，适合技术选型参考
 
 **适用场景**:
-- 全栈开发学习：开发者可通过对比不同技术栈实现，快速掌握多种框架的实战应用和架构设计思路
-- 技术选型参考：企业在技术选型时，可对比不同技术栈的代码实现和开发体验，做出更明智的技术决策
-- 面试准备与能力提升：深入理解各技术栈的生态特点、开发模式和生产级应用的最佳实践，提升技术竞争力
-
-
-
-### microsoft/playwright
-
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
-
-**发现来源**: trending
-
-**发现原因**: Trending in TypeScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 81,928 |
-| 语言 | TypeScript |
-| Forks | 5,066 |
-| Issues | 584 |
-| Topics | automation, chrome, chromium, e2e-testing, electron, end-to-end-testing, firefox, javascript, playwright, test, test-automation, testing, testing-tools, web, webkit |
-| 许可证 | Apache License 2.0 |
-
----
-
-Playwright 是微软开源的新一代端到端 Web 测试框架，采用现代化的架构设计（支持同时测试 Chromium、Firefox 和 WebKit 三大引擎），以 TypeScript 编写且具备跨浏览器、跨平台能力，是目前前端测试领域最具竞争力的工具之一。其独特价值在于解决了传统测试工具在多浏览器兼容性、执行速度和可靠性方面的痛点，提供统一的 API 同时覆盖桌面和移动端测试场景。
-
-**技术亮点**:
-- 跨浏览器统一 API：通过单一测试脚本同时支持 Chromium、Firefox、WebKit（含 Safari）三大渲染引擎，覆盖超过 95% 的浏览器市场份额
-- 原生跨平台支持：提供 Windows、macOS、Linux 完整支持，并可在本地或 CI/CD 环境中运行，无缝集成现有开发工作流
-- 强大的自动化能力：支持并行测试执行、截图/视频录制、网络拦截、文件下载等复杂场景，提供详细的可调试测试报告
-- 多语言绑定：官方提供 TypeScript/JavaScript、Python、Java、.NET（C#）四种语言 SDK，降低多技术栈团队的接入门槛
-- 现代 Web 标准支持：完整覆盖 Shadow DOM、iframe、worker、对话框等现代网页元素，且支持 Electron 应用测试
-
-**适用场景**:
-- 企业级 Web 应用端到端测试：为复杂业务系统（如电商、SaaS、金融系统）提供覆盖全链路用户场景的自动化测试，确保跨浏览器兼容性和核心流程稳定性
-- CI/CD 持续集成测试：在 Jenkins、GitHub Actions、GitLab CI 等 CI/CD 流水线中集成快速、可靠的自动化测试，实现每次代码提交的自动质量验证
-- 前端回归测试保障：为组件库、多页面应用（SPA）等前端项目建立稳定的自动化回归测试套件，在新功能开发时快速发现并阻断破坏性变更
-- 开发者本地即时验证：开发人员在本地编码时快速运行特定测试用例，实时验证页面交互和功能逻辑，提升开发效率
+- 全栈开发者学习：系统学习前后端分离架构和不同技术栈的实际应用
+- 技术选型参考：通过对比不同实现，帮助团队选择最适合的技术栈
+- 教学与培训：作为编程课程、Bootcamp或企业培训的标准实战项目
 
 
 
@@ -5438,28 +6725,28 @@ Playwright 是微软开源的新一代端到端 Web 测试框架，采用现代�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,888 |
+| Stars | 77,893 |
 | 语言 | TypeScript |
-| Forks | 7,761 |
+| Forks | 7,759 |
 | Issues | 607 |
 | Topics | build-tool, dev-server, frontend, hmr, vite |
 | 许可证 | MIT License |
 
 ---
 
-Vite 是新一代前端构建工具，凭借原生 ESM 支持和极速的冷启动速度，彻底改变了传统开发体验。作为 Vue 作者尤雨溪打造的下一代构建工具，它已被业界广泛采用，是现代前端工程化的标杆项目。
+Vite 是新一代前端构建工具，凭借其极速的冷启动和即时的热模块替换（HMR），彻底改变了传统构建工具的开发体验。它利用浏览器原生 ES 模块支持和 Rollup 进行优化打包，已成为现代前端开发的事实标准工具之一。
 
 **技术亮点**:
-- ⚡️ 极速冷启动：利用原生 ESM (ECMAScript Modules) 实现，无需打包即可启动开发服务器
-- 🔥 即时热更新 (HMR)：基于 ESM 的热模块替换，无论项目大小都能保持毫秒级响应
-- 📦 开箱即用的 TypeScript 支持：无需额外配置即可直接开发
-- 🎯 生产环境优化：使用 Rollup 进行代码分割和 tree-shaking，输出高度优化的生产代码
-- 🧩 丰富的插件生态：兼容 Rollup 插件，同时提供专属的 Vite 插件 API
+- 极速的冷启动 - 无需打包即可启动开发服务器，利用浏览器原生 ES 模块实现秒级启动
+- 即时的热模块替换 (HMR) - 无论应用规模大小，都能保持极速的 HMR 性能，显著提升开发效率
+- 基于 Rollup 的高效生产构建 - 输出高度优化的静态资源，支持代码分割和自动 CSS 代码抽取
+- 开箱即用的 TypeScript 支持 - 无需额外配置即可直接运行 TypeScript 文件
+- 丰富的插件生态系统 - 兼容 Rollup 插件，并提供专属 Vite 插件 API，扩展性强
 
 **适用场景**:
-- 🚀 **现代 Web 应用开发**：特别适合 Vue/React/Svelte 等框架的单页应用开发，提供极致的开发体验
-- 🏢 **企业级项目迁移**：适合从传统打包工具迁移到 Vite，显著提升开发效率和构建速度
-- 🔧 **组件库/工具库开发**：支持多框架组件库开发和文档站点建设（如 VitePress）
+- 现代 Web 应用开发 - 特别适合 Vue/React/Svelte 等框架的单页应用(SPA)开发，大幅提升开发效率
+- 组件库开发 - 快速迭代和预览组件，配合 HMR 实现实时反馈
+- 企业级中后台项目 - 大型项目开发中，其极速启动和热更新能力可显著节省开发时间，提升团队生产力
 
 
 
@@ -5477,27 +6764,27 @@ Vite 是新一代前端构建工具，凭借原生 ESM 支持和极速的冷启�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,633 |
+| Stars | 77,665 |
 | 语言 | TypeScript |
-| Forks | 9,399 |
-| Issues | 290 |
+| Forks | 9,403 |
+| Issues | 295 |
 | 许可证 | MIT License |
 
 ---
 
-这是 Anthropic 官方推出的 Model Context Protocol (MCP) 服务器集合项目，作为 AI 应用开发的标准化基础设施，提供了开箱即用的工具服务器实现。该项目获得了 77K+ stars，体现了业界对 AI 模型与外部系统标准化交互方案的强烈需求，是构建下一代 AI 应用的重要参考实现。
+这是 Anthropic 推出的 Model Context Protocol (MCP) 官方服务器集合，拥有近8万颗星，是构建 AI 应用与数据源标准化连接的权威基础设施。该项目为开发者提供开箱即用的预构建服务器，大幅降低将 AI 模型与各类系统和数据源集成的技术门槛。
 
 **技术亮点**:
-- 提供多样化的预置服务器实现，包括文件系统、数据库、API 集成等常用场景
-- 采用 TypeScript 编写，提供完整的类型定义和良好的开发体验
-- 遵循 MCP 标准协议，确保与多种 AI 模型的互操作性
-- 模块化设计架构，便于开发者选择和定制所需的服务器组件
-- 活跃的开源社区支持，持续更新和扩展服务器类型
+- 基于 TypeScript 构建，提供类型安全且易于扩展的 MCP 标准服务器实现
+- 统一标准化协议，让 AI 模型通过统一接口访问本地/远程数据和工具
+- 模块化设计，支持灵活组合和定制不同数据源的服务器
+- 官方维护的高质量代码库，遵循 MIT 许可证，商业友好的开源项目
+- 涵盖文件系统、数据库、API 等多种常用数据源的预构建服务器
 
 **适用场景**:
-- 企业开发 AI 助手应用时，需要让 LLM 访问企业内部系统（数据库、API、文件系统等）
-- 开发者构建 AI 代理系统，需要标准化的工具集成方案来扩展模型能力
-- 将现有业务系统集成到 AI 工作流中，需要通过 MCP 协议实现统一的数据和功能访问接口
+- 企业级 AI 应用开发：快速集成内部系统、数据库和业务工具，构建智能客服、知识库问答等场景
+- 个人开发者/独立黑客：利用预构建服务器快速搭建 AI Agent，实现自动化任务和数据交互
+- AI 平台和工具厂商：基于 MCP 协议构建可扩展的插件生态系统，提升产品兼容性
 
 
 
@@ -5515,28 +6802,28 @@ Vite 是新一代前端构建工具，凭借原生 ESM 支持和极速的冷启�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 242,658 |
+| Stars | 242,665 |
 | 语言 | JavaScript |
-| Forks | 50,483 |
-| Issues | 1,141 |
+| Forks | 50,486 |
+| Issues | 1,140 |
 | Topics | declarative, frontend, javascript, library, react, ui |
 | 许可证 | MIT License |
 
 ---
 
-React 是现代前端开发的基石项目，由 Facebook 维护，拥有超过 24 万颗星，是声明式 UI 开发的行业标准。它通过组件化思维和虚拟 DOM 技术，彻底改变了 Web 和原生应用的开发方式，是每位前端开发者必备的核心技能。
+React是Facebook开发的开源前端框架，以其创新的虚拟DOM和声明式编程范式重新定义了现代Web开发。超过24万Stars的社区规模证明了其作为UI开发基石的成熟度，跨平台特性（Web+Native）使其成为构建高性能用户界面的首选方案，拥有完善的生态系统和持续的技术演进能力。
 
 **技术亮点**:
-- 声明式编程范式：通过简单的声明式代码构建复杂的 UI，提升代码可读性和可维护性
-- 虚拟 DOM 技术：提供高效的渲染性能，只更新实际发生变化的部分
-- 跨平台能力：同时支持 Web 界面和 React Native 原生应用开发，实现代码复用
-- 组件化架构：通过可复用的组件构建用户界面，提升开发效率和代码一致性
-- 庞大的生态系统：拥有丰富的第三方库、工具和社区支持
+- 声明式UI编程范式，通过组件化思想简化复杂界面构建
+- 虚拟DOM和Fiber架构实现高效的渲染性能优化
+- Hooks系统创新性地解决状态管理和副作用处理问题
+- React Native支持实现真正的跨平台UI代码复用
+- MIT开源许可证支持企业级应用和商业项目
 
 **适用场景**:
-- 企业级 Web 应用开发：适合构建复杂的企业管理系统、电商平台和 SaaS 产品
-- 跨平台移动应用：通过 React Native 可同时开发 iOS 和 Android 应用，降低开发成本
-- 个人开发者学习与实践：是前端技能树的必修课，适合作为学习现代前端开发的起点
+- 企业级Web应用：电商平台、后台管理系统、SaaS产品等复杂的交互式界面开发
+- 移动应用开发：通过React Native实现iOS和Android双平台统一开发
+- 单页应用（SPA）：构建响应式、高性能的现代Web用户界面
 
 
 
@@ -5554,28 +6841,28 @@ React 是现代前端开发的基石项目，由 Facebook 维护，拥有超过 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 137,429 |
+| Stars | 137,434 |
 | 语言 | JavaScript |
-| Forks | 30,357 |
-| Issues | 3,248 |
+| Forks | 30,359 |
+| Issues | 3,253 |
 | Topics | blog, browser, compiler, components, hybrid, nextjs, node, react, server-rendering, ssg, static, static-site-generator, universal, vercel |
 | 许可证 | MIT License |
 
 ---
 
-Next.js 是当今最流行的 React 全栈框架，拥有 137K+ GitHub Stars 和活跃的开源社区。它通过统一的服务端渲染（SSR）、静态生成（SSG）和客户端渲染，让开发者既能享受 React 组件化开发体验，又能获得出色的 SEO 性能和首屏加载速度，是构建现代化 Web 应用的首选方案之一。
+Next.js是当今最流行的React全栈框架，由Vercel团队维护，拥有超过13.7万颗星。它完美融合了服务端渲染(SSR)、静态站点生成(SSG)和客户端渲染，为开发者提供了开箱即用的生产级React解决方案，极大降低了现代Web应用的开发门槛和部署复杂度。
 
 **技术亮点**:
-- 🚀 零配置、自动代码分割的智能编译系统，提供极致的开发体验和构建性能
-- 🔄 混合渲染模式：灵活运用 SSR（服务端渲染）、SSG（静态生成）和 ISR（增量静态再生成）
-- 📁 基于文件系统的自动路由，支持动态路由和中间件，简化应用架构
-- ⚡ 内置图片优化、字体优化和 API Routes，提供端到端的性能优化方案
-- 🌐 App Router 架构支持 React Server Components 和流式渲染，提升应用现代化水平
+- 🚀 混合渲染模式：支持SSR、SSG、ISR和CSR的无缝切换，可根据页面需求灵活选择最优渲染策略
+- ⚡️ 内置优化：自动代码分割、图片优化、字体优化和预取，无需额外配置即可获得出色性能
+- 🔧 强大的编译器：基于Rust/TurboPack的新一代编译工具，提供极速的开发体验和构建速度
+- 🎛️ 零配置部署：与Vercel平台深度集成，支持一键部署到全球边缘网络，实现毫秒级响应
+- 📦 全栈能力：内置API路由、中间件支持和服务端组件，真正实现前后端一体化开发
 
 **适用场景**:
-- 🏢 企业级内容平台：需要优秀的 SEO 和首屏性能的营销网站、电商前台、新闻博客等
-- 🛍️ 电商与SaaS应用：需要动态内容服务端渲染、用户个性化推荐和高并发处理的业务系统
-- 🎯 开发者个人项目：快速构建高性能个人博客、作品集网站或中小型全栈应用，降低开发成本
+- 🏢 企业级应用：适合需要高性能SEO、快速首屏加载和复杂业务逻辑的企业官网、电商平台和SaaS产品
+- 💻 个人/独立开发者：非常适合博客、作品集、文档站点等个人项目的快速搭建和部署
+- 📱 复杂交互应用：适用于需要服务端数据处理和客户端丰富交互相结合的现代化Web应用
 
 
 
@@ -5593,28 +6880,29 @@ Next.js 是当今最流行的 React 全栈框架，拥有 137K+ GitHub Stars 和
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,475 |
+| Stars | 115,481 |
 | 语言 | JavaScript |
-| Forks | 34,559 |
-| Issues | 2,421 |
+| Forks | 34,570 |
+| Issues | 2,423 |
 | Topics | javascript, js, linux, macos, mit, node, nodejs, runtime, windows |
 | 许可证 | Other |
 
 ---
 
-Node.js 是全球最广泛使用的服务端 JavaScript 运行时，拥有 11.5 万+ Stars 和庞大活跃的社区生态。它彻底改变了 JavaScript 的应用边界，让开发者能够使用统一语言构建全栈应用，是现代 Web 开发的核心技术基石，提供了卓越的异步 I/O 性能和跨平台能力。
+Node.js 是全球最流行的服务端 JavaScript 运行时，开创了"全栈 JavaScript"的编程范式。作为 V8 引擎的封装实现，它让开发者能够使用同一种语言构建前后端应用，极大地降低了技术栈复杂度，是现代 Web 开发不可或缺的基础设施。
 
 **技术亮点**:
-- ✨ 基于 V8 引擎的高性能 JavaScript 运行时，提供接近原生的执行效率
-- 🐢 事件驱动、非阻塞 I/O 模型，非常适合高并发、数据密集型实时应用
-- 🚀 完善的跨平台支持，无缝运行在 Linux、macOS 和 Windows 系统上
-- 📦 超百万级的 NPM 包生态系统，拥有世界上最丰富的开源模块库
-- 🔧 MIT 友好许可证，支持商业和个人项目的自由使用与二次开发
+- ✨ 基于 Chrome V8 引擎的高性能 JavaScript 执行环境，提供卓越的运行速度
+- 🐢 事件驱动、非阻塞 I/O 模型，擅长处理高并发场景，特别适合 I/O 密集型应用
+- 🚀 生态系统庞大，npm 拥有超过 200 万个包，是地球上最大的软件包仓库
+- 🌐 跨平台支持，可在 Linux、macOS、Windows 等多个操作系统上无缝运行
+- 📦 内置丰富的核心模块（http、fs、stream 等），开箱即用无需额外配置
 
 **适用场景**:
-- 企业级 Web 服务器和微服务架构开发（如 Express、Koa、NestJS 等框架构建的高性能 API 服务）
-- 前端开发者的全栈开发工具链（构建工具、包管理器、开发服务器等）
-- 实时应用系统（聊天应用、在线协作工具、实时数据推送平台等高并发场景）
+- 🏢 **企业级后端服务开发**：构建高性能 Web 服务器、RESTful API、微服务架构，广泛应用于企业级应用开发
+- 🚀 **全栈 Web 应用开发**：使用统一的 JavaScript/TypeScript 技术栈构建前后端，降低开发成本和维护复杂度
+- ⚡ **实时通信系统**：利用其事件驱动特性构建聊天应用、实时协作工具、在线游戏等高并发场景
+- 🔧 **开发工具链构建**：构建构建工具、CLI 工具、自动化脚本等开发者工具生态
 
 
 
@@ -5632,27 +6920,28 @@ Node.js 是全球最广泛使用的服务端 JavaScript 运行时，拥有 11.5 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 110,645 |
+| Stars | 110,656 |
 | 语言 | JavaScript |
-| Forks | 36,259 |
-| Issues | 605 |
+| Forks | 36,255 |
+| Issues | 602 |
 | Topics | 3d, augmented-reality, canvas, html5, javascript, svg, virtual-reality, webaudio, webgl, webgl2, webgpu, webxr |
 | 许可证 | MIT License |
 
 ---
 
-Three.js 是全球最受欢迎的 WebGL 3D 渲染库，110,000+ Stars 证明了其卓越品质和生态成熟度。它大幅降低了 Web 3D 开发门槛，让开发者无需掌握底层 WebGL 就能创建高性能的交互式 3D 场景，是 Web 3D 领域的事实标准。
+Three.js 是世界上最受欢迎的 Web 3D 图形库，拥有超过 11 万颗星和活跃的社区。它极大降低了 WebGL 开发门槛，让开发者无需深入了解底层图形学知识就能创建令人惊叹的 3D 网页体验，是现代 Web 3D 开发的事实标准。
 
 **技术亮点**:
-- 支持多种渲染后端：WebGL、WebGL2 和新兴的 WebGPU，确保未来技术兼容性
-- 原生支持 WebXR 标准，可直接开发 VR/AR 和 MR 混合现实应用
-- 丰富材质系统和几何体库，内置 PBR 物理渲染和后处理效果链
-- 完善的三维数学引擎与场景图架构，支持复杂的层级变换和粒子系统
+- 统一 API 支持 WebGL、WebGL2 和 WebGPU 多种渲染后端，确保高性能和未来兼容性
+- 内置 WebXR 支持，可无缝创建 VR/AR 和增强现实体验，适配主流头显设备
+- 提供丰富的 3D 对象、材质、光照和动画系统，包含完整的场景图架构
+- 内置加载器支持多种 3D 格式（GLTF、OBJ、FBX 等），并与 Web Audio API 深度集成
+- 活跃的开源社区和完善的文档生态，MIT 许可证允许商业和开源项目自由使用
 
 **适用场景**:
-- 创建沉浸式产品展示页面（如电商 3D 模型预览、房地产虚拟看房）
-- 开发 Web 端互动游戏和可视化应用（数据可视化、科学仿真）
-- 构建 AR/VR 体验（元宇宙场景、虚拟展厅、教育演示）
+- Web 产品展示和可视化：企业级产品 3D 配置器、虚拟展厅、房地产在线看房等商业应用
+- 互动娱乐和教育：3D 网页游戏、在线教育平台、数据可视化大屏等交互体验
+- WebXR 虚拟现实应用：VR 演示、AR 电商试穿、虚拟博物馆等沉浸式体验开发
 
 
 
@@ -5670,7 +6959,7 @@ Three.js 是全球最受欢迎的 WebGL 3D 渲染库，110,000+ Stars 证明了�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 108,565 |
+| Stars | 108,567 |
 | 语言 | JavaScript |
 | Forks | 11,504 |
 | Issues | 314 |
@@ -5679,19 +6968,19 @@ Three.js 是全球最受欢迎的 WebGL 3D 渲染库，110,000+ Stars 证明了�
 
 ---
 
-Axios 是 JavaScript 生态中最受欢迎的 HTTP 客户端库之一，拥有超过 10 万颗星，是前端和 Node.js 开发的事实标准。它完美解决了浏览器和 Node.js 环境中 HTTP 请求的统一处理问题，通过简洁的 API 设计和强大的配置能力，让开发者能够优雅地处理各种网络请求场景，是目前 JavaScript 工程师必掌握的核心工具之一。
+Axios 是目前最流行的 HTTP 客户端库之一，凭借 10万+ 的 GitHub Stars 成为前端和 Node.js 开发的标准选择。它以其简洁的 API 设计、强大的拦截器机制和完善的错误处理，成为现代 Web 应用 HTTP 请求的事实标准工具，无论是个人项目还是企业级应用都能显著提升开发效率。
 
 **技术亮点**:
-- ✨ 基于 Promise 的现代化设计，支持 async/await 语法，让异步代码更加简洁优雅
-- 🌐 完美支持浏览器和 Node.js 双环境，提供统一的 API 接口，实现代码跨平台复用
-- ⚡ 强大的拦截器机制（请求/响应拦截器），便于统一处理认证、日志、错误转换等逻辑
-- 🔧 丰富的配置选项：请求/响应转换、超时控制、取消请求、进度监控等企业级功能
-- 🛡️ 自动 JSON 数据转换、XSRF 防护、并发请求支持，开箱即用的安全性和便利性
+- 基于 Promise 的现代化 API 设计，支持 async/await 语法，让异步请求代码更加清晰优雅
+- 强大的请求和响应拦截器机制，便于统一处理认证 token、错误处理和请求日志
+- 自动转换 JSON 数据，支持请求和响应的自动序列化和反序列化
+- 优秀的浏览器和 Node.js 环境兼容性，同一套代码可在两端运行
+- 支持请求取消、超时设置、进度监控和并发请求处理等高级特性
 
 **适用场景**:
-- 🏢 企业级应用开发：在 Vue、React、Angular 等现代前端框架中作为统一的 HTTP 请求方案，配合拦截器实现 Token 管理、统一错误处理和请求日志记录
-- 🔌 微服务架构通信：Node.js 后端服务之间调用第三方 API，利用超时控制、重试机制和请求取消等功能保障服务稳定性
-- 📦 全栈开发场景：同一套 HTTP 客户端代码在浏览器和 Node.js 服务端共享，减少代码冗余，提高开发效率
+- 前端应用对接 REST API：适用于 Vue/React/Angular 等现代前端框架，处理与后端的数据交互
+- Node.js 服务端请求：在 Node.js 后端服务中调用第三方 API 或微服务之间的通信
+- 企业级项目开发：统一封装 HTTP 请求层，配合拦截器实现全局错误处理、鉴权和日志记录
 
 
 
@@ -5709,28 +6998,28 @@ Axios 是 JavaScript 生态中最受欢迎的 HTTP 客户端库之一，拥有�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,735 |
+| Stars | 97,737 |
 | 语言 | JavaScript |
-| Forks | 32,783 |
-| Issues | 1,739 |
+| Forks | 32,784 |
+| Issues | 1,738 |
 | Topics | design-system, material-design, material-ui, react, react-components |
 | 许可证 | MIT License |
 
 ---
 
-Material UI 是 React 生态系统中使用最广泛的 UI 组件库，拥有超过 97k stars 和庞大的开发者社区。它完整实现了 Google 的 Material Design 设计语言，提供经过精心打磨的企业级组件，使开发者能够快速构建美观、一致且可访问性强的 Web 应用程序。MIT 许可证确保了商业项目的自由使用。
+Material UI 是 React 生态系统中使用最广泛的 UI 组件库之一，完美实现了 Google 的 Material Design 设计规范。凭借近 10 万 Stars 的社区认可度、企业级的代码质量、MIT 免费商用许可和完整的组件体系，它是构建现代化 React 应用的首选解决方案，特别适合需要快速交付且保持设计一致性的项目。
 
 **技术亮点**:
-- 🎨 完整实现 Google Material Design 设计语言，提供统一的视觉风格和交互体验
-- ⚛️ 专为 React 生态系统打造，提供 60+ 高质量预制组件（按钮、表单、对话框、导航等）
-- 🔧 高度可定制化，支持主题系统、CSS-in-JS（基于 Emotion）和组件样式覆盖
-- ♿ 内置无障碍访问（Accessibility）支持，符合 WCAG 标准，确保应用对所有用户友好
-- 📱 响应式设计，支持移动端、平板和桌面端的自适应布局
+- 🎨 完整实现 Google Material Design 设计规范，提供开箱即用的精美 UI 组件
+- ⚛️ 深度集成 React 生态系统，支持 Hooks、TypeScript 和最新 React 特性
+- 🔧 高度可定制化的主题系统（Theming），支持暗色模式和样式覆盖
+- 📦 丰富的组件库，涵盖 60+ 预制组件，从基础按钮到复杂数据展示
+- 🌐 企业级维护与文档完善，拥有活跃社区和长期技术支持保障
 
 **适用场景**:
-- 🏢 企业级后台管理系统：利用丰富的表单、表格和导航组件快速构建管理后台
-- 🛒 SaaS 产品和电商平台：专业的 UI 提升产品可信度和用户体验
-- 🚀 快速原型开发和 MVP：基于预制组件快速验证产品想法，缩短开发周期
+- 企业级 React Web 应用开发：适合构建管理系统、SaaS 平台、电商后台等需要专业 UI 和长期维护的商业项目
+- 快速原型开发与 MVP 验证：利用预制组件库快速搭建产品原型，加速产品迭代和上线周期
+- Material Design 统一设计需求：适用于需要遵循 Google Material Design 规范的跨平台应用，确保视觉一致性
 
 
 
@@ -5748,7 +7037,7 @@ Material UI 是 React 生态系统中使用最广泛的 UI 组件库，拥有超
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,201 |
+| Stars | 95,202 |
 | 语言 | JavaScript |
 | Forks | 15,083 |
 | Issues | 68 |
@@ -5757,19 +7046,19 @@ Material UI 是 React 生态系统中使用最广泛的 UI 组件库，拥有超
 
 ---
 
-这是微软官方出品、超9.5万人星的零基础Web开发完整课程，采用精心设计的24课渐进式学习路径，涵盖HTML/CSS/JavaScript全栈技术栈，配套实战项目和企业级代码规范，是技术新人系统性学习Web开发的最佳入门资源之一。
+这是微软官方推出的 Web 开发入门课程，以系统化、结构化的方式涵盖 24 节核心课程，专为初学者设计。项目拥有超过 9.5 万颗星，是全球最受认可的 Web 开发学习资源之一，提供从零基础到入门的完整学习路径，质量经过微软团队严格把控，适合各类编程新手。
 
 **技术亮点**:
-- 循序渐进的课程体系：24节课、12周完整学习路径，从零基础到可独立开发Web应用
-- 全栈技术覆盖：深度涵盖HTML语义化、CSS样式布局、JavaScript核心概念及现代Web开发实践
-- 项目驱动教学：每节课配备实战项目练习，边学边做，培养实际编码能力
-- 微软工程规范：代码示例遵循企业级最佳实践和编码规范，不仅教会语法，更培养工程化思维
-- 开源社区活跃：9.5万+星标，持续更新维护，学习者可获得社区支持和最新技术趋势
+- 🎓 系统化课程设计：24 节课程，12 周学习计划，内容循序渐进，覆盖 Web 开发核心知识点
+- 🌐 全栈技术栈覆盖：涵盖 HTML、CSS、JavaScript 三大核心技术，构建完整的前端知识体系
+- 📚 实战导向：包含大量动手实践和项目案例，让学习者在编码中掌握技能
+- 🏢 权威背书：微软官方出品，教程质量和内容准确性有保障，符合行业标准
+- ♾️ 开源免费：MIT 许可证，学习资源完全免费，支持自主学习和教学使用
 
 **适用场景**:
-- 零基础转行人群：系统化学习Web开发，快速掌握前端核心技能并完成作品集项目
-- 高校计算机教育：作为前端开发课程配套教材，提供完整教学大纲和实践案例
-- 企业新员工培训：帮助非技术背景员工快速建立Web开发基础，提升跨部门协作能力
+- 👨‍🎓 个人自学：适合零基础或初级开发者系统学习 Web 开发，通过 12 周的学习计划建立扎实的前端基础
+- 🏫 教育培训：高校、培训机构可直接使用这套完整课程作为教学大纲，节省课程开发成本
+- 👥 企业内训：公司可用于技术团队内部培训，帮助非技术背景员工（如产品经理、设计师）理解 Web 开发原理
 
 
 
@@ -5787,28 +7076,27 @@ Material UI 是 React 生态系统中使用最广泛的 UI 组件库，拥有超
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,625 |
+| Stars | 85,627 |
 | 语言 | JavaScript |
-| Forks | 4,753 |
-| Issues | 976 |
+| Forks | 4,752 |
+| Issues | 978 |
 | Topics | compiler, template, ui |
 | 许可证 | MIT License |
 
 ---
 
-Svelte 是一个颠覆性的前端框架，它在构建时进行编译而非运行时处理，无需虚拟 DOM 即可实现高性能。85,000+ stars 的社区认可度证明了其"为普通开发者服务"的设计理念，让 web 开发更简单、更高效，特别适合追求性能和开发体验的开发者。
+Svelte 是一款革命性的前端框架，通过编译时优化而非运行时虚拟 DOM，在保持极简开发体验的同时实现卓越性能。85,000+ Stars 和 MIT 许可证证明了其在开发者社区中的高度认可和商业友好性，是构建现代 Web 应用的理想选择。
 
 **技术亮点**:
-- 革命性的编译时架构 - 将组件编译为原生 JavaScript，运行时零开销，无需虚拟 DOM
-- 原生响应式系统 - 基于赋值操作的响应式声明，无需复杂的 React hooks 或 Vue 的响应式 API
-- 极小的打包体积 - 编译后的代码体积远小于传统框架，大幅提升加载性能
-- 内置状态管理 - 提供 stores 和上下文 API，无需额外引入 Redux/Vuex 等状态管理库
-- 真正的 CSS 作用域 - 组件样式天然隔离，避免全局污染和样式冲突
+- 编译时架构：将组件编译为高效的 JavaScript 代码，避免虚拟 DOM 的运行时开销，性能远超传统框架
+- 响应式设计：采用内置响应式系统，开发者无需学习复杂的状态管理库，代码更简洁直观
+- 真 TypeScript 支持提供类型安全的完整保障，结合编译器技术实现开发效率与运行性能的完美平衡
+- 组件化开发与模板语法高度融合，显著降低学习成本和代码复杂度，特别适合中小型团队快速构建高质量产品
 
 **适用场景**:
-- 性能敏感的现代 Web 应用 - 需要快速加载和流畅交互的单页应用、企业级后台系统
-- 快速原型开发与中小型项目 - 个人开发者或小团队快速构建产品原型和 MVP 项目
-- 组件库与设计系统开发 - 利用编译时优化构建高性能的 UI 组件库供团队复用
+- 现代 Web 应用开发：SPA 单页应用、交互式网站、数据可视化平台等性能敏感场景
+- 企业级业务系统：内部管理系统、客户门户、电子商务平台等需要长期维护的商业项目
+- 个人开发者快速构建：从简单的个人网站到复杂的渐进式 Web 应用（PWA），提供灵活的开发体验
 
 
 
@@ -5826,28 +7114,28 @@ Svelte 是一个颠覆性的前端框架，它在构建时进行编译而非运�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,148 |
+| Stars | 78,159 |
 | 语言 | JavaScript |
-| Forks | 29,831 |
-| Issues | 237 |
+| Forks | 29,850 |
+| Issues | 238 |
 | Topics | dynamic, profile-readme, readme-generator, readme-stats, serverless |
 | 许可证 | MIT License |
 
 ---
 
-这是一个极具创意和实用性的开源项目，通过动态生成可视化统计卡片，让开发者的 GitHub 个人主页能够实时展示项目活跃度和影响力。该项目结合了无服务器架构与动态渲染技术，为全球 78,000+ 开发者提供了美化 README 的便捷解决方案。
+这是一个极具实用价值的开源项目，通过 Serverless 架构为开发者提供动态生成 GitHub 统计卡片的能力，已被广泛集成到全球开发者的个人主页中。该项目完美展示了前后端分离、动态图像生成和无服务器架构的最佳实践。
 
 **技术亮点**:
-- 采用无服务器架构（Serverless），利用 Vercel/Netlify 等平台实现高可用性和零运维成本
-- 动态图片渲染技术，实时获取 GitHub API 数据并生成可视化统计卡片
-- 支持高度自定义配置，包括主题切换、图标显示、语言过滤等多种个性化选项
-- 完全基于 JavaScript/TypeScript 开发，易于扩展和二次开发
-- RESTful API 设计，支持通过 URL 参数直接控制卡片生成逻辑
+- 采用 Serverless 架构部署，支持高并发和弹性伸缩，无需管理服务器基础设施
+- 基于 JavaScript/Vercel 构建，实现实时数据获取与动态图像渲染，性能优异
+- 支持丰富的自定义选项，包括主题、卡片样式、显示内容等高度可配置
+- RESTful API 设计，提供简单易用的接口，易于集成到各类 Markdown 环境中
+- 完全开源且社区活跃，78k+ Stars 证明了项目的可靠性和受欢迎程度
 
 **适用场景**:
-- 个人开发者美化 GitHub 个人主页，展示项目活跃度和开源贡献，提升技术影响力
-- 开源项目维护者在项目 README 中展示项目统计数据（Stars、Forks、活跃度等），吸引潜在贡献者
-- 技术团队或企业用于展示成员的代码贡献统计，作为简历或作品集的可视化补充
+- 个人开发者：在 GitHub Profile README 中展示代码贡献、语言分布、Star 数等可视化统计，提升个人技术品牌形象
+- 企业技术团队：在项目文档或团队介绍中动态展示团队贡献统计，增强透明度和团队凝聚力
+- 开源项目维护者：在项目 README 中展示项目活跃度、社区贡献者等信息，吸引更多开发者参与
 
 
 
@@ -5865,29 +7153,27 @@ Svelte 是一个颠覆性的前端框架，它在构建时进行编译而非运�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,611 |
+| Stars | 75,612 |
 | 语言 | JavaScript |
-| Forks | 7,273 |
+| Forks | 7,274 |
 | Issues | 708 |
 | 许可证 | Other |
 
 ---
 
-json-server 是开发者必备的神器，能在30秒内零代码搭建完整的REST API，75K+ GitHub Stars证明了其在开发社区的巨大价值和可靠性。对于前端开发者、原型设计者或需要快速Mock API的场景来说，这是最快速、最优雅的解决方案，极大地提升了开发效率。
+这是一个获得75k+星标的传奇级开源项目，能在30秒内零代码搭建完整的REST API，非常适合前端开发、原型设计和测试场景。项目解决了前后端分离开发中最常见的痛点——等待后端API完成，让开发者可以立即开始工作，极大提升了开发效率。
 
 **技术亮点**:
-- 零代码配置，30秒内快速搭建完整REST API，支持GET/POST/PUT/PATCH/DELETE等标准HTTP方法
-- 基于JSON文件作为数据源，天然支持关系型数据结构，可定义资源和关联关系
-- 内置查询功能，支持分页、排序、筛选和全文搜索等高级特性
-- 支持自定义路由和中间件，可通过JavaScript扩展功能，高度可定制
-- 体积轻量，作为npm包全局安装，也可集成到任何Node.js项目中
+- 零代码配置：基于简单的JSON文件或JavaScript对象自动生成完整的REST API，支持GET/POST/PUT/PATCH/DELETE等标准HTTP方法
+- 快速启动：只需一行命令即可在30秒内运行完整的模拟服务器，开箱即用
+- 功能丰富：支持分页、排序、过滤、全文搜索、关系型数据查询等高级特性
+- 高度可定制：支持自定义路由、中间件、响应格式，可模拟复杂业务逻辑
+- 轻量级与独立性：纯JavaScript实现，无需依赖数据库或后端服务，适合本地开发和测试
 
 **适用场景**:
-- 前端开发阶段：在后端API未就绪时，快速搭建Mock API进行前端开发和功能测试
-- 原型演示：为产品原型或演示应用提供完整的后端数据支持，无需编写后端代码
-- 接口开发：作为快速原型工具，先确定API规范和数据结构，再进行实际后端开发
-- 教学与学习：帮助初学者理解RESTful API设计理念和HTTP请求规范
-- 测试环境：为自动化测试或集成测试提供稳定可控的API服务
+- 前端开发：后端API尚未就绪时，前端团队可以立即使用模拟API进行开发，避免阻塞进度
+- 原型设计：快速构建产品原型或演示系统，用于客户展示或概念验证
+- 接口测试：为自动化测试提供稳定的Mock API，避免测试环境不稳定影响CI/CD流程
 
 
 
@@ -5905,7 +7191,7 @@ json-server 是开发者必备的神器，能在30秒内零代码搭建完整的
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 70,499 |
+| Stars | 70,501 |
 | 语言 | JavaScript |
 | Forks | 16,814 |
 | Issues | 882 |
@@ -5914,19 +7200,19 @@ json-server 是开发者必备的神器，能在30秒内零代码搭建完整的
 
 ---
 
-reveal.js 是目前最成熟的基于 Web 技术的演示框架，70K+ 星标证明了其强大实力。它让开发者用熟悉的 HTML/CSS/JavaScript 创建交互式演示文稿，无需学习 PowerPoint 或 Keynote，是技术分享和开发演示的理想选择。
+reveal.js 是 Web 端最流行的开源演示文稿框架，拥有 70,500+ GitHub Stars。它让开发者可以用熟悉的 HTML/CSS/JavaScript 技术栈创建具有专业级动画效果的演示文稿，无需安装额外软件，在任何现代浏览器中即可流畅运行，是技术分享和在线演示的理想选择。
 
 **技术亮点**:
-- 纯 HTML/CSS/JavaScript 构建，无需编译器或依赖管理，可直接嵌入现有 Web 项目
-- 支持 Markdown 语法编写幻灯片内容，降低编写门槛
-- 内置丰富的过渡动画和视觉效果，支持触摸手势、键盘控制等多种交互方式
-- 强大的 API 和插件系统，支持演讲者视图、幻灯片导出 PDF、代码高亮等高级功能
-- 响应式设计，自动适配各种屏幕尺寸和设备，支持移动端演示
+- 纯 Web 技术栈：基于 HTML/CSS/JavaScript 构建，无需编译或特殊工具即可使用
+- 丰富的前端特性：支持 Markdown 语法、嵌套幻灯片、PDF 导出、演讲者备注和多点触控
+- 高度可定制：提供灵活的主题系统和插件架构，支持自定义动画和交互效果
+- 响应式设计：自适应各种屏幕尺寸，支持移动端和桌面端展示
+- 无障碍支持：内置键盘导航和屏幕阅读器兼容性
 
 **适用场景**:
-- 技术会议和演讲演示：开发者可以使用熟悉的代码编辑器制作包含代码示例、实时演示的交互式幻灯片
-- 企业内部培训和知识分享：支持在线协作和版本控制，方便团队共同维护演示内容
-- 远程在线演示：通过 Web 浏览器直接分享演示文稿链接，无需额外软件，观众可自主控制翻页节奏
+- 技术会议和开发者大会的在线演示分享
+- 企业产品发布和远程团队汇报的Web化展示
+- 教育领域的互动式课件和在线教学材料制作
 
 
 
@@ -5944,67 +7230,28 @@ reveal.js 是目前最成熟的基于 Web 技术的演示框架，70K+ 星标证
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 66,293 |
+| Stars | 66,300 |
 | 语言 | JavaScript |
-| Forks | 4,436 |
-| Issues | 86 |
+| Forks | 4,435 |
+| Issues | 87 |
 | Topics | animation, anime, canvas, css, javascript, javascript-library, svg |
 | 许可证 | MIT License |
 
 ---
 
-Anime.js 是一款拥有超过 6.6 万 stars 的轻量级 JavaScript 动画引擎，以其简洁的 API 设计和强大的动画控制能力著称。它支持 CSS、SVG、Canvas 和 DOM 元素的动画，是 Web 动画领域的成熟解决方案，特别适合需要高性能、可定制动画功能的现代 Web 应用开发。
+Anime.js 是一个轻量级且功能强大的 JavaScript 动画引擎，凭借超过 66,000 的 Stars 证明了其在开发者社区中的极高人气。它提供了简单直观的 API 设计，同时支持 CSS、SVG、Canvas 等多种动画目标，是前端动画开发的理想选择。
 
 **技术亮点**:
-- 轻量级设计，核心库体积小，性能优化出色，支持流畅的 60fps 动画渲染
-- 统一的 API 设计，支持 CSS、SVG、Canvas 和 DOM 对象，实现跨多种渲染技术的动画控制
-- 内置丰富的时间轴控制和缓动函数，支持复杂的序列动画和动画编排
-- 提供完善的动画控制方法（播放、暂停、重启、反转），便于实现交互式动画效果
-- 支持创建可重用的动画时间轴，便于管理复杂的动画场景和动画组合
+- 轻量级动画引擎，体积小巧但功能完整，性能优化出色
+- 统一的 API 设计，支持 CSS、SVG、Canvas、DOM 对象等多种动画目标
+- 提供丰富的缓动函数和时间轴控制，支持复杂动画序列编排
+- 支持动画重叠、链式调用和回调机制，便于构建交互式动画
+- MIT 开源许可，社区活跃，文档完善，易于集成到现有项目
 
 **适用场景**:
-- 企业级前端项目：用于构建官网产品展示、数据可视化面板、营销活动页面等需要高质量动画效果的场景
-- Web 应用开发：实现 UI 交互动画、页面转场效果、加载动画、微交互等用户体验增强功能
-- 创意项目和游戏开发：Canvas 游戏动画、SVG 图形动画、创意艺术作品等需要精细动画控制的应用
-
-
-
-### leonardomso/33-js-concepts
-
-**描述**: 📜 33 JavaScript concepts every developer should know.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 66,215 |
-| 语言 | JavaScript |
-| Forks | 9,197 |
-| Issues | 0 |
-| Topics | angular, concepts, es6, es6-javascript, hacktoberfest, javascript, javascript-closures, javascript-engines, javascript-programming, nodejs, primitive-types, programming, react |
-| 许可证 | MIT License |
-
----
-
-这是一个精心整理的JavaScript开发者必备知识图谱，涵盖33个核心概念，适合所有水平的开发者系统化学习。凭借超过6.6万星的社区认可度和MIT开源许可，它是前端工程师、全栈开发者以及JavaScript学习者掌握语言深层特性的权威指南。
-
-**技术亮点**:
-- 涵盖JavaScript核心概念：包括闭包、原型链、异步编程、ES6+特性等33个关键知识点
-- 覆盖主流技术栈整合：涉及Angular、React、Node.js等现代JavaScript生态系统
-- 深入技术底层：包含JavaScript引擎工作原理、原始类型解析、数据结构等底层机制
-- 系统化学习路径：从基础概念到高级特性，为开发者提供完整的知识体系构建方案
-- 社区驱动持续更新：高活跃度的开源项目，内容紧跟JavaScript语言发展趋势
-
-**适用场景**:
-- 前端/全栈开发者系统化学习：帮助开发者填补知识盲区，从会用到懂原理
-- 技术面试准备：覆盖JavaScript面试高频考点，适合求职者复习核心概念
-- 团队技术培训材料：适合企业内部技术分享，作为团队成员统一JavaScript认知的标准化参考资料
+- 企业级 Web 应用：产品展示页、营销活动页面的交互动画效果
+- 数据可视化：为图表、仪表盘添加动态过渡动画，提升用户体验
+- 创意交互设计：H5 营销页面、游戏 UI、微交互动画的快速实现
 
 
 
@@ -6022,28 +7269,28 @@ Anime.js 是一款拥有超过 6.6 万 stars 的轻量级 JavaScript 动画引�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 65,934 |
+| Stars | 65,935 |
 | 语言 | JavaScript |
 | Forks | 9,227 |
-| Issues | 209 |
+| Issues | 211 |
 | Topics | amd, build-tool, commonjs, compiler, es2015, es6, esm, javascript, javascript-compiler, javascript-modules, loaders, module-bundler, plugins, web, web-performance, webpack |
 | 许可证 | MIT License |
 
 ---
 
-Webpack 是现代前端工程化的核心工具之一，拥有 65,000+ stars 和庞大的生态系统。它通过强大的模块打包能力和丰富的 loader/plugin 机制，彻底改变了 JavaScript 应用的构建方式，是任何前端开发者的必备技能。
+Webpack 是目前最成熟的 JavaScript 模块打包工具，生态系统极其完善，拥有 6.5 万+ stars 和海量社区插件。它通过强大的 Loader 和 Plugin 机制实现了高度可扩展性，几乎能处理任何类型的资源，是现代前端工程化不可或缺的基础设施。
 
 **技术亮点**:
-- 模块化打包 - 支持多种模块格式
-- 代码分割 - 按需加载优化应用性能
-- 强大扩展性 - 丰富的 Loaders 和 Plugins 生态
-- 多格式支持 - 除 JS 外还支持 CSS、图片、JSON 等资源
-- 代码优化 - Tree Shaking、压缩等优化能力
+- 强大的模块打包能力：支持 CommonJS、AMD、ES6 等多种模块格式，将众多模块打包为少量优化后的资源
+- 灵活的 Loader 系统：通过加载器可处理 CSS、Images、JSON、LESS、Coffeescript 等各类非 JavaScript 资源
+- 智能代码分割：按需加载功能，支持将应用拆分为多个代码块，实现懒加载和性能优化
+- 丰富的插件生态：提供强大的扩展机制，社区拥有数千个插件，可定制构建流程的每个环节
+- 多目标编译能力：可同时为 Web 和 Node.js 等不同环境构建代码
 
 **适用场景**:
-- 企业级复杂前端项目 - 需要模块化管理和打包
-- 现代化 Web 应用开发 - 需要处理 ES6+、TypeScript 等新特性
-- 性能优化需求 - 通过代码分割和按需加载提升加载速度
+- 大型企业级 Web 应用构建：支持复杂的项目结构和团队协作，适合中大型企业的核心业务系统
+- 现代前端框架项目：React/Vue/Angular 等框架项目的标准构建工具，提供完整的工程化方案
+- 性能优化场景：通过代码分割、Tree Shaking、懒加载等技术优化首屏加载速度和用户体验
 
 
 
@@ -6070,19 +7317,19 @@ Webpack 是现代前端工程化的核心工具之一，拥有 65,000+ stars 和
 
 ---
 
-Lodash 是 JavaScript 生态系统中最成熟且使用最广泛的实用工具库，拥有超过 6 万颗星和数百万每周下载量。它通过模块化设计、卓越的性能优化和浏览器兼容性，为开发者提供了 300+ 个经过严格测试的工具函数，是现代 JavaScript 开发不可或缺的基础设施。
+Lodash 是 JavaScript 生态系统中最经典的实用工具库，被全球数百万开发者依赖，拥有 61K+ stars 和广泛的社区支持。它提供了模块化、高性能的函数式编程工具，通过一致的 API 和优雅的链式调用极大提升了 JavaScript 开发效率。
 
 **技术亮点**:
-- 模块化架构：支持按需引入单个函数，可显著减小打包体积，构建工具友好
-- 极致性能：针对数组操作、对象遍历等高频场景进行了深度优化，性能远超原生方法
-- 全面的浏览器兼容性：支持从 IE 到最新浏览器的全版本覆盖，无需 polyfill
-- 链式调用语法：提供流式 API，支持函数组合和管道式编程
-- 严格的测试覆盖：拥有数千个单元测试和边界用例，确保生产环境稳定性
+- 模块化设计，支持按需引入单个函数，显著减小打包体积
+- 优化性能，针对数组、对象、字符串等操作进行了底层优化，比原生方法更高效
+- 支持链式调用（Chaining），提供流畅的函数式编程体验
+- 丰富的 API（300+ 方法），涵盖遍历、数据处理、类型判断等常用场景
+- 卓越的浏览器兼容性，支持 IE 及旧版浏览器，适合企业级应用
 
 **适用场景**:
-- 企业级项目开发：适用于大型 Web 应用和后台管理系统，提供稳定可靠的工具函数支持
-- 数据处理和转换：适合处理复杂的数据集合操作、数组去重、对象合并等常见业务场景
-- 遗留项目维护：为需要支持旧浏览器（如 IE）的项目提供兼容性解决方案
+- 企业级 Web 应用开发，特别是需要兼容旧版浏览器的项目
+- 数据密集型处理场景，如数组/对象转换、去重、排序、分组等复杂数据操作
+- 需要提升代码可读性和维护性的项目，通过统一的工具函数减少重复代码
 
 
 
@@ -6100,28 +7347,28 @@ Lodash 是 JavaScript 生态系统中最成熟且使用最广泛的实用工具�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 61,254 |
+| Stars | 61,259 |
 | 语言 | JavaScript |
-| Forks | 3,923 |
+| Forks | 3,922 |
 | Issues | 17 |
 | Topics | blocker, browser-extension, chromium, firefox, javascript, ublock, ublock-origin |
 | 许可证 | GNU General Public License v3.0 |
 
 ---
 
-uBlock Origin 是最值得推荐的开源广告拦截器之一，凭借极致的性能和效率（CPU/内存占用极低）成为数百万用户的首选。它不仅完全开源、尊重用户隐私，还通过高效的过滤引擎提供了强大的内容拦截能力，是浏览器扩展开发的优秀学习案例。
+uBlock Origin 是开源界最广受认可的浏览器广告拦截器，凭借其极致的轻量级设计（内存占用远低于同类产品）和高效的过滤规则引擎，成为全球数百万用户的首选隐私保护工具。该项目经过严格的代码审查，完全开源透明，在性能和安全性方面都远超商业化的广告拦截扩展。
 
 **技术亮点**:
-- 采用轻量级高效的过滤引擎，相比其他广告拦截器内存占用更低
-- 支持多种过滤列表订阅（EasyList、EasyPrivacy等）和自定义规则
-- 跨浏览器架构设计，同时支持 Chromium 和 Firefox 内核
-- 实现了高级元素隐藏功能和动态资源过滤
-- GPL-3.0 开源许可，代码质量高，社区活跃（61k+ stars）
+- 基于 JavaScript 实现的高效过滤规则引擎，支持 EasyList、EasyPrivacy 等多种过滤规则订阅
+- 跨浏览器扩展架构，同时支持 Chromium 和 Firefox 两大浏览器生态，代码复用率高
+- 极致的轻量级设计，内存占用和 CPU 使用率显著低于 Adblock Plus 等同类扩展
+- 动态过滤功能，允许用户精细化控制每个网站的请求权限，提供高级防火墙功能
+- 开源且社区活跃，无商业利益纠葛，定期更新以应对新型广告追踪技术
 
 **适用场景**:
-- 个人用户：浏览网页时自动拦截广告、跟踪器和恶意脚本，提升浏览速度和隐私保护
-- 开发者：学习浏览器扩展开发、内容过滤引擎设计及高效 JavaScript 实践
-- 企业/教育机构：部署开源、免费的网络过滤解决方案，节省带宽并提升安全性
+- 个人用户日常浏览网页时拦截广告、跟踪器和恶意脚本，提升浏览速度并保护隐私
+- 企业 IT 部门为员工浏览器部署标准化的广告拦截策略，减少安全风险和带宽消耗
+- Web 开发者测试网站在无广告环境下的表现，或学习浏览器扩展开发和过滤规则引擎的实现原理
 
 
 
@@ -6139,28 +7386,28 @@ uBlock Origin 是最值得推荐的开源广告拦截器之一，凭借极致的
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,820 |
+| Stars | 59,822 |
 | 语言 | JavaScript |
-| Forks | 20,500 |
+| Forks | 20,499 |
 | Issues | 93 |
 | Topics | jquery |
 | 许可证 | MIT License |
 
 ---
 
-jQuery 是 Web 开发史上最具有影响力的 JavaScript 库之一，以其"写得更少，做得更多"(Write Less, Do More)的核心理念彻底改变了前端开发方式。它拥有近 6 万 Stars 和庞大的社区生态，是学习 JavaScript 操作 DOM、处理事件、实现动画效果的经典项目，也是理解现代前端框架发展历程的重要里程碑。
+jQuery是Web开发史上最具影响力的JavaScript库之一，拥有近6万颗星和MIT许可证。它通过简洁的API设计彻底改变了DOM操作方式，极大降低了前端开发门槛，至今仍被数百万网站依赖，是学习JavaScript和现代框架发展历史的必经之路。
 
 **技术亮点**:
-- 简洁的链式语法设计，支持流畅的 API 调用风格（如 $('.class').css().fadeIn()）
-- 强大的 DOM 操作和选择器引擎，大幅简化元素查询和文档遍历
-- 跨浏览器兼容性处理，自动解决不同浏览器之间的 API 差异
-- 内置 AJAX 封装和事件处理系统，提供统一的数据交互接口
-- 丰富的动画效果和实用工具函数，开箱即用
+- 优雅的链式语法和简洁的DOM操作API（$选择器）
+- 强大的AJAX封装和跨浏览器兼容性处理
+- 轻量级核心+可扩展插件架构设计
+- 完善的动画效果系统和事件处理机制
+- 成熟的生态系统和丰富的社区插件资源
 
 **适用场景**:
-- 企业级传统 Web 应用的快速开发和维护，特别是需要支持 IE 等老版本浏览器的场景
-- JavaScript 入门教学和前端开发培训，帮助初学者理解 DOM 操作和事件处理的核心概念
-- 现有 jQuery 项目的功能扩展和 bug 修复，广泛应用于 WordPress、Bootstrap 等成熟生态系统中
+- 传统Web项目的快速开发和DOM操作简化
+- 遗留系统的维护和渐进式增强
+- JavaScript初学者学习DOM操作和异步编程的基础框架
 
 
 
@@ -6178,7 +7425,7 @@ jQuery 是 Web 开发史上最具有影响力的 JavaScript 库之一，以其"�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,236 |
+| Stars | 59,240 |
 | 语言 | JavaScript |
 | Forks | 5,574 |
 | Issues | 56 |
@@ -6187,58 +7434,19 @@ jQuery 是 Web 开发史上最具有影响力的 JavaScript 库之一，以其"�
 
 ---
 
-这是 draw.io 的官方 Electron 桌面版本，draw.io 是全球最流行的开源流程图绘制工具之一，拥有近 6 万 stars。该项目将强大的 Web 图表编辑器封装为跨平台桌面应用，完全开源免费且无需联网即可使用，是专业绘图工具的绝佳替代方案。
+drawio-desktop 是最受欢迎的开源图表编辑器之一，作为 draw.io 的官方桌面版本，它完美结合了强大的绘图功能和离线使用的便利性。该项目技术成熟、社区活跃（59k+ stars），是学习 Electron 应用开发和集成图表功能的最佳参考案例。
 
 **技术亮点**:
-- 基于 Electron 框架构建的跨平台桌面应用，支持 Windows、macOS 和 Linux
-- 完整继承 draw.io 核心功能，支持流程图、UML、网络图、组织架构图等多种图表类型
-- 采用 Apache 2.0 许可证，完全开源且可自由商用和二次开发
-- 提供离线运行能力，数据存储在本地，无需依赖云端服务
-- 支持多种文件格式导入导出（XML、SVG、PNG、PDF 等），集成多种云存储服务
+- Electron 桌面应用架构：展示了如何将 Web 应用成功打包为跨平台桌面应用，支持 Windows/Mac/Linux 多系统
+- 离线优先设计：可完全离线使用，无需联网即可创建和编辑图表，保障数据隐私和安全性
+- 丰富的图形渲染能力：支持流程图、UML、网络图、组织架构图等多种图表类型的绘制和编辑
+- 跨平台兼容性：基于 JavaScript/HTML5 技术栈，实现真正的'一次开发，多端运行'
+- 开源生态集成：Apache 2.0 许可证，可自由集成到企业项目或作为独立工具使用
 
 **适用场景**:
-- 企业团队：用于系统架构设计、业务流程梳理、技术文档编写等场景
-- 个人开发者：快速绘制项目架构图、算法流程图、数据库 ER 图等技术图表
-- 教育与培训：教师制作教学课件、学生完成课程作业和报告的可视化内容
-
-
-
-### gatsbyjs/gatsby
-
-**描述**: The best React-based framework with performance, scalability and security built in.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 55,974 |
-| 语言 | JavaScript |
-| Forks | 10,247 |
-| Issues | 357 |
-| Topics | blog, compiler, gatsby, graphql, react, static-site-generator, web-app |
-| 许可证 | MIT License |
-
----
-
-Gatsby 是业界领先的 React 静态站点生成框架，以卓越的性能表现、强大的 GraphQL 数据层和丰富的插件生态系统著称，在开发者社区拥有 55,000+ stars，是构建高性能 Web 应用的首选解决方案之一。
-
-**技术亮点**:
-- 基于 React 构建的现代化框架，提供组件化开发体验
-- 集成 GraphQL 数据层，实现统一的数据查询和管理
-- 内置性能优化机制，包括代码分割、图片优化和预加载
-- 编译器架构，支持将源数据转换为高性能静态页面
-- 丰富的插件生态系统，轻松扩展功能和集成第三方服务
-
-**适用场景**:
-- 企业级官网和营销站点构建，提供极致的加载速度和 SEO 优化
-- 个人博客和技术文档站点，借助 Markdown 支持和内容管理
-- 电商和产品展示网站，利用静态站点提升转化率和用户体验
+- 企业技术文档编写：系统架构设计、业务流程梳理、数据库建模等需要专业图表的场景
+- 个人开发者工具集：集成到开发工作流中，快速绘制技术方案图、API 流程图等
+- 教育培训材料制作：创建课程内容中的示意图、概念图、思维导图等可视化教学素材
 
 
 
@@ -6256,27 +7464,27 @@ Gatsby 是业界领先的 React 静态站点生成框架，以卓越的性能表
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 52,751 |
+| Stars | 52,750 |
 | 语言 | JavaScript |
-| Forks | 10,572 |
+| Forks | 10,571 |
 | Issues | 498 |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-这是由 Mozilla 开发的业界最权威的纯 JavaScript PDF 渲染引擎，无需任何插件即可在浏览器中完美解析和渲染 PDF 文件。作为 Firefox 浏览器的内置 PDF 查看器核心，它已被验证具备生产级稳定性和卓越性能，是 Web 应用集成 PDF 功能的首选方案。
+这是 Mozilla 官方开发的 PDF 渲染引擎，是目前 JavaScript 生态中最成熟、最可靠的 PDF 阅读解决方案。无需任何插件即可在浏览器中完整渲染 PDF 文档，已被全球数百万网站采用，是处理 Web 端 PDF 需求的首选项目。
 
 **技术亮点**:
-- 纯 JavaScript 实现，无需原生依赖，可跨平台运行在任何支持 JS 的环境
-- 完整的 PDF 标准支持，包括文本提取、表单填写、注释处理等高级功能
-- 提供基于 Canvas 和 SVG 的双层渲染架构，支持自定义渲染层
-- 内置 Web Worker 多线程架构，主线程不阻塞，渲染性能卓越
-- 提供完整 TypeScript 类型定义，API 设计清晰易用，便于集成
+- 纯 JavaScript 实现，无需依赖 Flash 或其他插件，完全符合现代 Web 标准
+- 采用 Canvas 技术实现高性能 PDF 渲染，支持页面缩放、旋转、文本选择等完整功能
+- 提供完整的分层架构，核心层与 UI 层分离，便于集成和定制开发
+- 跨平台兼容性极佳，支持所有主流浏览器（Chrome、Firefox、Safari、Edge）和移动端
+- 完整的 TypeScript 类型支持，提供丰富的 API 接口和事件处理机制
 
 **适用场景**:
-- 企业文档管理系统（DMS）：在线预览、审批流程集成、电子签章场景
-- SaaS 协作平台：为在线办公、教育平台、知识库提供无插件 PDF 查看能力
-- 个人开发者项目：构建跨平台桌面应用（Electron/Tauri）的 PDF 预览组件，或网站中的文档阅读器
+- 企业级 Web 应用：在线文档管理系统、OA 系统中的 PDF 预览功能
+- 开发者工具：为 CMS 系统、文件管理平台添加 PDF 在线阅读能力
+- 个人/开源项目：需要在浏览器中展示 PDF 文档的任何 Web 项目
 
 
 
@@ -6294,67 +7502,28 @@ Gatsby 是业界领先的 React 静态站点生成框架，以卓越的性能表
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,716 |
+| Stars | 51,717 |
 | 语言 | JavaScript |
 | Forks | 11,311 |
-| Issues | 295 |
+| Issues | 296 |
 | Topics | blogging, cms, ghost, javascript, journalism, nodejs, publishing, web-application |
 | 许可证 | MIT License |
 
 ---
 
-Ghost 是专为现代数字出版打造的开源 CMS 平台，集内容发布、会员管理、订阅系统和新闻通讯于一体。凭借 51K+ GitHub Stars 和成熟的商业化运营，它已验证为替代传统 CMS 的最佳独立解决方案，特别适合内容创作者实现自主经营的订阅经济。
+Ghost 是一个现代化的独立发布平台，专注于内容创作、会员管理和订阅制业务。它作为开源的 Headless CMS 解决方案，让创作者能够完全掌控自己的内容和收入，摆脱对大型科技平台的依赖，特别适合希望建立可持续内容商业化的个人和组织。
 
 **技术亮点**:
-- 基于 Node.js 构建的高性能 JavaScript 架构，专为内容发布优化
-- 内置完整的会员管理与订阅付费系统，支持创作者经济
-- 原生集成新闻通讯功能，实现内容与邮件营销无缝打通
-- 采用 MIT 许可证，完全开源且支持私有化部署
-- 无头 CMS 架构设计，支持通过 API 灵活集成各类前端
+- 基于 Node.js 构建的高性能 JavaScript 应用程序，采用现代化的前端架构
+- 采用 Headless CMS 设计理念，支持 API 优先的内容管理和多端发布
+- 内置完整的会员制和订阅管理系统，支持付费订阅和邮件通讯功能
+- MIT 开源许可，提供完全的自托管能力和代码自由度
+- 专为新闻业和内容发布场景优化的编辑体验和工作流
 
 **适用场景**:
-- 个人创作者/作家构建独立订阅平台，实现内容变现与读者社群运营
-- 媒体机构搭建现代化数字出版系统，替代传统 CMS 实现会员经济转型
-- 企业/开发者作为无头 CMS 后端，通过 API 构建定制化内容应用
-
-
-
-### prettier/prettier
-
-**描述**: Prettier is an opinionated code formatter.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 51,493 |
-| 语言 | JavaScript |
-| Forks | 4,642 |
-| Issues | 1,427 |
-| Topics | angular, ast, css, flow, formatter, graphql, html, javascript, json, jsx, less, markdown, prettier, printer, scss, typescript, vue, yaml |
-| 许可证 | MIT License |
-
----
-
-Prettier 是前端开发领域最受欢迎的代码格式化工具，拥有超过51k星标，支持JavaScript/TypeScript/CSS/HTML/JSON/Markdown等多种语言。它通过"有主见的"格式化规则消除团队代码风格争议，让开发者专注于逻辑而非格式，极大提升代码一致性和团队协作效率。
-
-**技术亮点**:
-- 支持15+种编程语言和文件格式（JavaScript/TypeScript/JSX/CSS/SCSS/HTML/Vue/Angular/GraphQL/JSON/YAML/Markdown等）
-- 基于AST（抽象语法树）的代码解析和格式化技术，确保代码格式化后语义不变
-- 高度可配置的编辑器集成（VS Code/Atom/Sublime/WebStorm等），支持保存时自动格式化
-- 与ESLint、Stylelint等工具无缝集成，支持CI/CD流程自动化
-- MIT开源协议，社区活跃，拥有丰富的插件生态系统
-
-**适用场景**:
-- 团队协作开发：统一团队代码风格，消除代码审查时的格式争议，提高代码可读性和维护性
-- 个人开发：自动格式化代码，节省手动调整格式的时间，保持代码风格一致性
-- 企业级项目：集成到CI/CD流程，确保代码仓库中的代码格式统一，降低维护成本
+- 个人创作者和独立博客作者希望建立自己的付费内容订阅体系
+- 媒体公司和新闻机构需要现代化的数字出版平台来管理内容和会员
+- 企业开发者需要 Headless CMS 作为内容中台，支持网站、移动应用等多端内容分发
 
 
 
@@ -6372,7 +7541,7 @@ Prettier 是前端开发领域最受欢迎的代码格式化工具，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,392 |
+| Stars | 50,393 |
 | 语言 | JavaScript |
 | Forks | 3,881 |
 | Issues | 31 |
@@ -6381,19 +7550,19 @@ Prettier 是前端开发领域最受欢迎的代码格式化工具，拥有超�
 
 ---
 
-这是一个极具社区价值的开源项目，成功汇聚了5万+星标，打破了传统技术面试中白板编程和算法题的垄断局面。项目不仅为求职者提供了更人性化、更贴近实际工作的公司选择，同时也推动了整个科技行业招聘文化的进步，是求职者和注重实践能力企业的宝贵资源库。
+这是一个获得 5 万+ Stars 的明星开源项目，致力于推动科技行业招聘改革。它构建了一个"零白板面试"公司索引库，为求职者提供了一个避免传统低效面试筛选的宝贵资源，同时对改善整个行业的招聘文化具有深远的社会意义。
 
 **技术亮点**:
-- 基于 JavaScript 构建的开源协作项目，展示社区驱动的内容维护模式
-- 集成 Airtable 作为数据源，实现公司信息的结构化管理和高效查询
-- 采用 MIT 宽松许可证，鼓励广泛传播、fork 和二次开发
-- 通过 GitHub Issues 和 PR 实现去中心化的内容审核与更新机制
-- 项目结构清晰，易于贡献和维护，体现了开放协作的最佳实践
+- 使用 JavaScript 构建，具有良好的前端交互体验和动态更新能力
+- 基于 Airtable 作为数据源，实现结构化公司信息的灵活存储与检索
+- MIT 开源许可，鼓励社区贡献和公司信息的持续更新维护
+- 主题标签系统涵盖 hiring、interview、jobs 等多个维度，便于分类和搜索
+- 采用响应式设计，支持多端访问，满足求职者随时随地查询的需求
 
 **适用场景**:
-- 求职者使用：技术求职者可以快速筛选并申请那些注重实际项目经验而非算法刷题的优秀公司，节省大量面试准备时间
-- HR和招聘使用：希望吸引务实技术人才的公司可以提交自己公司信息，展示更人性化的面试流程
-- 开发者参考：为其他开源项目提供社区驱动内容管理和去中心化协作的参考范例
+- 求职者场景：技术求职者可快速查询哪些公司采用实际技能评估而非白板算法题，提高求职效率并避免不合理面试流程
+- HR与企业场景：HR 团队可参考该榜单优化自身招聘流程，展示公司现代化的面试理念以吸引优秀人才
+- 行业研究场景：研究人员和分析师可基于该数据研究招聘趋势，分析不同公司面试模式与员工满意度的相关性
 
 
 
@@ -6411,28 +7580,28 @@ Prettier 是前端开发领域最受欢迎的代码格式化工具，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 132,208 |
+| Stars | 132,215 |
 | 语言 | Go |
-| Forks | 18,784 |
-| Issues | 9,774 |
+| Forks | 18,782 |
+| Issues | 9,780 |
 | Topics | go, golang, language, programming-language |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
 ---
 
-Go语言是Google开源的编译型编程语言，以其简洁高效的并发模型和卓越的性能表现著称。该项目是Go语言的官方实现仓库，拥有超过13万颗星，是构建高性能服务、云原生应用和分布式系统的理想选择，特别适合追求开发效率和运行性能平衡的现代软件开发场景。
+这是 Go 语言的核心仓库，作为现代系统编程语言的标杆项目，由 Google 开发并维护。它以其卓越的并发性能、简洁的语法设计和强大的工具链生态系统著称，已成为云原生、微服务架构和分布式系统的首选开发语言之一，对编程语言领域产生了深远影响。
 
 **技术亮点**:
-- 内置强大的并发支持，通过goroutine和channel实现轻量级并发编程
-- 编译速度快，执行性能接近C/C++，同时保持语言简洁性
-- 内置垃圾回收机制，自动内存管理降低开发复杂度
-- 静态强类型系统，配合丰富的标准库和完善的工具链
+- 原生支持 Goroutine 并发模型，提供轻量级、高效的并发编程能力
+- 内置强大的工具链（go build、go test、go fmt 等）和完善的依赖管理
+- 静态类型系统设计简洁，编译速度快，适合大规模代码库维护
+- GC（垃圾回收）机制优化，实现低延迟的内存管理
 - 跨平台支持良好，可编译为多种操作系统和架构的原生二进制文件
 
 **适用场景**:
-- 企业级后端服务和微服务架构开发（适合高并发、高性能API服务）
-- 云原生应用开发，如Docker、Kubernetes等容器化工具和平台
-- 网络编程和分布式系统，包括RPC服务、消息中间件、API网关等场景
+- 云原生应用和微服务架构开发（如 Kubernetes、Docker 等基础设施项目）
+- 高性能网络服务和分布式系统后端开发
+- DevOps 工具链和命令行应用程序开发
 
 
 
@@ -6450,68 +7619,28 @@ Go语言是Google开源的编译型编程语言，以其简洁高效的并发模
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 104,048 |
+| Stars | 104,055 |
 | 语言 | Go |
-| Forks | 14,849 |
+| Forks | 14,851 |
 | Issues | 45 |
 | Topics | expose, firewall, frp, go, http-proxy, nat, p2p, proxy, reverse-proxy, tunnel |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-frp 是一款成熟的高性能反向代理工具，专门解决 NAT 和防火墙环境下的内网穿透难题。凭借 104k+ GitHub Stars 的广泛验证和 Go 语言的高效实现，它是开发者快速暴露本地服务到互联网的首选方案，配置简单、性能卓越。
+frp 是 GitHub 上最受欢迎的反向代理工具之一，拥有超过 10 万颗星。它采用 Go 语言开发，性能优异且跨平台，是解决内网穿透问题的成熟稳定方案，相比同类工具更轻量高效，文档完善且社区活跃。
 
 **技术亮点**:
-- 基于 Go 语言开发，性能优异且跨平台支持，提供二进制文件即可开箱即用
-- 支持多种协议：HTTP、HTTPS、TCP、UDP、STCP 等，覆盖绝大多数代理需求
-- 提供客户端与服务端分离架构，支持多客户端连接、端口复用和负载均衡
-- 具备完整的仪表盘(Dashboard)功能，支持流量监控、权限管理和访问控制
-- 支持 P2P 直连模式(STCP/XTCP)，可在点对点通信场景下降低服务器带宽消耗
+- Go 语言编写的高性能代理，跨平台支持（Linux/Windows/macOS/ARM 等）
+- 支持多种协议：TCP、UDP、HTTP、HTTPS 和 STCP，覆盖各类代理需求
+- 支持 P2P 点对点连接模式，大幅提升传输速度并降低服务器带宽压力
+- 提供丰富的功能：负载均衡、健康检查、加密传输、URL 路由等
+- 灵活的配置方式和 Web Dashboard 可视化监控面板
 
 **适用场景**:
-- 个人开发者：将本地开发环境的 Web 服务临时暴露给外部测试或演示，无需购买公网服务器
-- 企业办公：远程访问公司内网的办公系统(OA、GitLab、Jenkins 等)，无需配置复杂的 VPN
-- IoT 设备管理：穿透家庭/企业路由器 NAT，远程管理位于内网的摄像头、树莓派等物联网设备
-- 微信开发调试：本地开发微信公众号/小程序时，将内网服务暴露至公网接收微信回调请求
-
-
-
-### gin-gonic/gin
-
-**描述**: Gin is a high-performance HTTP web framework written in Go. It provides a Martini-like API but with significantly better performance—up to 40 times faster—thanks to httprouter. Gin is designed for building REST APIs, web applications, and microservices.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 87,858 |
-| 语言 | Go |
-| Forks | 8,546 |
-| Issues | 881 |
-| Topics | framework, gin, go, middleware, performance, router, server |
-| 许可证 | MIT License |
-
----
-
-Gin 是 Go 语言生态中最受欢迎的高性能 Web 框架之一，拥有超过 87,000 stars，性能比同类框架提升 40 倍。其结合了 Martini 的友好 API 设计和 httprouter 的高性能路由，是目前构建 Go Web 服务和微服务的首选框架，具有极强的生产可用性和社区支持。
-
-**技术亮点**:
-- 基于 httprouter 实现的高性能路由，性能比 Martini 快 40 倍
-- 提供中间件机制，支持灵活的请求处理流程定制（如日志、认证、CORS 等）
-- 内置 JSON 验证、路由分组、错误管理等功能，API 设计简洁易用
-- 极简的 API 设计，类似 Martini 风格，降低学习成本，提高开发效率
-- 专为 REST API 和微服务架构优化，支持快速构建高性能 HTTP 服务
-
-**适用场景**:
-- 构建高性能 REST API 服务，尤其适合需要处理大量并发请求的互联网应用
-- 微服务架构中的独立服务开发，利用 Gin 的轻量级特性实现快速部署
-- 需要高性能路由和中间件支持的企业级 Web 应用，如电商平台、SaaS 系统等
+- 开发调试：本地开发环境需要暴露到外网供测试或演示（如微信小程序开发、移动端联调）
+- 远程访问：家庭/公司内网服务器、NAS、摄像头等设备需要从外网安全访问
+- 企业办公：分支机构访问总部内部系统，或临时远程办公内网资源访问
 
 
 
@@ -6529,7 +7658,7 @@ Gin 是 Go 语言生态中最受欢迎的高性能 Web 框架之一，拥有超�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 86,352 |
+| Stars | 86,356 |
 | 语言 | Go |
 | Forks | 8,184 |
 | Issues | 316 |
@@ -6538,19 +7667,19 @@ Gin 是 Go 语言生态中最受欢迎的高性能 Web 框架之一，拥有超�
 
 ---
 
-Hugo 是目前全球最受欢迎的静态网站生成器，拥有 8.6 万+ stars 和 Apache 2.0 商业友好许可证。其核心优势在于极快的构建速度（毫秒级）和零依赖部署，让开发者能够专注于内容创作而非配置环境，是个人博客、企业文档站点及大型内容网站的理想选择。
+Hugo 是全球最快的静态网站生成框架，基于 Go 语言开发，能在毫秒级完成大型网站的渲染，86k+ 星标证实了其卓越性能和可靠性。它完美平衡了速度、易用性与功能性，是现代静态站点构建的标杆项目。
 
 **技术亮点**:
-- 业界领先的构建性能：基于 Go 语言开发，可在毫秒级完成数千页网站的构建，比同类工具快 100 倍以上
-- 零依赖部署特性：生成的网站是纯静态 HTML/CSS/JS，无需数据库、无需运行时环境，可部署到任何静态托管服务
-- 强大的内容管理：支持 Markdown、短代码（Shortcodes）、多语言、图片处理、内容分片等企业级 CMS 功能
-- 丰富的主题生态：提供大量免费/付费主题，支持模块化主题系统和灵活的内容组织结构
-- 开发者友好：提供 HCL 配置、数据驱动生成、管道处理、跨平台支持，开发者可快速定制工作流
+- 基于 Go 语言构建，提供业界领先的构建速度（毫秒级渲染）
+- 完整的 CMS 功能，支持 Markdown、短代码、多语言等丰富特性
+- 零依赖的二进制文件部署，跨平台兼容性极佳
+- 高度可扩展的模板系统和主题生态，支持模块化开发
+- 强大的内容管理能力，支持分类、标签、作者等复杂内容结构
 
 **适用场景**:
-- 个人博客与作品集：作者/摄影师/设计师等个人创作者，可快速搭建精美的个人展示站点，支持 Git 版本管理
-- 企业文档与技术文档中心：软件公司可用 Hugo 构建产品文档、API 文档、知识库，支持版本化和多语言发布（如 Netlify、Vercel 部署）
-- 营销与企业官网：企业官网、产品落地页、活动站点，利用高性能和 SEO 优势提升用户体验和搜索引擎排名
+- 个人博客和技术文档站点搭建，快速构建高性能静态网站
+- 企业产品文档和知识库系统，支持多语言和版本管理
+- 营销网站和作品集展示，实现极致加载速度和 SEO 优化
 
 
 
@@ -6568,7 +7697,7 @@ Hugo 是目前全球最受欢迎的静态网站生成器，拥有 8.6 万+ stars
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 79,483 |
+| Stars | 79,491 |
 | 语言 | Go |
 | Forks | 4,905 |
 | Issues | 395 |
@@ -6577,59 +7706,19 @@ Hugo 是目前全球最受欢迎的静态网站生成器，拥有 8.6 万+ stars
 
 ---
 
-Syncthing 是一个成熟的、完全开源的跨平台文件同步解决方案，采用去中心化的 P2P 架构，无需依赖云服务器即可实现设备间安全、私密的数据同步，拥有近 8 万颗星证明了其卓越的稳定性和社区认可度。对于注重数据隐私、希望避免云服务厂商锁定的用户和开发者来说，这是最佳的自主可控同步方案。
+Syncthing 是一款开源的跨平台文件同步工具，其独特价值在于采用点对点（P2P）架构实现文件连续同步，无需云服务器中转，确保数据完全掌控在自己手中。作为开源领域的标杆项目，它拥有近8万Star和纯Go语言实现的高性能特性，是企业和个人实现安全、私密文件同步的理想选择。
 
 **技术亮点**:
-- 采用去中心化 P2P 架构，设备间直接通信，无需中间服务器，确保数据完全私密
-- 使用 Go 语言开发，天然支持跨平台运行（Windows、macOS、Linux、BSD 等），部署灵活
-- 内置强大的冲突检测与解决机制，支持双向同步、单向同步等多种同步模式
-- 采用端到端加密传输，TLS 1.3 保护通信安全，支持局域网发现和全球中继网络
-- 开源友好，采用 MPL 2.0 许可证，支持第三方集成和二次开发，提供完整的 REST API
+- 采用纯 Go 语言开发，具备出色的跨平台兼容性和高性能并发处理能力
+- 基于 P2P 架构设计，设备间直接通信，无需中央服务器，降低基础设施成本
+- 支持连续文件同步（Continuous File Synchronization），实时检测并传播文件变更
+- 端到端加密传输，确保数据在传输过程中的安全性和隐私保护
+- 采用 Mozilla Public License 2.0 许可证，对商业友好的开源协议
 
 **适用场景**:
-- 个人隐私保护场景：替代 Dropbox、Google Drive 等云存储服务，实现多台个人设备间（手机、电脑、NAS）的文件自动同步，完全掌控数据主权
-- 企业内部文档同步：在无需依赖外部云服务的情况下，实现团队成员间的安全文件共享和协作，适合对数据安全性要求高的行业
-- 开发环境配置同步：在多台开发机器间同步代码库、配置文件、IDE 设置等开发资源，保持开发环境一致性
-- NAS 与设备集成：作为 TrueNAS、Synology 等 NAS 系统的核心同步组件，实现本地存储与移动设备的无缝文件同步
-
-
-
-### caddyserver/caddy
-
-**描述**: Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 69,525 |
-| 语言 | Go |
-| Forks | 4,616 |
-| Issues | 252 |
-| Topics | acme, automatic-https, caddy, caddyfile, go, golang, http, http-server, http3, https, privacy, reverse-proxy, security, tls, web-server |
-| 许可证 | Apache License 2.0 |
-
----
-
-Caddy 是一个革命性的现代化 Web 服务器，凭借开箱即用的自动 HTTPS、零配置 HTTPS 证书管理脱颖而出。相比传统服务器如 Nginx，Caddy 具有更低的学习曲线和更强的安全性，其插件化架构支持 HTTP/3、反向代理等丰富功能，是追求开发效率和安全性的开发者的理想选择。
-
-**技术亮点**:
-- 开箱即用的自动 HTTPS：自动获取和续期 Let's Encrypt 证书，无需手动配置 TLS
-- 支持最新的 HTTP 协议栈：完整实现 HTTP/1.1、HTTP/2 和 HTTP/3 (QUIC) 协议
-- 强大且简洁的 Caddyfile 配置语法：相比传统配置文件更易读易写
-- 插件化架构支持：通过模块化设计支持反向代理、负载均衡、动态 DNS 等扩展功能
-- 跨平台高性能：基于 Go 语言编写，原生支持多平台部署，单文件运行无依赖
-
-**适用场景**:
-- 个人开发者快速搭建 HTTPS 网站：无需深入了解 TLS 配置，几分钟内即可上线安全的个人博客、作品集或小型项目
-- 企业微服务和 API 网关：作为反向代理和负载均衡器，统一管理多个后端服务的 HTTPS 终止和流量路由
-- 内网服务穿透与远程访问：配合动态 DNS 插件，为内网服务提供安全的 HTTPS 外部访问入口
+- 企业敏感数据同步：适合金融、医疗等对数据隐私要求高的行业，在内部服务器或分支机构间安全同步文件，避免使用公共云服务
+- 个人跨设备文件管理：开发者和技术人员在多台电脑（工作/家用）、服务器之间自动同步代码、配置文件和文档
+- 家庭私有云搭建：家庭用户在 NAS、路由器等设备上部署，实现家庭成员间的照片、视频共享和备份，无需付费云存储
 
 
 
@@ -6647,146 +7736,26 @@ Caddy 是一个革命性的现代化 Web 服务器，凭借开箱即用的自动
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 68,796 |
+| Stars | 68,794 |
 | 语言 | Go |
-| Forks | 3,243 |
-| Issues | 115 |
+| Forks | 3,247 |
+| Issues | 120 |
 | 许可证 | MIT License |
 
 ---
 
-这是 Coinbase 推出的 Layer 2 区块链网络 Base 的官方节点实现，作为以太坊 optimistic rollup 的基础设施，为开发者和企业提供了快速、低成本的去中心化应用部署平台。该项目继承了 Optimism Stack 的技术优势，拥有极高的社区关注度（近 7 万 Stars），是参与 Base 生态系统和构建下一代去中心化应用的核心工具。
+Base/node 是 Coinbase 推出的 Layer 2 区块链网络节点实现，拥有近 7 万颗星标，是目前最活跃的以太坊扩容方案之一。该项目提供了运行完整 Base 节点所需的全部组件，为开发者提供了一个低成本、高吞吐量的以太坊兼容链环境，对于想要探索 L2 生态、部署 dApp 或学习区块链底层技术的开发者来说极具价值。
 
 **技术亮点**:
-- 基于 Optimism OP Stack 构建的 Optimistic Rollup 技术，提供高吞吐量和低交易成本
-- 使用 Go 语言编写的高性能节点实现，确保系统的稳定性和可扩展性
-- 与以太坊虚拟机（EVM）完全兼容，支持现有以太坊工具和智能合约无缝迁移
-- 采用 MIT 开源许可证，允许企业自由集成和定制化开发
-- 提供完整的验证节点和数据可用性层支持，保障网络安全性
+- 基于 Go 语言开发，采用 OP Stack 技术栈，实现了与以太坊虚拟机（EVM）的完全兼容，让开发者可以无缝迁移现有 dApp
+- 具备完整的节点运行能力，包括共识机制、交易处理、状态同步等核心功能，支持独立节点验证者运行
+- 提供完整的 CLI 工具和配置管理，支持多种运行模式（L2 节点、执行客户端、共识客户端等）
+- 集成以太坊数据可用性层，大幅降低交易成本并提升吞吐量，相比 L1 网络具有显著性能优势
 
 **适用场景**:
-- 企业开发者：需要在 Base 链上部署 DApp、DeFi 协议或 NFT 市场的团队，通过运行自有节点实现更高的数据主权和交易控制权
-- 区块链基础设施提供商：为第三方提供 Base 网络访问服务、RPC 节点或质押服务的公司
-- 研究机构和验证者：参与 Base 网络共识、进行链上数据分析或学术研究的组织
-
-
-
-### traefik/traefik
-
-**描述**: The Cloud Native Application Proxy
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 61,365 |
-| 语言 | Go |
-| Forks | 5,789 |
-| Issues | 737 |
-| Topics | consul, docker, etcd, go, golang, kubernetes, letsencrypt, load-balancer, marathon, mesos, microservice, reverse-proxy, traefik, zookeeper |
-| 许可证 | MIT License |
-
----
-
-Traefik 是云原生时代的现代反向代理与负载均衡器，以其"配置即代码"理念著称，能够自动发现服务并动态更新配置，无需重启即可适配变化。作为云原生应用代理的标杆项目，它完美解决了微服务架构中服务发现和流量管理的痛点，拥有61k+ stars的社区验证，是构建现代云原生基础设施的关键组件。
-
-**技术亮点**:
-- 🚀 云原生设计：深度集成 Kubernetes、Docker、Consul、Etcd 等主流编排和服务发现工具，实现服务自动发现和动态配置
-- 🔒 自动 HTTPS：内置 Let's Encrypt 支持，自动获取和更新 SSL 证书，实现零配置的 HTTPS 部署
-- ⚡ 动态配置：支持热加载配置，无需重启即可响应服务变化，保障流量零中断
-- 🔌 丰富中间件生态：提供限流、熔断、重试、认证等多种中间件，支持灵活的流量治理策略
-- 📊 可观测性支持：内置 Metrics、Tracing 和 Access Logging，轻松对接 Prometheus、Jaeger 等监控系统
-
-**适用场景**:
-- 🏢 企业级微服务架构：作为 Kubernetes Ingress Controller 或 API 网关，统一管理多集群、多服务的南北向流量，支持蓝绿发布、金丝雀发布等高级流量管理
-- 🛒 个人开发者与初创公司：快速搭建具备 HTTPS、负载均衡能力的 Web 服务，结合 Docker 一键部署，大幅降低运维复杂度
-- 🔄 传统应用现代化：作为边缘代理实现传统应用与云原生基础设施的平滑对接，支持多协议（HTTP、TCP、UDP）路由
-
-
-
-### usememos/memos
-
-**描述**: An open-source, self-hosted note-taking service. Your thoughts, your data, your control — no tracking, no ads, no subscription fees.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 56,310 |
-| 语言 | Go |
-| Forks | 4,031 |
-| Issues | 59 |
-| Topics | docker, foss, go, markdown, memo, microblog, note-taking, notecard, react, self-hosted, social-network, sqlite |
-| 许可证 | MIT License |
-
----
-
-Memos 是一个开源、可自托管的笔记服务，采用 Go 后端 + React 前端的全栈架构，56k+ Stars 证明了其卓越的社区认可度。它强调"你的思想、你的数据、你的控制"，提供无追踪、无广告、无订阅费的隐私优先体验，同时支持 Markdown 和社交化特性，是 Notion、Twitter 等商业产品的理想替代方案。
-
-**技术亮点**:
-- 轻量级全栈架构：采用 Go 高性能后端 + React 前端，提供快速响应和低资源消耗
-- SQLite 原生支持：内置轻量级数据库，无需额外数据库服务，部署和迁移极其简单
-- Docker 容器化：开箱即用的 Docker 支持，一键部署，适合自托管和云原生环境
-- Markdown + 社交化融合：支持富文本编辑，同时具备微博客和社交网络功能，兼具笔记记录和知识分享
-- MIT 开源许可：完全免费且可商业化使用，代码透明可审计，安全可靠
-
-**适用场景**:
-- 个人知识管理：适合个人搭建私有笔记系统，记录日常想法、学习笔记和灵感，完全掌控自己的数据资产
-- 团队内部协作：小团队可部署内部知识库和微博客系统，支持成员间的信息分享和知识沉淀，避免使用外部商业服务的隐私风险
-- 企业自托管方案：企业可部署内部备忘录和社交化笔记平台，作为 Slack、Teams 的补充工具，提升团队沟通效率，确保数据主权和安全
-
-
-
-### pocketbase/pocketbase
-
-**描述**: Open Source realtime backend in 1 file
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 55,694 |
-| 语言 | Go |
-| Forks | 3,065 |
-| Issues | 20 |
-| Topics | authentication, backend, golang, realtime |
-| 许可证 | MIT License |
-
----
-
-PocketBase 是一个极具创新性的后端解决方案，其最大特色是"单文件部署"——将完整的后端功能（数据库、认证、实时订阅等）打包成一个可执行文件，极大降低了中小型项目的后端搭建复杂度，非常适合快速开发和部署，是个人开发者、初创企业和 MVP 项目的理想选择。
-
-**技术亮点**:
-- 🚀 单文件架构：将数据库、认证系统、实时订阅等功能完全打包在一个可执行文件中，无需额外依赖
-- ⚡ Go 语言高性能：利用 Go 语言的并发特性和性能优势，提供轻量但强大的后端服务
-- 🔐 内置完整认证系统：开箱即用的用户认证功能，支持邮箱密码、OAuth 等多种登录方式
-- 📡 实时数据订阅：基于 WebSocket 的实时数据推送机制，支持聊天、协作等实时应用场景
-- 🗄️ 内嵌 SQLite 数据库：采用嵌入式数据库设计，无需独立数据库服务器，简化部署流程
-
-**适用场景**:
-- 🏃 个人项目和原型开发：非常适合个人开发者快速验证想法，无需繁琐的后端配置即可启动完整功能的应用
-- 💼 创业公司 MVP 产品：初创团队可以用最小的成本快速上线产品原型，后续可根据需求平滑迁移到更复杂的架构
-- 📱 移动应用和小程序后端：为跨平台移动应用提供统一的 RESTful API 和实时数据同步服务
-- 🎓 学习和教学场景：作为学习后端开发和 API 设计的优秀教学案例，代码简洁易于理解
-- 🔧 中小型 Web 应用：适合内容管理系统、博客、电商平台等不需要大规模分布式架构的应用
+- Web3 开发者可以在 Base 上部署和测试去中心化应用，享受更低的 Gas 费和更快的交易确认速度
+- 企业或机构可以运行自己的 Base 节点，实现完全的数据主权和独立性，用于业务系统集成或区块链服务提供
+- 区块链学习者可以通过运行节点深入理解 L2 扩容技术、共识机制和以太坊生态的运作原理
 
 
 
@@ -6804,28 +7773,28 @@ PocketBase 是一个极具创新性的后端解决方案，其最大特色是"�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,221 |
+| Stars | 55,232 |
 | 语言 | Go |
 | Forks | 4,871 |
-| Issues | 1,126 |
+| Issues | 1,127 |
 | Topics | azure-blob, azure-blob-storage, azure-files, backblaze-b2, cloud-storage, dropbox, encryption, ftp, fuse-filesystem, go, golang, google-cloud-storage, google-drive, onedrive, openstack-swift, rclone, s3, sftp, sync, webdav |
 | 许可证 | MIT License |
 
 ---
 
-rclone 是开源云存储同步领域的标杆工具，被誉为"云存储界的瑞士军刀"。它支持超过70种云存储服务（S3、Google Drive、Dropbox、OneDrive等），采用Go语言开发具有跨平台优势，55K+ GitHub Stars证明了其极高的社区认可度和稳定性，是处理多云存储统一管理的首选工具。
+rclone 是云存储同步和备份领域的标杆工具，被称为"云存储界的 rsync"。它以单一 Go 二进制文件支持 70+ 种云存储服务，打破了厂商锁定，具有跨平台、加密传输、高效增量同步等独特优势，是企业 DevOps 和个人数据管理的必备利器。
 
 **技术亮点**:
-- 统一接口管理70+云存储服务，包括S3、Azure Blob、Google Cloud Storage、Dropbox等主流平台
-- 支持强大的同步、复制、移动、加密等操作，具备rsync风格的增量传输和断点续传功能
-- 提供FUSE文件系统挂载能力，可将云存储直接挂载为本地文件系统使用
-- Go语言编写，单一可执行文件无依赖，支持Linux、Windows、macOS等多平台部署
-- 内置加密、压缩、过滤、带宽限制等企业级特性，支持Server模式和Web UI界面
+- 支持 70+ 种云存储后端（S3、Azure、Google Drive、Dropbox 等），统一 API 抽象层实现无缝切换
+- 采用 Go 语言编写，单一静态链接二进制文件，无依赖跨平台运行（Linux/Windows/macOS/BSD 等）
+- 内置强大的加密功能（客户端加密）、过滤规则、断点续传和增量同步机制
+- 支持挂载为 FUSE 文件系统、WebDAV/SFTP/FTP 协议互转，灵活的管道式架构
+- 开源生态丰富，提供 rclone sync/copy/mount/bisync 等多样化命令，支持脚本自动化
 
 **适用场景**:
-- 企业多云数据备份与迁移：统一管理分散在不同云服务商的数据，实现跨云平台的数据同步、备份和迁移
-- 个人开发者云存储自动化：通过脚本或cron定时同步本地项目到云存储，或作为CI/CD流程中的artifact存储后端
-- 大数据与离线归档场景：利用其高效的增量传输和加密功能，将海量冷数据归档到低成本云存储（如B2、Wasabi）
+- 企业混合云备份与迁移：在不同云存储商之间迁移数据（如 AWS S3 → Azure Blob），或建立统一的多云备份策略
+- 开发者本地开发与云端同步：将本地代码、配置文件自动同步到云存储，或挂载云盘为本地文件系统进行便捷访问
+- 个人数据归档与加密备份：对敏感数据进行客户端加密后备份到多个云存储，实现冗余和隐私保护
 
 
 
@@ -6843,30 +7812,28 @@ rclone 是开源云存储同步领域的标杆工具，被誉为"云存储界的
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,754 |
+| Stars | 50,756 |
 | 语言 | Go |
-| Forks | 21,772 |
-| Issues | 377 |
+| Forks | 21,773 |
+| Issues | 379 |
 | Topics | blockchain, ethereum, geth, go, p2p |
 | 许可证 | GNU Lesser General Public License v3.0 |
 
 ---
 
-这是以太坊协议的官方 Go 语言实现（Geth），是区块链开发领域最成熟和最受认可的项目之一。拥有超过 5 万颗星，作为以太坊网络的核心客户端，它为开发者提供了完整的企业级区块链基础设施和丰富的工具链。
+这是以太坊官方的Go语言实现（Geth），是目前最成熟、应用最广泛的以太坊客户端，被全球数以万计的企业和开发者使用，是区块链生态系统的核心基础设施项目，拥有50k+ stars证明了其卓越的工程质量和社区认可度。
 
 **技术亮点**:
 - 完整的以太坊协议实现，支持全节点、轻节点和归档节点等多种运行模式
-- 高性能的 P2P 网络层和共识机制，经过大规模网络验证的稳定性
-- 内置智能合约开发工具链（包括 abigen、devp2p 等）
-- 支持以太坊虚拟机（EVM）执行和状态管理
-- 提供丰富的 RPC 接口和 JavaScript 控制台交互功能
+- 采用Go语言编写，具有卓越的并发性能和跨平台兼容性，内置P2P网络层和智能合约执行引擎
+- 提供丰富的API接口（RPC、IPC、WebSocket），方便开发者构建去中心化应用(dApps)
+- 包含强大的开发者工具链，支持智能合约开发、部署、调试和交易管理
+- 经过严格安全审计和实战检验，代码质量高，文档完善，社区活跃
 
 **适用场景**:
-- 企业级区块链应用开发和部署
-- 去中心化应用（DApp）后端服务搭建
-- 区块链节点运维和以太坊网络数据同步与分析
-- 智能合约开发测试环境搭建
-- 区块链技术学习和研究
+- 区块链应用开发：企业开发者使用Geth作为底层节点，构建和部署以太坊dApps、DeFi协议和NFT平台
+- 区块链基础设施：运营商部署以太坊节点参与网络共识，提供验证服务和区块数据存储
+- 智能合约开发与测试：个人开发者使用Geth搭建本地私有链，进行智能合约的快速迭代测试和调试
 
 
 
@@ -6884,27 +7851,27 @@ rclone 是开源云存储同步领域的标杆工具，被誉为"云存储界的
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 141,776 |
+| Stars | 141,811 |
 | 语言 | Python |
-| Forks | 11,085 |
+| Forks | 11,087 |
 | Issues | 257 |
 | Topics | awesome, github, hellogithub, python |
 
 ---
 
-HelloGitHub 是一个极具影响力的开源内容项目，拥有超过 14 万 Stars，专门为初学者筛选和分享 GitHub 上有趣、易入门的开源项目。它填补了开源项目发现与学习之间的鸿沟，通过人工精选降低学习门槛，是开发者进入开源世界的最佳导览平台，特别适合刚接触开源的程序员快速找到适合自己水平的优质项目。
+HelloGitHub 是国内最具影响力的开源项目分享平台之一，拥有超过 14.1 万星标。它独特之处在于专注于筛选和分享"有趣、入门级"的优质开源项目，为开发者（尤其是初学者）提供了降低学习门槛的项目发现渠道，填补了 GitHub 海量项目与开发者学习需求之间的鸿沟。
 
 **技术亮点**:
-- 基于 Python 构建的内容聚合与分享平台，展示了内容驱动型开源项目的最佳实践
-- 具备完善的项目分类体系和标签系统（涵盖 awesome、github、python 等主题），便于项目检索与发现
-- 采用人工筛选机制保证内容质量，每个推荐项目都经过精心审核确保对初学者友好
-- 拥有活跃的社区贡献机制，支持多人协作维护项目列表，形成了可持续的开源内容生态
-- 优秀的文档组织和版本管理实践，通过 Issues 和 PR 管理项目推荐流程，展示了社区协作典范
+- 精选优质项目筛选机制：严格评估项目的入门性、趣味性和实用性
+- 多维度项目分类体系：按编程语言、应用场景、难度等级进行智能分类
+- 活跃的开源社区运营：拥有庞大的中文开发者社区和持续的内容更新
+- 友好的文档结构：采用 Markdown 格式，便于阅读和贡献
+- 跨平台内容分发：支持 GitHub、公众号、网站等多种渠道同步更新
 
 **适用场景**:
-- **个人开发者学习场景**：初学者或希望拓展技术栈的开发者，可快速找到适合自己水平的优质开源项目进行学习和实践
-- **开源项目推广场景**：项目作者可通过被 HelloGitHub 收录，获得更多曝光机会，吸引潜在贡献者和用户
-- **企业人才培养**：技术团队可将该资源作为新人培训的参考材料，帮助团队成员快速了解优秀开源项目并提升技术视野
+- 个人开发者入门学习：为编程初学者提供快速找到适合自己水平的优质开源项目的入口，降低学习曲线
+- 开源项目推广曝光：为开源作者提供项目曝光和推广的机会，帮助优质项目被更多用户发现和使用
+- 企业人才培养：企业可用于内部技术团队建设，为员工提供系统化的开源项目学习资源和路径规划
 
 
 
@@ -6925,27 +7892,29 @@ HelloGitHub 是一个极具影响力的开源内容项目，拥有超过 14 万 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,815 |
+| Stars | 74,828 |
 | 语言 | Python |
-| Forks | 16,565 |
+| Forks | 16,568 |
 | Issues | 14 |
 | Topics | bounty, bugbounty, bypass, cheatsheet, enumeration, hacking, hacktoberfest, methodology, payload, payloads, penetration-testing, pentest, privilege-escalation, redteam, security, vulnerability, web-application |
 | 许可证 | MIT License |
 
 ---
 
-这是 Web 安全领域最受欢迎的开源安全资源库之一，汇集了实战验证的 Payload 和绕过技巧。对于网络安全从业者、渗透测试工程师和安全研究人员而言，这是一个必备的实战参考手册，填补了安全测试中 Payload 碎片化的痛点。
+PayloadsAllTheThings 是 Web 安全领域最受欢迎的开源知识库之一，在 GitHub 上获得超过 7.4 万颗星。它系统性地整理了渗透测试和 CTF 比赛中常用的各类攻击载荷、绕过技巧和测试方法论，是安全研究人员、红队成员和 Bug Bounty 猎手必备的实战参考手册，填补了 Web 安全领域系统化知识整理的空白。
 
 **技术亮点**:
-- 📚 内容覆盖全面：涵盖 SQL 注入、XSS、SSRF、文件上传、权限提升等 20+ 类别，几乎囊括 Web 应用安全的所有攻击向量
-- 🔄 持续更新维护：74K+ Stars 活跃社区支持，及时跟进最新漏洞披露和防御绕过技术
-- 💡 实战导向：所有 Payload 均经过真实场景验证，包含具体的绕过技巧和变体，适合 CTF 竞赛和红队实战
-- 📖 结构化组织：按漏洞类型分类清晰，含方法论、枚举技巧和完整利用链，便于快速检索和学习
+- 全面的攻击载荷库：涵盖 SQL 注入、XSS、XXE、SSRF、文件上传、命令注入等数十种常见 Web 漏洞的攻击载荷和绕过技巧
+- 实战方法论指南：提供结构化的渗透测试方法论，帮助安全研究人员系统地评估 Web 应用安全性
+- 持续更新维护：紧跟安全漏洞发展态势，及时补充最新的绕过技术和攻击向量
+- 丰富的枚举技巧：涵盖权限提升、信息收集、漏洞枚举等多个安全测试场景
+- 开源协作友好：采用 MIT 许可证，鼓励社区贡献和知识共享
 
 **适用场景**:
-- 🔴 渗透测试与红队行动：安全工程师在进行 Web 应用渗透测试、漏洞挖掘时快速查找可用 Payload 和绕过技巧
-- 🎯 CTF 竞赛与安全研究：CTF 选手和安全研究人员在攻防演练中参考已验证的攻击思路和利用方法
-- 💼 企业安全建设：企业安全团队用于构建安全测试用例库、编写漏洞验证 POC 和安全培训教材
+- 渗透测试与红队行动：安全研究人员和渗透测试工程师在进行 Web 应用渗透测试时快速查找攻击载荷和绕过技巧
+- Bug Bounty 漏洞挖掘：白帽子黑客在漏洞赏金项目中参考各种攻击向量和绕过方法，提高漏洞发现效率
+- CTF 竞赛备考：CTF 参赛者学习和练习各类 Web 安全漏洞的攻击技术与解题思路
+- 企业安全培训：作为企业内部安全团队培训教材，帮助新人快速掌握 Web 安全测试方法和常见攻击模式
 
 
 
@@ -6963,34 +7932,35 @@ HelloGitHub 是一个极具影响力的开源内容项目，拥有超过 14 万 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 195,448 |
+| Stars | 195,450 |
 | 语言 | JavaScript |
-| Forks | 31,122 |
+| Forks | 31,123 |
 | Issues | 387 |
 | Topics | algorithm, algorithms, computer-science, data-structures, interview, interview-preparation, javascript, javascript-algorithms |
 | 许可证 | MIT License |
 
 ---
 
-这是GitHub上最受欢迎的JavaScript算法学习资源之一（近20万星），提供了从基础到高级的完整算法与数据结构实现，特别适合JavaScript开发者系统化学习计算机科学核心知识，每个算法都配有详细解释和延伸阅读链接，兼具理论深度和实战价值。
+这是GitHub上最受欢迎的算法与数据结构学习资源之一，拥有近20万颗星。项目以JavaScript实现了完整的算法和数据结构体系，每个实现都配有详细的中文注释、复杂度分析和可视化示例，是JavaScript开发者学习计算机科学基础、准备技术面试的理想选择。
 
 **技术亮点**:
-- 🔢 覆盖全面的数据结构：链表、树、图、哈希表、堆、栈、队列等经典数据结构的JavaScript实现
-- 🧮 丰富的算法库：包含搜索、排序、动态规划、回溯、贪心、数学算法等多种算法范式
-- 📚 教学友好：每个算法都附带详细解释、复杂度分析和进一步学习资料链接
-- 💻 面试导向：专门针对技术面试准备，涵盖常见的面试高频算法题
-- 🎯 实战性强：提供可直接运行的代码示例，支持在浏览器和Node.js环境中使用
+- 涵盖经典算法和数据结构的完整实现，包括排序、搜索、图论、动态规划等核心主题
+- 每个算法都包含详细的时间/空间复杂度分析、解释文档和进一步学习链接
+- 支持多种JavaScript版本实现（ES5/ES6+），提供清晰的可视化示例
+- 包含面试高频算法题库和常见设计模式实现
+- 采用MIT许可证，代码质量高且注释详尽，便于学习和二次开发
 
 **适用场景**:
-- 🎓 技术面试准备：帮助前端/全栈开发者准备大厂技术面试，系统复习算法与数据结构
-- 📖 系统化学习：计算机专业学生或转码人员通过JavaScript理解算法原理，提升编程思维
-- 🔧 工程实践：开发者在实际项目中查找参考实现，快速应用标准算法解决方案
+- 前端/全栈开发者系统学习算法与数据结构，夯实计算机科学基础
+- 求职者准备技术面试（Google、Facebook、阿里、字节等大厂算法面试）
+- 高校教师和培训机构作为算法教学参考教材
+- 开发者在项目中需要快速参考和集成特定算法实现
 
 
 
-### expressjs/express
+### leonardomso/33-js-concepts
 
-**描述**: Fast, unopinionated, minimalist web framework for node.
+**描述**: 📜 33 JavaScript concepts every developer should know.
 
 **发现来源**: trending
 
@@ -7002,28 +7972,28 @@ HelloGitHub 是一个极具影响力的开源内容项目，拥有超过 14 万 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 68,629 |
+| Stars | 66,214 |
 | 语言 | JavaScript |
-| Forks | 22,332 |
-| Issues | 183 |
-| Topics | express, javascript, nodejs, server |
+| Forks | 9,197 |
+| Issues | 0 |
+| Topics | angular, concepts, es6, es6-javascript, hacktoberfest, javascript, javascript-closures, javascript-engines, javascript-programming, nodejs, primitive-types, programming, react |
 | 许可证 | MIT License |
 
 ---
 
-Express 是 Node.js 生态系统中最成熟、使用最广泛的 Web 框架，拥有 68K+ stars 和庞大的社区支持。其"快速、无偏见、极简"的设计理念使其成为构建 Web 应用和 API 的理想选择，既适合初学者入门，也能满足企业级应用的复杂需求。
+这是一个拥有66k+ Stars的经典JavaScript学习资源，系统性地总结了33个JavaScript开发者必须掌握的核心概念，涵盖从基础到高级的完整知识体系。该项目以其结构清晰、内容实用的特点，成为前端开发者进阶学习的权威指南，尤其适合想要系统提升JavaScript功底的工程师。
 
 **技术亮点**:
-- 极简主义设计：核心功能精简，不强制使用特定工具或架构，开发者拥有完全的技术栈选择自由
-- 强大的中间件机制：采用洋葱模型，提供灵活的请求处理流程，拥有数千个第三方中间件生态
-- 高性能路由系统：支持动态路由参数、多种 HTTP 方法、RESTful 风格设计，路由组织清晰高效
-- 零配置启动：开箱即用，无需复杂配置即可快速搭建 Web 服务器，极大提升开发效率
-- 成熟的生态系统：与 Node.js 生态深度集成，拥有丰富的插件和扩展，经过大规模生产环境验证
+- 完整覆盖JavaScript核心概念体系：包括ES6特性、闭包、原型链、异步编程、事件循环等33个关键知识点
+- 涉及现代JavaScript生态：集成Angular、React、Node.js等主流框架/库的相关概念
+- 深入底层原理：包含JavaScript引擎工作原理、原始类型、编程范式等深层次主题
+- 开源学习资源：MIT许可证，支持自由学习、分享和贡献
+- 社区高度认可：拥有66k+ Stars和活跃的维护，经过大量开发者验证的优质内容
 
 **适用场景**:
-- 企业级 RESTful API 开发：构建高性能、可维护的后端 API 服务，适用于电商、社交平台等各类商业应用
-- 全栈 Web 应用：个人或创业团队快速开发中小型 Web 应用，配合模板引擎（如 EJS、Pug）构建服务端渲染应用
-- 微服务架构：作为微服务的轻量级 HTTP 层，提供网关、代理或独立服务接口，特别适合需要精细控制的企业系统
+- 个人开发者技能进阶：适合1-3年经验的前端开发者系统梳理JavaScript知识盲区，建立完整的技术认知体系
+- 企业技术培训：可作为团队内部技术分享和学习材料，帮助团队成员对齐JavaScript核心概念理解
+- 面试准备指南：涵盖了JavaScript面试中高频出现的核心概念和原理性知识点，是求职准备的优秀资料
 
 
 
@@ -7041,7 +8011,7 @@ Express 是 Node.js 生态系统中最成熟、使用最广泛的 Web 框架，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 57,386 |
+| Stars | 57,385 |
 | 语言 | JavaScript |
 | Forks | 12,320 |
 | Issues | 22 |
@@ -7050,97 +8020,19 @@ Express 是 Node.js 生态系统中最成熟、使用最广泛的 Web 框架，�
 
 ---
 
-HTML5 Boilerplate 是 Web 前端开发的黄金标准模板，拥有超过 57,000+ Stars 的行业验证。它不仅提供了开箱即用的高性能 HTML/CSS/JavaScript 基础架构，更集成了业界多年的最佳实践和优化技巧，是任何 Web 项目的坚实起点，能帮助开发者避免重复造轮子，专注于业务逻辑实现。
+HTML5 Boilerplate 是前端开发领域最受推崇的基础模板项目之一，拥有超过 57,000 Stars 的验证。它集成了业界最佳实践和多年的经验积累，能够帮助开发者快速搭建性能优化、跨浏览器兼容、SEO友好的现代化网站基础架构，避免从零开始重复造轮子，是值得信赖的专业级前端起点。
 
 **技术亮点**:
-- ✅ 预集成的最佳实践：包含 Normalize.css、跨浏览器兼容性处理、SEO 优化元素、性能优化配置
-- ⚡ 性能优化导向：内置 CDN 加速资源、图片懒加载、CSS/JS 压缩配置、缓存策略
-- 🔧 完整的开发工具链：提供构建脚本、代码优化工具、自动化部署配置，支持现代前端工作流
-- 📱 响应式 & 可访问性：内置移动端适配、ARIA 属性、语义化标签、可访问性最佳实践
-- 🛡️ 安全与稳定性：包含 XSS 防护、CSP 策略、HTTPS 配置建议、错误处理机制
+- ✅ 集成行业最佳实践：包含完善的 HTML5 结构、CSS 重置、性能优化和安全性配置，经过数十年实战验证
+- 🌐 跨浏览器兼容性：内置处理 IE 及旧版浏览器的兼容方案，确保网站在各种浏览器中一致运行
+- 🚀 性能优化内置：预配置 CDN 链接、资源压缩提示、缓存策略等性能优化最佳实践，开箱即用
+- ♿ 可访问性与 SEO：遵循 WCAG 标准和搜索引擎优化原则，包含语义化标签和 meta 配置
+- 🔧 高度可定制：模块化设计，开发者可根据项目需求轻松增删组件，灵活适应不同规模项目
 
 **适用场景**:
-- 🏢 企业级 Web 应用开发：快速搭建符合企业标准的前端基础设施，确保代码质量和团队协作效率
-- 🚀 新项目快速启动：为个人开发者或小团队提供项目脚手架，省去初始配置时间，直接进入业务开发
-- 📚 学习最佳实践：作为学习现代 Web 开发标准、性能优化技巧和跨浏览器兼容性处理的优秀参考
-
-
-
-### nektos/act
-
-**描述**: Run your GitHub Actions locally 🚀
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 75/100
-
-**活跃度**: medium
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 68,447 |
-| 语言 | Go |
-| Forks | 1,833 |
-| Issues | 281 |
-| Topics | ci, devops, github-actions, golang |
-| 许可证 | MIT License |
-
----
-
-act 是一个革命性的开发者工具，让你能够在本地环境运行 GitHub Actions 工作流，无需每次推送代码到远程仓库进行测试。这个开源项目拥有超过 68k 星标，解决了 CI/CD 开发中的痛点问题，显著提升了开发效率并节省了 GitHub Actions 分钟数配额。
-
-**技术亮点**:
-- 完全兼容 GitHub Actions 语法，支持主流操作系统（Linux、macOS、Windows）和多种运行时环境
-- 基于 Go 语言开发，性能优异且编译为单一二进制文件，开箱即用无需复杂依赖
-- 支持 Docker 容器化运行，能够完美模拟 GitHub Actions 的执行环境
-- 提供丰富的命令行参数，支持工作流预览、步骤调试、环境变量配置等高级功能
-- 活跃的开源社区（MIT 许可证），持续维护更新，支持最新的 GitHub Actions 特性
-
-**适用场景**:
-- 开发者在提交代码前本地验证 CI/CD 工作流，避免推送到远程后发现配置错误导致流水线失败
-- 节省 GitHub Actions 使用配额，特别适合频繁测试工作流的个人开发者或中小型团队
-- 在离线环境或私有化部署场景下测试 GitHub Actions 工作流，不依赖 GitHub 平台服务
-
-
-
-### minio/minio
-
-**描述**: MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 75/100
-
-**活跃度**: medium
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 60,005 |
-| 语言 | Go |
-| Forks | 6,934 |
-| Issues | 79 |
-| Topics | amazon-s3, cloud, cloudnative, cloudstorage, go, k8s, kubernetes, multi-cloud, multi-cloud-kubernetes, objectstorage, s3, storage |
-| 许可证 | GNU Affero General Public License v3.0 |
-
----
-
-MinIO 是全球领先的开源高性能对象存储系统，完全兼容 AWS S3 API，拥有 60,000+ GitHub Stars 的庞大社区支持。作为云原生存储的标杆项目，它为企业提供了私有云对象存储的最佳解决方案，让开发者能够在自有基础设施上获得与 AWS S3 一致的存储体验，同时避免供应商锁定并大幅降低存储成本。
-
-**技术亮点**:
-- ✨ 100% AWS S3 API 兼容，无需修改代码即可迁移 S3 应用
-- ⚡️ 超高性能架构，专为高性能对象存储优化，支持纠删码和加密
-- ☁️ 云原生设计，完美支持 Kubernetes 容器化部署和多云架构
-- 🌐 多云混合云支持，可作为统一存储层连接 AWS、Azure、GCP 等云平台
-- 🔰 AGPLv3 开源许可，代码完全透明，企业可自主可控部署
-
-**适用场景**:
-- 🏢 企业私有云对象存储：替代 AWS S3 构建内部数据湖和文件存储系统，满足数据主权和合规要求，降低云存储成本
-- 🚀 云原生应用开发：为 Kubernetes 微服务架构提供高性能持久化存储，支持 CI/CD 流水线产物管理、容器镜像存储等
-- 💾 多云数据备份与归档：构建跨云数据备份策略，实现数据在不同云服务商间的冗余存储和灾难恢复
+- 🚀 新项目快速启动：无论是个人开发者还是企业团队，都需要从零开始搭建新网站时，可直接作为项目脚手架，节省初始配置时间
+- 📚 前端学习参考：初学者和有经验的开发者都可将其作为学习现代前端最佳实践的权威参考资料，了解行业标准配置
+- 🏢 企业级项目开发：适合需要稳定、可维护、符合规范的企业级 Web 应用开发，确保代码质量和团队协作规范
 
 
 
@@ -7158,27 +8050,27 @@ MinIO 是全球领先的开源高性能对象存储系统，完全兼容 AWS S3 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,445 |
+| Stars | 49,451 |
 | 语言 | Go |
-| Forks | 1,565 |
+| Forks | 1,566 |
 | Issues | 256 |
 | 许可证 | MIT License |
 
 ---
 
-这是一个为 Docker 管理而生的终极终端 UI 工具，解决了命令行管理 Docker 的繁琐问题。它通过交互式界面大幅提升了开发者管理容器、镜像、卷和网络的效率，特别适合需要频繁操作 Docker 的场景。
+lazydocker 是一个革命性的 Docker 终端管理工具，通过直观的 TUI（终端用户界面）将复杂的 Docker CLI 操作简化为可视化交互，极大地提升了开发效率。它的独特价值在于将 GUI 工具的易用性与命令行工具的高效性完美结合，让容器管理变得既简单又强大。
 
 **技术亮点**:
-- 基于 Go 语言开发的高性能终端 UI (TUI)，提供流畅的交互体验
-- 集成了 Docker 所有核心组件的管理功能（容器、镜像、卷、网络）
-- 支持实时查看日志、资源监控和状态更新，无需频繁切换命令
-- 提供丰富的快捷键操作，支持批量管理和快速筛选
-- 轻量级设计，无复杂依赖，易于安装和集成到现有工作流
+- 基于 Go 语言开发的高性能终端 UI（TUI）框架，提供流畅的交互体验
+- 支持全面的 Docker 对象管理，包括容器、镜像、卷、网络等一站式管理
+- 强大的键盘快捷键系统，实现快速操作和导航，大幅降低命令输入负担
+- 集成实时日志查看、资源监控、配置编辑等高级功能，无需离开终端界面
+- 轻量级跨平台设计，MIT 开源许可，适合集成到各种开发工作流中
 
 **适用场景**:
-- 个人开发者的日常开发环境管理，快速查看和调试本地 Docker 容器
-- DevOps 工程师的服务器运维场景，在远程服务器上高效管理生产环境的 Docker 资源
-- 技术教学和学习场景，通过可视化界面帮助初学者理解 Docker 的各项概念和操作
+- 需要频繁管理多个 Docker 容器和服务的开发者，可通过可视化界面快速查看状态、查看日志和重启服务
+- DevOps 工程师进行日常容器运维，无需记忆复杂的 Docker 命令即可完成镜像清理、网络配置等操作
+- 个人开发者在本地开发环境中快速管理项目的 Docker 服务栈，提升开发体验和效率
 
 
 
@@ -7196,26 +8088,26 @@ MinIO 是全球领先的开源高性能对象存储系统，完全兼容 AWS S3 
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,943 |
+| Stars | 48,949 |
 | 语言 | Go |
-| Forks | 7,993 |
+| Forks | 7,994 |
 | Issues | 579 |
 | Topics | file-server, gin, golang, onedrive, solidjs, webdav |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Alist 是一款功能强大的多云存储文件管理解决方案，聚合了 30+ 种存储服务（包括阿里云盘、OneDrive、Google Drive 等），能够将分散的云存储资源统一管理并提供 WebDAV 接口。近 5 万颗星证明了其在中文社区的极高人气，解决了个人和团队多云盘文件统一访问的痛点，是网盘聚合领域的标杆项目。
+Alist 是一个优秀的开源文件管理系统，凭借近 5 万颗 GitHub Stars 证明了其强大的社区认可度。它独特地聚合了多种云存储服务（OneDrive、Google Drive 等）并提供统一的文件访问接口，同时支持 WebDAV 协议，打破了不同存储平台之间的壁垒，为用户提供了灵活、高效的文件管理解决方案。
 
 **技术亮点**:
-- 采用 Go (Gin) + Solid.js 前后端分离架构，后端高性能、前端响应式体验佳
-- 支持 30+ 种存储后端，涵盖主流云盘、本地存储、FTP、S3、WebDAV 等协议
-- 提供 WebDAV 接口，可被挂载为本地磁盘或集成到其他应用（如流媒体播放器、文档编辑器）
-- 支持文件预览（视频、音频、图片、PDF、代码等）、离线下载、加密存储等企业级功能
-- 支持多用户、权限管理、文件夹隐藏、aria2 离线下载等高级特性
+- 基于 Gin 框架构建的高性能 Go 后端，提供稳定高效的文件服务
+- 采用 Solidjs 现代前端框架，构建响应式用户界面
+- 支持多种主流云存储平台的统一管理和访问，包括 OneDrive 等
+- 完整支持 WebDAV 协议，可与第三方工具无缝集成
+- 支持多存储后端的灵活挂载和管理，提供统一的文件列表接口
 
 **适用场景**:
-- 个人用户整合多个云盘资源（如阿里云盘、百度网盘、OneDrive），通过统一入口访问并挂载为本地磁盘
-- 团队/企业搭建内部文件共享平台，替代 NAS 系统，提供 WebDAV 供团队协作使用
-- 媒体服务器场景：配合 Jellyfin/Emby/Plex 等工具，将云盘资源直接作为媒体库使用
+- 个人云盘整合：将分散在不同云存储平台的文件统一管理，避免存储服务割裂
+- 企业文件共享：搭建内部文件服务器，支持多存储后挂载和 WebDAV 客户端访问
+- NAS/私有云部署：在本地服务器或 NAS 上搭建个人文件管理系统，实现多源文件聚合
 
