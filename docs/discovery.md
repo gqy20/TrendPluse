@@ -5,6 +5,7 @@
 ## 最新报告
 
 ### [2026-01-31](https://github.com/gqy20/TrendPluse/blob/main/reports/discovery/discovery-2026-01-31.md)
+<br/>
 
 **发现概览**:
 - 总发现数: 200
@@ -14,6 +15,7 @@
 - 已在监控: 18
 
 **高优先级推荐 Top 5**:
+
 1. [open-webui/open-webui](https://github.com/open-webui/open-webui) - 122,454 ⭐
 2. [infiniflow/ragflow](https://github.com/infiniflow/ragflow) - 72,477 ⭐
 3. [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) - 66,655 ⭐
