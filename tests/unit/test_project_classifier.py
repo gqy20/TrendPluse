@@ -274,3 +274,299 @@ class TestProjectClassifier:
         categories = classifier.classify(project)
 
         assert "其他" in categories
+
+
+class TestTopicCleaning:
+    """Topics 清洗功能测试"""
+
+    def test_clean_topics_filters_activity_tags(self):
+        """测试过滤活动标签（如 hacktoberfest）"""
+        classifier = ProjectClassifier()
+
+        dirty = ["ai", "llm", "hacktoberfest", "rag"]
+        cleaned = classifier._clean_topics(dirty)
+
+        assert "hacktoberfest" not in cleaned
+        assert "ai" in cleaned
+        assert "llm" in cleaned
+        assert "rag" in cleaned
+
+    def test_clean_topics_normalizes_variants(self):
+        """测试规范化 topics 变体"""
+        classifier = ProjectClassifier()
+
+        dirty = ["llms", "ai-agents", "large-language-models"]
+        cleaned = classifier._clean_topics(dirty)
+
+        assert "llm" in cleaned
+        assert "llms" not in cleaned
+        assert "agent" in cleaned
+        assert "ai-agents" not in cleaned
+        assert "llm" in cleaned  # large-language-models → llm
+
+    def test_clean_topics_converts_to_lowercase(self):
+        """测试转换为小写"""
+        classifier = ProjectClassifier()
+
+        dirty = ["AI", "LLM", "RAG", "DeepLearning"]
+        cleaned = classifier._clean_topics(dirty)
+
+        assert "ai" in cleaned
+        assert "llm" in cleaned
+        assert "rag" in cleaned
+        assert "deeplearning" in cleaned
+        assert "AI" not in cleaned
+        assert "LLM" not in cleaned
+
+    def test_clean_topics_filters_language_tags(self):
+        """测试过滤语言标签（可选功能）"""
+        classifier = ProjectClassifier()
+
+        # 语言标签应该被过滤，因为已有 language 字段
+        dirty = ["ai", "javascript", "python", "llm", "golang"]
+        cleaned = classifier._clean_topics(dirty)
+
+        # 验证语言标签被过滤
+        assert "javascript" not in cleaned
+        assert "python" not in cleaned
+        assert "golang" not in cleaned
+        # 技术主题保留
+        assert "ai" in cleaned
+        assert "llm" in cleaned
+
+    def test_clean_topics_empty_list(self):
+        """测试空列表处理"""
+        classifier = ProjectClassifier()
+
+        cleaned = classifier._clean_topics([])
+
+        assert cleaned == []
+
+    def test_clean_topics_removes_duplicates(self):
+        """测试去重"""
+        classifier = ProjectClassifier()
+
+        dirty = ["ai", "AI", "llm", "llm", "rag"]
+        cleaned = classifier._clean_topics(dirty)
+
+        assert cleaned.count("ai") == 1
+        assert cleaned.count("llm") == 1
+        assert cleaned.count("rag") == 1
+
+    def test_classify_uses_cleaned_topics(self):
+        """测试分类使用清洗后的 topics"""
+        classifier = ProjectClassifier()
+
+        # 使用未规范化的 topics
+        project = DiscoveredProject(
+            repo="test/test-agent",
+            name="test-agent",
+            description="Test",
+            stars=1000,
+            language="Python",
+            topics=["AI-Agents", "Multi-Agent", "hacktoberfest"],  # 未规范化
+            license="MIT",
+            open_issues=10,
+            forks=100,
+            watchers=1000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="Test",
+        )
+
+        categories = classifier.classify(project)
+
+        # 应该能正确匹配到 AI Agents（使用清洗后的 topics）
+        assert "AI Agents" in categories
+
+
+class TestExtendedCategories:
+    """扩展分类功能测试"""
+
+    def test_classify_ml_framework_project(self):
+        """测试机器学习框架项目分类"""
+        classifier = ProjectClassifier()
+
+        # Transformers 类项目
+        project = DiscoveredProject(
+            repo="huggingface/transformers",
+            name="transformers",
+            description="ML framework",
+            stars=100000,
+            language="Python",
+            topics=[
+                "deep-learning",
+                "machine-learning",
+                "nlp",
+                "pytorch",
+                "pretrained-models",
+                "transformer",
+            ],
+            license="Apache-2.0",
+            open_issues=100,
+            forks=10000,
+            watchers=100000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="ML framework",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "机器学习框架" in categories
+
+    def test_classify_monitoring_project(self):
+        """测试监控工具项目分类"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="prometheus/prometheus",
+            name="prometheus",
+            description="Monitoring system",
+            stars=50000,
+            language="Go",
+            topics=["monitoring", "metrics", "observability", "alerting"],
+            license="Apache-2.0",
+            open_issues=50,
+            forks=5000,
+            watchers=50000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="Monitoring tool",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "监控/观测" in categories
+
+    def test_classify_devops_project(self):
+        """测试 DevOps/基础设施项目分类"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="ansible/ansible",
+            name="ansible",
+            description="Automation tool",
+            stars=60000,
+            language="Python",
+            topics=[
+                "devops",
+                "automation",
+                "configuration",
+                "deployment",
+                "infrastructure",
+            ],
+            license="GPL-3.0",
+            open_issues=80,
+            forks=10000,
+            watchers=60000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="DevOps tool",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "DevOps/基础设施" in categories
+
+    def test_classify_web_framework_project(self):
+        """测试 Web 框架项目分类"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="example/fastapi",
+            name="fastapi",
+            description="Web framework",
+            stars=70000,
+            language="Python",
+            topics=["api", "backend", "http", "rest", "web-framework"],
+            license="MIT",
+            open_issues=30,
+            forks=5000,
+            watchers=70000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="Web framework",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "Web 框架" in categories
+
+    def test_kubernetes_classified_as_devops(self):
+        """测试 Kubernetes 被分类为 DevOps"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="kubernetes/kubernetes",
+            name="kubernetes",
+            description="Container orchestrator",
+            stars=100000,
+            language="Go",
+            topics=["kubernetes", "container", "orchestration", "deployment"],
+            license="Apache-2.0",
+            open_issues=200,
+            forks=30000,
+            watchers=100000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="Kubernetes",
+        )
+
+        categories = classifier.classify(project)
+
+        # kubernetes 关键词应该匹配到 DevOps/基础设施
+        assert "DevOps/基础设施" in categories
+
+    def test_tensorflow_classified_as_ml_framework(self):
+        """测试 TensorFlow 被分类为机器学习框架"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="tensorflow/tensorflow",
+            name="tensorflow",
+            description="ML framework",
+            stars=180000,
+            language="Python",
+            topics=[
+                "machine-learning",
+                "deep-learning",
+                "tensorflow",
+                "keras",
+            ],
+            license="Apache-2.0",
+            open_issues=150,
+            forks=90000,
+            watchers=180000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="ML framework",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "机器学习框架" in categories
+
+    def test_grafana_classified_as_monitoring(self):
+        """测试 Grafana 被分类为监控工具"""
+        classifier = ProjectClassifier()
+
+        project = DiscoveredProject(
+            repo="grafana/grafana",
+            name="grafana",
+            description="Dashboard",
+            stars=60000,
+            language="TypeScript",
+            topics=["monitoring", "metrics", "dashboard", "observability"],
+            license="AGPL-3.0",
+            open_issues=70,
+            forks=12000,
+            watchers=60000,
+            last_commit_at=None,
+            discovery_source="trending",
+            discovery_reason="Monitoring",
+        )
+
+        categories = classifier.classify(project)
+
+        assert "监控/观测" in categories

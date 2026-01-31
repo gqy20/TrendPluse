@@ -19,6 +19,55 @@ class ProjectClassifier:
     一个项目可以同时属于多个分类（如既是 AI Agent 又是 RAG/检索）。
     """
 
+    # 需要过滤的无用 topics
+    FILTER_TOPICS = {
+        # 活动标签
+        "hacktoberfest",
+        "hacktoberfest2024",
+        "hactoberfest",
+        # 语言标签（已有 language 字段）
+        "javascript",
+        "python",
+        "typescript",
+        "java",
+        "go",
+        "golang",
+        "rust",
+        "c",
+        "c++",
+        "csharp",
+        "ruby",
+        "php",
+        "swift",
+        "kotlin",
+        "dart",
+        "julia",
+        "scala",
+        "r",
+        "matlab",
+        "html",
+        "css",
+        "shell",
+        "bash",
+    }
+
+    # Topics 规范化映射（变体 → 标准形式）
+    TOPIC_NORMALIZATION = {
+        "llms": "llm",
+        "ai-agents": "agent",
+        "agents": "agent",
+        "multi-agents": "multi-agent",
+        "large-language-models": "llm",
+        "large-language-model": "llm",
+        "chatbots": "chatbot",
+        "openais": "openai",
+        "claudes": "claude",
+        "ollamas": "ollama",
+        "retrievals": "retrieval",
+        "vectors": "vector",
+        "embeddings": "embedding",
+    }
+
     # 分类规则（基于 Topics 关键词匹配）
     CATEGORIES = {
         "AI Agents": [
@@ -63,7 +112,6 @@ class ProjectClassifier:
             "data-pipeline",
             "infrastructure",
             "deployment",
-            "monitoring",
         ],
         "学习资源": [
             "awesome-list",
@@ -72,7 +120,95 @@ class ProjectClassifier:
             "prompt-engineering",
             "documentation",
         ],
+        # 新增分类
+        "机器学习框架": [
+            "deep-learning",
+            "machine-learning",
+            "ml",
+            "nlp",
+            "natural-language-processing",
+            "pytorch",
+            "tensorflow",
+            "jax",
+            "keras",
+            "pretrained-models",
+            "model-hub",
+            "transformer",
+            "computer-vision",
+            "cv",
+        ],
+        "监控/观测": [
+            "monitoring",
+            "monitor",
+            "metrics",
+            "observability",
+            "logging",
+            "tracing",
+            "alerting",
+            "dashboard",
+            "prometheus",
+            "grafana",
+        ],
+        "DevOps/基础设施": [
+            "devops",
+            "infrastructure",
+            "deployment",
+            "automation",
+            "configuration",
+            "ci-cd",
+            "cicd",
+            "container",
+            "kubernetes",
+            "k8s",
+            "docker",
+            "orchestration",
+        ],
+        "Web 框架": [
+            "web-framework",
+            "backend",
+            "api",
+            "server",
+            "http",
+            "rest",
+            "graphql",
+            "framework",
+        ],
     }
+
+    def _clean_topics(self, topics: list[str]) -> list[str]:
+        """清洗和规范化 topics
+
+        - 过滤无用 topics（活动标签、语言标签等）
+        - 规范化变体（llms → llm, ai-agents → agent）
+        - 转换为小写
+        - 去重
+
+        Args:
+            topics: 原始 topics 列表
+
+        Returns:
+            清洗后的 topics 列表
+        """
+        cleaned = []
+        seen = set()
+
+        for topic in topics:
+            # 转小写
+            topic_lower = topic.lower()
+
+            # 过滤无用 topics
+            if topic_lower in self.FILTER_TOPICS:
+                continue
+
+            # 规范化
+            normalized = self.TOPIC_NORMALIZATION.get(topic_lower, topic_lower)
+
+            # 去重
+            if normalized not in seen:
+                seen.add(normalized)
+                cleaned.append(normalized)
+
+        return cleaned
 
     def classify(self, project: DiscoveredProject) -> list[str]:
         """分类单个项目
@@ -83,8 +219,11 @@ class ProjectClassifier:
         Returns:
             分类列表，可能包含多个分类（如果项目匹配多个类别）
         """
-        # 转换 topics 为小写集合用于匹配
-        project_topics = {t.lower() for t in project.topics}
+        # 先清洗 topics
+        cleaned_topics = self._clean_topics(project.topics)
+
+        # 转换为集合用于匹配
+        project_topics = set(cleaned_topics)
 
         categories = []
 
