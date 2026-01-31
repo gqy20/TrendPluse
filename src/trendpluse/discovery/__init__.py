@@ -4,7 +4,9 @@
 """
 
 from trendpluse.discovery.base import BaseDiscoverer
+from trendpluse.discovery.classifier import ProjectClassifier
 from trendpluse.discovery.deduplicator import Deduplicator
+from trendpluse.discovery.dynamic_evaluator import DynamicThresholdEvaluator
 from trendpluse.discovery.evaluator import QualityEvaluator
 from trendpluse.discovery.highlight_analyzer import ProjectHighlightAnalyzer
 from trendpluse.discovery.keyword_searcher import KeywordSearcher
@@ -16,7 +18,9 @@ __all__ = [
     "TrendingCollector",
     "KeywordSearcher",
     "QualityEvaluator",
+    "DynamicThresholdEvaluator",
     "Deduplicator",
     "DiscoveryReporter",
     "ProjectHighlightAnalyzer",
+    "ProjectClassifier",
 ]
