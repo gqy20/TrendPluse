@@ -3,9 +3,14 @@
 from pydantic import BaseModel, Field
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
+from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
+
+# 创建重试装饰器
+_llm_retry = create_anthropic_retry_decorator()
 
 
 class ProjectHighlight(BaseModel):
@@ -94,6 +99,24 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
     使用 AI 分析项目，生成推荐理由、技术亮点和适用场景。
     """
 
+    def __init__(
+        self,
+        api_key: str,
+        model: str = DEFAULT_ANTHROPIC_MODEL,
+        base_url: str = DEFAULT_ANTHROPIC_BASE_URL,
+    ):
+        """初始化分析器
+
+        Args:
+            api_key: Anthropic API Key
+            model: 使用的模型
+            base_url: API 基础 URL
+        """
+        # 使用 instructor 模式（与 TrendAnalyzer 保持一致）
+        super().__init__(
+            api_key=api_key, model=model, base_url=base_url, use_instructor=True
+        )
+
     def _build_analysis_prompt(self, project) -> str:
         """构建分析提示词
 
@@ -103,37 +126,32 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         Returns:
             分析提示词
         """
-        return f"""分析这个 GitHub 项目并返回 JSON 格式的结果。
+        topics_str = ", ".join(project.topics) if project.topics else "N/A"
+        license_str = project.license or "N/A"
+
+        return f"""分析这个 GitHub 项目并生成项目亮点分析。
 
 项目信息：
 - 仓库名: {project.repo}
 - 描述: {project.description}
 - 编程语言: {project.language}
 - Stars: {project.stars:,}
-- Topics: {", ".join(project.topics) if project.topics else "N/A"}
-- 许可证: {project.license or "N/A"}
+- Topics: {topics_str}
+- 许可证: {license_str}
 
-请分析并返回：
-{{
-    "recommendation_reason": "推荐理由（说明为什么推荐这个项目及其独特价值）",
-    "technical_highlights": [
-        "技术亮点1（3-5个bullet points，突出技术特色）",
-        "技术亮点2",
-        "技术亮点3"
-    ],
-    "use_cases": [
-        "适用场景1（2-3个bullet points，说明适合什么场景使用）",
-        "适用场景2"
-    ]
-}}
+请分析并返回 ProjectHighlight，包含以下字段：
+1. recommendation_reason: 推荐理由（1-2句话，说明为什么推荐这个项目及其独特价值）
+2. technical_highlights: 技术亮点列表（3-5个bullet points，突出技术特色）
+3. use_cases: 适用场景列表（2-3个bullet points，说明适合什么场景使用）
 
 注意：
-1. 推荐理由要具体，避免空泛
-2. 技术亮点要基于项目描述和Topics推断
-3. 适用场景要实用，考虑企业/个人开发者
-4. 用中文回复
+- 推荐理由要具体，避免空泛
+- 技术亮点要基于项目描述和Topics推断
+- 适用场景要实用，考虑企业/个人开发者
+- 用中文回复
 """
 
+    @_llm_retry
     def analyze(self, project) -> ProjectHighlight:
         """分析项目亮点
 
@@ -146,41 +164,13 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_analysis_prompt(project)
 
         try:
-            response = self.client.messages.create(
+            highlight = self.client.chat.completions.create(
                 model=self.model,
+                response_model=ProjectHighlight,
+                messages=[{"role": "user", "content": prompt}],
                 max_tokens=1000,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
             )
-
-            # 提取响应文本
-            result = ""
-            for block in response.content:
-                if hasattr(block, "text"):
-                    result = block.text
-                    break
-
-            # 解析 JSON 响应
-            import json
-
-            # 提取 JSON 代码块
-            if "```json" in result:
-                json_start = result.index("```json") + 7
-                json_end = result.index("```", json_start)
-                json_str = result[json_start:json_end].strip()
-            elif "```" in result:
-                json_start = result.index("```") + 3
-                json_end = result.index("```", json_start)
-                json_str = result[json_start:json_end].strip()
-            else:
-                json_str = result.strip()
-
-            data = json.loads(json_str)
-            return ProjectHighlight(**data)
+            return highlight  # type: ignore[no-any-return]
 
         except Exception as e:
             logger.warning(f"AI 分析项目 {project.repo} 失败: {e}，使用降级方案")

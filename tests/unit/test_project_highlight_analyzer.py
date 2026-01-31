@@ -76,35 +76,31 @@ class TestProjectHighlightAnalyzer:
         assert "10,000 Stars" in highlight.technical_highlights[0]
         assert "Python" in highlight.technical_highlights[1]
 
-    @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_project_success(self, mock_anthropic, mock_env_vars):
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
+    def test_analyze_project_success(self, mock_instructor, mock_env_vars):
         """测试成功分析项目"""
-        # 模拟 LLM 响应
-        json_response = """```json
-{
-    "recommendation_reason": "这是一个优秀的AI界面项目",
-    "technical_highlights": [
-        "支持多种AI模型后端",
-        "提供直观的Web界面",
-        "开源可自部署"
-    ],
-    "use_cases": [
-        "企业内部AI助手部署",
-        "个人AI工具开发"
-    ]
-}
-```"""
+        # 模拟 instructor 返回的 ProjectHighlight 对象
+        mock_highlight = ProjectHighlight(
+            recommendation_reason="这是一个优秀的AI界面项目",
+            technical_highlights=[
+                "支持多种AI模型后端",
+                "提供直观的Web界面",
+                "开源可自部署",
+            ],
+            use_cases=[
+                "企业内部AI助手部署",
+                "个人AI工具开发",
+            ],
+        )
 
-        mock_message = MagicMock()
-        mock_message.content = [MagicMock(type="text", text=json_response)]
-
-        mock_anthropic.return_value.messages.create.return_value = mock_message
+        mock_client = MagicMock()
+        mock_client.chat.completions.create.return_value = mock_highlight
+        mock_instructor.return_value = mock_client
 
         analyzer = ProjectHighlightAnalyzer(
             api_key="test_key",
             model="test-model",
             base_url="http://test",
-            use_instructor=False,
         )
         result = analyzer.analyze(MockProject())
 
@@ -113,43 +109,46 @@ class TestProjectHighlightAnalyzer:
         assert "支持多种AI模型后端" in result.technical_highlights
         assert len(result.use_cases) == 2
 
-    @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_project_with_empty_response(self, mock_anthropic, mock_env_vars):
-        """测试 LLM 返回空响应时的降级处理"""
-        mock_message = MagicMock()
-        mock_message.content = [MagicMock(type="text", text="")]
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
+    def test_analyze_project_with_error(self, mock_instructor, mock_env_vars):
+        """测试 LLM 返回错误时的降级处理"""
+        import anthropic
 
-        mock_anthropic.return_value.messages.create.return_value = mock_message
+        mock_client = MagicMock()
+        mock_client.chat.completions.create.side_effect = anthropic.APITimeoutError(
+            "Request timeout"
+        )
+        mock_instructor.return_value = mock_client
 
         analyzer = ProjectHighlightAnalyzer(
             api_key="test_key",
             model="test-model",
             base_url="http://test",
-            use_instructor=False,
         )
         result = analyzer.analyze(MockProject())
 
         # 应该返回降级结果
         assert result.recommendation_reason != ""
         assert len(result.technical_highlights) > 0
+        # 验证是降级结果
+        assert "open-webui/open-webui" in result.recommendation_reason
 
-    @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_with_timeout(self, mock_anthropic, mock_env_vars):
-        """测试超时处理"""
-        import anthropic
-
-        mock_anthropic.return_value.messages.create.side_effect = (
-            anthropic.APITimeoutError("Request timeout")
-        )
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
+    def test_analyze_with_validation_error(self, mock_instructor, mock_env_vars):
+        """测试 LLM 返回错误时的降级处理"""
+        mock_client = MagicMock()
+        mock_client.chat.completions.create.side_effect = RuntimeError("LLM error")
+        mock_instructor.return_value = mock_client
 
         analyzer = ProjectHighlightAnalyzer(
             api_key="test_key",
             model="test-model",
             base_url="http://test",
-            use_instructor=False,
         )
         result = analyzer.analyze(MockProject())
 
-        # 超时时应该返回降级结果
-        assert result is not None
+        # 应该返回降级结果
         assert result.recommendation_reason != ""
+        assert len(result.technical_highlights) > 0
+        # 验证是降级结果
+        assert "open-webui/open-webui" in result.recommendation_reason
