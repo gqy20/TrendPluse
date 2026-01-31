@@ -64,7 +64,11 @@ class TestReportsDirectoryStructure:
         assert synced_file.exists()
 
     def test_sync_discovery_reports_to_docs(self, tmp_path):
-        """测试同步发现报告到 docs 目录"""
+        """测试同步发现报告到 docs 目录
+
+        注意：sync_discovery_reports_to_docs 不再复制文件到 docs 目录，
+        因为发现报告内容较大，不适合作为 MkDocs 页面。
+        """
         reports_dir = tmp_path / "reports"
         discovery_dir = reports_dir / "discovery"
         discovery_dir.mkdir(parents=True)
@@ -76,8 +80,11 @@ class TestReportsDirectoryStructure:
         docs_dir.mkdir(parents=True)
         sync_discovery_reports_to_docs(reports_dir, docs_dir)
 
+        # 验证文件未被复制到 docs 目录
         synced_file = docs_dir / "discovery-2026-01-31.md"
-        assert synced_file.exists()
+        assert not synced_file.exists()
+        # 原始报告文件仍然存在
+        assert test_report.exists()
 
     def test_generate_index_reads_from_subdirectories(self, tmp_path):
         """测试生成索引从子目录读取报告"""
