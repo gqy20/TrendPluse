@@ -24,5 +24,6 @@
   "breaking_changes": null,
   "monitored_repos": [
     "anthropics/skills"
-  ]
+  ],
+  "issues": null
 }

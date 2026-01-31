@@ -4,9 +4,12 @@
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, Field
+
+if TYPE_CHECKING:
+    from trendpluse.models.issue import IssueData
 
 
 class CoreTrend(BaseModel):
@@ -194,6 +197,11 @@ class DailyReport(BaseModel):
         default=None,
         description="监控的仓库列表（可选）",
     )
+    # Issue 数据（可选）
+    issues: "IssueData | None" = Field(
+        default=None,
+        description="Issue 分析数据（可选）",
+    )
 
 
 class WeeklyActivity(BaseModel):
@@ -248,3 +256,10 @@ class WeeklyReport(BaseModel):
         """
         year, week, _ = date.isocalendar()
         return f"{year}-W{week:02d}"
+
+
+# 重建模型以解析前向引用（IssueData）
+# 需要实际导入 IssueData 才能解析前向引用
+from trendpluse.models.issue import IssueData  # noqa: F401, E402
+
+DailyReport.model_rebuild()

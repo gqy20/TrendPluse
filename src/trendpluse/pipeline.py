@@ -8,10 +8,12 @@ from pathlib import Path
 
 from anthropic import Anthropic
 
+from trendpluse.aggregators.issue_aggregator import IssueAggregator
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
 )
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
+from trendpluse.analyzers.issue_analyzer import IssueAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
@@ -21,6 +23,7 @@ from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.collectors.github_events import GitHubEventsCollector
+from trendpluse.collectors.issues import IssueCollector
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH, Settings
 from trendpluse.logger import get_logger
@@ -62,6 +65,7 @@ class TrendPulsePipeline:
         self.collector = GitHubEventsCollector(token=self.settings.github_token)
         self.activity_collector = ActivityCollector(token=self.settings.github_token)
         self.release_collector = ReleaseCollector(token=self.settings.github_token)
+        self.issue_collector = IssueCollector(token=self.settings.github_token)
         self.commit_analyzer = CommitAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
@@ -82,6 +86,12 @@ class TrendPulsePipeline:
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
         )
+        self.issue_analyzer = IssueAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+        )
+        self.issue_aggregator = IssueAggregator(min_mentions=2)
         self.filter = EventFilter(
             max_count=self.settings.max_candidates,
             enable_open_prs=self.settings.enable_open_prs,
@@ -176,6 +186,57 @@ class TrendPulsePipeline:
                 release_analysis_data
             )
 
+        # 0.8. 收集 Issues（创建时间 90 天内，最近 3 天活跃）
+        detailed_issues, issues_stats = self.issue_collector.fetch_issues(
+            repos=self.settings.github_repos,
+            snapshot_date=date.strftime("%Y-%m-%d"),
+            max_workers=self.settings.max_parallel_workers,
+        )
+
+        # 0.9. AI 分析 Issues
+        issue_analyses = {}
+        if detailed_issues:
+            issue_analyses = self.issue_analyzer.analyze_batch(detailed_issues)
+
+        # 0.10. 聚合用户痛点
+        pain_points = []
+        if detailed_issues and issue_analyses:
+            pain_points = self.issue_aggregator.aggregate_pain_points(
+                detailed_issues, issue_analyses
+            )
+
+        # 构建 IssueData 对象
+        issues_final_data = None
+        if detailed_issues or issues_stats:
+            from trendpluse.models.issue import IssueData
+
+            # 统计分类
+            category_counts = {
+                "bug_report": 0,
+                "feature_request": 0,
+                "question": 0,
+                "discussion": 0,
+            }
+            sentiment_counts = {"positive": 0, "neutral": 0, "negative": 0}
+
+            for analysis in issue_analyses.values():
+                category_counts[analysis.category] = (
+                    category_counts.get(analysis.category, 0) + 1
+                )
+                sentiment_counts[analysis.sentiment] = (
+                    sentiment_counts.get(analysis.sentiment, 0) + 1
+                )
+
+            issues_final_data = IssueData(
+                total_count=issues_stats.get("total_issues", len(detailed_issues)),
+                bug_reports=category_counts["bug_report"],
+                feature_requests=category_counts["feature_request"],
+                questions=category_counts["question"],
+                discussions=category_counts["discussion"],
+                sentiment_distribution=sentiment_counts,
+                top_pain_points=pain_points[:5],  # 只保留前 5 个
+            )
+
         # 1. 从 GitHub API 获取 PR（只分析最近 24 小时）
         # 从当前时间往前推 24 小时
         events = self.collector.fetch_events(
@@ -190,7 +251,7 @@ class TrendPulsePipeline:
         # 如果没有候选事件，返回带活跃度、commit 和 release 信号的空报告
         if not candidates:
             return self._handle_empty_report(
-                date, activity_data, commit_signals, releases_data
+                date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
         # 3. 获取详细信息
@@ -198,7 +259,7 @@ class TrendPulsePipeline:
 
         if not pr_details:
             return self._handle_empty_report(
-                date, activity_data, commit_signals, releases_data
+                date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
         # 4. AI 分析提取信号
@@ -206,7 +267,7 @@ class TrendPulsePipeline:
 
         if not signals:
             return self._handle_empty_report(
-                date, activity_data, commit_signals, releases_data
+                date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
         # 4.5. 信号去重（只对 PR 信号去重）
@@ -231,11 +292,17 @@ class TrendPulsePipeline:
         report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
+        # 添加 Issue 数据
+        report.issues = issues_final_data
         # 更新统计信息（聚合时已包含部分统计）
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = releases_data.total_count
         report.stats["total_releases_analyzed"] = len(detailed_releases)
         report.stats["total_breaking_changes"] = len(breaking_changes)
+        report.stats["total_issues"] = (
+            issues_final_data.total_count if issues_final_data else 0
+        )
+        report.stats["total_issues_analyzed"] = len(detailed_issues)
 
         # 7. 保存报告（同时保存 Markdown 和 JSON）
         output_path = self._get_output_path(date)
@@ -251,6 +318,7 @@ class TrendPulsePipeline:
         activity_data: ActivityData | None = None,
         commit_signals: list | None = None,
         releases_data: ReleasesData | None = None,
+        issues_data=None,
     ) -> DailyReport:
         """生成空报告
 
@@ -259,6 +327,7 @@ class TrendPulsePipeline:
             activity_data: 活跃度数据（可选）
             commit_signals: commit 信号列表（可选）
             releases_data: Release 数据（可选）
+            issues_data: Issue 数据（可选）
 
         Returns:
             空的每日报告
@@ -328,6 +397,7 @@ class TrendPulsePipeline:
         activity_data: ActivityData | None = None,
         commit_signals: list | None = None,
         releases_data: ReleasesData | None = None,
+        issues_data=None,
     ) -> DailyReport:
         """处理空报告场景
 
@@ -338,12 +408,13 @@ class TrendPulsePipeline:
             activity_data: 活跃度数据
             commit_signals: commit 信号列表
             releases_data: Release 数据
+            issues_data: Issue 数据
 
         Returns:
             保存并发送后的空报告
         """
         report = self._generate_empty_report(
-            date, activity_data, commit_signals, releases_data
+            date, activity_data, commit_signals, releases_data, issues_data
         )
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
