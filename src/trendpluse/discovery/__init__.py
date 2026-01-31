@@ -4,8 +4,10 @@
 """
 
 from trendpluse.discovery.base import BaseDiscoverer
+from trendpluse.discovery.deduplicator import Deduplicator
 from trendpluse.discovery.evaluator import QualityEvaluator
 from trendpluse.discovery.keyword_searcher import KeywordSearcher
+from trendpluse.discovery.reporter import DiscoveryReporter
 from trendpluse.discovery.trending import TrendingCollector
 
 __all__ = [
@@ -13,4 +15,6 @@ __all__ = [
     "TrendingCollector",
     "KeywordSearcher",
     "QualityEvaluator",
+    "Deduplicator",
+    "DiscoveryReporter",
 ]
