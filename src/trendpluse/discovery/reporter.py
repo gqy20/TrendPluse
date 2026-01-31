@@ -117,6 +117,11 @@ class DiscoveryReporter:
         if project.license:
             lines.append(f"| 许可证 | {project.license} |")
 
+        # 添加 AI 分析的项目亮点
+        if project.highlight:
+            lines.extend(["", "---", ""])
+            lines.append(project.highlight.format_as_markdown())
+
         lines.append("")
         return lines
 

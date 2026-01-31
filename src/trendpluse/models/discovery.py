@@ -8,6 +8,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from trendpluse.discovery.highlight_analyzer import ProjectHighlight
+
 
 class DiscoveredProject(BaseModel):
     """发现的热门项目"""
@@ -48,6 +50,9 @@ class DiscoveredProject(BaseModel):
     # 推荐信息
     recommended: bool = Field(default=False, description="是否推荐添加")
     recommendation_priority: Literal["high", "medium", "low"] = Field(default="medium")
+
+    # AI 分析的项目亮点（可选）
+    highlight: ProjectHighlight | None = Field(default=None, description="项目亮点分析")
 
 
 class DiscoveryReport(BaseModel):

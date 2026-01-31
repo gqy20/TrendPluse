@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 
 import pytest
 
+from trendpluse.discovery.highlight_analyzer import ProjectHighlight
 from trendpluse.discovery.reporter import DiscoveryReporter
 from trendpluse.models.discovery import DiscoveredProject, DiscoveryReport
 
@@ -192,3 +193,53 @@ class TestDiscoveryReporter:
         # 应该有高优先级和中优先级部分
         assert "##" in markdown and "高优先级" in markdown
         assert "owner/repo1" in markdown
+
+    def test_markdown_includes_project_highlight(self):
+        """测试 Markdown 包含项目亮点分析"""
+        # 创建带亮点的项目
+        highlight = ProjectHighlight(
+            recommendation_reason="这是一个优秀的 AI 项目",
+            technical_highlights=["支持多模型", "易于部署"],
+            use_cases=["企业内部使用", "个人开发"],
+        )
+
+        project = DiscoveredProject(
+            repo="owner/ai-project",
+            name="ai-project",
+            description="AI framework",
+            stars=10000,
+            language="Python",
+            topics=["ai", "ml"],
+            license="MIT",
+            open_issues=50,
+            forks=500,
+            watchers=200,
+            last_commit_at=datetime.now(UTC),
+            discovery_source="trending",
+            discovery_reason="Trending",
+            quality_score=90.0,
+            activity_level="high",
+            recommended=True,
+            recommendation_priority="high",
+            highlight=highlight,
+        )
+
+        report = DiscoveryReport(
+            date="2025-01-31",
+            total_discovered=1,
+            passed_quality=1,
+            high_priority=1,
+            duplicates_removed=0,
+            already_monitored=0,
+            candidates=[project],
+        )
+
+        reporter = DiscoveryReporter()
+        markdown = reporter.generate_markdown(report)
+
+        # 验证亮点内容被包含在报告中
+        assert "这是一个优秀的 AI 项目" in markdown
+        assert "支持多模型" in markdown
+        assert "易于部署" in markdown
+        assert "**技术亮点**:" in markdown
+        assert "**适用场景**:" in markdown

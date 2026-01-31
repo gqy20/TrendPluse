@@ -16,6 +16,7 @@ from trendpluse.discovery import (
     Deduplicator,
     DiscoveryReporter,
     KeywordSearcher,
+    ProjectHighlightAnalyzer,
     QualityEvaluator,
     TrendingCollector,
 )
@@ -111,7 +112,29 @@ def discover(
     # 7. 按质量分数排序
     deduplicated.sort(key=lambda p: p.quality_score, reverse=True)
 
-    # 8. 生成报告
+    # 8. AI 分析项目亮点（高优先级和中优先级项目）
+    console.print("[cyan]AI 分析项目亮点...[/cyan]")
+    settings = get_settings()
+    if settings.anthropic_api_key:
+        highlight_analyzer = ProjectHighlightAnalyzer(
+            api_key=settings.anthropic_api_key,
+            model=settings.anthropic_model,
+            base_url=settings.anthropic_base_url,
+        )
+        # 只分析高优先级和中优先级项目
+        projects_to_analyze = [
+            p for p in deduplicated if p.recommendation_priority in ("high", "medium")
+        ]
+        highlights = highlight_analyzer.analyze_batch(projects_to_analyze)
+        # 将分析结果附加到项目上
+        for project in deduplicated:
+            if project.repo in highlights:
+                project.highlight = highlights[project.repo]
+        logger.info(f"AI 分析完成 {len(highlights)} 个项目")
+    else:
+        console.print("[yellow]未配置 API Key，跳过 AI 分析[/yellow]")
+
+    # 9. 生成报告
     report = DiscoveryReport(
         date=datetime.now().strftime("%Y-%m-%d"),
         total_discovered=len(all_candidates),
