@@ -239,6 +239,21 @@ class TestIssueCollector:
         # Assert
         assert days == 5
 
+    def test_calculate_last_comment_days_with_future_timestamp(self):
+        """测试：时钟偏差导致未来时间时应返回 0"""
+        # Arrange
+        collector = IssueCollector(token="test_token")
+        now = datetime.now(UTC)
+
+        # Mock Issue with future updated_at (clock skew)
+        issue = type("Issue", (), {"updated_at": now + timedelta(seconds=30)})()
+
+        # Act
+        days = collector._get_last_comment_days(issue, now)
+
+        # Assert - 应返回 0 而不是负数
+        assert days == 0
+
     def test_save_snapshot(self, temp_dir):
         """测试保存快照"""
         # Arrange

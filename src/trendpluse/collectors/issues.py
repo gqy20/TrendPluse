@@ -213,10 +213,10 @@ class IssueCollector(BaseGitHubCollector):
             now: 当前时间
 
         Returns:
-            距今天数
+            距今天数（最小为 0，避免时钟偏差导致负值）
         """
         updated_at = self.ensure_timezone_aware(issue.updated_at)
-        return (now - updated_at).days
+        return max(0, (now - updated_at).days)
 
     def save_snapshot(
         self,
