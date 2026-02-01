@@ -4,8 +4,40 @@
 """
 
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, Field
+
+
+class IssueAnalysis(BaseModel):
+    """Issue 分析结果
+
+    AI 对 Issue 进行分类和情绪分析的结果。
+    """
+
+    # 基础分类
+    category: Literal["bug_report", "feature_request", "question", "discussion"] = (
+        Field(description="Issue 分类")
+    )
+
+    # 情绪分析
+    sentiment: Literal["positive", "neutral", "negative"] = Field(
+        description="情绪倾向"
+    )
+    sentiment_score: float = Field(ge=-1.0, le=1.0, description="情绪分数 -1到1")
+
+    # 痛点提取（Bug Report）
+    pain_point: str | None = Field(default=None, description="用户痛点描述")
+    affected_area: str | None = Field(default=None, description="影响的功能区域")
+
+    # 需求提取（Feature Request）
+    feature_description: str | None = Field(default=None, description="功能需求描述")
+    priority: Literal["low", "medium", "high", "critical"] = Field(
+        default="medium", description="优先级"
+    )
+
+    # 技术标签
+    tech_tags: list[str] = Field(default_factory=list, description="技术标签")
 
 
 class IssueInfo(BaseModel):
@@ -65,3 +97,27 @@ class IssueData(BaseModel):
 
     # 痛点排行
     top_pain_points: list[UserPainPoint] = Field(default_factory=list)
+
+
+class BatchIssueAnalysis(BaseModel):
+    """批量 Issue 分析结果
+
+    用于批量分析多个 Issues 时返回的聚合结果。
+    """
+
+    # 固定长度的结果数组，索引对应输入 Issues 的顺序
+    results: list[IssueAnalysis | None] = Field(
+        description="分析结果数组，null 表示该位置分析失败"
+    )
+
+    # 统计信息
+    success_count: int = Field(default=0, ge=0, description="成功的数量")
+    failure_count: int = Field(default=0, ge=0, description="失败的数量")
+
+    # 失败详情（用于重试）
+    failed_indices: list[int] = Field(
+        default_factory=list, description="失败的索引位置"
+    )
+    errors: list[str | None] = Field(
+        default_factory=list, description="每个位置的错误信息"
+    )

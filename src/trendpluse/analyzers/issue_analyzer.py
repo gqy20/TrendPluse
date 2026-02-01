@@ -5,48 +5,15 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
-
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.logger import get_logger
-from trendpluse.models.issue import IssueInfo
+from trendpluse.models.issue import BatchIssueAnalysis, IssueAnalysis, IssueInfo
 from trendpluse.models.signal import Signal
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
 
 _llm_retry = create_anthropic_retry_decorator()
-
-
-class IssueAnalysis(BaseModel):
-    """Issue 分析结果
-
-    AI 对 Issue 进行分类和情绪分析的结果。
-    """
-
-    # 基础分类
-    category: Literal["bug_report", "feature_request", "question", "discussion"] = (
-        Field(description="Issue 分类")
-    )
-
-    # 情绪分析
-    sentiment: Literal["positive", "neutral", "negative"] = Field(
-        description="情绪倾向"
-    )
-    sentiment_score: float = Field(ge=-1.0, le=1.0, description="情绪分数 -1到1")
-
-    # 痛点提取（Bug Report）
-    pain_point: str | None = Field(default=None, description="用户痛点描述")
-    affected_area: str | None = Field(default=None, description="影响的功能区域")
-
-    # 需求提取（Feature Request）
-    feature_description: str | None = Field(default=None, description="功能需求描述")
-    priority: Literal["low", "medium", "high", "critical"] = Field(
-        default="medium", description="优先级"
-    )
-
-    # 技术标签
-    tech_tags: list[str] = Field(default_factory=list, description="技术标签")
 
 
 class IssueAnalyzer(BaseLLMAnalyzer):
@@ -309,3 +276,197 @@ Issue 内容: {issue.body or "(无内容)"}
         # 四舍五入并限制范围
         rounded = int(score + 0.5)
         return max(1, min(5, rounded))
+
+    # ========== 批量分析方法 ==========
+
+    def build_batch_prompt(self, issues: list[IssueInfo]) -> str:
+        """构建批量分析的 Prompt
+
+        Args:
+            issues: Issue 列表（2-20 个为宜）
+
+        Returns:
+            批量分析 Prompt
+        """
+        parts = [
+            f"分析以下 {len(issues)} 个 GitHub Issues，",
+            "为每个 Issue 返回结构化数据。\n",
+        ]
+
+        for i, issue in enumerate(issues, 1):
+            # 精简 Issue 信息，减少 token 消耗
+            content_preview = (
+                (issue.body[:200] + "...")
+                if issue.body and len(issue.body) > 200
+                else (issue.body or "(无内容)")
+            )
+
+            parts.append(f"""
+## Issue {i}
+- **标题**: {issue.title}
+- **内容**: {content_preview}
+- **仓库**: {issue.repo}
+- **状态**: {issue.state}
+- **标签**: {", ".join(issue.labels)}
+- **评论数**: {issue.comments}
+""")
+
+        parts.append(f"""
+请返回一个数组，包含所有 {len(issues)} 个 Issue 的分析结果。
+数组中的第 N 个元素对应第 N 个 Issue。
+
+结果格式要求:
+- 每个结果包含: category, sentiment, sentiment_score, pain_point,
+  affected_area, feature_description, priority, tech_tags
+- 如果某个 Issue 无法分析，该位置返回 null
+- 确保 results 数组长度与输入 Issues 数量一致
+
+返回格式示例:
+[
+  {{
+    "category": "bug_report",
+    "sentiment": "negative",
+    "sentiment_score": -0.5,
+    "pain_point": "用户描述的问题",
+    "affected_area": "受影响的功能模块",
+    "feature_description": null,
+    "priority": "high",
+    "tech_tags": ["python", "api"]
+  }},
+  ...
+]
+""")
+
+        return "\n".join(parts)
+
+    def analyze_batch_optimized(
+        self,
+        issues: list[IssueInfo],
+        batch_size: int = 5,
+        max_workers: int = 3,
+    ) -> dict[str, IssueAnalysis]:
+        """批量分析 Issues（优化版本）
+
+        使用真正的批量分析，一次 AI 调用处理多个 Issues。
+
+        Args:
+            issues: Issue 列表
+            batch_size: 每批处理的 Issue 数量（默认 5）
+            max_workers: 并发批次数（默认 3）
+
+        Returns:
+            {issue_key: 分析结果} 字典
+
+        Raises:
+            ValueError: batch_size 必须大于 0
+        """
+        if not issues:
+            return {}
+
+        if batch_size <= 0:
+            raise ValueError(f"batch_size 必须大于 0，当前值: {batch_size}")
+
+        all_results = {}
+        failed_issues = []
+
+        # 分批处理
+        batch_count = (len(issues) + batch_size - 1) // batch_size
+        logger.info(
+            f"开始批量分析: {len(issues)} 个 Issues, {batch_count} 批, "
+            f"每批 {batch_size} 个"
+        )
+
+        for i in range(0, len(issues), batch_size):
+            batch = issues[i : i + batch_size]
+            batch_num = i // batch_size + 1
+
+            try:
+                # 批量分析
+                batch_result = self._analyze_one_batch(batch)
+
+                # 处理结果
+                for j, analysis in enumerate(batch_result.results):
+                    issue = batch[j]
+                    key = f"{issue.repo}#{issue.issue_id}"
+
+                    if analysis is not None:
+                        all_results[key] = analysis
+                    else:
+                        failed_issues.append(issue)
+
+                # 记录统计
+                logger.debug(
+                    f"批次 {batch_num}/{batch_count}: "
+                    f"{batch_result.success_count}/{len(batch)} 成功"
+                )
+
+            except Exception as e:
+                # 整批失败，标记所有为待重试
+                logger.warning(
+                    f"批次 {batch_num}/{batch_count} 分析失败: {e}，"
+                    f"将单独重试 {len(batch)} 个 Issues"
+                )
+                failed_issues.extend(batch)
+
+        # 第二轮：单独重试失败的 Issues
+        if failed_issues:
+            logger.info(f"单独重试 {len(failed_issues)} 个失败的 Issues")
+            retry_results = self._retry_failed_singly(failed_issues)
+            all_results.update(retry_results)
+
+        # 统计
+        success_rate = len(all_results) / len(issues) * 100 if issues else 0
+        logger.info(
+            f"批量分析完成: {len(all_results)}/{len(issues)} 成功 ({success_rate:.1f}%)"
+        )
+
+        return all_results
+
+    @_llm_retry
+    def _analyze_one_batch(
+        self,
+        issues: list[IssueInfo],
+    ) -> BatchIssueAnalysis:  # type: ignore[no-any-return]
+        """分析一批 Issues
+
+        Args:
+            issues: Issue 列表（2-20 个为宜）
+
+        Returns:
+            批量分析结果
+        """
+        prompt = self.build_batch_prompt(issues)
+
+        # 调用 LLM 批量分析
+        response = self.client.chat.completions.create(
+            model=self.model,
+            response_model=BatchIssueAnalysis,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=4000,  # 批量分析需要更多 tokens
+        )
+
+        return response
+
+    def _retry_failed_singly(
+        self,
+        issues: list[IssueInfo],
+    ) -> dict[str, IssueAnalysis]:
+        """单独重试失败的 Issues
+
+        Args:
+            issues: 失败的 Issue 列表
+
+        Returns:
+            {issue_key: 分析结果} 字典
+        """
+        results = {}
+
+        for issue in issues:
+            try:
+                analysis = self.analyze(issue)
+                key = f"{issue.repo}#{issue.issue_id}"
+                results[key] = analysis
+            except Exception as e:
+                logger.debug(f"单独重试失败 {issue.repo}#{issue.issue_id}: {e}")
+
+        return results
