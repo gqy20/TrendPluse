@@ -22,7 +22,7 @@ class TestIssueCollector:
 
         # Assert
         assert collector.token == "test_token"
-        assert collector.CREATE_WINDOW_DAYS == 30
+        assert collector.CREATE_WINDOW_DAYS == 5
         assert collector.ACTIVE_WINDOW_DAYS == 3
 
     def test_create_collector_with_custom_snapshot_dir(self, temp_dir):

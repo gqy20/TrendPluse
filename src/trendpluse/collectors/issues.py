@@ -22,8 +22,8 @@ class IssueCollector(BaseGitHubCollector):
     从指定仓库采集 Issues，支持快照去重和时间窗口过滤。
     """
 
-    # 时间窗口配置（优化为 30 天，减少 API 请求）
-    CREATE_WINDOW_DAYS = 30  # 30天内创建的 Issue
+    # 时间窗口配置（聚焦最近 5 天的趋势）
+    CREATE_WINDOW_DAYS = 5  # 5天内创建的 Issue
     ACTIVE_WINDOW_DAYS = 3  # 3天内有新回复
 
     def __init__(self, token: str, snapshot_dir: str = "data/issue_snapshots"):

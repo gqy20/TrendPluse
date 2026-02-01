@@ -40,41 +40,57 @@ class IssueAggregator:
         Returns:
             痛点列表（按提及次数排序）
         """
-        # 使用完整 pain_point 文本作为 key 进行聚合
+        # 使用归一化后的痛点文本作为 key 进行聚合
         pain_point_map: dict[str, list[int]] = defaultdict(list)
         sentiment_scores: dict[str, list[float]] = defaultdict(list)
         affected_repos: dict[str, set[str]] = defaultdict(set)
         sample_issues: dict[str, list[str]] = defaultdict(list)
+        # 保留原始文本（归一化 key → 原始文本）
+        original_text_map: dict[str, str] = {}
 
         for issue in issues:
             key = f"{issue.repo}#{issue.issue_id}"
             analysis = analyses.get(key)
 
-            if not analysis or not analysis.pain_point:
+            if not analysis:
                 continue
 
-            # 使用完整的 pain_point 文本作为聚合 key
-            pain_point = analysis.pain_point
-            pain_point_map[pain_point].append(issue.issue_id)
-            sentiment_scores[pain_point].append(analysis.sentiment_score)
-            affected_repos[pain_point].add(issue.repo)
-            sample_issues[pain_point].append(issue.url)
+            # 获取痛点，优先使用 pain_point，fallback 到标题
+            pain_point = analysis.pain_point or issue.title
+            if not pain_point:
+                continue
+
+            # 归一化痛点文本用于聚合
+            normalized_topic = self._normalize_pain_point(pain_point)
+            pain_point_map[normalized_topic].append(issue.issue_id)
+            sentiment_scores[normalized_topic].append(analysis.sentiment_score)
+            affected_repos[normalized_topic].add(issue.repo)
+            sample_issues[normalized_topic].append(issue.url)
+
+            # 保留原始文本（第一个出现的）
+            if normalized_topic not in original_text_map:
+                original_text_map[normalized_topic] = pain_point
 
         # 构建痛点列表
         pain_points = []
-        for topic, issue_ids in pain_point_map.items():
+        for normalized_topic, issue_ids in pain_point_map.items():
             if len(issue_ids) >= self.min_mentions:
                 # 计算平均情绪分数
-                scores = sentiment_scores[topic]
+                scores = sentiment_scores[normalized_topic]
                 avg_sentiment = sum(scores) / len(scores) if scores else 0.0
+
+                # 使用原始文本作为展示主题
+                original_topic = original_text_map.get(
+                    normalized_topic, normalized_topic
+                )
 
                 pain_points.append(
                     UserPainPoint(
-                        topic=topic,
+                        topic=original_topic,
                         count=len(issue_ids),
                         avg_sentiment=avg_sentiment,
-                        affected_repos=list(affected_repos[topic]),
-                        sample_urls=list(sample_issues[topic])[:5],  # 最多 5 个示例
+                        affected_repos=list(affected_repos[normalized_topic]),
+                        sample_urls=list(sample_issues[normalized_topic])[:5],
                     )
                 )
 
@@ -87,6 +103,47 @@ class IssueAggregator:
         )
 
         return pain_points
+
+    def _normalize_pain_point(self, pain_point: str) -> str:
+        """归一化痛点文本
+
+        处理常见的重复模式：
+        - 移除空格和标点符号
+        - 统一常见同义词（配额/额度）
+        - 小写化处理
+
+        Args:
+            pain_point: 原始痛点文本
+
+        Returns:
+            归一化后的文本
+        """
+        import re
+
+        # 转小写
+        normalized = pain_point.lower()
+
+        # 统一同义词（在移除空格前处理，避免双重否定）
+        synonym_map = {
+            "配额": "额度",
+            "额度": "配额",  # 统一为同一个词
+            "剩余": "剩余",
+            "导致无法": "无法",
+            "无法使用": "无法",
+        }
+
+        # 替换同义词（只替换一次）
+        for old, new in synonym_map.items():
+            if old in normalized:
+                normalized = normalized.replace(old, new)
+
+        # 移除所有空格
+        normalized = normalized.replace(" ", "")
+
+        # 移除常见中英文标点
+        normalized = re.sub(r"[,，。！!？?、；;:：()]", "", normalized)
+
+        return normalized
 
     def _extract_keywords(self, text: str) -> list[str]:
         """从文本中提取关键词
