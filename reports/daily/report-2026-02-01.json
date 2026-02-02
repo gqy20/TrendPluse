@@ -1,198 +1,156 @@
 {
   "date": "2026-02-01",
-  "summary_brief": "今日 AI 编程助手领域呈现三大核心趋势：多项目同步强化推理规划能力，技能系统标准化生态加速成型，多模型支持与互操作性成为关键竞争力。Codex、OpenCode、gptme 等项目集体推动 Plan Mode、Personality 系统和技能模块化架构演进，同时 Fabric 率先集成 Claude 4.0 模型与 1M 上下文窗口支持，标志着 AI 代码生成工具向更智能、更可组合的方向快速发展。",
+  "summary_brief": "2026-02-01 的技术趋势集中在 AI 编程工具的\"计划驱动\"范式转变。OpenAI Codex、GPTme、OpenCode 等多个项目同时推出计划模式、个性化人格和技能加载等能力，标志着 AI 代理从即时反应向\"先规划后执行\"演进。同时，Claude Code Action v1.0 GA、Codex Personality API 稳定化、跨平台兼容性修复等生产级改进，反映出 AI 辅助编程工具正从实验阶段全面转向生产可用。",
   "engineering_signals": [
     {
-      "id": "eng-1",
-      "title": "AI 编程助手集体强化规划推理能力",
-      "type": "capability",
+      "id": "trend-plan-mode-2026-02-01",
+      "title": "AI 编程工具集体转向计划驱动范式",
+      "type": "workflow",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "Codex、OpenCode、gptme 和 Continue 等多个项目同步推出或优化 Plan Mode 功能，通过显式的任务规划步骤和响应约束规则，显著提升 AI 代理在复杂多步骤任务中的执行成功率和可控性。这标志着 AI 编程助手从即时响应模式向深思熟虑的规划模式演进。",
+      "why_it_matters": "OpenAI Codex 正式启用计划模式，配合 Plan Mode 交互规则优化和 Prompt 功能；GPTme 支持思考模式与工具调用的兼容。这标志着 AI 代理从即时反应向\"先规划后执行\"的范式转变，显著提升了复杂任务的可控性和可解释性。",
       "sources": [
         "https://github.com/openai/codex/pull/10313",
-        "https://github.com/openai/codex/pull/10329",
-        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.29",
+        "https://github.com/openai/codex/commit/30ed29a7b37e183f151ea04362bb22b496dc456e",
+        "https://github.com/ErikBjare/gptme/commit/503077803d5d5e7d72425edafa5e5baf87290254",
         "https://github.com/openai/codex/pull/10308",
-        "https://github.com/openai/codex/commit/3dd9a37e0bb7af065eed668c2c6a4c96cec85320",
-        "https://github.com/ErikBjare/gptme/commit/503077803d5d5e7d72425edafa5e5baf87290254"
+        "https://github.com/openai/codex/pull/10329"
       ],
       "related_repos": [
-        "anomalyco/opencode",
-        "anthropics/claude-agent-sdk-python",
-        "cline/cline",
-        "anthropics/claude-agent-sdk-typescript",
         "ErikBjare/gptme",
         "openai/codex",
-        "continuedev/continue"
+        "anthropics/claude-agent-sdk-python",
+        "anomalyco/opencode"
       ],
       "source_signal_ids": [
-        "pr-3",
-        "pr-9",
-        "pr-11",
         "commit-0",
-        "commit-3",
-        "release-2"
+        "pr-9",
+        "pr-2",
+        "pr-10",
+        "commit-4"
       ]
     },
     {
-      "id": "eng-2",
-      "title": "技能系统标准化与模块化生态加速成型",
+      "id": "trend-skill-ecosystem-2026-02-01",
+      "title": "AI 代理技能生态系统标准化",
       "type": "abstraction",
       "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "Codex 和 OpenCode 正在推动技能加载路径统一化（.agents/skills/），建立标准化的技能调用遥测机制，并与独立的 openai/skills 公共仓库同步，体现了 AI 代理能力正在向可复用、可组合的插件系统演进，为构建开放生态奠定基础。",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 引入统一的 `.agents/skills/` 目录结构，并建立独立的 openai/skills 仓库实现跨产品共享；Codex 同步系统技能配置。这揭示了 AI 代理平台正从单体架构向模块化技能生态演进，大幅降低自定义能力的开发门槛。",
       "sources": [
         "https://github.com/openai/codex/pull/10320",
-        "https://github.com/openai/codex/pull/10322",
-        "https://github.com/openai/skills/tree/main/skills/.system",
         "https://github.com/openai/codex/commit/39a6a84097ec4bdf180f42e5690f71159faa5670",
-        "https://github.com/openai/codex/pull/10317",
-        "https://github.com/agentskills/agentskills/issues/15"
+        "https://github.com/openai/skills/tree/main/skills/.system",
+        "https://github.com/openai/codex/pull/10322",
+        "https://github.com/openai/codex/pull/10317"
       ],
       "related_repos": [
+        "openai/codex",
         "openai/skills",
-        "anomalyco/opencode",
-        "agentskills/agentskills",
-        "openai/codex"
+        "agentskills/agentskills"
       ],
       "source_signal_ids": [
-        "pr-4",
-        "pr-5",
+        "commit-2",
         "pr-6",
-        "commit-2"
+        "pr-5",
+        "pr-3"
       ]
     },
     {
-      "id": "eng-3",
-      "title": "多模型互操作性与 Claude 4.0 集成浪潮",
-      "type": "capability",
+      "id": "trend-prod-readiness-2026-02-01",
+      "title": "AI 编程工具生产可用性突破",
+      "type": "workflow",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "Fabric 率先集成 Claude Sonnet 4.0 和 Opus 4.0 模型并支持 1M 上下文窗口，OpenCode 修复 Anthropic 和 Gemini 模型切换边界情况，显示多模型支持和跨平台兼容性已成为 AI 编程工具的核心竞争力。同时 Claude Code Action v1.0 正式发布，标志着 AI 助手在 CI/CD 流程中达到生产就绪状态。",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code Action v1.0 GA 统一了交互与自动化模式；Codex Personality API 升级至稳定版本；OpenCode 修复初始化阻塞、模型切换、跨平台兼容等关键生产问题。这标志着 AI 辅助编程工具正从实验原型全面转向生产级基础设施。",
       "sources": [
+        "https://github.com/anomalyco/opencode/pull/11642",
+        "https://github.com/openai/codex/pull/10310",
         "https://github.com/anthropics/claude-code/releases/tag/v2.1.29",
-        "https://github.com/danielmiessler/Fabric/pull/1979",
-        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.27",
+        "https://github.com/anomalyco/opencode/commit/d1d7447493e19ff6236b4363b502fc2de59bf67d",
+        "https://github.com/anomalyco/opencode/issues/11546",
         "https://github.com/anomalyco/opencode/pull/11569"
       ],
       "related_repos": [
-        "anthropics/claude-code",
-        "anomalyco/opencode",
-        "danielmiessler/Fabric",
-        "anthropics/claude-agent-sdk-python",
+        "openai/codex",
         "anthropics/claude-code-action",
-        "danielmiessler/fabric"
+        "anomalyco/opencode",
+        "anthropics/claude-code"
       ],
       "source_signal_ids": [
-        "pr-1",
-        "pr-16",
         "release-0",
-        "release-1"
+        "pr-11",
+        "pr-18",
+        "pr-17",
+        "commit-8"
       ]
     },
     {
-      "id": "eng-4",
-      "title": "Personality 系统生产化与交互体验优化",
+      "id": "trend-personalization-2026-02-01",
+      "title": "AI 助手个性化交互模式兴起",
       "type": "capability",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "Codex 将 Personality API 从实验性升级为稳定版本，默认切换为 Friendly 模式，并引入完整的迁移框架确保向后兼容，同时添加验证测试保证用户体验一致性。这表明 AI 编码助手的人机交互体验正在从功能可用性向体验友好性和生产稳定性转变。",
+      "why_it_matters": "OpenAI Codex 引入 Personality 配置支持务实/友好等模式切换，并通过用户行为迁移保证向后兼容；配置项从 config 统一重命名为 personality。这表明 AI 编码助手正从单一工具向具备不同交互风格的智能体演进，以适应不同用户偏好。",
       "sources": [
-        "https://github.com/openai/codex/pull/10306",
-        "https://github.com/openai/codex/pull/10310",
         "https://github.com/openai/codex/pull/10307",
-        "https://github.com/openai/codex/pull/10305",
-        "https://github.com/openai/codex/pull/10314"
+        "https://github.com/openai/codex/pull/10314",
+        "https://github.com/openai/codex/commit/0f9858394b9504245b1bbff32526dcea8bf487ec"
       ],
       "related_repos": [
         "openai/codex"
       ],
       "source_signal_ids": [
-        "pr-7",
-        "pr-10",
+        "commit-1",
         "pr-12",
-        "pr-13",
-        "pr-19"
+        "pr-7"
       ]
     },
     {
-      "id": "eng-5",
-      "title": "跨平台兼容性与性能优化集中发力",
-      "type": "performance",
+      "id": "trend-multi-provider-2026-02-01",
+      "title": "多模型兼容层成熟化",
+      "type": "abstraction",
       "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "今日多个项目集中解决跨平台问题：Codex 的 UTF-8 支持转正、Nix flake 更新适配 Rust 1.91+、Zed 编辑器修复大规模 Git 命令失败和光标位置预测、Anthropic SDK 修复 AbortSignal 内存泄漏。这些优化体现了 AI 编程工具在不同操作系统和开发环境下对稳定性和性能的持续投入。",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 修复 Anthropic 模型 variant 逻辑错误，新增 Gemini 推理模式支持，同时修复对话中途模型切换问题。这表明多模型支持的抽象层正在成熟，Agent 需要能够无缝处理不同提供商的模型特性和参数差异。",
       "sources": [
-        "https://github.com/gptme/gptme/issues/1199",
-        "https://github.com/gptme/gptme/pull/1216",
-        "https://github.com/zed-industries/zed/commit/839b4f1e60acd6f67e9b50f6bad5bc3284835872",
-        "https://github.com/zed-industries/zed/commit/b64256552659d7cf54ff23e43ea2f11311b6e500",
-        "https://github.com/anthropics/anthropic-sdk-typescript/pull/895",
-        "https://github.com/anomalyco/opencode/commit/f73f88fb56381f0ea6746964bbd4a6496f7ec229",
-        "https://github.com/openai/codex/pull/10302",
-        "https://github.com/openai/codex/pull/10296"
+        "https://github.com/anomalyco/opencode/commit/d1d7447493e19ff6236b4363b502fc2de59bf67d",
+        "https://github.com/anomalyco/opencode/issues/11546",
+        "https://github.com/anomalyco/opencode/pull/11569",
+        "https://github.com/anomalyco/opencode/pull/11665"
       ],
       "related_repos": [
+        "openai/codex",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "pr-17",
+        "commit-8"
+      ]
+    },
+    {
+      "id": "trend-cross-platform-2026-02-01",
+      "title": "跨平台兼容性深度优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 编辑器重写 Windows 文本渲染解决性能问题；Continue 修复 WSL 文件描述符泄漏并优化环境变量解析；Continue CLI 针对 Windows/WSL 混合环境深度适配。这反映了 AI 辅助工具在复杂开发环境（特别是 Windows/WSL）中稳定性的显著提升。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.29",
+        "https://github.com/continuedev/continue/commit/807d95dd3f1fbeab18e49d747954558bc9fe8456",
+        "https://github.com/zed-industries/zed/commit/fb428b5a503af5238e68fcacbaa0492eb55e0d5c"
+      ],
+      "related_repos": [
+        "continuedev/continue",
         "zed-industries/zed",
         "anomalyco/opencode",
-        "cline/cline",
-        "continuedev/continue",
-        "openai/codex",
-        "gptme/gptme",
-        "anthropics/anthropic-sdk-typescript"
+        "anthropics/claude-agent-sdk-typescript"
       ],
       "source_signal_ids": [
-        "pr-0",
-        "pr-14",
-        "pr-15",
-        "pr-18",
-        "commit-1",
-        "commit-4",
-        "commit-5"
-      ]
-    },
-    {
-      "id": "eng-6",
-      "title": "可观测性增强：遥测与日志优化",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Codex 引入 WebSocket 遥测指标并在历史 UI 中展示，gptme 优化日志详度分级（每条消息 DEBUG 级别，摘要 INFO 级别），显示 AI 编程工具正在加强运行时监控和调试能力，为生产环境部署提供更好的可观测性保障。",
-      "sources": [
-        "https://github.com/gptme/gptme/issues/1199",
-        "https://github.com/openai/codex/pull/10316",
-        "https://github.com/gptme/gptme/pull/1216"
-      ],
-      "related_repos": [
-        "gptme/gptme",
-        "openai/codex"
-      ],
-      "source_signal_ids": [
-        "pr-0",
-        "pr-8"
-      ]
-    },
-    {
-      "id": "eng-7",
-      "title": "SDK 依赖升级与安全维护同步推进",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "多个项目（Langchain、Continue、Fabric）集中升级 AWS SDK、Anthropic SDK 和 Urllib3 等核心依赖，修复已知安全漏洞并确保与最新模型 API 的兼容性。这种跨项目的依赖升级反映了生态系统的安全意识和技术债务管理实践。",
-      "sources": [
-        "https://github.com/langchain-ai/langchain/commit/c5834cc0281b1cdf2c6f4ac0be4b31140d0f4329",
-        "https://github.com/danielmiessler/Fabric/pull/1979"
-      ],
-      "related_repos": [
-        "danielmiessler/fabric",
-        "continuedev/continue",
-        "langchain-ai/langchain",
-        "danielmiessler/Fabric"
-      ],
-      "source_signal_ids": [
-        "pr-1",
-        "commit-6"
+        "commit-5",
+        "commit-6",
+        "release-2"
       ]
     }
   ],
@@ -200,67 +158,74 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "pr_signals": 20,
-    "commit_signals": 7,
-    "release_signals": 3,
-    "total_signals": 30,
-    "engineered_signals": 7,
-    "research_signals": 0,
+    "total_signals": 33,
+    "pr_count": 20,
+    "commit_count": 10,
+    "release_count": 3,
+    "identified_trends": 6,
+    "top_repos": [
+      "openai/codex",
+      "anomalyco/opencode",
+      "anthropics/claude-code-action",
+      "ErikBjare/gptme",
+      "continuedev/continue"
+    ],
+    "avg_impact_score": 3.3,
     "total_prs_analyzed": 20,
     "total_commits_analyzed": 90,
     "total_releases": 7,
-    "high_impact_signals": 5,
+    "high_impact_signals": 4,
     "total_releases_analyzed": 7,
     "total_breaking_changes": 2,
-    "total_issues": 6120,
-    "total_issues_analyzed": 6120
+    "total_issues": 6011,
+    "total_issues_analyzed": 6011
   },
   "activity": {
     "total_commits": 90,
-    "active_repos_count": 14,
+    "active_repos_count": 16,
     "top_repos": [
       {
         "repo": "anomalyco/opencode",
-        "commits": 25,
+        "commits": 32,
         "top_contributors": [
-          "thdxr",
           "rekram1-node",
-          "jerome-benoit",
+          "opencode-agent[bot]",
+          "thdxr",
           "neriousy",
-          "opencode-agent[bot]"
+          "gigamonster256"
         ]
       },
       {
         "repo": "openai/codex",
-        "commits": 19,
+        "commits": 16,
         "top_contributors": [
           "dylan-hurd-oai",
           "gverma-openai",
-          "aibrahim-oai",
           "charley-oai",
+          "aibrahim-oai",
           "apanasenko-oai"
-        ]
-      },
-      {
-        "repo": "zed-industries/zed",
-        "commits": 15,
-        "top_contributors": [
-          "cole-miller",
-          "marcocondrache",
-          "osyvokon",
-          "Veykril",
-          "littleKitchen"
         ]
       },
       {
         "repo": "langchain-ai/langchain",
         "commits": 9,
         "top_contributors": [
+          "ccurme",
+          "dependabot[bot]",
           "aahanabobade",
           "shivangraikar",
-          "Shivangisharma4",
-          "nandanadileep",
-          "akshaylive"
+          "Shivangisharma4"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 7,
+        "top_contributors": [
+          "cppcoffee",
+          "osyvokon",
+          "Veykril",
+          "cole-miller",
+          "littleKitchen"
         ]
       },
       {
@@ -272,11 +237,11 @@
         ]
       },
       {
-        "repo": "danielmiessler/fabric",
-        "commits": 4,
+        "repo": "ErikBjare/gptme",
+        "commits": 5,
         "top_contributors": [
-          "ksylvan",
-          "github-actions[bot]"
+          "TimeToBuildBob",
+          "Miyou"
         ]
       },
       {
@@ -288,11 +253,19 @@
         ]
       },
       {
-        "repo": "ErikBjare/gptme",
+        "repo": "google-gemini/gemini-cli",
         "commits": 3,
         "top_contributors": [
-          "TimeToBuildBob",
-          "Miyou"
+          "bdmorgan",
+          "LyalinDotCom"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 2,
+        "top_contributors": [
+          "github-actions[bot]",
+          "ksylvan"
         ]
       },
       {
@@ -328,6 +301,13 @@
         "commits": 1,
         "top_contributors": [
           "saoudrizwan"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "top_contributors": [
+          "neubig"
         ]
       },
       {
@@ -443,11 +423,6 @@
         "top_contributors": []
       },
       {
-        "repo": "OpenDevin/OpenDevin",
-        "commits": 0,
-        "top_contributors": []
-      },
-      {
         "repo": "langchain-ai/langgraph",
         "commits": 0,
         "top_contributors": []
@@ -459,11 +434,6 @@
       },
       {
         "repo": "microsoft/autogen",
-        "commits": 0,
-        "top_contributors": []
-      },
-      {
-        "repo": "google-gemini/gemini-cli",
         "commits": 0,
         "top_contributors": []
       },
@@ -544,12 +514,12 @@
         "ai_summary": {
           "change_type": "fix",
           "key_changes": [
-            "修复了在恢复带有 saved_hook_context 的会话时的启动性能问题",
-            "优化了会话恢复机制的执行效率",
-            "解决了特定场景下的性能瓶颈"
+            "修复了恢复带有 saved_hook_context 的会话时的启动性能问题",
+            "优化了会话恢复的加载速度",
+            "提升了特定场景下的用户体验"
           ],
-          "summary_cn": "此次发布主要修复了会话恢复时的性能问题。当恢复包含 saved_hook_context 的会话时，启动速度得到了优化。这是一个针对性的性能修复，提升了会话恢复的效率。",
-          "impact_level": 3
+          "summary_cn": "此版本主要修复了一个性能问题，针对恢复包含 saved_hook_context 的会话时可能出现的启动缓慢问题进行了优化。这是一个针对性的性能修复，不会带来功能变更或破坏性改动，建议遇到会话恢复缓慢问题的用户升级。",
+          "impact_level": 2
         }
       },
       {
@@ -561,12 +531,12 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.27",
         "ai_summary": {
-          "change_type": "improvement",
+          "change_type": "other",
           "key_changes": [
-            "更新内置的 Claude CLI 工具至 v2.1.29 版本",
-            "版本号升级至 v0.1.27"
+            "更新内置的 Claude CLI 工具至版本 2.1.29",
+            "内部依赖项升级"
           ],
-          "summary_cn": "这是一个小幅度的更新版本，主要将内置的 Claude CLI 工具从旧版本升级到了 v2.1.29。此次更新属于内部依赖升级，未引入新功能或重要的 bug 修复，对现有功能影响较小。",
+          "summary_cn": "此版本主要更新了内置的 Claude CLI 工具，从之前版本升级至 2.1.29。这是一个内部的依赖项更新，不涉及功能变更或问题修复。",
           "impact_level": 1
         }
       },
@@ -579,13 +549,13 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.29",
         "ai_summary": {
-          "change_type": "other",
+          "change_type": "improvement",
           "key_changes": [
-            "同步更新至 Claude Code v2.1.29 版本",
-            "保持与 Claude Code 的功能对等性",
-            "提供 npm/yarn/pnpm/bun 多种包管理器安装方式"
+            "与 Claude Code v2.1.29 保持功能对齐",
+            "同步最新的代码逻辑和 API 变更",
+            "提升与 Claude Code 主版本的兼容性"
           ],
-          "summary_cn": "这是一个同步更新版本，主要将 SDK 更新至与 Claude Code v2.1.29 版本保持一致。该版本确保了 TypeScript SDK 与 Claude Code 的功能对等性，未引入破坏性变更。",
+          "summary_cn": "本次更新将 claude-agent-sdk-typescript 升级至 v0.2.29 版本，与 Claude Code v2.1.29 保持功能对齐。这是一个次要版本的改进更新，主要确保 SDK 与 Claude Code 主版本的同步，提升兼容性和一致性。",
           "impact_level": 2
         }
       },
@@ -598,12 +568,13 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.41",
         "ai_summary": {
-          "change_type": "other",
+          "change_type": "fix",
           "key_changes": [
             "版本从 v1 更新至 v1.0.41",
-            "提供了完整的 Changelog 对比链接"
+            "包含常规 bug 修复和改进（基于版本号推断）",
+            "可能包含小的功能增强或依赖项更新"
           ],
-          "summary_cn": "此版本将项目从 v1 更新至 v1.0.41。由于 Release Notes 未提供具体的变更描述，建议查看完整的 Changelog 链接以获取详细的更新内容。",
+          "summary_cn": "v1.0.41 是一个补丁版本更新，主要包含常规 bug 修复和小幅改进。由于 Release Notes 中未提供具体变更详情，建议查看 Full Changelog 获取完整的变更列表。",
           "impact_level": 2
         }
       },
@@ -616,15 +587,15 @@
         "assets_count": 0,
         "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1",
         "ai_summary": {
-          "change_type": "feature",
+          "change_type": "breaking",
           "key_changes": [
-            "统一配置接口 - 自动模式检测，无需手动配置 mode 参数",
-            "所有输入整合为 prompt 和 claude_args 两个参数，简化配置",
-            "Breaking Changes - 多个旧参数被废弃，包括 mode、direct_prompt、custom_instructions 等",
-            "完整支持 Claude Code CLI 功能，兼容 AWS Bedrock 和 Google Vertex AI",
-            "新增多个实用场景示例：PR 审查、CI 失败修复、问题分类、文档生成"
+            "统一简化配置：自动模式检测，取消手动 mode 配置",
+            "API 重大变更：多个输入参数合并为统一的 prompt 和 claude_args",
+            "增强灵活性：直接访问所有 Claude Code CLI 功能",
+            "支持更多使用场景：PR 审查、CI 修复、Issue 分诊、文档生成",
+            "提升云服务兼容性：增强对 AWS Bedrock 和 Google Vertex AI 的支持"
           ],
-          "summary_cn": "Claude Code GitHub Action 发布 v1.0 主版本，带来重大架构升级。配置方式全面简化为统一的 prompt 和 claude_args 参数，但包含多个破坏性变更，需要参考迁移指南升级。新版本提供更强大的 CLI 集成能力和丰富的自动化工作流示例，支持 PR 审查、CI 修复等多种场景。",
+          "summary_cn": "Claude Code GitHub Action v1.0 正式发布，这是一次包含重大破坏性变更的主版本升级。新版本通过统一 prompt 和 claude_args 输入大幅简化配置，同时提供更强的 CLI 功能集成和灵活性，支持自动化 PR 审查、CI 故障修复等多种工作流。从 v0.x 升级需要遵循迁移指南，因为多个原有输入参数已被弃用。",
           "impact_level": 5
         }
       },
@@ -639,13 +610,13 @@
         "ai_summary": {
           "change_type": "fix",
           "key_changes": [
-            "修复不同分词器（tokenizers）的兼容性问题",
-            "修复对话压缩中悬空工具调用的处理逻辑",
-            "修复缺少取消流调用和非重试错误的返回处理",
-            "优化本地设置界面暗色模式下的文本显示问题",
-            "修复重复工具消息和 CLI 测试的不稳定性"
+            "修复不同 tokenizer 的兼容性问题",
+            "改进对话压缩功能，处理悬空工具调用",
+            "修复本地配置界面暗色模式下的文本显示问题",
+            "修复非重试错误的取消流处理逻辑",
+            "修复 CLI hub loader 测试的不稳定性问题"
           ],
-          "summary_cn": "@continuedev/config-yaml 1.40.0 版本主要包含多个 Bug 修复，重点关注了分词器兼容性、对话压缩逻辑和错误处理的改进。同时修复了本地设置界面在暗色模式下的显示问题，以及代码质量和测试稳定性相关的优化。",
+          "summary_cn": "本次 @continuedev/config-yaml@1.40.0 版本主要为 Bug 修复版本，解决了多个核心功能和用户体验问题。关键修复包括改进了 tokenizer 兼容性、优化了对话压缩机制（处理悬空工具调用）、修复了本地配置界面在暗色模式下的显示问题，以及完善了错误处理流程中的取消流调用。",
           "impact_level": 2
         }
       },
@@ -661,12 +632,12 @@
           "change_type": "feature",
           "key_changes": [
             "升级 Anthropic SDK 从 v1.19.0 到 v1.20.0",
+            "重构模型定义结构",
             "新增 Claude Sonnet 4.0 和 Opus 4.0 模型别名",
-            "将 100 万上下文测试版支持扩展到所有 Sonnet 4 变体",
-            "为 2026 年 2 月之前的旧模型添加弃用通知",
-            "重组模型定义结构"
+            "为 2026 年 2 月之前的旧版模型添加弃用通知",
+            "将 1M 上下文测试版支持扩展到所有 Sonnet 4 变体"
           ],
-          "summary_cn": "此版本主要升级了 Anthropic SDK 至 v1.20.0，并新增了 Claude Sonnet 4.0 和 Opus 4.0 模型别名支持。同时将 100 万上下文测试版支持扩展到所有 Sonnet 4 变体，并对 2026 年 2 月之前的旧模型添加了弃用通知。模型定义结构也进行了重组优化。",
+          "summary_cn": "此版本主要升级了 Anthropic SDK 至 v1.20.0，并重构了模型定义结构。新增了 Claude Sonnet 4.0 和 Opus 4.0 模型别名，同时为旧版模型添加了弃用通知。所有 Sonnet 4 变体现在都支持 1M 上下文测试版功能。",
           "impact_level": 3
         }
       }
@@ -679,22 +650,22 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "统一输入接口：移除 `mode`, `direct_prompt`, `override_prompt`，合并为单一的 `prompt` 输入",
+          "description": "输入参数 API 重构：mode, direct_prompt, override_prompt 合并为 prompt",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "CLI 参数化配置：移除 `custom_instructions`, `model`, `allowed_tools`, `mcp_config` 等独立配置项，改为通过 `claude_args` 统一传递 CLI 格式参数",
+          "description": "配置参数迁移：custom_instructions, model, allowed_tools 等迁移至 claude_args",
           "impact": "high",
           "category": "Config"
         },
         {
-          "description": "移除废弃配置项：删除 `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`",
+          "description": "移除废弃参数：disallowed_tools, anthropic_model, trigger_phrase, timeout_minutes",
           "impact": "medium",
           "category": "Config"
         },
         {
-          "description": "自动模式检测：移除手动 `mode` 配置，改为根据设置自动判断交互或自动化模式",
+          "description": "模式检测行为变更：自动检测交互/自动化模式，不再需要手动配置 mode",
           "impact": "medium",
           "category": "Behavior"
         }
@@ -706,9 +677,14 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "添加 2026 年 2 月之前的旧版模型弃用通知",
+          "description": "添加 2026 年 2 月前旧版模型的弃用通知",
           "impact": "low",
           "category": "Behavior"
+        },
+        {
+          "description": "模型定义重组，新增 Claude Sonnet 4.0 和 Opus 4.0 别名",
+          "impact": "low",
+          "category": "API"
         }
       ]
     }
@@ -768,94 +744,84 @@
     "zed-industries/zed"
   ],
   "issues": {
-    "total_count": 6120,
-    "bug_reports": 4383,
-    "feature_requests": 1560,
-    "questions": 97,
-    "discussions": 80,
+    "total_count": 6011,
+    "bug_reports": 4302,
+    "feature_requests": 1549,
+    "questions": 89,
+    "discussions": 71,
     "sentiment_distribution": {
-      "positive": 640,
-      "neutral": 2503,
-      "negative": 2977
+      "positive": 639,
+      "neutral": 2459,
+      "negative": 2913
     },
     "top_pain_points": [
       {
         "topic": "null",
         "count": 70,
-        "avg_sentiment": 0.25785714285714284,
+        "avg_sentiment": 0.27785714285714286,
         "affected_repos": [
-          "microsoft/semantic-kernel",
-          "anthropics/claude-code",
-          "anomalyco/opencode",
-          "langgenius/dify",
-          "OpenDevin/OpenDevin",
-          "Significant-Gravitas/AutoGPT",
-          "cline/cline",
-          "bytedance/deer-flow",
-          "ErikBjare/gptme",
+          "crewAIInc/crewAI",
           "google-gemini/gemini-cli",
-          "agentscope-ai/agentscope",
-          "anthropics/claude-code-action",
-          "paul-gauthier/aider",
-          "anthropics/skills",
+          "ruvnet/claude-flow",
+          "Significant-Gravitas/AutoGPT",
+          "AndyMik90/Auto-Claude",
+          "anomalyco/opencode",
+          "cline/cline",
           "anthropics/claude-plugins-official",
-          "crewAIInc/crewAI"
+          "anthropics/claude-agent-sdk-python",
+          "langgenius/dify",
+          "anthropics/claude-code",
+          "ErikBjare/gptme",
+          "anthropics/skills",
+          "agentscope-ai/agentscope",
+          "microsoft/semantic-kernel",
+          "anthropics/claude-code-action",
+          "bytedance/deer-flow",
+          "openai/codex",
+          "agno-agi/agno"
         ],
         "sample_urls": [
           "https://github.com/anthropics/skills/issues/308",
           "https://github.com/anthropics/skills/issues/307",
-          "https://github.com/Aider-AI/aider/issues/4803",
-          "https://github.com/anthropics/claude-plugins-official/issues/293",
+          "https://github.com/anthropics/claude-agent-sdk-python/issues/348",
+          "https://github.com/anthropics/claude-plugins-official/issues/320",
           "https://github.com/anthropics/claude-code-action/issues/867"
         ]
       },
       {
-        "topic": "用户在使用 Claude Sonnet 4.5 模型时遇到 402 错误，提示 Continue 账户没有剩余额度",
-        "count": 3,
-        "avg_sentiment": -0.16666666666666666,
+        "topic": "用户在使用 Claude Sonnet 4.5 模型时遇到 402 错误，提示 Continue 账户没有剩余额度，无法使用代理服务",
+        "count": 2,
+        "avg_sentiment": -0.09999999999999999,
         "affected_repos": [
           "continuedev/continue"
         ],
         "sample_urls": [
-          "https://github.com/continuedev/continue/issues/10063",
-          "https://github.com/continuedev/continue/issues/9947",
-          "https://github.com/continuedev/continue/issues/9943"
+          "https://github.com/continuedev/continue/issues/10086",
+          "https://github.com/continuedev/continue/issues/9978"
         ]
       },
       {
-        "topic": "用户在使用 Grok 4 模型时遇到 404 错误，系统提示找不到名为 \"XAI_API_KEY\" 的密钥配置",
+        "topic": "用户在使用 OpenAI GPT-4.1 模型时遇到 401 认证错误，提示 API key 不正确",
         "count": 2,
         "avg_sentiment": -0.04999999999999999,
         "affected_repos": [
           "continuedev/continue"
         ],
         "sample_urls": [
-          "https://github.com/continuedev/continue/issues/10075",
-          "https://github.com/continuedev/continue/issues/10051"
+          "https://github.com/continuedev/continue/issues/10079",
+          "https://github.com/continuedev/continue/issues/9997"
         ]
       },
       {
-        "topic": "用户在使用 Claude Sonnet 4.5 模型时遇到 402 错误，提示 Continue 账户没有剩余额度，无法继续使用 AI 功能",
+        "topic": "用户在使用 Claude Sonnet 4.5 模型时遇到 402 错误，提示 Continue 账户没有剩余额度，需要充值或添加自己的 ANTHROPIC_API_KEY 密钥",
         "count": 2,
-        "avg_sentiment": 0.0,
+        "avg_sentiment": -0.05,
         "affected_repos": [
           "continuedev/continue"
         ],
         "sample_urls": [
-          "https://github.com/continuedev/continue/issues/9962",
-          "https://github.com/continuedev/continue/issues/9956"
-        ]
-      },
-      {
-        "topic": "mistake",
-        "count": 2,
-        "avg_sentiment": 0.0,
-        "affected_repos": [
-          "anthropics/claude-code"
-        ],
-        "sample_urls": [
-          "https://github.com/anthropics/claude-code/issues/21798",
-          "https://github.com/anthropics/claude-code/issues/20279"
+          "https://github.com/continuedev/continue/issues/9956",
+          "https://github.com/continuedev/continue/issues/9937"
         ]
       }
     ]
