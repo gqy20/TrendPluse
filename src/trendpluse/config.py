@@ -215,6 +215,10 @@ class Settings(BaseSettings):
     # 输出配置
     output_dir: str = "reports/daily"
     snapshot_dir: str = DEFAULT_SNAPSHOT_DIR
+    issue_dump_dir: str = Field(
+        default="data/issues",
+        description="Issue 明细落盘目录（按日期与仓库分文件）",
+    )
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

@@ -42,6 +42,7 @@ from trendpluse.models.signal import (
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
+from trendpluse.utils.issue_io import dump_issues_to_jsonl
 
 logger = get_logger(__name__)
 
@@ -237,6 +238,12 @@ class TrendPulsePipeline:
             max_workers=self.settings.max_parallel_workers,
             max_issues_per_repo=self.settings.max_issues_per_repo,
         )
+        if detailed_issues:
+            dump_issues_to_jsonl(
+                detailed_issues,
+                self.settings.issue_dump_dir,
+                date.strftime("%Y-%m-%d"),
+            )
 
         # 0.9. AI 分析 Issues
         issue_analyses = {}
@@ -429,6 +436,12 @@ class TrendPulsePipeline:
             max_workers=self.settings.max_parallel_workers,
             max_issues_per_repo=self.settings.max_issues_per_repo,
         )
+        if detailed_issues:
+            dump_issues_to_jsonl(
+                detailed_issues,
+                self.settings.issue_dump_dir,
+                date.strftime("%Y-%m-%d"),
+            )
         logger.info(
             "Issue collection done in %.2fs (issues=%d)",
             time.perf_counter() - step_start,
