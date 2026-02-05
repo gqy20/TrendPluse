@@ -55,7 +55,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
     def summarize_releases(
         self,
         detailed_releases: list[dict],
-        max_workers: int = 3,
+        max_workers: int = 5,
     ) -> dict[str, ReleaseSummary]:
         """批量总结 Releases（并行处理）
 

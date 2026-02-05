@@ -104,7 +104,7 @@ Issue 内容: {issue.body or "(无内容)"}
     def analyze_batch(
         self,
         issues: list[IssueInfo],
-        max_workers: int = 3,
+        max_workers: int = 5,
     ) -> dict[str, IssueAnalysis]:
         """批量分析 Issues
 

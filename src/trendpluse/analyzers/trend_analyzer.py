@@ -113,7 +113,7 @@ PR 描述: {pr_details.get("body", "")}
 
         return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
-    def analyze_prs(self, pr_list: list[dict], max_workers: int = 3) -> list[Signal]:
+    def analyze_prs(self, pr_list: list[dict], max_workers: int = 5) -> list[Signal]:
         """批量分析多个 PR（并行处理）
 
         Args:
