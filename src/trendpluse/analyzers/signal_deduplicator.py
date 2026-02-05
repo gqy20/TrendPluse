@@ -11,6 +11,7 @@ from typing import Any
 
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH
 from trendpluse.models.signal import Signal
+from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 
 class SignalDeduplicator:
@@ -25,6 +26,9 @@ class SignalDeduplicator:
         lookback_days: int = 7,
         history_path: str = DEFAULT_SIGNAL_HISTORY_PATH,
         model: str = "glm-4.7",
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化去重器
 
@@ -40,6 +44,11 @@ class SignalDeduplicator:
         self.history_path = Path(history_path)
         self.history_path.parent.mkdir(parents=True, exist_ok=True)
         self.model = model
+        self._llm_retry = create_anthropic_retry_decorator(
+            max_attempts=retry_max_attempts,
+            wait_min=retry_wait_min,
+            wait_max=retry_wait_max,
+        )
 
     def compute_fingerprint(self, signal: Signal) -> str:
         """计算信号指纹
@@ -260,12 +269,15 @@ class SignalDeduplicator:
 """
 
         # 调用 LLM
-        message = self.llm_client.messages.create(
-            model=self.model,
-            max_tokens=10,
-            temperature=0,
-            messages=[{"role": "user", "content": prompt}],
-        )
+        def _call():
+            return self.llm_client.messages.create(
+                model=self.model,
+                max_tokens=10,
+                temperature=0,
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+        message = self._llm_retry(_call)()
 
         response = message.content[0].text.strip().upper()
 

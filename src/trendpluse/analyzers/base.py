@@ -12,6 +12,7 @@ from anthropic.types import TextBlock
 from pydantic import BaseModel, ValidationError
 
 from trendpluse.models.signal import Signal
+from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 # Instructor 和 Anthropic 客户端的联合类型
 LLMClient = instructor.Instructor | Anthropic
@@ -29,6 +30,9 @@ class BaseLLMAnalyzer(ABC):
         model: str,
         base_url: str | None = None,
         use_instructor: bool = True,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化分析器
 
@@ -42,6 +46,9 @@ class BaseLLMAnalyzer(ABC):
         self.model = model
         self.base_url = base_url
         self.use_instructor = use_instructor
+        self.retry_max_attempts = retry_max_attempts
+        self.retry_wait_min = retry_wait_min
+        self.retry_wait_max = retry_wait_max
 
         # 初始化客户端（使用类型忽略以避免类型检查错误）
         if use_instructor:
@@ -54,6 +61,16 @@ class BaseLLMAnalyzer(ABC):
                 self.client = Anthropic(api_key=api_key, base_url=base_url)  # type: ignore[assignment]
             else:
                 self.client = Anthropic(api_key=api_key)  # type: ignore[assignment]
+
+    def _run_with_llm_retry(self, func):
+        """统一封装 LLM 调用重试逻辑（可配置）"""
+        decorator = create_anthropic_retry_decorator(
+            max_attempts=self.retry_max_attempts,
+            wait_min=self.retry_wait_min,
+            wait_max=self.retry_wait_max,
+        )
+        wrapped = decorator(func)
+        return wrapped()
 
     def _extract_text_from_response(self, message) -> str:
         """从 Anthropic 消息响应中提取文本内容

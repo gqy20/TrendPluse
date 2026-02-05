@@ -11,12 +11,8 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import ReleaseSummary
-from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
-
-# 创建重试装饰器（统一配置）
-_llm_retry = create_anthropic_retry_decorator()
 
 # 可重试的临时错误类型
 RETRYABLE_ERRORS = (anthropic.APITimeoutError, anthropic.RateLimitError)
@@ -34,6 +30,9 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         api_key: str,
         model: str = DEFAULT_ANTHROPIC_MODEL,
         base_url: str = DEFAULT_ANTHROPIC_BASE_URL,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化总结器
 
@@ -44,7 +43,13 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         """
         # 使用 instructor 模式（默认）
         super().__init__(
-            api_key=api_key, model=model, base_url=base_url, use_instructor=True
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            use_instructor=True,
+            retry_max_attempts=retry_max_attempts,
+            retry_wait_min=retry_wait_min,
+            retry_wait_max=retry_wait_max,
         )
 
     def summarize_releases(
@@ -101,7 +106,6 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
         return summaries
 
-    @_llm_retry
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）
 
@@ -115,20 +119,23 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
             Exception: 其他错误向上传播
         """
-        summary = self.client.chat.completions.create(
-            model=self.model,
-            response_model=ReleaseSummary,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "你是一个专业的软件变更分析专家，"
-                    "擅长分析 Release Notes 并提取关键信息。",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=1000,
-        )
-        return summary  # type: ignore[no-any-return]
+
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=ReleaseSummary,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "你是一个专业的软件变更分析专家，"
+                        "擅长分析 Release Notes 并提取关键信息。",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=1000,
+            )
+
+        return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
     def _summarize_single_release(self, release: dict) -> ReleaseSummary:
         """总结单个 Release

@@ -120,6 +120,9 @@ def discover(
             api_key=settings.anthropic_api_key,
             model=settings.anthropic_model,
             base_url=settings.anthropic_base_url,
+            retry_max_attempts=settings.llm_retry_max_attempts,
+            retry_wait_min=settings.llm_retry_wait_min,
+            retry_wait_max=settings.llm_retry_wait_max,
         )
         # 只分析高优先级和中优先级项目
         projects_to_analyze = [

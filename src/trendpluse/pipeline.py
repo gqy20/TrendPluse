@@ -70,26 +70,41 @@ class TrendPulsePipeline:
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.release_analyzer = ReleaseAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.release_summarizer = ReleaseSummarizer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.breaking_changes_detector = BreakingChangesDetector(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.issue_analyzer = IssueAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.issue_aggregator = IssueAggregator(min_mentions=2)
         self.filter = EventFilter(
@@ -102,6 +117,9 @@ class TrendPulsePipeline:
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         # 初始化信号去重器
         self.deduplicator = SignalDeduplicator(
@@ -109,6 +127,9 @@ class TrendPulsePipeline:
             lookback_days=self.settings.days_to_lookback,  # 与 PR 回溯天数一致
             history_path=DEFAULT_SIGNAL_HISTORY_PATH,
             model=self.settings.anthropic_model,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.reporter = MarkdownReporter()
 
@@ -596,6 +617,9 @@ class TrendPulsePipeline:
         aggregator = WeeklyAggregator(
             api_key=self.settings.anthropic_api_key,
             base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
         )
         ai_result = aggregator.aggregate(all_signals)
 

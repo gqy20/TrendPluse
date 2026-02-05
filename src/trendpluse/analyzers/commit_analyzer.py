@@ -27,6 +27,9 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         api_key: str,
         model: str = "claude-sonnet-4-20250514",
         base_url: str | None = None,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化分析器
 
@@ -37,7 +40,13 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         """
         # 使用 Anthropic 模式（手动解析 JSON）
         super().__init__(
-            api_key=api_key, model=model, base_url=base_url, use_instructor=False
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            use_instructor=False,
+            retry_max_attempts=retry_max_attempts,
+            retry_wait_min=retry_wait_min,
+            retry_wait_max=retry_wait_max,
         )
 
     def analyze_commits(self, commits: list[dict[str, Any]]) -> list[Signal]:
@@ -87,19 +96,21 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_prompt(commits)
 
         # 调用 API
-        message = self.client.messages.create(  # type: ignore[call-overload]
-            model=self.model,
-            max_tokens=4096,
-            temperature=0.3,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
-        )
+        def _call():
+            return self.client.messages.create(  # type: ignore[call-overload]
+                model=self.model,
+                max_tokens=4096,
+                temperature=0.3,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+            )
 
         # 使用基类方法提取文本
+        message = self._run_with_llm_retry(_call)
         return self._extract_text_from_response(message)
 
     def _build_prompt(self, commits: list[dict[str, Any]]) -> str:

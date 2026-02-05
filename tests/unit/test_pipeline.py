@@ -62,6 +62,9 @@ class TestTrendPulsePipeline:
         mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = ""
         mock_settings_instance.feishu_at_mobiles_list = []
+        mock_settings_instance.llm_retry_max_attempts = 3
+        mock_settings_instance.llm_retry_wait_min = 1
+        mock_settings_instance.llm_retry_wait_max = 10
         mock_settings.return_value = mock_settings_instance
 
         # Act
@@ -78,16 +81,25 @@ class TestTrendPulsePipeline:
             api_key="test_api_key",
             model="glm-4.7",
             base_url="https://open.bigmodel.cn/api/anthropic",
+            retry_max_attempts=3,
+            retry_wait_min=1,
+            retry_wait_max=10,
         )
         mock_release_analyzer.assert_called_once_with(
             api_key="test_api_key",
             model="glm-4.7",
             base_url="https://open.bigmodel.cn/api/anthropic",
+            retry_max_attempts=3,
+            retry_wait_min=1,
+            retry_wait_max=10,
         )
         mock_analyzer.assert_called_once_with(
             api_key="test_api_key",
             model="glm-4.7",
             base_url="https://open.bigmodel.cn/api/anthropic",
+            retry_max_attempts=3,
+            retry_wait_min=1,
+            retry_wait_max=10,
         )
         mock_reporter.assert_called_once()
 
@@ -134,6 +146,9 @@ class TestTrendPulsePipeline:
         mock_settings_instance.include_prereleases = False
         mock_settings_instance.feishu_webhook_url = ""
         mock_settings_instance.feishu_at_mobiles_list = []
+        mock_settings_instance.llm_retry_max_attempts = 3
+        mock_settings_instance.llm_retry_wait_min = 1
+        mock_settings_instance.llm_retry_wait_max = 10
         mock_settings.return_value = mock_settings_instance
 
         # Mock 组件

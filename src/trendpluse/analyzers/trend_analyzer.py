@@ -9,12 +9,8 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport, Signal
-from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
-
-# 创建重试装饰器（统一配置）
-_llm_retry = create_anthropic_retry_decorator()
 
 
 class TrendAnalyzer(BaseLLMAnalyzer):
@@ -28,6 +24,9 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         api_key: str,
         model: str = DEFAULT_ANTHROPIC_MODEL,
         base_url: str = DEFAULT_ANTHROPIC_BASE_URL,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化分析器
 
@@ -38,7 +37,13 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         """
         # 使用 instructor 模式（默认）
         super().__init__(
-            api_key=api_key, model=model, base_url=base_url, use_instructor=True
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            use_instructor=True,
+            retry_max_attempts=retry_max_attempts,
+            retry_wait_min=retry_wait_min,
+            retry_wait_max=retry_wait_max,
         )
 
     def analyze_pr(self, pr_details: dict) -> Signal:
@@ -84,7 +89,6 @@ PR 描述: {pr_details.get("body", "")}
 
         return signal  # type: ignore[no-any-return]
 
-    @_llm_retry
     def _call_llm_for_signal(self, prompt: str) -> Signal:
         """调用 LLM 提取 PR 信号（带重试机制）
 
@@ -98,13 +102,16 @@ PR 描述: {pr_details.get("body", "")}
             RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
             Exception: 其他错误向上传播
         """
-        signal = self.client.chat.completions.create(
-            model=self.model,
-            response_model=Signal,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,
-        )
-        return signal  # type: ignore[no-any-return]
+
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=Signal,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1000,
+            )
+
+        return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
     def analyze_prs(self, pr_list: list[dict], max_workers: int = 3) -> list[Signal]:
         """批量分析多个 PR（并行处理）
@@ -234,12 +241,15 @@ PR 描述: {pr_details.get("body", "")}
 """
 
         # 步骤 3: 调用 LLM 聚合信号
-        report = self.client.chat.completions.create(
-            model=self.model,
-            response_model=DailyReport,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=3000,
-        )
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=DailyReport,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=3000,
+            )
+
+        report = self._run_with_llm_retry(_call)
 
         # 确保日期正确
         report.date = date
@@ -308,12 +318,15 @@ PR 描述: {pr_details.get("body", "")}
 - activity, releases, breaking_changes, monitored_repos
 """
 
-        report = self.client.chat.completions.create(
-            model=self.model,
-            response_model=DailyReport,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=2000,
-        )
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=DailyReport,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=2000,
+            )
+
+        report = self._run_with_llm_retry(_call)
 
         # 确保日期正确
         report.date = date

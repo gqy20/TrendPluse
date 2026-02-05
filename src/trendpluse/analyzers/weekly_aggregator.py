@@ -8,6 +8,7 @@ from anthropic.types import TextBlock
 from pydantic import BaseModel, Field
 
 from trendpluse.models.signal import CoreTrend
+from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 
 class WeeklyAggregationResult(BaseModel):
@@ -36,7 +37,14 @@ class WeeklyAggregator:
     - 提供周报级别的智能摘要
     """
 
-    def __init__(self, api_key: str, base_url: str | None = None):
+    def __init__(
+        self,
+        api_key: str,
+        base_url: str | None = None,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
+    ):
         """初始化聚合器
 
         Args:
@@ -44,6 +52,11 @@ class WeeklyAggregator:
             base_url: API 基础 URL（可选）
         """
         self._client = Anthropic(api_key=api_key, base_url=base_url)
+        self._llm_retry = create_anthropic_retry_decorator(
+            max_attempts=retry_max_attempts,
+            wait_min=retry_wait_min,
+            wait_max=retry_wait_max,
+        )
 
     def aggregate(self, signals: list) -> WeeklyAggregationResult:
         """聚合信号列表
@@ -118,16 +131,19 @@ class WeeklyAggregator:
 - core_trends 和 summary_brief 都是必需字段
 """
 
-        response = self._client.messages.create(
-            model="glm-4.7",
-            max_tokens=2000,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
-        )
+        def _call():
+            return self._client.messages.create(
+                model="glm-4.7",
+                max_tokens=2000,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+            )
+
+        response = self._llm_retry(_call)()
 
         # 提取响应 - 获取第一个文本块
         text_block: TextBlock = response.content[0]  # type: ignore[assignment]

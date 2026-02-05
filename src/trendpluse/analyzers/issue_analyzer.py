@@ -9,11 +9,8 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.logger import get_logger
 from trendpluse.models.issue import BatchIssueAnalysis, IssueAnalysis, IssueInfo
 from trendpluse.models.signal import Signal
-from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
-
-_llm_retry = create_anthropic_retry_decorator()
 
 
 class IssueAnalyzer(BaseLLMAnalyzer):
@@ -27,6 +24,9 @@ class IssueAnalyzer(BaseLLMAnalyzer):
         api_key: str,
         model: str = "glm-4.7",
         base_url: str | None = None,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化分析器
 
@@ -35,7 +35,15 @@ class IssueAnalyzer(BaseLLMAnalyzer):
             model: 模型名称
             base_url: API Base URL
         """
-        super().__init__(api_key, model, base_url, use_instructor=True)
+        super().__init__(
+            api_key,
+            model,
+            base_url,
+            use_instructor=True,
+            retry_max_attempts=retry_max_attempts,
+            retry_wait_min=retry_wait_min,
+            retry_wait_max=retry_wait_max,
+        )
 
     def analyze(self, issue: IssueInfo) -> IssueAnalysis:
         """分析单个 Issue
@@ -73,7 +81,6 @@ Issue 内容: {issue.body or "(无内容)"}
         analysis = self._call_llm_for_analysis(prompt)
         return analysis
 
-    @_llm_retry
     def _call_llm_for_analysis(self, prompt: str) -> IssueAnalysis:  # type: ignore[no-any-return]
         """调用 LLM 分析 Issue
 
@@ -83,13 +90,16 @@ Issue 内容: {issue.body or "(无内容)"}
         Returns:
             分析结果
         """
-        analysis = self.client.chat.completions.create(
-            model=self.model,
-            response_model=IssueAnalysis,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,
-        )
-        return analysis
+
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=IssueAnalysis,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1000,
+            )
+
+        return self._run_with_llm_retry(_call)
 
     def analyze_batch(
         self,
@@ -427,7 +437,6 @@ Issue 内容: {issue.body or "(无内容)"}
 
         return all_results
 
-    @_llm_retry
     def _analyze_one_batch(
         self,
         issues: list[IssueInfo],
@@ -443,14 +452,15 @@ Issue 内容: {issue.body or "(无内容)"}
         prompt = self.build_batch_prompt(issues)
 
         # 调用 LLM 批量分析
-        response = self.client.chat.completions.create(
-            model=self.model,
-            response_model=BatchIssueAnalysis,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=4000,  # 批量分析需要更多 tokens
-        )
+        def _call():
+            return self.client.chat.completions.create(
+                model=self.model,
+                response_model=BatchIssueAnalysis,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=4000,  # 批量分析需要更多 tokens
+            )
 
-        return response
+        return self._run_with_llm_retry(_call)
 
     def _retry_failed_singly(
         self,

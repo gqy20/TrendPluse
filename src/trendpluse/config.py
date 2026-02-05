@@ -180,6 +180,24 @@ class Settings(BaseSettings):
     # 成本控制
     daily_token_budget: int = 100_000
     max_retries: int = 3
+    llm_retry_max_attempts: int = Field(
+        default=3,
+        ge=1,
+        le=10,
+        description="LLM 调用最大重试次数（默认 3）",
+    )
+    llm_retry_wait_min: int = Field(
+        default=1,
+        ge=0,
+        le=60,
+        description="LLM 重试最小等待时间（秒）",
+    )
+    llm_retry_wait_max: int = Field(
+        default=10,
+        ge=1,
+        le=300,
+        description="LLM 重试最大等待时间（秒）",
+    )
 
     # 输出配置
     output_dir: str = "reports/daily"

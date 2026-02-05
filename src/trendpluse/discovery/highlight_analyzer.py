@@ -5,12 +5,8 @@ from pydantic import BaseModel, Field
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
-from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
-
-# 创建重试装饰器
-_llm_retry = create_anthropic_retry_decorator()
 
 
 class ProjectHighlight(BaseModel):
@@ -104,6 +100,9 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         api_key: str,
         model: str = DEFAULT_ANTHROPIC_MODEL,
         base_url: str = DEFAULT_ANTHROPIC_BASE_URL,
+        retry_max_attempts: int = 3,
+        retry_wait_min: int = 1,
+        retry_wait_max: int = 10,
     ):
         """初始化分析器
 
@@ -114,7 +113,13 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         """
         # 使用 instructor 模式（与 TrendAnalyzer 保持一致）
         super().__init__(
-            api_key=api_key, model=model, base_url=base_url, use_instructor=True
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            use_instructor=True,
+            retry_max_attempts=retry_max_attempts,
+            retry_wait_min=retry_wait_min,
+            retry_wait_max=retry_wait_max,
         )
 
     def _build_analysis_prompt(self, project) -> str:
@@ -151,7 +156,6 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
 - 用中文回复
 """
 
-    @_llm_retry
     def analyze(self, project) -> ProjectHighlight:
         """分析项目亮点
 
@@ -164,13 +168,16 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_analysis_prompt(project)
 
         try:
-            highlight = self.client.chat.completions.create(
-                model=self.model,
-                response_model=ProjectHighlight,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1000,
-            )
-            return highlight  # type: ignore[no-any-return]
+
+            def _call():
+                return self.client.chat.completions.create(
+                    model=self.model,
+                    response_model=ProjectHighlight,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1000,
+                )
+
+            return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
         except Exception as e:
             logger.warning(f"AI 分析项目 {project.repo} 失败: {e}，使用降级方案")
