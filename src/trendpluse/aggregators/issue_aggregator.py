@@ -82,7 +82,7 @@ class IssueAggregator:
             if decision is not None:
                 if not decision.include:
                     continue
-            elif not self._should_include_issue(issue):
+            elif not self._should_include_issue(issue, analysis):
                 continue
 
             # 获取痛点，优先使用 pain_point，fallback 到标题
@@ -153,24 +153,24 @@ class IssueAggregator:
             logger.debug(f"Issue 质量判定失败: {exc}")
             return {}
 
-    def _should_include_issue(self, issue: IssueInfo) -> bool:
+    def _should_include_issue(self, issue: IssueInfo, analysis: IssueAnalysis) -> bool:
         title = (issue.title or "").lower()
         blocked_keywords = ("announcement", "release", "protocol")
         if any(keyword in title for keyword in blocked_keywords):
             return False
 
         if not issue.labels:
-            return False
+            return analysis.category in {"bug_report", "feature_request", "question"}
 
         allowed_keywords = ("bug", "feature", "question")
-        if not any(
+        if any(
             keyword in label.lower()
             for label in issue.labels
             for keyword in allowed_keywords
         ):
-            return False
+            return True
 
-        return True
+        return False
 
     def _normalize_topics_with_llm(self, topics: list[str]) -> dict[str, str]:
         if not topics or not self.topic_normalizer:
