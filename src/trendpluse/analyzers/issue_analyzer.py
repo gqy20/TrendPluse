@@ -305,7 +305,7 @@ Issue 内容: {issue.body or "(无内容)"}
                 else (issue.body or "(无内容)")
             )
 
-        parts.append(f"""
+            parts.append(f"""
 ## Issue {i}
 - **标题**: {issue.title}
 - **内容**: {content_preview}
