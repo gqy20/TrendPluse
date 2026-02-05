@@ -367,6 +367,105 @@ PR 描述: {pr_details.get("body", "")}
 
         return report  # type: ignore[no-any-return]
 
+    async def aggregate_and_generate_report_async(
+        self,
+        pr_signals: list[Signal],
+        commit_signals: list[Signal],
+        release_signals: list[Signal],
+        date: str,
+    ) -> DailyReport:
+        signal_map: dict[str, Signal] = {}
+        for idx, signal in enumerate(pr_signals):
+            signal_map[f"pr-{idx}"] = signal
+        for idx, signal in enumerate(commit_signals):
+            signal_map[f"commit-{idx}"] = signal
+        for idx, signal in enumerate(release_signals):
+            signal_map[f"release-{idx}"] = signal
+
+        prompt = f"""分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
+
+日期: {date}
+
+## 数据统计
+- PR 信号: {len(pr_signals)} 个
+- Commit 技术点: {len(commit_signals)} 个
+- Release 信号: {len(release_signals)} 个
+
+## PR 信号
+{self._format_signals_with_ids(pr_signals, "pr") if pr_signals else "无"}
+
+## Commit 技术点
+{self._format_signals_with_ids(commit_signals, "commit") if commit_signals else "无"}
+
+## Release 信号
+{self._format_signals_with_ids(release_signals, "release") if release_signals else "无"}
+
+## 分析要求
+
+请识别**跨类型的模式和趋势**，例如：
+- 多个项目同时推出相似功能（可能同时出现在 PR 和 Commit 中）
+- 技术方向的集体演进（多个相关变更指向同一趋势）
+- 重要版本发布与相关 PR/Commit 的关联
+
+## 输出要求
+
+返回一份 DailyReport，只包含以下字段：
+1. date: 日期字符串
+2. summary_brief: 当日总览（2-3 句话）
+3. engineering_signals: 聚合后的高层次工程趋势列表
+4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
+5. stats: 统计信息字典
+
+**以下字段由代码自动填充，无需返回**：
+- activity: 仓库活跃度数据（代码采集）
+- releases: Release 数据（代码采集）
+- breaking_changes: 不兼容变更（代码检测）
+- monitored_repos: 监控仓库列表（代码配置）
+
+重要：
+- **source_signal_ids 字段必须填写**，用于后续溯源
+- ID 格式为 "类型-索引"，例如 "pr-0", "commit-1", "release-2"
+- **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
+- 只返回真正有价值的跨类型趋势
+- 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
+"""
+
+        async def _call():
+            if self.async_instructor_client is None:
+                return await asyncio.to_thread(
+                    lambda: self.client.chat.completions.create(
+                        model=self.model,
+                        response_model=DailyReport,
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=3000,
+                    )
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=DailyReport,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=3000,
+                )
+            )
+
+        report = await self._run_with_llm_retry_async(_call)
+
+        report.date = date
+        if not report.stats:
+            report.stats = {}
+        report.stats["total_prs_analyzed"] = len(pr_signals)
+        report.stats["total_commits_analyzed"] = len(commit_signals)
+        report.stats["total_releases"] = len(release_signals)
+        report.stats["high_impact_signals"] = len(
+            self.filter_high_impact(report.engineering_signals, threshold=4)
+        )
+
+        report = self._resolve_sources_from_ids(report, signal_map)
+        report.commit_signals = []
+
+        return report  # type: ignore[no-any-return]
+
     def generate_report(self, signals: list[Signal], date: str) -> DailyReport:
         """生成每日报告
 
@@ -424,6 +523,67 @@ PR 描述: {pr_details.get("body", "")}
         report.date = date
 
         # 确保统计数据正确
+        if not report.stats:
+            report.stats = {}
+        report.stats["total_prs_analyzed"] = len(signals)
+        report.stats["high_impact_signals"] = high_impact_count
+
+        return report  # type: ignore[no-any-return]
+
+    async def generate_report_async(
+        self, signals: list[Signal], date: str
+    ) -> DailyReport:
+        categorized = self.categorize_signals(signals)
+        high_impact_count = len(self.filter_high_impact(signals, threshold=4))
+
+        prompt = f"""基于以下信号生成每日趋势报告。
+
+日期: {date}
+工程信号数量: {len(categorized["engineering"])}
+研究信号数量: {len(categorized["research"])}
+高影响信号数量: {high_impact_count}
+
+工程信号:
+{self._format_signals(categorized["engineering"])}
+
+研究信号:
+{self._format_signals(categorized["research"])}
+
+## 输出要求
+
+返回 DailyReport，只包含：
+- date: 日期字符串
+- summary_brief: 当日总览（2-3 句话）
+- engineering_signals: 工程信号列表
+- research_signals: 研究信号列表（目前可为空）
+- stats: 统计信息
+
+**无需返回以下字段**（由代码自动填充）：
+- activity, releases, breaking_changes, monitored_repos
+"""
+
+        async def _call():
+            if self.async_instructor_client is None:
+                return await asyncio.to_thread(
+                    lambda: self.client.chat.completions.create(
+                        model=self.model,
+                        response_model=DailyReport,
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=2000,
+                    )
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=DailyReport,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=2000,
+                )
+            )
+
+        report = await self._run_with_llm_retry_async(_call)
+
+        report.date = date
         if not report.stats:
             report.stats = {}
         report.stats["total_prs_analyzed"] = len(signals)

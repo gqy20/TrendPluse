@@ -3,8 +3,10 @@
 协调各个组件完成每日趋势分析。
 """
 
+import asyncio
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 from anthropic import Anthropic
 
@@ -326,6 +328,199 @@ class TrendPulsePipeline:
         report.stats["total_issues_analyzed"] = len(detailed_issues)
 
         # 7. 保存报告（同时保存 Markdown 和 JSON）
+        output_path = self._get_output_path(date)
+        self.reporter.save_report(report, output_path)
+        self._save_report_json(report, output_path)
+        self._send_notification(report)
+
+        return report
+
+    async def run_daily_async(self, date: datetime | None = None) -> DailyReport:
+        """运行每日分析流程（异步）
+
+        Args:
+            date: 分析日期，None 则使用今天
+
+        Returns:
+            每日报告
+        """
+        if date is None:
+            date = datetime.now()
+
+        day_ago = date - timedelta(days=1)
+
+        activity_data, detailed_commits = (
+            self.activity_collector.collect_activity_graphql(
+                repos=self.settings.github_repos,
+                since=day_ago,
+                max_workers=self.settings.max_parallel_workers,
+            )
+        )
+
+        releases_data, detailed_releases = self.release_collector.collect_releases(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            include_prereleases=self.settings.include_prereleases,
+            max_workers=self.settings.max_parallel_workers,
+        )
+
+        tasks: dict[str, asyncio.Task[Any]] = {}
+
+        if detailed_releases:
+            tasks["release_summaries"] = asyncio.create_task(
+                self.release_summarizer.summarize_releases_async(detailed_releases)
+            )
+            tasks["release_signals"] = asyncio.create_task(
+                self.release_analyzer.analyze_releases_async(
+                    {"detailed_releases": detailed_releases}
+                )
+            )
+            tasks["breaking_changes"] = asyncio.create_task(
+                self.breaking_changes_detector.detect_breaking_changes_async(
+                    {"detailed_releases": detailed_releases}
+                )
+            )
+
+        if detailed_commits:
+            tasks["commit_signals"] = asyncio.create_task(
+                self.commit_analyzer.analyze_commits_async(detailed_commits)
+            )
+
+        detailed_issues, issues_stats = self.issue_collector.fetch_issues(
+            repos=self.settings.github_repos,
+            snapshot_date=date.strftime("%Y-%m-%d"),
+            max_workers=self.settings.max_parallel_workers,
+        )
+
+        if detailed_issues:
+            tasks["issue_analyses"] = asyncio.create_task(
+                self.issue_analyzer.analyze_batch_async(detailed_issues)
+            )
+
+        results: dict[str, object] = {}
+        if tasks:
+            task_names = list(tasks.keys())
+            task_results = await asyncio.gather(*tasks.values(), return_exceptions=True)
+            results = dict(zip(task_names, task_results))
+
+        summaries: dict[str, Any] = {}
+        summary_result = results.get("release_summaries")
+        if isinstance(summary_result, dict):
+            summaries = summary_result
+
+        if detailed_releases and summaries:
+            for release in releases_data.releases:
+                key = f"{release.repo}@{release.version}"
+                if key in summaries:
+                    release.ai_summary = summaries[key]
+
+        commit_signals: list[Any] = []
+        commit_result = results.get("commit_signals")
+        if isinstance(commit_result, list):
+            commit_signals = commit_result
+
+        release_signals: list[Any] = []
+        release_result = results.get("release_signals")
+        if isinstance(release_result, list):
+            release_signals = release_result
+
+        breaking_changes: list[Any] = []
+        breaking_result = results.get("breaking_changes")
+        if isinstance(breaking_result, list):
+            breaking_changes = breaking_result
+
+        issue_analyses: dict[str, Any] = {}
+        issue_result = results.get("issue_analyses")
+        if isinstance(issue_result, dict):
+            issue_analyses = issue_result
+
+        pain_points = []
+        if detailed_issues and issue_analyses:
+            pain_points = self.issue_aggregator.aggregate_pain_points(
+                detailed_issues, issue_analyses
+            )
+
+        issues_final_data = None
+        if detailed_issues or issues_stats:
+            from trendpluse.models.issue import IssueData
+
+            category_counts = {
+                "bug_report": 0,
+                "feature_request": 0,
+                "question": 0,
+                "discussion": 0,
+            }
+            sentiment_counts = {"positive": 0, "neutral": 0, "negative": 0}
+
+            for analysis in issue_analyses.values():
+                category_counts[analysis.category] = (
+                    category_counts.get(analysis.category, 0) + 1
+                )
+                sentiment_counts[analysis.sentiment] = (
+                    sentiment_counts.get(analysis.sentiment, 0) + 1
+                )
+
+            issues_final_data = IssueData(
+                total_count=issues_stats.get("total_issues", len(detailed_issues)),
+                bug_reports=category_counts["bug_report"],
+                feature_requests=category_counts["feature_request"],
+                questions=category_counts["question"],
+                discussions=category_counts["discussion"],
+                sentiment_distribution=sentiment_counts,
+                top_pain_points=pain_points[:5],
+            )
+
+        events = self.collector.fetch_events(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            max_workers=self.settings.max_parallel_workers,
+        )
+
+        candidates = self.filter.filter_candidates(events)
+
+        if not candidates:
+            return self._handle_empty_report(
+                date, activity_data, commit_signals, releases_data, issues_final_data
+            )
+
+        pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
+
+        if not pr_details:
+            return self._handle_empty_report(
+                date, activity_data, commit_signals, releases_data, issues_final_data
+            )
+
+        signals = await self.analyzer.analyze_prs_async(pr_details)
+
+        if not signals:
+            return self._handle_empty_report(
+                date, activity_data, commit_signals, releases_data, issues_final_data
+            )
+
+        pr_signals = self.deduplicator.deduplicate(signals)
+
+        report = await self.analyzer.aggregate_and_generate_report_async(
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+            date=date.strftime("%Y-%m-%d"),
+        )
+
+        report.commit_signals = []
+        report.activity = activity_data
+        report.releases = releases_data
+        report.breaking_changes = breaking_changes if breaking_changes else None
+        report.monitored_repos = self.settings.github_repos
+        report.issues = issues_final_data
+        report.stats["total_commits_analyzed"] = len(detailed_commits)
+        report.stats["total_releases"] = releases_data.total_count
+        report.stats["total_releases_analyzed"] = len(detailed_releases)
+        report.stats["total_breaking_changes"] = len(breaking_changes)
+        report.stats["total_issues"] = (
+            issues_final_data.total_count if issues_final_data else 0
+        )
+        report.stats["total_issues_analyzed"] = len(detailed_issues)
+
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
         self._save_report_json(report, output_path)

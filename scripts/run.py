@@ -3,6 +3,7 @@
 执行每日 GitHub 趋势分析。
 """
 
+import asyncio
 import os
 import sys
 from datetime import datetime
@@ -94,7 +95,7 @@ def main():
         # 运行每日分析
         console.print("\n[bold]开始分析...[/bold]")
         date = datetime.now()
-        report = pipeline.run_daily(date=date)
+        report = asyncio.run(pipeline.run_daily_async(date=date))
 
         # 显示结果
         result_text = (
