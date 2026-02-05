@@ -6,6 +6,7 @@
 import re
 
 # Issue 数据需要延迟导入以避免循环导入
+from trendpluse.models.issue_agent import IssueAgentReport
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
@@ -112,7 +113,20 @@ class FeishuFormatter:
                 )
             )
 
-        # 7. 统计信息 - 使用折叠面板
+        # 7. Issue 洞察（Agent）- 使用折叠面板
+        if report.issue_insights:
+            elements.append({"tag": "hr"})
+            content = self._generate_issue_insights_content(report.issue_insights)
+            elements.append(
+                self._create_collapsible_panel(
+                    title="🧠 Issue 洞察（Agent）",
+                    content=content,
+                    expanded=False,
+                    icon="down-small-ccm_outlined",
+                )
+            )
+
+        # 8. 统计信息 - 使用折叠面板
         elements.append({"tag": "hr"})
         stats_content = self._generate_stats_content(report.stats)
         elements.append(
@@ -124,7 +138,7 @@ class FeishuFormatter:
             )
         )
 
-        # 8. 查看详情按钮（JSON V2 格式：按钮直接在 elements 中）
+        # 9. 查看详情按钮（JSON V2 格式：按钮直接在 elements 中）
         report_url = self.report_url_template.format(date=report.date)
         elements.append({"tag": "hr"})
         elements.append(
@@ -536,6 +550,28 @@ class FeishuFormatter:
         content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
         content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}\n"
         return content
+
+    def _generate_issue_insights_content(self, report: IssueAgentReport) -> str:
+        lines: list[str] = []
+
+        if not report.top_pain_points:
+            return "暂无可用的 Issue 洞察。\n"
+
+        lines.append("**用户痛点 TOP 3**\n\n")
+        for idx, pain_point in enumerate(report.top_pain_points[:3], 1):
+            repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
+            if len(pain_point.affected_repos) > 2:
+                repos_str += f" (+{len(pain_point.affected_repos) - 2})"
+            lines.append(f"{idx}. **{pain_point.topic}** ({pain_point.count}次)\n")
+            lines.append(f"   受影响: {repos_str}\n")
+
+        sample_urls = report.top_pain_points[0].sample_urls
+        if sample_urls:
+            lines.append("\n**示例**\n\n")
+            for url in sample_urls[:3]:
+                lines.append(f"- {url}\n")
+
+        return "".join(lines)
 
     def _get_type_emoji(self, signal_type: str) -> str:
         """获取信号类型的表情

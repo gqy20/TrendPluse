@@ -4,7 +4,7 @@
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, Field
 
@@ -194,6 +194,10 @@ class DailyReport(BaseModel):
         default=None,
         description="监控的仓库列表（可选）",
     )
+    issue_insights: "IssueAgentReport | None" = Field(
+        default=None,
+        description="Issue Agent 分析结果（可选）",
+    )
 
 
 class WeeklyActivity(BaseModel):
@@ -248,6 +252,12 @@ class WeeklyReport(BaseModel):
         """
         year, week, _ = date.isocalendar()
         return f"{year}-W{week:02d}"
+
+
+if TYPE_CHECKING:
+    from trendpluse.models.issue_agent import IssueAgentReport
+else:
+    from trendpluse.models.issue_agent import IssueAgentReport  # noqa: F401
 
 
 DailyReport.model_rebuild()

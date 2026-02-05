@@ -5,6 +5,7 @@
 
 from pathlib import Path
 
+from trendpluse.models.issue_agent import IssueAgentReport
 from trendpluse.models.signal import (
     ActivityData,
     CoreTrend,  # noqa: F401 (used in WeeklyReport.core_trends type annotation)
@@ -135,6 +136,13 @@ class MarkdownReporter:
         if report.activity:
             activity_section = "\n\n" + self._render_activity(report.activity)
 
+        # Issue Agent 信息（仅在有内容时渲染）
+        issue_insights_section = ""
+        if report.issue_insights:
+            issue_insights_section = "\n\n" + self._render_issue_insights(
+                report.issue_insights
+            )
+
         # 统计信息
         stats_section = self._render_stats(report.stats)
 
@@ -148,8 +156,36 @@ class MarkdownReporter:
             + release_section
             + breaking_changes_section
             + activity_section
+            + issue_insights_section
             + stats_section
         )
+
+    def _render_issue_insights(self, report: IssueAgentReport) -> str:
+        lines = ["---\n", "## 🧠 Issue 洞察（Agent）\n\n"]
+
+        if not report.top_pain_points:
+            lines.append("暂无可用的 Issue 洞察。\n")
+            return "".join(lines)
+
+        lines.append("### 用户痛点 TOP 5\n\n")
+        lines.append("| 排名 | 痛点 | 提及次数 | 受影响仓库 |\n")
+        lines.append("|------|------|----------|------------|\n")
+
+        for idx, pain_point in enumerate(report.top_pain_points[:5], 1):
+            repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
+            if len(pain_point.affected_repos) > 2:
+                repos_str += f" (+{len(pain_point.affected_repos) - 2})"
+            lines.append(
+                f"| {idx} | {pain_point.topic} | {pain_point.count} | {repos_str} |\n"
+            )
+
+        sample_urls = report.top_pain_points[0].sample_urls
+        if sample_urls:
+            lines.append("\n**示例**:\n\n")
+            for url in sample_urls[:3]:
+                lines.append(f"- [{format_source_url(url)}]({url})\n")
+
+        return "".join(lines)
 
     def _render_commit_signals(self, signals: list[Signal]) -> str:
         """渲染 commit 信号

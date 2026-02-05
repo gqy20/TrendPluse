@@ -38,6 +38,7 @@ from trendpluse.models.signal import (
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
+from trendpluse.utils.issue_agent_io import load_issue_agent_report
 from trendpluse.utils.issue_io import dump_issues_to_jsonl
 
 logger = get_logger(__name__)
@@ -270,6 +271,10 @@ class TrendPulsePipeline:
         report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
+        report.issue_insights = load_issue_agent_report(
+            self.settings.issue_dump_dir,
+            date.strftime("%Y-%m-%d"),
+        )
         # 更新统计信息（聚合时已包含部分统计）
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = releases_data.total_count
@@ -483,6 +488,10 @@ class TrendPulsePipeline:
         report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
+        report.issue_insights = load_issue_agent_report(
+            self.settings.issue_dump_dir,
+            date.strftime("%Y-%m-%d"),
+        )
         report.stats["total_commits_analyzed"] = len(detailed_commits)
         report.stats["total_releases"] = releases_data.total_count
         report.stats["total_releases_analyzed"] = len(detailed_releases)
@@ -569,6 +578,10 @@ class TrendPulsePipeline:
 
         # 添加监控的仓库列表
         report.monitored_repos = self.settings.github_repos
+        report.issue_insights = load_issue_agent_report(
+            self.settings.issue_dump_dir,
+            date.strftime("%Y-%m-%d"),
+        )
 
         return report
 

@@ -27,6 +27,7 @@ dependencies = [
     "anthropic>=0.45.0",
     "instructor>=1.6.0",
     "PyGithub>=2.5.0",
+    "claude-agent-sdk>=0.1.27",
     "pydantic>=2.10.0",
     "pydantic-settings>=2.6.0",
     "python-dotenv>=1.0.0",
@@ -142,6 +143,7 @@ module = [
     "httpx.*",
     "gql.*",              # 新增：GraphQL 客户端
     "graphql_core.*",      # 新增：GraphQL 核心
+    "claude_agent_sdk.*",
 ]
 ignore_missing_imports = true
 
