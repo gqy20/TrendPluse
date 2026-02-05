@@ -1,0 +1,821 @@
+{
+  "date": "2026-02-05",
+  "summary_brief": "今日 AI 代理基础设施迎来重大架构升级，多个顶级项目（OpenAI Codex、Continue、Cline、crewAI）集体推出长期记忆、安全沙箱、多模态能力和模块化技能系统等核心能力。Agent 编排框架正从实验性特性向生产就绪演进，同时安全隔离、OAuth 认证和跨平台兼容性成为工程化重点。",
+  "engineering_signals": [
+    {
+      "id": "trend-agent-memory-statefulness",
+      "title": "AI 代理集体迈向有状态长期记忆架构",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex、Continue、DeepAgents 等多个头部项目同时引入记忆系统（数据库、线程摘要、持久化），标志着 AI 编程助手从无状态对话向具备长期记忆和上下文连续性的智能体演进，这是实现复杂多步骤任务的核心基础设施突破。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents==0.3.11",
+        "https://github.com/openai/codex/commit/4922b3e571d2da548f7e592707b4a1fac8fda09f",
+        "https://github.com/openai/codex/releases/tag/rust-v0.96.0",
+        "https://github.com/continuedev/continue/releases/tag/v1.2.15-vscode"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "continuedev/continue",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "commit-3",
+        "release-2",
+        "release-4"
+      ]
+    },
+    {
+      "id": "trend-modular-skills-subagents",
+      "title": "Agent 技能模块化与子代理编排模式确立",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 的技能热重载、Continue 的 Subagents、crewAI 的 Provider 重构、DeepAgents 的子代理技能以及 Gemini CLI 的 MCP 技能链接，共同指向 Agent 架构正在从单体向可组合、可复用的模块化能力单元演进，大幅提升了系统的扩展性和维护性。",
+      "sources": [
+        "https://github.com/openai/codex/releases/tag/rust-v0.96.0",
+        "https://github.com/google-gemini/gemini-cli/commit/a3af4a8caedfbccc3f1339f9d62bb21111aaa8c2",
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents==0.3.11",
+        "https://github.com/openai/codex/commit/7bcc552325b95b1f17042c0e4f928ef971f26339",
+        "https://github.com/crewAIInc/crewAI/pull/4367"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "openai/codex",
+        "crewAIInc/crewAI",
+        "langchain-ai/deepagents",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "release-2",
+        "pr-16",
+        "release-4",
+        "commit-5"
+      ]
+    },
+    {
+      "id": "trend-sandbox-security-isolation",
+      "title": "统一沙箱与安全隔离成为 Agent 执行标准",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入 Bubblewrap 统一执行沙箱、DeepAgents 集成 LangSmith 远程沙箱、Zed 加固终端权限系统并拦截危险命令，反映出 AI 代理在执行 Shell 命令和代码时，安全隔离和权限管控已成为生产部署的硬性要求，避免无限制执行带来的安全风险。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/5d2feaa1443bdd508e5d18a055106cbb54c9795e",
+        "https://github.com/openai/codex/commit/ae4de43ccc894e389868b60e190306301a37806b",
+        "https://github.com/zed-industries/zed/commit/323680f6fe7e2f12d444ca591b793fe90a75326b",
+        "https://github.com/langchain-ai/deepagents/pull/1077"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "langchain-ai/deepagents",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "pr-17",
+        "commit-7",
+        "commit-11"
+      ]
+    },
+    {
+      "id": "trend-multimodal-workflow",
+      "title": "多模态能力与计划模式提升 Agent 任务可靠性",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 支持工具返回图片、Gemini CLI 引入计划模式先规划再执行、crewAI 增强 HITL 人机交互，这些改进通过增强视觉反馈、任务规划和人类协作，显著提升了 Agent 处理复杂任务的可靠性和可控性。",
+      "sources": [
+        "https://github.com/openai/codex/commit/5ea107a08857e44001fe156a67b7d8536d5db66b",
+        "https://github.com/crewAIInc/crewAI/commit/6bfc98e960fd6bd78978d9131005d2eb2b5cb7e5",
+        "https://github.com/google-gemini/gemini-cli/commit/0012d958489489822a6015c9c0f4c40cabc5bccb"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI",
+        "openai/codex",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "commit-4",
+        "commit-10"
+      ]
+    },
+    {
+      "id": "trend-auth-remote-lockdown",
+      "title": "OAuth 认证流与远程配置锁定强化企业部署",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline 的 OAuth-like API Key Flow 和远程配置锁定、OpenHands 的 reCAPTCHA 用户关联与日志增强、Cline 修复 VS Code 远程环境 OAuth，显示出 AI 工具正加强企业级部署所需的身份管理、安全审计和配置管控能力，解决大规模协作和远程开发场景的痛点。",
+      "sources": [
+        "https://github.com/OpenHands/OpenHands/pull/12749",
+        "https://github.com/cline/cline/pull/9111",
+        "https://github.com/cline/cline/commit/a64f46a5f42907af7c6c53639b287d8c03571886",
+        "https://github.com/cline/cline/pull/9098"
+      ],
+      "related_repos": [
+        "OpenHands/OpenHands",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "commit-13",
+        "pr-3",
+        "pr-5"
+      ]
+    },
+    {
+      "id": "trend-streaming-reliability-resilience",
+      "title": "流式传输可靠性修复与速率限制智能处理",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme 修复 HTTP 传输错误导致的流式崩溃、Auto-Claude 实现速率限制智能恢复、AgentScope 移除 HuggingFace 依赖以规避限流，反映出项目正通过重试机制、降级策略和依赖解耦来应对外部 API 不稳定性和速率限制问题，提升系统鲁棒性。",
+      "sources": [
+        "https://github.com/AndyMik90/Auto-Claude/commit/6d0222fa9c70552bd31347b0362aaf01dd719190",
+        "https://github.com/agentscope-ai/agentscope/pull/1198",
+        "https://github.com/gptme/gptme/pull/1226",
+        "https://github.com/gptme/gptme/issues/1189"
+      ],
+      "related_repos": [
+        "agentscope-ai/agentscope",
+        "gptme/gptme",
+        "AndyMik90/Auto-Claude"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "commit-6",
+        "pr-2"
+      ]
+    },
+    {
+      "id": "trend-editor-ecosystem-evolution",
+      "title": "编辑器生态从单一模型向多源预测解耦",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Zed 支持多源编辑预测（GitHub Copilot、Ollama、Codestral）、Dify 优化插件预加载、Zed 增强代码语义高亮和 Diff 侧边对比，展示编辑器生态正在构建可插拔的 AI 能力层，允许用户自定义模型提供商并优化开发体验。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/bae3eda75c3a1b835d205439070961feeb76cf90",
+        "https://github.com/langgenius/dify/commit/e04f2a0786df994168618abe1832a8ae921f6227",
+        "https://github.com/zed-industries/zed/commit/5d2feaa1443bdd508e5d18a055106cbb54c9795e",
+        "https://github.com/openai/codex/releases/tag/rust-v0.97.0"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "openai/codex",
+        "langgenius/dify"
+      ],
+      "source_signal_ids": [
+        "release-1",
+        "commit-14",
+        "commit-11",
+        "commit-12"
+      ]
+    },
+    {
+      "id": "trend-production-maturity",
+      "title": "并行工具调用等特性从实验走向生产就绪",
+      "type": "release",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Cline 将 Parallel Tool Calls 标记为稳定功能、Codex 实现统一执行架构并减少隐式状态、crewAI 进行大规模重构和 Hook 系统改进，表明 AI 编程工具的核心功能已完成验证，正专注于稳定性、类型安全和性能优化，以满足生产环境要求。",
+      "sources": [
+        "https://github.com/openai/codex/commit/0e8d359da900512129750cd6cce0a7799ddea28e",
+        "https://github.com/crewAIInc/crewAI/pull/4374",
+        "https://github.com/crewAIInc/crewAI/pull/4375",
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli==0.0.18",
+        "https://github.com/cline/cline/pull/9097"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI",
+        "langchain-ai/deepagents",
+        "openai/codex",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-9",
+        "release-3",
+        "pr-13",
+        "pr-14",
+        "commit-8"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_pr_signals": 20,
+    "total_commit_signals": 15,
+    "total_release_signals": 5,
+    "total_signals": 40,
+    "monitored_repos_count": 11,
+    "high_impact_signals_count": 6,
+    "trending_categories": [
+      "capability",
+      "safety",
+      "abstraction"
+    ],
+    "total_prs_analyzed": 20,
+    "total_commits_analyzed": 245,
+    "total_releases": 6,
+    "high_impact_signals": 5,
+    "total_releases_analyzed": 6,
+    "total_breaking_changes": 2,
+    "total_issues": 513,
+    "total_issues_analyzed": 513
+  },
+  "activity": {
+    "total_commits": 245,
+    "active_repos_count": 16,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 68,
+        "top_contributors": [
+          "cole-miller",
+          "osyvokon",
+          "MrSubidubi",
+          "osiewicz",
+          "Veykril"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 41,
+        "top_contributors": [
+          "jif-oai",
+          "gt-oai",
+          "dylan-hurd-oai",
+          "aibrahim-oai",
+          "pakrym-oai"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 39,
+        "top_contributors": [
+          "adamdotdevin",
+          "rekram1-node",
+          "opencode-agent[bot]",
+          "thdxr",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 28,
+        "top_contributors": [
+          "mdrxy",
+          "vtrivedy",
+          "sydney-runkle",
+          "github-actions[bot]",
+          "jacoblee93"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 18,
+        "top_contributors": [
+          "saoudrizwan",
+          "BarreiroT",
+          "abeatrix",
+          "ClineXDiego",
+          "maxpaulus43"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 11,
+        "top_contributors": [
+          "g-samroberts",
+          "abhipatel12",
+          "Adib234",
+          "MushuEE",
+          "cbcoutinho"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 9,
+        "top_contributors": [
+          "hyoban",
+          "fatelei",
+          "QuantumGhost",
+          "Stream29",
+          "majiayu000"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 6,
+        "top_contributors": [
+          "AndyMik90",
+          "dertuerke"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 5,
+        "top_contributors": [
+          "RomneyDa",
+          "sestinj",
+          "dependabot[bot]",
+          "BekahHW"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 5,
+        "top_contributors": [
+          "mdrxy",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 5,
+        "top_contributors": [
+          "greysonlalonde",
+          "vinibrsl"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 3,
+        "top_contributors": [
+          "saurya",
+          "tofarr"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 3,
+        "top_contributors": [
+          "ashpreetbedi",
+          "uzaxirr"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 2,
+        "top_contributors": [
+          "DavdGao"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 1,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "rx5ad"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 6,
+    "unique_repos_count": 4,
+    "releases": [
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.97.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-05",
+        "summary": "## New Features\n- Added a session-scoped “Allow and remember” option for MCP/App tool approvals, so repeated calls to the same tool can be auto-approved during the session. (#10584)\n- Added live skill update detection, so skill file changes are picked up without restarting. (#10478)\n- Added support for mixed text and image content in dynamic tool outputs for app-server integrations. (#10567)\n- Added a new `/debug-config` slash command in the TUI to inspect effective configuration. (#10642)\n- Introduced initial memory plumbing (API client + local persistence) to support thread memory summaries. (#10629, #10634)\n- Added configurable `log_dir` so logs can be redirected (including via `-c` overrides) more easily. (#10678)\n\n## Bug Fixes\n- Fixed jitter in the TUI apps/connectors picker by stabilizing description-column rendering. (#10593)\n- Restored and stabilized the TUI “working” status indicator/shimmer during preamble and early exec flows. (#10700, #10701)\n- Improved cloud requirements reliability with higher timeouts, retries, and corrected precedence over MDM settings. (#10631, #10633, #10659)\n- Persisted pending-input user events more consistently for mid-turn injected input handling. (#10656)\n\n## Documentation\n- Documented how to opt in to the experimental app-server API. (#10667)\n- Updated docs/schema coverage for new `log_dir` configuration behavior. (#10678)\n\n## Chores\n- Added a gated Bubblewrap (`bwrap`) Linux sandbox path to improve filesystem isolation options. (#9938)\n- Refactored model client lifecycle to be session-scoped and reduced implicit client state. (#10595, #10664)\n- Added caching for MCP actions from apps to reduce repeated load latency for users with many installed apps. (#10662)\n- Added a `none` personality option in protocol/config surfaces. (#10688)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.96.0...rust-v0.97.0\n\n- #10595 Stop client from being state carrier @pakrym-oai\n- #10584 Add option to approve and remember MCP/Apps tool usage @canvrno-oai\n- #10644 fix: flaky test @jif-oai\n- #10629 feat: add phase 1 mem client @jif-oai\n- #10633 Cloud Requirements: take precedence over MDM @gt-oai\n- #10659 Increase cloud req timeout @gt-oai\n- #9938 feat(linux-sandbox): add bwrap support @viyatb-oai\n- #10656 Persist pending input user events @aibrahim-oai\n- #10634 feat: add phase 1 mem db @jif-oai\n- #10593 Fix jitter in TUI apps/connectors picker  @canvrno-oai\n- #10662 [apps] Cache MCP actions from apps. @mzeng-openai\n- #10649 Fix test_shell_command_interruption flake @gt-oai\n- #10642 Add /debug-config slash command @gt-oai\n- #10478 Added support for live updates to skills @etraut-openai\n- #10688 add none personality option @aibrahim-oai\n- #10567 feat(app-server, core): allow text + image content items for dynamic tool outputs @owenlin0\n- #10667 chore(app-server): document experimental API opt-in @owenlin0\n- #10664 Session-level model client @pakrym-oai\n- #10678 feat(core): add configurable log_dir @joshka-oai\n- #10631 Cloud Requirements: increase timeout and retries @gt-oai\n- #10650 chore(core) personality migration tests @dylan-hurd-oai\n- #10701 fix(tui): restore working shimmer after preamble output @joshka-oai\n- #10700 fix: ensure status indicator present earlier in exec path @sayan-oai\n\n\n",
+        "assets_count": 75,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.97.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 MCP/App 工具审批的会话级“允许并记住”选项，避免重复审批",
+            "新增实时技能更新检测，技能文件变更无需重启即可生效",
+            "为动态工具输出新增文本和图片混合内容支持（app-server 集成）",
+            "引入线程内存摘要支持的内存基础设施（API 客户端 + 本地持久化）",
+            "新增可配置 log_dir 选项，支持更灵活的日志重定向"
+          ],
+          "summary_cn": "rust-v0.97.0 版本主要带来多项用户体验增强功能，包括会话级工具审批记忆、实时技能更新检测和混合内容输出支持。同时引入了内存摘要功能的基础设施，并修复了 TUI 渲染抖动和云需求可靠性问题。整体变更聚焦于提升工作流效率和系统稳定性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-cli==0.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-02-05",
+        "summary": "### Features\r\n\r\n* Support  .`agents/skills` dir alias ([#1059](https://github.com/langchain-ai/deepagents/issues/1059)) ([ec1db17](https://github.com/langchain-ai/deepagents/commit/ec1db172c12bc8b8f85bb03138e442353d4b1013))\r\n* Resume thread enhancements ([#1065](https://github.com/langchain-ai/deepagents/issues/1065)) ([e6663b0](https://github.com/langchain-ai/deepagents/commit/e6663b0b314582583afd32cb906a6d502cd8f16b))\r\n\r\n### Bug Fixes\r\n\r\n* `Ctrl+E` for tool output toggle ([#1100](https://github.com/langchain-ai/deepagents/issues/1100)) ([9fa9d72](https://github.com/langchain-ai/deepagents/commit/9fa9d727dbf6b8996a61f2f764675dbc2e23c1b6))\r\n* Installed default prompt not updated following upgrade ([#1082](https://github.com/langchain-ai/deepagents/issues/1082)) ([bffd956](https://github.com/langchain-ai/deepagents/commit/bffd95610730c668406c485ad941835a5307c226))\r\n* Replace silent exception handling with proper logging ([#708](https://github.com/langchain-ai/deepagents/issues/708)) ([20faf7a](https://github.com/langchain-ai/deepagents/commit/20faf7ac244d97e688f1cc4121d480ed212fe97c))\r\n* Show full shell command in error output ([#1097](https://github.com/langchain-ai/deepagents/issues/1097)) ([23bb1d8](https://github.com/langchain-ai/deepagents/commit/23bb1d8af85eec8739aea17c3bb3616afb22072a)), closes [#1080](https://github.com/langchain-ai/deepagents/issues/1080)\r\n* Consolidate tool output expand/collapse hint placement ([#1102](https://github.com/langchain-ai/deepagents/issues/1102)) ([70db34b](https://github.com/langchain-ai/deepagents/commit/70db34b5f15a7e81ff586dd0adb2bdfd9ac5d4e9))\r\n* Support `-h`/`--help` flags ([#1106](https://github.com/langchain-ai/deepagents/issues/1106)) ([26bebf5](https://github.com/langchain-ai/deepagents/commit/26bebf592ab56ffdc5eeff55bb7c2e542ef8f706))\r\n* Delete `/exit` ([#1052](https://github.com/langchain-ai/deepagents/issues/1052)) ([8331b77](https://github.com/langchain-ai/deepagents/commit/8331b7790fcf0474e109c3c29f810f4ced0f1745)), closes [#836](https://github.com/langchain-ai/deepagents/issues/836) [#651](https://github.com/langchain-ai/deepagents/issues/651)\r\n\r\n---\r\n\r\nThanks to our community contributors: @kaushikkumarkr",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli%3D%3D0.0.18",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "支持 .agents/skills 目录别名",
+            "线程恢复功能增强",
+            "修复 Ctrl+E 工具输出切换问题",
+            "修复升级后默认提示模板未更新问题",
+            "改进异常处理为日志记录并支持 -h/--help 标志"
+          ],
+          "summary_cn": "deepagents-cli 0.0.18 版本主要增强了技能目录支持和线程恢复功能，同时修复了多个用户体验问题，包括快捷键操作、升级后的默认提示模板更新、异常处理和错误输出显示等方面。本次更新还删除了 /exit 命令并新增了对 -h/--help 帮助标志的支持，整体提升了 CLI 工具的易用性和可维护性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "continuedev/continue",
+        "version": "v1.2.15-vscode",
+        "author": "RomneyDa",
+        "date": "2026-02-04",
+        "summary": "## What's Changed\r\n* docs: update /info command description with usage statistics by @continue[bot] in https://github.com/continuedev/continue/pull/9071\r\n* chore(deps): bump undici from 7.16.0 to 7.18.2 in /binary by @dependabot[bot] in https://github.com/continuedev/continue/pull/9534\r\n* fix: add GH_TOKEN to continue-agents workflow by @ThanhNguyxn in https://github.com/continuedev/continue/pull/9497\r\n* chore: bump prerelease versions by @RomneyDa in https://github.com/continuedev/continue/pull/9536\r\n* Filter out .md files when loading agent configs by @RomneyDa in https://github.com/continuedev/continue/pull/9537\r\n* feat: subagents by @uinstinct in https://github.com/continuedev/continue/pull/9128\r\n* Update docs index page with new inbox card and copy changes by @BekahHW in https://github.com/continuedev/continue/pull/9533\r\n* docs: Add documentation for running agents locally by @bdougie in https://github.com/continuedev/continue/pull/9507\r\n* feat: agent skills by @uinstinct in https://github.com/continuedev/continue/pull/9353\r\n* chore(deps): bump diff from 7.0.0 to 8.0.3 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/9552\r\n* [Snyk] Upgrade @c15t/react from 1.8.1 to 1.8.2 by @sestinj in https://github.com/continuedev/continue/pull/9540\r\n* Refactor info command into separate functions and add usage statistics by @sestinj in https://github.com/continuedev/continue/pull/9070\r\n* [Snyk] Upgrade posthog-js from 1.297.2 to 1.310.1 by @sestinj in https://github.com/continuedev/continue/pull/9541\r\n* Allow MCP/Bash tools by default in headless mode by @RomneyDa in https://github.com/continuedev/continue/pull/9538\r\n* docs: fix title case in documentation headers by @sestinj in https://github.com/continuedev/continue/pull/9543\r\n* fix: simplify config error by @uinstinct in https://github.com/continuedev/continue/pull/9556\r\n* chore(deps): bump undici from 6.21.3 to 6.23.0 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/9565\r\n* fix: duplicate tool messages added by @RomneyDa in https://github.com/continuedev/continue/pull/9596\r\n* [Snyk] Upgrade react-hook-form from 7.62.0 to 7.69.0 by @sestinj in https://github.com/continuedev/continue/pull/9588\r\n* [Snyk] Upgrade @tiptap/extension-mention from 2.26.1 to 2.27.1 by @sestinj in https://github.com/continuedev/continue/pull/9589\r\n* fix: prevent waiting for the session to load from history by @uinstinct in https://github.com/continuedev/continue/pull/9525\r\n* fix: show full right side gradient border by @uinstinct in https://github.com/continuedev/continue/pull/9672\r\n* docs: create IDE Extensions tab with Customize and Reference sections by @sestinj in https://github.com/continuedev/continue/pull/9539\r\n* Revert \"docs: create IDE Extensions tab with Customize and Reference sections\" by @sestinj in https://github.com/continuedev/continue/pull/9680\r\n* Revert \"Revert \"docs: create IDE Extensions tab with Customize and Reference sections\"\" by @sestinj in https://github.com/continuedev/continue/pull/9681\r\n* fix: resolve docs tab navigation issues by @sestinj in https://github.com/continuedev/continue/pull/9682\r\n* fix: use ide.runCommand when Windows host connects to WSL by @shanevcantwell in https://github.com/continuedev/continue/pull/9679\r\n* fix: compact conversation with dangling tool calls by @uinstinct in https://github.com/continuedev/continue/pull/9465\r\n* feat: resubmit overloaded errors by @uinstinct in https://github.com/continuedev/continue/pull/9082\r\n* feat(cli): agent skills by @uinstinct in https://github.com/continuedev/continue/pull/9696\r\n* Add extension features and customization links to docs index by @sestinj in https://github.com/continuedev/continue/pull/9798\r\n* fix: command fixed in contributing file by @sarthakNITT in https://github.com/continuedev/continue/pull/9715\r\n* fix: autocompaction failures from exceeded context length by @RomneyDa in https://github.com/continuedev/continue/pull/9567\r\n* chore(deps-dev): bump lodash-es from 4.17.21 to 4.17.23 in /packages/config-yaml by @dependabot[bot] in https://github.com/continuedev/continue/pull/9773\r\n* chore(deps-dev): bump lodash-es from 4.17.21 to 4.17.23 in /packages/openai-adapters by @dependabot[bot] in https://github.com/continuedev/continue/pull/9775\r\n* chore(deps-dev): bump lodash-es from 4.17.21 to 4.17.23 in /extensions/cli by @dependabot[bot] in https://github.com/continuedev/continue/pull/9774\r\n* chore(deps-dev): bump lodash from 4.17.21 to 4.17.23 by @dependabot[bot] in https://github.com/continuedev/continue/pull/9781\r\n* [Snyk] Upgrade yaml from 2.8.1 to 2.8.2 by @sestinj in https://github.com/continuedev/continue/pull/9653\r\n* feat: add remove rule button by @uinstinct in https://github.com/continuedev/continue/pull/9576\r\n* Continue CLI support provider Ask Sage by @alex-mcgraw-askSage in https://github.com/continuedev/continue/pull/9719\r\n* chore(deps-dev): bump lodash-es from 4.17.21 to 4.17.23 in /packages/fetch by @dependabot[bot] in https://github.com/continuedev/continue/pull/9772\r\n* Update asksage.mdx by @alex-mcgraw-askSage in https://github.com/continuedev/continue/pull/9757\r\n* chore(deps): bump lodash from 4.17.21 to 4.17.23 in /extensions/cli by @dependabot[bot] in https://github.com/continuedev/continue/pull/9802\r\n* fix: support object-type arguments in tool call parsing by @silencezhoudev in https://github.com/continuedev/continue/pull/9743\r\n* [Snyk] Upgrade @tiptap/extension-paragraph from 2.26.1 to 2.27.1 by @sestinj in https://github.com/continuedev/continue/pull/9817\r\n* chore(deps-dev): bump lodash from 4.17.21 to 4.17.23 in /docs by @dependabot[bot] in https://github.com/continuedev/continue/pull/9803\r\n* chore(deps): bump lodash from 4.17.21 to 4.17.23 in /gui by @dependabot[bot] in https://github.com/continuedev/continue/pull/9830\r\n* fix: Set isComplete metadata when agents finish execution by @sestinj in https://github.com/continuedev/continue/pull/9892\r\n* Fix: Set isComplete=true after agent turn ends without tool calls by @sestinj in https://github.com/continuedev/continue/pull/9899\r\n* feat(cli): detect wsl and spawn appropriate shell by @uinstinct in https://github.com/continuedev/continue/pull/9810\r\n* Refactor imports. by @alex-mcgraw-askSage in https://github.com/continuedev/continue/pull/9828\r\n* chore(deps): bump lodash from 4.17.21 to 4.17.23 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/9833\r\n* chore(deps-dev): bump lodash from 4.17.21 to 4.17.23 in /binary by @dependabot[bot] in https://github.com/continuedev/continue/pull/9834\r\n* [Snyk] Upgrade @huggingface/jinja from 0.1.3 to 0.5.3 by @sestinj in https://github.com/continuedev/continue/pull/9845\r\n* chore(deps-dev): bump lodash from 4.17.21 to 4.17.23 in /packages/fetch by @dependabot[bot] in https://github.com/continuedev/continue/pull/9893\r\n* fix: skip cmd.exe wrapping for MCP servers when Windows host connects to WSL by @shanevcantwell in https://github.com/continuedev/continue/pull/9740\r\n* Add detailed logging for metadata endpoint requests by @sestinj in https://github.com/continuedev/continue/pull/9909\r\n* Publish cn-staging blueprint on stable release by @sestinj in https://github.com/continuedev/continue/pull/9914\r\n* feat: Add new OVHcloud models by @eliasto in https://github.com/continuedev/continue/pull/9663\r\n* chore: vscode 30, jetbrains 59 by @RomneyDa in https://github.com/continuedev/continue/pull/9832\r\n* fix(cli): flaky hub loader tests by @uinstinct in https://github.com/continuedev/continue/pull/9923\r\n* [Snyk] Upgrade @tiptap/extension-text from 2.26.1 to 2.27.1 by @sestinj in https://github.com/continuedev/continue/pull/9915\r\n* chore(deps): bump tar from 7.4.3 to 7.5.7 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/9985\r\n* chore(deps): bump hono from 4.11.4 to 4.11.7 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/9959\r\n* fix: Local setup screen input text is black on dark background by @sarthakNITT in https://github.com/continuedev/continue/pull/9967\r\n* [Snyk] Upgrade ws from 8.18.0 to 8.19.0 by @sestinj in https://github.com/continuedev/continue/pull/9946\r\n* [Snyk] Upgrade systeminformation from 5.27.14 to 5.30.0 by @sestinj in https://github.com/continuedev/continue/pull/9945\r\n* fix: pass GITHUB_TOKEN to vscode e2e tests for ripgrep download by @RomneyDa in https://github.com/continuedev/continue/pull/9929\r\n* feat: indicate excluded tools in MCP server # tools badge by @RomneyDa in https://github.com/continuedev/continue/pull/9970\r\n* docs: remove on-prem from secrets page by @RomneyDa in https://github.com/continuedev/continue/pull/9972\r\n* fix: use underlying provider name for stream errors by @RomneyDa in https://github.com/continuedev/continue/pull/9963\r\n* chore: hub.continue.dev -> continue.dev by @RomneyDa in https://github.com/continuedev/continue/pull/10049\r\n* docs: link changelog to changelog.continue.dev by @sestinj in https://github.com/continuedev/continue/pull/10021\r\n* [Snyk] Security upgrade @aws-sdk/client-sagemaker-runtime from 3.777.0 to 3.894.0 by @sestinj in https://github.com/continuedev/continue/pull/10052\r\n* fix: pass pre-read content to RegistryClient for WSL compatibility by @shanevcantwell in https://github.com/continuedev/continue/pull/9739\r\n* fix: detect WSL remote for shell PATH resolution by @shanevcantwell in https://github.com/continuedev/continue/pull/9934\r\n* fix(resource-monitoring): fix lsof file descriptor leak by @yumosx in https://github.com/continuedev/continue/pull/9568\r\n* Add cn-check skill for AI agent code checks by @sestinj in https://github.com/continuedev/continue/pull/10111\r\n* Register `cn check` as a CLI subcommand by @sestinj in https://github.com/continuedev/continue/pull/10112\r\n* Fix defunct hub.continue.dev URLs by @sestinj in https://github.com/continuedev/continue/pull/10114\r\n* Fix cn check workers failing silently by @sestinj in https://github.com/continuedev/continue/pull/10115\r\n* Rename `cn check` to `cn review` with UX improvements by @sestinj in https://github.com/continuedev/continue/pull/10134\r\n* [Snyk] Upgrade @openapitools/openapi-generator-cli from 2.25.1 to 2.27.0 by @sestinj in https://github.com/continuedev/continue/pull/10090\r\n* feat: show message counter in history page by @uinstinct in https://github.com/continuedev/continue/pull/9524\r\n* fix: OpenAI Responses API parallel tool calls losing call_ids by @houssemzaier in https://github.com/continuedev/continue/pull/9659\r\n* feat: add tool prompt override support in .continuerc.json by @shanevcantwell in https://github.com/continuedev/continue/pull/9314\r\n* fix: retrieve reasoning toggle from local storage by @uinstinct in https://github.com/continuedev/continue/pull/9688\r\n* feat: Add OpenRouter Provider Support with Dynamic Model Loading by @partha-sarathyy in https://github.com/continuedev/continue/pull/8738\r\n* Fix OpenAI timeout settings not being applied by @micalgenus in https://github.com/continuedev/continue/pull/10036\r\n* fix(cli): add SSL verification option for client transports  by @yumosx in https://github.com/continuedev/continue/pull/9551\r\n* fix: add reasoning content field support in chat body by @uinstinct in https://github.com/continuedev/continue/pull/10027\r\n* feat: add Nous Research Hermes models as provider by @Aboozle1 in https://github.com/continuedev/continue/pull/9989\r\n* fix: show error for blank inputs when using hub blocks in local config by @uinstinct in https://github.com/continuedev/continue/pull/10127\r\n* Create invokable markdown prompt instead of .prompt file by @RomneyDa in https://github.com/continuedev/continue/pull/10082\r\n* chore(deps): bump @isaacs/brace-expansion from 5.0.0 to 5.0.1 in /packages/continue-sdk by @dependabot[bot] in https://github.com/continuedev/continue/pull/10170\r\n* [Snyk] Upgrade @electron/rebuild from 3.7.0 to 3.7.2 by @sestinj in https://github.com/continuedev/continue/pull/10034\r\n* fix: don't crash config loading for one block failure by @RomneyDa in https://github.com/continuedev/continue/pull/10140\r\n* [Snyk] Security upgrade @aws-sdk/credential-providers from 3.943.0 to 3.974.0 by @sestinj in https://github.com/continuedev/continue/pull/10147\r\n* fix: better failed default config error by @RomneyDa in https://github.com/continuedev/continue/pull/10081\r\n* Move getAdjustedTokenCountFromModel from CLI to core by @RomneyDa in https://github.com/continuedev/continue/pull/9968\r\n* [Snyk] Security upgrade @aws-sdk/credential-providers from 3.943.0 to 3.974.0 by @sestinj in https://github.com/continuedev/continue/pull/10145\r\n* Add demo video to docs landing page by @sestinj in https://github.com/continuedev/continue/pull/10174\r\n* fix: improve error messages for invalid rule files by @sarthakNITT in https://github.com/continuedev/continue/pull/9716\r\n* fix: prevent non whitespace characters from being sent from input by @uinstinct in https://github.com/continuedev/continue/pull/10149\r\n* chore: vscode 31 jetbrains 60 by @RomneyDa in https://github.com/continuedev/continue/pull/10180\r\n* chore(deps): bump @modelcontextprotocol/sdk from 1.25.2 to 1.26.0 in /core by @dependabot[bot] in https://github.com/continuedev/continue/pull/10201\r\n* Update agent links and section title in docs index by @BekahHW in https://github.com/continuedev/continue/pull/10194\r\n\r\n## New Contributors\r\n* @ThanhNguyxn made their first contribution in https://github.com/continuedev/continue/pull/9497\r\n* @sarthakNITT made their first contribution in https://github.com/continuedev/continue/pull/9715\r\n* @silencezhoudev made their first contribution in https://github.com/continuedev/continue/pull/9743\r\n* @eliasto made their first contribution in https://github.com/continuedev/continue/pull/9663\r\n* @yumosx made their first contribution in https://github.com/continuedev/continue/pull/9568\r\n* @partha-sarathyy made their first contribution in https://github.com/continuedev/continue/pull/8738\r\n* @micalgenus made their first contribution in https://github.com/continuedev/continue/pull/10036\r\n* @Aboozle1 made their first contribution in https://github.com/continuedev/continue/pull/9989\r\n\r\n**Full Changelog**: https://github.com/continuedev/continue/compare/v1.2.14-vscode...v1.2.15-vscode",
+        "assets_count": 8,
+        "url": "https://github.com/continuedev/continue/releases/tag/v1.2.15-vscode",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增子代理功能",
+            "新增代理技能",
+            "无头模式下默认允许 MCP/Bash 工具",
+            "更新文档并添加本地运行代理说明",
+            "修复配置错误和添加使用统计"
+          ],
+          "summary_cn": "这是一个以功能更新为主的版本，主要引入了子代理和代理技能功能，增强了扩展性和定制化能力。同时包含多项依赖项更新、文档完善和错误修复，提升了整体稳定性和用户体验。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.96.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-04",
+        "summary": "## New Features\n- Added `thread/compact` to the v2 app-server API as an async trigger RPC, so clients can start compaction immediately and track completion separately. (#10445)\n- Added websocket-side rate limit signaling via a new `codex.rate_limits` event, with websocket parity for ETag/reasoning metadata handling. (#10324)\n- Enabled `unified_exec` on all non-Windows platforms. (#10641)\n- Constrained requirement values now include source provenance, enabling source-aware config debugging in UI flows like `/debug-config`. (#10568)\n\n## Bug Fixes\n- Fixed `Esc` handling in the TUI `request_user_input` overlay: when notes are open, `Esc` now exits notes mode instead of interrupting the session. (#10569)\n- Thread listing now queries the state DB first (including archived threads) and falls back to filesystem traversal only when needed, improving listing correctness and resilience. (#10544)\n- Fixed thread path lookup to require that the resolved file actually exists, preventing invalid thread-id resolutions. (#10618)\n- Dynamic tool injection now runs in a single transaction to avoid partial state updates. (#10614)\n- Refined `request_rule` guidance used in approval-policy prompting to correct rule behavior. (#10379, #10598)\n\n## Documentation\n- Updated app-server docs for `thread/compact` to clarify its asynchronous behavior and thread-busy lifecycle. (#10445)\n- Updated TUI docs to match the mode-specific `Esc` behavior in `request_user_input`. (#10569)\n\n## Chores\n- Migrated state DB helpers to a versioned SQLite filename scheme and cleaned up legacy state files during runtime initialization. (#10623)\n- Expanded runtime telemetry with websocket timing metrics and simplified internal metadata flow in core client plumbing. (#10577, #10589)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.95.0...rust-v0.96.0\n\n- #10569 tui: make Esc clear request_user_input notes while notes are shown @charley-oai\n- #10577 feat: log webscocket timing into runtime metrics @apanasenko-oai\n- #10445 Add thread/compact v2  @aibrahim-oai\n- #10589 Move metadata calculation out of client @pakrym-oai\n- #10379 fix(core) updated request_rule guidance @dylan-hurd-oai\n- #10598 fix(core) Request Rule guidance tweak @dylan-hurd-oai\n- #10544 Prefer state DB thread listings before filesystem @jif-oai\n- #10614 fix: single transaction for dyn tools injection @jif-oai\n- #10568 Requirements: add source to constrained requirement values @gt-oai\n- #10611 chore: simplify user message detection @jif-oai\n- #10618 fix: make sure file exist in `find_thread_path_by_id_str_in_subdir` @jif-oai\n- #10619 nit: cleaning @jif-oai\n- #10324 Add a codex.rate_limits event for websockets @rasmusrygaard\n- #10623 Migrate state DB path helpers to versioned filename @jif-oai\n- #10638 Update tests to stop using sse_completed fixture @pakrym-oai\n- #10641 feat: land unified_exec @jif-oai\n\n\n",
+        "assets_count": 75,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.96.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 thread/compact 异步触发 API，支持立即启动压缩并独立跟踪完成状态",
+            "在所有非 Windows 平台启用 unified_exec 功能",
+            "修复线程列表查询逻辑，优先使用状态 DB，提高正确性和弹性",
+            "改进 TUI 中 Esc 键处理行为，在 notes 打开时退出 notes 模式",
+            "迁移到版本化 SQLite 文件名方案，并清理旧的状态文件"
+          ],
+          "summary_cn": "rust-v0.96.0 版本主要新增了异步线程压缩 API 和速率限制事件信号，并在所有非 Windows 平台启用了 unified_exec 执行引擎。同时修复了线程列表查询、TUI 快捷键处理等多个问题，优化了状态数据库存储机制。此版本还包含了文档更新和运行时遥测指标的改进。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.3.11",
+        "author": "github-actions[bot]",
+        "date": "2026-02-04",
+        "summary": "Changes since deepagents==0.3.10\r\n* feat(sdk): subagent skills, middleware refactor (#1041)\r\n* fix(sdk): add newlines in tool result message for large outputs (#1053)\r\n\r\n---\r\n\r\nThanks to our contributors: @sydney-runkle",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.3.11",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 subagent 技能支持，扩展代理能力",
+            "SDK 中间件重构，优化架构设计",
+            "修复工具结果消息格式问题，改善大文本输出的可读性"
+          ],
+          "summary_cn": "deepagents v0.3.11 主要引入了 subagent 技能功能，并对 SDK 中间件进行了重构优化。同时修复了工具结果在大文本输出时的格式问题，通过添加换行符提升可读性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.222.2",
+        "author": "github-actions[bot]",
+        "date": "2026-02-04",
+        "summary": "This week's release includes support for [multiple edit prediction providers](https://zed.dev/blog/edit-prediction-providers) (GitHub Copilot's Next Edit Suggestions, Ollama, Codestral, Sweep, and Mercury Coder), zooming and panning in the image viewer, Windows as a supported target for SSH remoting, significantly reduced resource usage when watching filesystem changes on macOS, and the ability to rename terminal tabs via right-click or double-click.\r\n\r\n## Features\r\n\r\n### AI\r\n\r\n- Edit Prediction: Added support for multiple edit prediction providers, including GitHub Copilot's Next Edit Suggestions, Ollama, Codestral, Sweep, and Mercury Coder. To configure, open the `Edit Prediction` menu and select `Configure Providers`.\r\n- Agent: Made the message queue feature available for external agents as well. ([#47379](https://github.com/zed-industries/zed/pull/47379))\r\n- Agent: Added a menu for inserting context more easily with the mouse in the agent panel. ([#47768](https://github.com/zed-industries/zed/pull/47768))\r\n- Agent: Improved `@` file completions in agent panel to be more accurate. ([#47466](https://github.com/zed-industries/zed/pull/47466))\r\n- Agent: Improved double-click word selection in Agent Panel to respect punctuation and language-specific word characters. ([#47844](https://github.com/zed-industries/zed/pull/47844))\r\n- Agent: Added a setting for controlling the behavior of the stop button in the terminal tool call card (between cancelling the command to run and the thread, or just the command). ([#47521](https://github.com/zed-industries/zed/pull/47521))\r\n- Improved memory usage of large ACP thread diff multibuffers. ([#47526](https://github.com/zed-industries/zed/pull/47526))\r\n\r\n### Git\r\n\r\n- Improved the project picker in the Git panel by also displaying the Git status icon on them, to clearly indicate which repos have changes. ([#47752](https://github.com/zed-industries/zed/pull/47752); thanks [tartarughina](https://github.com/tartarughina))\r\n\r\n### Languages\r\n\r\n- C/C++: Added highlights for `#elifdef`, `#elifndef` directives and document comments. ([#45672](https://github.com/zed-industries/zed/pull/45672); thanks [hokein](https://github.com/hokein), [#47556](https://github.com/zed-industries/zed/pull/47556); thanks [ozacod](https://github.com/ozacod))\r\n- C++: Added first-line language detection for extensionless libc++ headers. ([#47443](https://github.com/zed-industries/zed/pull/47443); thanks [ozacod](https://github.com/ozacod))\r\n- C: Updated tree-sitter-c for highlighting attribute specifier. ([#47156](https://github.com/zed-industries/zed/pull/47156); thanks [ozacod](https://github.com/ozacod))\r\n- Go: Improved support to run table-test subtests, handling tests without explicitly declaring variables for test scenarios. ([#46645](https://github.com/zed-industries/zed/pull/46645); thanks [lzakharov](https://github.com/lzakharov))\r\n- Nim: Updated file aliases so icon is shown for `.nims`/`.nimble` files. ([#47616](https://github.com/zed-industries/zed/pull/47616); thanks [ire4ever1190](https://github.com/ire4ever1190))\r\n- TypeScript: Improved keyword syntax highlighting for declarations (`const`, `let`, `var`, `function`, `class`, `enum`, `interface`, `type`) and imports/exports (`export`, `from`, `import`). ([#47435](https://github.com/zed-industries/zed/pull/47435); thanks [ahcurrier](https://github.com/ahcurrier))\r\n\r\n### Terminal\r\n\r\n- Added ability to rename terminal tabs via right-click context menu and double-click. ([#45800](https://github.com/zed-industries/zed/pull/45800); thanks [tacshi](https://github.com/tacshi))\r\n\r\n### Vim / Helix\r\n\r\n- Added relative line jump support to go-to-line action via `+/-/f/b/F/B`. ([#46932](https://github.com/zed-industries/zed/pull/46932); thanks [KalaayPT](https://github.com/KalaayPT))\r\n- Added a `vim.gdefault` setting to make `/g` (replace all matches in a line) the default for substitutions, along with `:set gdefault` and `:set nogdefault` commands (short forms: `gd`, `nogd`). ([#47664](https://github.com/zed-industries/zed/pull/47664); thanks [bluetech](https://github.com/bluetech))\r\n\r\n### Remote Development\r\n\r\n- Added configurable remote server cache retention (default 5). ([#47202](https://github.com/zed-industries/zed/pull/47202); thanks [cppcoffee](https://github.com/cppcoffee))\r\n- Improved error handling in the dev container crate to prevent panics. ([#47513](https://github.com/zed-industries/zed/pull/47513); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Improved parsing of devcontainer CLI output when using earlier versions. ([#47403](https://github.com/zed-industries/zed/pull/47403); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Improved error messaging to guide user away from opening a dev container from within a remote project. ([#47816](https://github.com/zed-industries/zed/pull/47816); thanks [KyleBarton](https://github.com/KyleBarton))\r\n\r\n### Windows\r\n\r\n- Added support for Windows as a target platform for SSH remoting. ([#47460](https://github.com/zed-industries/zed/pull/47460))\r\n- Added \"Reveal in File Manager\" to the project panel context menu on WSL. ([#47288](https://github.com/zed-industries/zed/pull/47288))\r\n\r\n### Linux\r\n\r\n- Relaxed the checks on `xdg_wm_base` to ensure compatibility with Weston 9. ([#47185](https://github.com/zed-industries/zed/pull/47185); thanks [linghengqian](https://github.com/linghengqian))\r\n\r\n### macOS\r\n\r\n- Zed now uses significantly fewer resources when watching filesystem changes. ([#47322](https://github.com/zed-industries/zed/pull/47322); thanks [marcocondrache](https://github.com/marcocondrache))\r\n\r\n### Other\r\n\r\n- Added zooming and panning support in the image viewer with zoom in/out, reset, fit-to-view, zoom-to-actual actions, scroll-wheel zoom with modifier, click-and-drag panning, zoom percentage overlay, and toolbar controls. ([#43944](https://github.com/zed-industries/zed/pull/43944); thanks [MostlyKIGuess](https://github.com/MostlyKIGuess))\r\n- Added a menu item in the buffer and tab right-click menu for opening Markdown and SVG files in the preview tab. ([#47821](https://github.com/zed-industries/zed/pull/47821))\r\n- Added commands for extending selections to syntax node boundaries, i.e., `editor: select to start of larger syntax node` and `editor: select to end of larger syntax node`. ([#47571](https://github.com/zed-industries/zed/pull/47571); thanks [alexispurslane](https://github.com/alexispurslane))\r\n- Added support for specifying multiple snippets paths in extensions. ([#45829](https://github.com/zed-industries/zed/pull/45829))\r\n- Added `project_panel.bold_folder_labels` to show folder names with bold text in the project panel (defaults to `false`). ([#47631](https://github.com/zed-industries/zed/pull/47631); thanks [zertosh](https://github.com/zertosh))\r\n- Added a menu item to close the current project, going back to a clean window state. ([#47365](https://github.com/zed-industries/zed/pull/47365))\r\n- Added support for installing a specific Zed version via the `ZED_VERSION` environment variable in the install script (defaults to `latest` when unspecified). ([#45522](https://github.com/zed-industries/zed/pull/45522); thanks [mikelneonedwin](https://github.com/mikelneonedwin))\r\n- Added \"Reopen with Encoding\" feature (currently supported for local files). ([#46553](https://github.com/zed-industries/zed/pull/46553); thanks [tomopumipumi](https://github.com/tomopumipumi))\r\n- Improved empty workspaces with unsaved files to now restore on startup (hot-exit). ([#46557](https://github.com/zed-industries/zed/pull/46557); thanks [shfc](https://github.com/shfc))\r\n- Improved performance when a large number of files were open by making background diagnostics more efficient. ([#47510](https://github.com/zed-industries/zed/pull/47510))\r\n- Improved project search loading UI. ([#47620](https://github.com/zed-industries/zed/pull/47620); thanks [zertosh](https://github.com/zertosh))\r\n- Improved memory usage of large git diff multibuffers. ([#47524](https://github.com/zed-industries/zed/pull/47524))\r\n- Changed bold UI text to render using Plex SemiBold instead of Bold. ([#47725](https://github.com/zed-industries/zed/pull/47725))\r\n- Changed the auto signature popover — `\"auto_signature_help\": true` — to respect `hover_popover_delay`. ([#46745](https://github.com/zed-industries/zed/pull/46745); thanks [TheSalarKhan](https://github.com/TheSalarKhan))\r\n- Added server notifications auto-dismiss with `\"global_lsp_settings\": { \"notifications\": { \"dismiss_timeout_ms\": 5000 } }` setting. ([#46708](https://github.com/zed-industries/zed/pull/46708); thanks [tomatitito](https://github.com/tomatitito))\r\n- Added support for importing VS Code Insiders and VSCodium Insiders user settings (`settings.json`). ([#47247](https://github.com/zed-industries/zed/pull/47247); thanks [maj113](https://github.com/maj113))\r\n- Block cursor no longer reveals characters within redacted ranges. ([#45549](https://github.com/zed-industries/zed/pull/45549); thanks [tacshi](https://github.com/tacshi))\r\n\r\n## Bug Fixes\r\n\r\n- Agent: Fixed old AI text thread sessions failing to open from History when they contain icons that were removed in previous updates. ([#47624](https://github.com/zed-industries/zed/pull/47624); thanks [lex00](https://github.com/lex00))\r\n- Agent: Fixed a bug where the inline assistant feedback buttons were being displayed despite the setting \"Enable Feedback\" was turned off. ([#47382](https://github.com/zed-industries/zed/pull/47382))\r\n- Agent: Fixed cut-off mention creases in the inline assistant. ([#47772](https://github.com/zed-industries/zed/pull/47772))\r\n- Agent: Fixed message editor stealing focus from other panels. ([#47321](https://github.com/zed-industries/zed/pull/47321); thanks [fabianszabo](https://github.com/fabianszabo))\r\n- Settings UI: Fixed a bug with the number field rendering of the font weight setting. ([#47384](https://github.com/zed-industries/zed/pull/47384))\r\n- Vim/Helix: Fixed bug causing normal-mode vim/helix selections to get expanded during `vim::Scroll` commands. ([#47024](https://github.com/zed-industries/zed/pull/47024); thanks [jrobsonchase](https://github.com/jrobsonchase))\r\n- Rust: Fixed enum variants with no lower-case being highlighted as constants instead of types. ([#45546](https://github.com/zed-industries/zed/pull/45546); thanks [tacshi](https://github.com/tacshi))\r\n- Fixed typing emoji using the macOS system palette (`cmd-ctrl-space`). ([#47835](https://github.com/zed-industries/zed/pull/47835))\r\n- Fixed issue where user `.ssh/config` file would not parse if global ssh config file was not present. ([#47310](https://github.com/zed-industries/zed/pull/47310); thanks [Gaff](https://github.com/Gaff))\r\n- Fixed a bug where `workspace::SendKeystrokes` would not allow remapping keys in different keyboard layouts. ([#47061](https://github.com/zed-industries/zed/pull/47061); thanks [everdrone](https://github.com/everdrone))\r\n- Fixed a small issue where highlights of the syntax tree view would persist after the view was closed. ([#47638](https://github.com/zed-industries/zed/pull/47638))\r\n- Fixed a visual glitch with sticky scroll headers in markdown. ([#47314](https://github.com/zed-industries/zed/pull/47314); thanks [KyleBarton](https://github.com/KyleBarton))\r\n- Fixed alignment of folded directory names in project panel. ([#47648](https://github.com/zed-industries/zed/pull/47648))\r\n- Fixed an issue where deleted rules from the rules library were getting restored after a restart. ([#47323](https://github.com/zed-industries/zed/pull/47323))\r\n- Fixed an issue where the terminal would sometimes fail to write shell history. ([#47408](https://github.com/zed-industries/zed/pull/47408))\r\n- Fixed bracket color not updating when system theme changes. ([#47505](https://github.com/zed-industries/zed/pull/47505); thanks [smitchaudhary](https://github.com/smitchaudhary))\r\n- Fixed clearing hovered link when no target found. ([#47134](https://github.com/zed-industries/zed/pull/47134); thanks [cppcoffee](https://github.com/cppcoffee))\r\n- Fixed Conda showing up in terminal on Windows. ([#47261](https://github.com/zed-industries/zed/pull/47261))\r\n- Fixed extension uninstall button not working when an upgrade is available. ([#47745](https://github.com/zed-industries/zed/pull/47745); thanks [eureka928](https://github.com/eureka928))\r\n- Fixed language servers unnecessarily restarting when changing `lsp.<server>.settings` configuration. Dynamic settings are now properly updated via `workspace/didChangeConfiguration` without requiring a server restart. ([#47376](https://github.com/zed-industries/zed/pull/47376); thanks [aviatesk](https://github.com/aviatesk))\r\n- Fixed project-less workspaces not persisting their dock state. ([#45966](https://github.com/zed-industries/zed/pull/45966); thanks [ppfmagno](https://github.com/ppfmagno))\r\n- Fixed remote server binaries accumulating on WSL over time. ([#47839](https://github.com/zed-industries/zed/pull/47839))\r\n- Fixed \"Reveal in File Manager\" not working for WSL remote connections on Windows. ([#47288](https://github.com/zed-industries/zed/pull/47288))\r\n- Fixed some instances of authentication errors with the Zed API that could be resolved automatically by refreshing the token. ([#47512](https://github.com/zed-industries/zed/pull/47512))\r\n- Fixed struct union enum outline issues for C. ([#46125](https://github.com/zed-industries/zed/pull/46125); thanks [ozacod](https://github.com/ozacod))\r\n- Fixed terminal hanging when a child process is killed by a signal (e.g., SIGSEGV from null pointer dereference). ([#47420](https://github.com/zed-industries/zed/pull/47420))\r\n- Fixed user-defined tasks with unresolved `ZED_*` variables being silently omitted. ([#45621](https://github.com/zed-industries/zed/pull/45621); thanks [playdohface](https://github.com/playdohface))\r\n- Fixed vim mode incorrectly switching to Visual mode on first project search. ([#44284](https://github.com/zed-industries/zed/pull/44284); thanks [MostlyKIGuess](https://github.com/MostlyKIGuess))\r\n- Fixed vim mode paragraph motions (`}` and `{`) to correctly ignore whitespace-only lines. ([#47734](https://github.com/zed-industries/zed/pull/47734); thanks [lex00](https://github.com/lex00))\r\n- Fixed a crash in LoadingLabel's loading animation when displaying CJK or emoji text. ([#45632](https://github.com/zed-industries/zed/pull/45632); thanks [MomentDerek](https://github.com/MomentDerek))\r\n- Fixed uninitialized var declaration not being shown in outline. ([#46499](https://github.com/zed-industries/zed/pull/46499); thanks [hokein](https://github.com/hokein))\r\n- Fixed LSP integrations to send language server shutdown requests with correct parameters. ([#46027](https://github.com/zed-industries/zed/pull/46027); thanks [Spirrwell](https://github.com/Spirrwell))\r\n",
+        "assets_count": 12,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.222.2",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增多个编辑预测提供商支持，包括 GitHub Copilot Next Edit、Ollama、Codestral、Sweep 和 Mercury Coder",
+            "图像查看器新增缩放和平移功能",
+            "Windows 平台正式支持 SSH 远程连接",
+            "大幅优化 macOS 文件系统监听的资源占用",
+            "终端标签页支持右键或双击重命名"
+          ],
+          "summary_cn": "Zed v0.222.2 是一次重要的功能更新，重点增强了 AI 编辑能力，支持多个主流编辑预测提供商。同时改进了图像查看器的交互体验，将 SSH 远程功能扩展至 Windows 平台，并显著优化了 macOS 上的文件系统监听性能。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "langchain-ai/deepagents",
+      "tag_name": "deepagents-cli==0.0.18",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "移除 `/exit` 命令",
+          "impact": "low",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "openai/codex",
+      "tag_name": "rust-v0.96.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "状态数据库迁移至版本化文件名方案，旧版遗留文件将在运行时清理",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "TUI `request_user_input` 覆盖层中的 `Esc` 行为变更：当笔记打开时，`Esc` 现在退出笔记模式而不是中断会话",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issues": {
+    "total_count": 513,
+    "bug_reports": 355,
+    "feature_requests": 127,
+    "questions": 22,
+    "discussions": 9,
+    "sentiment_distribution": {
+      "positive": 64,
+      "neutral": 231,
+      "negative": 218
+    },
+    "top_pain_points": [
+      {
+        "topic": "VMP-1.0 Protocol Announcement - BotNode.io",
+        "count": 2,
+        "avg_sentiment": 0.725,
+        "affected_repos": [
+          "microsoft/autogen",
+          "langchain-ai/langgraph"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langgraph/issues/6745",
+          "https://github.com/microsoft/autogen/issues/7206"
+        ]
+      },
+      {
+        "topic": "After installing Docker with the default environment, the application remains stuck at the installation interface when launched",
+        "count": 2,
+        "avg_sentiment": -0.55,
+        "affected_repos": [
+          "langgenius/dify"
+        ],
+        "sample_urls": [
+          "https://github.com/langgenius/dify/issues/31996",
+          "https://github.com/langgenius/dify/issues/31995"
+        ]
+      }
+    ]
+  }
+}
