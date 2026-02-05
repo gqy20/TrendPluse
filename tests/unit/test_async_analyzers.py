@@ -2,10 +2,8 @@
 
 import pytest
 
-from trendpluse.analyzers.issue_analyzer import IssueAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
-from trendpluse.models.issue import IssueAnalysis, IssueInfo
 from trendpluse.models.signal import ReleaseSummary, Signal
 
 
@@ -56,44 +54,6 @@ async def test_trend_analyzer_analyze_prs_async():
     results = await analyzer.analyze_prs_async(pr_list, max_workers=2)
     assert len(results) == 1
     assert results[0].id == "pr-1"
-
-
-@pytest.mark.asyncio
-async def test_issue_analyzer_analyze_batch_async():
-    analyzer = IssueAnalyzer(api_key="test", model="test")
-    analyzer.async_instructor_client = _AsyncInstructorClientStub(
-        IssueAnalysis(
-            category="bug_report",
-            sentiment="neutral",
-            sentiment_score=0,
-            pain_point="测试",
-            affected_area=None,
-            feature_description=None,
-            priority="low",
-            technical_tags=[],
-        )
-    )
-
-    issue = IssueInfo(
-        repo="repo/a",
-        issue_id=1,
-        title="Bug",
-        body="Body",
-        state="open",
-        author="alice",
-        created_at="2026-01-01T00:00:00Z",
-        updated_at="2026-01-01T00:00:00Z",
-        closed_at=None,
-        comments=0,
-        labels=[],
-        url="https://github.com/repo/a/issues/1",
-        last_comment_days=1,
-        is_recently_active=True,
-    )
-
-    results = await analyzer.analyze_batch_async([issue], max_workers=2)
-    assert "repo/a#1" in results
-    assert results["repo/a#1"].category == "bug_report"
 
 
 @pytest.mark.asyncio

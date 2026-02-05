@@ -5,9 +5,6 @@
 
 from pathlib import Path
 
-# Issue 数据需要延迟导入以避免循环导入
-from typing import TYPE_CHECKING
-
 from trendpluse.models.signal import (
     ActivityData,
     CoreTrend,  # noqa: F401 (used in WeeklyReport.core_trends type annotation)
@@ -23,9 +20,6 @@ from trendpluse.utils.formatters import (
     get_impact_emoji,
     get_release_type_emoji,
 )
-
-if TYPE_CHECKING:
-    from trendpluse.models.issue import IssueData
 
 
 class MarkdownReporter:
@@ -141,11 +135,6 @@ class MarkdownReporter:
         if report.activity:
             activity_section = "\n\n" + self._render_activity(report.activity)
 
-        # Issue 信息（仅在有内容时渲染）
-        issues_section = ""
-        if report.issues:
-            issues_section = "\n" + self._render_issues(report.issues)
-
         # 统计信息
         stats_section = self._render_stats(report.stats)
 
@@ -159,7 +148,6 @@ class MarkdownReporter:
             + release_section
             + breaking_changes_section
             + activity_section
-            + issues_section
             + stats_section
         )
 
@@ -285,78 +273,6 @@ class MarkdownReporter:
 
         return "".join(lines)
 
-    def _render_issues(self, issues: "IssueData") -> str:
-        """渲染 Issue 数据
-
-        Args:
-            issues: Issue 数据
-
-        Returns:
-            Markdown 格式的 Issue 信息
-        """
-        lines = ["---\n", "\n## 🐛 Issue 分析\n\n"]
-
-        # 总览
-        lines.append("### 总览\n\n")
-        lines.append(f"- **总 Issue 数**: {issues.total_count}\n")
-        analyzed_count = (
-            issues.bug_reports
-            + issues.feature_requests
-            + issues.questions
-            + issues.discussions
-        )
-        lines.append(f"- **已分析**: {analyzed_count}\n")
-        lines.append(f"  - Bug 报告: {issues.bug_reports}\n")
-        lines.append(f"  - 功能请求: {issues.feature_requests}\n")
-        lines.append(f"  - 问题: {issues.questions}\n")
-        lines.append(f"  - 讨论: {issues.discussions}\n")
-
-        # 情绪分布
-        if issues.sentiment_distribution:
-            lines.append("\n### 情绪分布\n\n")
-            positive = issues.sentiment_distribution.get("positive", 0)
-            neutral = issues.sentiment_distribution.get("neutral", 0)
-            negative = issues.sentiment_distribution.get("negative", 0)
-
-            lines.append(f"- 😊 正面: {positive}\n")
-            lines.append(f"- 😐 中性: {neutral}\n")
-            lines.append(f"- 😞 负面: {negative}\n")
-
-        # 痛点排行
-        if issues.top_pain_points:
-            lines.append("\n### 用户痛点 TOP 5\n\n")
-            lines.append("| 排名 | 痛点 | 提及次数 | 平均情绪 | 受影响仓库 |\n")
-            lines.append("|------|------|----------|----------|------------|\n")
-
-            for i, pain_point in enumerate(issues.top_pain_points[:5], 1):
-                # 计算情绪 emoji
-                avg_sentiment = pain_point.avg_sentiment
-                if avg_sentiment > 0.3:
-                    sentiment_emoji = "😊"
-                elif avg_sentiment < -0.3:
-                    sentiment_emoji = "😞"
-                else:
-                    sentiment_emoji = "😐"
-
-                # 格式化仓库名称（最多显示 2 个）
-                repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
-                if len(pain_point.affected_repos) > 2:
-                    repos_str += f" (+{len(pain_point.affected_repos) - 2})"
-
-                table_row = (
-                    f"| {i} | {pain_point.topic} | {pain_point.count} | "
-                    f"{sentiment_emoji} {avg_sentiment:.2f} | {repos_str} |\n"
-                )
-                lines.append(table_row)
-
-            # 添加示例链接（如果有）
-            if issues.top_pain_points[0].sample_urls:
-                lines.append("\n**示例**:\n\n")
-                for url in issues.top_pain_points[0].sample_urls[:3]:
-                    lines.append(f"- [{format_source_url(url)}]({url})\n")
-
-        return "".join(lines)
-
     def _format_stat_label(self, key: str) -> str:
         """格式化统计标签
 
@@ -373,8 +289,6 @@ class MarkdownReporter:
             "total_commits_analyzed": "分析 Commit 数",
             "total_releases_analyzed": "分析 Release 数",
             "total_breaking_changes": "Breaking Changes 数",
-            "total_issues": "Issue 总数",
-            "total_issues_analyzed": "已分析 Issue 数",
         }
         return labels.get(key, key)
 
