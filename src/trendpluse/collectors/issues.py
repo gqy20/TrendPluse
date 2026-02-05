@@ -35,12 +35,14 @@ class IssueCollector(BaseGitHubCollector):
         """
         super().__init__(token)
         self.snapshot = IssueSnapshot(snapshot_dir)
+        self.max_issues_per_repo = 20
 
     def fetch_issues(
         self,
         repos: list[str],
         snapshot_date: str | None = None,
         max_workers: int | None = None,
+        max_issues_per_repo: int | None = None,
     ) -> tuple[list[IssueInfo], dict[str, int]]:
         """采集指定仓库的 Issues
 
@@ -56,6 +58,9 @@ class IssueCollector(BaseGitHubCollector):
         analyzed_ids = self.snapshot.load_analyzed_ids(snapshot_date or "")
 
         # 并行获取所有仓库的 Issues
+        if max_issues_per_repo is not None:
+            self.max_issues_per_repo = max_issues_per_repo
+
         all_issues = parallel_execute(
             lambda repo: self._fetch_repo_issues(repo, analyzed_ids),
             repos,
@@ -123,6 +128,8 @@ class IssueCollector(BaseGitHubCollector):
                 # 转换为 IssueInfo
                 issue_info = self._convert_to_issue_info(issue, repo_name, now)
                 issues.append(issue_info)
+                if len(issues) >= self.max_issues_per_repo:
+                    break
 
         except GithubException as e:
             logger.error(f"获取仓库 {repo_name} Issues 失败: {e}")

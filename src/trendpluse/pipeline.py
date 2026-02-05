@@ -4,6 +4,7 @@
 """
 
 import asyncio
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -161,13 +162,12 @@ class TrendPulsePipeline:
         day_ago = date - timedelta(days=1)
 
         # 0. 收集仓库活跃度数据（使用 GraphQL API，查询最近 24 小时）
-        (
-            activity_data,
-            detailed_commits,
-        ) = self.activity_collector.collect_activity_graphql(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            max_workers=self.settings.max_parallel_workers,
+        activity_data, detailed_commits = (
+            self.activity_collector.collect_activity_graphql(
+                repos=self.settings.github_repos,
+                since=day_ago,
+                max_workers=self.settings.max_parallel_workers,
+            )
         )
 
         # 0.3. 收集 Releases 数据（只分析最近 24 小时）
@@ -214,6 +214,7 @@ class TrendPulsePipeline:
             repos=self.settings.github_repos,
             snapshot_date=date.strftime("%Y-%m-%d"),
             max_workers=self.settings.max_parallel_workers,
+            max_issues_per_repo=self.settings.max_issues_per_repo,
         )
 
         # 0.9. AI 分析 Issues
@@ -344,11 +345,14 @@ class TrendPulsePipeline:
         Returns:
             每日报告
         """
+        start_time = time.perf_counter()
+
         if date is None:
             date = datetime.now()
 
         day_ago = date - timedelta(days=1)
 
+        step_start = time.perf_counter()
         activity_data, detailed_commits = (
             self.activity_collector.collect_activity_graphql(
                 repos=self.settings.github_repos,
@@ -356,12 +360,23 @@ class TrendPulsePipeline:
                 max_workers=self.settings.max_parallel_workers,
             )
         )
+        logger.info(
+            "Activity collection done in %.2fs (commits=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_commits),
+        )
 
+        step_start = time.perf_counter()
         releases_data, detailed_releases = self.release_collector.collect_releases(
             repos=self.settings.github_repos,
             since=day_ago,
             include_prereleases=self.settings.include_prereleases,
             max_workers=self.settings.max_parallel_workers,
+        )
+        logger.info(
+            "Release collection done in %.2fs (releases=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_releases),
         )
 
         tasks: dict[str, asyncio.Task[Any]] = {}
@@ -386,10 +401,17 @@ class TrendPulsePipeline:
                 self.commit_analyzer.analyze_commits_async(detailed_commits)
             )
 
+        step_start = time.perf_counter()
         detailed_issues, issues_stats = self.issue_collector.fetch_issues(
             repos=self.settings.github_repos,
             snapshot_date=date.strftime("%Y-%m-%d"),
             max_workers=self.settings.max_parallel_workers,
+            max_issues_per_repo=self.settings.max_issues_per_repo,
+        )
+        logger.info(
+            "Issue collection done in %.2fs (issues=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_issues),
         )
 
         if detailed_issues:
@@ -400,7 +422,13 @@ class TrendPulsePipeline:
         results: dict[str, object] = {}
         if tasks:
             task_names = list(tasks.keys())
+            async_start = time.perf_counter()
             task_results = await asyncio.gather(*tasks.values(), return_exceptions=True)
+            logger.info(
+                "Async analysis done in %.2fs (tasks=%d)",
+                time.perf_counter() - async_start,
+                len(task_names),
+            )
             results = dict(zip(task_names, task_results))
 
         summaries: dict[str, Any] = {}
@@ -470,41 +498,73 @@ class TrendPulsePipeline:
                 top_pain_points=pain_points[:5],
             )
 
+        step_start = time.perf_counter()
         events = self.collector.fetch_events(
             repos=self.settings.github_repos,
             since=day_ago,
             max_workers=self.settings.max_parallel_workers,
         )
+        logger.info(
+            "Event collection done in %.2fs (events=%d)",
+            time.perf_counter() - step_start,
+            len(events),
+        )
 
+        step_start = time.perf_counter()
         candidates = self.filter.filter_candidates(events)
+        logger.info(
+            "Candidate filtering done in %.2fs (candidates=%d)",
+            time.perf_counter() - step_start,
+            len(candidates),
+        )
 
         if not candidates:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
+        step_start = time.perf_counter()
         pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
+        logger.info(
+            "PR detail fetch done in %.2fs (prs=%d)",
+            time.perf_counter() - step_start,
+            len(pr_details),
+        )
 
         if not pr_details:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
+        step_start = time.perf_counter()
         signals = await self.analyzer.analyze_prs_async(pr_details)
+        logger.info(
+            "PR analysis done in %.2fs (signals=%d)",
+            time.perf_counter() - step_start,
+            len(signals),
+        )
 
         if not signals:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data, issues_final_data
             )
 
+        step_start = time.perf_counter()
         pr_signals = self.deduplicator.deduplicate(signals)
+        logger.info(
+            "Deduplication done in %.2fs (signals=%d)",
+            time.perf_counter() - step_start,
+            len(pr_signals),
+        )
 
+        step_start = time.perf_counter()
         report = await self.analyzer.aggregate_and_generate_report_async(
             pr_signals=pr_signals,
             commit_signals=commit_signals,
             release_signals=release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
+        logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
 
         report.commit_signals = []
         report.activity = activity_data
@@ -525,6 +585,7 @@ class TrendPulsePipeline:
         self.reporter.save_report(report, output_path)
         self._save_report_json(report, output_path)
         self._send_notification(report)
+        logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
 
         return report
 

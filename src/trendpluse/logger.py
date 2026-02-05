@@ -1,6 +1,7 @@
 """日志模块 - Rich 格式化支持"""
 
 import logging
+import os
 from pathlib import Path
 
 from rich.console import Console
@@ -47,6 +48,10 @@ def setup_logger(
         >>> logger.info("应用程序已启动")
         >>> logger.debug("调试信息")
     """
+    env_level = os.getenv("LOG_LEVEL", "").strip().upper()
+    if env_level:
+        level = getattr(logging, env_level, level)
+
     logger = logging.getLogger(name)
     logger.setLevel(level)
 

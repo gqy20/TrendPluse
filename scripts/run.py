@@ -17,9 +17,11 @@ from rich.panel import Panel
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from trendpluse.config import Settings
+from trendpluse.logger import get_logger
 from trendpluse.pipeline import TrendPulsePipeline
 
 console = Console()
+logger = get_logger(__name__)
 
 
 def check_env_vars() -> bool:
@@ -94,8 +96,10 @@ def main():
 
         # 运行每日分析
         console.print("\n[bold]开始分析...[/bold]")
+        logger.info("Daily pipeline started")
         date = datetime.now()
         report = asyncio.run(pipeline.run_daily_async(date=date))
+        logger.info("Daily pipeline finished")
 
         # 显示结果
         result_text = (

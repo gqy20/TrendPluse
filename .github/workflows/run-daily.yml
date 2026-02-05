@@ -53,6 +53,7 @@ jobs:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_LEVEL: INFO
         run: uv run python scripts/run.py
 
       - name: Get report date
@@ -78,6 +79,7 @@ jobs:
           path: |
             reports/daily/report-*.md
             reports/daily/report-*.json
+            logs/*.log
           retention-days: 30
 
       - name: Sync reports to docs

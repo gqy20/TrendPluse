@@ -183,6 +183,12 @@ class Settings(BaseSettings):
         le=32,
         description="并行采集的最大线程数（1-32，默认8）",
     )
+    max_issues_per_repo: int = Field(
+        default=20,
+        ge=1,
+        le=200,
+        description="每个仓库最多抓取的 Issue 数量（默认20）",
+    )
 
     # 成本控制
     daily_token_budget: int = 100_000
