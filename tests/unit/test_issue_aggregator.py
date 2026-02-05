@@ -6,7 +6,7 @@
 from datetime import UTC, datetime
 
 from trendpluse.aggregators.issue_aggregator import IssueAggregator
-from trendpluse.models.issue import IssueAnalysis, IssueInfo
+from trendpluse.models.issue import IssueAnalysis, IssueInfo, IssueQualityDecision
 
 
 class TestIssueAggregator:
@@ -161,6 +161,119 @@ class TestIssueAggregator:
         assert "repo1" in repos
         assert "repo2" in repos
 
+    def test_aggregate_skips_announcement_titles(self):
+        """公告/推广类标题应被过滤"""
+        aggregator = IssueAggregator(min_mentions=1)
+        now = datetime.now(UTC)
+
+        issues = [
+            self._create_issue(now, 1, "Protocol Announcement: VMP 1.0"),
+        ]
+        analyses = {
+            "test/repo#1": self._create_analysis(
+                "bug_report", "negative", 0.0, "Protocol Announcement: VMP 1.0"
+            )
+        }
+
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+        assert pain_points == []
+
+    def test_aggregate_requires_bug_feature_question_labels(self):
+        """仅保留 bug/feature/question 标签的 issue"""
+        aggregator = IssueAggregator(min_mentions=1)
+        now = datetime.now(UTC)
+
+        issues = [
+            self._create_issue(
+                now, 1, "Docs update", labels=["documentation"], repo="test/repo"
+            ),
+            self._create_issue(now, 2, "Bug found", labels=["bug"], repo="test/repo"),
+        ]
+        analyses = {
+            "test/repo#1": self._create_analysis(
+                "bug_report", "negative", 0.0, "Docs update"
+            ),
+            "test/repo#2": self._create_analysis(
+                "bug_report", "negative", 0.0, "Bug found"
+            ),
+        }
+
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+        assert len(pain_points) == 1
+        assert pain_points[0].topic == "Bug found"
+
+    def test_aggregate_uses_llm_normalized_topic(self):
+        """使用 LLM 归一化后的主题展示"""
+
+        class StubNormalizer:
+            def normalize_topics(self, topics):
+                return {topics[0]: "安装卡住"}
+
+        aggregator = IssueAggregator(min_mentions=1, topic_normalizer=StubNormalizer())
+        now = datetime.now(UTC)
+
+        issues = [self._create_issue(now, 1, "Install stuck on Docker", repo="r/a")]
+        analyses = {
+            "r/a#1": self._create_analysis(
+                "bug_report", "negative", 0.0, "Install stuck on Docker"
+            )
+        }
+
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+        assert len(pain_points) == 1
+        assert pain_points[0].topic == "安装卡住"
+
+    def test_aggregate_skips_when_quality_gate_excludes(self):
+        """质量判定为排除时应跳过"""
+
+        class StubQualityGate:
+            def evaluate(self, issues):
+                issue = issues[0]
+                return {
+                    f"{issue.repo}#{issue.issue_id}": IssueQualityDecision(
+                        include=False, reason="公告", normalized_topic=None
+                    )
+                }
+
+        aggregator = IssueAggregator(min_mentions=1, quality_gate=StubQualityGate())
+        now = datetime.now(UTC)
+
+        issues = [self._create_issue(now, 1, "Release Announcement", repo="r/a")]
+        analyses = {
+            "r/a#1": self._create_analysis(
+                "bug_report", "negative", 0.0, "Release Announcement"
+            )
+        }
+
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+        assert pain_points == []
+
+    def test_aggregate_uses_quality_gate_topic_as_fallback(self):
+        """当 pain_point 缺失时使用质量判定的主题"""
+
+        class StubQualityGate:
+            def evaluate(self, issues):
+                issue = issues[0]
+                return {
+                    f"{issue.repo}#{issue.issue_id}": IssueQualityDecision(
+                        include=True, reason=None, normalized_topic="安装失败"
+                    )
+                }
+
+        aggregator = IssueAggregator(min_mentions=1, quality_gate=StubQualityGate())
+        now = datetime.now(UTC)
+
+        issues = [self._create_issue(now, 1, "Install failed", repo="r/a")]
+        analyses = {
+            "r/a#1": self._create_analysis(
+                "bug_report", "negative", 0.0, pain_point=None
+            )
+        }
+
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+        assert len(pain_points) == 1
+        assert pain_points[0].topic == "安装失败"
+
     def test_aggregate_collects_sample_urls(self):
         """测试收集示例 URL"""
         # Arrange
@@ -276,6 +389,7 @@ class TestIssueAggregator:
         title: str,
         repo: str = "test/repo",
         url: str = "https://github.com/test/repo/issues/1",
+        labels: list[str] | None = None,
     ) -> IssueInfo:
         """创建测试用 Issue"""
         return IssueInfo(
@@ -289,7 +403,7 @@ class TestIssueAggregator:
             updated_at=now,
             closed_at=None,
             comments=0,
-            labels=[],
+            labels=labels or ["bug"],
             url=url,
             last_comment_days=0,
             is_recently_active=False,

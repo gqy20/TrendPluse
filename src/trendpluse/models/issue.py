@@ -110,6 +110,14 @@ class IssueData(BaseModel):
     top_pain_points: list[UserPainPoint] = Field(default_factory=list)
 
 
+class IssueQualityDecision(BaseModel):
+    """Issue 质量判定结果（用于过滤与主题补全）"""
+
+    include: bool = Field(description="是否保留该 Issue")
+    reason: str | None = Field(default=None, description="排除/保留原因")
+    normalized_topic: str | None = Field(default=None, description="归一化后的中文主题")
+
+
 class BatchIssueAnalysis(BaseModel):
     """批量 Issue 分析结果
 

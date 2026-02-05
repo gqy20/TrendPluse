@@ -12,11 +12,13 @@ from typing import Any
 from anthropic import Anthropic
 
 from trendpluse.aggregators.issue_aggregator import IssueAggregator
+from trendpluse.aggregators.issue_topic_normalizer import IssueTopicNormalizer
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
 )
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.issue_analyzer import IssueAnalyzer
+from trendpluse.analyzers.issue_quality_analyzer import IssueQualityAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
@@ -109,7 +111,26 @@ class TrendPulsePipeline:
             retry_wait_min=self.settings.llm_retry_wait_min,
             retry_wait_max=self.settings.llm_retry_wait_max,
         )
-        self.issue_aggregator = IssueAggregator(min_mentions=2)
+        self.issue_quality_analyzer = IssueQualityAnalyzer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=self.settings.llm_retry_max_attempts,
+            retry_wait_min=self.settings.llm_retry_wait_min,
+            retry_wait_max=self.settings.llm_retry_wait_max,
+        )
+        self.issue_aggregator = IssueAggregator(
+            min_mentions=2,
+            topic_normalizer=IssueTopicNormalizer(
+                api_key=self.settings.anthropic_api_key,
+                model=self.settings.anthropic_model,
+                base_url=self.settings.anthropic_base_url,
+                retry_max_attempts=self.settings.llm_retry_max_attempts,
+                retry_wait_min=self.settings.llm_retry_wait_min,
+                retry_wait_max=self.settings.llm_retry_wait_max,
+            ),
+            quality_gate=self.issue_quality_analyzer,
+        )
         self.filter = EventFilter(
             max_count=self.settings.max_candidates,
             enable_open_prs=self.settings.enable_open_prs,

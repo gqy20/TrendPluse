@@ -4,12 +4,26 @@
 """
 
 from collections import defaultdict
+from typing import Protocol
 
 from trendpluse.logger import get_logger
-from trendpluse.models.issue import IssueAnalysis, IssueInfo, UserPainPoint
+from trendpluse.models.issue import (
+    IssueAnalysis,
+    IssueInfo,
+    IssueQualityDecision,
+    UserPainPoint,
+)
 from trendpluse.utils.text import sanitize_optional_text
 
 logger = get_logger(__name__)
+
+
+class IssueTopicNormalizer(Protocol):
+    def normalize_topics(self, topics: list[str]) -> dict[str, str]: ...
+
+
+class IssueQualityGate(Protocol):
+    def evaluate(self, issues: list[IssueInfo]) -> dict[str, IssueQualityDecision]: ...
 
 
 class IssueAggregator:
@@ -18,13 +32,20 @@ class IssueAggregator:
     从多个 Issues 中聚合用户痛点。
     """
 
-    def __init__(self, min_mentions: int = 3):
+    def __init__(
+        self,
+        min_mentions: int = 3,
+        topic_normalizer: IssueTopicNormalizer | None = None,
+        quality_gate: IssueQualityGate | None = None,
+    ):
         """初始化聚合器
 
         Args:
             min_mentions: 最小提及次数阈值
         """
         self.min_mentions = min_mentions
+        self.topic_normalizer = topic_normalizer
+        self.quality_gate = quality_gate
 
     def aggregate_pain_points(
         self,
@@ -48,6 +69,8 @@ class IssueAggregator:
         # 保留原始文本（归一化 key → 原始文本）
         original_text_map: dict[str, str] = {}
 
+        quality_decisions = self._evaluate_issue_quality(issues)
+
         for issue in issues:
             key = f"{issue.repo}#{issue.issue_id}"
             analysis = analyses.get(key)
@@ -55,8 +78,17 @@ class IssueAggregator:
             if not analysis:
                 continue
 
+            decision = quality_decisions.get(key)
+            if decision is not None:
+                if not decision.include:
+                    continue
+            elif not self._should_include_issue(issue):
+                continue
+
             # 获取痛点，优先使用 pain_point，fallback 到标题
             pain_point = sanitize_optional_text(analysis.pain_point)
+            if not pain_point and decision is not None:
+                pain_point = sanitize_optional_text(decision.normalized_topic)
             if not pain_point:
                 pain_point = issue.title
             if not pain_point:
@@ -75,6 +107,7 @@ class IssueAggregator:
 
         # 构建痛点列表
         pain_points = []
+        normalized_topics = self._normalize_topics_with_llm(list(pain_point_map.keys()))
         for normalized_topic, issue_ids in pain_point_map.items():
             if len(issue_ids) >= self.min_mentions:
                 # 计算平均情绪分数
@@ -85,10 +118,12 @@ class IssueAggregator:
                 original_topic = original_text_map.get(
                     normalized_topic, normalized_topic
                 )
+                normalized_display = normalized_topics.get(normalized_topic)
+                display_topic = normalized_display or original_topic
 
                 pain_points.append(
                     UserPainPoint(
-                        topic=original_topic,
+                        topic=display_topic,
                         count=len(issue_ids),
                         avg_sentiment=avg_sentiment,
                         affected_repos=list(affected_repos[normalized_topic]),
@@ -105,6 +140,52 @@ class IssueAggregator:
         )
 
         return pain_points
+
+    def _evaluate_issue_quality(
+        self, issues: list[IssueInfo]
+    ) -> dict[str, IssueQualityDecision]:
+        if not self.quality_gate or not issues:
+            return {}
+
+        try:
+            return self.quality_gate.evaluate(issues)
+        except Exception as exc:
+            logger.debug(f"Issue 质量判定失败: {exc}")
+            return {}
+
+    def _should_include_issue(self, issue: IssueInfo) -> bool:
+        title = (issue.title or "").lower()
+        blocked_keywords = ("announcement", "release", "protocol")
+        if any(keyword in title for keyword in blocked_keywords):
+            return False
+
+        if not issue.labels:
+            return False
+
+        allowed_keywords = ("bug", "feature", "question")
+        if not any(
+            keyword in label.lower()
+            for label in issue.labels
+            for keyword in allowed_keywords
+        ):
+            return False
+
+        return True
+
+    def _normalize_topics_with_llm(self, topics: list[str]) -> dict[str, str]:
+        if not topics or not self.topic_normalizer:
+            return {}
+
+        try:
+            normalized = self.topic_normalizer.normalize_topics(topics)
+        except Exception as exc:
+            logger.debug(f"痛点主题 LLM 归一化失败: {exc}")
+            return {}
+
+        if not isinstance(normalized, dict):
+            return {}
+
+        return {k: v for k, v in normalized.items() if v}
 
     def _normalize_pain_point(self, pain_point: str) -> str:
         """归一化痛点文本
