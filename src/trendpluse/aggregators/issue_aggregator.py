@@ -68,6 +68,14 @@ class IssueAggregator:
         sample_issues: dict[str, list[str]] = defaultdict(list)
         # 保留原始文本（归一化 key → 原始文本）
         original_text_map: dict[str, str] = {}
+        stats = {
+            "total": len(issues),
+            "missing_analysis": 0,
+            "excluded_quality": 0,
+            "excluded_heuristic": 0,
+            "missing_pain_point": 0,
+            "included": 0,
+        }
 
         quality_decisions = self._evaluate_issue_quality(issues)
 
@@ -76,13 +84,16 @@ class IssueAggregator:
             analysis = analyses.get(key)
 
             if not analysis:
+                stats["missing_analysis"] += 1
                 continue
 
             decision = quality_decisions.get(key)
             if decision is not None:
                 if not decision.include:
+                    stats["excluded_quality"] += 1
                     continue
             elif not self._should_include_issue(issue, analysis):
+                stats["excluded_heuristic"] += 1
                 continue
 
             # 获取痛点，优先使用 pain_point，fallback 到标题
@@ -92,6 +103,7 @@ class IssueAggregator:
             if not pain_point:
                 pain_point = issue.title
             if not pain_point:
+                stats["missing_pain_point"] += 1
                 continue
 
             # 归一化痛点文本用于聚合
@@ -104,10 +116,16 @@ class IssueAggregator:
             # 保留原始文本（第一个出现的）
             if normalized_topic not in original_text_map:
                 original_text_map[normalized_topic] = pain_point
+            stats["included"] += 1
 
         # 构建痛点列表
         pain_points = []
         normalized_topics = self._normalize_topics_with_llm(list(pain_point_map.keys()))
+        below_threshold = sum(
+            1
+            for issue_ids in pain_point_map.values()
+            if len(issue_ids) < self.min_mentions
+        )
         for normalized_topic, issue_ids in pain_point_map.items():
             if len(issue_ids) >= self.min_mentions:
                 # 计算平均情绪分数
@@ -135,8 +153,20 @@ class IssueAggregator:
         pain_points.sort(key=lambda p: p.count, reverse=True)
 
         logger.info(
-            f"痛点聚合完成: {len(pain_points)} 个痛点 "
-            f"(最低提及次数: {self.min_mentions})"
+            "痛点聚合完成: %s 个痛点 (最低提及次数: %s) | "
+            "issues=%s included=%s missing_analysis=%s excluded_quality=%s "
+            "excluded_heuristic=%s missing_pain_point=%s below_threshold=%s "
+            "normalized_topics=%s",
+            len(pain_points),
+            self.min_mentions,
+            stats["total"],
+            stats["included"],
+            stats["missing_analysis"],
+            stats["excluded_quality"],
+            stats["excluded_heuristic"],
+            stats["missing_pain_point"],
+            below_threshold,
+            len(normalized_topics),
         )
 
         return pain_points
