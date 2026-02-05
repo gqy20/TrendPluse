@@ -33,9 +33,10 @@ class Settings(BaseSettings):
     github_token: str = Field(
         default="",
         description=(
-            "GitHub Personal Access Token（优先 GITHUB_PAT，其次 GITHUB_TOKEN）"
+            "GitHub Personal Access Token（优先 PAT_TOKEN，"
+            "其次 GITHUB_PAT/GITHUB_TOKEN）"
         ),
-        validation_alias=AliasChoices("GITHUB_PAT", "GITHUB_TOKEN"),
+        validation_alias=AliasChoices("PAT_TOKEN", "GITHUB_PAT", "GITHUB_TOKEN"),
     )
     github_repos: list[str] = Field(
         default=[
