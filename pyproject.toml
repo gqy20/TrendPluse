@@ -126,6 +126,8 @@ ignore_missing_imports = true
 # 忽略没有 stubs 的第三方库
 [[tool.mypy.overrides]]
 module = [
+    "pydantic",
+    "pydantic.*",
     "anthropic.*",
     "instructor.*",
     "google.cloud.*",

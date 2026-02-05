@@ -6,7 +6,9 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+from trendpluse.utils.text import sanitize_optional_text
 
 
 class IssueAnalysis(BaseModel):
@@ -38,6 +40,15 @@ class IssueAnalysis(BaseModel):
 
     # 技术标签
     tech_tags: list[str] = Field(default_factory=list, description="技术标签")
+
+    @field_validator("pain_point", "affected_area", "feature_description")
+    @classmethod
+    def _sanitize_optional_text(cls, value: str | None) -> str | None:
+        """清洗可选文本字段。
+
+        将无效占位符或空文本转为 None，避免污染聚合结果。
+        """
+        return sanitize_optional_text(value)
 
 
 class IssueInfo(BaseModel):

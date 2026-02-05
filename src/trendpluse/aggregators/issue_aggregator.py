@@ -5,9 +5,9 @@
 
 from collections import defaultdict
 
-from trendpluse.analyzers.issue_analyzer import IssueAnalysis
 from trendpluse.logger import get_logger
-from trendpluse.models.issue import IssueInfo, UserPainPoint
+from trendpluse.models.issue import IssueAnalysis, IssueInfo, UserPainPoint
+from trendpluse.utils.text import sanitize_optional_text
 
 logger = get_logger(__name__)
 
@@ -56,7 +56,9 @@ class IssueAggregator:
                 continue
 
             # 获取痛点，优先使用 pain_point，fallback 到标题
-            pain_point = analysis.pain_point or issue.title
+            pain_point = sanitize_optional_text(analysis.pain_point)
+            if not pain_point:
+                pain_point = issue.title
             if not pain_point:
                 continue
 

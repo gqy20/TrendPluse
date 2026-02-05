@@ -9,8 +9,7 @@
 from datetime import UTC, datetime
 
 from trendpluse.aggregators.issue_aggregator import IssueAggregator
-from trendpluse.analyzers.issue_analyzer import IssueAnalysis
-from trendpluse.models.issue import IssueInfo
+from trendpluse.models.issue import IssueAnalysis, IssueInfo
 
 
 class TestIssueAggregatorOptimized:
@@ -45,6 +44,40 @@ class TestIssueAggregatorOptimized:
         # Assert - 应该使用标题作为痛点，而不是跳过
         assert len(pain_points) == 1
         assert pain_points[0].topic == "App crashes on startup"
+        assert pain_points[0].count == 2
+
+    def test_fallback_to_title_when_pain_point_is_invalid_string(self):
+        """测试：痛点为无效字符串时应 fallback 到 Issue 标题"""
+        # Arrange
+        aggregator = IssueAggregator(min_mentions=2)
+        now = datetime.now(UTC)
+
+        issues = [
+            self._create_issue(now, 1, "Login failed"),
+            self._create_issue(now, 2, "Login failed"),
+        ]
+
+        analyses = {
+            "test/repo#1": self._create_analysis(
+                "bug_report",
+                "negative",
+                -0.4,
+                pain_point="null",  # 无效字符串
+            ),
+            "test/repo#2": self._create_analysis(
+                "bug_report",
+                "negative",
+                -0.2,
+                pain_point="N/A",  # 无效字符串
+            ),
+        }
+
+        # Act
+        pain_points = aggregator.aggregate_pain_points(issues, analyses)
+
+        # Assert - 应该使用标题作为痛点
+        assert len(pain_points) == 1
+        assert pain_points[0].topic == "Login failed"
         assert pain_points[0].count == 2
 
     def test_normalize_pain_point_merges_similar_issues(self):

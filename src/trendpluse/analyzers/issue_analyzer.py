@@ -64,6 +64,10 @@ Issue 内容: {issue.body or "(无内容)"}
 4. 功能需求: 用户想要的功能（如果是 feature_request）
 5. 优先级: low / medium / high / critical
 6. 技术标签: 相关技术栈关键词
+
+重要格式要求：
+- 如果字段不存在或不适用，请返回 JSON null（不是字符串 "null"/"None"/"N/A"）
+- 只返回结构化结果，不要附带额外说明文字
 """
 
         analysis = self._call_llm_for_analysis(prompt)
@@ -301,7 +305,7 @@ Issue 内容: {issue.body or "(无内容)"}
                 else (issue.body or "(无内容)")
             )
 
-            parts.append(f"""
+        parts.append(f"""
 ## Issue {i}
 - **标题**: {issue.title}
 - **内容**: {content_preview}
@@ -320,6 +324,7 @@ Issue 内容: {issue.body or "(无内容)"}
   affected_area, feature_description, priority, tech_tags
 - 如果某个 Issue 无法分析，该位置返回 null
 - 确保 results 数组长度与输入 Issues 数量一致
+- 字段为空时必须返回 JSON null（不是字符串 "null"/"None"/"N/A"）
 
 返回格式示例:
 [

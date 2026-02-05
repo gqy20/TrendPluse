@@ -6,8 +6,7 @@
 from datetime import UTC, datetime
 
 from trendpluse.aggregators.issue_aggregator import IssueAggregator
-from trendpluse.analyzers.issue_analyzer import IssueAnalysis
-from trendpluse.models.issue import IssueInfo
+from trendpluse.models.issue import IssueAnalysis, IssueInfo
 
 
 class TestIssueAggregator:

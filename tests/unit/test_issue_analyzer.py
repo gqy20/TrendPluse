@@ -5,8 +5,8 @@
 
 from datetime import UTC, datetime
 
-from trendpluse.analyzers.issue_analyzer import IssueAnalysis, IssueAnalyzer
-from trendpluse.models.issue import IssueInfo
+from trendpluse.analyzers.issue_analyzer import IssueAnalyzer
+from trendpluse.models.issue import IssueAnalysis, IssueInfo
 
 
 class TestIssueAnalysis:
@@ -51,6 +51,21 @@ class TestIssueAnalysis:
         # Assert
         assert analysis.category == "feature_request"
         assert analysis.feature_description == "Add dark mode support"
+
+    def test_feature_description_null_string_is_sanitized(self):
+        """测试 feature_description 为无效字符串时自动清洗为 None"""
+        analysis = IssueAnalysis(
+            category="feature_request",
+            sentiment="neutral",
+            sentiment_score=0.0,
+            pain_point=None,
+            affected_area=None,
+            feature_description="null",
+            priority="medium",
+            tech_tags=[],
+        )
+
+        assert analysis.feature_description is None
 
     def test_sentiment_score_validation(self):
         """测试情绪分数范围验证"""
