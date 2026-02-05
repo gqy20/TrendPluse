@@ -1,145 +1,182 @@
 {
   "date": "2026-02-05",
-  "summary_brief": "AI 编程助手框架集体向架构现代化演进，OpenAI Codex、CrewAI、LangChain/DeepAgents、Continue 等多个主流项目同时引入 Provider 模式、中间件机制和记忆系统，推动 Agent 生态从单一脚本向模块化、可组合的微服务架构转型。同时，安全性问题受到前所未有的重视，Codex 引入 Linux 沙箱隔离，多个项目修复模型切换时指令丢失和 Prompt 工程漏洞，显示行业正从简单的文本过滤转向系统级强隔离和鲁棒的 Prompt 设计。",
+  "summary_brief": "今日 Agent 框架在架构层面集体演进，多项目同时推出子代理系统与技能化编排能力（Continue、DeepAgents、CrewAI），并强化上下文传递与中间件模式。同时，安全基础设施成为新焦点，OpenAI Codex 引入沙箱隔离与长期记忆机制，多个项目同步优化流式传输稳定性与错误处理。编辑器生态向多模型路由与 AI 深度集成方向发展。",
   "engineering_signals": [
     {
-      "id": "eng-20250205-01",
-      "title": "AI 编程助手集体架构升级：Provider 模式与中间件机制",
+      "id": "signal-agent-orchestration",
+      "title": "AI Agent 框架集体升级：子代理系统与技能编排",
       "type": "abstraction",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "CrewAI、LangChain/DeepAgents、Continue、Cline 等 4+ 个主流项目在同一天完成核心架构重构，引入 Provider 模式解耦 AI 能力、中间件机制增强扩展性、子代理技能隔离实现模块化。这标志着 Agent 框架正在经历从单体到微服务的集体架构转型，将大幅提升生态系统的可组合性和插件化能力。",
+      "why_it_matters": "Continue、DeepAgents、CrewAI 三大框架同时推出子代理与技能系统（Skills/Subagents），配合 LangChain 与 CrewAI 的中间件重构，标志着 Agent 正从单一执行者向可编排的多层代理系统演进。这解决了复杂任务分解、模块化复用与团队协作的核心难题。",
       "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli==0.0.18",
-        "https://github.com/langchain-ai/langchain/commit/dde2012b832c9d370a2ea76fd18a79624a182a4c",
         "https://github.com/crewAIInc/crewAI/pull/4367",
-        "https://github.com/openai/codex/releases/tag/rust-v0.96.0"
+        "https://github.com/langchain-ai/langchain/commit/dde2012b832c9d370a2ea76fd18a79624a182a4c",
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli==0.0.18",
+        "https://github.com/crewAIInc/crewAI/pull/4373",
+        "https://github.com/openai/codex/releases/tag/rust-v0.96.0",
+        "https://github.com/crewAIInc/crewAI/pull/4374"
       ],
       "related_repos": [
-        "continuedev/continue",
-        "langchain-ai/deepagents",
         "crewAIInc/crewAI",
         "langchain-ai/langchain",
+        "continuedev/continue",
+        "langchain-ai/deepagents",
         "openai/codex"
       ],
       "source_signal_ids": [
-        "pr-13",
         "release-2",
-        "commit-0",
-        "release-3"
+        "release-3",
+        "pr-11",
+        "pr-12",
+        "pr-13",
+        "commit-0"
       ]
     },
     {
-      "id": "eng-20250205-02",
-      "title": "长期记忆系统落地：AI 工具从无状态向有状态演进",
+      "id": "signal-security-sandbox",
+      "title": "安全基础设施标准化：Linux 沙箱与统一执行",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入 Bubblewrap (bwrap) 沙箱隔离与 unified_exec 机制，解决了生产级 Agent 执行 Shell 命令的安全隔离难题。这标志着 AI 工具从实验性质向企业级安全基础设施演进，为大规模部署扫清关键障碍。",
+      "sources": [
+        "https://github.com/openai/codex/commit/ae4de43ccc894e389868b60e190306301a37806b",
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents==0.3.11"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin",
+        "openai/codex",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "release-4",
+        "commit-1"
+      ]
+    },
+    {
+      "id": "signal-memory-systems",
+      "title": "长期记忆系统落地：从单次对话到持久化上下文",
       "type": "capability",
       "category": "engineering",
       "impact_score": 5,
-      "why_it_matters": "OpenAI Codex (v0.97.0) 正式引入 Phase 1 记忆数据库客户端和线程摘要功能，这是 AI 编程助手从单纯的上下文窗口向持久化知识库转变的里程碑。多个项目 (Cline、Codex) 同时修复模型切换时指令丢失问题，确保记忆和指令在多模型协作中的一致性，为生产环境中的长期 AI 协作奠定基础。",
+      "why_it_matters": "OpenAI Codex、Continue、Auto-Claude 同时推进记忆系统（Phase 1 数据库、Graphiti 迁移），引入 API 客户端与本地持久化层。这是 AI 助手从无状态对话向有状态长期理解演进的关键架构升级，使 Agent 能够跨会话积累知识。",
       "sources": [
-        "https://github.com/cline/cline/pull/9107",
+        "https://github.com/openai/codex/commit/4922b3e571d2da548f7e592707b4a1fac8fda09f",
         "https://github.com/continuedev/continue/releases/tag/v1.2.15-vscode",
-        "https://github.com/openai/codex/commit/e482978261b787716859fb8c0a54022e8183cbf8",
-        "https://github.com/openai/codex/commit/4922b3e571d2da548f7e592707b4a1fac8fda09f"
+        "https://github.com/AndyMik90/Auto-Claude/pull/1714",
+        "https://github.com/AndyMik90/Auto-Claude/pull/1651"
       ],
       "related_repos": [
+        "Auto-Claude",
         "continuedev/continue",
-        "openai/codex",
-        "cline/cline"
+        "AndyMik90/Auto-Claude",
+        "openai/codex"
       ],
       "source_signal_ids": [
         "release-0",
-        "commit-6",
+        "commit-3",
+        "pr-18"
+      ]
+    },
+    {
+      "id": "signal-mcp-standardization",
+      "title": "MCP 协议成为工具调用标准接口",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline、Google Gemini CLI、Continue 同时加强对 MCP (Model Context Protocol) 的支持，包括远程配置锁定和服务器管理。这表明 MCP 正快速成为 AI 工具调用的标准化接口，打破工具生态孤岛。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/2566057e446d1d0c59eae42bb76e18d30db0d42b",
+        "https://github.com/cline/cline/pull/9107"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "cline/cline",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
         "commit-2",
         "pr-6"
       ]
     },
     {
-      "id": "eng-20250205-03",
-      "title": "安全范式转变：从正则过滤到系统级沙箱隔离",
-      "type": "safety",
+      "id": "signal-streaming-stability",
+      "title": "流式传输稳定性提升：错误处理与重试机制",
+      "type": "performance",
       "category": "engineering",
       "impact_score": 4,
-      "why_it_matters": "OpenAI Codex 引入 Bubblewrap (bwrap) Linux 沙箱并统一执行路径，Zed 修复 Shell 引用绕过漏洞，Agno 修复 Prompt 注入漏洞（模型混淆参考文件为可执行脚本）。这些同步改进显示 AI 编码工具的安全策略正在从简单的文本正则过滤，转向操作系统级别的进程隔离和更鲁棒的 Prompt 工程设计，应对生产环境中的真实安全威胁。",
+      "why_it_matters": "GPTme、Auto-Claude 同时修复流式传输连接中断问题，实现统一重试注册表。这表明提升 AI 响应在弱网络环境下的鲁棒性已成为头部项目优化的重点，直接影响用户体验。",
       "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents==0.3.11",
-        "https://github.com/openai/codex/commit/ae4de43ccc894e389868b60e190306301a37806b",
-        "https://github.com/agno-agi/agno/pull/6311"
+        "https://github.com/ErikBjare/gptme/commit/f564bb70722589b4ee6d5aab9a815939832f7e24",
+        "https://github.com/gptme/gptme/pull/1226",
+        "https://github.com/AndyMik90/Auto-Claude/pull/1714",
+        "https://github.com/AndyMik90/Auto-Claude/pull/1651"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "Auto-Claude",
+        "AndyMik90/Auto-Claude",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "commit-6",
+        "pr-0",
+        "pr-18"
+      ]
+    },
+    {
+      "id": "signal-editor-multi-model",
+      "title": "编辑器进化：从单一模型到多源 AI 路由",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Zed 突破单一模型限制，支持 GitHub Copilot、Ollama、Codestral 等多个编辑预测提供商。Cline 深度集成语义高亮与 AI 编辑预测。这标志着编辑器正从单一 AI 供应商依赖转向智能模型路由层。",
+      "sources": [
+        "https://github.com/openai/codex/releases/tag/rust-v0.97.0",
+        "https://github.com/cline/cline/commit/0ef1c0bf47ced7be092385065702326e2ce22074"
       ],
       "related_repos": [
         "zed-industries/zed",
-        "langchain-ai/deepagents",
+        "cline/cline",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "release-1",
+        "commit-5"
+      ]
+    },
+    {
+      "id": "signal-prompt-robustness",
+      "title": "提示词鲁棒性工程：显式状态标记防混淆",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Agno 引入显式 <scripts>none</scripts> 标记防止弱模型混淆，OpenAI Codex 切换到 gpt-5.1-codex-mini 优化探索任务。这表明项目开始系统性解决提示词在不同 LLM 提供商间的兼容性与鲁棒性问题。",
+      "sources": [
+        "https://github.com/agno-agi/agno/pull/6311",
+        "https://github.com/openai/codex/pull/10748"
+      ],
+      "related_repos": [
         "agno-agi/agno",
         "openai/codex"
       ],
       "source_signal_ids": [
-        "commit-1",
-        "release-4",
-        "pr-15"
-      ]
-    },
-    {
-      "id": "eng-20250205-04",
-      "title": "网络容错与跨平台适配成为生产级必备能力",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "GPTme、OpenAI Codex、Cline 等项目集中解决流式传输中断、速率限制、远程环境认证、跨平台输入缓冲等网络和平台兼容问题。随着 AI 工具从实验性走向生产环境，对非完美网络条件的健壮处理、OAuth 集成、以及 Windows/Linux/macOS 的跨平台一致性已成为用户体验的核心要求。",
-      "sources": [
-        "https://github.com/openai/codex/pull/10729",
-        "https://github.com/gptme/gptme/pull/1226",
-        "https://github.com/ErikBjare/gptme/commit/f564bb70722589b4ee6d5aab9a815939832f7e24",
-        "https://github.com/cline/cline/pull/9111",
-        "https://github.com/openai/codex/pull/10719"
-      ],
-      "related_repos": [
-        "openai/codex",
-        "gptme/gptme",
-        "ErikBjare/gptme",
-        "cline/cline"
-      ],
-      "source_signal_ids": [
-        "pr-0",
-        "pr-4",
-        "commit-7",
-        "pr-17",
+        "pr-15",
         "pr-19"
       ]
     },
     {
-      "id": "eng-20250205-05",
-      "title": "编辑器智能化竞争加剧：语义高亮与多源预测",
+      "id": "signal-oauth-integration",
+      "title": "OAuth 认证流程标准化：VS Code Remote 与第三方集成",
       "type": "capability",
       "category": "engineering",
       "impact_score": 3,
-      "why_it_matters": "Zed 编辑器在同一天落地语义高亮功能并支持多源编辑预测（GitHub Copilot、Ollama、Codestral），显示编辑器正从语法高亮向语义理解升级。这与 DeepAgents、OpenCode 在 CLI 用户体验上的深度优化（ESC 键关闭模态框、自动补全点击）形成呼应，表明 AI 辅助编码工具正在追求接近原生 GUI 的流畅体验。",
+      "why_it_matters": "Cline 实现 HostBridge 模式修复 VS Code Remote 环境 OAuth，OpenHands 增强 reCAPTCHA 评估日志，HICAP 集成回调式 OAuth。这显示 AI 工具正在建立标准化的第三方认证集成模式。",
       "sources": [
-        "https://github.com/zed-industries/zed/commit/5d2feaa1443bdd508e5d18a055106cbb54c9795e",
-        "https://github.com/openai/codex/releases/tag/rust-v0.97.0",
-        "https://github.com/langchain-ai/deepagents/commit/b1cc83d277e01614b0cc4141993cde40ce68d632"
-      ],
-      "related_repos": [
-        "zed-industries/zed",
-        "langchain-ai/deepagents",
-        "openai/codex",
-        "anomalyco/opencode"
-      ],
-      "source_signal_ids": [
-        "commit-5",
-        "release-1",
-        "commit-4"
-      ]
-    },
-    {
-      "id": "eng-20250205-06",
-      "title": "安全性与可观测性增强：OAuth 集成与用户行为追踪",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 2,
-      "why_it_matters": "OpenHands 通过 reCAPTCHA 用户身份关联和评估标注增强安全追踪，Cline 引入 HICAP Provider 的 OAuth 风格 API Key 生成流程。这些改进表明 AI 平台在安全合规和用户管理上正在构建更完善的观测体系，特别是在 OAuth 集成和反欺诈检测方面。",
-      "sources": [
-        "https://github.com/OpenHands/OpenHands/pull/12749",
+        "https://github.com/cline/cline/pull/9111",
         "https://github.com/OpenHands/OpenHands/pull/12744",
+        "https://github.com/OpenHands/OpenHands/pull/12749",
         "https://github.com/cline/cline/pull/9098"
       ],
       "related_repos": [
@@ -147,9 +184,37 @@
         "cline/cline"
       ],
       "source_signal_ids": [
+        "pr-4",
+        "pr-7",
         "pr-2",
-        "pr-3",
-        "pr-7"
+        "pr-3"
+      ]
+    },
+    {
+      "id": "signal-code-quality",
+      "title": "代码质量与工具链现代化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Cline 升级到 Biome 2.3.14 并启用更严格规则，AgentScope 修复教程 Bug，Auto-Claude 修复 React useEffect 依赖导致无限循环。这表明成熟 AI 框架正同步提升代码质量标准与开发体验。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/pull/4375",
+        "https://github.com/cline/cline/pull/9109",
+        "https://github.com/agentscope-ai/agentscope/pull/1199",
+        "https://github.com/AndyMik90/Auto-Claude/pull/1716"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI",
+        "biomejs/biome",
+        "cline/cline",
+        "agentscope-ai/agentscope",
+        "Auto-Claude"
+      ],
+      "source_signal_ids": [
+        "pr-5",
+        "pr-1",
+        "pr-17",
+        "pr-10"
       ]
     }
   ],
@@ -158,27 +223,33 @@
   "release_signals": [],
   "stats": {
     "total_pr_signals": 20,
-    "total_commit_signals": 8,
+    "total_commit_points": 7,
     "total_release_signals": 5,
-    "total_signals_analyzed": 33,
-    "major_architecture_shifts": 4,
-    "security_related_changes": 3,
+    "total_signals": 32,
+    "monitored_repos": 15,
+    "top_categories": {
+      "abstraction": 3,
+      "safety": 2,
+      "capability": 4,
+      "performance": 1,
+      "workflow": 1
+    },
     "total_prs_analyzed": 20,
-    "total_commits_analyzed": 237,
+    "total_commits_analyzed": 245,
     "total_releases": 6,
-    "high_impact_signals": 3,
+    "high_impact_signals": 6,
     "total_releases_analyzed": 6,
     "total_breaking_changes": 2,
-    "total_issues": 513,
-    "total_issues_analyzed": 513
+    "total_issues": 514,
+    "total_issues_analyzed": 514
   },
   "activity": {
-    "total_commits": 237,
+    "total_commits": 245,
     "active_repos_count": 16,
     "top_repos": [
       {
         "repo": "zed-industries/zed",
-        "commits": 63,
+        "commits": 61,
         "top_contributors": [
           "cole-miller",
           "osiewicz",
@@ -189,7 +260,7 @@
       },
       {
         "repo": "anomalyco/opencode",
-        "commits": 41,
+        "commits": 44,
         "top_contributors": [
           "adamdotdevin",
           "rekram1-node",
@@ -200,7 +271,7 @@
       },
       {
         "repo": "openai/codex",
-        "commits": 39,
+        "commits": 41,
         "top_contributors": [
           "jif-oai",
           "gt-oai",
@@ -233,24 +304,24 @@
       },
       {
         "repo": "google-gemini/gemini-cli",
-        "commits": 11,
+        "commits": 13,
         "top_contributors": [
+          "jackwotherspoon",
           "g-samroberts",
           "abhipatel12",
           "Adib234",
-          "MushuEE",
-          "cbcoutinho"
+          "skeshive"
         ]
       },
       {
         "repo": "langgenius/dify",
-        "commits": 9,
+        "commits": 10,
         "top_contributors": [
           "hyoban",
           "fatelei",
+          "WH-2099",
           "QuantumGhost",
-          "Stream29",
-          "majiayu000"
+          "Stream29"
         ]
       },
       {
@@ -281,6 +352,15 @@
         ]
       },
       {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 5,
+        "top_contributors": [
+          "qveys",
+          "AndyMik90",
+          "dertuerke"
+        ]
+      },
+      {
         "repo": "OpenDevin/OpenDevin",
         "commits": 3,
         "top_contributors": [
@@ -297,20 +377,6 @@
         ]
       },
       {
-        "repo": "agentscope-ai/agentscope",
-        "commits": 2,
-        "top_contributors": [
-          "DavdGao"
-        ]
-      },
-      {
-        "repo": "AndyMik90/Auto-Claude",
-        "commits": 2,
-        "top_contributors": [
-          "AndyMik90"
-        ]
-      },
-      {
         "repo": "ErikBjare/gptme",
         "commits": 1,
         "top_contributors": [
@@ -322,6 +388,13 @@
         "commits": 1,
         "top_contributors": [
           "rx5ad"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "top_contributors": [
+          "DavdGao"
         ]
       },
       {
@@ -521,14 +594,14 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增会话级“允许并记住”选项，自动批准重复的工具调用",
-            "添加实时技能更新检测，无需重启即可生效",
-            "为 thread memory summaries 引入内存管道（API 客户端 + 本地持久化）",
-            "增强云需求可靠性，提高超时和重试机制",
-            "添加可配置的 log_dir 以便重定向日志"
+            "新增会话级工具审批记忆功能，同一工具在会话中可自动批准",
+            "实时检测技能文件更新，无需重启即可生效",
+            "新增动态工具输出的图文混合内容支持",
+            "引入内存持久化机制，支持线程记忆摘要功能",
+            "新增 /debug-config 斜杠命令用于检查有效配置"
           ],
-          "summary_cn": "Codex v0.97.0 主要提升了用户体验和工作流程效率，包括会话级工具自动批准、实时技能更新检测等新功能。版本还引入了初始内存管道以支持线程记忆摘要，并通过优化超时和重试机制增强了云需求的可靠性。此外，新增了可配置日志目录和 Linux 沙箱隔离选项。",
-          "impact_level": 2
+          "summary_cn": "本次版本更新重点增强了用户体验和自动化能力，包括会话级工具审批记忆、实时技能更新检测和图文混合内容支持等新功能。同时引入了内存持久化机制以支持线程记忆摘要，并新增了可配置的日志目录和调试命令，提升了系统的可观测性和灵活性。",
+          "impact_level": 3
         }
       },
       {
@@ -542,15 +615,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 agents/skills 目录别名支持",
-            "增强线程恢复功能",
-            "修复工具输出切换快捷键 (Ctrl+E)",
+            "新增支持 `.agents/skills` 目录别名，优化技能目录组织",
+            "改进线程恢复（Resume thread）功能，提升会话恢复体验",
             "修复升级后默认提示模板未更新的问题",
-            "改进异常处理机制，使用日志记录替代静默处理",
-            "支持 -h/--help 帮助标志",
-            "删除 /exit 命令"
+            "新增 `-h`/`--help` 命令行帮助标志支持",
+            "改进异常处理，使用日志记录替代静默异常处理"
           ],
-          "summary_cn": "本次版本主要增强了 CLI 工具的用户体验和功能完整性，包括支持 agents/skills 目录别名、线程恢复功能增强和帮助标志支持。同时修复了多个问题，如工具输出切换快捷键、升级后默认提示模板更新失败、异常处理机制等，并优化了错误输出的可读性。",
+          "summary_cn": "deepagents-cli v0.0.18 版本主要增强了技能目录管理和线程恢复功能，同时修复了多个用户体验问题。本次更新包含 2 项新功能、7 个 bug 修复，重点解决了升级后提示模板未更新的问题，并改进了错误日志和命令行交互体验。",
           "impact_level": 2
         }
       },
@@ -565,13 +636,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增子代理（subagents）功能支持",
-            "新增代理技能（agent skills）能力",
-            "无头模式下默认允许使用 MCP/Bash 工具",
-            "加载代理配置时过滤 .md 文件",
-            "修复工作流中的 GH_TOKEN 配置问题"
+            "新增 subagents（子代理）功能，支持更复杂的代理协作模式",
+            "新增 agent skills（代理技能）功能，增强代理能力配置",
+            "简化配置错误提示，改善用户体验",
+            "更新 info 命令并添加使用统计功能",
+            "在 headless 模式下默认允许使用 MCP/Bash 工具"
           ],
-          "summary_cn": "这是一个功能增强版本，核心是引入了子代理（subagents）和代理技能（agent skills）两大新特性，显著增强了 AI 代理的能力。同时优化了无头模式下的工具默认行为，修复了多个配置和依赖项问题，提升了整体稳定性。",
+          "summary_cn": "这是一个以功能增强为主的版本，主要引入了 subagents（子代理）和 agent skills（代理技能）两大核心新功能，显著提升了代理系统的灵活性和能力。同时进行了多项用户体验改进，包括简化配置错误提示、更新 info 命令并添加使用统计，以及在 headless 模式下默认允许使用 MCP/Bash 工具。依赖包也得到了安全更新和升级。",
           "impact_level": 3
         }
       },
@@ -586,13 +657,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 thread/compact 异步 RPC API，支持立即触发压缩并独立跟踪完成状态",
-            "为 WebSocket 添加速率限制信号事件（codex.rate_limits），实现 ETag 和推理元数据处理的 WebSocket 等效功能",
-            "在所有非 Windows 平台启用 unified_exec 执行模式",
-            "修复 TUI 中 Esc 键处理逻辑，优化用户输入交互体验",
-            "改进线程列表查询机制，优先查询状态数据库以提高正确性和可靠性"
+            "新增 thread/compact 异步压缩 RPC，支持即时触发和独立完成跟踪",
+            "增强 WebSocket 限流信令功能，新增 codex.rate_limits 事件",
+            "在所有非 Windows 平台启用 unified_exec 功能",
+            "修复 TUI 中 Esc 键处理逻辑，优化用户交互体验",
+            "改进线程列表查询机制，优先使用状态 DB 提升可靠性和正确性"
           ],
-          "summary_cn": "rust-v0.96.0 版本主要引入了异步线程压缩 API 和 WebSocket 速率限制信号功能，并在非 Windows 平台启用了统一的执行模式。同时修复了 TUI 交互、线程列表查询和动态工具注入等多个问题，改进了状态数据库管理和运行时遥测能力。",
+          "summary_cn": "rust-v0.96.0 版本主要引入了异步压缩 API 和 WebSocket 限流信令两大新功能，并在所有非 Windows 平台启用了统一执行模式。同时修复了 TUI 交互、线程查询和动态工具注入等多个 bug，显著提升了系统的稳定性和用户体验。",
           "impact_level": 3
         }
       },
@@ -607,12 +678,11 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增 subagent 技能功能（subagent skills）",
-            "重构中间件架构（middleware refactor）",
-            "修复工具结果消息在新输出中的换行问题",
-            "优化大型输出结果的格式化显示"
+            "SDK 新增 subagent skills 功能，扩展了智能代理技能系统",
+            "重构中间件架构，提升代码质量和可维护性",
+            "修复工具结果消息在大输出时的格式问题，增加换行支持"
           ],
-          "summary_cn": "deepagents v0.3.11 版本主要带来了 subagent 技能功能，并进行了中间件架构的重构。同时修复了工具结果消息在大型输出中的格式化问题，提升了可读性。此次更新以功能增强为主，同时改善了用户体验。",
+          "summary_cn": "deepagents 0.3.11 版本主要集中在功能增强和 SDK 层面的修复。核心亮点包括引入 subagent skills 新特性以及对中间件架构进行重构优化，同时修复了工具输出结果的消息格式问题。",
           "impact_level": 2
         }
       },
@@ -627,13 +697,13 @@
         "ai_summary": {
           "change_type": "feature",
           "key_changes": [
-            "新增多个编辑预测提供商支持（GitHub Copilot Next Edit、Ollama、Codestral、Sweep、Mercury Coder）",
-            "AI Agent 功能增强：消息队列功能开放、上下文插入菜单优化、文件补全准确性提升",
-            "图像查看器支持缩放和平移功能",
-            "Windows 成为 SSH 远程连接的受支持目标平台",
-            "大幅优化 macOS 文件系统监控的资源使用情况"
+            "支持多个编辑预测提供商，包括 GitHub Copilot Next Edit Suggestions、Ollama、Codestral、Sweep 和 Mercury Coder",
+            "图像查看器新增缩放和平移功能",
+            "SSH 远程支持 Windows 目标平台",
+            "大幅优化 macOS 文件系统变更监控的资源占用",
+            "终端标签页支持通过右键或双击重命名"
           ],
-          "summary_cn": "Zed v0.222.2 版本重点增强了 AI 编辑预测能力，支持包括 GitHub Copilot Next Edit、Ollama、Codestral 等多个编辑预测提供商，并显著改进了 AI Agent 的交互体验。同时新增图像查看器缩放平移功能，将 SSH 远程连接扩展至 Windows 平台，并优化了 macOS 文件系统监控的资源占用。",
+          "summary_cn": "这是一个功能丰富的更新，重点是 AI 编辑预测能力的增强，支持多家主流 AI 服务商的编辑建议功能。同时新增了图像查看器的交互功能、SSH 远程对 Windows 的支持，并优化了系统资源使用体验。",
           "impact_level": 3
         }
       }
@@ -646,7 +716,7 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "删除了 `/exit` 命令",
+          "description": "移除了 `/exit` 命令",
           "impact": "low",
           "category": "API"
         }
@@ -658,12 +728,12 @@
       "has_breaking": true,
       "changes": [
         {
-          "description": "更改了粗体 UI 文本的渲染方式，从 Bold 改为 Plex SemiBold",
+          "description": "粗体 UI 文本渲染从 Bold 改为 Plex SemiBold",
           "impact": "low",
           "category": "Behavior"
         },
         {
-          "description": "自动签名弹窗现在遵循 `hover_popover_delay` 设置，改变了原有的默认行为",
+          "description": "自动签名帮助弹窗现在遵循 `hover_popover_delay` 设置",
           "impact": "low",
           "category": "Behavior"
         },
@@ -730,16 +800,29 @@
     "zed-industries/zed"
   ],
   "issues": {
-    "total_count": 513,
-    "bug_reports": 348,
-    "feature_requests": 135,
-    "questions": 21,
-    "discussions": 9,
+    "total_count": 514,
+    "bug_reports": 359,
+    "feature_requests": 127,
+    "questions": 22,
+    "discussions": 6,
     "sentiment_distribution": {
-      "positive": 60,
-      "neutral": 229,
-      "negative": 224
+      "positive": 68,
+      "neutral": 216,
+      "negative": 230
     },
-    "top_pain_points": []
+    "top_pain_points": [
+      {
+        "topic": "TranscribeYoutubeVideoBlock 抛出 BlockUnknownError 异常",
+        "count": 2,
+        "avg_sentiment": -0.55,
+        "affected_repos": [
+          "Significant-Gravitas/AutoGPT"
+        ],
+        "sample_urls": [
+          "https://github.com/Significant-Gravitas/AutoGPT/issues/11979",
+          "https://github.com/Significant-Gravitas/AutoGPT/issues/11973"
+        ]
+      }
+    ]
   }
 }
