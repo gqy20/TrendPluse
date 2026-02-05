@@ -270,9 +270,17 @@ def _build_anthropic_stub() -> ModuleType:
         def create(self, *args, **kwargs):
             return None
 
+    class _AsyncMessagesStub:
+        async def create(self, *args, **kwargs):
+            return None
+
     class _AnthropicStub:
         def __init__(self, *args, **kwargs):
             self.messages = _MessagesStub()
+
+    class _AsyncAnthropicStub:
+        def __init__(self, *args, **kwargs):
+            self.messages = _AsyncMessagesStub()
 
     class APITimeoutError(Exception):
         pass
@@ -293,6 +301,7 @@ def _build_anthropic_stub() -> ModuleType:
         pass
 
     stub.Anthropic = _AnthropicStub  # type: ignore[attr-defined]
+    stub.AsyncAnthropic = _AsyncAnthropicStub  # type: ignore[attr-defined]
     stub.APITimeoutError = APITimeoutError  # type: ignore[attr-defined]
     stub.RateLimitError = RateLimitError  # type: ignore[attr-defined]
     stub.APIConnectionError = APIConnectionError  # type: ignore[attr-defined]

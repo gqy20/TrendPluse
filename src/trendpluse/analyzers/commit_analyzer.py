@@ -83,6 +83,25 @@ class CommitAnalyzer(BaseLLMAnalyzer):
             logger.debug(f"CommitAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
+    async def analyze_commits_async(
+        self, commits: list[dict[str, Any]]
+    ) -> list[Signal]:
+        """异步分析 commit 列表"""
+        if not commits:
+            logger.debug("CommitAnalyzer: 收到空 commit 列表")
+            return []
+
+        logger.debug(f"CommitAnalyzer: 开始分析 {len(commits)} 个 commits（异步）")
+
+        try:
+            llm_response = await self._call_llm_async(commits)
+            logger.debug(f"CommitAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
+            signals = self._parse_signals(llm_response, commits)
+            return signals
+        except Exception as e:
+            logger.debug(f"CommitAnalyzer: 异步分析失败 - {type(e).__name__}: {e}")
+            return []
+
     def _call_llm(self, commits: list[dict[str, Any]]) -> str:
         """调用 LLM 分析 commits
 
@@ -111,6 +130,20 @@ class CommitAnalyzer(BaseLLMAnalyzer):
 
         # 使用基类方法提取文本
         message = self._run_with_llm_retry(_call)
+        return self._extract_text_from_response(message)
+
+    async def _call_llm_async(self, commits: list[dict[str, Any]]) -> str:
+        prompt = self._build_prompt(commits)
+
+        async def _call():
+            return await self.async_client.messages.create(
+                model=self.model,
+                max_tokens=4096,
+                temperature=0.3,
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+        message = await self._run_with_llm_retry_async(_call)
         return self._extract_text_from_response(message)
 
     def _build_prompt(self, commits: list[dict[str, Any]]) -> str:

@@ -3,6 +3,9 @@
 使用 LLM 对一周的信号进行整合分析，识别核心趋势。
 """
 
+import asyncio
+
+import anthropic
 from anthropic import Anthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, Field
@@ -52,11 +55,29 @@ class WeeklyAggregator:
             base_url: API 基础 URL（可选）
         """
         self._client = Anthropic(api_key=api_key, base_url=base_url)
+        self._retry_max_attempts = retry_max_attempts
+        self._retry_wait_min = retry_wait_min
+        self._retry_wait_max = retry_wait_max
         self._llm_retry = create_anthropic_retry_decorator(
             max_attempts=retry_max_attempts,
             wait_min=retry_wait_min,
             wait_max=retry_wait_max,
         )
+
+    async def _run_with_llm_retry_async(self, func):
+        retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
+        attempts = self._retry_max_attempts
+        wait_min = self._retry_wait_min
+        wait_max = self._retry_wait_max
+
+        for attempt in range(1, attempts + 1):
+            try:
+                return await func()
+            except retryable_errors:
+                if attempt >= attempts:
+                    raise
+                backoff = wait_min * (2 ** (attempt - 1))
+                await asyncio.sleep(min(wait_max, backoff))
 
     def aggregate(self, signals: list) -> WeeklyAggregationResult:
         """聚合信号列表
@@ -174,6 +195,102 @@ class WeeklyAggregator:
                     raise
 
             # 验证并创建结果
+            result = WeeklyAggregationResult.model_validate(data)
+
+        result.total_signals = len(signals)
+        return result
+
+    async def aggregate_async(self, signals: list) -> WeeklyAggregationResult:
+        if not signals:
+            return WeeklyAggregationResult(
+                core_trends=[],
+                summary_brief="本周暂无信号",
+                total_signals=0,
+            )
+
+        from trendpluse.models.signal import Signal
+
+        signal_summaries = []
+        for sig in signals:
+            if isinstance(sig, Signal):
+                signal_summaries.append(
+                    f"- [{sig.id}] {sig.title}\n"
+                    f"  类型: {sig.type} | 影响: {sig.impact_score}/5\n"
+                    f"  说明: {sig.why_it_matters}\n"
+                    f"  仓库: {', '.join(sig.related_repos)}"
+                )
+
+        prompt = f"""你是一个技术趋势分析专家。请分析以下 {len(signals)} 个信号，
+识别出本周的核心技术趋势（3-5 个）。
+
+## 信号列表
+
+{chr(10).join(signal_summaries)}
+
+## 分析要求
+
+1. **趋势识别**：将语义相关的信号整合为一个趋势
+   - 例如：3 个关于"异步架构"的信号 → "异步架构普及"趋势
+   - 不同类型的信号可以归为同一趋势（如 capability + abstraction）
+
+2. **趋势命名**：为每个趋势生成简洁有力的标题
+
+3. **主题分类**：使用以下主题之一
+   - architecture: 架构模式
+   - tooling: 工具链/框架
+   - performance: 性能优化
+   - safety: 安全性
+   - research: 研究创新
+   - workflow: 工作流
+   - ecosystem: 生态发展
+
+4. **趋势描述**：说明为什么这是本周的核心趋势
+
+5. **周报摘要**：生成 1-2 句话的本周总览
+
+## 返回格式要求
+
+请直接返回 JSON 格式（不要使用 markdown 代码块）。
+
+返回示例（请严格遵循此格式）:
+{{"core_trends":[{{"title":"趋势标题","theme":"architecture","description":"趋势描述","signal_ids":["sig-1","sig-2"],"impact_level":5}}],"summary_brief":"本周总览"}}
+
+**重要**：
+- 必须是完整的 JSON 对象（以 {{ 开头，}} 结尾）
+- 不要使用 markdown 代码块（```json）
+- core_trends 和 summary_brief 都是必需字段
+"""
+
+        async def _call():
+            return await self._client.messages.create(
+                model="glm-4.7",
+                max_tokens=2000,
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+        response = await self._run_with_llm_retry_async(_call)
+
+        text_block: TextBlock = response.content[0]  # type: ignore[assignment]
+        result_text = text_block.text
+
+        result_text = self._extract_json_from_markdown(result_text)
+
+        try:
+            result = WeeklyAggregationResult.model_validate_json(result_text)
+        except Exception:
+            import json
+
+            try:
+                data = json.loads(result_text)
+            except json.JSONDecodeError:
+                cleaned = result_text.strip()
+                if cleaned.startswith("{") and cleaned.endswith("}"):
+                    cleaned = cleaned.replace("True", "true").replace("False", "false")
+                    cleaned = cleaned.replace("'", '"')
+                    data = json.loads(cleaned)
+                else:
+                    raise
+
             result = WeeklyAggregationResult.model_validate(data)
 
         result.total_signals = len(signals)

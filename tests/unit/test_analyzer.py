@@ -17,7 +17,7 @@ class TestTrendAnalyzer:
 
         # Assert
         assert analyzer is not None
-        mock_from_anthropic.assert_called_once()
+        assert mock_from_anthropic.call_count == 2
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_analyze_single_pr(self, mock_from_anthropic):

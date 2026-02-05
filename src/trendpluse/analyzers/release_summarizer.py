@@ -3,7 +3,9 @@
 使用 AI 分析 Release Notes，生成结构化的中文总结。
 """
 
+import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import cast
 
 import anthropic
 
@@ -106,6 +108,37 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
         return summaries
 
+    async def summarize_releases_async(
+        self, detailed_releases: list[dict], max_workers: int = 5
+    ) -> dict[str, ReleaseSummary]:
+        if not detailed_releases:
+            return {}
+
+        if len(detailed_releases) == 1:
+            release = detailed_releases[0]
+            key = f"{release['repo']}@{release['tag_name']}"
+            return {key: await self._summarize_single_release_async(release)}
+
+        semaphore = asyncio.Semaphore(max_workers)
+
+        async def _run(release: dict):
+            async with semaphore:
+                summary = await self._summarize_single_release_async(release)
+                return release, summary
+
+        tasks = [_run(release) for release in detailed_releases]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        summaries: dict[str, ReleaseSummary] = {}
+        for result in results:
+            if isinstance(result, Exception):
+                continue
+            release, summary = cast(tuple[dict, ReleaseSummary], result)
+            key = f"{release['repo']}@{release['tag_name']}"
+            summaries[key] = summary
+
+        return summaries
+
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）
 
@@ -136,6 +169,40 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             )
 
         return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
+
+    async def _call_llm_for_summary_async(self, prompt: str) -> ReleaseSummary:
+        async def _call():
+            if self.async_instructor_client is None:
+                return self.client.chat.completions.create(
+                    model=self.model,
+                    response_model=ReleaseSummary,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "你是一个专业的软件变更分析专家，"
+                            "擅长分析 Release Notes 并提取关键信息。",
+                        },
+                        {"role": "user", "content": prompt},
+                    ],
+                    max_tokens=1000,
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=ReleaseSummary,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "你是一个专业的软件变更分析专家，"
+                            "擅长分析 Release Notes 并提取关键信息。",
+                        },
+                        {"role": "user", "content": prompt},
+                    ],
+                    max_tokens=1000,
+                )
+            )
+
+        return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
 
     def _summarize_single_release(self, release: dict) -> ReleaseSummary:
         """总结单个 Release
@@ -204,6 +271,65 @@ Release Notes:
                 f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
             )
             # 返回默认总结
+            return ReleaseSummary(
+                change_type="other",
+                key_changes=[],
+                summary_cn=f"{repo} {tag_name} 发布",
+                impact_level=1,
+            )
+
+    async def _summarize_single_release_async(self, release: dict) -> ReleaseSummary:
+        body = release.get("body", "")
+        tag_name = release.get("tag_name", "")
+        repo = release.get("repo", "")
+
+        if not body or body.strip() == "":
+            return ReleaseSummary(
+                change_type="other",
+                key_changes=[],
+                summary_cn=f"{repo} {tag_name} 发布，暂无详细说明。",
+                impact_level=1,
+            )
+
+        prompt = f"""分析以下 GitHub Release 的变更内容，生成结构化的中文总结。
+
+仓库: {repo}
+版本: {tag_name}
+
+Release Notes:
+{body[:2000]}
+
+请分析并提取：
+1. 变更类型（feature/fix/improvement/breaking/other）
+2. 3-5 个关键变更点（简洁的中文描述）
+3. 中文总结（2-3 句话概括主要变更）
+4. 影响级别（1-5，5 为最高）
+
+注意：
+- **所有文本内容必须使用中文**（key_changes、summary_cn）
+- 优先识别 Breaking Changes（影响级别应为 5）
+- 如果是主版本升级（如 v1.0.0 到 v2.0.0），通常意味着 Breaking Changes
+- 新功能优先于修复，修复优先于改进
+"""
+
+        try:
+            return await self._call_llm_for_summary_async(prompt)
+        except RETRYABLE_ERRORS as e:
+            logger.debug(
+                f"ReleaseSummarizer: 异步重试耗尽 - {type(e).__name__}: {e}, "
+                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
+            )
+            return ReleaseSummary(
+                change_type="other",
+                key_changes=[],
+                summary_cn=f"{repo} {tag_name} 发布（重试失败）",
+                impact_level=1,
+            )
+        except Exception as e:
+            logger.debug(
+                f"ReleaseSummarizer: 异步分析失败 - {type(e).__name__}: {e}, "
+                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
+            )
             return ReleaseSummary(
                 change_type="other",
                 key_changes=[],

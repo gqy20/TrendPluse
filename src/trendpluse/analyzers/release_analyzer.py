@@ -87,6 +87,23 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             logger.debug(f"ReleaseAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
+    async def analyze_releases_async(self, releases: dict[str, Any]) -> list[Signal]:
+        detailed_releases = releases.get("detailed_releases", [])
+        if not detailed_releases:
+            logger.debug("ReleaseAnalyzer: 收到空 release 列表")
+            return []
+
+        logger.debug(
+            f"ReleaseAnalyzer: 开始分析 {len(detailed_releases)} 个 releases（异步）"
+        )
+        try:
+            llm_response = await self._call_llm_async(detailed_releases)
+            signals = self._parse_signals(llm_response, detailed_releases)
+            return signals
+        except Exception as e:
+            logger.debug(f"ReleaseAnalyzer: 异步分析失败 - {type(e).__name__}: {e}")
+            return []
+
     def _call_llm(self, releases: list[dict[str, Any]]) -> str:
         """调用 LLM 分析 releases
 
@@ -115,6 +132,20 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
 
         # 使用基类方法提取文本
         message = self._run_with_llm_retry(_call)
+        return self._extract_text_from_response(message)
+
+    async def _call_llm_async(self, releases: list[dict[str, Any]]) -> str:
+        prompt = self._build_prompt(releases)
+
+        async def _call():
+            return await self.async_client.messages.create(
+                model=self.model,
+                max_tokens=4096,
+                temperature=0.3,
+                messages=[{"role": "user", "content": prompt}],
+            )
+
+        message = await self._run_with_llm_retry_async(_call)
         return self._extract_text_from_response(message)
 
     def _build_prompt(self, releases: list[dict[str, Any]]) -> str:

@@ -3,7 +3,9 @@
 支持 Anthropic Claude 和智谱 AI (GLM) + Instructor 提取结构化趋势信号。
 """
 
+import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import cast
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
@@ -89,6 +91,36 @@ PR 描述: {pr_details.get("body", "")}
 
         return signal  # type: ignore[no-any-return]
 
+    async def analyze_pr_async(self, pr_details: dict) -> Signal:
+        prompt = f"""分析以下 GitHub PR，提取趋势信号。
+
+PR 标题: {pr_details.get("title", "")}
+PR 描述: {pr_details.get("body", "")}
+仓库: {pr_details.get("repo_name", "")}
+作者: {pr_details.get("author", "")}
+链接: {pr_details.get("url", "")}
+
+请提取关键信息并返回结构化信号。
+"""
+
+        signal = await self._call_llm_for_signal_async(prompt)
+
+        if not signal.id:
+            signal.id = (
+                f"{pr_details.get('repo_name', 'unknown')}-"
+                f"{pr_details.get('number', 0)}"
+            )
+
+        if not signal.sources:
+            signal.sources = [pr_details.get("url", "")]
+
+        if not signal.related_repos:
+            repo_name = pr_details.get("repo_name")
+            if repo_name:
+                signal.related_repos = [repo_name]
+
+        return signal  # type: ignore[no-any-return]
+
     def _call_llm_for_signal(self, prompt: str) -> Signal:
         """调用 LLM 提取 PR 信号（带重试机制）
 
@@ -112,6 +144,26 @@ PR 描述: {pr_details.get("body", "")}
             )
 
         return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
+
+    async def _call_llm_for_signal_async(self, prompt: str) -> Signal:
+        async def _call():
+            if self.async_instructor_client is None:
+                return self.client.chat.completions.create(
+                    model=self.model,
+                    response_model=Signal,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1000,
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=Signal,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1000,
+                )
+            )
+
+        return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
 
     def analyze_prs(self, pr_list: list[dict], max_workers: int = 5) -> list[Signal]:
         """批量分析多个 PR（并行处理）
@@ -161,6 +213,46 @@ PR 描述: {pr_details.get("body", "")}
                     logger.debug(
                         f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}"
                     )
+
+        return signals
+
+    async def analyze_prs_async(
+        self, pr_list: list[dict], max_workers: int = 5
+    ) -> list[Signal]:
+        if not pr_list:
+            return []
+
+        if len(pr_list) == 1:
+            pr = pr_list[0]
+            try:
+                return [await self.analyze_pr_async(pr)]
+            except Exception as e:
+                repo_name = pr.get("repo_name", "unknown")
+                number = pr.get("number", 0)
+                logger.debug(
+                    f"TrendAnalyzer: 异步分析 PR {repo_name}#{number} 失败: {e}"
+                )
+                return []
+
+        semaphore = asyncio.Semaphore(max_workers)
+
+        async def _run(pr):
+            async with semaphore:
+                return await self.analyze_pr_async(pr)
+
+        tasks = [_run(pr) for pr in pr_list]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        signals: list[Signal] = []
+        for pr, result in zip(pr_list, results):
+            if isinstance(result, Exception):
+                repo_name = pr.get("repo_name", "unknown")
+                number = pr.get("number", 0)
+                logger.debug(
+                    f"TrendAnalyzer: 异步分析 PR {repo_name}#{number} 失败: {result}"
+                )
+                continue
+            signals.append(cast(Signal, result))
 
         return signals
 

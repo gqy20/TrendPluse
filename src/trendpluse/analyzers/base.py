@@ -3,11 +3,14 @@
 提供统一的 LLM 客户端初始化，支持 instructor 和 Anthropic 两种模式。
 """
 
+import asyncio
+import inspect
 from abc import ABC
 from typing import Any
 
+import anthropic
 import instructor
-from anthropic import Anthropic
+from anthropic import Anthropic, AsyncAnthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, ValidationError
 
@@ -62,6 +65,12 @@ class BaseLLMAnalyzer(ABC):
             else:
                 self.client = Anthropic(api_key=api_key)  # type: ignore[assignment]
 
+        # 初始化异步客户端（用于 async I/O 并发）
+        self.async_client = AsyncAnthropic(api_key=api_key, base_url=base_url)  # type: ignore[assignment]
+        self.async_instructor_client = None
+        if use_instructor:
+            self.async_instructor_client = instructor.from_anthropic(self.async_client)  # type: ignore[assignment]
+
     def _run_with_llm_retry(self, func):
         """统一封装 LLM 调用重试逻辑（可配置）"""
         decorator = create_anthropic_retry_decorator(
@@ -71,6 +80,27 @@ class BaseLLMAnalyzer(ABC):
         )
         wrapped = decorator(func)
         return wrapped()
+
+    async def _maybe_await(self, value):
+        if inspect.isawaitable(value):
+            return await value
+        return value
+
+    async def _run_with_llm_retry_async(self, func):
+        """异步重试封装（与同步重试配置保持一致）"""
+        retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
+        attempts = self.retry_max_attempts
+        wait_min = self.retry_wait_min
+        wait_max = self.retry_wait_max
+
+        for attempt in range(1, attempts + 1):
+            try:
+                return await self._maybe_await(func())
+            except retryable_errors:
+                if attempt >= attempts:
+                    raise
+                backoff = wait_min * (2 ** (attempt - 1))
+                await asyncio.sleep(min(wait_max, backoff))
 
     def _extract_text_from_response(self, message) -> str:
         """从 Anthropic 消息响应中提取文本内容

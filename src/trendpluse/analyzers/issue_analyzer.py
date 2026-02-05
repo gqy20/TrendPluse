@@ -3,7 +3,8 @@
 使用 AI 对 Issue 进行分类、情绪分析和痛点提取。
 """
 
-from typing import Literal
+import asyncio
+from typing import Literal, cast
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.logger import get_logger
@@ -81,6 +82,32 @@ Issue 内容: {issue.body or "(无内容)"}
         analysis = self._call_llm_for_analysis(prompt)
         return analysis
 
+    async def analyze_async(self, issue: IssueInfo) -> IssueAnalysis:
+        prompt = f"""分析以下 GitHub Issue，提取关键信息。
+
+Issue 标题: {issue.title}
+Issue 内容: {issue.body or "(无内容)"}
+仓库: {issue.repo}
+状态: {issue.state}
+标签: {", ".join(issue.labels)}
+评论数: {issue.comments}
+链接: {issue.url}
+
+请分析并返回结构化数据，包括：
+1. 分类: bug_report / feature_request / question / discussion
+2. 情绪: positive / neutral / negative
+3. 痛点: 用户遇到的问题（如果适用）
+4. 功能需求: 用户想要的功能（如果是 feature_request）
+5. 优先级: low / medium / high / critical
+6. 技术标签: 相关技术栈关键词
+
+重要格式要求：
+- 如果字段不存在或不适用，请返回 JSON null（不是字符串 "null"/"None"/"N/A"）
+- 只返回结构化结果，不要附带额外说明文字
+"""
+
+        return await self._call_llm_for_analysis_async(prompt)
+
     def _call_llm_for_analysis(self, prompt: str) -> IssueAnalysis:  # type: ignore[no-any-return]
         """调用 LLM 分析 Issue
 
@@ -100,6 +127,26 @@ Issue 内容: {issue.body or "(无内容)"}
             )
 
         return self._run_with_llm_retry(_call)
+
+    async def _call_llm_for_analysis_async(self, prompt: str) -> IssueAnalysis:  # type: ignore[no-any-return]
+        async def _call():
+            if self.async_instructor_client is None:
+                return self.client.chat.completions.create(
+                    model=self.model,
+                    response_model=IssueAnalysis,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1000,
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=IssueAnalysis,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1000,
+                )
+            )
+
+        return await self._run_with_llm_retry_async(_call)
 
     def analyze_batch(
         self,
@@ -132,6 +179,31 @@ Issue 内容: {issue.body or "(无内容)"}
                     results[key] = analysis
                 except Exception as e:
                     logger.debug(f"分析 Issue {issue.repo}#{issue.issue_id} 失败: {e}")
+
+        return results
+
+    async def analyze_batch_async(
+        self, issues: list[IssueInfo], max_workers: int = 5
+    ) -> dict[str, IssueAnalysis]:
+        results: dict[str, IssueAnalysis] = {}
+        if not issues:
+            return results
+
+        semaphore = asyncio.Semaphore(max_workers)
+
+        async def _run(issue: IssueInfo):
+            async with semaphore:
+                return issue, await self.analyze_async(issue)
+
+        tasks = [_run(issue) for issue in issues]
+        task_results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        for result in task_results:
+            if isinstance(result, Exception):
+                continue
+            issue, analysis = cast(tuple[IssueInfo, IssueAnalysis], result)
+            key = f"{issue.repo}#{issue.issue_id}"
+            results[key] = analysis
 
         return results
 
@@ -461,6 +533,30 @@ Issue 内容: {issue.body or "(无内容)"}
             )
 
         return self._run_with_llm_retry(_call)
+
+    async def _analyze_one_batch_async(
+        self, issues: list[IssueInfo]
+    ) -> BatchIssueAnalysis:  # type: ignore[no-any-return]
+        prompt = self.build_batch_prompt(issues)
+
+        async def _call():
+            if self.async_instructor_client is None:
+                return self.client.chat.completions.create(
+                    model=self.model,
+                    response_model=BatchIssueAnalysis,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=4000,
+                )
+            return await self._maybe_await(
+                self.async_instructor_client.chat.completions.create(
+                    model=self.model,
+                    response_model=BatchIssueAnalysis,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=4000,
+                )
+            )
+
+        return await self._run_with_llm_retry_async(_call)
 
     def _retry_failed_singly(
         self,
