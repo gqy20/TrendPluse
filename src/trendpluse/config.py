@@ -5,7 +5,7 @@
 
 from typing import Any
 
-from pydantic import Field, field_validator, model_validator
+from pydantic import AliasChoices, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # 默认模型名称（供分析器使用）
@@ -30,7 +30,13 @@ class Settings(BaseSettings):
     )
 
     # GitHub 配置
-    github_token: str = Field(default="", description="GitHub Personal Access Token")
+    github_token: str = Field(
+        default="",
+        description=(
+            "GitHub Personal Access Token（优先 GITHUB_PAT，其次 GITHUB_TOKEN）"
+        ),
+        validation_alias=AliasChoices("GITHUB_PAT", "GITHUB_TOKEN"),
+    )
     github_repos: list[str] = Field(
         default=[
             # Anthropic 核心产品
