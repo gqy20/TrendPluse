@@ -63,14 +63,14 @@ jobs:
             --output-dir reports
 
       - name: Upload reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: discovery-reports
           path: reports/discovery/discovery-*.md
           retention-days: 30
 
       - name: Upload JSON reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: discovery-reports-json
           path: reports/discovery/discovery-*.json
