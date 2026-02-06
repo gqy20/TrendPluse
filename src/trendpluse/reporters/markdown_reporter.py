@@ -162,9 +162,16 @@ class MarkdownReporter:
 
     def _render_issue_insights(self, report: IssueAgentReport) -> str:
         lines = ["---\n", "## 🧠 Issue 洞察（Agent）\n\n"]
+        lines.append(
+            f"解析文件: {report.parsed_files}，失败文件: {report.failed_files}\n\n"
+        )
 
         if not report.top_pain_points:
             lines.append("暂无可用的 Issue 洞察。\n")
+            if report.failed_samples:
+                lines.append(
+                    f"失败样例: {', '.join(f'`{s}`' for s in report.failed_samples)}\n"
+                )
             return "".join(lines)
 
         lines.append("### 用户痛点 TOP 5\n\n")

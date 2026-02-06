@@ -227,6 +227,18 @@ class Settings(BaseSettings):
         default=None,
         description="Issue Agent 使用的模型名称（为空则使用默认）",
     )
+    issue_agent_retry_max_attempts: int = Field(
+        default=3,
+        ge=1,
+        le=10,
+        description="Issue Agent 输出校验失败时的最大重试次数",
+    )
+    issue_agent_retry_wait_seconds: float = Field(
+        default=1.0,
+        ge=0.0,
+        le=30.0,
+        description="Issue Agent 重试等待时间（秒）",
+    )
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

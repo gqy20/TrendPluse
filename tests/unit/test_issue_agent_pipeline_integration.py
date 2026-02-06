@@ -12,8 +12,15 @@ import trendpluse.pipeline as pipeline_module
 class _StubIssueAgentRunner:
     called = False
 
-    def __init__(self, model=None):
+    def __init__(
+        self,
+        model=None,
+        retry_max_attempts: int = 3,
+        retry_wait_seconds: float = 1.0,
+    ):
         self.model = model
+        self.retry_max_attempts = retry_max_attempts
+        self.retry_wait_seconds = retry_wait_seconds
 
     async def analyze_directory(self, input_dir: Path, output_dir: Path) -> int:
         _StubIssueAgentRunner.called = True
@@ -43,6 +50,8 @@ def test_pipeline_runs_issue_agent_when_enabled(tmp_path, monkeypatch):
             anthropic_api_key="test-key",
             issue_dump_dir=str(tmp_path),
             issue_agent_model=None,
+            issue_agent_retry_max_attempts=2,
+            issue_agent_retry_wait_seconds=0.0,
         ),
     )
 

@@ -32,3 +32,41 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     assert report.top_pain_points[0].topic == "安装失败"
     assert report.top_pain_points[0].count == 3
     assert set(report.top_pain_points[0].affected_repos) == {"a/b", "c/d"}
+    assert report.parsed_files == 2
+    assert report.failed_files == 0
+    assert report.failed_samples == []
+
+
+def test_load_issue_agent_report_tracks_failed_files(tmp_path: Path) -> None:
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-05" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "valid.analysis.json").write_text(
+        """{
+  "top_pain_points": [
+    {"topic": "安装失败", "count": 2, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
+  ]
+}""",
+        encoding="utf-8",
+    )
+    (snapshot / "bad-json.analysis.json").write_text("{oops", encoding="utf-8")
+    (snapshot / "bad-schema.analysis.json").write_text(
+        """{
+  "top_pain_points": [
+    {
+      "topic": "类型错误",
+      "count": "xx",
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"]
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-05")
+    assert report.parsed_files == 1
+    assert report.failed_files == 2
+    assert "bad-json.analysis.json" in report.failed_samples
+    assert "bad-schema.analysis.json" in report.failed_samples

@@ -552,10 +552,17 @@ class FeishuFormatter:
         return content
 
     def _generate_issue_insights_content(self, report: IssueAgentReport) -> str:
-        lines: list[str] = []
+        lines: list[str] = [
+            f"• 解析文件: {report.parsed_files}\n",
+            f"• 失败文件: {report.failed_files}\n\n",
+        ]
 
         if not report.top_pain_points:
-            return "暂无可用的 Issue 洞察。\n"
+            lines.append("暂无可用的 Issue 洞察。\n")
+            if report.failed_samples:
+                samples = ", ".join(f"`{s}`" for s in report.failed_samples[:3])
+                lines.append(f"失败样例: {samples}\n")
+            return "".join(lines)
 
         lines.append("**用户痛点 TOP 3**\n\n")
         for idx, pain_point in enumerate(report.top_pain_points[:3], 1):

@@ -531,7 +531,11 @@ class TrendPulsePipeline:
 
         output_dir = input_dir / "analysis"
         try:
-            runner = IssueAgentRunner(model=self.settings.issue_agent_model)
+            runner = IssueAgentRunner(
+                model=self.settings.issue_agent_model,
+                retry_max_attempts=self.settings.issue_agent_retry_max_attempts,
+                retry_wait_seconds=self.settings.issue_agent_retry_wait_seconds,
+            )
             count = await runner.analyze_directory(input_dir, output_dir)
             logger.info("Issue Agent 分析完成: files=%d", count)
         except Exception as exc:  # pragma: no cover - 防御性日志

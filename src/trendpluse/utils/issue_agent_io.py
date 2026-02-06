@@ -3,11 +3,16 @@
 from __future__ import annotations
 
 import json
+import logging
 from collections import defaultdict
 from os import PathLike
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from trendpluse.models.issue_agent import IssueAgentPainPoint, IssueAgentReport
+
+logger = logging.getLogger(__name__)
 
 
 def load_issue_agent_report(
@@ -25,32 +30,37 @@ def load_issue_agent_report(
     if not analysis_dir.exists():
         return IssueAgentReport()
 
+    files = sorted(analysis_dir.glob("*.analysis.json"))
     merged_counts: dict[str, int] = defaultdict(int)
     merged_repos: dict[str, set[str]] = defaultdict(set)
     merged_urls: dict[str, list[str]] = defaultdict(list)
+    parsed_files = 0
+    failed_files = 0
+    failed_samples: list[str] = []
 
-    for path in sorted(analysis_dir.glob("*.analysis.json")):
+    for path in files:
         try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            validated = IssueAgentReport.model_validate(raw)
+        except (json.JSONDecodeError, ValidationError):
+            failed_files += 1
+            if len(failed_samples) < 5:
+                failed_samples.append(path.name)
             continue
 
-        pain_points = data.get("top_pain_points", [])
-        if not isinstance(pain_points, list):
-            continue
-
-        for item in pain_points:
-            topic = str(item.get("topic", "")).strip()
+        parsed_files += 1
+        for item in validated.top_pain_points:
+            topic = item.topic.strip()
             if not topic:
                 continue
-            count = int(item.get("count", 1))
+            count = item.count
             merged_counts[topic] += max(1, count)
-            for repo in item.get("affected_repos", []) or []:
+            for repo in item.affected_repos:
                 merged_repos[topic].add(str(repo))
-            for url in item.get("sample_urls", []) or []:
+            for url in item.sample_urls:
                 merged_urls[topic].append(str(url))
 
-    merged = []
+    merged: list[IssueAgentPainPoint] = []
     for topic, count in merged_counts.items():
         merged.append(
             IssueAgentPainPoint(
@@ -62,4 +72,15 @@ def load_issue_agent_report(
         )
 
     merged.sort(key=lambda p: p.count, reverse=True)
-    return IssueAgentReport(top_pain_points=merged[:5])
+    if failed_files > 0:
+        logger.warning(
+            "Issue Agent 分析文件解析失败: failed=%d, samples=%s",
+            failed_files,
+            ",".join(failed_samples),
+        )
+    return IssueAgentReport(
+        top_pain_points=merged[:5],
+        parsed_files=parsed_files,
+        failed_files=failed_files,
+        failed_samples=failed_samples,
+    )

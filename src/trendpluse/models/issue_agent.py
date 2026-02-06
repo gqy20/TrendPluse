@@ -16,3 +16,9 @@ class IssueAgentReport(BaseModel):
     """Agent 输出的 Issue 汇总结果"""
 
     top_pain_points: list[IssueAgentPainPoint] = Field(default_factory=list)
+    parsed_files: int = Field(default=0, ge=0, description="成功解析的分析文件数")
+    failed_files: int = Field(default=0, ge=0, description="解析失败的分析文件数")
+    failed_samples: list[str] = Field(
+        default_factory=list,
+        description="失败文件示例（最多 5 个）",
+    )

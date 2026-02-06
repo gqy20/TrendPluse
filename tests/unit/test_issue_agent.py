@@ -1,5 +1,7 @@
 """Issue Agent 解析测试"""
 
+import pytest
+
 from trendpluse.agents.issue_agent import IssueAgentRunner
 
 
@@ -18,3 +20,64 @@ def test_extract_text_blocks_handles_multiple_types() -> None:
     ]
     text = runner._extract_text_blocks(content)
     assert text == "ABC"
+
+
+def test_normalize_and_validate_output_accepts_fenced_json() -> None:
+    runner = IssueAgentRunner(model=None)
+    text = """
+这里是说明文字
+```json
+{
+  "top_pain_points": [
+    {"topic":"安装失败","count":2,"affected_repos":["a/b"],"sample_urls":["u1"]}
+  ]
+}
+```
+"""
+    report = runner._normalize_and_validate_output(text)
+    assert len(report.top_pain_points) == 1
+    assert report.top_pain_points[0].topic == "安装失败"
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_retries_on_invalid_then_success(tmp_path) -> None:
+    class _RetryRunner(IssueAgentRunner):
+        def __init__(self) -> None:
+            super().__init__(model=None, retry_max_attempts=2, retry_wait_seconds=0)
+            self.calls = 0
+
+        async def _run_agent_query(self, prompt: str) -> str:
+            del prompt
+            self.calls += 1
+            if self.calls == 1:
+                return "not json"
+            return (
+                '{"top_pain_points":[{"topic":"崩溃","count":1,'
+                '"affected_repos":["a/b"],"sample_urls":["u"]}]}'
+            )
+
+    runner = _RetryRunner()
+    output_path = tmp_path / "x.analysis.json"
+    input_path = tmp_path / "x.jsonl"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    text = await runner.analyze_file(input_path, output_path)
+    assert runner.calls == 2
+    assert "top_pain_points" in text
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_raises_after_retry_exhausted(tmp_path) -> None:
+    class _FailRunner(IssueAgentRunner):
+        def __init__(self) -> None:
+            super().__init__(model=None, retry_max_attempts=2, retry_wait_seconds=0)
+
+        async def _run_agent_query(self, prompt: str) -> str:
+            del prompt
+            return "still invalid"
+
+    runner = _FailRunner()
+    output_path = tmp_path / "x.analysis.json"
+    input_path = tmp_path / "x.jsonl"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    with pytest.raises(RuntimeError, match="仍未通过校验"):
+        await runner.analyze_file(input_path, output_path)
