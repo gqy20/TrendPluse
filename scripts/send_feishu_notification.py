@@ -37,6 +37,12 @@ def find_report_json(report_date: str) -> Path | None:
         找到的文件路径（绝对路径），未找到返回 None
     """
     filename = f"report-{report_date}.json"
+
+    # 优先 artifact 下载后的嵌套目录结构，避免读取到仓库中旧报告
+    nested_candidates = sorted(Path("reports").glob(f"**/reports/daily/{filename}"))
+    if nested_candidates:
+        return nested_candidates[0].resolve()
+
     candidates = [
         Path(f"reports/{filename}"),
         Path(f"reports/daily/{filename}"),
@@ -46,11 +52,6 @@ def find_report_json(report_date: str) -> Path | None:
         path = candidate.resolve()
         if path.exists():
             return path
-
-    # 兼容 artifact 下载后的嵌套目录结构：reports/**/reports/daily/report-*.json
-    nested_candidates = sorted(Path("reports").glob(f"**/reports/daily/{filename}"))
-    if nested_candidates:
-        return nested_candidates[0].resolve()
 
     return None
 

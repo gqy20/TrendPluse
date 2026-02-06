@@ -110,6 +110,32 @@ class TestFindReportJson:
         assert result == json_file
         assert result.exists()
 
+    def test_find_json_prefers_artifact_over_local_daily(self, tmp_path, monkeypatch):
+        """测试：artifact 与本地 reports/daily 同时存在时优先 artifact"""
+        report_date = "2026-01-05"
+
+        local_daily = tmp_path / "reports" / "daily"
+        local_daily.mkdir(parents=True)
+        local_json = local_daily / f"report-{report_date}.json"
+        local_json.write_text('{"source": "local"}', encoding="utf-8")
+
+        artifact_dir = (
+            tmp_path / "reports" / "trend-report-2026-01-05" / "reports" / "daily"
+        )
+        artifact_dir.mkdir(parents=True)
+        artifact_json = artifact_dir / f"report-{report_date}.json"
+        artifact_json.write_text('{"source": "artifact"}', encoding="utf-8")
+
+        monkeypatch.chdir(tmp_path)
+
+        from scripts.send_feishu_notification import find_report_json
+
+        result = find_report_json(report_date)
+
+        assert result == artifact_json
+        content = json.loads(result.read_text(encoding="utf-8"))
+        assert content["source"] == "artifact"
+
     def test_find_json_returns_none_when_not_found(self, tmp_path, monkeypatch):
         """测试：文件不存在时返回 None"""
         # Arrange
