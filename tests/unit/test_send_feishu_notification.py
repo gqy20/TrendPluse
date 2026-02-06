@@ -68,6 +68,48 @@ class TestFindReportJson:
         content = json.loads(result.read_text(encoding="utf-8"))
         assert content["location"] == "reports"
 
+    def test_find_json_in_reports_daily_directory(self, tmp_path, monkeypatch):
+        """测试：在 reports/daily 目录中找到 JSON 文件"""
+        # Arrange
+        report_date = "2026-01-05"
+        reports_daily_dir = tmp_path / "reports" / "daily"
+        reports_daily_dir.mkdir(parents=True)
+        json_file = reports_daily_dir / f"report-{report_date}.json"
+        json_file.write_text('{"date": "2026-01-05"}', encoding="utf-8")
+
+        monkeypatch.chdir(tmp_path)
+
+        # Act
+        from scripts.send_feishu_notification import find_report_json
+
+        result = find_report_json(report_date)
+
+        # Assert
+        assert result == json_file
+        assert result.exists()
+
+    def test_find_json_in_downloaded_artifact_structure(self, tmp_path, monkeypatch):
+        """测试：在下载后的 artifact 子目录中找到 JSON 文件"""
+        # Arrange
+        report_date = "2026-01-05"
+        artifact_dir = (
+            tmp_path / "reports" / "trend-report-2026-01-05" / "reports" / "daily"
+        )
+        artifact_dir.mkdir(parents=True)
+        json_file = artifact_dir / f"report-{report_date}.json"
+        json_file.write_text('{"date": "2026-01-05"}', encoding="utf-8")
+
+        monkeypatch.chdir(tmp_path)
+
+        # Act
+        from scripts.send_feishu_notification import find_report_json
+
+        result = find_report_json(report_date)
+
+        # Assert
+        assert result == json_file
+        assert result.exists()
+
     def test_find_json_returns_none_when_not_found(self, tmp_path, monkeypatch):
         """测试：文件不存在时返回 None"""
         # Arrange

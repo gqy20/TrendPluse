@@ -36,15 +36,21 @@ def find_report_json(report_date: str) -> Path | None:
     Returns:
         找到的文件路径（绝对路径），未找到返回 None
     """
-    # 优先在 reports/ 目录查找（标准位置）
-    reports_path = Path(f"reports/report-{report_date}.json").resolve()
-    if reports_path.exists():
-        return reports_path
+    filename = f"report-{report_date}.json"
+    candidates = [
+        Path(f"reports/{filename}"),
+        Path(f"reports/daily/{filename}"),
+        Path(filename),
+    ]
+    for candidate in candidates:
+        path = candidate.resolve()
+        if path.exists():
+            return path
 
-    # 回退到当前目录（GitHub Actions artifact 下载后的场景）
-    current_path = Path(f"report-{report_date}.json").resolve()
-    if current_path.exists():
-        return current_path
+    # 兼容 artifact 下载后的嵌套目录结构：reports/**/reports/daily/report-*.json
+    nested_candidates = sorted(Path("reports").glob(f"**/reports/daily/{filename}"))
+    if nested_candidates:
+        return nested_candidates[0].resolve()
 
     return None
 
@@ -121,7 +127,7 @@ def main():
 
     if not json_path:
         console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
-        return
+        sys.exit(1)
     else:
         # 直接读取 JSON
         console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")

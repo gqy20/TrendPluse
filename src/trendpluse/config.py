@@ -219,6 +219,14 @@ class Settings(BaseSettings):
         default="data/issues",
         description="Issue 明细落盘目录（按日期与仓库分文件）",
     )
+    enable_issue_agent_analysis: bool = Field(
+        default=False,
+        description="是否在 daily 流程中启用 Claude Agent Issue 分析",
+    )
+    issue_agent_model: str | None = Field(
+        default=None,
+        description="Issue Agent 使用的模型名称（为空则使用默认）",
+    )
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

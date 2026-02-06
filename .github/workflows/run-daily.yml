@@ -53,6 +53,8 @@ jobs:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_ISSUE_AGENT_ANALYSIS: "true"
+          ISSUE_AGENT_MODEL: ${{ secrets.ISSUE_AGENT_MODEL || '' }}
           LOG_LEVEL: INFO
         run: uv run python scripts/run.py
 

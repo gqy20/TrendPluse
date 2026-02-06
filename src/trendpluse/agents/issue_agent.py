@@ -33,13 +33,27 @@ class IssueAgentRunner:
         output_path.write_text(response_text, encoding="utf-8")
         return response_text
 
+    async def analyze_directory(self, input_dir: Path, output_dir: Path) -> int:
+        """分析目录下所有 JSONL 文件。
+
+        Returns:
+            成功写入的分析文件数量。
+        """
+        files = sorted(input_dir.glob("*.jsonl"))
+        if not files:
+            return 0
+
+        output_dir.mkdir(parents=True, exist_ok=True)
+        success_count = 0
+        for input_path in files:
+            output_path = output_dir / f"{input_path.stem}.analysis.json"
+            await self.analyze_file(input_path, output_path)
+            success_count += 1
+        return success_count
+
     async def _run_agent_query(self, prompt: str) -> str:
         try:
-            from claude_agent_sdk import (  # type: ignore
-                AssistantMessage,
-                ClaudeAgentOptions,
-                query,
-            )
+            from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, query
         except Exception as exc:  # pragma: no cover - 仅在缺少依赖时触发
             raise RuntimeError(
                 "未安装 claude-agent-sdk，请先安装依赖后再运行。"

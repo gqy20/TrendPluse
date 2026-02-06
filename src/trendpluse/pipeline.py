@@ -11,6 +11,7 @@ from typing import Any
 
 from anthropic import Anthropic
 
+from trendpluse.agents.issue_agent import IssueAgentRunner
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
 )
@@ -213,6 +214,7 @@ class TrendPulsePipeline:
                 self.settings.issue_dump_dir,
                 date.strftime("%Y-%m-%d"),
             )
+        self._run_issue_agent_analysis(date.strftime("%Y-%m-%d"))
 
         # 0.9. Issue 分析已迁移到 Agent SDK（此处仅落盘）
 
@@ -367,6 +369,7 @@ class TrendPulsePipeline:
                 self.settings.issue_dump_dir,
                 date.strftime("%Y-%m-%d"),
             )
+        await self._run_issue_agent_analysis_async(date.strftime("%Y-%m-%d"))
         logger.info(
             "Issue collection done in %.2fs (issues=%d)",
             time.perf_counter() - step_start,
@@ -504,6 +507,35 @@ class TrendPulsePipeline:
         logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
 
         return report
+
+    def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
+        if getattr(self.settings, "enable_issue_agent_analysis", False) is not True:
+            return
+        if not self.settings.anthropic_api_key:
+            logger.warning("已启用 Issue Agent 分析但未配置 ANTHROPIC_API_KEY，跳过")
+            return
+        try:
+            asyncio.run(self._run_issue_agent_analysis_async(snapshot_date))
+        except Exception as exc:  # pragma: no cover - 防御性日志
+            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
+
+    async def _run_issue_agent_analysis_async(self, snapshot_date: str) -> None:
+        if getattr(self.settings, "enable_issue_agent_analysis", False) is not True:
+            return
+
+        input_dir = Path(self.settings.issue_dump_dir) / snapshot_date
+        if not input_dir.exists():
+            return
+        if not any(input_dir.glob("*.jsonl")):
+            return
+
+        output_dir = input_dir / "analysis"
+        try:
+            runner = IssueAgentRunner(model=self.settings.issue_agent_model)
+            count = await runner.analyze_directory(input_dir, output_dir)
+            logger.info("Issue Agent 分析完成: files=%d", count)
+        except Exception as exc:  # pragma: no cover - 防御性日志
+            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
 
     def _generate_empty_report(
         self,
