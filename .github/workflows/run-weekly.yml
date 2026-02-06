@@ -5,6 +5,17 @@ on:
     # 每周一 UTC 0:05 运行 (北京时间 8:05)
     - cron: '05 0 * * 1'
   workflow_dispatch:
+    inputs:
+      send_notification:
+        description: '是否发送周报飞书通知'
+        required: false
+        type: boolean
+        default: true
+      week_id:
+        description: '周标识 (YYYY-Www)，默认上周'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -48,3 +59,37 @@ jobs:
           git add reports/weekly/*.md reports/weekly/*.json docs/reports/*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update weekly trend report [skip ci]"
           git push
+
+  notify:
+    name: Send Weekly Feishu Notification
+    needs: weekly
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || inputs.send_notification == true }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Send weekly feishu notification
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+          FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
+          WEEK_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.week_id || '' }}
+        run: uv run python scripts/send_weekly_feishu.py
