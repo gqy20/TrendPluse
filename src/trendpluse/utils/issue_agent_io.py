@@ -4,16 +4,23 @@ from __future__ import annotations
 
 import json
 from collections import defaultdict
+from os import PathLike
 from pathlib import Path
 
 from trendpluse.models.issue_agent import IssueAgentPainPoint, IssueAgentReport
 
 
-def load_issue_agent_report(base_dir: str, snapshot_date: str) -> IssueAgentReport:
+def load_issue_agent_report(
+    base_dir: str | PathLike[str] | object,
+    snapshot_date: str,
+) -> IssueAgentReport:
     """读取并合并 Agent 输出结果。
 
     读取目录：{base_dir}/{snapshot_date}/analysis/*.analysis.json
     """
+    if not isinstance(base_dir, (str, PathLike)):
+        return IssueAgentReport()
+
     analysis_dir = Path(base_dir) / snapshot_date / "analysis"
     if not analysis_dir.exists():
         return IssueAgentReport()

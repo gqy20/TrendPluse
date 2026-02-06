@@ -25,5 +25,7 @@
   "monitored_repos": [
     "anthropics/skills"
   ],
-  "issues": null
+  "issue_insights": {
+    "top_pain_points": []
+  }
 }
