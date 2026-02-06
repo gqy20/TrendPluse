@@ -38,10 +38,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: uv run python scripts/run_weekly.py
 
+      - name: Sync reports to docs
+        run: uv run python scripts/generate_report_index.py
+
       - name: Commit weekly report
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/weekly-*.md reports/weekly-*.json
+          git add reports/weekly/*.md reports/weekly/*.json docs/reports/*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update weekly trend report [skip ci]"
           git push

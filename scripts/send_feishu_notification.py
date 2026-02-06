@@ -26,9 +26,8 @@ console = Console()
 def find_report_json(report_date: str) -> Path | None:
     """查找报告 JSON 文件
 
-    支持多个路径，适配不同的部署场景：
-    1. reports/report-{date}.json - 本地运行或完整目录结构
-    2. report-{date}.json - GitHub Actions artifact 下载后的场景（去掉路径前缀）
+    仅支持仓库内新目录结构：
+    1. reports/daily/report-{date}.json
 
     Args:
         report_date: 报告日期 (YYYY-MM-DD)
@@ -38,20 +37,9 @@ def find_report_json(report_date: str) -> Path | None:
     """
     filename = f"report-{report_date}.json"
 
-    # 优先 artifact 下载后的嵌套目录结构，避免读取到仓库中旧报告
-    nested_candidates = sorted(Path("reports").glob(f"**/reports/daily/{filename}"))
-    if nested_candidates:
-        return nested_candidates[0].resolve()
-
-    candidates = [
-        Path(f"reports/{filename}"),
-        Path(f"reports/daily/{filename}"),
-        Path(filename),
-    ]
-    for candidate in candidates:
-        path = candidate.resolve()
-        if path.exists():
-            return path
+    daily_path = Path(f"reports/daily/{filename}").resolve()
+    if daily_path.exists():
+        return daily_path
 
     return None
 
@@ -153,14 +141,6 @@ def main():
             at_mobiles=at_mobiles,
             secret=secret or None,
         )
-
-        # 构建飞书卡片（用于调试和保存 artifact）
-        card = notifier._build_card(report)
-
-        # 保存卡片数据到当前目录（GitHub Actions 会上传为 artifact）
-        card_file = Path("feishu_card.json")
-        card_file.write_text(json.dumps(card, ensure_ascii=False, indent=2))
-        console.print(f"  [dim]卡片已保存到: {card_file}[/dim]")
 
         console.print(f"  Webhook URL: {webhook_url[:30]}...{webhook_url[-10:]}")
         console.print(f"  使用签名: {'是' if secret else '否'}")

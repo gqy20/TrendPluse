@@ -4,6 +4,8 @@
 从过去 7 天的日报聚合生成周报。
 """
 
+import os
+
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
 from trendpluse.pipeline import TrendPulsePipeline
@@ -13,6 +15,9 @@ logger = get_logger(__name__)
 
 def main():
     """主函数"""
+    if os.getenv("GITHUB_ACTIONS") != "true":
+        raise RuntimeError("周报生成仅支持通过 GitHub Actions 触发执行")
+
     logger.info("开始生成周报...")
 
     settings = Settings()

@@ -112,29 +112,3 @@ class TestReportsDirectoryStructure:
         content = output_path.read_text()
         assert "2026-01-31" in content
         assert "2026-W04" in content
-
-    def test_migrate_old_structure_to_new(self, tmp_path):
-        """测试迁移旧结构到新结构"""
-        reports_dir = tmp_path / "reports"
-        reports_dir.mkdir()
-
-        # 创建旧结构文件
-        (reports_dir / "report-2026-01-31.md").write_text("旧日报")
-        (reports_dir / "weekly-2026-W04.md").write_text("旧周报")
-
-        # 执行迁移
-        daily_dir = reports_dir / "daily"
-        weekly_dir = reports_dir / "weekly"
-        daily_dir.mkdir()
-        weekly_dir.mkdir()
-
-        # 移动文件
-        (reports_dir / "report-2026-01-31.md").rename(
-            daily_dir / "report-2026-01-31.md"
-        )
-        (reports_dir / "weekly-2026-W04.md").rename(weekly_dir / "weekly-2026-W04.md")
-
-        # 验证新结构
-        assert (daily_dir / "report-2026-01-31.md").exists()
-        assert (weekly_dir / "weekly-2026-W04.md").exists()
-        assert not (reports_dir / "report-2026-01-31.md").exists()

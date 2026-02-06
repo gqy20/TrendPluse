@@ -65,9 +65,10 @@ make run
 报告生成后位于 `reports/` 目录：
 
 ```bash
-ls reports/
-# report-2026-01-02.md    # Markdown 格式（人类可读）
-# report-2026-01-02.json  # JSON 格式（机器可读）
+ls reports/daily reports/weekly
+# reports/daily/report-2026-01-02.md    # 每日报告（Markdown）
+# reports/daily/report-2026-01-02.json  # 每日报告（JSON）
+# reports/weekly/weekly-2026-W04.md     # 周报（Markdown）
 ```
 
 ---

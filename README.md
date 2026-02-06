@@ -96,8 +96,9 @@ FEISHU_AT_MOBILES=13800138000,13900139000
 uv run python scripts/run.py
 
 # 查看生成的报告
-ls reports/
-# report-2026-01-02.md
+ls reports/daily reports/weekly
+# reports/daily/report-2026-01-02.md
+# reports/weekly/weekly-2026-W04.md
 ```
 
 ## 常用命令
@@ -188,8 +189,9 @@ TrendPluse/
 │   │   └── index.md        # 报告索引
 │   └── stylesheets/        # 自定义样式
 ├── reports/                # 生成的趋势报告
-│   ├── report-*.md         # Markdown 格式
-│   └── report-*.json       # JSON 格式
+│   ├── daily/              # 每日报告
+│   ├── weekly/             # 周报
+│   └── discovery/          # 发现报告
 ├── scripts/                # 工具脚本
 │   ├── run.py                       # 主程序入口
 │   ├── generate_report_index.py     # 生成报告索引

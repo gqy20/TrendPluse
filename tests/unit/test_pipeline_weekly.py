@@ -59,7 +59,9 @@ class TestLoadDailyReports:
     def test_load_existing_reports(self, temp_dir):
         """测试加载存在的日报"""
         # Arrange
-        settings = Settings()
+        daily_output_dir = temp_dir / "reports" / "daily"
+        daily_output_dir.mkdir(parents=True)
+        settings = Settings(output_dir=str(daily_output_dir))
         pipeline = TrendPulsePipeline(settings=settings)
 
         # 创建测试日报文件
@@ -71,12 +73,11 @@ class TestLoadDailyReports:
             date="2026-01-20",
             summary_brief="测试日报",
         )
-        json_file = temp_dir / "report-2026-01-20.json"
+        json_file = daily_output_dir / "report-2026-01-20.json"
         json_file.write_text(report.model_dump_json())
 
         # Act
-        with patch("trendpluse.pipeline.Path", return_value=temp_dir):
-            reports = pipeline._load_daily_reports(start_date, end_date)
+        reports = pipeline._load_daily_reports(start_date, end_date)
 
         # Assert
         assert len(reports) == 1
@@ -85,14 +86,15 @@ class TestLoadDailyReports:
     def test_load_no_reports(self, temp_dir):
         """测试没有日报的情况"""
         # Arrange
-        settings = Settings()
+        daily_output_dir = temp_dir / "reports" / "daily"
+        daily_output_dir.mkdir(parents=True)
+        settings = Settings(output_dir=str(daily_output_dir))
         pipeline = TrendPulsePipeline(settings=settings)
         start_date = datetime(2026, 1, 20)
         end_date = datetime(2026, 1, 20)
 
         # Act - 空目录
-        with patch("trendpluse.pipeline.Path", return_value=temp_dir):
-            reports = pipeline._load_daily_reports(start_date, end_date)
+        reports = pipeline._load_daily_reports(start_date, end_date)
 
         # Assert
         assert len(reports) == 0
@@ -372,7 +374,7 @@ class TestGetWeeklyOutputPath:
         path = pipeline._get_weekly_output_path(date)
 
         # Assert
-        assert path == "reports/weekly-2026-W05.md"
+        assert path == "reports/weekly/weekly-2026-W05.md"
 
 
 class TestSaveWeeklyReportJson:

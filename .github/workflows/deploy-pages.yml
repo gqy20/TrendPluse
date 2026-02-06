@@ -100,7 +100,7 @@ jobs:
         id: report_date
         run: |
           # 获取最新的报告文件名中的日期
-          REPORT_FILE=$(ls -t reports/report-*.md 2>/dev/null | head -1)
+          REPORT_FILE=$(ls -t reports/daily/report-*.md 2>/dev/null | head -1)
           if [ -n "$REPORT_FILE" ]; then
             DATE=$(basename "$REPORT_FILE" | sed 's/report-\(.*\)\.md/\1/')
             echo "date=$DATE" >> $GITHUB_OUTPUT

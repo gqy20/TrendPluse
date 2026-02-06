@@ -189,12 +189,6 @@ jobs:
         with:
           fetch-depth: 0  # 获取完整历史，确保获取最新版本
 
-      - name: Download report artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: trend-report-${{ needs.analyze.outputs.report_date }}
-          path: reports
-
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
@@ -221,12 +215,3 @@ jobs:
             exit 0
           fi
           uv run python scripts/send_feishu_notification.py
-
-      - name: Upload Feishu card artifact
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: feishu-card-${{ needs.analyze.outputs.report_date }}
-          path: feishu_card.json
-          retention-days: 30
-          if-no-files-found: ignore

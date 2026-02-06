@@ -6,7 +6,7 @@
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -30,8 +30,8 @@ def find_weekly_report_json(week_id: str) -> Path | None:
     Returns:
         找到的文件路径（绝对路径），未找到返回 None
     """
-    # 优先在 reports/ 目录查找（标准位置）
-    reports_path = Path(f"reports/weekly-{week_id}.json").resolve()
+    # 统一在 reports/weekly/ 目录查找
+    reports_path = Path(f"reports/weekly/weekly-{week_id}.json").resolve()
     if reports_path.exists():
         return reports_path
 
@@ -70,8 +70,8 @@ def main():
         today = datetime.now()
         # 获取上周日（与 pipeline.run_weekly() 的 end_date 一致）
         weekday = today.weekday()  # 0=周一, 6=周日
-        this_monday = today - __import__("datetime").timedelta(days=weekday)
-        last_sunday = this_monday - __import__("datetime").timedelta(days=1)
+        this_monday = today - timedelta(days=weekday)
+        last_sunday = this_monday - timedelta(days=1)
         # 使用 WeeklyReport.get_week_id() 计算
         from trendpluse.models.signal import WeeklyReport
 
@@ -97,7 +97,9 @@ def main():
     json_path = find_weekly_report_json(week_id)
 
     if not json_path:
-        console.print(f"[yellow]周报文件不存在: weekly-{week_id}.json[/yellow]")
+        console.print(
+            f"[yellow]周报文件不存在: reports/weekly/weekly-{week_id}.json[/yellow]"
+        )
         return
     else:
         console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
@@ -125,44 +127,24 @@ def main():
         console.print(f"  Webhook URL: {webhook_url[:30]}...{webhook_url[-10:]}")
         console.print(f"  使用签名: {'是' if secret else '否'}")
 
-        # 发送通知 - 使用 send_report 方法
-        # 注意：FeishuNotifier 期望 DailyReport，但 WeeklyReport 也有相似的字段
-        # 我们需要构造一个兼容的格式或扩展 FeishuNotifier
+        # 发送周报摘要文本，避免 WeeklyReport -> DailyReport 的临时转换层
         console.print("  正在发送...")
-
-        # 将 WeeklyReport 转换为 DailyReport 格式用于飞书通知
-        # 这是因为 FeishuNotifier 当前只支持 DailyReport
-        # 作为临时方案，我们构造一个"伪日报"
-        from trendpluse.models.signal import (
-            ActivityData,
-            DailyReport,
+        weekly_url = (
+            f"https://home.gqy20.top/TrendPluse/reports/weekly-{report.week_id}/"
         )
-
-        # 转换 WeeklyActivity 到 ActivityData（如果存在）
-        activity = None
-        if report.weekly_activity:
-            activity = ActivityData(
-                total_commits=report.weekly_activity.total_commits,
-                active_repos_count=report.weekly_activity.active_repos_count,
-                top_repos=report.weekly_activity.top_repos,
-            )
-
-        daily_report = DailyReport(
-            date=f"{report.start_date} ~ {report.end_date}",
-            summary_brief=f"## {report.week_id} 周报\n\n{report.summary_brief}",
-            engineering_signals=report.engineering_signals,
-            research_signals=report.research_signals,
-            stats={
-                "total_prs_analyzed": report.total_prs_analyzed,
-                "high_impact_signals": report.high_impact_signals,
-                "total_commits_analyzed": report.total_commits,
-                "total_releases": report.total_releases,
-                "daily_reports_count": report.daily_reports_count,
-            },
-            activity=activity,
+        content = (
+            f"📅 周期: {report.start_date} ~ {report.end_date}\n"
+            f"🧭 摘要: {report.summary_brief}\n"
+            f"📊 日报天数: {report.daily_reports_count}\n"
+            f"📌 核心趋势: {len(report.core_trends)}\n"
+            f"🔧 工程信号: {len(report.engineering_signals)}\n"
+            f"🔬 研究信号: {len(report.research_signals)}"
         )
-
-        success = notifier.send_report(daily_report)
+        success = notifier.send(
+            title=f"TrendPulse 周报 {report.week_id}",
+            content=content,
+            url=weekly_url,
+        )
 
         if success:
             console.print("[green]✓ 飞书通知发送成功[/green]")

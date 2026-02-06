@@ -769,10 +769,11 @@ class TrendPulsePipeline:
         reports = []
         current_date = start_date
 
+        daily_reports_dir = Path(self.settings.output_dir)
+
         while current_date <= end_date:
-            json_path = (
-                Path("reports") / f"report-{current_date.strftime('%Y-%m-%d')}.json"
-            )
+            filename = f"report-{current_date.strftime('%Y-%m-%d')}.json"
+            json_path = daily_reports_dir / filename
 
             if json_path.exists():
                 try:
@@ -907,7 +908,7 @@ class TrendPulsePipeline:
         )
 
     def _get_weekly_output_path(self, date: datetime) -> str:
-        """获取周报输出路径: reports/weekly-YYYY-Www.md
+        """获取周报输出路径: reports/weekly/weekly-YYYY-Www.md
 
         Args:
             date: 日期（用于计算周数）
@@ -915,7 +916,7 @@ class TrendPulsePipeline:
         Returns:
             输出文件路径
         """
-        reports_dir = Path("reports")
+        reports_dir = Path("reports/weekly")
         week_id = WeeklyReport.get_week_id(date)
         filename = f"weekly-{week_id}.md"
         return str(reports_dir / filename)
