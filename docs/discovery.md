@@ -4,7 +4,7 @@
 
 ## 最新报告
 
-### [2026-02-10](discovery-reports/discovery-2026-02-10.md)
+### [2026-02-11](discovery-reports/discovery-2026-02-11.md)
 
 **发现概览**:<br/>
 - 总发现数: 200<br/>
@@ -20,6 +20,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
+| 2026-02-11 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-11.md) |
 | 2026-02-10 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-10.md) |
 | 2026-02-09 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-09.md) |
 | 2026-02-08 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-08.md) |
@@ -29,7 +30,6 @@
 | 2026-02-04 | 200 | 137 | [查看](discovery-reports/discovery-2026-02-04.md) |
 | 2026-02-03 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-03.md) |
 | 2026-02-01 | 200 | 136 | [查看](discovery-reports/discovery-2026-02-01.md) |
-| 2026-01-31 | 200 | 133 | [查看](discovery-reports/discovery-2026-01-31.md) |
 
 ## 关于发现功能
 
