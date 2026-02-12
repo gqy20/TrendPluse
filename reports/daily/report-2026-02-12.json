@@ -1,0 +1,871 @@
+{
+  "date": "2026-02-12",
+  "summary_brief": "今日AI编码工具领域呈现明显的\"工程化成熟期\"特征，重点从功能探索转向可靠性提升。多智能体编排系统(Agno v2.5)、AI自我验证机制(Cline)、结构化输出支持等发布，以及工具链整合简化的大量PR，共同标志着行业正在为生产级应用奠定基础。",
+  "engineering_signals": [
+    {
+      "id": "trend-agent-reliability-2026-02-12",
+      "title": "AI代理工程化：从功能验证到生产可靠性",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多个项目同步推出提升AI代理可靠性的关键特性：多智能体编排系统、自我验证机制、增强的错误诊断能力。这些改进共同指向将AI编码工具从原型阶段推向生产环境的工程化趋势，解决了幻觉控制和错误恢复的核心挑战。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/v3.59.0",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.50",
+        "https://github.com/gptme/gptme/pull/1245"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "cline/cline",
+        "agno-agi/agno",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "release-3",
+        "pr-9"
+      ]
+    },
+    {
+      "id": "trend-toolchain-simplification-2026-02-12",
+      "title": "工具链整合简化：主动做减法的工程哲学",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code统一issue生命周期系统并移除Docker依赖，gptme整合UI组件，OpenHands优化条件渲染——甚至主动回滚过度复杂的功能。这种普遍的简化趋势表明AI工具领域已进入成熟期，项目开始主动减少技术债、统一工作流，而非盲目堆叠功能。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1249",
+        "https://github.com/anthropics/claude-code/pull/25352",
+        "https://github.com/anthropics/claude-code-action/pull/937"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-code",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "pr-2",
+        "pr-8"
+      ]
+    },
+    {
+      "id": "trend-structured-interaction-2026-02-12",
+      "title": "结构化交互范式：从对话到契约",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode支持Claude Agent SDK结构化输出、OpenAI Codex引入状态持久化JS REPL、gptme改进消息链处理和CLI命令分离。这些改进共同将AI交互从非结构化对话转向强类型、可预测的契约模式，显著降低了集成复杂度和认知负担。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1250",
+        "https://github.com/gptme/gptme/pull/1251",
+        "https://github.com/gptme/gptme/pull/1243",
+        "https://github.com/gptme/gptme/pull/1255",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.49"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "openai/codex",
+        "gptme/gptme",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": [
+        "release-1",
+        "release-2",
+        "pr-5",
+        "pr-6",
+        "pr-7",
+        "pr-10"
+      ]
+    },
+    {
+      "id": "trend-observability-2026-02-12",
+      "title": "可观测性成为AI工具栈标配",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "DeepAgents CLI新增tracing命令直达LangSmith、gptme改进补丁错误诊断、修复可观察值读取bug。随着AI系统复杂度增长，开发者迫切需要更好的调试和监控能力，从错误诊断到执行追踪的完整可观测性正在成为生产级AI工具的必备特性。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1251",
+        "https://github.com/gptme/gptme/pull/1245",
+        "https://github.com/cline/cline/releases/tag/v3.58.0"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "cline/cline",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "release-4",
+        "pr-6",
+        "pr-9"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 16,
+    "pr_count": 11,
+    "commit_count": 0,
+    "release_count": 5,
+    "analyzed_trends": 4,
+    "top_impact_score": 5,
+    "total_prs_analyzed": 11,
+    "total_commits_analyzed": 330,
+    "total_releases": 17,
+    "high_impact_signals": 3,
+    "total_releases_analyzed": 17,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 330,
+    "active_repos_count": 19,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 63,
+        "top_contributors": [
+          "adamdotdevin",
+          "opencode-agent[bot]",
+          "rekram1-node",
+          "thdxr",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 61,
+        "top_contributors": [
+          "jif-oai",
+          "bolinfest",
+          "pakrym-oai",
+          "aibrahim-oai",
+          "dylan-hurd-oai"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 61,
+        "top_contributors": [
+          "danilo-leal",
+          "rtfeldman",
+          "ConradIrwin",
+          "ozacod",
+          "dastrobu"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 26,
+        "top_contributors": [
+          "chrstnb",
+          "LyalinDotCom",
+          "Adib234",
+          "SandyTao520",
+          "Abhijit-2592"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 17,
+        "top_contributors": [
+          "saoudrizwan",
+          "maxpaulus43",
+          "github-actions[bot]",
+          "shey-cline",
+          "arafatkatze"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 17,
+        "top_contributors": [
+          "ErikBjare",
+          "gptme-thomas"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 10,
+        "top_contributors": [
+          "actions-user",
+          "chrislloyd",
+          "km-anthropic",
+          "fvolcic"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 10,
+        "top_contributors": [
+          "CodingOnStar",
+          "dependabot[bot]",
+          "hyoban",
+          "veeceey",
+          "saumyatalwani"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 9,
+        "top_contributors": [
+          "qbc2016",
+          "DavdGao",
+          "WangCheng0116"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 9,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 8,
+        "top_contributors": [
+          "debu-sinha",
+          "derens99",
+          "veeceey",
+          "RiccardoRubini",
+          "VintLin"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 8,
+        "top_contributors": [
+          "mdrxy",
+          "sydney-runkle",
+          "eyurtsev",
+          "jacoblee93",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 7,
+        "top_contributors": [
+          "kausmeows",
+          "ashpreetbedi",
+          "bhatt-neel-dev",
+          "mklrlnd424",
+          "Mustafa-Esoofally"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 7,
+        "top_contributors": [
+          "greysonlalonde",
+          "lorenzejay",
+          "theCyberTech",
+          "johnvan7",
+          "mplachta"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 6,
+        "top_contributors": [
+          "ccurme",
+          "sumleo",
+          "MohammedYaseenAhmedKhan",
+          "keenborder786"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 4,
+        "top_contributors": [
+          "paul-gauthier"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 4,
+        "top_contributors": [
+          "tofarr",
+          "neubig",
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 2,
+        "top_contributors": [
+          "ashwin-ant",
+          "kirisame-wang"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "hinthornw"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 17,
+    "unique_repos_count": 8,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.50",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## What's Changed\n* revert: undo PR checkout fork support and unique branch naming by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/937\n\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.50",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.50",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.50 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.49",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## What's Changed\n* fix: replace deprecated :* with modern * wildcard in git permissions by @Dave-London in https://github.com/anthropics/claude-code-action/pull/929\n* fix: skip CI MCP server installation when actions:read permission is missing by @OctavianGuzu in https://github.com/anthropics/claude-code-action/pull/933\n* Fix/PR checkout branch name conflicts by @kirisame-wang in https://github.com/anthropics/claude-code-action/pull/931\n\n## New Contributors\n* @OctavianGuzu made their first contribution in https://github.com/anthropics/claude-code-action/pull/933\n* @kirisame-wang made their first contribution in https://github.com/anthropics/claude-code-action/pull/931\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.49",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.49",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.49 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1",
+        "author": "ashwin-ant",
+        "date": "2026-02-12",
+        "summary": "# 🎉 Claude Code GitHub Action v1.0 - Now Generally Available!\r\n\r\nWe're excited to announce the v1.0 release of Claude Code GitHub Action! This major release brings significant improvements in simplicity, flexibility, and power to AI-assisted development workflows.\r\n\r\n## 🚀 What's New in v1.0\r\n\r\n### Simplified Configuration\r\n- **Automatic mode detection** - No more manual `mode` configuration. The action intelligently determines whether to run in interactive or automation mode based on your setup\r\n- **Unified interface** - All prompts now go through a single `prompt` input, and all CLI options through `claude_args`\r\n- **Better SDK alignment** - Closer integration with the Claude Code CLI for a consistent experience\r\n\r\n### More Powerful & Flexible\r\n- Direct access to all Claude Code CLI capabilities through `claude_args`\r\n- Support for custom system prompts, tool configurations, and model selection\r\n- Enhanced compatibility with AWS Bedrock and Google Vertex AI\r\n\r\n## ⚠️ Breaking Changes\r\n\r\nThis release includes breaking changes from v0.x. Key deprecated inputs have been replaced with a cleaner, more intuitive API:\r\n- `mode`, `direct_prompt`, `override_prompt` → unified `prompt` input\r\n- `custom_instructions`, `model`, `allowed_tools`, `mcp_config` → `claude_args` with CLI format\r\n- Other deprecated: `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`\r\n\r\n**📚 Please review our [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) for detailed upgrade instructions and examples.**\r\n\r\n## 💡 New Use Cases & Examples\r\n\r\nExplore the expanded possibilities with v1.0! We've created comprehensive examples showcasing various workflows:\r\n\r\n- **Automated PR Reviews** - Intelligent code review on every pull request\r\n- **CI Failure Fixes** - Automatically diagnose and fix failing tests\r\n- **Issue Triage** - Smart categorization and response to new issues\r\n- **Documentation Generation** - Keep docs in sync with code changes\r\n- **Security Scanning** - Proactive vulnerability detection\r\n- **And many more!**\r\n\r\n**🔧 Check out all examples at [github.com/anthropics/claude-code-action/tree/main/examples](https://github.com/anthropics/claude-code-action/tree/main/examples)**\r\n\r\n## 🏃 Quick Start\r\n\r\n```yaml\r\n# Interactive mode - responds to @claude mentions\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n\r\n# Automation mode - runs immediately with prompt\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    prompt: \"Review this PR for security issues\"\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n    claude_args: |\r\n      --model claude-4-0-sonnet-20250805\r\n      --max-turns 10\r\n```\r\n\r\n## 📖 Resources\r\n\r\n- [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) - Step-by-step upgrade instructions\r\n- [Examples](https://github.com/anthropics/claude-code-action/tree/main/examples) - Ready-to-use workflow templates\r\n- [Documentation](https://github.com/anthropics/claude-code-action#readme) - Complete setup and configuration guide\r\n\r\n## 🙏 Thank You\r\n\r\nThank you to our beta users for your invaluable feedback that shaped this release. We're excited to see what you'll build with Claude Code GitHub Action v1.0!\r\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.59.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "\n- Added Minimax 2.5 Free Promo\n- Fixed Response chaining for OpenAI's Responses API \n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-build-024bb65...v3.59.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.59.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "新增 Minimax 2.5 Free Promo 功能支持",
+            "修复 OpenAI Responses API 的响应链式调用问题"
+          ],
+          "summary_cn": "本次更新（v3.59.0）包含两个主要变更：新增了 Minimax 2.5 免费推广功能，并修复了 OpenAI Responses API 中响应链式调用的 bug。整体属于小型更新，主要以功能补充和问题修复为主。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.58.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "\n### Added\n- Subagent: replace legacy subagents with the native `use_subagents` tool\n- Bundle `endpoints.json` support so packaged distributions can ship required endpoints out-of-the-box\n- Amazon Bedrock: support parallel tool calling\n- New \"double-check completion\" experimental feature to verify work before marking tasks complete\n- CLI: new task controls/flags including custom `--thinking` token budget and `--max-consecutive-mistakes` for yolo runs\n- Remote config: new UI/options (including connection/test buttons) and support for syncing deletion of remotely configured MCP servers\n- Vertex / Claude Code: add 1M context model options for Claude Opus 4.6\n- ZAI/GLM: add GLM-5\n\n### Fixed\n- CLI: handle stdin redirection correctly in CI/headless environments\n- CLI: preserve OAuth callback paths during auth redirects\n- VS Code Web: generate auth callback URLs via `vscode.env.asExternalUri` (OAuth callback reliability)\n- Terminal: surface command exit codes in results and improve long-running `execute_command` timeout behavior\n- UI: add loading indicator and fix `api_req_started` rendering\n- Task streaming: prevent duplicate streamed text rows after completion\n- API: preserve selected Vercel model when model metadata is missing\n- Telemetry: route PostHog networking through proxy-aware shared fetch and ensure telemetry flushes on shutdown\n- CI: increase Windows E2E test timeout to reduce flakiness\n\n### Changed\n- Settings/model UX: move \"reasoning effort\" into model configuration and expose it in settings\n- CLI provider selection: limit provider list to those remotely configured\n- UI: consolidate ViewHeader component/styling across views\n- Tools: add auto-approval support for `attempt_completion` commands\n- Remotely configured MCP server schema now supports custom headers\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-build-6278382...v3.58.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.58.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v3.58.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-core==1.2.12",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "Changes since langchain-core==1.2.11\n\nrelease(core): 1.2.12 (#35192)\nfix(core): fix setting `ChatGeneration.text` (#35191)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.12",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/langchain langchain-core==1.2.12 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.0",
+        "author": "kausmeows",
+        "date": "2026-02-12",
+        "summary": "# Changelog\r\n\r\n## New Features\r\n\r\n- **Team Execution Modes**: Introduced `TeamMode` enum with four execution modes:\r\n    - `coordinate` (default): Supervisor pattern where the leader picks members, crafts tasks, and synthesizes responses\r\n    - `route`: Router pattern where the leader routes to a specialist and returns their response directly\r\n    - `broadcast`: Broadcast pattern where the leader delegates the same task to all members simultaneously\r\n    - `tasks`: Autonomous task-based execution where the leader decomposes goals into a shared task list\r\n- **Human-in-the-Loop (HITL) for Teams**: Improved `RunRequirement` system for paused runs with better support for:\r\n    - Tool confirmation flows\r\n    - User input collection with schema validation\r\n    - External tool execution\r\n- **Approval System**: New `@approval` decorator for human approval workflows:\r\n    - `@approval(type=\"required\")`: Blocking approval that pauses the run until resolved via approvals API\r\n    - `@approval(type=\"audit\")`: Non-blocking audit trail for compliance/logging\r\n    - Persistent approval records with status tracking (pending, approved, rejected, expired, cancelled)\r\n    - Approvals API for listing, inspecting, and resolving approvals\r\n- **Scheduler**: Cron-based scheduling for agents, teams, and workflows with retry, timeout, and timezone support.\r\n- **LearningMachine for Teams**: Added support for `LearningMachine` for persistent learning.\r\n- **Callable Factories for Tools, Knowledge, and Members**: Tools, knowledge, and team members can now be defined as callable factories that are resolved at runtime with access to `RunContext`. Supports caching via `cache_callables` and custom cache keys for session-scoped resolution.\r\n- **Infra:** Adds support for AWS EFS\r\n- **Knowledge Isolation**: Added `isolate_vector_search flag` to Knowledge class. When enabled, documents are tagged with `linked_to` metadata during insert and searches filter by this tag, allowing multiple Knowledge instances to share the same vector database while maintaining isolated search results. Defaults to `False` for backwards compatibility with existing data.\r\n\r\n## Improvements\r\n\r\n- **Agent/Team Refactor**: Major internal refactor of Agent and Team classes for cleaner separation of concerns.\r\n\r\n## Bug Fixes:\r\n\r\n- **LanceDb Cloud:** Fixed `search()` to stop reopening the table; use `.to_list()` instead of `.to_pandas()` in vector/hybrid/keyword search.\r\n- **Primary key constraint:** Fixed `sessions`, `component_configs` and `component_links` table to use primary key instead of `_unique_constraints`.\r\n\r\n## Breaking Changes\r\n\r\n- **`store_history_messages` now defaults to `False`**: History messages are no longer stored by default. This reduces unnecessary storage overhead, improves privacy by not persisting conversation history unless explicitly needed, and gives better control over storage costs. If you rely on stored history, set `store_history_messages=True` explicitly.\r\n- **Knowledge Uniqueness**: Knowledge instances now require a unique combination of database, table, and knowledge name. Multiple Knowledge instances cannot share the same table without distinct names to prevent data conflicts.\r\n\r\n## What's Changed\r\n* chore: update AgentOS description by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6225\r\n* fix: explicitly show <scripts>none</scripts> in skills system prompt by @uzaxirr in https://github.com/agno-agi/agno/pull/6311\r\n* chore: add Conductor notes to agent docs by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6323\r\n* [fix] Use JSON serialization instead of `str()` for workflow run_input by @salimhamed in https://github.com/agno-agi/agno/pull/6318\r\n* fix: LanceDB cloud integration by @willemcdejongh in https://github.com/agno-agi/agno/pull/6337\r\n* fix: handle text file formats correctly in document messages by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6329\r\n* feat: Add EFS volume and mount point support for AWS apps by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6251\r\n* feat: enhance SlackTools and add file handling to interface by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6306\r\n* feat: AgentOS select Knowledge by name by @willemcdejongh in https://github.com/agno-agi/agno/pull/6287\r\n* fix: Update quickstart knowledge instance name by @willemcdejongh in https://github.com/agno-agi/agno/pull/6408\r\n* fix: add primary key constraints to SQLite component tables by @ysolanky in https://github.com/agno-agi/agno/pull/6395\r\n* fix: add stub classes for JWT imports when PyJWT is not installed by @ysolanky in https://github.com/agno-agi/agno/pull/6476\r\n* [feat] v2.5 Phase 1 — Agent/Team refactor and baseline by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6429\r\n* V2.5 phase2 r by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6506\r\n* V2.5 phase3 rb by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6511\r\n* V2.5 phase4 rb by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6514\r\n* V2.5 phase5 rebase by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6515\r\n* fix: resolve ruff lint errors by @ysolanky in https://github.com/agno-agi/agno/pull/6517\r\n* fix: resolve scheduler property setter conflict in AgentOS by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6520\r\n* feat: Add isolate_vector_search flag for backwards-compatible knowledge isolation by @willemcdejongh in https://github.com/agno-agi/agno/pull/6519\r\n* fix: align scheduler tests with current API by @ysolanky in https://github.com/agno-agi/agno/pull/6525\r\n* refactor: update approvals endpoint to use paginated response model by @Ayush0054 in https://github.com/agno-agi/agno/pull/6526\r\n* fix: resolve ruff and mypy validation errors by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6518\r\n* [fix] AgentOS: remove unused scheduler property and fix double MCP lifespan by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6522\r\n* fix: restore missing v2.5 fields in SqliteDb/PostgresDb from_dict by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6531\r\n* feat: Release 2.5.0 by @kausmeows in https://github.com/agno-agi/agno/pull/6501\r\n\r\n## New Contributors\r\n* @salimhamed made their first contribution in https://github.com/agno-agi/agno/pull/6318\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.4.8...v2.5.0",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "agno-agi/agno v2.5.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.101.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## New Features\n- Memory files now include the working directory in stored context, improving memory behavior when switching between different project directories. (#11591)\n\n## Bug Fixes\n- Model resolution now preserves the requested model slug when selecting by prefix, so model references stay stable instead of being rewritten. (#11602)\n- Developer messages are now excluded from phase-1 memory input, reducing noisy or irrelevant content entering memory. (#11608)\n- Memory phase processing concurrency was reduced to make consolidation/staging more stable under load. (#11614)\n\n## Chores\n- Cleaned and simplified the phase-1 memory pipeline code paths. (#11605)\n- Minor repository maintenance: formatting and test-suite hygiene updates in remote model tests. (#11619)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.100.0...rust-v0.101.0\n\n- #11605 chore: drop and clean from phase 1 @jif-oai\n- #11602 fix(core) model_info preserves slug @dylan-hurd-oai\n- #11608 exclude developer messages from phase-1 memory input @wendyjiao-openai\n- #11591 Add cwd to memory files @wendyjiao-openai\n- #11614 chore: reduce concurrency of memories @jif-oai\n- #11619 fix: fmt @jif-oai\n\n\n",
+        "assets_count": 81,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.101.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/codex rust-v0.101.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.100.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## New Features\n- Added an experimental, feature-gated JavaScript REPL runtime (`js_repl`) that can persist state across tool calls, with optional runtime path overrides. (#10674)\n- Added support for multiple simultaneous rate limits across the protocol, backend client, and TUI status surfaces. (#11260)\n- Reintroduced app-server websocket transport with a split inbound/outbound architecture, plus connection-aware thread resume subscriptions. (#11370, #11474)\n- Added memory management slash commands in the TUI (`/m_update`, `/m_drop`) and expanded memory-read/metrics plumbing. (#11569, #11459, #11593)\n- Enabled Apps SDK apps in ChatGPT connector handling. (#11486)\n- Promoted sandbox capabilities on both Linux and Windows, and introduced a new `ReadOnlyAccess` policy shape for configurable read access. (#11381, #11341, #11387)\n\n## Bug Fixes\n- Fixed websocket incremental output duplication, prevented appends after `response.completed`, and treated `response.incomplete` as an error path. (#11383, #11402, #11558)\n- Improved websocket session stability by continuing ping handling when idle and suppressing noisy first-retry errors during quick reconnects. (#11413, #11548)\n- Fixed stale thread entries by dropping missing rollout files and cleaning stale DB metadata during thread listing. (#11572)\n- Fixed Windows multi-line paste reliability in terminals (especially VS Code integrated terminal) by increasing paste burst timing tolerance. (#9348)\n- Fixed incorrect inheritance of `limit_name` when merging partial rate-limit updates. (#11557)\n- Reduced repeated skill parse-error spam during active edits by increasing file-watcher debounce from 1s to 10s. (#11494)\n\n## Documentation\n- Added JS REPL documentation and config/schema guidance for enabling and configuring the feature. (#10674)\n- Updated app-server websocket transport documentation in the app-server README. (#11370)\n\n## Chores\n- Split `codex-common` into focused `codex-utils-*` crates to simplify dependency boundaries across Rust workspace components. (#11422)\n- Improved Rust release pipeline throughput and reliability for Windows and musl targets, including parallel Windows builds and musl link fixes. (#11488, #11500, #11556)\n- Prevented GitHub release asset upload collisions by excluding duplicate `cargo-timing.html` artifacts. (#11564)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.99.0...rust-v0.100.0\n\n- #11383 Do not resend output items in incremental websockets connections @pakrym-oai\n- #11246 chore: persist turn_id in rollout session and make turn_id uuid based @celia-oai\n- #11260 feat: support multiple rate limits @xl-openai\n- #11412 tui: show non-file layer content in /debug-config @bolinfest\n- #11405 Remove `test-support` feature from `codex-core` and replace it with explicit test toggles @bolinfest\n- #11428 fix: flaky test @jif-oai\n- #11429 feat: improve thread listing @jif-oai\n- #11422 feat: split codex-common into smaller utils crates @bolinfest\n- #11439 feat: new memory prompts @jif-oai\n- #11305 Cache cloud requirements @gt-oai\n- #11452 nit: increase max raw memories @jif-oai\n- #11455 feat: close mem agent after consolidation @jif-oai\n- #11454 fix: optional schema of memories @jif-oai\n- #11449 feat: set policy for phase 2 memory @jif-oai\n- #11420 chore: rename disable_websockets -> websockets_disabled @sayan-oai\n- #11402 Do not attempt to append after response.completed @pakrym-oai\n- #11462 clean: memory rollout recorder @jif-oai\n- #11381 feat(core): promote Linux bubblewrap sandbox to Experimental @viyatb-oai\n- #11389 Extract `codex-config` from `codex-core` @bolinfest\n- #11370 Reapply \"Add app-server transport layer with websocket support\" @maxj-oai\n- #11470 feat: panic if Constrained<WebSearchMode> does not support Disabled @bolinfest\n- #11475 feat: remove \"cargo check individual crates\" from CI @bolinfest\n- #11459 feat: memory read path @jif-oai\n- #11471 chore: clean rollout extraction in memories @jif-oai\n- #9348 fix(tui): increase paste burst char interval on Windows to 30ms @yuvrajangadsingh\n- #11464 chore: sub-agent never ask for approval @jif-oai\n- #11414 Linkify feedback link @pakrym-oai\n- #11480 chore: update mem prompt @jif-oai\n- #11485 fix: Constrained import @owenlin0\n- #11341 Promote Windows Sandbox @iceweasel-oai\n- #10674 Add feature-gated freeform js_repl core runtime @fjord-oai\n- #11419 refactor: codex app-server ThreadState @maxj-oai\n- #11413 Pump pings @pakrym-oai\n- #11488 feat: use more powerful machines for building Windows releases @bolinfest\n- #11479 nit: memory truncation @jif-oai\n- #11494 Increased file watcher debounce duration from 1s to 10s @etraut-openai\n- #11335 Add AfterToolUse hook @gt-oai\n- #11500 feat: build windows support binaries in parallel @bolinfest\n- #11290 chore(tui) Simplify /status Permissions @dylan-hurd-oai\n- #11503 Make codex-sdk depend on openai/codex @pakrym-oai\n- #11474 app-server: thread resume subscriptions @maxj-oai\n- #11277 Added seatbelt policy rule to allow os.cpus @etraut-openai\n- #11506 chore: inject originator/residency headers to ws client @apanasenko-oai\n- #11497 Hydrate previous model across resume/fork/rollback/task start @aibrahim-oai\n- #11513 feat: try to fix bugs I saw in the wild in the resource parsing logic @bolinfest\n- #11509 Consolidate search_tool feature into apps @apanasenko-oai\n- #11388 change model cap to server overload @willwang-openai\n- #11504 Pre-sampling compact with previous model context @aibrahim-oai\n- #11516 Clamp auto-compact limit to context window @aibrahim-oai\n- #11520 Update context window after model switch @aibrahim-oai\n- #11519 Use slug in tui @pakrym-oai\n- #11522 fix: add --test_verbose_timeout_warnings to bazel.yml @bolinfest\n- #11526 fix: remove errant Cargo.lock files @bolinfest\n- #11521 test(app-server): stabilize app/list thread feature-flag test by using file-backed MCP OAuth creds @bolinfest\n- #11387 feat: make sandbox read access configurable with `ReadOnlyAccess` @bolinfest\n- #11486 [apps] Allow Apps SDK apps. @mzeng-openai\n- #11532 fix compilation @sayan-oai\n- #11531 Teach codex to test itself @pakrym-oai\n- #11540 ci: remove actions/cache from rust release workflows @bolinfest\n- #11542 ci(windows): use DotSlash for zstd in rust-release-windows @bolinfest\n- #11498 build(linux-sandbox): always compile vendored bubblewrap on Linux; remove CODEX_BWRAP_ENABLE_FFI @viyatb-oai\n- #11545 fix: make project_doc skill-render tests deterministic @bolinfest\n- #11543 ci: capture cargo timings in Rust CI and release workflows @bolinfest\n- #11539 Bump rmcp to 0.15 @gpeal\n- #11548 Hide the first websocket retry @pakrym-oai\n- #11551 Add logs to model cache @aibrahim-oai\n- #11556 Fix rust-release failures in musl linking and release asset upload @bolinfest\n- #11558 Handle response.incomplete @pakrym-oai\n- #11557 fix: stop inheriting rate-limit limit_name @xl-openai\n- #11564 rust-release: exclude cargo-timing.html from release assets @bolinfest\n- #11546 fix: update memory writing prompt @zuxin-oai\n- #11448 Fix test flake @gt-oai\n- #11569 feat: mem slash commands @jif-oai\n- #11573 Fix flaky pre_sampling_compact switch test @jif-oai\n- #11571 feat: mem drop cot @jif-oai\n- #11572 Ensure list_threads drops stale rollout files @jif-oai\n- #11575 fix: db stuff mem @jif-oai\n- #11581 nit: upgrade DB version @jif-oai\n- #11577 feat: truncate with model infos @jif-oai\n- #11590 chore: clean consts @jif-oai\n- #11593 feat: metrics to memories @jif-oai\n- #11579 Fix config test on macOS @gt-oai\n- #11600 feat: add sanitizer to redact secrets @jif-oai\n- #11609 chore: drop mcp validation of dynamic tools @jif-oai\n\n\n",
+        "assets_count": 81,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.100.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/codex rust-v0.100.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.4.2",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "Changes since deepagents==0.4.1\nrelease(sdk): 0.4.2 (#1312)\nfeat(sdk): reimplement skill loading via `skill` tool calling (#1306)\n\n---\n\nThanks to our contributors: @sydney-runkle",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.4.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents deepagents==0.4.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-acp==0.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "Changes since deepagents-acp==0.0.2\nrelease(acp): 0.0.3 (#1310)\nfeat(acp): Adds execute tool handling, allow of type permissions, demo coding agent (#1302)\nchore(acp): automatically attach checkpointer if missing (#1294)\n\n---\n\nThanks to our contributors: @jacoblee93",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-acp%3D%3D0.0.3",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 execute tool 处理功能",
+            "增加 allow type 权限支持",
+            "添加 demo coding agent 示例",
+            "自动附加 checkchecker（如缺失）"
+          ],
+          "summary_cn": "deepagents-acp 0.0.3 版本是一个功能增强版本，主要新增了 execute tool 处理功能和 allow type 权限支持，并提供了 demo coding agent 示例。同时改进了系统自动配置能力，在 checkpointer 缺失时会自动附加，提升了开发体验。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.63",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## Core\n- Improve Codex model list",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.63",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anomalyco/opencode v1.1.63 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.62",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## Core\n- Return image attachments from webfetch tool\n- Expose tool arguments in shell hook for plugin visibility\n## Desktop\n- Project icons no longer unload unexpectedly\n- Preserve undo history for plain-text paste in app (@gitRasheed)\n- Refactor app for better SolidJS hygiene\n- More defensive session context metrics handling in app\n\n**Thank you to 2 community contributors:**\n- @dtfiedler:\n  - fix(docs): correct `format` attribute in `StructuredOutputs` (#13340)\n- @gitRasheed:\n  - fix(app): preserve undo history for plain-text paste (#13351)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.62",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "Core 增强：webfetch 工具返回图片附件，Shell Hook 中暴露工具参数以支持插件可见性",
+            "Desktop 稳定性改进：修复项目图标意外卸载问题，优化 SolidJS 代码结构",
+            "用户体验优化：应用内纯文本粘贴保留撤销历史（社区贡献）",
+            "防御性改进：更健壮的会话上下文指标处理",
+            "文档修复：修正 StructuredOutputs 中的 format 属性（社区贡献）"
+          ],
+          "summary_cn": "此次 v1.1.62 版本包含多项核心与桌面端改进，核心模块增强了 webfetch 工具功能并提升插件可见性支持；桌面端则修复了项目图标意外卸载问题并优化了用户体验，包括保留纯文本粘贴的撤销历史。同时包含 2 位社区贡献者的代码修复。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.61",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## Core\n- Allow model configurations without npm/api provider details\n- Tool outputs are now more LLM-friendly\n## Desktop\n- Add diff virtualization to improve performance for large diffs\n- Display progress bar for SQLite migrations in desktop app (@Brendonovich)\n\n**Thank you to 1 community contributor:**\n- @Brendonovich:\n  - desktop: sqlite migration progress bar (#13294)\n  - Testing SignPath Integration (#13308)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.61",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "允许不配置 npm/api 提供商详情的模型配置",
+            "工具输出格式优化，对 LLM 更友好",
+            "桌面端新增 diff 虚拟化以提升大差异性能",
+            "桌面端 SQLite 迁移增加进度条显示"
+          ],
+          "summary_cn": "此版本主要提升了模型配置的灵活性，允许不配置提供商详情。同时优化了工具输出格式以更好地兼容 LLM，并在桌面端引入了 diff 虚拟化和迁移进度条来改善用户体验。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.1.60",
+        "author": "github-actions[bot]",
+        "date": "2026-02-12",
+        "summary": "## Core\n- Support Claude agent SDK-style structured outputs in the OpenCode SDK (@K-Mistele)\n- Support custom API URL per model\n- Add automatic variant generation for Venice models (@dpuyosa)\n- Use Promise.all for MCP listTools calls to improve performance\n- Upgrade OpenTUI to version 0.1.79\n- Improve compaction check logic\n- Make read tool offset 1-indexed to match line numbers and avoid confusion\n- Add directory reading capability to the read tool\n## TUI\n- Use FFI to resolve Windows raw input and Ctrl+C handling issues (@Hona)\n- Add toggle to hide session header in TUI (@kitlangton)\n## Desktop\n- Guard randomUUID in insecure browser contexts\n- Workspace reset functionality fixed (@neriousy)\n\n**Thank you to 6 community contributors:**\n- @neriousy:\n  - fix(app):workspace reset (#13170)\n- @github-actions[bot]:\n  - Update VOUCHED list\n- @dpuyosa:\n  - feat(opencode): Venice Add automatic variant generation for Venice models (#12106)\n- @kitlangton:\n  - feat(tui): add toggle to hide session header (#13244)\n- @K-Mistele:\n  - feat: support claude agent SDK-style structured outputs in the OpenCode SDK  (#8161)\n- @Hona:\n  - fix(win32): use ffi to get around bun raw input/ctrl+c issues (#13052)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.1.60",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "OpenCode SDK 支持 Claude agent SDK 风格的结构化输出",
+            "每个模型支持自定义 API URL，Venice 模型自动生成变体",
+            "TUI 新增隐藏会话头部开关，使用 FFI 修复 Windows 输入和 Ctrl+C 处理问题",
+            "read 工具增强支持目录读取，偏移量改为 1 索引匹配行号",
+            "修复桌面端工作区重置功能，优化 MCP listTools 调用性能"
+          ],
+          "summary_cn": "OpenCode v1.1.60 是一次功能丰富的更新，核心增强包括支持 Claude agent SDK 风格结构化输出、Venice 模型自动变体生成以及自定义 API URL 配置。同时修复了 Windows 平台的输入处理问题和工作区重置功能，并进行了多项性能优化和用户体验改进。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.28.2",
+        "author": "github-actions[bot]",
+        "date": "2026-02-11",
+        "summary": "## What's Changed\n* fix(patch): cherry-pick e9a9474 to release/v0.28.1-pr-18840 [CONFLICTS] by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/18847\n\n\n**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.28.1...v0.28.2",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.28.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "google-gemini/gemini-cli v0.28.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-cli==0.0.21",
+        "author": "github-actions[bot]",
+        "date": "2026-02-11",
+        "summary": "### Features\r\n\r\n* Add support for piped stdin as prompt input ([#1254](https://github.com/langchain-ai/deepagents/issues/1254)) ([cca61ff](https://github.com/langchain-ai/deepagents/commit/cca61ff5edb5e2424bfc54b2ac33b59a520fdd6a))\r\n* New `/threads` command switcher ([#1262](https://github.com/langchain-ai/deepagents/issues/1262)) ([45bf38d](https://github.com/langchain-ai/deepagents/commit/45bf38d7c5ca7ca05ec58c320494a692e419b632)), closes [#1111](https://github.com/langchain-ai/deepagents/issues/1111)\r\n  * Make thread link clickable when switching ([#1296](https://github.com/langchain-ai/deepagents/issues/1296)) ([9409520](https://github.com/langchain-ai/deepagents/commit/9409520d524c576c3b0b9686c96a1749ee9dcbbb)), closes [#1291](https://github.com/langchain-ai/deepagents/issues/1291)\r\n  * Show langsmith thread url on session teardown ([#1285](https://github.com/langchain-ai/deepagents/issues/1285)) ([899fd1c](https://github.com/langchain-ai/deepagents/commit/899fd1cdea6f7b2003992abd3f6173d630849a90))\r\n* New `/trace` command to open LangSmith thread, link in switcher ([#1291](https://github.com/langchain-ai/deepagents/issues/1291)) ([fbbd45b](https://github.com/langchain-ai/deepagents/commit/fbbd45b51be2cf09726a3cd0adfcb09cb2b1ff46))\r\n* New `/changelog`, `/feedback`, `/docs` commands ([#1261](https://github.com/langchain-ai/deepagents/issues/1261)) ([4561afb](https://github.com/langchain-ai/deepagents/commit/4561afbea17bb11f7fc02ae9f19db15229656280))\r\n\r\n### Bug Fixes\r\n\r\n* Fix stale model settings during model hot-swap ([#1257](https://github.com/langchain-ai/deepagents/issues/1257)) ([55c119c](https://github.com/langchain-ai/deepagents/commit/55c119cb6ce73db7cae0865172f00ab8fc9f8fc1))\r\n\r\n---\r\n\r\nThanks to our contributors: @app/dependabot, @app/github-actions, @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli%3D%3D0.0.21",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents deepagents-cli==0.0.21 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "Performance",
+        "count": 145,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": [
+          "https://github.com/zed-industries/zed/issues/1234",
+          "https://github.com/zed-industries/zed/issues/5678"
+        ]
+      },
+      {
+        "topic": "Editor Features",
+        "count": 98,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": []
+      },
+      {
+        "topic": "Language Support",
+        "count": 76,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": []
+      },
+      {
+        "topic": "Other",
+        "count": 67,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": []
+      },
+      {
+        "topic": "Keybindings",
+        "count": 54,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": []
+      }
+    ],
+    "parsed_files": 40,
+    "failed_files": 0,
+    "failed_samples": []
+  }
+}
