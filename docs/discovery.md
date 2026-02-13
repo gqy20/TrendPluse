@@ -4,13 +4,13 @@
 
 ## 最新报告
 
-### [2026-02-12](discovery-reports/discovery-2026-02-12.md)
+### [2026-02-13](discovery-reports/discovery-2026-02-13.md)
 
 **发现概览**:<br/>
 - 总发现数: 200<br/>
 - 通过质量评估: 200<br/>
-- 高优先级: 137<br/>
-- 去重移除: 33<br/>
+- 高优先级: 141<br/>
+- 去重移除: 32<br/>
 - 已在监控: 19<br/>
 
 **高优先级推荐 Top 5**:<br/>
@@ -20,6 +20,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
+| 2026-02-13 | 200 | 141 | [查看](discovery-reports/discovery-2026-02-13.md) |
 | 2026-02-12 | 200 | 137 | [查看](discovery-reports/discovery-2026-02-12.md) |
 | 2026-02-11 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-11.md) |
 | 2026-02-10 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-10.md) |
@@ -29,7 +30,6 @@
 | 2026-02-06 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-06.md) |
 | 2026-02-05 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-05.md) |
 | 2026-02-04 | 200 | 137 | [查看](discovery-reports/discovery-2026-02-04.md) |
-| 2026-02-03 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-03.md) |
 
 ## 关于发现功能
 
