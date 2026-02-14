@@ -1,0 +1,825 @@
+{
+  "date": "2026-02-14",
+  "summary_brief": "今日 AI 编程工具生态迎来安全性、性能和国际化三大方向的集体升级。多个头部项目同时加强了安全防护机制，包括网络访问控制、内存泄漏修复和命令注入漏洞防护；性能优化方面呈现数据持久化和资源管理两个重点趋势；同时 AI 辅助的自动化国际化改造成为新兴工程实践。",
+  "engineering_signals": [
+    {
+      "id": "signal-1",
+      "title": "AI 编程工具安全防护体系强化",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入结构化网络审批、Cline 修复 17 个高危依赖漏洞、Zed 修复 Shell 命令注入，表明 AI 编程工具正在建立多层级安全防护，对生产环境部署至关重要",
+      "sources": [
+        "https://github.com/openai/codex/commit/5b6911cb1beef5da474e6c55e9304e42e10febcf",
+        "https://github.com/openai/codex/commit/b527ee28907a7dcc68185f256c0441d90a07fe9d",
+        "https://github.com/langchain-ai/langgraph/pull/6806",
+        "https://github.com/langchain-ai/langgraph/releases/tag/sdk==0.3.6",
+        "https://github.com/zed-industries/zed/commit/144dd9302b06bad6efbcaf0eebc5fbb2d6909c3b",
+        "https://github.com/openai/openai-python/releases/tag/v2.21.0"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "anthropics/claude-code",
+        "zed-industries/zed",
+        "openai/codex",
+        "google-gemini/gemini-cli",
+        "langchain-ai/langgraph",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "commit-2",
+        "commit-9",
+        "pr-11",
+        "release-1",
+        "release-2"
+      ]
+    },
+    {
+      "id": "signal-2",
+      "title": "会话管理 SQLite 持久化趋势",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 架构重构迁移回 SQLite、Dify 优化 DB 迁移锁、CrewAI 统一内存 API，显示数据持久化和状态管理正成为 AI 工具性能优化的关键方向",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/v3.62.0",
+        "https://github.com/anomalyco/opencode/commit/6d95f0d14cbd83fc8b7775f77ba39ab2881008f3",
+        "https://github.com/langgenius/dify/commit/db17119a96a32924f31ec0f712f14a70b04b5127"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "anomalyco/opencode",
+        "zed-industries/zed",
+        "langgenius/dify",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "commit-3",
+        "commit-10",
+        "release-0"
+      ]
+    },
+    {
+      "id": "signal-3",
+      "title": "AI 驱动的自动化国际化改造",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Fabric 项目使用 Maestro AI 自动化工具改造 129+ 硬编码字符串支持 10 种语言，验证了 AI 辅助的大规模重构可行性，为多语言支持提供可复制模式",
+      "sources": [
+        "https://github.com/ksylvan/maestro-playbooks-custom",
+        "https://github.com/danielmiessler/Fabric/pull/2001",
+        "https://github.com/danielmiessler/Fabric/pull/2002",
+        "https://github.com/danielmiessler/fabric/commit/c37a7dbf0b9e596115ed3b72265dae825d6c5898",
+        "https://runmaestro.ai/"
+      ],
+      "related_repos": [
+        "ksylvan/maestro-playbooks-custom",
+        "langgenius/dify",
+        "danielmiessler/fabric",
+        "danielmiessler/Fabric"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "pr-3",
+        "commit-5"
+      ]
+    },
+    {
+      "id": "signal-4",
+      "title": "Agent 状态管理与资源清理机制",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "LangGraph 新增 prune 方法、Auto-Claude 修复 GPU OOM、CrewAI 统一内存 API、Gemini CLI 会话保留策略，表明长时间运行 Agent 的资源管理正成为性能优化重点",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/commit/18d266c8e7dec3e34171c78168cbd1689c7632a7",
+        "https://github.com/langchain-ai/langgraph/pull/6804",
+        "https://github.com/AndyMik90/Auto-Claude/commit/4091d1d4b5e9ebf3ebe335247b75b4d2e3767d43"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI",
+        "openai/codex",
+        "langchain-ai/langgraph",
+        "AndyMik90/Auto-Claude",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-4",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "signal-5",
+      "title": "AI 工作流集成插件生态",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Agno 集成 Claude Code 工作流实现自动代码审查、Cline 深度链接修复、Claude Code 生命周期标签自动化，展示 AI 编程助手正从单点工具向协作工作流生态演进",
+      "sources": [
+        "https://github.com/agno-agi/agno/pull/6562",
+        "https://github.com/anthropics/claude-code/commit/8c09097e8c2565c4c9c107cb9ad1cfcb87366368",
+        "https://github.com/anthropics/claude-code/pull/25665",
+        "https://github.com/cline/cline/pull/9320",
+        "https://github.com/agno-agi/agno/pull/6560"
+      ],
+      "related_repos": [
+        "paul-gauthier/aider",
+        "anthropics/claude-code",
+        "claude-code-plugins",
+        "cline/cline",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "pr-10",
+        "pr-14",
+        "pr-15",
+        "commit-8"
+      ]
+    },
+    {
+      "id": "signal-6",
+      "title": "多模型提供商扩展支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 和 Gemini CLI 持续扩展对 Moonshot、GLM-5 等新兴模型的支持，反映 AI 编程工具正通过多模型兼容性降低用户切换成本",
+      "sources": [
+        "https://github.com/cline/cline/pull/9314",
+        "https://github.com/cline/cline/commit/49975fd0a3647bebb7f700632f8dc9efdddfb729"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-5",
+        "commit-7"
+      ]
+    },
+    {
+      "id": "signal-7",
+      "title": "测试稳定性提升模式",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 通过动态断言和确定性代码选择修复 E2E 测试不稳定性，Agno Cookbook 实现完全测试覆盖，表明 AI 工具项目正提升测试工程成熟度以支持生产级质量",
+      "sources": [
+        "https://github.com/agno-agi/agno/pull/6557",
+        "https://github.com/cline/cline/pull/9311",
+        "https://github.com/cline/cline/actions/runs/22003228631"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "pr-16"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_pr_signals": 20,
+    "total_commit_signals": 12,
+    "total_release_signals": 4,
+    "total_signals_analyzed": 36,
+    "engineered_signals_identified": 7,
+    "total_prs_analyzed": 20,
+    "total_commits_analyzed": 137,
+    "total_releases": 6,
+    "high_impact_signals": 5,
+    "total_releases_analyzed": 6,
+    "total_breaking_changes": 2
+  },
+  "activity": {
+    "total_commits": 137,
+    "active_repos_count": 17,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 24,
+        "top_contributors": [
+          "rekram1-node",
+          "thdxr",
+          "opencode-agent[bot]",
+          "Brendonovich",
+          "albertov"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 18,
+        "top_contributors": [
+          "viyatb-oai",
+          "charley-oai",
+          "joshka-oai",
+          "fjord-oai",
+          "maxj-oai"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 17,
+        "top_contributors": [
+          "morgankrey",
+          "SomeoneToIgnore",
+          "maxdeviant",
+          "cuiweixie",
+          "KuSh"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 11,
+        "top_contributors": [
+          "ksylvan"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 11,
+        "top_contributors": [
+          "scidomino",
+          "jerop",
+          "korade-krushna",
+          "aishaneeshah",
+          "mbleigh"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 9,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "apcha-oai",
+          "karpetrosyan"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 8,
+        "top_contributors": [
+          "arafatkatze",
+          "saoudrizwan",
+          "shey-cline",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 8,
+        "top_contributors": [
+          "Mustafa-Esoofally",
+          "ashpreetbedi"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 8,
+        "top_contributors": [
+          "WillemJiang",
+          "lailoo",
+          "MagicCube"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 6,
+        "top_contributors": [
+          "lyzno1",
+          "lin-snow",
+          "GareArc",
+          "poojanInfocusp",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 4,
+        "top_contributors": [
+          "hinthornw",
+          "jkennedyvz"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 4,
+        "top_contributors": [
+          "AndyMik90",
+          "StillKnotKnown"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 3,
+        "top_contributors": [
+          "jacoblee93"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 2,
+        "top_contributors": [
+          "chrislloyd"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 2,
+        "top_contributors": [
+          "paul-gauthier",
+          "chr15m"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "ashwin-ant"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "top_contributors": [
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 6,
+    "unique_repos_count": 4,
+    "releases": [
+      {
+        "repo": "openai/openai-python",
+        "version": "v2.21.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-02-14",
+        "summary": "## 2.21.0 (2026-02-13)\n\nFull Changelog: [v2.20.0...v2.21.0](https://github.com/openai/openai-python/compare/v2.20.0...v2.21.0)\n\n### Features\n\n* **api:** container network_policy and skills ([d19de2e](https://github.com/openai/openai-python/commit/d19de2ee5c74413f9dc52684b650df1898dee82b))\n\n\n### Bug Fixes\n\n* **structured outputs:** resolve memory leak in parse methods ([#2860](https://github.com/openai/openai-python/issues/2860)) ([6dcbe21](https://github.com/openai/openai-python/commit/6dcbe211f12f8470db542a5cb95724cb933786dd))\n* **webhooks:** preserve method visibility for compatibility checks ([44a8936](https://github.com/openai/openai-python/commit/44a8936d580b770f23fae79659101a27eadafad6))\n\n\n### Chores\n\n* **internal:** fix lint error on Python 3.14 ([534f215](https://github.com/openai/openai-python/commit/534f215941f504443d63509e872409a0b1236452))\n\n\n### Documentation\n\n* split `api.md` by standalone resources ([96e41b3](https://github.com/openai/openai-python/commit/96e41b398a110212ddec71436b2439343bea87d4))\n* update comment ([63def23](https://github.com/openai/openai-python/commit/63def23b7acd5c6dacf03337fe1bd08439d1dba8))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v2.21.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "API 新增 container 网络策略和技能支持",
+            "修复结构化输出解析方法中的内存泄漏问题",
+            "修复 webhooks 方法可见性问题以确保兼容性",
+            "文档改进：将 api.md 按独立资源拆分",
+            "内部修复 Python 3.14 的 lint 错误"
+          ],
+          "summary_cn": "OpenAI Python v2.21.0 版本主要新增了 API 的 container 网络策略和技能支持功能，同时修复了结构化输出解析方法中的内存泄漏问题，这是一个重要的性能修复。此外还改进了 webhooks 兼容性检查方法，并进行了文档结构优化和 Python 3.14 兼容性修复。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "sdk==0.3.6",
+        "author": "github-actions[bot]",
+        "date": "2026-02-14",
+        "summary": "Changes since sdk==0.3.5\n\n* release(sdk-py): 0.3.6 (#6805)\n* chore: update to add prune method (#6804)\n* chore: Re-organize client files. (#6787)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/sdk%3D%3D0.3.6",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "添加了 prune 方法，优化数据处理能力",
+            "重构了客户端文件组织结构，提升代码可维护性",
+            "发布 Python SDK 0.3.6 版本"
+          ],
+          "summary_cn": "本次 SDK 0.3.6 版本主要为内部优化更新。新增了 prune 方法以增强数据处理功能，并对客户端文件进行了重新组织以改善代码结构。这些变更属于常规维护性改进，不包含破坏性更新。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.2",
+        "author": "github-actions[bot]",
+        "date": "2026-02-14",
+        "summary": "## Core\n- Add comprehensive test coverage for Session.list() filters\n- Filter sessions at database level to improve session list loading performance\n- Fix Vercel gateway variants\n- Bump Vertex AI packages",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.2",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "为 Session.list() 过滤功能添加全面的测试覆盖",
+            "优化会话列表加载性能：在数据库层面进行过滤",
+            "修复 Vercel 网关变体问题",
+            "升级 Vertex AI 相关依赖包"
+          ],
+          "summary_cn": "本次 v1.2.2 版本主要聚焦于性能优化和质量提升，通过在数据库层面过滤会话列表显著提高了加载性能，同时为 Session.list() 过滤器添加了全面的测试覆盖。此外还修复了 Vercel 网关变体问题并升级了 Vertex AI 依赖包。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.1",
+        "author": "github-actions[bot]",
+        "date": "2026-02-14",
+        "summary": "v1.2.0 and beyond includes a data migration that will execute on first run. It will migrate all flat files in data directory to a single sqlite database. Depending on how much data you have and speed of computer this can take some time.\r\n\r\nif anything goes wrong you can retrigger the migration by deleting `~/.local/share/opencode/opencode.db*` files (%APPDATA% on windows)\r\n\r\nIf you have any issues with the migration the original data is not yet deleted and downgrading should work. But please open an issue so we can investigate and include sqlite in the issue title.\r\n\r\n\r\nSDK Users\r\n\r\nWe now have a PartDelta event which sends only incremental changes to parts. This avoids sending the full content of text parts over and over when it is updated\r\n\r\n## Core\r\n- Show all project sessions from any working directory\r\n- Tweak websearch tool description date info to avoid cache busts",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.1",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "引入数据迁移机制，首次运行时将 data 目录中的所有平铺文件迁移至单个 sqlite 数据库",
+            "新增 PartDelta 事件，仅发送部分的增量变更，避免重复发送完整文本内容",
+            "支持显示任意工作目录下的所有项目会话",
+            "优化 websearch 工具描述中的日期信息，避免缓存失效"
+          ],
+          "summary_cn": "v1.2.1 版本包含重大数据架构变更：首次运行时会自动将现有的平铺文件迁移至 sqlite 数据库，迁移时间取决于数据量和计算机性能。SDK 新增 PartDelta 事件以优化数据传输，仅发送增量变更而非完整内容。同时支持显示任意工作目录的项目会话并优化了 websearch 工具的缓存机制。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-14",
+        "summary": "This release includes a data migration that will execute on first run. It will migrate all flat files in data directory to a single sqlite database. Depending on how much data you have and speed of computer this can take some time.\r\n\r\nif anything goes wrong you can retrigger the migration by deleting ~/.local/share/opencode/opencode.db* files (%APPDATA% on windows)\r\n\r\nIf you have any issues with the migration the original data is not yet deleted and downgrading should work. But please open an issue so we can investigate and include sqlite in the issue title.\r\n\r\nSDK Users\r\n\r\nWe now have a PartDelta event which sends only incremental changes to parts. This avoids sending the full content of text parts over and over when it is updated\r\n\r\n```js\r\n    PartDelta: BusEvent.define(\r\n      \"message.part.delta\",\r\n      z.object({\r\n        sessionID: z.string(),\r\n        messageID: z.string(),\r\n        partID: z.string(),\r\n        field: z.string(),\r\n        delta: z.string(),\r\n      }),\r\n    )\r\n```\r\n\r\n## Core\r\n- Revert to SQLite database implementation\r\n- Move timeout configuration from programmatic API to CLI flag (@yanhao98)\r\n- Update AI SDK packages and use adaptive reasoning for Claude Opus 4.6 on Vertex, Bedrock, and Anthropic\r\n## TUI\r\n- Prevent crash when tool inputs are malformed during opencode run (@0xK3vin)\r\n- Add --dir option to run command (@BlankParticle)\r\n## Desktop\r\n- Fix Rust compilation issues in desktop application (@Brendonovich)\r\n- Remove OPENCODE_SQLITE environment variable from desktop (@Brendonovich)\r\n- Terminal resize handling fixed in app\r\n- Use prompt_async endpoint to avoid timeout over VPN/tunnel (@eytans)\r\n- Remount SDK and sync tree when server URL changes (@ysm-dev)\r\n- Sync docs locale cookie on alias redirects (@Seungjun0906)\r\n- Performance optimization for showing large diffs and files in desktop (@neriousy)\r\n\r\n**Thank you to 12 community contributors:**\r\n- @BlankParticle:\r\n  - feat(cli): add --dir option to run command (#12443)\r\n- @neriousy:\r\n  - fix(desktop): performance optimization for showing large diff & files  (#13460)\r\n- @Seungjun0906:\r\n  - fix(web): sync docs locale cookie on alias redirects (#13109)\r\n  - docs(ko): polish Korean phrasing in acp, agents, config, and custom-tools docs (#13446)\r\n- @ysm-dev:\r\n  - fix(app): remount SDK/sync tree when server URL changes (#13437)\r\n- @Annopick:\r\n  - docs: Fix zh-cn translation mistake in tools.mdx (#13407)\r\n- @eytans:\r\n  - fix(web): use prompt_async endpoint to avoid timeout over VPN/tunnel (#12749)\r\n- @G36maid:\r\n  - docs: add pacman installation option for Arch Linux alongside AUR (#13293)\r\n- @yanhao98:\r\n  - fix(test): move timeout config to CLI flag (#13494)\r\n- @niushuai1991:\r\n  - fix: standardize zh-CN docs character set and terminology (#13500)\r\n- @kitlangton:\r\n  - fix(ui): support cmd-click links in inline code (#12552)\r\n- @0xK3vin:\r\n  - fix: prevent opencode run crash on malformed tool inputs (#13051)\r\n- @Brendonovich:\r\n  - desktop: remote OPENCODE_SQLITE env (#13545)\r\n  - desktop: fix rust",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.0",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "引入数据迁移机制，将 flat files 迁移到 SQLite 数据库（首次运行时自动执行）",
+            "新增 PartDelta 事件，仅发送增量变更而非完整内容",
+            "更新 AI SDK 包，为 Claude Opus 4.6 使用自适应推理",
+            "Desktop 应用性能优化，改进大文件和 diff 显示",
+            "CLI 新增 --dir 选项，支持指定目录运行"
+          ],
+          "summary_cn": "v1.2.0 版本包含一次重要的架构迁移，将原有的 flat file 数据存储迁移到 SQLite 数据库，这是一个具有破坏性影响的变更。SDK 新增 PartDelta 增量事件以优化数据传输效率，同时更新了 AI SDK 包并支持 Claude Opus 4.6 的自适应推理。多个组件进行了性能优化和 bug 修复，包括 Desktop 应用的大文件显示性能提升和 CLI 新增目录选项等。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.62.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-13",
+        "summary": "\n### Fixed\n- Banners now display immediately when opening the extension instead of requiring user interaction first\n- Resolved 17 security vulnerabilities including high-severity DoS issues in dependencies (body-parser, axios, qs, tar, and others)\n\n**Full Changelog**: https://github.com/cline/cline/compare/v3.61.0...v3.62.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.62.0",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复横幅显示延迟问题，现在打开扩展时立即显示",
+            "修复 17 个安全漏洞，包括 body-parser、axios、qs、tar 等依赖库中的高危 DoS 漏洞"
+          ],
+          "summary_cn": "v3.62.0 是一个重要的安全修复版本，主要解决了 17 个安全漏洞，包括多个依赖库中的高危 DoS 漏洞（如 body-parser、axios、qs、tar 等）。此外还优化了用户体验，修复了横幅需要用户交互才显示的问题，现在打开扩展时会立即显示。",
+          "impact_level": 4
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anomalyco/opencode",
+      "tag_name": "v1.2.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "数据存储结构变更：首次运行时将数据目录中的平面文件迁移至单个 SQLite 数据库",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "配置变更：超时配置从编程式 API 移除，改为 CLI 标志",
+          "impact": "medium",
+          "category": "Config"
+        },
+        {
+          "description": "API 变更：SDK 新增 PartDelta 事件以发送增量变更，影响事件处理逻辑",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "环境变量移除：桌面应用中移除 OPENCODE_SQLITE 环境变量",
+          "impact": "low",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "anomalyco/opencode",
+      "tag_name": "v1.2.1",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "数据迁移警告：包含从 v1.2.0 开始的数据迁移逻辑，首次启动可能耗时较长",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "Accessibility improvements needed",
+        "count": 7,
+        "affected_repos": [
+          "AndyMik90/Auto-Claude"
+        ],
+        "sample_urls": [
+          "https://github.com/AndyMik90/Auto-Claude/issues/1825",
+          "https://github.com/AndyMik90/Auto-Claude/issues/1822",
+          "https://github.com/AndyMik90/Auto-Claude/issues/1823",
+          "https://github.com/AndyMik90/Auto-Claude/issues/1824"
+        ]
+      },
+      {
+        "topic": "Plugin installation and configuration issues",
+        "count": 7,
+        "affected_repos": [
+          "anthropics/claude-plugins-official"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-plugins-official/issues/387",
+          "https://github.com/anthropics/claude-plugins-official/issues/379",
+          "https://github.com/anthropics/claude-plugins-official/issues/371",
+          "https://github.com/anthropics/claude-plugins-official/issues/245"
+        ]
+      },
+      {
+        "topic": "SDK execution errors and crashes",
+        "count": 6,
+        "affected_repos": [
+          "anthropics/claude-code-action"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-code-action/issues/892",
+          "https://github.com/anthropics/claude-code-action/issues/911",
+          "https://github.com/anthropics/claude-code-action/issues/914",
+          "https://github.com/anthropics/claude-code-action/issues/893"
+        ]
+      },
+      {
+        "topic": "UI/UX体验问题",
+        "count": 5,
+        "affected_repos": [
+          "OpenDevin/OpenDevin"
+        ],
+        "sample_urls": [
+          "https://github.com/OpenHands/OpenHands/issues/12871",
+          "https://github.com/OpenHands/OpenHands/issues/12865",
+          "https://github.com/OpenHands/OpenHands/issues/12764",
+          "https://github.com/OpenHands/OpenHands/issues/12704",
+          "https://github.com/OpenHands/OpenHands/issues/12855"
+        ]
+      },
+      {
+        "topic": "ralph-loop plugin bugs and cross-platform issues",
+        "count": 5,
+        "affected_repos": [
+          "anthropics/claude-plugins-official"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-plugins-official/issues/394",
+          "https://github.com/anthropics/claude-plugins-official/issues/370",
+          "https://github.com/anthropics/claude-plugins-official/issues/365",
+          "https://github.com/anthropics/claude-plugins-official/issues/244"
+        ]
+      }
+    ],
+    "parsed_files": 17,
+    "failed_files": 0,
+    "failed_samples": []
+  }
+}
