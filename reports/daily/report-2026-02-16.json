@@ -1,0 +1,867 @@
+{
+  "date": "2026-02-16",
+  "summary_brief": "今日 AI 编程工具领域呈现三大核心趋势：多智能体协作架构成为行业标准（Codex、Cline、Continue 等项目集体推进），流式体验与上下文优化成为工程重点（5 个项目同时解决 UI 闪烁、token 计量、上下文压缩问题），国际化与安全性成熟实践落地（Fabric、Aider、Zed 等项目的系统性升级）。这些变化标志着 AI 工具从能力扩展转向体验优化和企业级可靠性建设。",
+  "engineering_signals": [
+    {
+      "id": "eng-1",
+      "title": "多智能体协作范式标准化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Codex、Cline、Continue 等主流 AI 编程工具同时推进多智能体架构，通过模块重命名（collab → multi_agents）、自定义角色、独立工具链等实现，标志着从单一智能体向协作系统的范式转变已成行业共识，显著提升复杂任务处理能力。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1266",
+        "https://github.com/codex/pull/11924",
+        "https://github.com/openai/codex/pull/11939",
+        "https://github.com/openai/codex/commit/beb5cb4f4808c0b1c7717e47535868f1b9e2e050"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "gptme/gptme",
+        "continuedev/continue",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "pr-2",
+        "pr-17",
+        "pr-19"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "流式体验与交互稳定性优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline、OpenHands、Agno、Zed 等 5 个项目集中解决流式输出问题，涵盖 UI 行闪烁修复、token 计量准确性、自动滚动增强、推理可见性保持，反映用户对实时响应体验的强烈需求成为工程优化的核心方向。",
+      "sources": [
+        "https://github.com/cline/cline/commit/b266475d0aa093ce2abc81a59cc3bf5a5266abe0",
+        "https://github.com/agno-agi/agno/commit/e38132275004b4f26557a98b92d82593c73f312a",
+        "https://github.com/agno-agi/agno/pull/6580",
+        "https://github.com/cline/cline/pull/9335",
+        "https://github.com/cline/cline/pull/9334",
+        "https://github.com/agno-agi/agno/issues/6537",
+        "https://github.com/OpenHands/OpenHands/pull/12885"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "zed-industries/zed",
+        "agno-agi/agno",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "commit-7",
+        "pr-5",
+        "pr-6",
+        "pr-11",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "AI 辅助国际化工作流成熟化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Fabric 项目展示了完整的 AI 自动化国际化实践，通过 Maestro + GLM-5 生成 10 语言支持的 42 个错误键值，结合人工审查流程。同时 Dify、Semantic Kernel 等项目也在推进本地化支持，反映 AI 工具全球化落地的工程标准化趋势。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/a71a006f74f79c8058edf5b283a2239761234241",
+        "https://github.com/danielmiessler/Fabric/pull/2003",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.52",
+        "https://github.com/danielmiessler/Fabric/pull/2004",
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.406"
+      ],
+      "related_repos": [
+        "microsoft/semantic-kernel",
+        "langgenius/dify",
+        "ksylvan/maestro-playbooks-custom",
+        "anthropics/claude-code-action",
+        "danielmiessler/Fabric",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "pr-1",
+        "commit-5",
+        "release-0",
+        "release-1"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "沙箱化与权限精细化控制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "gptme 的独立 read 工具、Aider 的符号链接循环防御、Zed 和 Continue 的默认禁用高风险工具，这些变更共同指向 AI Agent 安全架构的演进：通过工具解耦、防御式编程和权限最小化，在保持功能性的同时显著提升本地运行安全性。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1266",
+        "https://github.com/continuedev/continue/commit/ce63eae384d74c6ee07715ebdbc1e885912bf0a6",
+        "https://github.com/Aider-AI/aider/pull/4838"
+      ],
+      "related_repos": [
+        "Aider-AI/aider",
+        "continuedev/continue",
+        "zed-industries/zed",
+        "ErikBjare/gptme",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "commit-4",
+        "pr-2",
+        "pr-7"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "环境状态持久化与上下文优化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 的 Shell 快照功能与环境策略强制执行、gptme 的上下文压缩失败自动恢复、Codex 的自动丢弃无关工具，这些变更共同解决了 AI Agent 长期运行中的状态一致性和上下文效率问题，提升了多轮对话和复杂任务的稳定性。",
+      "sources": [
+        "https://github.com/openai/codex/commit/af434b4f712165d6e3e470232ce39d03ad653496",
+        "https://github.com/openai/codex/commit/825a4af42feef5ceacfe97f1b1eb838c18004e3b"
+      ],
+      "related_repos": [
+        "paul-gauthier/aider",
+        "ErikBjare/gptme",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "推理模型标准化适配加速",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Gemini CLI、Langchain、Codex 纷纷添加对 GPT-5.2 等推理模型的自定义配置支持，显示生态系统正在快速适配具备显式推理能力的新一代模型。Cline 集成 GLM-5 免费模型也反映了模型供应商多元化趋势。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/39d36108d7ebe82972aa16a419aeb1c9cf06b59e",
+        "https://github.com/cline/cline/pull/9341",
+        "https://github.com/microsoft/semantic-kernel/releases/tag/dotnet-1.71.0"
+      ],
+      "related_repos": [
+        "microsoft/semantic-kernel",
+        "google-gemini/gemini-cli",
+        "cline/cline",
+        "langchain-ai/langchain",
+        "anomalyco/opencode",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-3",
+        "pr-3",
+        "release-3"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "HITL（人工介入循环）机制增强",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "crewAI 显著增强了 HITL 自循环功能和测试覆盖率，确保在多次拒绝或立即批准场景下的流程控制可靠性。OpenHands 的规划预览空状态处理也反映出对人工交互体验的重视，显示 Agent 工作流中人机协作模式正在成熟。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/pull/4493",
+        "https://github.com/OpenHands/OpenHands/pull/12879"
+      ],
+      "related_repos": [
+        "OpenHands/OpenHands",
+        "crewAIInc/crewAI"
+      ],
+      "source_signal_ids": [
+        "pr-15",
+        "pr-12"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_pr_signals": 20,
+    "total_commit_signals": 8,
+    "total_release_signals": 4,
+    "total_signals": 32,
+    "engineering_trends_identified": 7,
+    "total_prs_analyzed": 20,
+    "total_commits_analyzed": 143,
+    "total_releases": 7,
+    "high_impact_signals": 5,
+    "total_releases_analyzed": 7,
+    "total_breaking_changes": 3
+  },
+  "activity": {
+    "total_commits": 143,
+    "active_repos_count": 21,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 34,
+        "top_contributors": [
+          "Veykril",
+          "benbrandt",
+          "maxdeviant",
+          "chenwuji2000-cyber",
+          "cppcoffee"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 24,
+        "top_contributors": [
+          "rekram1-node",
+          "opencode-agent[bot]",
+          "ImmuneFOMO",
+          "zhzy0077",
+          "ariane-emory"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 12,
+        "top_contributors": [
+          "sehoon38",
+          "jacob314",
+          "NTaylorMullen",
+          "korade-krushna",
+          "kevinjwang1"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 12,
+        "top_contributors": [
+          "jif-oai",
+          "apanasenko-oai",
+          "sayan-oai",
+          "vb-openai",
+          "gt-oai"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 11,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 6,
+        "top_contributors": [
+          "saoudrizwan",
+          "github-actions[bot]",
+          "alex-lum",
+          "arafatkatze",
+          "juanpflores"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 6,
+        "top_contributors": [
+          "ashpreetbedi",
+          "ArivunidhiA"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 5,
+        "top_contributors": [
+          "hieptl",
+          "tofarr",
+          "mamoodi"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 5,
+        "top_contributors": [
+          "keenborder786",
+          "OiPunk",
+          "ademicho123",
+          "yaowubarbara"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 5,
+        "top_contributors": [
+          "laipz8200",
+          "WH-2099",
+          "Haohao-end",
+          "dependabot[bot]",
+          "asukaminato0721"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 4,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "top_contributors": [
+          "ashwin-ant"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 3,
+        "top_contributors": [
+          "paul-gauthier",
+          "314clay"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 3,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 3,
+        "top_contributors": [
+          "eyurtsev",
+          "dependabot[bot]",
+          "AdemBoukhris457"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 2,
+        "top_contributors": [
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 1,
+        "top_contributors": [
+          "yttrium400"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 1,
+        "top_contributors": [
+          "rogerbarreto"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "whysosaket"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "top_contributors": [
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 1,
+        "top_contributors": [
+          "AndyMik90"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 7,
+    "unique_repos_count": 5,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.406",
+        "author": "github-actions[bot]",
+        "date": "2026-02-16",
+        "summary": "## Changes\n\n### PR [#2004](https://github.com/danielmiessler/Fabric/pull/2004) by [ksylvan](https://github.com/ksylvan): Add i18n translations for VertexAI, Gemini, Bedrock, and fetch plugins\n\n- Add i18n translations for VertexAI, Gemini, Bedrock, and fetch plugins across 10 locale files\n- Replace hardcoded English strings with `i18n.T()` calls in Bedrock, Gemini, VertexAI, and fetch plugins\n- Add error handling for fetch operations with new error messages in i18n\n- Use `errors.New` instead of `fmt.Errorf` for non-formatted error strings\n- Add Gemini TTS and audio error translations, AWS Bedrock client error translations, and fetch plugin error translations to all locales\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.406",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "为 VertexAI、Gemini、Bedrock 和 fetch 插件添加 i18n 国际化翻译，覆盖 10 种语言环境文件",
+            "将 Bedrock、Gemini、VertexAI 和 fetch 插件中的硬编码英文字符串替换为 i18n.T() 调用",
+            "为 fetch 操作添加错误处理，并在 i18n 中新增错误消息翻译",
+            "优化错误处理：使用 errors.New 替代 fmt.Errorf 处理非格式化错误字符串",
+            "添加 Gemini TTS 和音频错误、AWS Bedrock 客户端错误以及 fetch 插件错误的多语言翻译"
+          ],
+          "summary_cn": "此次 v1.4.406 版本主要增强了国际化（i18n）支持，为 VertexAI、Gemini、Bedrock 和 fetch 等多个插件添加了 10 种语言的完整翻译，替换了硬编码的英文字符串。同时改进了错误处理机制，统一使用 errors.New 创建错误对象，并为各类错误消息提供了多语言翻译支持。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.405",
+        "author": "github-actions[bot]",
+        "date": "2026-02-16",
+        "summary": "## Changes\n\n### PR [#2002](https://github.com/danielmiessler/Fabric/pull/2002) by [ksylvan](https://github.com/ksylvan): Internationalization Polish\n\n- Added i18n translations for ollama, extensions, lmstudio, and spotify modules\n- Replaced hardcoded English strings with `i18n.T()` calls across all modules\n- Added translations for all new keys in de, en, es, fa, fr, it, ja, pt-BR, pt-PT, and zh locales\n- Added i18n strings for extension registry, executor, and manager operations\n- Added i18n strings for Spotify API client error messages\n\n### PR [#2003](https://github.com/danielmiessler/Fabric/pull/2003) by [ksylvan](https://github.com/ksylvan): Add internationalization support for chatter and template file operations\n\n- Add internationalization support for chatter and template file operations\n- Replace hardcoded strings with i18n keys in chatter.go and file.go\n- Provide translations in nine languages: German, English, Spanish, Persian, French, Italian, Japanese, Portuguese, and Chinese\n- Enable localized output for stream updates and file plugin operations\n- Maintain backward compatibility with existing functionality\n\n### Direct commits\n\n- MAESTRO: i18n: extract hard-coded strings from internal/tools/spotify/spotify.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_executor.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/plugins/ai/openai/openai.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_registry.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/plugins/ai/lmstudio/lmstudio.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/plugins/template/extension_manager.go\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n- MAESTRO: i18n: extract hard-coded strings from internal/server/ollama.go\nReplace 37 hard-coded error/log strings with i18n.T() calls and add\ntranslations for all 10 supported languages (en, de, es, fa, fr, it,\nja, pt-BR, pt-PT, zh). Keys use ollama_ prefix following project\nconventions.\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.405",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "为 ollama、extensions、lmstudio、spotify 等模块添加国际化翻译支持",
+            "将硬编码的英文字符串替换为 i18n.T() 调用，覆盖所有模块",
+            "为 chatter 和模板文件操作添加国际化支持，提供 9 种语言翻译",
+            "新增扩展注册表、执行器、管理器及 Spotify API 客户端的 i18n 字符串",
+            "支持德语、英语、西班牙语、波斯语、法语、意大利语、日语、葡萄牙语和中文输出"
+          ],
+          "summary_cn": "v1.4.405 版本主要进行了全面的国际化（i18n）改进，为多个核心模块（ollama、extensions、lmstudio、spotify、chatter 等）添加了多语言支持，将硬编码的英文字符串替换为 i18n 调用。现已支持 9 种语言的本地化输出（包括中文），并保持向后兼容性，显著提升了非英语用户的使用体验。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "version": "dotnet-1.71.0",
+        "author": "dmytrostruk",
+        "date": "2026-02-16",
+        "summary": "\n\n## Changes:\n\n* 91f795605e42f0dd03ed9cdfaf4ffd8bdb1ae553 .Net: Bumping - Version 1.71.0 (#13552)\n* 1b8b08b0ee72e6a26494009e2724c38010bd0ea3 Remove unused workflow (#13545)\n* c6f07d65f498dca5bb74fcc72f2f96d96e0c2fa4 .Net: Implement SQL Server hybrid search (#13512) [ #11080 ]\n* e8b4862d0372478bfe9a26f86e5010f033e7a098 .Net: [MEVD] Map DateTime to timestamptz on PostgreSQL (#13514) [ #10641 ]\n* 898b9fe6916623b59540995b3d579f959aa3332a Python: Bump urllib3 from 2.3.0 to 2.6.3 in /python (#13496) [ urllib3/urllib3#3743, urllib3/urllib3#3752, urllib3/urllib3#3734, #3731, #3743, #3752, #3734, #3755, #3747, #3748, #3750, #3749, #3746 ]\n* 31588993aed36faab226c1b4da5dc8df1a64faa3 Python: Bump azure-core from 1.36.0 to 1.38.0 in /python (#13495) [ #44084, #44609, #44590, #44574, #44398, #44343, #44328, #43201, #43435 ]\n* 0d283ea9add3040b62449786bf81a1c23c66ce04 Python: Version bump and dependency updates (#13533)\n* 7a74a262272fb89c3761e1301626ba3d19f9f990 .Net: Update DirectoryObjects.yml URL from dev to main branch (#13526)\n* 07f55e34b70baf7624418eb567dd0c4b59ee7c77 Python: Bump authlib from 1.6.5 to 1.6.6 in /python (#13489) [ authlib/authlib#778, authlib/authlib#842, authlib/authlib#844, #844, #778, #743 ]\n* 6a8864f7799d87dc75f3d03770f0fe47f81e0832 Python: Bump virtualenv from 20.35.4 to 20.36.1 in /python (#13491) [ pypa/virtualenv#3011, pypa/virtualenv#3013, pypa/virtualenv#2981, pypa/virtualenv#2982, pypa/virtualenv#2989, pypa/virtualenv#2990, pypa/virtualenv#2996, pypa/virtualenv#3001, pypa/virtualenv#3002, pypa/virtualenv#3007, pypa/virtualenv#3006, pypa/virtualenv#3008, #3013, #3011, #3008, #3, #3007, #2997, #3001 ]\n<details><summary><b>See More</b></summary>\n\n* c2881501bc81032cc35d0a5c0af7720998416559 Python: Bump python-multipart from 0.0.20 to 0.0.22 in /python (#13493) [ ludex/python-multipart#216, ludex/python-multipart#203, #216, #222, #221, #219, #218, #217, #214, #212, #210 ]\n* 1a0caff234e24c6ea603185f281cfa790ab03346 Python: Bump aiohttp from 3.13.2 to 3.13.3 in /python (#13494)\n* 4b499433e28252551f218da50a383c1797141c76 Python: Bump protobuf from 5.29.5 to 5.29.6 in /python (#13513) [ protocolbuffers/protobuf#25296, protocolbuffers/protobuf#25161, #25168, #24115, #23369, #15633 ]\n* 1dcfda04aecbe385062ef1a6d661ab2ffc4d67e5 Python: Bump nbconvert from 7.16.6 to 7.17.0 in /python (#13528) [ #2227, #2264, #2261, #2228, #2226, #2267, #2238, #2237, #2231, #2229, #2224, #2221, #2232 ]\n* d6d4f3bc124b998da16e9e20460d9dd89a15fbbe Python: refinement of filtering (#13505)\n* c4d0a623f22a9a138e98759127525ce9d47d3607 .Net: Update Microsoft.SemanticKernel packages from 1.68.0 to 1.70.0 (#13524) [ #13523 ]\n* b0d621f2a682f4d6915c4a9b44384353cbbfdbe9 .Net: Implement PostgreSQL hybrid search (#13502) [ #13501, #11084, #10359 ]\n* 7d7a6494e55b1ceb65b32bcee2e9faeb4d0c0fd8 .Net: [MEVD] Implement support for score threshold (#13501) [ #9566 ]\n* 838b9511723b32e34956370313d9466045f9a453 Python: Bump Python version to 1.39.3 for a release (#13503)\n* b6f95e2c453dfae0ca41be738c30c73517c2795f Python: Add class validation for Dapr Runtime step loading (#13499)\n* cbb1f219d072c1266e0acd4c7694482c9ae64a7c .Net: [MEVD] Introduce FilterTranslatorBase and remove duplication (#13485)\n* a3be1fd29946a855adccba98f4360caf90273890 Bump actions/setup-dotnet from 4 to 5 (#13137) [ actions/setup-dotnet#654, actions/setup-dotnet#622, actions/setup-dotnet#591, actions/setup-dotnet#594, actions/setup-dotnet#639, actions/setup-dotnet#641, actions/setup-dotnet#652, actions/setup-dotnet#662, actions/setup-dotnet#647, actions/setup-dotnet#572, actions/setup-dotnet#566, dotnet/install-scripts#559, actions/setup-dotnet#615, actions/setup-dotnet#587, actions/setup-dotnet#585, actions/setup-dotnet#586, actions/setup-dotnet#590, actions/setup-dotnet#592, actions/setup-dotnet#596, #654, #662, #652, #641, #639, #594, #591, #647, #622 ]\n* 8f301a1879591b7b849eefc768ca6498b495872a Bump mdast-util-to-hast from 13.2.0 to 13.2.1 in /dotnet/samples/Demos/ProcessWithCloudEvents/ProcessWithCloudEvents.Client (#13409)\n* 33e58829a13b295067ed0fccd0a285a88d7d825c .Net: Bump form-data from 4.0.2 to 4.0.4 in /dotnet/samples/Demos/ProcessFrameworkWithSignalR (#12979) [ #577 ]\n* 1b9d5f142ce5d8d14c15a24fc69aa6a59597309c Bump vite from 6.2.7 to 6.4.1 in /dotnet/samples/Demos/ProcessFrameworkWithSignalR/src/ProcessFramework.Aspire.SignalR.ReactFrontend (#13388) [ #19878, #19805, #19836, #19793, #19792, #19794, #19828 ]\n* d3ac002ac9c44725f0279124eb47213c726f0252 .Net: Remove old MEVD integration tests (#13484) [ #12506 ]\n* 5b27a727a2190d8c251f17e0a0fbb78a3c59d96f Python: Add file upload security controls to SessionsPythonPlugin (#13478)\n* af0761c69e4497fd759b616206899c106f0fa710 .Net: Adding copilot cli to the codespace definition (#13479)\n* 7918395b47efba61624141f27d9848df559de79e .Net: [MEVD] Implement key auto-generation (#13466) [ #11485 ]\n* fe11ab6ab5452d49d5acf2a5f17a3852dab6a2e0 .Net: [MEVD] Support .Any(x => x.Contains(...)) in filters  (#13471) [ #13470, #13152 ]\n* 5794549af7a6908a8ad4c957f72ad6df52efb7fa .Net: [MEVD] Ensure identifiers are properly quoted (#13470) [ #12161 ]\n* b0a185b7fa521cd0c0aaa2e6eade297b8909c18f .Net: ItCanReturnImageUrlAsync test is flakey so skipping (#13472)\n* 3ce1a84d3b3b66a4a3379ce706137e68c982527a .Net: Use testcontainer for SQL Server 2025 (#13465)\n* 4e055e8fdf065e262d924830f121617da7d237de .Net: Add agentic tool registration guide to SK -> AF migration. (#13464) [ microsoft/agent-framework#3276 ]\n\nThis list of changes was [auto generated](https://msdata.visualstudio.com/Vienna/_build/results?buildId=207585011&view=logs).</details>",
+        "assets_count": 0,
+        "url": "https://github.com/microsoft/semantic-kernel/releases/tag/dotnet-1.71.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 SQL Server 混合搜索功能实现",
+            "修复 PostgreSQL 上 DateTime 映射到 timestamptz 的问题",
+            "Python 环境依赖包安全升级（urllib3、azure-core 等）",
+            "清理未使用的工作流，更新文档链接",
+            "版本号升级至 1.71.0"
+          ],
+          "summary_cn": "这是 Semantic Kernel .NET 1.71.0 版本更新，主要新增了 SQL Server 混合搜索功能并修复了 PostgreSQL 日期时间类型映射问题。同时 Python 依赖包进行了多项安全升级，包括 urllib3、azure-core 等关键组件的版本更新。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.6",
+        "author": "github-actions[bot]",
+        "date": "2026-02-16",
+        "summary": "## Core\n- Add dfmt formatter support for D language files (@burner)\n- Bump GitLab provider and auth plugin for mid-session token refresh (@vglafirov)\n- Remove unnecessary per-message title LLM calls (@rmk40)\n- Prioritize user-defined variables over environment variables in Google Vertex AI configuration\n- Add OpenAI-compatible endpoint support for Google Vertex provider (@leehack)\n- Add Venice support for temperature, topP, topK, and smallOption parameters (@dpuyosa)\n- Add cljfmt formatter support for Clojure files (@finalfantasia)\n## TUI\n- Make use of server directory path for file references in prompts (@OpeOginni)\n- Add database migration command to convert JSON storage to SQLite\n- Add --continue and --fork flags to attach command\n- Fixed inaccurate tips in TUI (@imanolmzd-svg)\n## Desktop\n- Normalize Linux Wayland/X11 backend and decoration policy (@bnema)\n- Use process-wrap library instead of manual job object handling in desktop (@Brendonovich)\n\n**Thank you to 12 community contributors:**\n- @finalfantasia:\n  - feat(opencode): add `cljfmt` formatter support for Clojure files (#13426)\n- @pkx07:\n  - fix(website): correct zh-CN translation of proprietary terms in zen.mdx (#13734)\n- @Brendonovich:\n  - desktop: use process-wrap instead of manual job object (#13431)\n- @dpuyosa:\n  - feat(opencode): Add Venice support in temperature, topP, topK and smallOption (#13553)\n- @bnema:\n  - fix(desktop): normalize Linux Wayland/X11 backend and decoration policy (#13143)\n- @leehack:\n  - feat: add openai-compatible endpoint support for google-vertex provider (#10303)\n- @hobostay:\n  - fix(docs): correct critical translation errors in Russian zen page (#13830)\n- @rmk40:\n  - fix(core): remove unnecessary per-message title LLM calls (#13804)\n- @imanolmzd-svg:\n  - fix (tui): Inaccurate tips (#13845)\n- @vglafirov:\n  - fix: bump GitLab provider and auth plugin for mid-session token refresh (#13850)\n- @OpeOginni:\n  - fix(tui): make use of server dir path for file references in prompts (#13781)\n- @burner:\n  - feat(opencode): add `dfmt` formatter support for D language files (#13867)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.6",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 D 语言 dfmt 格式化支持",
+            "新增 Clojure 语言 cljfmt 格式化支持",
+            "Google Vertex AI 支持 OpenAI 兼容端点",
+            "GitLab 提供商支持会话中令牌刷新",
+            "桌面端 Linux Wayland/X11 后端和装饰策略标准化",
+            "数据库迁移命令支持从 JSON 转换到 SQLite"
+          ],
+          "summary_cn": "v1.2.6 版本主要增强了代码格式化功能，新增 D 语言和 Clojure 语言的支持，同时为多个 AI 提供商扩展了参数兼容性。TUI 和桌面端进行了多项改进，包括数据库迁移支持和 Linux 平台优化。版本还包含性能优化和 bug 修复，如减少不必要的 LLM 调用和修复多语言翻译问题。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.52",
+        "author": "github-actions[bot]",
+        "date": "2026-02-15",
+        "summary": "## What's Changed\n* Fix stale claudeCodeVersion and update bump script to keep run.ts in sync by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/943\n* fix: revert to colon-based wildcard syntax for git permissions by @ashwin-ant in https://github.com/anthropics/claude-code-action/pull/949\n\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.52",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.52",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 claudeCodeVersion 过期问题并同步更新 run.ts",
+            "修复 git 权限配置，恢复使用基于冒号的通配符语法",
+            "改进版本升级脚本以保持文件同步"
+          ],
+          "summary_cn": "此版本主要包含两个修复：解决了 claudeCodeVersion 过期问题，并更新脚本确保 run.ts 文件保持同步；同时修复了 git 权限配置，恢复使用基于冒号的通配符语法。这两个变更都旨在修复现有功能问题，没有引入新功能或破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.2",
+        "author": "ashpreetbedi",
+        "date": "2026-02-15",
+        "summary": "## What's Changed\n* Release 2.5.2 by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6578\n\n\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.5.1...v2.5.2",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "发布 v2.5.2 版本",
+            "具体的变更详情请参考 Full Changelog"
+          ],
+          "summary_cn": "这是 agno-agi/agno 仓库的 v2.5.2 版本发布，是 v2.5.1 的后续更新版本。Release Notes 中未提供具体变更内容，需要通过 Full Changelog 查看完整的变更信息。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.1",
+        "author": "ashpreetbedi",
+        "date": "2026-02-15",
+        "summary": "## What's Changed\n* [fix] remove include_answer kwarg from tavily tool method  by @mklrlnd424 in https://github.com/agno-agi/agno/pull/5755\n* refactor: Fail explicitly when header_provider is incompatible with transport by @bhatt-neel-dev in https://github.com/agno-agi/agno/pull/5988\n* fix: prioritize explicit id over name in get_member_id by @kausmeows in https://github.com/agno-agi/agno/pull/6336\n* fix: Cache FastEmbed model and reset reader state between calls by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6029\n* test: improve test suite with rate-limit protection by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6535\n* cookbook: Restructure 02_agents into numbered directories with feature coverage by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6536\n* cookbook: Improve cookbook demo by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6538\n* cookbook: Make 03_teams fully testable and feature-complete by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6557\n* ci: add Claude Code workflow with code-review plugin by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6560\n* fix: use correct marketplace for code-review plugin by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6562\n* feat: add CodingTools, UserFeedbackTools, and demo cookbook updates by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6572\n* release: v2.5.1 by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6576\n\n## New Contributors\n* @mklrlnd424 made their first contribution in https://github.com/agno-agi/agno/pull/5755\n\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.5.0...v2.5.1\n",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.1",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Tavily 工具方法移除 include_answer 参数问题",
+            "修复 get_member_id 方法优先级逻辑，优先使用显式 ID 而非名称",
+            "修复 FastEmbed 模型缓存并重置读取器状态",
+            "新增 CodingTools 和 UserFeedbackTools 功能及相关示例",
+            "改进测试套件并添加速率限制保护机制"
+          ],
+          "summary_cn": "这是一个主要包含问题修复的补丁版本，重点修复了多个工具和方法的逻辑问题，包括 Tavily 工具参数、成员 ID 获取优先级以及 FastEmbed 模型缓存等。同时新增了编码工具和用户反馈工具功能，并优化了测试套件的稳定性。",
+          "impact_level": 2
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code-action",
+      "tag_name": "v1.0.52",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Git 权限通配符语法恢复为基于冒号的格式（此前可能已变更）",
+          "impact": "medium",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "agno-agi/agno",
+      "tag_name": "v2.5.1",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "移除了 Tavily 工具方法中的 include_answer 参数",
+          "impact": "high",
+          "category": "API"
+        },
+        {
+          "description": "当 header_provider 与传输层不兼容时，现在会显式抛出错误而非静默失败",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "anomalyco/opencode",
+      "tag_name": "v1.2.6",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Google Vertex AI 配置中，用户定义变量现在优先于环境变量（可能覆盖现有配置）",
+          "impact": "medium",
+          "category": "Config"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "Configuration and Integration Issues",
+        "count": 9,
+        "affected_repos": [
+          "mem0ai/mem0",
+          "microsoft/autogen"
+        ],
+        "sample_urls": [
+          "https://github.com/mem0ai/mem0/issues/4059",
+          "https://github.com/mem0ai/mem0/issues/4057",
+          "https://github.com/mem0ai/mem0/issues/4048",
+          "https://github.com/mem0ai/mem0/issues/4040",
+          "https://github.com/mem0ai/mem0/issues/3906"
+        ]
+      },
+      {
+        "topic": "模型集成与兼容性问题",
+        "count": 8,
+        "affected_repos": [
+          "langchain-ai/langchain"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langchain/issues/35259",
+          "https://github.com/langchain-ai/langchain/issues/35226",
+          "https://github.com/langchain-ai/langchain/issues/35219",
+          "https://github.com/langchain-ai/langchain/issues/35224"
+        ]
+      },
+      {
+        "topic": "Agent hanging and freezing issues",
+        "count": 7,
+        "affected_repos": [
+          "cline/cline"
+        ],
+        "sample_urls": [
+          "https://github.com/cline/cline/issues/9337",
+          "https://github.com/cline/cline/issues/9336",
+          "https://github.com/cline/cline/issues/9332",
+          "https://github.com/cline/cline/issues/9331",
+          "https://github.com/cline/cline/issues/9323"
+        ]
+      },
+      {
+        "topic": "Gemini API 配额限制问题",
+        "count": 7,
+        "affected_repos": [
+          "continuedev/continue"
+        ],
+        "sample_urls": [
+          "https://github.com/continuedev/continue/issues/10562",
+          "https://github.com/continuedev/continue/issues/10560",
+          "https://github.com/continuedev/continue/issues/10557",
+          "https://github.com/continuedev/continue/issues/10553",
+          "https://github.com/continuedev/continue/issues/10548"
+        ]
+      },
+      {
+        "topic": "Uncaught exceptions and crashes",
+        "count": 7,
+        "affected_repos": [
+          "paul-gauthier/aider"
+        ],
+        "sample_urls": [
+          "https://github.com/Aider-AI/aider/issues/4835",
+          "https://github.com/Aider-AI/aider/issues/4831",
+          "https://github.com/Aider-AI/aider/issues/4829",
+          "https://github.com/Aider-AI/aider/issues/4828",
+          "https://github.com/Aider-AI/aider/issues/4742"
+        ]
+      }
+    ],
+    "parsed_files": 41,
+    "failed_files": 0,
+    "failed_samples": []
+  }
+}
