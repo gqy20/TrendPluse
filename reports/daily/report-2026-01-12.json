@@ -1,16 +1,1 @@
-{
-  "date": "2026-01-12",
-  "stats": {
-    "total_signals": 0,
-    "pr_count": 0,
-    "commit_count": 0,
-    "release_count": 0,
-    "unique_repos": 0,
-    "total_prs_analyzed": 0,
-    "total_commits_analyzed": 0,
-    "total_releases": 0,
-    "total_releases_analyzed": 0,
-    "high_impact_signals": 0,
-    "total_breaking_changes": 0
-  }
-}
+{"date": "2026-01-12"}

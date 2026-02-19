@@ -81,3 +81,38 @@ async def test_analyze_file_raises_after_retry_exhausted(tmp_path) -> None:
     input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
     with pytest.raises(RuntimeError, match="仍未通过校验"):
         await runner.analyze_file(input_path, output_path)
+
+
+@pytest.mark.asyncio
+async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> None:
+    class _PartialFailRunner(IssueAgentRunner):
+        async def analyze_file(self, input_path, output_path):  # type: ignore[override]
+            if input_path.name == "bad.jsonl":
+                raise RuntimeError("boom")
+            output_path.write_text('{"top_pain_points":[]}', encoding="utf-8")
+            return '{"top_pain_points":[]}'
+
+    runner = _PartialFailRunner(model=None)
+    input_dir = tmp_path / "in"
+    output_dir = tmp_path / "out"
+    input_dir.mkdir()
+    (input_dir / "a.jsonl").write_text(
+        '{"repo":"a/b","issue_id":1}\n',
+        encoding="utf-8",
+    )
+    (input_dir / "bad.jsonl").write_text(
+        '{"repo":"a/b","issue_id":2}\n', encoding="utf-8"
+    )
+    (input_dir / "c.jsonl").write_text(
+        '{"repo":"a/b","issue_id":3}\n',
+        encoding="utf-8",
+    )
+
+    result = await runner.analyze_directory(input_dir, output_dir)
+
+    assert result.expected_files == 3
+    assert result.succeeded_files == 2
+    assert result.failed_files == 1
+    assert "bad.jsonl" in result.failed_samples
+    assert (output_dir / "a.analysis.json").exists()
+    assert (output_dir / "c.analysis.json").exists()

@@ -54,6 +54,7 @@ def setup_logger(
 
     logger = logging.getLogger(name)
     logger.setLevel(level)
+    logger.propagate = False
 
     logger.handlers.clear()
 

@@ -10,9 +10,9 @@ from trendpluse.models.signal import (
     ActivityData,
     CoreTrend,  # noqa: F401 (used in WeeklyReport.core_trends type annotation)
     DailyReport,
-    ReportStats,
     ReleasesData,
     ReleaseSummary,
+    ReportStats,
     Signal,
     WeeklyActivity,
     WeeklyReport,
@@ -164,7 +164,9 @@ class MarkdownReporter:
     def _render_issue_insights(self, report: IssueAgentReport) -> str:
         lines = ["---\n", "## 🧠 Issue 洞察（Agent）\n\n"]
         lines.append(
-            f"解析文件: {report.parsed_files}，失败文件: {report.failed_files}\n\n"
+            "预期文件: "
+            f"{report.expected_files}，生成文件: {report.generated_files}，"
+            f"解析成功: {report.parsed_files}，失败文件: {report.failed_files}\n\n"
         )
 
         if not report.top_pain_points:

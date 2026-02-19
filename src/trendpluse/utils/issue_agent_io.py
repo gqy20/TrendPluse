@@ -26,11 +26,30 @@ def load_issue_agent_report(
     if not isinstance(base_dir, (str, PathLike)):
         return IssueAgentReport()
 
-    analysis_dir = Path(base_dir) / snapshot_date / "analysis"
+    snapshot_dir = Path(base_dir) / snapshot_date
+    input_files = sorted(snapshot_dir.glob("*.jsonl"))
+    expected_files = len(input_files)
+
+    analysis_dir = snapshot_dir / "analysis"
     if not analysis_dir.exists():
-        return IssueAgentReport()
+        missing_samples = [
+            f"{path.stem}.analysis.json (missing)" for path in input_files[:5]
+        ]
+        return IssueAgentReport(
+            expected_files=expected_files,
+            generated_files=0,
+            failed_files=expected_files,
+            failed_samples=missing_samples,
+        )
 
     files = sorted(analysis_dir.glob("*.analysis.json"))
+    generated_files = len(files)
+    existing_analysis_names = {path.name for path in files}
+    missing_files = [
+        f"{path.stem}.analysis.json (missing)"
+        for path in input_files
+        if f"{path.stem}.analysis.json" not in existing_analysis_names
+    ]
     merged_counts: dict[str, int] = defaultdict(int)
     merged_repos: dict[str, set[str]] = defaultdict(set)
     merged_urls: dict[str, list[str]] = defaultdict(list)
@@ -78,9 +97,14 @@ def load_issue_agent_report(
             failed_files,
             ",".join(failed_samples),
         )
+
+    all_failed_samples = (failed_samples + missing_files)[:5]
+    total_failed_files = failed_files + len(missing_files)
     return IssueAgentReport(
         top_pain_points=merged[:5],
+        expected_files=expected_files,
+        generated_files=generated_files,
         parsed_files=parsed_files,
-        failed_files=failed_files,
-        failed_samples=failed_samples,
+        failed_files=total_failed_files,
+        failed_samples=all_failed_samples,
     )

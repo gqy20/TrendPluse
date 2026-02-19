@@ -553,6 +553,8 @@ class FeishuFormatter:
 
     def _generate_issue_insights_content(self, report: IssueAgentReport) -> str:
         lines: list[str] = [
+            f"• 预期文件: {report.expected_files}\n",
+            f"• 生成文件: {report.generated_files}\n",
             f"• 解析文件: {report.parsed_files}\n",
             f"• 失败文件: {report.failed_files}\n\n",
         ]

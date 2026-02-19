@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: write
 
 jobs:
   analyze:
@@ -35,7 +36,8 @@ jobs:
       - name: Extract GitHub URL and analyze
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.TRENDPLUSE_BOT_TOKEN != '' && secrets.TRENDPLUSE_BOT_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ secrets.TRENDPLUSE_BOT_TOKEN != '' && secrets.TRENDPLUSE_BOT_TOKEN || github.token }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           EVENT_NAME: ${{ github.event_name }}

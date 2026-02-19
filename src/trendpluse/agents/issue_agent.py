@@ -7,6 +7,7 @@ import json
 import logging
 import re
 from collections.abc import Iterable
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +16,16 @@ from pydantic import ValidationError
 from trendpluse.models.issue_agent import IssueAgentReport
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass(slots=True)
+class IssueAgentBatchResult:
+    """Issue Agent 批量分析统计。"""
+
+    expected_files: int
+    succeeded_files: int
+    failed_files: int
+    failed_samples: list[str]
 
 
 class IssueAgentRunner:
@@ -74,23 +85,47 @@ class IssueAgentRunner:
             f"Issue Agent 输出在 {self.retry_max_attempts} 次尝试后仍未通过校验"
         ) from last_exc
 
-    async def analyze_directory(self, input_dir: Path, output_dir: Path) -> int:
+    async def analyze_directory(
+        self, input_dir: Path, output_dir: Path
+    ) -> IssueAgentBatchResult:
         """分析目录下所有 JSONL 文件。
 
         Returns:
-            成功写入的分析文件数量。
+            批量分析统计。
         """
         files = sorted(input_dir.glob("*.jsonl"))
         if not files:
-            return 0
+            return IssueAgentBatchResult(
+                expected_files=0,
+                succeeded_files=0,
+                failed_files=0,
+                failed_samples=[],
+            )
 
         output_dir.mkdir(parents=True, exist_ok=True)
         success_count = 0
+        failed_count = 0
+        failed_samples: list[str] = []
         for input_path in files:
             output_path = output_dir / f"{input_path.stem}.analysis.json"
-            await self.analyze_file(input_path, output_path)
-            success_count += 1
-        return success_count
+            try:
+                await self.analyze_file(input_path, output_path)
+                success_count += 1
+            except Exception as exc:
+                failed_count += 1
+                if len(failed_samples) < 5:
+                    failed_samples.append(input_path.name)
+                logger.warning(
+                    "Issue Agent 单文件分析失败: file=%s, error=%s",
+                    input_path.name,
+                    exc,
+                )
+        return IssueAgentBatchResult(
+            expected_files=len(files),
+            succeeded_files=success_count,
+            failed_files=failed_count,
+            failed_samples=failed_samples,
+        )
 
     async def _run_agent_query(self, prompt: str) -> str:
         try:

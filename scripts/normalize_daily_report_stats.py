@@ -135,7 +135,10 @@ def normalize_stats(report: dict[str, Any]) -> dict[str, int]:
 
     total_commits_analyzed = as_int(stats.get("total_commits_analyzed"), 0)
     if total_commits_analyzed == 0:
-        total_commits_analyzed = as_int((report.get("activity") or {}).get("total_commits"), 0)
+        total_commits_analyzed = as_int(
+            (report.get("activity") or {}).get("total_commits"),
+            0,
+        )
 
     high_impact = as_int(stats.get("high_impact_signals"), 0)
     if high_impact == 0:
@@ -218,7 +221,8 @@ def main() -> None:
             if len(sample) < 5 and normalized:
                 sample.append(
                     f"{path.name}: total={normalized['total_signals']}, "
-                    f"pr={normalized['pr_count']}, commit={normalized['commit_count']}, "
+                    f"pr={normalized['pr_count']}, "
+                    f"commit={normalized['commit_count']}, "
                     f"release={normalized['release_count']}"
                 )
 
