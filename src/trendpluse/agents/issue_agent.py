@@ -13,7 +13,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from trendpluse.models.issue_agent import IssueAgentReport
+from trendpluse.models.issue_agent import IssueAgentPainPoint, IssueAgentReport
 
 logger = logging.getLogger(__name__)
 
@@ -36,33 +36,24 @@ class IssueAgentRunner:
         model: str | None = None,
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
+        review_confidence_threshold: float = 0.6,
     ) -> None:
         self.model = model
         self.retry_max_attempts = max(1, retry_max_attempts)
         self.retry_wait_seconds = max(0.0, retry_wait_seconds)
+        self.review_confidence_threshold = min(
+            1.0, max(0.0, review_confidence_threshold)
+        )
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
         """分析单个 JSONL 文件并写入 JSON 结果。"""
         input_path = input_path.resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        prompt = (
-            "你是一个 Issue 分析专家。请读取下面路径的 JSONL 文件，"
-            "按 repo 聚合痛点并输出结构化 JSON：\n\n"
-            f"文件路径: {input_path}\n\n"
-            "要求：\n"
-            "- 过滤公告/发布/推广类问题\n"
-            "- 合并语义相近的痛点主题\n"
-            "- 输出字段：top_pain_points（数组，元素含 topic/count/"
-            "affected_repos/sample_urls）\n"
-            "- 只输出 JSON，不要附加说明\n"
-        )
-
         last_exc: Exception | None = None
         for attempt in range(1, self.retry_max_attempts + 1):
             try:
-                response_text = await self._run_agent_query(prompt)
-                validated = self._normalize_and_validate_output(response_text)
+                validated = await self._run_three_round_analysis(input_path)
                 normalized_text = json.dumps(
                     validated.model_dump(), ensure_ascii=False, indent=2
                 )
@@ -84,6 +75,149 @@ class IssueAgentRunner:
         raise RuntimeError(
             f"Issue Agent 输出在 {self.retry_max_attempts} 次尝试后仍未通过校验"
         ) from last_exc
+
+    async def _run_three_round_analysis(self, input_path: Path) -> IssueAgentReport:
+        round1_prompt = self._build_round1_prompt(input_path)
+        round1_text = await self._run_agent_query(round1_prompt)
+        round1_data = self._parse_round_payload(round1_text, "candidate_pain_points")
+
+        round2_prompt = self._build_round2_prompt(input_path, round1_data)
+        round2_text = await self._run_agent_query(round2_prompt)
+        round2_data = self._parse_round_payload(round2_text, "merged_pain_points")
+
+        round3_prompt = self._build_round3_prompt(input_path, round2_data)
+        round3_text = await self._run_agent_query(round3_prompt)
+        round3_data = self._parse_json_like_text(round3_text)
+        if not isinstance(round3_data, dict):
+            raise ValueError("ROUND3 输出不是合法 JSON 对象")
+
+        if "top_pain_points" in round3_data:
+            return IssueAgentReport.model_validate(round3_data)
+
+        reviewed = round3_data.get("reviewed_pain_points")
+        if not isinstance(reviewed, list):
+            raise ValueError("ROUND3 缺少 reviewed_pain_points 字段")
+
+        return self._build_report_from_reviewed_points(reviewed)
+
+    def _build_round1_prompt(self, input_path: Path) -> str:
+        return (
+            "[ROUND1] 你是 Issue 质量分析器。读取 JSONL 并做高召回抽取。\n\n"
+            f"文件路径: {input_path}\n\n"
+            "输出 JSON 字段：candidate_pain_points（数组），每项至少包含\n"
+            "topic/count/affected_repos/sample_urls。\n"
+            "要求：保留可能的候选痛点，宁可多，不要解释文字。"
+        )
+
+    def _build_round2_prompt(
+        self, input_path: Path, round1_data: dict[str, Any]
+    ) -> str:
+        payload = json.dumps(round1_data, ensure_ascii=False)
+        return (
+            "[ROUND2] 你是 Issue 主题归一化分析器。请合并语义相近主题。\n\n"
+            f"文件路径: {input_path}\n"
+            f"ROUND1结果: {payload}\n\n"
+            "输出 JSON 字段：merged_pain_points（数组），每项包含\n"
+            "topic/count/affected_repos/sample_urls，可选 aliases。"
+        )
+
+    def _build_round3_prompt(
+        self, input_path: Path, round2_data: dict[str, Any]
+    ) -> str:
+        payload = json.dumps(round2_data, ensure_ascii=False)
+        return (
+            "[ROUND3] 你是 Issue 审稿器。请对主题做保留判定和置信度打分。\n\n"
+            f"文件路径: {input_path}\n"
+            f"ROUND2结果: {payload}\n\n"
+            "输出 JSON 字段：reviewed_pain_points（数组），每项包含\n"
+            "topic/count/affected_repos/sample_urls/confidence/priority/keep，"
+            "可选 review_reason。\n"
+            "priority 仅允许 P0/P1/P2。"
+        )
+
+    def _parse_round_payload(self, text: str, key: str) -> dict[str, Any]:
+        parsed = self._parse_json_like_text(text)
+        if not isinstance(parsed, dict):
+            raise ValueError(f"{key} 输出不是合法 JSON 对象")
+        value = parsed.get(key)
+        if not isinstance(value, list):
+            raise ValueError(f"缺少字段: {key}")
+        return parsed
+
+    def _build_report_from_reviewed_points(
+        self, reviewed_points: list[Any]
+    ) -> IssueAgentReport:
+        points: list[IssueAgentPainPoint] = []
+        for raw in reviewed_points:
+            if not isinstance(raw, dict):
+                continue
+            keep = bool(raw.get("keep", True))
+            confidence_value = raw.get("confidence")
+            confidence = (
+                float(confidence_value)
+                if isinstance(confidence_value, (int, float))
+                else None
+            )
+            if not keep:
+                continue
+            if confidence is not None and confidence < self.review_confidence_threshold:
+                continue
+
+            topic = str(raw.get("topic", "")).strip()
+            if not topic:
+                continue
+
+            count_raw = raw.get("count", 1)
+            count = count_raw if isinstance(count_raw, int) and count_raw > 0 else 1
+
+            affected_repos = raw.get("affected_repos")
+            repos = (
+                [str(item) for item in affected_repos if isinstance(item, str)]
+                if isinstance(affected_repos, list)
+                else []
+            )
+
+            sample_urls = raw.get("sample_urls")
+            urls = (
+                [str(item) for item in sample_urls if isinstance(item, str)]
+                if isinstance(sample_urls, list)
+                else []
+            )
+
+            aliases_raw = raw.get("aliases")
+            aliases = (
+                [str(item) for item in aliases_raw if isinstance(item, str)]
+                if isinstance(aliases_raw, list)
+                else []
+            )
+
+            priority_raw = raw.get("priority")
+            priority = (
+                str(priority_raw)
+                if isinstance(priority_raw, str) and priority_raw in {"P0", "P1", "P2"}
+                else None
+            )
+            review_reason = (
+                str(raw.get("review_reason"))
+                if isinstance(raw.get("review_reason"), str)
+                else None
+            )
+
+            points.append(
+                IssueAgentPainPoint(
+                    topic=topic,
+                    count=count,
+                    affected_repos=repos,
+                    sample_urls=urls,
+                    aliases=aliases,
+                    confidence=confidence,
+                    priority=priority,
+                    review_reason=review_reason,
+                )
+            )
+
+        points.sort(key=lambda item: item.count, reverse=True)
+        return IssueAgentReport(top_pain_points=points[:5])
 
     async def analyze_directory(
         self, input_dir: Path, output_dir: Path

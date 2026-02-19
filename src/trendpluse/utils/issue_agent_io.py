@@ -53,6 +53,10 @@ def load_issue_agent_report(
     merged_counts: dict[str, int] = defaultdict(int)
     merged_repos: dict[str, set[str]] = defaultdict(set)
     merged_urls: dict[str, list[str]] = defaultdict(list)
+    merged_aliases: dict[str, set[str]] = defaultdict(set)
+    merged_confidences: dict[str, list[float]] = defaultdict(list)
+    merged_priorities: dict[str, set[str]] = defaultdict(set)
+    merged_reasons: dict[str, list[str]] = defaultdict(list)
     parsed_files = 0
     failed_files = 0
     failed_samples: list[str] = []
@@ -78,15 +82,34 @@ def load_issue_agent_report(
                 merged_repos[topic].add(str(repo))
             for url in item.sample_urls:
                 merged_urls[topic].append(str(url))
+            for alias in item.aliases:
+                merged_aliases[topic].add(str(alias))
+            if item.confidence is not None:
+                merged_confidences[topic].append(float(item.confidence))
+            if item.priority in {"P0", "P1", "P2"}:
+                merged_priorities[topic].add(item.priority)
+            if item.review_reason:
+                merged_reasons[topic].append(item.review_reason)
 
     merged: list[IssueAgentPainPoint] = []
     for topic, count in merged_counts.items():
+        priority = None
+        if merged_priorities[topic]:
+            priority = sorted(merged_priorities[topic], key=lambda p: int(p[1]))[0]
         merged.append(
             IssueAgentPainPoint(
                 topic=topic,
                 count=count,
                 affected_repos=sorted(merged_repos[topic]),
                 sample_urls=merged_urls[topic][:5],
+                aliases=sorted(merged_aliases[topic]),
+                confidence=max(merged_confidences[topic])
+                if merged_confidences[topic]
+                else None,
+                priority=priority,
+                review_reason=merged_reasons[topic][0]
+                if merged_reasons[topic]
+                else None,
             )
         )
 

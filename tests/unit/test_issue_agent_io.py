@@ -13,7 +13,16 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     (snapshot / "repo1.analysis.json").write_text(
         """{
   "top_pain_points": [
-    {"topic": "安装失败", "count": 2, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
+    {
+      "topic": "安装失败",
+      "count": 2,
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"],
+      "aliases": ["install failure"],
+      "confidence": 0.8,
+      "priority": "P1",
+      "review_reason": "影响首次使用"
+    }
   ]
 }""",
         encoding="utf-8",
@@ -21,7 +30,15 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     (snapshot / "repo2.analysis.json").write_text(
         """{
   "top_pain_points": [
-    {"topic": "安装失败", "count": 1, "affected_repos": ["c/d"], "sample_urls": ["u2"]}
+    {
+      "topic": "安装失败",
+      "count": 1,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u2"],
+      "aliases": ["安装报错"],
+      "confidence": 0.92,
+      "priority": "P0"
+    }
   ]
 }""",
         encoding="utf-8",
@@ -32,6 +49,10 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     assert report.top_pain_points[0].topic == "安装失败"
     assert report.top_pain_points[0].count == 3
     assert set(report.top_pain_points[0].affected_repos) == {"a/b", "c/d"}
+    assert set(report.top_pain_points[0].aliases) == {"install failure", "安装报错"}
+    assert report.top_pain_points[0].confidence == 0.92
+    assert report.top_pain_points[0].priority == "P0"
+    assert report.top_pain_points[0].review_reason == "影响首次使用"
     assert report.generated_files == 2
     assert report.parsed_files == 2
     assert report.failed_files == 0

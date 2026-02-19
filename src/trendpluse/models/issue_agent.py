@@ -10,6 +10,22 @@ class IssueAgentPainPoint(BaseModel):
     count: int = Field(description="提及次数", ge=1)
     affected_repos: list[str] = Field(description="受影响仓库")
     sample_urls: list[str] = Field(description="示例 Issue 链接")
+    aliases: list[str] = Field(default_factory=list, description="主题别名")
+    confidence: float | None = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="审稿置信度",
+    )
+    priority: str | None = Field(
+        default=None,
+        pattern=r"^P[0-2]$",
+        description="优先级标签（P0/P1/P2）",
+    )
+    review_reason: str | None = Field(
+        default=None,
+        description="审稿保留/过滤理由",
+    )
 
 
 class IssueAgentReport(BaseModel):
