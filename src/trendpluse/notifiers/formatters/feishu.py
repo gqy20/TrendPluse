@@ -557,6 +557,8 @@ class FeishuFormatter:
             f"• 生成文件: {report.generated_files}\n",
             f"• 解析文件: {report.parsed_files}\n",
             f"• 失败文件: {report.failed_files}\n\n",
+            f"• 质量等级: {report.quality_status}\n",
+            f"• 质量分: {report.quality_score:.3f}\n\n",
         ]
 
         if not report.top_pain_points:

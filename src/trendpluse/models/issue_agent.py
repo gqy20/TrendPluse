@@ -40,3 +40,8 @@ class IssueAgentReport(BaseModel):
         default_factory=list,
         description="失败文件示例（最多 5 个）",
     )
+    quality_score: float = Field(default=0.0, ge=0.0, le=1.0, description="质量分")
+    quality_status: str = Field(
+        default="poor",
+        description="质量等级：good/warning/poor/no_data",
+    )

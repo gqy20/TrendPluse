@@ -15,6 +15,34 @@ from trendpluse.models.issue_agent import IssueAgentPainPoint, IssueAgentReport
 logger = logging.getLogger(__name__)
 
 
+def _sort_key(pain_point: IssueAgentPainPoint) -> tuple[int, float, int]:
+    priority_rank = {"P0": 0, "P1": 1, "P2": 2}
+    rank = priority_rank.get(pain_point.priority or "", 3)
+    confidence = pain_point.confidence if pain_point.confidence is not None else -1.0
+    return (rank, -confidence, -pain_point.count)
+
+
+def _compute_quality_metrics(
+    *,
+    expected_files: int,
+    generated_files: int,
+    parsed_files: int,
+    failed_files: int,
+) -> tuple[float, str]:
+    if expected_files == 0 and generated_files == 0:
+        return 1.0, "no_data"
+
+    coverage = generated_files / expected_files if expected_files > 0 else 0.0
+    parse_rate = parsed_files / generated_files if generated_files > 0 else 0.0
+    score = round(min(1.0, max(0.0, 0.7 * coverage + 0.3 * parse_rate)), 3)
+
+    if failed_files == 0 and coverage >= 0.95 and parse_rate >= 0.95:
+        return score, "good"
+    if coverage >= 0.8 and parse_rate >= 0.8:
+        return score, "warning"
+    return score, "poor"
+
+
 def load_issue_agent_report(
     base_dir: str | PathLike[str] | object,
     snapshot_date: str,
@@ -35,11 +63,19 @@ def load_issue_agent_report(
         missing_samples = [
             f"{path.stem}.analysis.json (missing)" for path in input_files[:5]
         ]
+        quality_score, quality_status = _compute_quality_metrics(
+            expected_files=expected_files,
+            generated_files=0,
+            parsed_files=0,
+            failed_files=expected_files,
+        )
         return IssueAgentReport(
             expected_files=expected_files,
             generated_files=0,
             failed_files=expected_files,
             failed_samples=missing_samples,
+            quality_score=quality_score,
+            quality_status=quality_status,
         )
 
     files = sorted(analysis_dir.glob("*.analysis.json"))
@@ -113,7 +149,7 @@ def load_issue_agent_report(
             )
         )
 
-    merged.sort(key=lambda p: p.count, reverse=True)
+    merged.sort(key=_sort_key)
     if failed_files > 0:
         logger.warning(
             "Issue Agent 分析文件解析失败: failed=%d, samples=%s",
@@ -123,6 +159,12 @@ def load_issue_agent_report(
 
     all_failed_samples = (failed_samples + missing_files)[:5]
     total_failed_files = failed_files + len(missing_files)
+    quality_score, quality_status = _compute_quality_metrics(
+        expected_files=expected_files,
+        generated_files=generated_files,
+        parsed_files=parsed_files,
+        failed_files=total_failed_files,
+    )
     return IssueAgentReport(
         top_pain_points=merged[:5],
         expected_files=expected_files,
@@ -130,4 +172,6 @@ def load_issue_agent_report(
         parsed_files=parsed_files,
         failed_files=total_failed_files,
         failed_samples=all_failed_samples,
+        quality_score=quality_score,
+        quality_status=quality_status,
     )

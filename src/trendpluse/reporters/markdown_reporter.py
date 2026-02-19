@@ -168,6 +168,10 @@ class MarkdownReporter:
             f"{report.expected_files}，生成文件: {report.generated_files}，"
             f"解析成功: {report.parsed_files}，失败文件: {report.failed_files}\n\n"
         )
+        lines.append(
+            "质量等级: "
+            f"`{report.quality_status}`，质量分: `{report.quality_score:.3f}`\n\n"
+        )
 
         if not report.top_pain_points:
             lines.append("暂无可用的 Issue 洞察。\n")

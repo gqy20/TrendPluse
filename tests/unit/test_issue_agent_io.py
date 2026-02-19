@@ -124,3 +124,75 @@ def test_load_issue_agent_report_marks_missing_analysis_outputs(tmp_path: Path) 
     assert report.parsed_files == 1
     assert report.failed_files == 1
     assert "repo2.analysis.json (missing)" in report.failed_samples
+
+
+def test_load_issue_agent_report_sorts_by_priority_then_confidence(
+    tmp_path: Path,
+) -> None:
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-07" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "repo1.analysis.json").write_text(
+        """{
+  "top_pain_points": [
+    {
+      "topic": "高频低优先级",
+      "count": 20,
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"],
+      "priority": "P2",
+      "confidence": 0.99
+    },
+    {
+      "topic": "低频高优先级",
+      "count": 3,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u2"],
+      "priority": "P0",
+      "confidence": 0.70
+    },
+    {
+      "topic": "中优先级高置信度",
+      "count": 5,
+      "affected_repos": ["e/f"],
+      "sample_urls": ["u3"],
+      "priority": "P1",
+      "confidence": 0.95
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-07")
+    topics = [item.topic for item in report.top_pain_points]
+    assert topics[:3] == ["低频高优先级", "中优先级高置信度", "高频低优先级"]
+
+
+def test_load_issue_agent_report_has_quality_gate_metrics(tmp_path: Path) -> None:
+    base_dir = tmp_path / "issues"
+    snapshot_dir = base_dir / "2026-02-08"
+    analysis_dir = snapshot_dir / "analysis"
+    analysis_dir.mkdir(parents=True, exist_ok=True)
+
+    (snapshot_dir / "repo1.jsonl").write_text(
+        '{"repo":"a/b","issue_id":1}\n',
+        encoding="utf-8",
+    )
+    (snapshot_dir / "repo2.jsonl").write_text(
+        '{"repo":"c/d","issue_id":2}\n',
+        encoding="utf-8",
+    )
+    (analysis_dir / "repo1.analysis.json").write_text(
+        """{
+  "top_pain_points": [
+    {"topic": "安装失败", "count": 1, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-08")
+    assert report.quality_status == "poor"
+    assert 0 <= report.quality_score < 0.8
