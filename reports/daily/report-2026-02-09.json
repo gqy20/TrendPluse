@@ -155,34 +155,16 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_pr_signals": 20,
-    "total_commit_signals": 10,
-    "total_release_signals": 2,
-    "aggregated_trends": 6,
-    "top_repos_by_signals": [
-      "agno-agi/agno",
-      "langchain-ai/langchain",
-      "google-gemini/gemini-cli",
-      "langchain-ai/deepagents",
-      "TabbyML/tabby",
-      "danielmiessler/Fabric",
-      "zed-industries/zed",
-      "agentscope-ai/agentscope",
-      "anthropics/claude-code-action",
-      "bytedance/deer-flow"
-    ],
-    "impact_distribution": {
-      "critical_5": 3,
-      "high_4": 4,
-      "medium_3": 10,
-      "low_2": 13,
-      "total_signals": 32
-    },
+    "total_signals": 32,
+    "pr_count": 20,
+    "commit_count": 10,
+    "release_count": 2,
+    "unique_repos": 16,
     "total_prs_analyzed": 20,
     "total_commits_analyzed": 230,
     "total_releases": 4,
-    "high_impact_signals": 5,
     "total_releases_analyzed": 4,
+    "high_impact_signals": 5,
     "total_breaking_changes": 0
   },
   "activity": {

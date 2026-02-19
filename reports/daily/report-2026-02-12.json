@@ -111,13 +111,12 @@
     "pr_count": 11,
     "commit_count": 0,
     "release_count": 5,
-    "analyzed_trends": 4,
-    "top_impact_score": 5,
+    "unique_repos": 10,
     "total_prs_analyzed": 11,
     "total_commits_analyzed": 330,
     "total_releases": 17,
-    "high_impact_signals": 3,
     "total_releases_analyzed": 17,
+    "high_impact_signals": 3,
     "total_breaking_changes": 0
   },
   "activity": {

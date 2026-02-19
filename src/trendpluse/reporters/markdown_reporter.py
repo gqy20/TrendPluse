@@ -10,6 +10,7 @@ from trendpluse.models.signal import (
     ActivityData,
     CoreTrend,  # noqa: F401 (used in WeeklyReport.core_trends type annotation)
     DailyReport,
+    ReportStats,
     ReleasesData,
     ReleaseSummary,
     Signal,
@@ -260,7 +261,7 @@ class MarkdownReporter:
 
         return "".join(lines)
 
-    def _render_stats(self, stats: dict) -> str:
+    def _render_stats(self, stats: ReportStats | dict) -> str:
         """渲染统计信息
 
         Args:
@@ -270,8 +271,26 @@ class MarkdownReporter:
             Markdown 格式的统计信息
         """
         lines = ["\n---\n", "\n## 📊 统计信息\n\n"]
+        ordered_keys = [
+            "total_signals",
+            "pr_count",
+            "commit_count",
+            "release_count",
+            "unique_repos",
+            "high_impact_signals",
+            "total_prs_analyzed",
+            "total_commits_analyzed",
+            "total_releases",
+            "total_releases_analyzed",
+            "total_breaking_changes",
+        ]
 
-        for key, value in stats.items():
+        stats_data = stats.model_dump() if isinstance(stats, ReportStats) else stats
+
+        for key in ordered_keys:
+            if key not in stats_data:
+                continue
+            value = stats_data[key]
             label = self._format_stat_label(key)
             lines.append(f"- **{label}**: {value}\n")
 
@@ -326,6 +345,11 @@ class MarkdownReporter:
             格式化后的标签
         """
         labels = {
+            "total_signals": "总信号数",
+            "pr_count": "PR 信号数",
+            "commit_count": "Commit 信号数",
+            "release_count": "Release 信号数",
+            "unique_repos": "涉及仓库数",
             "total_prs_analyzed": "分析 PR 数",
             "total_releases": "Release 数",
             "high_impact_signals": "高影响信号数",

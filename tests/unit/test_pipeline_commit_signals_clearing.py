@@ -201,3 +201,152 @@ class TestCommitSignalsClearing:
         )
         # 验证工程信号仍然存在（没有被错误清空）
         assert len(report.engineering_signals) > 0, "engineering_signals 不应该为空"
+
+    # 注意：patch 装饰器从下往上应用，参数从上往下对应
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_release_signals_should_be_preserved(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_fetcher,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+    ):
+        """测试：聚合后 release_signals 不应被清空。"""
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["test/repo"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
+        mock_settings_instance.feishu_webhook_url = ""
+        mock_settings_instance.feishu_at_mobiles_list = []
+        mock_settings.return_value = mock_settings_instance
+
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_collector.return_value = mock_collector_instance
+
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = [
+            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+        ]
+        mock_filter.return_value = mock_filter_instance
+
+        mock_fetcher_instance = Mock()
+        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
+            {"number": 1, "title": "Test PR", "repo_name": "test/repo"}
+        ]
+        mock_fetcher.return_value = mock_fetcher_instance
+
+        mock_activity_collector_instance = Mock()
+        mock_activity_data = ActivityData(
+            total_commits=1,
+            active_repos_count=1,
+            top_repos=[],
+        )
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
+            mock_activity_data,
+            [],
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_release_collector_instance = Mock()
+        mock_releases_data = ReleasesData(
+            total_count=1,
+            unique_repos_count=1,
+            releases=[],
+        )
+        detailed_releases = [
+            {
+                "repo": "test/repo",
+                "tag_name": "v1.0.0",
+                "name": "v1.0.0",
+                "html_url": "https://github.com/test/repo/releases/tag/v1.0.0",
+                "version_info": {"major": 1, "minor": 0, "patch": 0},
+            }
+        ]
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            detailed_releases,
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        release_signal = Signal(
+            id="release-1",
+            title="test/repo 发布 v1.0.0",
+            type="release",
+            impact_score=4,
+            category="engineering",
+            why_it_matters="重要版本发布",
+            related_repos=["test/repo"],
+            sources=["https://github.com/test/repo/releases/tag/v1.0.0"],
+        )
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_releases.return_value = [release_signal]
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        mock_pr_signal = Signal(
+            id="pr-1",
+            title="PR Signal",
+            type="capability",
+            impact_score=5,
+            category="engineering",
+            why_it_matters="Test PR signal",
+            related_repos=["test/repo"],
+            sources=["https://github.com/test/repo/pull/1"],
+        )
+        mock_analyzer_instance = Mock()
+        mock_analyzer_instance.analyze_prs.return_value = [mock_pr_signal]
+
+        mock_report_obj = Mock()
+        mock_report_obj.date = "2026-01-12"
+        mock_report_obj.engineering_signals = [mock_pr_signal]
+        mock_report_obj.research_signals = []
+        mock_report_obj.commit_signals = []
+        mock_report_obj.release_signals = [release_signal]
+        mock_report_obj.activity = {}
+        mock_report_obj.stats = {"total_prs_analyzed": 1}
+        mock_report_obj.model_dump_json = Mock(return_value='{"date": "2026-01-12"}')
+        mock_analyzer_instance.aggregate_and_generate_report.return_value = (
+            mock_report_obj
+        )
+        mock_analyzer.return_value = mock_analyzer_instance
+
+        mock_reporter_instance = Mock()
+        mock_reporter.return_value = mock_reporter_instance
+
+        pipeline = TrendPulsePipeline()
+        report = pipeline.run_daily(date=datetime(2026, 1, 12))
+
+        assert report.commit_signals == []
+        assert len(report.release_signals) == 1
+        assert report.release_signals[0].id == "release-1"

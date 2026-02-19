@@ -255,10 +255,17 @@
   ],
   "release_signals": [],
   "stats": {
+    "total_signals": 8,
+    "pr_count": 0,
+    "commit_count": 8,
+    "release_count": 0,
+    "unique_repos": 17,
     "total_prs_analyzed": 0,
-    "high_impact_signals": 6,
     "total_commits_analyzed": 268,
-    "total_releases": 13
+    "total_releases": 13,
+    "total_releases_analyzed": 13,
+    "high_impact_signals": 6,
+    "total_breaking_changes": 0
   },
   "activity": {
     "total_commits": 268,

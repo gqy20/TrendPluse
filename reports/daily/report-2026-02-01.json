@@ -159,34 +159,17 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_signals_analyzed": 34,
-    "pr_signals": 20,
-    "commit_signals": 10,
-    "release_signals": 4,
-    "engineering_signals_generated": 6,
-    "research_signals_generated": 0,
-    "trending_repos": [
-      "openai/codex",
-      "anthropics/claude-agent-sdk-typescript",
-      "anthropics/claude-agent-sdk-python",
-      "danielmiessler/fabric",
-      "anomalyco/opencode"
-    ],
-    "key_themes": [
-      "技能系统标准化",
-      "长上下文与推理",
-      "DevOps AI 集成",
-      "可观测性与治理",
-      "供应链安全"
-    ],
+    "total_signals": 20,
+    "pr_count": 20,
+    "commit_count": 0,
+    "release_count": 0,
+    "unique_repos": 14,
     "total_prs_analyzed": 20,
     "total_commits_analyzed": 90,
     "total_releases": 8,
-    "high_impact_signals": 5,
     "total_releases_analyzed": 8,
-    "total_breaking_changes": 2,
-    "total_issues": 1649,
-    "total_issues_analyzed": 1649
+    "high_impact_signals": 5,
+    "total_breaking_changes": 2
   },
   "activity": {
     "total_commits": 90,

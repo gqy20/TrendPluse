@@ -141,15 +141,15 @@
   "release_signals": [],
   "stats": {
     "total_signals": 34,
-    "pr_signals": 20,
-    "commit_signals": 10,
-    "release_signals": 4,
-    "aggregated_trends": 5,
+    "pr_count": 20,
+    "commit_count": 0,
+    "release_count": 0,
+    "unique_repos": 17,
     "total_prs_analyzed": 20,
     "total_commits_analyzed": 385,
     "total_releases": 9,
-    "high_impact_signals": 5,
     "total_releases_analyzed": 9,
+    "high_impact_signals": 5,
     "total_breaking_changes": 2
   },
   "activity": {

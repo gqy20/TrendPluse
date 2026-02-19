@@ -169,17 +169,16 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_pr_signals": 19,
-    "total_commit_signals": 10,
-    "total_release_signals": 6,
-    "total_trends_identified": 8,
-    "high_impact_signals": 6,
-    "safety_related_signals": 3,
-    "performance_related_signals": 4,
+    "total_signals": 35,
+    "pr_count": 19,
+    "commit_count": 10,
+    "release_count": 6,
+    "unique_repos": 18,
     "total_prs_analyzed": 19,
     "total_commits_analyzed": 258,
     "total_releases": 23,
     "total_releases_analyzed": 23,
+    "high_impact_signals": 6,
     "total_breaking_changes": 1
   },
   "activity": {

@@ -10,7 +10,7 @@ from typing import cast
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
-from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.models.signal import DailyReport, ReportStats, Signal
 
 logger = get_logger(__name__)
 
@@ -316,7 +316,6 @@ PR 描述: {pr_details.get("body", "")}
 2. summary_brief: 当日总览（2-3 句话）
 3. engineering_signals: 聚合后的高层次工程趋势列表
 4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
-5. stats: 统计信息字典
 
 **以下字段由代码自动填充，无需返回**：
 - activity: 仓库活跃度数据（代码采集）
@@ -347,8 +346,7 @@ PR 描述: {pr_details.get("body", "")}
         report.date = date
 
         # 确保统计数据正确
-        if not report.stats:
-            report.stats = {}
+        report.stats = ReportStats()
         report.stats["total_prs_analyzed"] = len(pr_signals)
         report.stats["total_commits_analyzed"] = len(commit_signals)
         report.stats["total_releases"] = len(release_signals)
@@ -414,7 +412,6 @@ PR 描述: {pr_details.get("body", "")}
 2. summary_brief: 当日总览（2-3 句话）
 3. engineering_signals: 聚合后的高层次工程趋势列表
 4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
-5. stats: 统计信息字典
 
 **以下字段由代码自动填充，无需返回**：
 - activity: 仓库活跃度数据（代码采集）
@@ -452,8 +449,7 @@ PR 描述: {pr_details.get("body", "")}
         report = await self._run_with_llm_retry_async(_call)
 
         report.date = date
-        if not report.stats:
-            report.stats = {}
+        report.stats = ReportStats()
         report.stats["total_prs_analyzed"] = len(pr_signals)
         report.stats["total_commits_analyzed"] = len(commit_signals)
         report.stats["total_releases"] = len(release_signals)
@@ -503,7 +499,6 @@ PR 描述: {pr_details.get("body", "")}
 - summary_brief: 当日总览（2-3 句话）
 - engineering_signals: 工程信号列表
 - research_signals: 研究信号列表（目前可为空）
-- stats: 统计信息
 
 **无需返回以下字段**（由代码自动填充）：
 - activity, releases, breaking_changes, monitored_repos
@@ -523,8 +518,7 @@ PR 描述: {pr_details.get("body", "")}
         report.date = date
 
         # 确保统计数据正确
-        if not report.stats:
-            report.stats = {}
+        report.stats = ReportStats()
         report.stats["total_prs_analyzed"] = len(signals)
         report.stats["high_impact_signals"] = high_impact_count
 
@@ -556,7 +550,6 @@ PR 描述: {pr_details.get("body", "")}
 - summary_brief: 当日总览（2-3 句话）
 - engineering_signals: 工程信号列表
 - research_signals: 研究信号列表（目前可为空）
-- stats: 统计信息
 
 **无需返回以下字段**（由代码自动填充）：
 - activity, releases, breaking_changes, monitored_repos
@@ -584,8 +577,7 @@ PR 描述: {pr_details.get("body", "")}
         report = await self._run_with_llm_retry_async(_call)
 
         report.date = date
-        if not report.stats:
-            report.stats = {}
+        report.stats = ReportStats()
         report.stats["total_prs_analyzed"] = len(signals)
         report.stats["high_impact_signals"] = high_impact_count
 

@@ -155,16 +155,16 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
+    "total_signals": 32,
     "pr_count": 20,
     "commit_count": 8,
     "release_count": 4,
-    "total_signals": 32,
-    "active_repos": 10,
+    "unique_repos": 13,
     "total_prs_analyzed": 20,
     "total_commits_analyzed": 82,
     "total_releases": 6,
-    "high_impact_signals": 3,
     "total_releases_analyzed": 6,
+    "high_impact_signals": 3,
     "total_breaking_changes": 1
   },
   "activity": {

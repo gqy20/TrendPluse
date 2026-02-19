@@ -167,24 +167,16 @@
   "commit_signals": [],
   "release_signals": [],
   "stats": {
-    "total_pr_signals": 4,
-    "total_commit_signals": 7,
-    "total_release_signals": 0,
-    "total_signals_analyzed": 11,
-    "high_impact_signals": 4,
-    "engineering_signals_count": 8,
-    "research_signals_count": 0,
-    "top_repos_mentioned": [
-      "OpenHands/OpenHands",
-      "anthropics/claude-agent-sdk-python",
-      "cline/cline",
-      "openai/codex",
-      "run-llama/llama_index"
-    ],
+    "total_signals": 11,
+    "pr_count": 4,
+    "commit_count": 7,
+    "release_count": 0,
+    "unique_repos": 18,
     "total_prs_analyzed": 4,
     "total_commits_analyzed": 389,
     "total_releases": 17,
     "total_releases_analyzed": 17,
+    "high_impact_signals": 4,
     "total_breaking_changes": 0
   },
   "activity": {

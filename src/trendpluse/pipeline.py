@@ -32,8 +32,10 @@ from trendpluse.logger import get_logger
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
+    ReportStats,
     ReleasesData,
     RepoActivity,
+    Signal,
     WeeklyActivity,
     WeeklyReport,
 )
@@ -192,6 +194,15 @@ class TrendPulsePipeline:
             release_signals = self.release_analyzer.analyze_releases(
                 release_analysis_data
             )
+            if not release_signals:
+                logger.warning(
+                    "ReleaseAnalyzer 未产出信号，启用 deterministic fallback "
+                    "(releases=%d)",
+                    len(detailed_releases),
+                )
+                release_signals = self._build_release_fallback_signals(
+                    detailed_releases
+                )
 
         # 0.7. 检测 breaking changes
         breaking_changes = []
@@ -261,12 +272,13 @@ class TrendPulsePipeline:
             release_signals=release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
+        if not isinstance(report.release_signals, list) or not report.release_signals:
+            report.release_signals = release_signals
 
-        # 5.5. 确保低层次信号被清空（避免重复显示）
+        # 5.5. 确保低层次 commit 信号被清空（避免重复显示）
         # 虽然 TrendAnalyzer 尝试清空这些字段，但 LLM 返回的对象可能不遵守
         # 这里强制清空以确保 Markdown 报告不会重复显示
         report.commit_signals = []
-        report.release_signals = []
 
         # 6. 添加活跃度、release 数据和 breaking changes
         report.activity = activity_data
@@ -277,11 +289,17 @@ class TrendPulsePipeline:
             self.settings.issue_dump_dir,
             date.strftime("%Y-%m-%d"),
         )
-        # 更新统计信息（聚合时已包含部分统计）
-        report.stats["total_commits_analyzed"] = len(detailed_commits)
-        report.stats["total_releases"] = releases_data.total_count
-        report.stats["total_releases_analyzed"] = len(detailed_releases)
-        report.stats["total_breaking_changes"] = len(breaking_changes)
+        # 使用统一口径覆盖统计，避免每日字段漂移
+        self._finalize_report_stats(
+            report=report,
+            pr_signals_count=len(pr_signals),
+            commit_signals_count=len(commit_signals),
+            release_signals_count=len(release_signals),
+            total_commits_analyzed=len(detailed_commits),
+            total_releases=releases_data.total_count,
+            total_releases_analyzed=len(detailed_releases),
+            total_breaking_changes=len(breaking_changes),
+        )
 
         # 7. 保存报告（同时保存 Markdown 和 JSON）
         output_path = self._get_output_path(date)
@@ -410,6 +428,13 @@ class TrendPulsePipeline:
         release_result = results.get("release_signals")
         if isinstance(release_result, list):
             release_signals = release_result
+        if detailed_releases and not release_signals:
+            logger.warning(
+                "ReleaseAnalyzer(异步) 未产出信号，启用 deterministic fallback "
+                "(releases=%d)",
+                len(detailed_releases),
+            )
+            release_signals = self._build_release_fallback_signals(detailed_releases)
 
         breaking_changes: list[Any] = []
         breaking_result = results.get("breaking_changes")
@@ -484,6 +509,8 @@ class TrendPulsePipeline:
             release_signals=release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
+        if not isinstance(report.release_signals, list) or not report.release_signals:
+            report.release_signals = release_signals
         logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
 
         report.commit_signals = []
@@ -495,10 +522,16 @@ class TrendPulsePipeline:
             self.settings.issue_dump_dir,
             date.strftime("%Y-%m-%d"),
         )
-        report.stats["total_commits_analyzed"] = len(detailed_commits)
-        report.stats["total_releases"] = releases_data.total_count
-        report.stats["total_releases_analyzed"] = len(detailed_releases)
-        report.stats["total_breaking_changes"] = len(breaking_changes)
+        self._finalize_report_stats(
+            report=report,
+            pr_signals_count=len(pr_signals),
+            commit_signals_count=len(commit_signals),
+            release_signals_count=len(release_signals),
+            total_commits_analyzed=len(detailed_commits),
+            total_releases=releases_data.total_count,
+            total_releases_analyzed=len(detailed_releases),
+            total_breaking_changes=len(breaking_changes),
+        )
 
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
@@ -596,14 +629,6 @@ class TrendPulsePipeline:
             engineering_signals=engineering_signals,
             research_signals=research_signals,
             commit_signals=[],  # 清空，避免与工程/研究信号重复显示
-            stats={
-                "total_prs_analyzed": 0,
-                "high_impact_signals": high_impact_count,
-                "total_commits_analyzed": activity_data.total_commits
-                if activity_data
-                else 0,
-                "total_releases": releases_data.total_count if releases_data else 0,
-            },
         )
 
         # 添加活跃度和 release 数据（如果有）
@@ -617,6 +642,17 @@ class TrendPulsePipeline:
         report.issue_insights = load_issue_agent_report(
             self.settings.issue_dump_dir,
             date.strftime("%Y-%m-%d"),
+        )
+        self._finalize_report_stats(
+            report=report,
+            pr_signals_count=0,
+            commit_signals_count=commit_count,
+            release_signals_count=release_count,
+            total_commits_analyzed=activity_data.total_commits if activity_data else 0,
+            total_releases=releases_data.total_count if releases_data else 0,
+            total_releases_analyzed=releases_data.total_count if releases_data else 0,
+            total_breaking_changes=0,
+            override_high_impact=high_impact_count,
         )
 
         return report
@@ -690,6 +726,119 @@ class TrendPulsePipeline:
         json_data = report.model_dump_json(indent=2, ensure_ascii=False)
 
         Path(json_path).write_text(json_data, encoding="utf-8")
+
+    def _build_release_fallback_signals(
+        self, detailed_releases: list[dict[str, Any]]
+    ) -> list[Signal]:
+        """构建 release 信号兜底结果
+
+        当 LLM 解析失败或返回空列表时，使用确定性规则产出最基础的 release 信号，
+        避免“有 release 数据但无 release 信号”的数据断层。
+        """
+        signals: list[Signal] = []
+        for idx, release in enumerate(detailed_releases):
+            repo = str(release.get("repo", "")).strip()
+            tag_name = str(
+                release.get("tag_name") or release.get("name") or f"unknown-{idx + 1}"
+            ).strip()
+            source_url = str(release.get("html_url", "")).strip()
+            version_info = release.get("version_info") or {}
+            major = int(version_info.get("major", 0)) if version_info else 0
+            is_prerelease = bool(version_info.get("is_prerelease", False))
+
+            impact_score = 4 if major >= 1 and not is_prerelease else 3
+            title = f"{repo} 发布 {tag_name}" if repo else f"版本发布 {tag_name}"
+            why_it_matters = (
+                f"{repo} 发布新版本 {tag_name}，建议评估变更影响与兼容性。"
+                if repo
+                else f"检测到新版本 {tag_name}，建议评估变更影响与兼容性。"
+            )
+
+            signals.append(
+                Signal(
+                    id=f"release-fallback-{idx}",
+                    title=title,
+                    type="release",
+                    category="engineering",
+                    impact_score=impact_score,
+                    why_it_matters=why_it_matters,
+                    sources=[source_url] if source_url else [],
+                    related_repos=[repo] if repo else [],
+                )
+            )
+        return signals
+
+    def _finalize_report_stats(
+        self,
+        report: DailyReport,
+        *,
+        pr_signals_count: int,
+        commit_signals_count: int,
+        release_signals_count: int,
+        total_commits_analyzed: int,
+        total_releases: int,
+        total_releases_analyzed: int,
+        total_breaking_changes: int,
+        override_high_impact: int | None = None,
+    ) -> None:
+        """统一生成日报统计字段，保证跨天口径一致。"""
+        engineering_signals = (
+            report.engineering_signals
+            if isinstance(report.engineering_signals, list)
+            else []
+        )
+        research_signals = (
+            report.research_signals if isinstance(report.research_signals, list) else []
+        )
+        commit_signals = (
+            report.commit_signals if isinstance(report.commit_signals, list) else []
+        )
+        release_signals = (
+            report.release_signals if isinstance(report.release_signals, list) else []
+        )
+
+        all_signals = (
+            engineering_signals + research_signals + commit_signals + release_signals
+        )
+        unique_repos: set[str] = set()
+        for signal in all_signals:
+            related_repos = getattr(signal, "related_repos", [])
+            if not isinstance(related_repos, list):
+                continue
+            for repo in related_repos:
+                if isinstance(repo, str) and repo.strip():
+                    unique_repos.add(repo.strip().lower())
+        if report.releases:
+            for release in report.releases.releases:
+                if release.repo:
+                    unique_repos.add(release.repo.strip().lower())
+
+        high_impact_count = (
+            override_high_impact
+            if override_high_impact is not None
+            else sum(
+                1
+                for signal in all_signals
+                if isinstance(getattr(signal, "impact_score", 0), int)
+                and getattr(signal, "impact_score", 0) >= 4
+            )
+        )
+
+        report.stats = ReportStats(
+            total_signals=pr_signals_count
+            + commit_signals_count
+            + release_signals_count,
+            pr_count=pr_signals_count,
+            commit_count=commit_signals_count,
+            release_count=release_signals_count,
+            unique_repos=len(unique_repos),
+            total_prs_analyzed=pr_signals_count,
+            total_commits_analyzed=total_commits_analyzed,
+            total_releases=total_releases,
+            total_releases_analyzed=total_releases_analyzed,
+            high_impact_signals=high_impact_count,
+            total_breaking_changes=total_breaking_changes,
+        )
 
     def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
         """运行周报生成流程

@@ -161,6 +161,42 @@ class ReleasesData(BaseModel):
     releases: list[ReleaseInfo] = Field(description="版本发布列表")
 
 
+class ReportStats(BaseModel):
+    """日报统计数据"""
+
+    total_signals: int = Field(default=0, ge=0, description="总信号数")
+    pr_count: int = Field(default=0, ge=0, description="PR 信号数")
+    commit_count: int = Field(default=0, ge=0, description="Commit 信号数")
+    release_count: int = Field(default=0, ge=0, description="Release 信号数")
+    unique_repos: int = Field(default=0, ge=0, description="涉及仓库数")
+    total_prs_analyzed: int = Field(default=0, ge=0, description="分析 PR 数")
+    total_releases: int = Field(default=0, ge=0, description="Release 数")
+    high_impact_signals: int = Field(default=0, ge=0, description="高影响信号数")
+    total_commits_analyzed: int = Field(default=0, ge=0, description="分析 Commit 数")
+    total_releases_analyzed: int = Field(default=0, ge=0, description="分析 Release 数")
+    total_breaking_changes: int = Field(default=0, ge=0, description="Breaking 数")
+
+    # 兼容旧调用：stats["key"] / stats.get() / stats.items()
+    def __getitem__(self, key: str) -> int:
+        return getattr(self, key)
+
+    def __setitem__(self, key: str, value: int) -> None:
+        setattr(self, key, value)
+
+    def get(self, key: str, default: int = 0) -> int:
+        value = getattr(self, key, default)
+        return value if isinstance(value, int) else default
+
+    def items(self):
+        return self.model_dump().items()
+
+    def keys(self):
+        return self.model_dump().keys()
+
+    def __contains__(self, key: object) -> bool:
+        return isinstance(key, str) and key in type(self).model_fields
+
+
 class DailyReport(BaseModel):
     """每日分析报告"""
 
@@ -170,14 +206,7 @@ class DailyReport(BaseModel):
     research_signals: list[Signal] = Field(default_factory=list)
     commit_signals: list[Signal] = Field(default_factory=list)
     release_signals: list[Signal] = Field(default_factory=list)
-    stats: dict = Field(
-        default_factory=lambda: {
-            "total_prs_analyzed": 0,
-            "total_releases": 0,
-            "high_impact_signals": 0,
-            "total_commits_analyzed": 0,
-        }
-    )
+    stats: ReportStats = Field(default_factory=ReportStats)
     activity: ActivityData | None = Field(
         default=None,
         description="仓库活跃度数据（可选）",
