@@ -157,3 +157,4 @@ nav:
       - 功能概述: features.md
       - 快速开始: quickstart.md
       - 配置指南: configuration.md
+      - 后续功能开发说明: future-feature-development.md

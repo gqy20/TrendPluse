@@ -17,6 +17,9 @@
 - 🔍 **智能采集**: 使用 GitHub API 实时获取 PR、Issue、Release
 - 🤖 **AI 分析**: 使用 glm-4.7 提取趋势信号和关键洞察
 - 📊 **每日报告**: 自动生成结构化的 Markdown 和 JSON 趋势分析报告
+- 🧠 **Issue 洞察**: 基于 Issue Agent 的三轮分析提取用户痛点，并输出质量分
+- 🧭 **项目发现**: 自动发现候选项目并按质量分层推荐（discovery 报告）
+- 📆 **周报聚合**: 聚合近 7 天日报生成 weekly 报告
 - 🎯 **多维分类**: 工程实践、研究成果、生态动向等分类
 - 🌐 **自动发布**: GitHub Pages 自动展示报告
 - ⚡ **TDD 开发**: 测试驱动开发，代码质量有保障
@@ -29,17 +32,6 @@
 |------|------|------|
 | 🔧 **工程信号** | Claude 工具链、SDK、框架更新 | 新增 API、性能优化、Bug 修复 |
 | 🔬 **研究信号** | 论文、实验、技术探索 | 新模型、评估方法、基准测试 |
-
-### 技术架构
-
-```mermaid
-graph LR
-    A[GitHub API] --> B[事件采集]
-    B --> C[智能筛选]
-    C --> D[AI 分析]
-    D --> E[报告生成]
-    E --> F[GitHub Pages]
-```
 
 ## 快速开始
 
@@ -141,6 +133,12 @@ make test-cov
 make run
 # 或: uv run python scripts/run.py
 
+# 运行周报聚合（仅 GitHub Actions 环境）
+uv run python scripts/run_weekly.py
+
+# 运行项目发现
+uv run python scripts/discover_projects.py --days 30 --min-quality 60 --output-dir reports
+
 # 生成报告索引
 make gen-index
 # 或: uv run python scripts/generate_report_index.py
@@ -167,77 +165,24 @@ make docs-serve
 项目配置了自动化工作流：
 - **CI** - 每次 PR/push 时运行测试和代码检查
 - **每日分析** - 每天 UTC 0:10 自动生成趋势报告（北京时间 8:10）
+- **每周报告** - 定时聚合日报生成周报
+- **项目发现** - 定时发现候选项目并生成 discovery 报告
+- **Issue 仓库分析** - 在 issue/comment 中通过 `@claude` 触发仓库分析
+- **新增仓库请求** - 通过 workflow 自动处理仓库新增请求
 - **文档部署** - 报告更新后自动部署到 GitHub Pages
-- **飞书通知** - 可选的飞书机器人推送
+- **飞书通知** - 可选的飞书机器人推送（日报/周报）
 
 详见 [`.github/workflows/`](./.github/workflows/)
 
-## 项目结构
+## 能力索引
 
-```
-TrendPluse/
-├── .github/
-│   └── workflows/          # GitHub Actions 配置
-│       ├── ci.yml                    # CI workflow
-│       ├── run-daily.yml             # 每日分析
-│       ├── deploy-pages.yml          # Pages 部署
-│       ├── send-feishu.yml           # 飞书通知
-│       └── process_repo_request.yml  # 仓库请求处理
-├── docs/                   # MkDocs 文档源文件
-│   ├── index.md            # 首页
-│   ├── reports/            # 报告目录
-│   │   └── index.md        # 报告索引
-│   └── stylesheets/        # 自定义样式
-├── reports/                # 生成的趋势报告
-│   ├── daily/              # 每日报告
-│   ├── weekly/             # 周报
-│   └── discovery/          # 发现报告
-├── scripts/                # 工具脚本
-│   ├── run.py                       # 主程序入口
-│   ├── generate_report_index.py     # 生成报告索引
-│   ├── sync_repos_to_docs.py        # 同步仓库列表到文档
-│   ├── add_repo.py                  # 添加监控仓库
-│   ├── send_feishu_notification.py  # 发送飞书通知
-│   └── repos_doc_generator.py       # 仓库文档生成器
-├── src/trendpluse/         # 源代码
-│   ├── analyzers/          # AI 分析器
-│   │   ├── base.py               # LLM 分析器基类
-│   │   ├── trend_analyzer.py     # PR 趋势分析
-│   │   ├── commit_analyzer.py    # Commit 分析
-│   │   ├── release_analyzer.py   # Release 分析
-│   │   ├── release_summarizer.py # Release AI 总结
-│   │   ├── breaking_changes_detector.py  # 不兼容变更检测
-│   │   └── signal_deduplicator.py      # 信号去重
-│   ├── collectors/         # 数据采集器
-│   │   ├── github_events.py     # GitHub 事件采集
-│   │   ├── activity.py          # 活跃度采集
-│   │   ├── releases.py          # Release 采集
-│   │   ├── filter.py            # 事件筛选
-│   │   ├── github_api.py        # GitHub API 封装
-│   │   └── parallel.py          # 并行采集框架
-│   ├── models/             # 数据模型
-│   │   └── signal.py            # 信号和报告模型
-│   ├── reporters/          # 报告生成器
-│   │   └── markdown_reporter.py # Markdown 报告生成
-│   ├── notifiers/          # 通知发送
-│   │   ├── base.py              # 通知器基类
-│   │   ├── feishu.py            # 飞书通知
-│   │   └── formatters/
-│   │       └── feishu.py        # 飞书卡片格式化
-│   ├── config.py           # 配置管理
-│   ├── pipeline.py         # 主流程协调器
-│   ├── logger.py           # 日志系统
-│   ├── core.py             # 核心基础函数
-│   └── main.py             # 命令行入口
-├── tests/                  # 测试文件
-│   └── unit/
-├── data/                   # 数据文件
-│   ├── signal_history.json  # 信号历史记录
-│   └── snapshots/           # 数据快照
-├── mkdocs.yml              # MkDocs 配置
-├── pyproject.toml          # 项目配置
-└── README.md               # 本文件
-```
+- 每日分析主入口：`scripts/run.py`
+- 周报生成：`scripts/run_weekly.py`
+- 项目发现：`scripts/discover_projects.py`
+- Issue Agent 分析：`scripts/analyze_issues_with_agent.py`
+- 报告索引生成：`scripts/generate_report_index.py`
+- 仓库同步文档：`scripts/sync_repos_to_docs.py`
+- 统计归一化工具：`scripts/normalize_daily_report_stats.py`
 
 ## 报告展示
 
