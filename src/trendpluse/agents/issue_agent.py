@@ -102,11 +102,15 @@ class IssueAgentRunner:
 
     def _build_round1_prompt(self, input_path: Path) -> str:
         return (
-            "[ROUND1] 你是 Issue 质量分析器。读取 JSONL 并做高召回抽取。\n\n"
+            "[ROUND1] 你是用户痛点候选抽取器。读取 JSONL 并做高召回抽取。\n\n"
             f"文件路径: {input_path}\n\n"
             "输出 JSON 字段：candidate_pain_points（数组），每项至少包含\n"
             "topic/count/affected_repos/sample_urls。\n"
-            "要求：保留可能的候选痛点，宁可多，不要解释文字。"
+            "痛点定义：用户在真实使用中反复遇到的问题，通常会导致主流程失败、"
+            "体验显著下降或明显成本损失。\n"
+            "排除项：单条安全公告、纯功能请求、路线图讨论、无用户影响证据的维护事项。\n"
+            "硬约束：count 必须等于该主题去重后的 issue 数量，不允许估算。\n"
+            "仅输出 JSON，不要解释文字。"
         )
 
     def _build_round2_prompt(
@@ -114,11 +118,16 @@ class IssueAgentRunner:
     ) -> str:
         payload = json.dumps(round1_data, ensure_ascii=False)
         return (
-            "[ROUND2] 你是 Issue 主题归一化分析器。请合并语义相近主题。\n\n"
+            "[ROUND2] 你是用户痛点归一化分析器。请按同一根因合并主题。\n\n"
             f"文件路径: {input_path}\n"
             f"ROUND1结果: {payload}\n\n"
             "输出 JSON 字段：merged_pain_points（数组），每项包含\n"
-            "topic/count/affected_repos/sample_urls，可选 aliases。"
+            "topic/count/affected_repos/sample_urls，可选 aliases。\n"
+            "合并规则：只有在“用户遇到的是同一类问题根因”时才合并；"
+            "不要因关键词相似就合并。\n"
+            "禁止把“Security vulnerabilities”等泛化大类作为最终主题，"
+            "必须落到用户可感知的具体问题场景。\n"
+            "仅输出 JSON，不要解释文字。"
         )
 
     def _build_round3_prompt(
@@ -126,13 +135,24 @@ class IssueAgentRunner:
     ) -> str:
         payload = json.dumps(round2_data, ensure_ascii=False)
         return (
-            "[ROUND3] 你是 Issue 审稿器。请对主题做保留判定和置信度打分。\n\n"
+            "[ROUND3] 你是用户痛点审稿器。请做证据驱动的保留判定。\n\n"
             f"文件路径: {input_path}\n"
             f"ROUND2结果: {payload}\n\n"
             "输出 JSON 字段：reviewed_pain_points（数组），每项包含\n"
             "topic/count/affected_repos/sample_urls/confidence/priority/keep，"
             "可选 review_reason。\n"
-            "priority 仅允许 P0/P1/P2。"
+            "priority 仅允许 P0/P1/P2。\n"
+            "保留规则：keep=true 必须有明确用户影响证据（如阻断、崩溃、"
+            "反复失败、计费异常、关键功能不可用）。\n"
+            "如果仅因“安全关键词”被识别但缺乏用户影响证据，必须 keep=false。\n"
+            "优先级规则：\n"
+            "- P0: 高频 + 主流程阻断 + 有样例链接支撑；\n"
+            "- P1: 影响明显但非阻断；\n"
+            "- P2: 低频或边缘改进项。\n"
+            "若 count < 3 且仅单仓问题，默认不得标记为 P0（除非 review_reason 明确给出"
+            "强用户影响证据）。\n"
+            "review_reason 必须解释“为什么是用户痛点”，而非只强调技术严重性。\n"
+            "仅输出 JSON，不要解释文字。"
         )
 
     def _parse_round_payload(self, text: str, key: str) -> dict[str, Any]:
