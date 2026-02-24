@@ -4,12 +4,12 @@
 
 ## 最新报告
 
-### [2026-02-23](discovery-reports/discovery-2026-02-23.md)
+### [2026-02-24](discovery-reports/discovery-2026-02-24.md)
 
 **发现概览**:<br/>
 - 总发现数: 200<br/>
 - 通过质量评估: 200<br/>
-- 高优先级: 136<br/>
+- 高优先级: 135<br/>
 - 去重移除: 30<br/>
 - 已在监控: 20<br/>
 
@@ -20,6 +20,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
+| 2026-02-24 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-24.md) |
 | 2026-02-23 | 200 | 136 | [查看](discovery-reports/discovery-2026-02-23.md) |
 | 2026-02-22 | 200 | 135 | [查看](discovery-reports/discovery-2026-02-22.md) |
 | 2026-02-21 | 200 | 136 | [查看](discovery-reports/discovery-2026-02-21.md) |
@@ -29,7 +30,6 @@
 | 2026-02-17 | 200 | 140 | [查看](discovery-reports/discovery-2026-02-17.md) |
 | 2026-02-16 | 200 | 138 | [查看](discovery-reports/discovery-2026-02-16.md) |
 | 2026-02-15 | 200 | 140 | [查看](discovery-reports/discovery-2026-02-15.md) |
-| 2026-02-14 | 200 | 140 | [查看](discovery-reports/discovery-2026-02-14.md) |
 
 ## 关于发现功能
 
@@ -74,7 +74,7 @@ uv run python scripts/discover_projects.py \
 
 ### 自动运行
 
-项目发现通过 GitHub Actions 每天 UTC 19:00
-（北京时间次日 03:00）自动运行。
+项目发现通过 GitHub Actions 每周一 UTC 00:10
+(北京时间 08:10) 自动运行。
 
-查看工作流: [discover-projects.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-projects.yml)
+查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)
