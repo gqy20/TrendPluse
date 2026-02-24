@@ -1,0 +1,1253 @@
+{
+  "date": "2026-02-24",
+  "summary_brief": "AI Agent 基础设施向企业级安全与可控性迈进，主要体现在多代理系统的权限隔离（Profile、Worktree）、细粒度安全审查（非写权限变更检测）和人机交互确认（Workflow HITL）。同时，AI Agent 能力边界持续扩展，从本地文件系统操作向浏览器自动化、实时语音交互和批量任务编排演进，跨平台兼容性和成本优化也成为重要关注点。",
+  "engineering_signals": [
+    {
+      "id": "eng-001",
+      "title": "多代理系统安全隔离与权限管控体系成熟",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多个项目同时推出安全隔离机制，包括 Profile 角色权限控制、子代理 Worktree 文件系统隔离、安全审查工作流自动化，标志着多代理系统从原型探索走向企业级安全部署，为大规模代理协作提供了必要的安全沙箱和治理框架。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/15b83765415c6e82d73c18de3a3fd4d977a09b03",
+        "https://github.com/gptme/gptme/issues/1157",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.51",
+        "https://github.com/anthropics/claude-code/pull/28243",
+        "https://github.com/gptme/gptme/pull/1463",
+        "https://github.com/gptme/gptme/pull/1455",
+        "https://github.com/gptme/gptme/pull/1460",
+        "https://github.com/gptme/gptme/pull/1465",
+        "https://github.com/anthropics/claude-code-action/pull/973"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "anthropics/claude-code-action",
+        "gptme/gptme",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "pr-14",
+        "pr-10",
+        "pr-4",
+        "pr-5",
+        "pr-12",
+        "release-1",
+        "commit-3",
+        "pr-18"
+      ]
+    },
+    {
+      "id": "eng-002",
+      "title": "Agent 工作流人机交互确认（HITL）成为共识模式",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Agno 和其他框架同时在工作流级别引入步骤级人工确认机制，允许在关键步骤前暂停并请求用户输入，这解决了自主 Agent 在高风险场景（如生产环境部署、敏感数据操作）中的可控性问题，是实现安全 AI 自动化的关键基础设施。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.41",
+        "https://github.com/agno-agi/agno/commit/f73d0b65f0d50dcde9562853d23ae75aa7ee6527"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "release-2"
+      ]
+    },
+    {
+      "id": "eng-003",
+      "title": "CI/CD 成本优化与测试智能过滤",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "多个项目（gptme、LlamaIndex）同时推出针对成本和效率的优化方案，包括基于路径变更的智能测试过滤（节省 $30+/天 API 成本）、实验性测试隔离、Token Bucket 速率限制，表明 AI 工具在规模化应用中面临的经济性问题已成为工程优化的重点方向。",
+      "sources": [
+        "https://github.com/run-llama/llama_index/commit/65ec78efddec0de3267a510b33108100faa053e4",
+        "https://github.com/gptme/gptme/pull/1454",
+        "https://github.com/gptme/gptme/pull/1458",
+        "https://github.com/gptme/gptme/pull/1462"
+      ],
+      "related_repos": [
+        "run-llama/llama_index",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "pr-19",
+        "commit-8",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "eng-004",
+      "title": "AI 编程工具跨平台兼容性成为标准要求",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenCode 集中修复 Windows 平台路径处理、CRLF 换行符和插件解析问题，加上 AsyncIO 垃圾回收 bug 的修复，表明 AI 编程工具正从 Linux/Mac 优先的开发者工具转向真正的跨平台生产力工具，Windows 企业用户的体验优化成为产品成熟度的标志。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/commit/1af3e9e557a6df4f933a01d0dad2e52e418ebd52",
+        "https://github.com/gptme/gptme/pull/1456"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "commit-9",
+        "pr-17"
+      ]
+    },
+    {
+      "id": "eng-005",
+      "title": "Agent 持久化记忆与状态管理模式确立",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "gptme 采用 Claude Code 的 MEMORY.md 模式实现子代理的跨调用知识累积，配合 Markdown Profile 配置（YAML frontmatter），标志着 AI Agent 从无状态交互向可学习的有状态系统演进，为构建专业化、知识密集型的 Agent 提供了标准化的持久化方案。",
+      "sources": [
+        "https://github.com/gptme/gptme/issues/1157",
+        "https://github.com/gptme/gptme/pull/1455",
+        "https://github.com/gptme/gptme/pull/1464",
+        "https://github.com/gptme/gptme/pull/1466"
+      ],
+      "related_repos": [
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-9",
+        "pr-11",
+        "pr-18"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-001",
+      "title": "AI Agent 操作能力从本地系统向 Web 浏览器扩展",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Google Gemini CLI 引入实验性浏览器 Agent，配合 OpenAI Codex 的网络代理 MITM 支持和实时语音对话模式，标志着 AI Agent 正在突破本地文件系统限制，向通用 Web 自动化和多模态交互演进，这是实现真正通用 AI 代理的关键技术突破。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/9e95b8b3c53d9c70e9845bb3822cab58722b35b9",
+        "https://github.com/openai/codex/commit/8d3d58f992792d62de13f8e3b638ed6626f5fc10",
+        "https://github.com/openai/codex/commit/b6ab2214e32493ea84cdf5a45bbe481a50c0ab9e"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "commit-5",
+        "commit-4"
+      ]
+    },
+    {
+      "id": "res-002",
+      "title": "AI 批量任务编排与大规模自动化管理能力浮现",
+      "type": "workflow",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 引入从 CSV 生成批量子代理任务并导出到 SQLite 的功能，配合 Anthropic SRE Agent 实战教程的发布，展示了 AI Agent 从单点辅助向大规模任务编排和 DevOps 自动化演进的趋势，为 AIOps 的落地提供了技术路径验证。",
+      "sources": [
+        "https://github.com/openai/codex/commit/dcab40123f5e64ba8af962ae27abe6cbcc205344",
+        "https://github.com/anthropics/claude-cookbooks/pull/391",
+        "https://github.com/anthropics/claude-cookbooks/pull/392"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-cookbooks"
+      ],
+      "source_signal_ids": [
+        "commit-7",
+        "pr-2",
+        "pr-1"
+      ]
+    },
+    {
+      "id": "res-003",
+      "title": "AI 文本生成检测与质量控制成为新方向",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "Zed 编辑器新增基于维基百科指南的 AI 写作检测与修正能力（24 种常见模式），配合 Agno 的细粒度指标追踪系统，标志着 AI 工具从单纯的生成能力向生成质量控制、检测和评估体系建设演进，反映了 AI 信任与可解释性研究的工程化落地。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/0912dc9973950593c92e3d40c09dbb637986cb2c",
+        "https://github.com/agno-agi/agno/commit/15108d1daa0885f90bcb4e8a90c887b52111b649"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "res-004",
+      "title": "AI 辅助编码 CI/CD 集成进入生产就绪阶段",
+      "type": "workflow",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code GitHub Action v1.0 正式发布，配合 Slack 插件从临时版本迁移到官方稳定版本，以及 Cline 向多代理平台演进（Responses API、文件式 Agent 配置），标志着 AI 辅助编码从本地开发工具向生产级 CI/CD 基础设施转型，自动化 PR Review 和 CI 修复即将成为标准实践。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.52",
+        "https://github.com/anthropics/claude-plugins-official/pull/454",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.40"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-code",
+        "anthropics/claude-plugins-official",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "pr-3",
+        "release-3"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code GitHub Action v1.0 正式发布",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "标志着 Claude Code 在 CI/CD 自动化领域的成熟，通过统一接口和自动模式检测大幅简化了 AI 辅助编码的集成流程，为自动化 PR Review 和 CI 修复奠定了基础。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.52"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Claude Code 引入远程控制与安全沙箱",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增的 `remote-control` 子命令和严格的安全沙箱机制（HTTP Hooks 域名白名单、环境变量显式授权）显著增强了企业级环境下的可控性与安全性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.51"
+      ],
+      "related_repos": [
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "Agno 引入工作流级人机交互(HITL)",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "在 Step 级别支持暂停确认和用户输入，结合细粒度的 Metrics 系统，使得复杂 Agent 工作流的调试和可控性达到了新的高度。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.41"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Cline 引入 Responses API 与子代理配置",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "通过支持 OpenAI Responses API 和文件式 Agent 配置加载，Cline 正在从单一编码助手向可编排的多代理平台演进，提升了架构的灵活性。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.40"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "OpenAI Python SDK 新增 Phase 接口",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增的 `phase` 接口（v2.24.0）及对 `gpt-realtime-1.5` 的支持（v2.23.0）表明 OpenAI 正在强化其 SDK 对实时交互和复杂推理阶段的管理能力。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.52"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-5",
+      "title": "Fabric 增强企业级网关与国际化支持",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "对 Azure OpenAI Gateway 的 i18n 支持及更严格的超时与大小限制控制，体现了 AI 工具在大型企业落地时对稳定性和规范性的持续优化。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.51"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 36,
+    "pr_count": 20,
+    "commit_count": 10,
+    "release_count": 6,
+    "unique_repos": 19,
+    "total_prs_analyzed": 20,
+    "total_releases": 17,
+    "high_impact_signals": 12,
+    "total_commits_analyzed": 286,
+    "total_releases_analyzed": 17,
+    "total_breaking_changes": 4
+  },
+  "activity": {
+    "total_commits": 286,
+    "active_repos_count": 24,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 42,
+        "top_contributors": [
+          "MrSubidubi",
+          "ConradIrwin",
+          "morgankrey",
+          "danilo-leal",
+          "Veykril"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 38,
+        "top_contributors": [
+          "Hona",
+          "fwang",
+          "adamdotdevin",
+          "opencode-agent[bot]",
+          "noamzbr"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 37,
+        "top_contributors": [
+          "jerop",
+          "scidomino",
+          "Nixxx19",
+          "galz10",
+          "jacob314"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 32,
+        "top_contributors": [
+          "bolinfest",
+          "pakrym-oai",
+          "etraut-openai",
+          "jif-oai",
+          "aibrahim-oai"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 28,
+        "top_contributors": [
+          "KinomotoMio",
+          "saumyatalwani",
+          "akashseth-ifp",
+          "poojanInfocusp",
+          "longway-code"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 18,
+        "top_contributors": [
+          "arafatkatze",
+          "BarreiroT",
+          "abeatrix",
+          "robinnewhouse",
+          "jl-codes"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 16,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 12,
+        "top_contributors": [
+          "Mustafa-Esoofally",
+          "kausmeows",
+          "ysolanky",
+          "Yoo-Joo",
+          "WilliamEspegren"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 8,
+        "top_contributors": [
+          "aivong-openhands",
+          "tofarr",
+          "amanape",
+          "hieptl",
+          "eureka928"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 8,
+        "top_contributors": [
+          "dependabot[bot]",
+          "hinthornw"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 6,
+        "top_contributors": [
+          "actions-user",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 6,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 5,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 5,
+        "top_contributors": [
+          "AtharvaJaiswal005",
+          "AstraBert",
+          "TuanaCelik",
+          "debu-sinha"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 4,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]",
+          "jlec"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 4,
+        "top_contributors": [
+          "dependabot[bot]",
+          "WillemJiang"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 3,
+        "top_contributors": [
+          "ccurme",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 2,
+        "top_contributors": [
+          "PedramNavid"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 2,
+        "top_contributors": [
+          "dicksontsai"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "top_contributors": [
+          "nicoferdi96",
+          "mplachta"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 1,
+        "top_contributors": [
+          "sestinj"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 1,
+        "top_contributors": [
+          "AdemBoukhris457"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 17,
+    "unique_repos_count": 11,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.52",
+        "author": "ashwin-ant",
+        "date": "2026-02-24",
+        "summary": "## What's changed\n\n- VS Code: Fixed extension crash on Windows (\"command 'claude-vscode.editor.openLast' not found\")\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.52",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 VS Code 扩展在 Windows 系统上的崩溃问题",
+            "解决 'claude-vscode.editor.openLast' 命令未找到的错误",
+            "提升扩展在 Windows 平台的稳定性"
+          ],
+          "summary_cn": "Claude Code v2.1.52 是一个紧急修复版本，主要解决了 VS Code 扩展在 Windows 系统上的崩溃问题。该版本修复了因缺少 'claude-vscode.editor.openLast' 命令导致的扩展崩溃错误，显著提升了扩展在 Windows 平台的稳定性和可用性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.51",
+        "author": "ashwin-ant",
+        "date": "2026-02-24",
+        "summary": "## What's changed\n\n- Added `claude remote-control` subcommand for external builds, enabling local environment serving for all users.\n- Updated plugin marketplace default git timeout from 30s to 120s and added `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` to configure.\n- Added support for custom npm registries and specific version pinning when installing plugins from npm sources\n- BashTool now skips login shell (`-l` flag) by default when a shell snapshot is available, improving command execution performance. Previously this required setting `CLAUDE_BASH_NO_LOGIN=true`.\n- Fixed a security issue where `statusLine` and `fileSuggestion` hook commands could execute without workspace trust acceptance in interactive mode.\n- Tool results larger than 50K characters are now persisted to disk (previously 100K). This reduces context window usage and improves conversation longevity.\n- Fixed a security issue where HTTP hooks could interpolate arbitrary environment variables from header values. Env var interpolation now requires an explicit `allowedEnvVars` list in the hook configuration.\n- Fixed a bug where duplicate `control_response` messages (e.g. from WebSocket reconnects) could cause API 400 errors by pushing duplicate assistant messages into the conversation.\n- Added `CLAUDE_CODE_ACCOUNT_UUID`, `CLAUDE_CODE_USER_EMAIL`, and `CLAUDE_CODE_ORGANIZATION_UUID` environment variables for SDK callers to provide account info synchronously, eliminating a race condition where early telemetry events lacked account metadata.\n- Fixed slash command autocomplete crashing when a plugin's SKILL.md description is a YAML array or other non-string type\n- HTTP hooks are now routed through the sandbox network proxy when sandboxing is enabled, enforcing the domain allowlist. HTTP hooks are not supported for SessionStart/Setup events.\n- The `/model` picker now shows human-readable labels (e.g., \"Sonnet 4.5\") instead of raw model IDs for pinned model versions, with an upgrade hint when a newer version is available.\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.51",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 claude remote-control 子命令，支持外部构建和本地环境服务",
+            "修复 2 个安全漏洞：hooks 权限控制不严和 HTTP hooks 环境变量注入",
+            "插件市场优化：支持自定义 npm registry、版本锁定和超时配置（120s）",
+            "BashTool 性能提升：有快照时跳过登录 shell，工具结果持久化阈值降至 50K 字符",
+            "新增 SDK 账户信息环境变量，修复 WebSocket 重复消息导致的 API 400 错误"
+          ],
+          "summary_cn": "Claude Code v2.1.51 版本重点引入了 remote-control 远程控制功能，并修复了 2 个重要安全漏洞（workspace trust 和环境变量注入）。同时优化了插件生态（npm registry、版本锁定、超时配置），提升 BashTool 性能和系统稳定性，新增 SDK 账户信息环境变量以避免竞态条件。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.41",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.52\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.41/\n\n```bash\npip install claude-agent-sdk==0.1.41\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.41",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "将集成的 Claude CLI 升级至 v2.1.52 版本",
+            "内部依赖更新，包含 CLI 工具的最新版本"
+          ],
+          "summary_cn": "这是一个小版本的内部更新版本，主要变更将项目捆绑的 Claude CLI 工具升级到了 v2.1.52 版本。此次更新属于内部依赖维护范畴，未引入新的功能特性或错误修复，建议用户保持 CLI 工具的最新版本以获得更好的兼容性。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.40",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "\n### Bug Fixes\n\n- **Unknown message type handling**: Fixed an issue where unrecognized CLI message types (e.g., `rate_limit_event`) would crash the session by raising `MessageParseError`. Unknown message types are now silently skipped, making the SDK forward-compatible with future CLI message types (#598)\n\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.51\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.40/\n\n```bash\npip install claude-agent-sdk==0.1.40\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.40",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复未知 CLI 消息类型处理问题，避免会话崩溃",
+            "更新捆绑的 Claude CLI 至 2.1.51 版本",
+            "增强 SDK 与未来 CLI 消息类型的向前兼容性"
+          ],
+          "summary_cn": "此次版本主要修复了未知消息类型导致的会话崩溃问题，现在会自动跳过无法识别的 CLI 消息类型（如 rate_limit_event），提升了 SDK 的向前兼容性。同时将捆绑的 Claude CLI 更新至 2.1.51 版本。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.52",
+        "author": "ashwin-ant",
+        "date": "2026-02-24",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.52\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.52\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.52\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.52\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.52\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.52",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "与 Claude Code v2.1.52 保持功能同步",
+            "更新 SDK 至最新对等版本",
+            "确保 TypeScript SDK 与主版本库一致"
+          ],
+          "summary_cn": "这是一个小版本更新（v0.2.52），主要是为了与 Claude Code v2.1.52 保持功能对等。该更新确保 TypeScript SDK 与主版本库的同步，不包含破坏性变更，适合所有用户升级。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.51",
+        "author": "ashwin-ant",
+        "date": "2026-02-24",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.51\n- Fixed SDK crashing with `ReferenceError` when used inside compiled Bun binaries (`bun build --compile`)\n- Fixed unbounded memory growth in long-running SDK sessions caused by message UUID tracking never evicting old entries\n- Fixed local slash command output not being returned to SDK clients\n- Added `task_progress` events for real-time background agent progress reporting with cumulative usage metrics, tool counts, and duration\n- Fixed `session.close()` in the v2 session API killing the subprocess before it could persist session data, which broke `resumeSession()`\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.51\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.51\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.51\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.51\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.51",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Bun 编译模式下的 ReferenceError 崩溃问题",
+            "修复长期运行会话中的内存无限增长问题",
+            "新增 task_progress 事件用于实时后台代理进度报告",
+            "修复本地斜杠命令输出未返回给 SDK 客户端",
+            "修复 session.close() 导致 resumeSession() 失败的问题"
+          ],
+          "summary_cn": "这是一个重要的修复版本，主要解决了三个关键问题：Bun 编译环境下的崩溃、长期运行会话的内存泄漏以及会话持久化功能的缺陷。同时新增了 task_progress 事件，支持实时后台代理进度报告，包含累积使用指标、工具计数和持续时间统计。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.57",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.57",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.57",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "从 v1 升级到 v1.0.57（具体变更内容需查看完整 Changelog）",
+            "版本迭代更新",
+            "详细的变更信息未在 Release Notes 中提供"
+          ],
+          "summary_cn": "claude-code-action 从 v1 更新到 v1.0.57 版本。由于 Release Notes 仅提供了 Changelog 链接而未包含具体变更描述，无法确定详细的功能更新、修复或改进内容。建议查看完整的版本对比链接以获取准确的变更信息。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.56",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "## What's Changed\n* Use wrapper script for label operations in issue triage by @OctavianGuzu in https://github.com/anthropics/claude-code-action/pull/968\n\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.56",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.56",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "在 issue triage 中使用包装脚本来执行标签操作",
+            "优化了标签管理的执行方式"
+          ],
+          "summary_cn": "此版本改进了 issue triage（问题分类）流程，引入了包装脚本来处理标签操作。这是一个内部实现优化，提升了代码的可维护性和执行稳定性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1",
+        "author": "ashwin-ant",
+        "date": "2026-02-24",
+        "summary": "# 🎉 Claude Code GitHub Action v1.0 - Now Generally Available!\r\n\r\nWe're excited to announce the v1.0 release of Claude Code GitHub Action! This major release brings significant improvements in simplicity, flexibility, and power to AI-assisted development workflows.\r\n\r\n## 🚀 What's New in v1.0\r\n\r\n### Simplified Configuration\r\n- **Automatic mode detection** - No more manual `mode` configuration. The action intelligently determines whether to run in interactive or automation mode based on your setup\r\n- **Unified interface** - All prompts now go through a single `prompt` input, and all CLI options through `claude_args`\r\n- **Better SDK alignment** - Closer integration with the Claude Code CLI for a consistent experience\r\n\r\n### More Powerful & Flexible\r\n- Direct access to all Claude Code CLI capabilities through `claude_args`\r\n- Support for custom system prompts, tool configurations, and model selection\r\n- Enhanced compatibility with AWS Bedrock and Google Vertex AI\r\n\r\n## ⚠️ Breaking Changes\r\n\r\nThis release includes breaking changes from v0.x. Key deprecated inputs have been replaced with a cleaner, more intuitive API:\r\n- `mode`, `direct_prompt`, `override_prompt` → unified `prompt` input\r\n- `custom_instructions`, `model`, `allowed_tools`, `mcp_config` → `claude_args` with CLI format\r\n- Other deprecated: `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`\r\n\r\n**📚 Please review our [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) for detailed upgrade instructions and examples.**\r\n\r\n## 💡 New Use Cases & Examples\r\n\r\nExplore the expanded possibilities with v1.0! We've created comprehensive examples showcasing various workflows:\r\n\r\n- **Automated PR Reviews** - Intelligent code review on every pull request\r\n- **CI Failure Fixes** - Automatically diagnose and fix failing tests\r\n- **Issue Triage** - Smart categorization and response to new issues\r\n- **Documentation Generation** - Keep docs in sync with code changes\r\n- **Security Scanning** - Proactive vulnerability detection\r\n- **And many more!**\r\n\r\n**🔧 Check out all examples at [github.com/anthropics/claude-code-action/tree/main/examples](https://github.com/anthropics/claude-code-action/tree/main/examples)**\r\n\r\n## 🏃 Quick Start\r\n\r\n```yaml\r\n# Interactive mode - responds to @claude mentions\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n\r\n# Automation mode - runs immediately with prompt\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    prompt: \"Review this PR for security issues\"\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n    claude_args: |\r\n      --model claude-4-0-sonnet-20250805\r\n      --max-turns 10\r\n```\r\n\r\n## 📖 Resources\r\n\r\n- [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) - Step-by-step upgrade instructions\r\n- [Examples](https://github.com/anthropics/claude-code-action/tree/main/examples) - Ready-to-use workflow templates\r\n- [Documentation](https://github.com/anthropics/claude-code-action#readme) - Complete setup and configuration guide\r\n\r\n## 🙏 Thank You\r\n\r\nThank you to our beta users for your invaluable feedback that shaped this release. We're excited to see what you'll build with Claude Code GitHub Action v1.0!\r\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "统一接口设计：将 mode、direct_prompt、override_prompt 等多个输入简化为单一的 prompt 输入，所有 CLI 选项通过 claude_args 统一管理",
+            "智能模式检测：移除手动 mode 配置，Action 可根据设置自动判断运行模式（交互式或自动化）",
+            "破坏性变更：废弃了 custom_instructions、model、allowed_tools 等 6 个输入参数，需使用新的 prompt 和 claude_args 接口替代",
+            "完整 CLI 能力访问：通过 claude_args 参数直接访问 Claude Code CLI 的所有功能，支持自定义系统提示、工具配置和模型选择",
+            "增强云平台兼容性：改进与 AWS Bedrock 和 Google Vertex AI 的集成兼容性"
+          ],
+          "summary_cn": "Claude Code GitHub Action v1.0 正式发布，这是一个包含重大破坏性变更的主版本升级。新版本大幅简化了配置方式，将多个输入参数统一为 prompt 和 claude_args 两个接口，并引入智能模式检测功能。虽然提供了更强大的 CLI 访问能力和更好的云平台兼容性，但用户需要参考迁移指南调整现有的 Action 配置。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.67.0",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "\n### Added\n\n- Add support for skills and optional modelId in subagent configuration\n- Add AgentConfigLoader for file-based agent configs\n- Add Responses API support for OpenAI native provider\n- Preconnect websocket to reduce response latency\n- Fetch featured models from backend with local fallback\n- Add /q command to quit CLI\n- Add MCP enterprise configuration details\n- Pull Cline's recommended models from internal endpoint\n- Add dynamic flag to adjust banner cache duration\n\n### Fixed\n\n- Fix reasoning delta crash on usage-only stream chunks\n- Fix OpenAI tool ID transformation restricted to native provider only\n- Fix auth check for ACP mode\n- Fix CLI yolo mode to not persist yolo setting to disk\n- Fix inline focus-chain slider within its feature row\n- Fix Gemini 3.1 Pro compatibility\n- Fix Cline auth with ACP flag\n\n### Changed\n\n- Move PR skill to .agents/skills\n- SambaNova provider: update models list\n- Remove changeset-converter GitHub Action and npm run changeset\n\n**Full Changelog**: https://github.com/cline/cline/compare/v2.4.2-cli...v3.67.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.67.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增子代理配置中的技能支持和可选模型 ID",
+            "为 OpenAI 原生提供商添加 Responses API 支持",
+            "引入基于文件的代理配置加载器 AgentConfigLoader",
+            "WebSocket 预连接以降低响应延迟",
+            "添加 /q 命令用于退出 CLI"
+          ],
+          "summary_cn": "cline v3.67.0 是一次重要的功能更新，主要增强了代理配置能力（支持技能配置和基于文件的配置加载器）并新增了 OpenAI 原生提供商的 Responses API 支持。此外还优化了性能（WebSocket 预连接）和用户体验（新增 /q 退出命令），同时修复了多个兼容性问题包括 Gemini 3.1 Pro 和 ACP 模式的认证。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "openai/openai-python",
+        "version": "v2.24.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-02-24",
+        "summary": "## 2.24.0 (2026-02-24)\n\nFull Changelog: [v2.23.0...v2.24.0](https://github.com/openai/openai-python/compare/v2.23.0...v2.24.0)\n\n### Features\n\n* **api:** add phase ([391deb9](https://github.com/openai/openai-python/commit/391deb99f6a92e51bffb25efd8dfe367d144bb9d))\n\n\n### Bug Fixes\n\n* **api:** fix phase enum ([42ebf7c](https://github.com/openai/openai-python/commit/42ebf7c30b7e27a175c0d75fcf42c8dc858e56d6))\n* **api:** phase docs ([7ddc61c](https://github.com/openai/openai-python/commit/7ddc61cd0f7825d5e7f3a10daf809135511d8d20))\n\n\n### Chores\n\n* **internal:** make `test_proxy_environment_variables` more resilient to env ([65af8fd](https://github.com/openai/openai-python/commit/65af8fd8550e99236e3f4dcb035312441788157a))\n* **internal:** refactor sse event parsing ([2344600](https://github.com/openai/openai-python/commit/23446008f06fb474d8c75d14a1bce26f4c5b95d8))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v2.24.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "API 新增 phase 功能支持",
+            "修复 phase 枚举类型问题",
+            "完善 phase 相关文档",
+            "重构 SSE 事件解析逻辑",
+            "增强代理环境变量测试的健壮性"
+          ],
+          "summary_cn": "v2.24.0 版本主要引入了新的 phase API 功能，包括添加 phase 支持、修复枚举类型问题以及完善相关文档。同时内部进行了 SSE 事件解析的重构和测试健壮性改进，属于功能性更新版本。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openai/openai-python",
+        "version": "v2.23.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-02-24",
+        "summary": "## 2.23.0 (2026-02-24)\n\nFull Changelog: [v2.22.0...v2.23.0](https://github.com/openai/openai-python/compare/v2.22.0...v2.23.0)\n\n### Features\n\n* **api:** add gpt-realtime-1.5 and gpt-audio-1.5 model options to realtime calls ([3300b61](https://github.com/openai/openai-python/commit/3300b61e1d5a34c9d28ec9cebbebd0de1fa93aa6))\n\n\n### Chores\n\n* **internal:** make `test_proxy_environment_variables` more resilient ([6b441e2](https://github.com/openai/openai-python/commit/6b441e2c43df60a773f62308e918d76b8eb3c4d3))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v2.23.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "API 新增 gpt-realtime-1.5 和 gpt-audio-1.5 模型选项支持",
+            "实时接口功能扩展，新增两个模型调用选项",
+            "内部测试优化：增强代理环境变量测试的健壮性"
+          ],
+          "summary_cn": "OpenAI Python SDK v2.23.0 版本主要更新了实时 API 功能，新增了 gpt-realtime-1.5 和 gpt-audio-1.5 两个模型选项，扩展了实时调用的模型支持范围。同时进行了内部测试优化，改进了代理环境变量测试的健壮性。这是一个增量更新版本，主要面向开发者提供更丰富的实时模型选择。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.420",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "## Changes\n\n### PR [#2021](https://github.com/danielmiessler/Fabric/pull/2021) by [jlec](https://github.com/jlec) and [ksylvan](https://github.com/ksylvan): Enhanced Azure AI Gateway with i18n Support and documentation\n\n- Added configurable API version support for the Azure OpenAI backend, defaulting to `2025-04-01-preview` while maintaining backward compatibility.\n- Implemented URL validation with HTTPS enforcement and a cancellable context in `SendStream` with a 300-second timeout.\n- Added a 10MB response body size limit using `io.LimitReader` and improved error body truncation from 200 to 500 characters.\n- Added file-level documentation across all backend files and enforced lowercase error messages per Go convention.\n- Fixed Bedrock `max_tokens` to correctly respect `opts.MaxTokens` with a fallback, and added error checks for empty message lists across all backends.\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.420",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "增强 Azure AI Gateway 国际化支持和文档",
+            "为 Azure OpenAI 后端添加可配置 API 版本支持（默认 2025-04-01-preview）",
+            "实现 HTTPS 强制 URL 验证和 300 秒超时可取消上下文",
+            "添加 10MB 响应体大小限制，错误信息截断从 200 扩展到 500 字符",
+            "修复 Bedrock max_tokens 正确使用 opts.MaxTokens，所有后端添加空消息列表错误检查"
+          ],
+          "summary_cn": "本次更新主要增强了 Azure AI Gateway 的功能，包括可配置 API 版本支持、URL 验证和响应体大小限制等安全改进。同时修复了 Bedrock max_tokens 参数处理问题，并完善了所有后端的错误检查和文档。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-anthropic==1.3.4",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "Changes since langchain-anthropic==1.3.3\n\nrelease(anthropic): 1.3.4 (#35418)\nfix(anthropic): filter out common OpenAI Responses block types (#35417)\nfix(anthropic): update integration tests (#35396)\nrevert: add ChatAnthropicBedrockWrapper (#35371)\nfix(anthropic): replace retired model IDs in tests and docstrings (#35365)\nfeat(anthropic): add ChatAnthropicBedrock wrapper (#35091)\nfix(model-profiles): sort generated profiles by model ID for stable diffs (#35344)\nfix(anthropic): set max input tokens based on 1m context beta header (#35341)\nchore: bump model profiles (#35294)\nfeat(anthropic): add User-Agent header for Anthropic API calls (#35268)\nchore(anthropic): add version (#35293)\nfix(anthropic): hoist cache_control from tool_result content sub-blocks to tool_result level (#35126)\nchore(deps): bump langsmith from 0.4.43 to 0.6.3 in /libs/partners/anthropic (#35150)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-anthropic%3D%3D1.3.4",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 OpenAI Responses 块类型过滤问题",
+            "回退 ChatAnthropicBedrockWrapper 功能",
+            "基于 1M 上下文 beta header 设置最大输入 token",
+            "为 Anthropic API 调用添加 User-Agent header",
+            "更新依赖并修复测试用例"
+          ],
+          "summary_cn": "langchain-anthropic 1.3.4 版本主要包含多项修复和功能优化。重点是修复了 OpenAI Responses 块类型过滤问题，回退了 ChatAnthropicBedrockWrapper 功能，并基于 1M 上下文 beta header 设置最大输入 token。同时为 Anthropic API 调用添加了 User-Agent header，升级了 langsmith 依赖，并更新了模型配置和测试用例。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "sdk==0.3.9",
+        "author": "github-actions[bot]",
+        "date": "2026-02-24",
+        "summary": "Changes since sdk==0.3.8\n\n* release(sdk-py): 0.3.9 (#6932)\n* feat(sdk-py): add extract parameter to threads.search() (#6880)\n* chore: add `make type` target for type checking (#6748)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/sdk%3D%3D0.3.9",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "在 threads.search() 方法中新增 extract 参数，增强搜索功能",
+            "添加 `make type` 命令目标，用于类型检查",
+            "发布 SDK Python 版本 0.3.9"
+          ],
+          "summary_cn": "本次 SDK Python 版本 0.3.9 更新主要引入了 threads.search() 方法的 extract 参数，提升了线程搜索功能。同时新增了 `make type` 类型检查命令，改善了开发体验。整体为小幅功能增强。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "version": "v0.29.7",
+        "author": "gemini-cli-robot",
+        "date": "2026-02-24",
+        "summary": "## What's Changed\n* fix(patch): cherry-pick d96bd05 to release/v0.29.6-pr-19867 to patch version v0.29.6 and create version 0.29.7 by @gemini-cli-robot in https://github.com/google-gemini/gemini-cli/pull/20111\n\n\n**Full Changelog**: https://github.com/google-gemini/gemini-cli/compare/v0.29.6...v0.29.7",
+        "assets_count": 1,
+        "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.29.7",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "通过 cherry-pick 方式修复 v0.29.6 版本的已知问题",
+            "创建新的补丁版本 v0.29.7",
+            "包含提交 d96bd05 的修复内容"
+          ],
+          "summary_cn": "这是一个补丁修复版本（v0.29.7），通过 cherry-pick 方式将提交 d96bd05 应用到 v0.29.6 版本中，修复了该版本存在的已知问题。本次变更属于热修复发布，影响范围较小。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.4",
+        "author": "kausmeows",
+        "date": "2026-02-24",
+        "summary": "# Changelog\r\n\r\n## New Features:\r\n\r\n- **PgVector**: added `similarity_threshold` parameter for filtering search results by minimum similarity score.\r\n- **Team:** Added streaming event support for `TeamMode.tasks`, enabling real-time event emission during autonomous task execution.\r\n- **Workflows HITL:** Add support for HITL in workflows at Step level to pause for confirmation and user input. See [docs](https://docs.agno.com/workflows/hitl/overview)\r\n\r\n## Improvements:\r\n\r\n- **Metrics:** Redesigns the metrics system to provide per-model, per-component granular tracking across the entire agent/team/workflow lifecycle.\r\n- **WebsearchTools:** expose timelimit, region and backend params in `DuckDuckGoTools`\r\n- **SeltzTools**: Updated to use Seltz SDK 0.1.3\r\n\r\n## Bug Fixes:\r\n\r\n- **AWS Bedrock:** Fixed to refresh AWS credentials on every Bedrock request when using boto3 session.\r\n- **`@tool` decorator:** Fixed @tool decorator to not fail for Agent/Team type annotations\r\n- **Pydantic model serialization:** Fixed Pydantic model serialization in tool cache.\r\n\r\n## What's Changed\r\n* chore: update quickstart by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6656\r\n* chore: new cookbook by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6663\r\n* feat: add similarity_threshold parameter for filtering search for PgVector [SDK-441] by @harshsinha03 in https://github.com/agno-agi/agno/pull/6216\r\n* cookbook: agent level by @ysolanky in https://github.com/agno-agi/agno/pull/6665\r\n* chore: split team tests into 4 balanced parallel jobs by @ysolanky in https://github.com/agno-agi/agno/pull/6628\r\n* fix: handle Pydantic model serialization in tool cache by @fehmisener in https://github.com/agno-agi/agno/pull/6678\r\n* [feat] expose timelimit, region and backend params in DuckDuckGoTools by @hztBUAA in https://github.com/agno-agi/agno/pull/6650\r\n* fix: @tool decorator fails with Agent/Team type annotations by @ysolanky in https://github.com/agno-agi/agno/pull/6610\r\n* chore: openai pdf input bytes by @kausmeows in https://github.com/agno-agi/agno/pull/6685\r\n* fix: add CI guard for split test coverage + fix 3 missing knowledge tests by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6668\r\n* fix: use fresh OpenAI clients in memori multi-registration tests by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6691\r\n* fix: refresh AWS credentials on every Bedrock request when using boto3 session by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6657\r\n* feat: metrics update by @harshsinha03 in https://github.com/agno-agi/agno/pull/6405\r\n* feat: support streaming for team task mode by @kausmeows in https://github.com/agno-agi/agno/pull/6622\r\n* [feat] Update SeltzTools for Seltz SDK 0.1.3 by @WilliamEspegren in https://github.com/agno-agi/agno/pull/6292\r\n* fix: include member response metrics in team session metrics by @ysolanky in https://github.com/agno-agi/agno/pull/6704\r\n* feat: step level workflow HITL by @kausmeows in https://github.com/agno-agi/agno/pull/6211\r\n* refactor: replace heavyweight RunOutput collectors with RunMetrics by @ysolanky in https://github.com/agno-agi/agno/pull/6703\r\n* fix: harden hook execution and PII guardrail by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6483\r\n* chore: Release v2.5.4 by @kausmeows in https://github.com/agno-agi/agno/pull/6661\r\n\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.5.3...v2.5.4",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.4",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "PgVector 新增相似度阈值参数，支持按最小相似度分数过滤搜索结果",
+            "Team 的 tasks 模式新增流式事件支持，实现自主任务执行时的实时事件推送",
+            "Workflows 新增 HITL（人机交互）支持，可在 Step 级别暂停等待确认和用户输入",
+            "重构 Metrics 系统，提供跨 Agent/Team/Workflow 生命周期的细粒度模型和组件跟踪",
+            "修复 AWS Bedrock 凭证刷新、@tool 装饰器类型注解和 Pydantic 模型序列化等问题"
+          ],
+          "summary_cn": "Agno v2.5.4 版本重点增强向量搜索和实时交互能力，新增 PgVector 相似度过滤、Team 流式事件支持以及 Workflow HITL 人机交互功能。同时重构了 Metrics 系统提供更细粒度的监控，并修复了 AWS Bedrock 凭证、工具装饰器和模型序列化等多个关键问题。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code",
+      "tag_name": "v2.1.51",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "BashTool 默认跳过登录 shell (`-l` 标志)，改变环境初始化行为",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "HTTP Hooks 环境变量插值需要显式 `allowedEnvVars` 列表，不再自动支持任意变量",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "工具结果持久化阈值从 100K 降低至 50K 字符",
+          "impact": "low",
+          "category": "Behavior"
+        },
+        {
+          "description": "HTTP Hooks 在沙箱模式下强制执行域名白名单，且不支持 SessionStart/Setup 事件",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-code-action",
+      "tag_name": "v1",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "移除 `mode`, `direct_prompt`, `override_prompt` 等输入，统一为 `prompt`",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "移除 `custom_instructions`, `model`, `allowed_tools` 等独立配置，需通过 `claude_args` 传递",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "移除 `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes` 等已弃用输入",
+          "impact": "medium",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "cline/cline",
+      "tag_name": "v3.67.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "移除 changeset-converter GitHub Action 及 `npm run changeset` 命令",
+          "impact": "low",
+          "category": "Dependency"
+        }
+      ]
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "tag_name": "langchain-anthropic==1.3.4",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "回滚/移除 `ChatAnthropicBedrockWrapper` (此前版本添加)",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "Zed崩溃和卡死问题",
+        "count": 2,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": [
+          "https://github.com/zed-industries/zed/issues/49998",
+          "https://github.com/zed-industries/zed/issues/49961"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "包含明确崩溃和卡死问题：#49998描述连接channel时直接崩溃，#49961描述编辑器在使用时规律性卡顿约10秒（用户报告\"regularly hangs\"）。这两个问题都直接阻断编辑器正常使用，属于稳定性核心问题。虽count=2但影响严重，符合P0定义。"
+      },
+      {
+        "topic": "API response parsing crashes when backend proto changes",
+        "count": 7,
+        "affected_repos": [
+          "google-gemini/gemini-cli"
+        ],
+        "sample_urls": [
+          "https://github.com/google-gemini/gemini-cli/issues/20193",
+          "https://github.com/google-gemini/gemini-cli/issues/20187",
+          "https://github.com/google-gemini/gemini-cli/issues/20188",
+          "https://github.com/google-gemini/gemini-cli/issues/20189",
+          "https://github.com/google-gemini/gemini-cli/issues/20190"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "7个issue证实用户在使用过程中遭遇CLI崩溃，属于主流程阻断性故障。高频崩溃直接影响用户完成任务的连续性，符合P0判定标准。"
+      },
+      {
+        "topic": "SDK crash on startup with AJV validation error (Agent SDK 0.2.27+)",
+        "count": 4,
+        "affected_repos": [
+          "anthropics/claude-code-action"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-code-action/issues/892",
+          "https://github.com/anthropics/claude-code-action/issues/947",
+          "https://github.com/anthropics/claude-code-action/issues/965",
+          "https://github.com/anthropics/claude-code-action/issues/872"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "Agent SDK在启动时崩溃，直接阻断用户使用Claude Code Action的核心功能。AJV验证错误导致整个工作流无法启动，用户无法完成代码审查等任务。4个issue证实这是高频且严重的问题。"
+      },
+      {
+        "topic": "Streaming mode parsing failures",
+        "count": 4,
+        "affected_repos": [
+          "langchain-ai/langchain"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langchain/issues/35395",
+          "https://github.com/langchain-ai/langchain/issues/35259",
+          "https://github.com/langchain-ai/langchain/issues/35405"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "CRITICAL production-blocking issues: Issue 35259 causes complete crash with TypeError when streaming Mistral with citations - user reports 'complete failure' affecting LangGraph agents. Issue 35395 is a REGRESSION in 1.2.14 that broke working code from 1.2.13 - tool args parse failed in streaming mode. User evidence shows parse output changed from valid JSON to broken data. Count=4 meets frequency threshold, and issues demonstrate complete functionality breakage, not just degraded performance."
+      },
+      {
+        "topic": "OAuth authentication fails after successful login with 401 token expired errors",
+        "count": 3,
+        "affected_repos": [
+          "AndyMik90/Auto-Claude"
+        ],
+        "sample_urls": [
+          "https://github.com/AndyMik90/Auto-Claude/issues/1532",
+          "https://github.com/AndyMik90/Auto-Claude/issues/1768",
+          "https://github.com/AndyMik90/Auto-Claude/issues/1882"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "Authentication failure blocks users from accessing the application entirely. 3 separate issue reports confirm users complete login successfully but immediately receive 401 token expired errors, preventing any application usage. This is a critical blocker affecting the core user flow."
+      }
+    ],
+    "expected_files": 42,
+    "generated_files": 42,
+    "parsed_files": 42,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "good"
+  }
+}
