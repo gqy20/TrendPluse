@@ -2,81 +2,45 @@
 
 ## Workflow 文件
 
-### 1. CI Workflow (`.github/workflows/ci.yml`)
+### 1. CI (`.github/workflows/ci.yml`)
 
-**触发条件：**
-- Push 到 `main` 分支
-- Pull Request 到 `main` 分支
+- 触发：`push` / `pull_request`
+- 功能：ruff、mypy、pytest、codecov
 
-**功能：**
-- 代码检查 (ruff check & format)
-- 类型检查 (mypy)
-- 运行单元测试
-- 上传覆盖率报告到 Codecov
+### 2. 每日分析 (`.github/workflows/run-daily.yml`)
 
----
+- 触发：`schedule` + `workflow_dispatch`
+- 功能：生成日报、同步索引、提交产物、触发后续部署/通知
 
-### 2. 每日分析 Workflow (`.github/workflows/run-daily.yml`)
+### 3. 周报生成 (`.github/workflows/run-weekly.yml`)
 
-**触发条件：**
-- 每天 UTC 0:10 (北京时间 8:10)
-- 手动触发 (workflow_dispatch)
+- 触发：`schedule` + `workflow_dispatch`
+- 功能：聚合日报生成周报并提交产物
 
-**功能：**
-- 运行 TrendPulse 趋势分析
-- 生成 Markdown + JSON 报告
-- 上传报告为 artifact (保留 30 天)
-- 自动提交报告到仓库 ([skip ci] 跳过 CI)
-- 同步报告索引到文档
-- 部署到 GitHub Pages
-- 可选发送飞书通知
+### 4. 项目发现 (`.github/workflows/discover-projects.yml`)
 
-**Job 结构：**
-```mermaid
-graph LR
-    A[analyze] --> B[deploy]
-    A --> C[notify]
-    B --> D[deploy_pages]
-    C --> D
-```
+- 触发：`schedule` + `workflow_dispatch` + `workflow_call`
+- 功能：发现候选项目、生成 discovery 报告并同步 docs
 
----
+### 5. Issue 仓库分析 (`.github/workflows/issue-analyzer.yml`)
 
-### 3. 飞书通知 Workflow (`.github/workflows/send-feishu.yml`)
+- 触发：`issues` / `issue_comment`
+- 功能：在 issue/comment 中识别 `@claude`，调用分析脚本并回帖
 
-**触发条件：**
-- 手动触发 (workflow_dispatch)
-- 支持指定报告日期
+### 6. 仓库请求处理 (`.github/workflows/add-repo-request.yml`)
 
-**功能：**
-- 下载指定日期的报告
-- 生成飞书卡片（折叠面板格式）
-- 发送到飞书群机器人
-- 上传飞书卡片为 artifact
+- 触发：Issue 表单/标签驱动
+- 功能：自动处理新增监控仓库请求
 
----
+### 7. Pages 部署 (`.github/workflows/deploy-pages.yml`)
 
-### 4. 仓库请求处理 Workflow (`.github/workflows/process_repo_request.yml`)
+- 触发：日报工作流完成后
+- 功能：构建 MkDocs 并部署 GitHub Pages
 
-**触发条件：**
-- Issue 中包含特定标签
+### 8. 飞书通知 (`.github/workflows/send-feishu.yml`)
 
-**功能：**
-- 自动处理仓库添加请求
-- 更新监控仓库列表
-
----
-
-### 5. Pages 部署 Workflow (`.github/workflows/deploy-pages.yml`)
-
-**触发条件：**
-- `run-daily.yml` 完成后触发
-
-**功能：**
-- 构建 MkDocs 文档
-- 部署到 GitHub Pages
-
----
+- 触发：手动触发（支持指定日期）
+- 功能：发送日报飞书通知
 
 ## 配置 Secrets
 
@@ -142,11 +106,13 @@ gh workflow run send-feishu.yml -f report_date=2026-01-12
 报告也会自动提交到 `reports/` 目录：
 ```
 reports/
-├── report-2026-01-02.md
-├── report-2026-01-02.json
-├── report-2026-01-03.md
-├── report-2026-01-03.json
-└── ...
+├── daily/
+│   ├── report-2026-01-02.md
+│   └── report-2026-01-02.json
+├── weekly/
+│   └── weekly-2026-W08.md
+└── discovery/
+    └── discovery-2026-02-23.md
 ```
 
 ### GitHub Pages

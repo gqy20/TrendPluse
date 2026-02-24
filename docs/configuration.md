@@ -27,7 +27,7 @@
 |--------|------|--------|
 | `FEISHU_WEBHOOK_URL` | 飞书机器人 Webhook URL | 无（不发送通知） |
 | `FEISHU_SECRET` | 飞书签名验证密钥 | 无 |
-| `FEISHU_AT_MOBILES` | 飞��� @ 提醒手机号（逗号分隔） | 无 |
+| `FEISHU_AT_MOBILES` | 飞书 @ 提醒手机号（逗号分隔） | 无 |
 | `FEISHU_MAX_SIGNALS` | 飞书卡片显示信号数量（1-10） | 5 |
 
 ### Release 监控配置

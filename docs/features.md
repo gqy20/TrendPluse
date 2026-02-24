@@ -12,6 +12,7 @@ TrendPulse 是一个自动化趋势分析工具，专注于 Anthropic Claude 生
 - 📦 **Release 监控**: 自动追踪版本发布，分析升级趋势
 - 💾 **Commit 分析**: 从代码提交中提取技术信号
 - 📈 **仓库活跃度**: 追踪 commit 数量、活跃仓库、新贡献者
+- 🧠 **Issue 数据落盘**: 按日期和仓库输出 JSONL，支持后续 Agent 分析
 
 ### 2. AI 驱动分析
 
@@ -21,6 +22,7 @@ TrendPulse 是一个自动化趋势分析工具，专注于 Anthropic Claude 生
 - 🔄 **智能去重**: 基于 LLM 的信号去重机制
 - 🔍 **Breaking Changes 检测**: AI 检测版本不兼容变更
 - 🚀 **Release AI 总结**: 使用 AI 分析 Release Notes，生成结构化中文总结
+- 🧠 **Issue 洞察（Agent）**: 三轮分析提取用户痛点，并输出质量分
 
 ### 3. 结构化报告
 
@@ -28,6 +30,8 @@ TrendPulse 是一个自动化趋势分析工具，专注于 Anthropic Claude 生
 - 📄 **JSON 格式**: 机器可读，支持数据分析和 API
 - 🎨 **美观展示**: GitHub Pages 自动发布
 - 🔍 **全文搜索**: 快速找到历史信息
+- 📆 **周报聚合**: 聚合近 7 天日报输出 weekly 报告
+- 🧭 **项目发现报告**: 发现候选项目并输出 discovery 报告
 - 📬 **飞书通知**: 支持 @ 提醒和富文本卡片
 - 📱 **折叠面板**: 飞书卡片使用折叠面板优化信息展示
 - 🔄 **自动重试**: LLM 调用失败自动重试（指数退避）
@@ -38,26 +42,15 @@ TrendPulse 是一个自动化趋势分析工具，专注于 Anthropic Claude 生
 - ⚡ **并行分析**: PR 和 Release 分析并行处理
 - 🛡️ **容错设计**: 单个任务失败不影响整体流程
 
-## 数据流程
+### 5. 自动化工作流
 
-```mermaid
-sequenceDiagram
-    participant GH as GitHub
-    participant Collector as 并行采集器
-    participant Filter as 筛选器
-    participant AI as AI 分析器
-    participant Reporter as 报告器
-    participant Feishu as 飞书通知
-
-    GH->>Collector: 并行获取事件
-    Collector->>Filter: 传递原始数据
-    Filter->>Filter: 筛选候选
-    Filter->>AI: 并行分析 PR/Release
-    AI->>AI: 提取信号 (带重试)
-    AI->>Reporter: 生成 Markdown+JSON
-    Reporter->>Feishu: 发送折叠面板卡片
-    Reporter->>Pages: 发布到网站
-```
+- ✅ CI：代码检查、类型检查、测试
+- 📊 每日分析：生成日报并同步文档
+- 📆 每周报告：聚合日报生成周报
+- 🧭 项目发现：定时发现热门候选项目
+- 🧠 Issue 仓库分析：在 issue/comment 中通过 `@claude` 触发
+- ➕ 新增仓库请求：自动处理仓库请求流程
+- 📬 飞书通知：日报/周报推送
 
 ## 支持的仓库
 
@@ -82,8 +75,14 @@ sequenceDiagram
 - 🚀 **版本发布**: 最新版本发布信息（带 AI 总结）
 - ⚠️ **Breaking Changes**: 不兼容变更检测
 - 📈 **仓库活跃度**: Commit 数量、活跃仓库排名
+- 🧠 **Issue 洞察（Agent）**: 用户痛点 TOP 与质量指标
 - 📊 **统计数据**: 分析数量、影响评分
 - 🔗 **JSON 数据**: 完整的结构化数据
+
+额外产物：
+
+- 📆 **周报**: 按周汇总高影响趋势与活跃度
+- 🧭 **项目发现报告**: 候选项目、质量评分与推荐优先级
 
 ## 技术栈
 
@@ -99,33 +98,21 @@ sequenceDiagram
 | 展示 | MkDocs + Material |
 | 通知 | 飞书 Webhook |
 
-## 新增功能详解
+## 关键能力说明
 
-### Release AI 总结
+### Issue 洞察（Agent）
 
-使用 `ReleaseSummarizer` 分析 Release Notes，生成结构化中文总结：
+- 三轮流程：候选抽取 → 主题归一化 → 审稿与优先级判定
+- 输出内容：`top_pain_points`、`quality_score`、`quality_status`
+- 与日报融合：在日报中单独展示 Issue 洞察章节
 
-- **变更类型**: feature/fix/improvement/breaking/other
-- **关键变更**: 3-5 个简洁的中文描述
-- **中文总结**: 2-3 句话概括主要变更
-- **影响级别**: 1-5 级评分
+### 项目发现（Discovery）
 
-### 并行处理架构
+- 数据来源：Trending + 关键词搜索
+- 流程：去重 → 质量评估 → 分类排序 → 发现报告
+- 输出位置：`reports/discovery/` 与 `docs/discovery-reports/`
 
-- **采集并行**: `parallel_map()` 和 `parallel_execute()` 函数
-- **分析并行**: `TrendAnalyzer` 和 `ReleaseSummarizer` 支持多线程
-- **容错设计**: 单个任务失败自动降级，不影响整体流程
+### 周报聚合
 
-### 飞书通知优化
-
-- **折叠面板**: 工程/研究信号、版本发布、活跃度统计使用折叠面板
-- **智能去重**: 摘要中移除重复的日期信息
-- **链接格式化**: Commit SHA、PR 号码自动格式化
-
-### LLM 调用重试机制
-
-使用 `tenacity` 库实现自动重试：
-
-- **重试条件**: 超时、速率限制等临时错误
-- **重试策略**: 最多 3 次，指数退避（1s → 2s → 4s → 10s）
-- **失败降级**: 重试耗尽后返回默认值，确保流程继续
+- 从过去 7 天日报聚合生成周报
+- 输出位置：`reports/weekly/` 和 `docs/reports/`

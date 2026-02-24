@@ -195,7 +195,7 @@ tests/
 └── test_discovery_integration.py
 │
 .github/workflows/
-└── discover-repos.yml           # 定时发现 CI
+└── discover-projects.yml        # 定时发现 CI
 ```
 
 ---
@@ -840,7 +840,7 @@ class TrendingCollector(BaseDiscoverer):
 
 **任务清单**:
 - [ ] 实现 `scripts/discover_projects.py`
-- [ ] 创建 `.github/workflows/discover-repos.yml`
+- [ ] 创建 `.github/workflows/discover-projects.yml`
 - [ ] 集成测试
 - [ ] 文档更新
 

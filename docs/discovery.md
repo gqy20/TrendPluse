@@ -74,7 +74,7 @@ uv run python scripts/discover_projects.py \
 
 ### 自动运行
 
-项目发现通过 GitHub Actions 每周一 UTC 00:10
-(北京时间 08:10) 自动运行。
+项目发现通过 GitHub Actions 每天 UTC 19:00
+（北京时间次日 03:00）自动运行。
 
-查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)
+查看工作流: [discover-projects.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-projects.yml)
