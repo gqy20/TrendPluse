@@ -9,9 +9,9 @@
 **发现概览**:<br/>
 - 总发现数: 200<br/>
 - 通过质量评估: 200<br/>
-- 高优先级: 147<br/>
-- 去重移除: 35<br/>
-- 已在监控: 18<br/>
+- 高优先级: 138<br/>
+- 去重移除: 32<br/>
+- 已在监控: 20<br/>
 
 **高优先级推荐 Top 5**:<br/>
 
@@ -20,7 +20,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
-| 2026-03-01 | 200 | 147 | [查看](discovery-reports/discovery-2026-03-01.md) |
+| 2026-03-01 | 200 | 138 | [查看](discovery-reports/discovery-2026-03-01.md) |
 | 2026-02-28 | 200 | 136 | [查看](discovery-reports/discovery-2026-02-28.md) |
 | 2026-02-27 | 200 | 132 | [查看](discovery-reports/discovery-2026-02-27.md) |
 | 2026-02-26 | 200 | 136 | [查看](discovery-reports/discovery-2026-02-26.md) |
@@ -62,10 +62,10 @@
 
 ```bash
 # 本地运行发现
-uv run trendpluse-discover-projects
+uv run python scripts/discover_projects.py
 
 # 自定义参数
-uv run trendpluse-discover-projects \
+uv run python scripts/discover_projects.py \
   --days 7 \
   --min-quality 60.0 \
   --languages python typescript go \

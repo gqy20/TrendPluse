@@ -1,7 +1,7 @@
 {
   "date": "2026-03-01",
-  "generated_at": "2026-03-01T14:16:40.147493",
-  "total_candidates": 147,
+  "generated_at": "2026-03-01T19:21:15.528654",
+  "total_candidates": 148,
   "selected_count": 10,
   "candidates": [
     {
@@ -24,8 +24,8 @@
       "name": "OpenBB",
       "priority": "high",
       "quality_score": 100,
-      "discovery_source": "trending",
-      "discovery_reason": "[keyword, trending] Trending in Python",
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
       "classified_categories": [
         "机器学习框架"
       ],
@@ -75,19 +75,6 @@
       "suggested_category": "Agentic AI 核心框架"
     },
     {
-      "repo": "datawhalechina/happy-llm",
-      "name": "happy-llm",
-      "priority": "high",
-      "quality_score": 100,
-      "discovery_source": "keyword",
-      "discovery_reason": "Keyword: RAG",
-      "classified_categories": [
-        "AI Agents",
-        "RAG/检索"
-      ],
-      "suggested_category": "Agentic AI 核心框架"
-    },
-    {
       "repo": "f/prompts.chat",
       "name": "prompts.chat",
       "priority": "high",
@@ -114,28 +101,42 @@
       "suggested_category": "Agentic AI 核心框架"
     },
     {
-      "repo": "hesreallyhim/awesome-claude-code",
-      "name": "awesome-claude-code",
+      "repo": "hiyouga/LlamaFactory",
+      "name": "LlamaFactory",
       "priority": "high",
       "quality_score": 100,
       "discovery_source": "keyword",
-      "discovery_reason": "Keyword: Claude",
+      "discovery_reason": "Keyword: AI agent",
       "classified_categories": [
-        "LLM 界面",
-        "学习资源"
+        "AI Agents",
+        "机器学习框架"
       ],
-      "suggested_category": "Anthropic 工具与集成"
+      "suggested_category": "Agentic AI 核心框架"
     },
     {
-      "repo": "hiyouga/LlamaFactory",
-      "name": "LlamaFactory",
+      "repo": "infiniflow/ragflow",
+      "name": "ragflow",
       "priority": "high",
       "quality_score": 100,
       "discovery_source": "trending",
       "discovery_reason": "[keyword, trending] Trending in Python",
       "classified_categories": [
         "AI Agents",
-        "机器学习框架"
+        "RAG/检索",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "jeecgboot/JeecgBoot",
+      "name": "JeecgBoot",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索"
       ],
       "suggested_category": "Agentic AI 核心框架"
     }
