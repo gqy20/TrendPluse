@@ -388,6 +388,71 @@ class TestDiscoverProjectsIntegration:
         assert data["selected_count"] == 10
         assert len(data["candidates"]) == 10
 
+    @patch("scripts.discover_projects.ProjectHighlightAnalyzer")
+    @patch("scripts.discover_projects.get_settings")
+    @patch("scripts.discover_projects.TrendingCollector")
+    @patch("scripts.discover_projects.KeywordSearcher")
+    @patch("scripts.discover_projects.load_monitored_repos")
+    def test_highlight_analysis_respects_default_limit_10(
+        self,
+        mock_load_monitored,
+        mock_keyword_searcher,
+        mock_trending_collector,
+        mock_get_settings,
+        mock_highlight_analyzer,
+        tmp_path,
+    ):
+        """测试：AI 亮点分析默认最多分析 10 个项目"""
+        mock_load_monitored.return_value = set()
+        mock_get_settings.return_value = Mock(
+            anthropic_api_key="test-key",
+            anthropic_model="glm-4.7",
+            anthropic_base_url="",
+            llm_retry_max_attempts=3,
+            llm_retry_wait_min=1,
+            llm_retry_wait_max=10,
+        )
+
+        trending_projects = []
+        for i in range(15):
+            trending_projects.append(
+                DiscoveredProject(
+                    repo=f"owner/high-highlight-{i}",
+                    name=f"high-highlight-{i}",
+                    description="AI agent project",
+                    stars=15000 - i * 50,
+                    language="Python",
+                    topics=["agent", "ai"],
+                    license="MIT",
+                    open_issues=10,
+                    forks=300,
+                    watchers=100,
+                    last_commit_at=datetime.now(UTC),
+                    discovery_source="trending",
+                    discovery_reason="Trending",
+                )
+            )
+
+        mock_trending = Mock()
+        mock_trending_collector.return_value = mock_trending
+        mock_trending.discover.return_value = trending_projects
+
+        mock_keyword = Mock()
+        mock_keyword_searcher.return_value = mock_keyword
+        mock_keyword.discover.return_value = []
+
+        analyzer_instance = Mock()
+        analyzer_instance.analyze_batch.return_value = {}
+        mock_highlight_analyzer.return_value = analyzer_instance
+
+        discover(
+            github_token="test_token",
+            output_dir=tmp_path,
+        )
+
+        analyze_args = analyzer_instance.analyze_batch.call_args[0][0]
+        assert len(analyze_args) == 10
+
 
 @pytest.mark.integration
 @pytest.mark.skip(reason="需要真实 GitHub API")

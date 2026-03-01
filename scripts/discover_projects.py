@@ -110,6 +110,7 @@ def discover(
     min_quality_score: float = 60.0,
     days: int = 30,
     actionable_limit: int = 10,
+    highlight_limit: int = 10,
     output_dir: Path | None = None,
 ) -> DiscoveryReport:
     """执行项目发现流程
@@ -121,6 +122,7 @@ def discover(
         min_quality_score: 最低质量分数
         days: 回溯天数
         actionable_limit: actionable 候选输出上限
+        highlight_limit: AI 亮点分析项目上限
         output_dir: 输出目录
 
     Returns:
@@ -196,6 +198,7 @@ def discover(
         projects_to_analyze = [
             p for p in deduplicated if p.recommendation_priority in ("high", "medium")
         ]
+        projects_to_analyze = projects_to_analyze[:highlight_limit]
         highlights = highlight_analyzer.analyze_batch(projects_to_analyze)
         # 将分析结果附加到项目上
         for project in deduplicated:
@@ -313,6 +316,12 @@ def main() -> int:
         help="actionable 候选输出上限（默认: 10）",
     )
     parser.add_argument(
+        "--highlight-limit",
+        type=int,
+        default=10,
+        help="AI 亮点分析项目上限（默认: 10）",
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -342,6 +351,7 @@ def main() -> int:
             min_quality_score=args.min_quality,
             days=args.days,
             actionable_limit=args.actionable_limit,
+            highlight_limit=args.highlight_limit,
             output_dir=args.output_dir,
         )
 
