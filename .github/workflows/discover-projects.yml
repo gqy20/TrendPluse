@@ -119,7 +119,7 @@ jobs:
             APPLY_FLAG="--apply"
           fi
 
-          uv run python scripts/bridge_discovery_to_monitoring.py \
+          uv run python -m scripts.bridge_discovery_to_monitoring \
             --actionable-file "$ACTIONABLE_FILE" \
             --config-file src/trendpluse/config.py \
             --min-priority medium \
