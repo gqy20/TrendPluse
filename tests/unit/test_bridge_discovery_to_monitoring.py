@@ -50,7 +50,9 @@ class Settings:
     config_path = tmp_path / "config.py"
     config_path.write_text(config_content, encoding="utf-8")
 
-    from scripts.bridge_discovery_to_monitoring import bridge_actionable_to_monitoring
+    from trendpluse.automation.bridge_discovery_to_monitoring import (
+        bridge_actionable_to_monitoring,
+    )
 
     result = bridge_actionable_to_monitoring(
         actionable_file=str(actionable_path),
@@ -114,7 +116,9 @@ class Settings:
     config_path = tmp_path / "config.py"
     config_path.write_text(config_content, encoding="utf-8")
 
-    from scripts.bridge_discovery_to_monitoring import bridge_actionable_to_monitoring
+    from trendpluse.automation.bridge_discovery_to_monitoring import (
+        bridge_actionable_to_monitoring,
+    )
 
     result = bridge_actionable_to_monitoring(
         actionable_file=str(actionable_path),

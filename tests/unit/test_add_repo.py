@@ -33,7 +33,7 @@ class Settings:
         config_file.write_text(config_content)
 
         # Act - 添加新仓库
-        from scripts.add_repo import add_repo_to_config
+        from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -77,7 +77,7 @@ class Settings:
         config_file.write_text(config_content)
 
         # Act
-        from scripts.add_repo import add_repo_to_config
+        from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -100,7 +100,7 @@ class Settings:
         config_file.write_text(config_content)
 
         # Act
-        from scripts.add_repo import add_repo_to_config
+        from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -113,7 +113,7 @@ class Settings:
 
     def test_validate_repo_format(self):
         """测试：仓库格式验证"""
-        from scripts.add_repo import validate_repo_format
+        from trendpluse.automation.add_repo import validate_repo_format
 
         # 有效格式
         assert validate_repo_format("anthropics/claude-code") is True
@@ -129,7 +129,7 @@ class Settings:
 
     def test_parse_issue_body(self):
         """测试：解析 Issue 表单内容"""
-        from scripts.add_repo import parse_issue_body
+        from trendpluse.automation.add_repo import parse_issue_body
 
         body = """
         ### GitHub 仓库
@@ -155,7 +155,7 @@ class Settings:
 
     def test_category_to_marker_mapping(self):
         """测试：分类到注释标记的映射"""
-        from scripts.add_repo import get_category_markers
+        from trendpluse.automation.add_repo import get_category_markers
 
         # 测试主要分类
         markers = get_category_markers("Agentic AI 核心框架")
@@ -188,7 +188,7 @@ class Settings:
         config_file = tmp_path / "config.py"
         config_file.write_text(config_content)
 
-        from scripts.add_repo import batch_add_repos_to_config
+        from trendpluse.automation.add_repo import batch_add_repos_to_config
 
         result = batch_add_repos_to_config(
             config_file=str(config_file),

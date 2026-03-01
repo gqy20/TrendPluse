@@ -3,17 +3,9 @@
 测试从 config 生成监控仓库列表的 Markdown 文档。
 """
 
-# ruff: noqa: E402
-# mypy: disable-error-code="import-not-found"
-
-# scripts 是独立目录，需要添加到路径
-import sys
 from pathlib import Path
 
-scripts_dir = Path(__file__).parent.parent.parent.parent / "scripts"
-sys.path.insert(0, str(scripts_dir))
-
-from repos_doc_generator import (  # type: ignore[import-not-found]
+from trendpluse.automation.repos_doc_generator import (
     RepoCategory,
     generate_repos_markdown,
     parse_repos_from_config,

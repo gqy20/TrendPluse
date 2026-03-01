@@ -3,7 +3,7 @@
 测试按类型隔离的报告目录结构。
 """
 
-from scripts.generate_report_index import (
+from trendpluse.automation.generate_report_index import (
     generate_index,
     sync_discovery_reports_to_docs,
     sync_reports_to_docs,
