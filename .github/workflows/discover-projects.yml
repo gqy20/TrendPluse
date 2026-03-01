@@ -117,21 +117,21 @@ jobs:
 
       - name: Upload bridge result
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: discovery-bridge-result
           path: reports/discovery/discovery-bridge-result.json
           retention-days: 30
 
       - name: Upload reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: discovery-reports
           path: reports/discovery/discovery-*.md
           retention-days: 30
 
       - name: Upload JSON reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: discovery-reports-json
           path: reports/discovery/discovery-*.json
