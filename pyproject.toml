@@ -104,6 +104,9 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --strict-markers"
+markers = [
+    "integration: 标记需要外部依赖或较慢的集成测试",
+]
 
 [tool.coverage.run]
 source = ["src/trendpluse"]

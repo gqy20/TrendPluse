@@ -39,6 +39,27 @@ jobs:
         run: |
           uv run pytest tests/ -v --cov=src/trendpluse --cov-report=xml --cov-report=term
 
+      - name: Build wheel package
+        run: uv build --wheel
+
+      - name: Validate installed CLI entrypoints
+        run: |
+          python -m venv /tmp/trendpluse-wheel-test
+          /tmp/trendpluse-wheel-test/bin/pip install dist/*.whl
+
+          /tmp/trendpluse-wheel-test/bin/trendpluse-run --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-run-weekly --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-discover-projects --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-analyze-issues --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-analyze-repo --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-send-feishu --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-send-weekly-feishu --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-add-repo --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-bridge-discovery --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-generate-report-index --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-sync-repos-to-docs --help
+          /tmp/trendpluse-wheel-test/bin/trendpluse-normalize-daily-stats --help
+
       - name: Verify coverage file exists
         run: |
           ls -la coverage.xml

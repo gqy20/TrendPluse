@@ -3,6 +3,7 @@
 执行每日 GitHub 趋势分析。
 """
 
+import argparse
 import asyncio
 import os
 import sys
@@ -56,6 +57,9 @@ def check_env_vars() -> bool:
 
 def main():
     """主函数"""
+    parser = argparse.ArgumentParser(description="运行 TrendPulse 每日趋势分析")
+    parser.parse_args()
+
     load_dotenv()
 
     console.print(

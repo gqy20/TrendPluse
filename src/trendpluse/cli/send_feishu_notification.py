@@ -5,6 +5,7 @@
 现在直接读取 JSON 数据，不再从 Markdown 反向解析。
 """
 
+import argparse
 import json
 import os
 import sys
@@ -82,6 +83,9 @@ def load_report_from_json(json_path: str) -> DailyReport:
 
 def main():
     """主函数"""
+    parser = argparse.ArgumentParser(description="发送 TrendPulse 日报飞书通知")
+    parser.parse_args()
+
     load_dotenv()
 
     # 获取环境变量

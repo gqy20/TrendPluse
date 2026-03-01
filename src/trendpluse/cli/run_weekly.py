@@ -4,6 +4,7 @@
 从过去 7 天的日报聚合生成周报。
 """
 
+import argparse
 import os
 
 from trendpluse.config import Settings
@@ -15,6 +16,9 @@ logger = get_logger(__name__)
 
 def main():
     """主函数"""
+    parser = argparse.ArgumentParser(description="运行 TrendPulse 周报生成")
+    parser.parse_args()
+
     if os.getenv("GITHUB_ACTIONS") != "true":
         raise RuntimeError("周报生成仅支持通过 GitHub Actions 触发执行")
 

@@ -3,6 +3,7 @@
 用于发送周报到飞书。
 """
 
+import argparse
 import json
 import os
 import sys
@@ -51,6 +52,9 @@ def load_weekly_report_from_json(json_path: str) -> WeeklyReport:
 
 def main():
     """主函数"""
+    parser = argparse.ArgumentParser(description="发送 TrendPulse 周报飞书通知")
+    parser.parse_args()
+
     load_dotenv()
 
     # 获取环境变量
