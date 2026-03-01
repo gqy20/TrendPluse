@@ -1,0 +1,51 @@
+{
+  "actionable_file": "reports/discovery/discovery-2026-03-01-actionable.json",
+  "min_priority": "medium",
+  "max_add_per_run": 10,
+  "total_candidates": 10,
+  "selected_before_cap": 10,
+  "selected_count": 10,
+  "selected_items": [
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "OpenBB-finance/OpenBB",
+      "category": "Anthropic 研究与评估"
+    },
+    {
+      "repo": "affaan-m/everything-claude-code",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "dair-ai/Prompt-Engineering-Guide",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "danny-avila/LibreChat",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "datawhalechina/happy-llm",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "f/prompts.chat",
+      "category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "firecrawl/firecrawl",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "hesreallyhim/awesome-claude-code",
+      "category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "hiyouga/LlamaFactory",
+      "category": "Agentic AI 核心框架"
+    }
+  ],
+  "batch_result": null
+}
