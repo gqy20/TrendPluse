@@ -88,7 +88,7 @@ jobs:
         run: |
           DAYS=${{ inputs.days || github.event.inputs.days || 30 }}
           MIN_QUALITY=${{ inputs.min_quality || github.event.inputs.min_quality || 60.0 }}
-          uv run python scripts/discover_projects.py \
+          uv run trendpluse-discover-projects \
             --days $DAYS \
             --min-quality $MIN_QUALITY \
             --output-dir reports
@@ -150,7 +150,7 @@ jobs:
 
       - name: Sync reports to docs
         run: |
-          uv run python scripts/generate_report_index.py
+          uv run trendpluse-generate-report-index
 
       - name: Commit and push reports
         run: |

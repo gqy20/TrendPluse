@@ -48,4 +48,4 @@ jobs:
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
           FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
           REPORT_DATE: ${{ inputs.report_date || github.event.schedule.run_time }}
-        run: uv run python scripts/send_feishu_notification.py
+        run: uv run trendpluse-send-feishu

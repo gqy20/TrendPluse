@@ -85,7 +85,7 @@ FEISHU_AT_MOBILES=13800138000,13900139000
 
 ```bash
 # 运行每日趋势分析
-uv run python scripts/run.py
+uv run trendpluse-run
 
 # 查看生成的报告
 ls reports/daily reports/weekly
@@ -131,21 +131,21 @@ make test-cov
 ```bash
 # 运行每日趋势分析
 make run
-# 或: uv run python scripts/run.py
+# 或: uv run trendpluse-run
 
 # 运行周报聚合（仅 GitHub Actions 环境）
-uv run python scripts/run_weekly.py
+uv run trendpluse-run-weekly
 
 # 运行项目发现
-uv run python scripts/discover_projects.py --days 30 --min-quality 60 --output-dir reports
+uv run trendpluse-discover-projects --days 30 --min-quality 60 --output-dir reports
 
 # 生成报告索引
 make gen-index
-# 或: uv run python scripts/generate_report_index.py
+# 或: uv run trendpluse-generate-report-index
 
 # 同步仓库列表到文档
 make sync-repos
-# 或: uv run python scripts/sync_repos_to_docs.py
+# 或: uv run trendpluse-sync-repos-to-docs
 ```
 
 ### 文档
@@ -176,13 +176,13 @@ make docs-serve
 
 ## 能力索引
 
-- 每日分析主入口：`scripts/run.py`
-- 周报生成：`scripts/run_weekly.py`
-- 项目发现：`scripts/discover_projects.py`
-- Issue Agent 分析：`scripts/analyze_issues_with_agent.py`
-- 报告索引生成：`scripts/generate_report_index.py`
-- 仓库同步文档：`scripts/sync_repos_to_docs.py`
-- 统计归一化工具：`scripts/normalize_daily_report_stats.py`
+- 每日分析主入口：`trendpluse-run`
+- 周报生成：`trendpluse-run-weekly`
+- 项目发现：`trendpluse-discover-projects`
+- Issue Agent 分析：`trendpluse-analyze-issues`
+- 报告索引生成：`trendpluse-generate-report-index`
+- 仓库同步文档：`trendpluse-sync-repos-to-docs`
+- 统计归一化工具：`trendpluse-normalize-daily-stats`
 
 ## 报告展示
 
@@ -311,7 +311,7 @@ git commit -m "feat: add new feature"
 
 ### 分析失败
 
-**问题**: 运行 `scripts/run.py` 失败
+**问题**: 运行 `trendpluse-run` 失败
 
 **解决方案**:
 ```bash
@@ -320,7 +320,7 @@ echo $ANTHROPIC_API_KEY
 echo $ANTHROPIC_BASE_URL
 
 # 查看详细日志
-RUST_LOG=debug uv run python scripts/run.py
+RUST_LOG=debug uv run trendpluse-run
 ```
 
 ### 没有生成报告
@@ -367,7 +367,7 @@ echo $FEISHU_WEBHOOK_URL
 echo $FEISHU_SECRET
 
 # 手动发送通知测试
-uv run python scripts/send_feishu_notification.py
+uv run trendpluse-send-feishu
 
 # 查看飞书卡片内容
 cat feishu_card.json

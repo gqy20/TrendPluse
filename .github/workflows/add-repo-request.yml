@@ -92,7 +92,7 @@ jobs:
 
       - name: 添加仓库到配置
         run: |
-          uv run python scripts/add_repo.py \
+          uv run trendpluse-add-repo \
             --repo "${{ steps.parse.outputs.repo }}" \
             --category "${{ steps.parse.outputs.category }}"
 

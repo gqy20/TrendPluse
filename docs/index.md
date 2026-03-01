@@ -114,7 +114,7 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 ### 使用方式
 
 !!! tip "快速开始"
-    1. 本地运行: `uv run python scripts/run.py`
+    1. 本地运行: `uv run trendpluse-run`
     2. 查看报告: 访问 GitHub Pages
     3. 订阅更新: Star 仓库接收通知
 

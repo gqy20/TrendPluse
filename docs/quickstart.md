@@ -54,7 +54,7 @@ DAILY_TOKEN_BUDGET=100000
 
 ```bash
 # 运行每日分析
-uv run python scripts/run.py
+uv run trendpluse-run
 
 # 或使用 make 命令
 make run
@@ -116,7 +116,7 @@ gh auth token
 
 ```bash
 # 发送今日的飞书通知
-uv run python scripts/send_feishu_notification.py
+uv run trendpluse-send-feishu
 
 # 或手动触发 GitHub Actions
 gh workflow run send-feishu.yml -f report_date=2026-01-12
@@ -185,17 +185,17 @@ make docs-serve
 
 ```bash
 # 添加单个仓库
-uv run python scripts/add_repo.py owner/repo
+uv run trendpluse-add-repo owner/repo
 
 # 批量添加
-uv run python scripts/add_repo.py owner/repo1 owner/repo2
+uv run trendpluse-add-repo owner/repo1 owner/repo2
 ```
 
 ### 通过环境变量
 
 ```bash
 export GITHUB_REPOS="org/repo1,org/repo2,org/repo3"
-uv run python scripts/run.py
+uv run trendpluse-run
 ```
 
 ### 通过配置文件
@@ -230,7 +230,7 @@ class Settings(BaseSettings):
     解决方案：
     - 使用 GitHub Token 提高速率限制
     - 检查网络连接
-    - 查看详细日志：`RUST_LOG=debug uv run python scripts/run.py`
+    - 查看详细日志：`RUST_LOG=debug uv run trendpluse-run`
 
 !!! question "并行处理失败？"
     降低并行线程数：

@@ -70,10 +70,18 @@ Homepage = "https://github.com/gqy20/trendpluse"
 Repository = "https://github.com/gqy20/trendpluse.git"
 
 [project.scripts]
+trendpluse-run = "trendpluse.cli.run:main"
+trendpluse-run-weekly = "trendpluse.cli.run_weekly:main"
+trendpluse-discover-projects = "trendpluse.cli.discover_projects:main"
+trendpluse-analyze-issues = "trendpluse.cli.analyze_issues_with_agent:main"
+trendpluse-analyze-repo = "trendpluse.cli.analyze_repo:main"
+trendpluse-send-feishu = "trendpluse.cli.send_feishu_notification:main"
+trendpluse-send-weekly-feishu = "trendpluse.cli.send_weekly_feishu:main"
 trendpluse-add-repo = "trendpluse.automation.add_repo:main"
 trendpluse-bridge-discovery = "trendpluse.automation.bridge_discovery_to_monitoring:main"
 trendpluse-generate-report-index = "trendpluse.automation.generate_report_index:main"
 trendpluse-sync-repos-to-docs = "trendpluse.automation.sync_repos_to_docs:main"
+trendpluse-normalize-daily-stats = "trendpluse.automation.normalize_daily_report_stats:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/trendpluse"]

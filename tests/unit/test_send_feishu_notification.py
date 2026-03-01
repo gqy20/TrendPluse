@@ -16,7 +16,7 @@ class TestFindReportJson:
         monkeypatch.chdir(tmp_path)
 
         # Act
-        from scripts.send_feishu_notification import find_report_json
+        from trendpluse.cli.send_feishu_notification import find_report_json
 
         result = find_report_json(report_date)
 
@@ -31,7 +31,7 @@ class TestFindReportJson:
         monkeypatch.chdir(tmp_path)
 
         # Act
-        from scripts.send_feishu_notification import find_report_json
+        from trendpluse.cli.send_feishu_notification import find_report_json
 
         result = find_report_json(report_date)
 

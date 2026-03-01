@@ -38,3 +38,29 @@ def test_sync_repos_wrapper_exports_automation_functions() -> None:
     from trendpluse.automation.sync_repos_to_docs import update_index_file as real_func
 
     assert wrapped_func is real_func
+
+
+def test_discover_wrapper_exports_cli_functions() -> None:
+    """scripts.discover_projects 应导出 cli 实现。"""
+    from scripts.discover_projects import discover as wrapped_func
+    from trendpluse.cli.discover_projects import discover as real_func
+
+    assert wrapped_func is real_func
+
+
+def test_send_feishu_wrapper_exports_cli_functions() -> None:
+    """scripts.send_feishu_notification 应导出 cli 实现。"""
+    from scripts.send_feishu_notification import find_report_json as wrapped_func
+    from trendpluse.cli.send_feishu_notification import find_report_json as real_func
+
+    assert wrapped_func is real_func
+
+
+def test_normalize_wrapper_exports_automation_functions() -> None:
+    """scripts.normalize_daily_report_stats 应导出 automation 实现。"""
+    from scripts.normalize_daily_report_stats import normalize_stats as wrapped_func
+    from trendpluse.automation.normalize_daily_report_stats import (
+        normalize_stats as real_func,
+    )
+
+    assert wrapped_func is real_func

@@ -239,7 +239,7 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  run: uv run python scripts/run.py
+  run: uv run trendpluse-run
 ```
 
 ### 飞书通知配置
@@ -269,7 +269,7 @@ export FEISHU_AT_MOBILES="13800138000,13900139000"
 ```bash
 # 启用详细日志
 export RUST_LOG=debug
-uv run python scripts/run.py
+uv run trendpluse-run
 ```
 
 ### 日志级别
@@ -300,10 +300,10 @@ uv run python -c "from trendpluse.config import Settings; from github import Git
 
 ```bash
 # 添加单个仓库
-uv run python scripts/add_repo.py owner/repo
+uv run trendpluse-add-repo owner/repo
 
 # 批量添加
-uv run python scripts/add_repo.py owner/repo1 owner/repo2
+uv run trendpluse-add-repo owner/repo1 owner/repo2
 ```
 
 ## 故障排查

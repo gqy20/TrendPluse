@@ -12,6 +12,7 @@ from trendpluse.models.signal import (
     DailyReport,
     ReleasesData,
     ReleaseSummary,
+    ReportStats,
     Signal,
 )
 from trendpluse.utils.formatters import (
@@ -534,7 +535,7 @@ class FeishuFormatter:
 
         return "".join(lines)
 
-    def _generate_stats_content(self, stats: dict) -> str:
+    def _generate_stats_content(self, stats: ReportStats) -> str:
         """生成统计信息内容（不包含外层标题，用于折叠面板）
 
         Args:

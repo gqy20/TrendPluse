@@ -64,7 +64,7 @@ jobs:
 
       - name: Sync reports to docs
         run: |
-          uv run python scripts/generate_report_index.py
+          uv run trendpluse-generate-report-index
 
       - name: Build site
         run: uv run mkdocs build
@@ -150,4 +150,4 @@ jobs:
             echo "FEISHU_WEBHOOK_URL not configured, skipping notification"
             exit 0
           fi
-          uv run python scripts/send_feishu_notification.py
+          uv run trendpluse-send-feishu

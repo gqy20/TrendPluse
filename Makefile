@@ -25,15 +25,15 @@ test-cov:
 
 # 运行主程序
 run:
-	uv run python scripts/run.py
+	uv run trendpluse-run
 
 # 生成报告索引
 gen-index:
-	uv run python scripts/generate_report_index.py
+	uv run trendpluse-generate-report-index
 
 # 同步仓库列表到文档
 sync-repos:
-	uv run python scripts/sync_repos_to_docs.py
+	uv run trendpluse-sync-repos-to-docs
 
 # 构建文档
 docs-build:

@@ -62,10 +62,10 @@
 
 ```bash
 # 本地运行发现
-uv run python scripts/discover_projects.py
+uv run trendpluse-discover-projects
 
 # 自定义参数
-uv run python scripts/discover_projects.py \
+uv run trendpluse-discover-projects \
   --days 7 \
   --min-quality 60.0 \
   --languages python typescript go \

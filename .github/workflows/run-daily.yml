@@ -56,7 +56,7 @@ jobs:
           ENABLE_ISSUE_AGENT_ANALYSIS: "true"
           ISSUE_AGENT_MODEL: ${{ secrets.ISSUE_AGENT_MODEL || '' }}
           LOG_LEVEL: INFO
-        run: uv run python scripts/run.py
+        run: uv run trendpluse-run
 
       - name: Get report date
         id: report_date
@@ -90,7 +90,7 @@ jobs:
       - name: Sync reports to docs
         if: steps.check_report.outputs.exists == 'true'
         run: |
-          uv run python scripts/generate_report_index.py
+          uv run trendpluse-generate-report-index
 
       - name: Commit report and docs
         if: steps.check_report.outputs.exists == 'true'
@@ -138,7 +138,7 @@ jobs:
 
       - name: Sync reports to docs
         run: |
-          uv run python scripts/generate_report_index.py
+          uv run trendpluse-generate-report-index
 
       - name: Build site
         run: uv run mkdocs build
@@ -220,4 +220,4 @@ jobs:
             echo "FEISHU_WEBHOOK_URL not configured, skipping notification"
             exit 0
           fi
-          uv run python scripts/send_feishu_notification.py
+          uv run trendpluse-send-feishu

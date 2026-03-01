@@ -9,16 +9,16 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from scripts.discover_projects import discover, load_monitored_repos
+from trendpluse.cli.discover_projects import discover, load_monitored_repos
 from trendpluse.models.discovery import DiscoveredProject
 
 
 class TestDiscoverProjectsIntegration:
     """项目发现集成测试"""
 
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_discover_full_workflow(
         self,
         mock_load_monitored,
@@ -111,9 +111,9 @@ class TestDiscoverProjectsIntegration:
         for repo in repos:
             assert "/" in repo
 
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_saves_reports_to_files(
         self,
         mock_load_monitored,
@@ -157,9 +157,9 @@ class TestDiscoverProjectsIntegration:
         assert "date" in json_content
         assert "candidates" in json_content
 
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_handles_empty_discovery(
         self,
         mock_load_monitored,
@@ -187,9 +187,9 @@ class TestDiscoverProjectsIntegration:
         assert report.passed_quality == 0
         assert len(report.candidates) == 0
 
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_deduplicates_across_sources(
         self,
         mock_load_monitored,
@@ -250,10 +250,10 @@ class TestDiscoverProjectsIntegration:
         assert len(report.candidates) == 1
         assert report.duplicates_removed == 1
 
-    @patch("scripts.discover_projects.get_settings")
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.get_settings")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_saves_actionable_candidates_file(
         self,
         mock_load_monitored,
@@ -326,10 +326,10 @@ class TestDiscoverProjectsIntegration:
         assert len(data["candidates"]) == 1
         assert data["candidates"][0]["repo"] == "owner/high-priority"
 
-    @patch("scripts.discover_projects.get_settings")
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.get_settings")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_actionable_candidates_respect_default_limit_10(
         self,
         mock_load_monitored,
@@ -388,11 +388,11 @@ class TestDiscoverProjectsIntegration:
         assert data["selected_count"] == 10
         assert len(data["candidates"]) == 10
 
-    @patch("scripts.discover_projects.ProjectHighlightAnalyzer")
-    @patch("scripts.discover_projects.get_settings")
-    @patch("scripts.discover_projects.TrendingCollector")
-    @patch("scripts.discover_projects.KeywordSearcher")
-    @patch("scripts.discover_projects.load_monitored_repos")
+    @patch("trendpluse.cli.discover_projects.ProjectHighlightAnalyzer")
+    @patch("trendpluse.cli.discover_projects.get_settings")
+    @patch("trendpluse.cli.discover_projects.TrendingCollector")
+    @patch("trendpluse.cli.discover_projects.KeywordSearcher")
+    @patch("trendpluse.cli.discover_projects.load_monitored_repos")
     def test_highlight_analysis_respects_default_limit_10(
         self,
         mock_load_monitored,

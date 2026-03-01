@@ -47,10 +47,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: uv run python scripts/run_weekly.py
+        run: uv run trendpluse-run-weekly
 
       - name: Sync reports to docs
-        run: uv run python scripts/generate_report_index.py
+        run: uv run trendpluse-generate-report-index
 
       - name: Commit weekly report
         run: |
@@ -92,4 +92,4 @@ jobs:
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
           FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
           WEEK_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.week_id || '' }}
-        run: uv run python scripts/send_weekly_feishu.py
+        run: uv run trendpluse-send-weekly-feishu

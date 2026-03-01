@@ -100,7 +100,7 @@ jobs:
           echo "Analysis days: $DAYS"
 
           # 调用分析脚本
-          uv run python scripts/analyze_repo.py "$REPO_URL" --days "$DAYS" --output /tmp/report.md
+          uv run trendpluse-analyze-repo "$REPO_URL" --days "$DAYS" --output /tmp/report.md
 
           # 回复 issue
           gh issue comment $ISSUE_NUMBER --body-file /tmp/report.md
