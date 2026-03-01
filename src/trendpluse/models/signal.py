@@ -178,7 +178,10 @@ class ReportStats(BaseModel):
 
     # 兼容旧调用：stats["key"] / stats.get() / stats.items()
     def __getitem__(self, key: str) -> int:
-        return getattr(self, key)
+        value = getattr(self, key)
+        if isinstance(value, int):
+            return value
+        raise KeyError(key)
 
     def __setitem__(self, key: str, value: int) -> None:
         setattr(self, key, value)

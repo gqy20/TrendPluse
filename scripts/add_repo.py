@@ -5,6 +5,7 @@
 """
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -180,11 +181,89 @@ def add_repo_to_config(config_file: str, repo: str, category: str) -> bool:
     return True
 
 
+def is_repo_in_config(config_file: str, repo: str) -> bool:
+    """检查仓库是否已存在于配置中"""
+    content = Path(config_file).read_text()
+    return f'"{repo}"' in content or f"'{repo}'" in content
+
+
+def batch_add_repos_to_config(
+    config_file: str,
+    items: list[dict[str, str]],
+) -> dict[str, list[str]]:
+    """批量添加仓库到配置文件
+
+    Args:
+        config_file: 配置文件路径
+        items: 待添加项列表，每项至少包含 repo/category
+
+    Returns:
+        结构化结果
+    """
+    result: dict[str, list[str]] = {
+        "added": [],
+        "duplicates": [],
+        "invalid_format": [],
+        "invalid_category": [],
+        "failed": [],
+    }
+
+    for item in items:
+        repo = (item.get("repo") or "").strip()
+        category = (item.get("category") or "").strip() or "其他"
+
+        if not validate_repo_format(repo):
+            result["invalid_format"].append(repo)
+            continue
+        if get_category_markers(category) is None:
+            result["invalid_category"].append(repo)
+            continue
+        if is_repo_in_config(config_file, repo):
+            result["duplicates"].append(repo)
+            continue
+
+        if add_repo_to_config(config_file=config_file, repo=repo, category=category):
+            result["added"].append(repo)
+        else:
+            result["failed"].append(repo)
+
+    return result
+
+
+def load_batch_items(batch_file: str) -> list[dict[str, str]]:
+    """从 JSON 文件读取批量添加项"""
+    data = json.loads(Path(batch_file).read_text(encoding="utf-8"))
+
+    if isinstance(data, list):
+        raw_items = data
+    elif isinstance(data, dict):
+        raw_items = data.get("candidates", [])
+    else:
+        raw_items = []
+
+    items: list[dict[str, str]] = []
+    for item in raw_items:
+        if not isinstance(item, dict):
+            continue
+        repo = str(item.get("repo", "")).strip()
+        category = str(
+            item.get("category") or item.get("suggested_category") or "其他"
+        ).strip()
+        items.append({"repo": repo, "category": category})
+    return items
+
+
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="添加仓库到配置")
-    parser.add_argument("--repo", required=True, help="仓库路径，格式：owner/repo")
-    parser.add_argument("--category", required=True, help="分类名称")
+    parser.add_argument("--repo", help="仓库路径，格式：owner/repo")
+    parser.add_argument("--category", help="分类名称")
+    parser.add_argument(
+        "--batch-file",
+        help=(
+            "批量输入文件（JSON），支持 [{repo,category}] 或 discovery actionable 格式"
+        ),
+    )
     parser.add_argument(
         "--config-file",
         default="src/trendpluse/config.py",
@@ -197,6 +276,26 @@ def main():
 
     args = parser.parse_args()
 
+    if args.batch_file:
+        items = load_batch_items(args.batch_file)
+        result = batch_add_repos_to_config(args.config_file, items)
+        print(
+            "批量添加结果: "
+            f"added={len(result['added'])}, "
+            f"duplicates={len(result['duplicates'])}, "
+            f"invalid_format={len(result['invalid_format'])}, "
+            f"invalid_category={len(result['invalid_category'])}, "
+            f"failed={len(result['failed'])}"
+        )
+        has_errors = bool(
+            result["invalid_format"] or result["invalid_category"] or result["failed"]
+        )
+        sys.exit(1 if has_errors else 0)
+
+    if not args.repo or not args.category:
+        print("单仓模式必须提供 --repo 和 --category")
+        sys.exit(1)
+
     # 验证仓库格式
     if not validate_repo_format(args.repo):
         print(f"无效仓库格式: {args.repo}")
@@ -204,7 +303,6 @@ def main():
 
     # 添加仓库
     success = add_repo_to_config(args.config_file, args.repo, args.category)
-
     sys.exit(0 if success else 1)
 
 

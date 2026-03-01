@@ -5,6 +5,7 @@
 """
 
 import argparse
+import json
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -16,6 +17,7 @@ from trendpluse.discovery import (
     Deduplicator,
     DiscoveryReporter,
     KeywordSearcher,
+    ProjectClassifier,
     ProjectHighlightAnalyzer,
     QualityEvaluator,
     TrendingCollector,
@@ -25,6 +27,57 @@ from trendpluse.models.discovery import DiscoveryReport
 
 logger = get_logger(__name__)
 console = Console()
+
+# 发现分类 -> 监控分类 映射（用于后续自动接入监控列表）
+MONITORING_CATEGORY_MAP: dict[str, str] = {
+    "AI Agents": "Agentic AI 核心框架",
+    "RAG/检索": "Agent 框架",
+    "LLM 界面": "Anthropic 工具与集成",
+    "机器学习框架": "Anthropic 研究与评估",
+    "开发工具": "AI 编程助手",
+    "DevOps/基础设施": "其他",
+    "监控/观测": "其他",
+    "Web 框架": "其他",
+    "数据/基础设施": "Agent 框架",
+    "学习资源": "Anthropic 研究与评估",
+    "其他": "其他",
+}
+
+
+def _build_actionable_candidates(candidates: list) -> list[dict]:
+    """构建可执行候选清单（用于后续自动接入）
+
+    仅输出 high/medium 优先级项目。
+    """
+    classifier = ProjectClassifier()
+    classified = classifier.classify_batch(candidates)
+
+    actionable = []
+    for project in candidates:
+        if project.recommendation_priority not in ("high", "medium"):
+            continue
+
+        categories = classified.get(project.repo, ["其他"])
+        suggested_category = "其他"
+        for category in categories:
+            mapped = MONITORING_CATEGORY_MAP.get(category)
+            if mapped:
+                suggested_category = mapped
+                break
+
+        actionable.append(
+            {
+                "repo": project.repo,
+                "name": project.name,
+                "priority": project.recommendation_priority,
+                "quality_score": round(project.quality_score, 2),
+                "discovery_source": project.discovery_source,
+                "discovery_reason": project.discovery_reason,
+                "classified_categories": categories,
+                "suggested_category": suggested_category,
+            }
+        )
+    return actionable
 
 
 def load_monitored_repos() -> set[str]:
@@ -168,7 +221,25 @@ def discover(
         json_file = output_dir / f"discovery-{report.date}.json"
         reporter.save_json(report, json_file)
 
-        console.print(f"[green]报告已保存:[/green] {md_file.name}, {json_file.name}")
+        # 可执行候选清单（给后续自动化接入使用）
+        actionable_file = output_dir / f"discovery-{report.date}-actionable.json"
+        actionable_candidates = _build_actionable_candidates(report.candidates)
+        actionable_data: dict[str, object] = {
+            "date": report.date,
+            "generated_at": datetime.now().isoformat(),
+            "total_candidates": len(report.candidates),
+            "selected_count": len(actionable_candidates),
+            "candidates": actionable_candidates,
+        }
+        actionable_file.write_text(
+            json.dumps(actionable_data, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+        console.print(
+            "[green]报告已保存:[/green] "
+            f"{md_file.name}, {json_file.name}, {actionable_file.name}"
+        )
 
     return report
 

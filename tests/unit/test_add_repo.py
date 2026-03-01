@@ -162,7 +162,60 @@ class Settings:
         assert markers is not None
         assert "start" in markers
         assert "end" in markers
+        assert markers["start"] is not None
         assert "Agentic AI" in markers["start"]
 
         # 无效分类
         assert get_category_markers("不存在的分类") is None
+
+    def test_batch_add_repos_to_config(self, tmp_path: Path):
+        """测试：批量添加仓库，返回结构化结果"""
+        config_content = '''"""配置管理模块"""
+
+class Settings:
+    github_repos: list[str] = Field(
+        default=[
+            # Anthropic 核心产品
+            "anthropics/skills",
+            # Agentic AI 核心框架
+            "openai/swarm",
+            # 自主 AI 编程代理
+            "cline/cline",
+            # 其他
+        ]
+    )
+'''
+        config_file = tmp_path / "config.py"
+        config_file.write_text(config_content)
+
+        from scripts.add_repo import batch_add_repos_to_config
+
+        result = batch_add_repos_to_config(
+            config_file=str(config_file),
+            items=[
+                {
+                    "repo": "openai/codex",
+                    "category": "Agentic AI 核心框架",
+                },
+                {
+                    "repo": "anthropics/skills",
+                    "category": "Anthropic 核心产品",
+                },
+                {
+                    "repo": "invalid-format",
+                    "category": "Anthropic 核心产品",
+                },
+                {
+                    "repo": "foo/bar",
+                    "category": "不存在的分类",
+                },
+            ],
+        )
+
+        assert "openai/codex" in result["added"]
+        assert "anthropics/skills" in result["duplicates"]
+        assert "invalid-format" in result["invalid_format"]
+        assert "foo/bar" in result["invalid_category"]
+
+        updated_content = config_file.read_text()
+        assert '"openai/codex"' in updated_content

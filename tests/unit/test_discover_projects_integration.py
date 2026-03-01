@@ -3,6 +3,7 @@
 测试完整的项目发现流程。
 """
 
+import json
 from datetime import UTC, datetime
 from unittest.mock import Mock, patch
 
@@ -139,17 +140,20 @@ class TestDiscoverProjectsIntegration:
         # 检查文件已创建
         md_files = list(tmp_path.glob("*.md"))
         json_files = list(tmp_path.glob("*.json"))
+        actionable_files = list(tmp_path.glob("*-actionable.json"))
 
         assert len(md_files) == 1
-        assert len(json_files) == 1
+        assert len(json_files) == 2
+        assert len(actionable_files) == 1
 
         # 验证文件内容
         md_content = md_files[0].read_text()
         assert "# 项目发现报告" in md_content
 
-        import json
-
-        json_content = json.loads(json_files[0].read_text())
+        base_report_file = next(
+            file for file in json_files if not file.name.endswith("-actionable.json")
+        )
+        json_content = json.loads(base_report_file.read_text())
         assert "date" in json_content
         assert "candidates" in json_content
 
@@ -245,6 +249,82 @@ class TestDiscoverProjectsIntegration:
         # 应该去重，只剩 1 个
         assert len(report.candidates) == 1
         assert report.duplicates_removed == 1
+
+    @patch("scripts.discover_projects.get_settings")
+    @patch("scripts.discover_projects.TrendingCollector")
+    @patch("scripts.discover_projects.KeywordSearcher")
+    @patch("scripts.discover_projects.load_monitored_repos")
+    def test_saves_actionable_candidates_file(
+        self,
+        mock_load_monitored,
+        mock_keyword_searcher,
+        mock_trending_collector,
+        mock_get_settings,
+        tmp_path,
+    ):
+        """测试：保存可执行候选清单（仅 high/medium）"""
+        mock_load_monitored.return_value = set()
+        mock_get_settings.return_value = Mock(
+            anthropic_api_key="",
+            anthropic_model="glm-4.7",
+            anthropic_base_url="",
+            llm_retry_max_attempts=3,
+            llm_retry_wait_min=1,
+            llm_retry_wait_max=10,
+        )
+
+        mock_trending = Mock()
+        mock_trending_collector.return_value = mock_trending
+        mock_trending.discover.return_value = [
+            DiscoveredProject(
+                repo="owner/high-priority",
+                name="high-priority",
+                description="AI agent project",
+                stars=15000,
+                language="Python",
+                topics=["agent", "ai"],
+                license="MIT",
+                open_issues=20,
+                forks=800,
+                watchers=100,
+                last_commit_at=datetime.now(UTC),
+                discovery_source="trending",
+                discovery_reason="Trending",
+            )
+        ]
+
+        mock_keyword = Mock()
+        mock_keyword_searcher.return_value = mock_keyword
+        mock_keyword.discover.return_value = [
+            DiscoveredProject(
+                repo="owner/low-priority",
+                name="low-priority",
+                description="",
+                stars=10,
+                language="Unknown",
+                topics=[],
+                license=None,
+                open_issues=0,
+                forks=0,
+                watchers=0,
+                last_commit_at=None,
+                discovery_source="keyword",
+                discovery_reason="Keyword: test",
+            )
+        ]
+
+        discover(
+            github_token="test_token",
+            output_dir=tmp_path,
+        )
+
+        actionable_files = list(tmp_path.glob("discovery-*-actionable.json"))
+        assert len(actionable_files) == 1
+
+        data = json.loads(actionable_files[0].read_text(encoding="utf-8"))
+        assert "candidates" in data
+        assert len(data["candidates"]) == 1
+        assert data["candidates"][0]["repo"] == "owner/high-priority"
 
 
 @pytest.mark.integration

@@ -18,9 +18,31 @@ on:
         required: false
         type: number
         default: 60.0
+      bridge_mode:
+        description: "discovery 到监控列表桥接模式 (off/preview/apply)"
+        required: false
+        type: choice
+        default: "preview"
+        options:
+          - off
+          - preview
+          - apply
 
   # 允许从其他 workflow 调用
   workflow_call:
+    inputs:
+      days:
+        required: false
+        type: number
+        default: 30
+      min_quality:
+        required: false
+        type: number
+        default: 60.0
+      bridge_mode:
+        required: false
+        type: string
+        default: "preview"
 
 permissions:
   contents: write
@@ -55,12 +77,51 @@ jobs:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          DAYS=${{ github.event.inputs.days || 30 }}
-          MIN_QUALITY=${{ github.event.inputs.min_quality || 60.0 }}
+          DAYS=${{ inputs.days || github.event.inputs.days || 30 }}
+          MIN_QUALITY=${{ inputs.min_quality || github.event.inputs.min_quality || 60.0 }}
           uv run python scripts/discover_projects.py \
             --days $DAYS \
             --min-quality $MIN_QUALITY \
             --output-dir reports
+
+      - name: Bridge discovery to monitoring (preview/apply)
+        env:
+          BRIDGE_MODE: ${{ inputs.bridge_mode || github.event.inputs.bridge_mode || 'preview' }}
+        run: |
+          set -e
+          BRIDGE_RESULT_FILE="reports/discovery/discovery-bridge-result.json"
+          if [ "$BRIDGE_MODE" = "off" ]; then
+            echo "Bridge mode is off; skip."
+            echo '{"mode":"off","status":"skipped"}' > "$BRIDGE_RESULT_FILE"
+            exit 0
+          fi
+
+          ACTIONABLE_FILE=$(ls -1t reports/discovery/discovery-*-actionable.json | head -1 || true)
+          if [ -z "$ACTIONABLE_FILE" ]; then
+            echo "No actionable file found; skip bridge."
+            echo '{"mode":"'"$BRIDGE_MODE"'","status":"no_actionable_file"}' > "$BRIDGE_RESULT_FILE"
+            exit 0
+          fi
+
+          echo "Using actionable file: $ACTIONABLE_FILE"
+          APPLY_FLAG=""
+          if [ "$BRIDGE_MODE" = "apply" ]; then
+            APPLY_FLAG="--apply"
+          fi
+
+          uv run python scripts/bridge_discovery_to_monitoring.py \
+            --actionable-file "$ACTIONABLE_FILE" \
+            --config-file src/trendpluse/config.py \
+            --min-priority medium \
+            $APPLY_FLAG | tee "$BRIDGE_RESULT_FILE"
+
+      - name: Upload bridge result
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: discovery-bridge-result
+          path: reports/discovery/discovery-bridge-result.json
+          retention-days: 30
 
       - name: Upload reports
         uses: actions/upload-artifact@v6
@@ -84,6 +145,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/discovery/*.md reports/discovery/*.json docs/discovery-reports/*.md docs/discovery.md
-          git diff --quiet && git diff --staged --quiet || git commit -m "docs: update discovery reports [skip ci]"
+          git add reports/discovery/*.md reports/discovery/*.json docs/discovery-reports/*.md docs/discovery.md src/trendpluse/config.py || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update discovery outputs and monitoring list [skip ci]"
           git push
