@@ -27,6 +27,11 @@ on:
           - off
           - preview
           - apply
+      max_add_per_run:
+        description: "bridge 每次最多新增仓库数量"
+        required: false
+        type: number
+        default: 10
 
   # 允许从其他 workflow 调用
   workflow_call:
@@ -43,6 +48,10 @@ on:
         required: false
         type: string
         default: "preview"
+      max_add_per_run:
+        required: false
+        type: number
+        default: 10
 
 permissions:
   contents: write
@@ -87,6 +96,7 @@ jobs:
       - name: Bridge discovery to monitoring (preview/apply)
         env:
           BRIDGE_MODE: ${{ inputs.bridge_mode || github.event.inputs.bridge_mode || 'preview' }}
+          MAX_ADD_PER_RUN: ${{ inputs.max_add_per_run || github.event.inputs.max_add_per_run || 10 }}
         run: |
           set -e
           BRIDGE_RESULT_FILE="reports/discovery/discovery-bridge-result.json"
@@ -113,6 +123,7 @@ jobs:
             --actionable-file "$ACTIONABLE_FILE" \
             --config-file src/trendpluse/config.py \
             --min-priority medium \
+            --max-add-per-run "$MAX_ADD_PER_RUN" \
             $APPLY_FLAG | tee "$BRIDGE_RESULT_FILE"
 
       - name: Upload bridge result

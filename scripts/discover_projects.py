@@ -44,7 +44,10 @@ MONITORING_CATEGORY_MAP: dict[str, str] = {
 }
 
 
-def _build_actionable_candidates(candidates: list) -> list[dict]:
+def _build_actionable_candidates(
+    candidates: list,
+    max_candidates: int = 10,
+) -> list[dict]:
     """构建可执行候选清单（用于后续自动接入）
 
     仅输出 high/medium 优先级项目。
@@ -77,7 +80,17 @@ def _build_actionable_candidates(candidates: list) -> list[dict]:
                 "suggested_category": suggested_category,
             }
         )
-    return actionable
+
+    # 按优先级和质量分排序后截断，避免下游一次处理过多项目
+    priority_order = {"high": 3, "medium": 2, "low": 1}
+    actionable.sort(
+        key=lambda item: (
+            -priority_order.get(str(item["priority"]), 0),
+            -float(item["quality_score"]),
+            str(item["repo"]),
+        )
+    )
+    return actionable[:max_candidates]
 
 
 def load_monitored_repos() -> set[str]:
@@ -96,6 +109,7 @@ def discover(
     keywords: list[str] | None = None,
     min_quality_score: float = 60.0,
     days: int = 30,
+    actionable_limit: int = 10,
     output_dir: Path | None = None,
 ) -> DiscoveryReport:
     """执行项目发现流程
@@ -106,6 +120,7 @@ def discover(
         keywords: 关键词列表
         min_quality_score: 最低质量分数
         days: 回溯天数
+        actionable_limit: actionable 候选输出上限
         output_dir: 输出目录
 
     Returns:
@@ -223,7 +238,9 @@ def discover(
 
         # 可执行候选清单（给后续自动化接入使用）
         actionable_file = output_dir / f"discovery-{report.date}-actionable.json"
-        actionable_candidates = _build_actionable_candidates(report.candidates)
+        actionable_candidates = _build_actionable_candidates(
+            report.candidates, max_candidates=actionable_limit
+        )
         actionable_data: dict[str, object] = {
             "date": report.date,
             "generated_at": datetime.now().isoformat(),
@@ -290,6 +307,12 @@ def main() -> int:
         help="报告输出目录",
     )
     parser.add_argument(
+        "--actionable-limit",
+        type=int,
+        default=10,
+        help="actionable 候选输出上限（默认: 10）",
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -318,6 +341,7 @@ def main() -> int:
             keywords=args.keywords,
             min_quality_score=args.min_quality,
             days=args.days,
+            actionable_limit=args.actionable_limit,
             output_dir=args.output_dir,
         )
 

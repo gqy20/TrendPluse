@@ -326,6 +326,68 @@ class TestDiscoverProjectsIntegration:
         assert len(data["candidates"]) == 1
         assert data["candidates"][0]["repo"] == "owner/high-priority"
 
+    @patch("scripts.discover_projects.get_settings")
+    @patch("scripts.discover_projects.TrendingCollector")
+    @patch("scripts.discover_projects.KeywordSearcher")
+    @patch("scripts.discover_projects.load_monitored_repos")
+    def test_actionable_candidates_respect_default_limit_10(
+        self,
+        mock_load_monitored,
+        mock_keyword_searcher,
+        mock_trending_collector,
+        mock_get_settings,
+        tmp_path,
+    ):
+        """测试：actionable 默认最多输出 10 个"""
+        mock_load_monitored.return_value = set()
+        mock_get_settings.return_value = Mock(
+            anthropic_api_key="",
+            anthropic_model="glm-4.7",
+            anthropic_base_url="",
+            llm_retry_max_attempts=3,
+            llm_retry_wait_min=1,
+            llm_retry_wait_max=10,
+        )
+
+        # 生成 12 个高优先级候选，默认应只输出 10 个
+        trending_projects = []
+        for i in range(12):
+            trending_projects.append(
+                DiscoveredProject(
+                    repo=f"owner/high-{i}",
+                    name=f"high-{i}",
+                    description="AI agent project",
+                    stars=12000 - i * 100,
+                    language="Python",
+                    topics=["agent", "ai"],
+                    license="MIT",
+                    open_issues=10,
+                    forks=200,
+                    watchers=50,
+                    last_commit_at=datetime.now(UTC),
+                    discovery_source="trending",
+                    discovery_reason="Trending",
+                )
+            )
+
+        mock_trending = Mock()
+        mock_trending_collector.return_value = mock_trending
+        mock_trending.discover.return_value = trending_projects
+
+        mock_keyword = Mock()
+        mock_keyword_searcher.return_value = mock_keyword
+        mock_keyword.discover.return_value = []
+
+        discover(
+            github_token="test_token",
+            output_dir=tmp_path,
+        )
+
+        actionable_file = next(tmp_path.glob("discovery-*-actionable.json"))
+        data = json.loads(actionable_file.read_text(encoding="utf-8"))
+        assert data["selected_count"] == 10
+        assert len(data["candidates"]) == 10
+
 
 @pytest.mark.integration
 @pytest.mark.skip(reason="需要真实 GitHub API")
