@@ -1,0 +1,1035 @@
+{
+  "date": "2026-03-02",
+  "summary_brief": "今日呈现三大技术趋势：1) 异步化架构成为 AI 应用的性能共识，OpenHands 企业模块全面迁移异步会话并修复 CPU 占用问题，同时 OpenDevin 也在推进相同的架构升级；2) 安全默认原则在多个 AI 编码工具中得到强化，Anthropic 系列产品连续收紧数据暴露策略，gptme 和 OpenRouter 等项目同步加强输入验证与错误处理；3) 多智能体系统从概念验证走向工程化落地，OpenAI Codex 的子代理分支机制与 OpenHands 的智能体边界划分，标志着分布式协作体系正在成熟。",
+  "engineering_signals": [
+    {
+      "id": "trend-async-migration",
+      "title": "异步数据库会话迁移成为高并发 AI 应用的性能共识",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenHands 和 OpenDevin 两个大型 AI 编码平台同步将核心数据库访问层从同步模式重构为异步模式，显著解决了 I/O 阻塞导致的性能瓶颈。OpenHands 更是修复了异步回调处理中的 100% CPU 占用问题，这表明异步化已是 AI 应用性能优化的必经之路。",
+      "sources": [
+        "https://github.com/OpenHands/OpenHands/pull/13134",
+        "https://github.com/OpenHands/OpenHands/pull/13137",
+        "https://github.com/OpenDevin/OpenDevin/commit/003b430e962ae728325d0fa5f787ec6c5e7abe5c",
+        "https://github.com/OpenHands/OpenHands/pull/13136"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "pr-17",
+        "pr-18",
+        "pr-19",
+        "commit-1"
+      ]
+    },
+    {
+      "id": "trend-security-defaults",
+      "title": "安全默认原则与输入验证强化成为行业共识",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic、gptme、cline 等多个主流 AI 编码工具同步加强安全默认配置和输入验证，包括默认关闭 display_report、隐藏敏感权限详情、严格类型校验、防止 JSON 注入等。这反映出 AI 工具链正在从功能优先转向安全优先，系统性降低 CI/CD 自动化中的数据泄露风险。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1569",
+        "https://github.com/anthropics/claude-code/pull/30066",
+        "https://github.com/anthropics/claude-code-action/pull/992",
+        "https://github.com/anthropics/claude-code-action/pull/996",
+        "https://github.com/anthropics/claude-code-action/pull/993",
+        "https://github.com/continuedev/continue/releases/tag/v1.5.44",
+        "https://github.com/gptme/gptme/pull/1571"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "continuedev/continue",
+        "anthropics/claude-code-action",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "pr-5",
+        "pr-1",
+        "pr-3",
+        "pr-9",
+        "pr-10",
+        "release-3"
+      ]
+    },
+    {
+      "id": "trend-agent-boundaries",
+      "title": "多智能体协作中的边界划分与错误处理机制成熟",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenHands 和 OpenAI Codex 同时解决多智能体系统中的关键工程问题：OpenHands 修复了规划 Agent 错误执行代码的边界问题，Codex 引入子代理分支机制实现任务隔离。配合 Cline 和 OpenCode 实现的上下文溢出自动恢复，以及 OpenRouter 的错误检测增强，显示出 AI Agent 系统正在建立稳定的容错与协作模式。",
+      "sources": [
+        "https://github.com/OpenHands/OpenHands/pull/13139",
+        "https://github.com/cline/cline/issues/9592",
+        "https://github.com/cline/cline/pull/9633",
+        "https://github.com/cline/cline/commit/76bd0926e63c4d375ff7b038c9bb989140940f86",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.65"
+      ],
+      "related_repos": [
+        "OpenHands/OpenHands",
+        "cline/cline",
+        "anthropics/claude-code-action",
+        "anomalyco/opencode",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "release-1",
+        "pr-6",
+        "commit-2"
+      ]
+    },
+    {
+      "id": "trend-workflow-reliability",
+      "title": "CLI 工具链验证与发布自动化可靠性提升",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Anthropic 生态三个仓库同步强化 gh.sh 脚本的验证与错误处理，gptme 修复发布自动化中的 changelog 膨胀问题并添加截断保护，Fabric 新增波兰语支持达到 11 种语言全覆盖。这些改进显示 AI 开发工具链正在系统性地提升自动化工作流的可靠性和国际化能力。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/pull/30066",
+        "https://github.com/danielmiessler/Fabric/pull/2040",
+        "https://github.com/anthropics/claude-code-action/pull/996",
+        "https://github.com/gptme/gptme/pull/1567",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/pull/209"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code-action",
+        "danielmiessler/Fabric",
+        "anthropics/claude-code",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "pr-1",
+        "pr-11",
+        "pr-2"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "trend-architecture-modularity",
+      "title": "AI 应用架构向模块化与推理模型支持演进",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "Dify 将工作流引擎独立为 dify_graph 包，Deer Flow 添加 reasoning_effort 参数支持，显示 AI 应用平台正在向更清晰的模块化架构演进，并开始适配 OpenAI o1 等推理模型的特性。这种架构升级为未来支持更复杂的推理任务和多模型协作奠定了基础。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/c917838f9c855e32d06ff6c12fbb55422b1bd219",
+        "https://github.com/bytedance/deer-flow/commit/a138d5388ab807b85d6f03c20d2ba59a764d84cf",
+        "https://github.com/langchain-ai/deepagents/commit/dad8b6e15a78d26921c0cb831579648927caa551"
+      ],
+      "related_repos": [
+        "langgenius/dify",
+        "bytedance/deer-flow",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "commit-8",
+        "commit-5",
+        "commit-4"
+      ]
+    },
+    {
+      "id": "trend-context-management",
+      "title": "LLM 上下文管理与工具交互优化成为焦点",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "Google Gemini CLI 引入 MCP 工具输出截断保护，gptme 和 ErikBjare/bob 修复 GitHub 多行注释处理，Cline 实现 checkpoint 恢复重试机制，这些改进共同指向 LLM 上下文管理与外部工具交互的鲁棒性优化，是构建可靠 AI Agent 系统的核心研究问题。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/ce5a2d0760a7e5e892aebf7ddf679d86674a52c0",
+        "https://github.com/gptme/gptme/pull/1572",
+        "https://github.com/cline/cline/pull/9620",
+        "https://github.com/cline/cline/commit/d96c5d4b409e2940d6ec2026bdfc3ec7bd3e1517"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "gptme/gptme",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "commit-3",
+        "pr-8",
+        "pr-7",
+        "commit-7"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code Action v1.0 正式发布",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic 官方 CI/CD 集成工具迎来 1.0 正版，统一了交互与自动化模式，大幅简化了在 GitHub Actions 中使用 Claude 进行代码审查、CI 修复和文档生成的配置复杂度。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.66"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenAI Codex 引入多代理分支机制",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增线程分支功能允许在对话中生成子代理，实现了复杂任务的并行处理与隔离，同时强化了沙箱安全机制和实时语音交互的设备控制能力。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.65"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "Agno 增强企业级知识源集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增 GitHub App 身份认证支持，解决了企业级知识库访问的权限管理痛点；同时引入高级过滤 DSL 和审批状态端点，显著提升了 AI Agent 在企业环境中的可控性和安全性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Claude Code 默认收紧数据暴露策略",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "连续两个版本将 `display_report` 默认值改为 false 并清理输出中的权限拒绝计数，显示出 Anthropic 正在积极调整默认策略，以减少 CI 流程中敏感数据的意外泄露风险。",
+      "sources": [
+        "https://github.com/continuedev/continue/releases/tag/v1.5.44"
+      ],
+      "related_repos": [
+        "continuedev/continue",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "LangGraph CLI 修复关键安全漏洞",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "紧急修复了 `minimatch` 和 `js-yaml` 依赖中的多个高危 CVE 漏洞，对于使用 LangGraph 构建生产级 AI 应用的开发者至关重要。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.428"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric",
+        "langchain-ai/langgraph"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 35,
+    "pr_count": 20,
+    "commit_count": 10,
+    "release_count": 5,
+    "unique_repos": 18,
+    "total_prs_analyzed": 20,
+    "total_releases": 9,
+    "high_impact_signals": 6,
+    "total_commits_analyzed": 222,
+    "total_releases_analyzed": 9,
+    "total_breaking_changes": 4
+  },
+  "activity": {
+    "total_commits": 222,
+    "active_repos_count": 24,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 47,
+        "top_contributors": [
+          "Veykril",
+          "benbrandt",
+          "cole-miller",
+          "bennetbo",
+          "smitbarmase"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 23,
+        "top_contributors": [
+          "fatelei",
+          "laipz8200",
+          "CodingOnStar",
+          "stablegenius49",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 20,
+        "top_contributors": [
+          "sydney-runkle",
+          "mdrxy",
+          "eyurtsev",
+          "AdemBoukhris457",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 16,
+        "top_contributors": [
+          "jif-oai",
+          "etraut-openai",
+          "joshka-oai",
+          "dylan-hurd-oai",
+          "charley-oai"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 15,
+        "top_contributors": [
+          "sydney-runkle",
+          "mdrxy",
+          "dependabot[bot]",
+          "untilhamza"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 15,
+        "top_contributors": [
+          "SandyTao520",
+          "gundermanc",
+          "scidomino",
+          "keithguerin",
+          "abhipatel12"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 15,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "Brendonovich",
+          "neriousy",
+          "opencode-agent[bot]"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 12,
+        "top_contributors": [
+          "kausmeows",
+          "ysolanky",
+          "willemcdejongh",
+          "ashpreetbedi",
+          "hztBUAA"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 11,
+        "top_contributors": [
+          "tofarr",
+          "hieptl",
+          "dependabot[bot]",
+          "neubig",
+          "mo-abdulai"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 10,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 5,
+        "top_contributors": [
+          "saoudrizwan",
+          "arafatkatze",
+          "Br1an67",
+          "reneehuang1"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 5,
+        "top_contributors": [
+          "sydney-runkle",
+          "hinthornw",
+          "npentrel"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 4,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]",
+          "Twozee-Tech"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 4,
+        "top_contributors": [
+          "zhiyunyao",
+          "fancyboi999",
+          "haibow"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "top_contributors": [
+          "ddworken",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 3,
+        "top_contributors": [
+          "sestinj"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 3,
+        "top_contributors": [
+          "it-education-md",
+          "gautamvarmadatla",
+          "CoderOMaster"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 3,
+        "top_contributors": [
+          "mplachta",
+          "greysonlalonde",
+          "giulio-leone"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 2,
+        "top_contributors": [
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 2,
+        "top_contributors": [
+          "04cb",
+          "YingchaoX"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 1,
+        "top_contributors": [
+          "roji"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "whysosaket"
+        ]
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 1,
+        "top_contributors": [
+          "avianion"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 9,
+    "unique_repos_count": 7,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.66",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "## What's Changed\n* Only expose permission_denials count in sanitized output by @ddworken in https://github.com/anthropics/claude-code-action/pull/993\n\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.66",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.66",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "优化权限拒绝计数在清理输出中的暴露方式",
+            "调整 sanitized 输出的敏感信息处理逻辑"
+          ],
+          "summary_cn": "v1.0.66 版本主要是对输出安全性处理的改进，仅将 permission_denials（权限拒绝）计数暴露在清理后的输出中，以更好地控制敏感信息的显示。这是一个小幅度的安全性优化更新，影响级别较低。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.65",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "## What's Changed\n* Change the default `display_report` option to false to restrict exposed data by @ddworken in https://github.com/anthropics/claude-code-action/pull/992\n\n\n**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.65",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.65",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "将 display_report 默认值从 true 改为 false",
+            "限制默认暴露的数据内容",
+            "增强数据隐私保护和安全性",
+            "影响现有依赖默认显示报告的用户"
+          ],
+          "summary_cn": "这是一个重大安全增强版本。该版本将 display_report 配置项的默认值从 true 更改为 false，以减少默认情况下暴露的数据量。这一变更可能会影响那些依赖默认显示报告功能的现有用户，建议用户根据需要显式设置该选项。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1",
+        "author": "ashwin-ant",
+        "date": "2026-03-02",
+        "summary": "# 🎉 Claude Code GitHub Action v1.0 - Now Generally Available!\r\n\r\nWe're excited to announce the v1.0 release of Claude Code GitHub Action! This major release brings significant improvements in simplicity, flexibility, and power to AI-assisted development workflows.\r\n\r\n## 🚀 What's New in v1.0\r\n\r\n### Simplified Configuration\r\n- **Automatic mode detection** - No more manual `mode` configuration. The action intelligently determines whether to run in interactive or automation mode based on your setup\r\n- **Unified interface** - All prompts now go through a single `prompt` input, and all CLI options through `claude_args`\r\n- **Better SDK alignment** - Closer integration with the Claude Code CLI for a consistent experience\r\n\r\n### More Powerful & Flexible\r\n- Direct access to all Claude Code CLI capabilities through `claude_args`\r\n- Support for custom system prompts, tool configurations, and model selection\r\n- Enhanced compatibility with AWS Bedrock and Google Vertex AI\r\n\r\n## ⚠️ Breaking Changes\r\n\r\nThis release includes breaking changes from v0.x. Key deprecated inputs have been replaced with a cleaner, more intuitive API:\r\n- `mode`, `direct_prompt`, `override_prompt` → unified `prompt` input\r\n- `custom_instructions`, `model`, `allowed_tools`, `mcp_config` → `claude_args` with CLI format\r\n- Other deprecated: `disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`\r\n\r\n**📚 Please review our [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) for detailed upgrade instructions and examples.**\r\n\r\n## 💡 New Use Cases & Examples\r\n\r\nExplore the expanded possibilities with v1.0! We've created comprehensive examples showcasing various workflows:\r\n\r\n- **Automated PR Reviews** - Intelligent code review on every pull request\r\n- **CI Failure Fixes** - Automatically diagnose and fix failing tests\r\n- **Issue Triage** - Smart categorization and response to new issues\r\n- **Documentation Generation** - Keep docs in sync with code changes\r\n- **Security Scanning** - Proactive vulnerability detection\r\n- **And many more!**\r\n\r\n**🔧 Check out all examples at [github.com/anthropics/claude-code-action/tree/main/examples](https://github.com/anthropics/claude-code-action/tree/main/examples)**\r\n\r\n## 🏃 Quick Start\r\n\r\n```yaml\r\n# Interactive mode - responds to @claude mentions\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n\r\n# Automation mode - runs immediately with prompt\r\n- uses: anthropics/claude-code-action@v1\r\n  with:\r\n    prompt: \"Review this PR for security issues\"\r\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\r\n    claude_args: |\r\n      --model claude-4-0-sonnet-20250805\r\n      --max-turns 10\r\n```\r\n\r\n## 📖 Resources\r\n\r\n- [Migration Guide](https://github.com/anthropics/claude-code-action/blob/main/docs/migration-guide.md) - Step-by-step upgrade instructions\r\n- [Examples](https://github.com/anthropics/claude-code-action/tree/main/examples) - Ready-to-use workflow templates\r\n- [Documentation](https://github.com/anthropics/claude-code-action#readme) - Complete setup and configuration guide\r\n\r\n## 🙏 Thank You\r\n\r\nThank you to our beta users for your invaluable feedback that shaped this release. We're excited to see what you'll build with Claude Code GitHub Action v1.0!\r\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "统一配置接口：所有 prompt 输入合并为单一 `prompt` 参数，CLI 选项通过 `claude_args` 传递",
+            "自动模式检测：智能识别交互模式或自动化模式，无需手动配置",
+            "废弃多个旧输入参数（mode、direct_prompt、custom_instructions 等），需要迁移到新 API",
+            "完整支持 Claude Code CLI 所有功能，包括自定义系统提示词、工具配置和模型选择",
+            "新增多种使用场景示例：自动化 PR 评审、CI 失败修复、问题分类、文档生成"
+          ],
+          "summary_cn": "Claude Code GitHub Action v1.0 正式发布，这是一个主要版本更新，带来了重大架构改进。核心变更包括简化配置（统一接口和自动模式检测）以及更强大的 CLI 集成，但同时包含多个破坏性变更，需要从旧版输入参数迁移到新的 API。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "continuedev/continue",
+        "version": "v1.5.44",
+        "author": "sestinj",
+        "date": "2026-03-02",
+        "summary": "Release v1.5.44 built and published from the main branch.",
+        "assets_count": 0,
+        "url": "https://github.com/continuedev/continue/releases/tag/v1.5.44",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "从主分支构建并发布 v1.5.44 版本"
+          ],
+          "summary_cn": "Continue v1.5.44 版本已从主分支构建并发布。Release Notes 中未提供具体的变更详情，这可能是一个常规的版本发布或维护更新。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.428",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "## Changes\n\n### PR [#2040](https://github.com/danielmiessler/Fabric/pull/2040) by [Twozee-Tech](https://github.com/Twozee-Tech): Add Polish (pl) locale\n\n- Add Polish (pl) locale with a complete translation file containing all 683 keys, matching the structure of existing locale files in `internal/i18n/locales/`.\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.428",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增波兰语（pl）语言支持",
+            "添加完整的翻译文件，包含全部 683 个翻译键",
+            "翻译文件结构与现有语言环境文件保持一致"
+          ],
+          "summary_cn": "Fabric v1.4.428 版本新增了波兰语（pl）本地化支持。该版本在 internal/i18n/locales/ 目录下添加了完整的波兰语翻译文件，包含了所有 683 个翻译键，确保与现有语言环境文件结构保持一致。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-huggingface==1.2.1",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "Changes since langchain-huggingface==1.2.0\n\nfix(huggingface): switch integration test provider to together (#35525)\nfix(huggingface): resolve huggingface-hub 1.x compat (#35524)\nfix(huggingface): bump transformers and sentence-transformers lower bounds (#35522)\nchore: bump langgraph-checkpoint from 3.0.0 to 4.0.0 in /libs/partners/huggingface (#35447)\nfix(model-profiles): sort generated profiles by model ID for stable diffs (#35344)\nchore: bump model profiles (#35294)\nrelease(huggingface): 1.2.1 (#35182)\nchore(huggingface): version bump for huggingface-hub and transformers deps (#35061)\nchore(deps): bump pillow from 11.3.0 to 12.1.1 in /libs/partners/huggingface (#35179)\nchore(deps): bump langsmith from 0.4.32rc0 to 0.6.3 in /libs/partners/huggingface (#35152)\nfeat(model-profiles): add `text_inputs` and `text_outputs` (#35084)\nchore: add `make type` target (#35015)\nrevert: \"chore: add typing target in `Makefile`\" (#35013)\nchore: add typing target in `Makefile` (#35012)\nchore: enrich `pyproject.toml` files (#34980)\nchore(deps): bump the uv group across 20 directories with 3 updates (#34941)\nchore: upgrade urllib3 to 2.6.3 (#34940)\ndocs: add missing module-level docstrings to partner integrations (#34838)\nchore(deps): bump the uv group across 8 directories with 6 updates (#34773)\nchore: update twitter URLs (#34736)\nchore: ban relative imports on all packages (#34691)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-huggingface%3D%3D1.2.1",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 huggingface-hub 1.x 兼容性问题",
+            "将集成测试提供商切换为 together",
+            "提升 transformers 和 sentence-transformers 依赖版本下限",
+            "langgraph-checkpoint 依赖从 3.0.0 升级到 4.0.0",
+            "新增模型配置的 text_inputs 和 text_outputs 字段"
+          ],
+          "summary_cn": "这是 langchain-huggingface 1.2.1 版本，主要包含多个依赖更新和兼容性修复。核心变更包括修复 huggingface-hub 1.x 兼容性问题、切换集成测试提供商至 together，以及提升关键依赖包的版本下限，同时更新了多个依赖项包括 langgraph-checkpoint 4.0.0。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "version": "cli==0.4.14",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "Changes since cli==0.4.12\n\n* chore(cli): pass checkpointer config to CLI (#7003)\n* fix: bump minimatch to resolve CVE-2026-26996, CVE-2026-27903, CVE-2026-27904 (#6968)\n* Merge commit from fork\n* chore(deps): bump the all-dependencies group in /libs/cli with 2 updates (#6920)\n* chore(deps): bump the all-dependencies group in /libs/cli/js-monorepo-example with 4 updates (#6914)\n* chore(deps): bump the all-dependencies group in /libs/cli/js-examples with 3 updates (#6912)\n* fix(cli): update graph config schema to support description field (#6895)\n* chore: add `make type` target for type checking (#6748)\n* chore: Update CLI schema (#6858)\n* fix: bump js-yaml to 3.14.2 to resolve CVE-2025-64718 (#6879)\n* chore(deps): bump langgraph-sdk from 0.3.5 to 0.3.6 in /libs/cli in the all-dependencies group (#6851)\n* chore(deps): bump the all-dependencies group in /libs/cli/js-examples with 2 updates (#6848)\n* chore(deps): bump langchain-core from 1.2.7 to 1.2.11 in /libs/cli (#6836)\n* chore(deps): bump protobuf from 6.33.4 to 6.33.5 in /libs/cli (#6830)\n* chore(deps): bump the all-dependencies group in /libs/cli with 2 updates (#6811)\n* chore(deps): bump the all-dependencies group in /libs/cli/js-examples with 17 updates (#6814)\n* chore(deps): bump cryptography from 46.0.3 to 46.0.5 in /libs/cli (#6834)\n* chore(deps): bump the all-dependencies group in /libs/cli/js-monorepo-example with 13 updates (#6813)\n* chore(deps): bump langsmith from 0.3.66 to 0.3.87 in /libs/cli/js-monorepo-example (#6840)\n* feat(cli): add keep_latest prune strategy to ThreadTTLConfig (#6784)\n* chore: Drop support for bullseye builds (#6779)\n* chore: Update ThreadTTLConfig (#6730)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/cli%3D%3D0.4.14",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "修复 3 个 minimatch 安全漏洞 (CVE-2026-26996, CVE-2026-27903, CVE-2026-27904)",
+            "修复 js-yaml 安全漏洞 CVE-2025-64718",
+            "新增 CLI 的 keep_latest 线程清理策略",
+            "CLI 更新图配置 schema 以支持 description 字段",
+            "CLI 支持传递 checkpointer 配置"
+          ],
+          "summary_cn": "这是一个主要聚焦安全修复的 CLI 版本更新，修复了 minimatch 和 js-yaml 的多个高危安全漏洞（CVE）。同时新增了 keep_latest 线程清理策略，并优化了 CLI 的配置 schema 以支持描述字段传递。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.6",
+        "author": "kausmeows",
+        "date": "2026-03-02",
+        "summary": "# Changelog\r\n\r\n## New Features:\r\n\r\n- **GitHub App Authentication for Knowledge Sources:** Adds support for authenticating with GitHub as a GitHub App (`app_id`, `installation_id`, `private_key`) in addition to personal access tokens, with thread-safe token caching and both sync/async variants.\r\n- **File Upload:** Added `image/heic` and `image/heif` support to file upload endpoints.\r\n- **Approvals:** Added approval status endpoint and admin-gated continue run enforcement.\r\n- **Traces:** Added advanced filtering DSL support in Agent OS\r\n\r\n## Improvements:\r\n\r\n- **Google Tools**: Restructured Google tools into `agno.tools.google` sub-package (`from agno.tools.google import GmailTools`). Old import paths still work with a backwards compatibility.\r\n- **Team Task Mode:**\r\n    - Enhances `TeamMode.tasks` streaming to provide structured task data for frontend rendering in events like `TeamTaskCreated` and `TeamTaskUpdated`\r\n    - Structured task data in `TaskStateUpdatedEvent`: Added `tasks: List[TaskData]` field containing full task details (id, title, description, status, assignee, dependencies, result) and completion_summary field\r\n\r\n## Bug Fixes:\r\n\r\n- **OpenAI Responses:**\r\n    - Fixed vector store polling race condition where `file_search` silently returned empty results due to eventual consistency in OpenAI's `vector_stores.files.list`\r\n    API.\r\n    - Added `input_file` support to OpenAIResponses\r\n- **Sentence Transformer Reranker:** Fixed VRAM memory leak in SentenceTransformerReranker caused by CrossEncoder being instantiated on every `_rerank()` call instead of being reused.\r\n- **JSON Schema:** Extended support for `Literal` types in JSON schema generation\r\n\r\n## What's Changed\r\n* feat: extend Registry with agents/teams for UI workflow rehydration by @ysolanky in https://github.com/agno-agi/agno/pull/6278\r\n* cookbook: add Gemini 3 progressive guide by @ysolanky in https://github.com/agno-agi/agno/pull/6730\r\n* fix: add support for Literal types in JSON schema generation by @kausmeows in https://github.com/agno-agi/agno/pull/6723\r\n* fix: updated links in README by @kyleaton in https://github.com/agno-agi/agno/pull/6749\r\n* feat: add image/heic and image/heif support to file upload endpoints by @Br1an67 in https://github.com/agno-agi/agno/pull/6791\r\n* feat: add input_file support to OpenAIResponses by @uzaxirr in https://github.com/agno-agi/agno/pull/6806\r\n* [fix] properly release SentenceTransformerReranker models to prevent VRAM leak by @hztBUAA in https://github.com/agno-agi/agno/pull/6638\r\n* feat: add advanced filtering dsl by @kausmeows in https://github.com/agno-agi/agno/pull/6671\r\n* feat: restructure Google tools, add FileTools.search_content, add enable flags by @ashpreetbedi in https://github.com/agno-agi/agno/pull/6833\r\n* feat: add GitHub App authentication support to GitHubConfig by @willemcdejongh in https://github.com/agno-agi/agno/pull/6831\r\n* fix: use Coroutine return types for arun/acontinue_run overloads by @ysolanky in https://github.com/agno-agi/agno/pull/6836\r\n* feat: add approval status endpoint and admin-gated continue run enforcement by @kausmeows in https://github.com/agno-agi/agno/pull/6598\r\n* chore: update team tasks stream by @kausmeows in https://github.com/agno-agi/agno/pull/6718\r\n* fix: return 503 instead of 404 for disabled AgentOS features by @ysolanky in https://github.com/agno-agi/agno/pull/6837\r\n* chore: Release v2.5.6 by @kausmeows in https://github.com/agno-agi/agno/pull/6823\r\n\r\n## New Contributors\r\n* @Br1an67 made their first contribution in https://github.com/agno-agi/agno/pull/6791\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.5.5...v2.5.6",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.6",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 GitHub App 身份认证支持，支持 app_id/installation_id/private_key 方式",
+            "文件上传新增 HEIC 和 HEIF 图像格式支持",
+            "修复 OpenAI 向量存储轮询竞态条件导致的空结果问题",
+            "修复 SentenceTransformerReranker 的 VRAM 内存泄漏",
+            "Team Task Mode 流式增强，提供结构化任务数据用于前端渲染"
+          ],
+          "summary_cn": "Agno v2.5.6 版本主要增强了身份认证和文件处理能力，新增 GitHub App 认证支持和 HEIC/HEIF 图像格式处理。同时修复了多个重要 bug，包括 OpenAI 向量存储轮询竞态条件和 SentenceTransformerReranker 内存泄漏问题，并优化了 Team Task Mode 的流式输出体验。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.107.0",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "## New Features\n- You can now fork a thread into sub-agents, making it easier to branch work without leaving the current conversation. (#12499)\n- Realtime voice sessions now let you pick microphone and speaker devices, persist those choices, and send audio in a format better aligned with transcription. (#12849, #12850, #13030)\n- Custom tools can now return multimodal output, including structured content like images, instead of being limited to plain text. (#12948)\n- The app server now exposes richer model availability and upgrade metadata, and the TUI uses it to explain plan-gated models with limited-run tooltips. (#12958, #12972, #13021)\n- Memories are now configurable, and there is a new `codex debug clear-memories` command to fully reset saved memory state when needed. (#12997, #12999, #13002, #13085)\n\n## Bug Fixes\n- Reconnecting with `thread/resume` now restores pending approval and input requests instead of leaving clients out of sync. (#12560)\n- `thread/start` no longer blocks unrelated app-server requests, reducing stalls during slow startup paths such as MCP auth checks. (#13033)\n- Interactive terminal sessions no longer print the final assistant response twice. (#13082)\n- Large pasted-content placeholders now survive file completion correctly, fixing a regression from `0.106.0`. (#13070)\n- ChatGPT accounts that arrive without plan info now handle account reads correctly instead of triggering repeated login issues. (#13072)\n- Diff rendering in the TUI now respects theme colors better and displays more cleanly in Windows Terminal and other low-color environments. (#13016, #13037)\n- MCP OAuth login flows now forward configured `oauth_resource` values correctly for servers that require a `resource` parameter. (#12866)\n\n## Documentation\n- Updated sandbox escalation guidance so dependency-install failures caused by sandboxed network access are more clearly treated as escalation candidates. (#13051)\n\n## Chores\n- Tightened sandbox filesystem behavior by improving restricted read-only handling on Linux and avoiding sensitive directories like `~/.ssh` on Windows. (#12369, #12835)\n- Escalated shell commands now keep their sandbox configuration when rerun, closing a gap where approvals could lose the intended restrictions. (#12839)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.106.0...rust-v0.107.0\n\n- #12925 chore: calm down awaiter @jif-oai\n- #12499 feat: fork thread multi agent @jif-oai\n- #12837 Log js_repl nested tool responses in rollout history @fjord-oai\n- #12774 feat: add post-compaction sub-agent infos @jif-oai\n- #12929 Remove noisy log @pakrym-oai\n- #12835 don't grant sandbox read access to ~/.ssh and a few other dirs. @iceweasel-oai\n- #12839 feat: include sandbox config with escalation request @bolinfest\n- #12940 feat: add git info to memories @jif-oai\n- #12727 tui: use thread_id for resume/fork cwd resolution @charley-oai\n- #12950 Allow clients not to send summary as an option @pakrym-oai\n- #12944 fix: sort codex features list alphabetically @bolinfest\n- #12849 Add realtime audio device config @aibrahim-oai\n- #12957 test: move unix_escalation tests into sibling file @bolinfest\n- #12947 feat: add local date/timezone to turn environment context @celia-oai\n- #12959 Make realtime audio test deterministic @aibrahim-oai\n- #12958 Feat: cxa-1833 update model/list @shijie-oai\n- #12850 Add realtime audio device picker @aibrahim-oai\n- #12948 Support multimodal custom tool outputs @fjord-oai\n- #12745 [apps] Improve app/list with force_fetch=true @mzeng-openai\n- #12866 Add oauth_resource handling for MCP login flows @etraut-openai\n- #12936 Add a background job to refresh the requirements local cache @alexsong-oai\n- #12972 Add model availability NUX metadata @aibrahim-oai\n- #12981 Add realtime websocket tracing @aibrahim-oai\n- #12968 notify: include client in legacy hook payload @bolinfest\n- #12997 feat: add use memories config @jif-oai\n- #12999 feat: gen memories config @jif-oai\n- #13002 feat: use the memory mode for phase 1 extraction @jif-oai\n- #13001 chore: tmp remove awaiter @jif-oai\n- #13011 fix: more stable notify script @jif-oai\n- #12970 fix: use AbsolutePathBuf for permission profile file roots @bolinfest\n- #13016 fix(tui): promote windows terminal diff ansi16 to truecolor @fcoury\n- #13030 Align TUI voice transcription audio with 4o ASR @nornagon-openai\n- #13047 app-server: deflake running thread resume tests @bolinfest\n- #12560 app-server: Replay pending item requests on `thread/resume` @euroelessar\n- #13055 fix: disable Bazel builds in CI on ubuntu-24.04-arm until we can stabilize them @bolinfest\n- #12964 execpolicy: add host_executable() path mappings @bolinfest\n- #13051 Clarify escalation guidance for sandbox-related network failures @daniel-oai\n- #12612 Unify rollout reconstruction with resume/fork TurnContext hydration @charley-oai\n- #13067 [apps] Stablize app list updated event. @mzeng-openai\n- #12369 feat(linux-sandbox): support restricted ReadOnlyAccess in bwrap @viyatb-oai\n- #13037 fix(tui): theme-aware diff backgrounds with fallback behavior @fcoury\n- #13070 Keep large-paste placeholders intact during file completion @etraut-openai\n- #13072 Handle missing plan info for ChatGPT accounts @etraut-openai\n- #13021 Add model availability NUX tooltips @aibrahim-oai\n- #13080 app-server: Add an ability to watch events in the test client @euroelessar\n- #13082 Suppress duplicate assistant output on stdout in interactive sessions @etraut-openai\n- #13033 fix(app-server): make thread/start non-blocking @owenlin0\n- #13046 core: adopt host_executable() rules in zsh-fork @bolinfest\n- #13084 app-server: Add `ephemeral` field to `Thread` object @euroelessar\n- #13085 feat: add debug clear-memories command to hard-wipe memories state @sayan-oai\n\n\n",
+        "assets_count": 82,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.107.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增线程分支功能，可将对话分叉到子代理处理，支持多路并行工作",
+            "实时语音会话支持麦克风和扬声器设备选择，以及音频格式优化",
+            "自定义工具现在支持返回多模态输出（如图像等结构化内容），不再局限于纯文本",
+            "修复多个连接和会话管理问题，包括 thread/resume 同步、终端双显、MCP OAuth 登录等",
+            "记忆功能现在可配置，新增 codex debug clear-memories 命令用于完全重置记忆状态"
+          ],
+          "summary_cn": "rust-v0.107.0 版本带来了多项重要增强，包括线程分叉到子代理的功能、实时语音设备选择与持久化、自定义工具的多模态输出支持，以及可配置的记忆系统。同时修复了多个连接同步、会话恢复和认证相关的 bug，提升了整体稳定性和用户体验。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code-action",
+      "tag_name": "v1.0.65",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "默认配置变更：`display_report` 选项默认值改为 false，默认限制暴露数据",
+          "impact": "medium",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-code-action",
+      "tag_name": "v1",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "API 重构：移除 `mode`, `direct_prompt`, `override_prompt` 等输入，统一为 `prompt`",
+          "impact": "high",
+          "category": "API"
+        },
+        {
+          "description": "配置变更：`custom_instructions`, `model`, `allowed_tools` 等迁移至 `claude_args`",
+          "impact": "high",
+          "category": "Config"
+        },
+        {
+          "description": "移除废弃选项：`disallowed_tools`, `anthropic_model`, `trigger_phrase`, `timeout_minutes`",
+          "impact": "high",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "langchain-ai/langgraph",
+      "tag_name": "cli==0.4.14",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "依赖更新：`langgraph-checkpoint` 从 3.0.0 升级至 4.0.0",
+          "impact": "medium",
+          "category": "Dependency"
+        }
+      ]
+    },
+    {
+      "repo": "openai/codex",
+      "tag_name": "rust-v0.107.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "行为变更：`thread/resume` 现在会恢复待处理的审批和输入请求，可能导致客户端状态同步逻辑变化",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "安全增强：Linux 沙盒不再授予 `~/.ssh` 等敏感目录的读取权限",
+          "impact": "high",
+          "category": "Behavior"
+        },
+        {
+          "description": "行为变更：重新运行的升级 Shell 命令现在会保留沙盒配置",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "AJV schema validation crashes preventing action from running",
+        "count": 5,
+        "affected_repos": [
+          "anthropics/claude-code-action"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-code-action/issues/980",
+          "https://github.com/anthropics/claude-code-action/issues/978",
+          "https://github.com/anthropics/claude-code-action/issues/977",
+          "https://github.com/anthropics/claude-code-action/issues/965",
+          "https://github.com/anthropics/claude-code-action/issues/892"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "高频阻断性问题：5个issue报告action在SDK初始化阶段崩溃，total_cost_usd:0表明崩溃发生在API调用前，完全阻断CI/CD流程。issue #965明确指出'PR review automation is completely broken across all repositories'，#892提供的时间线显示从2025年1月30日持续影响至2026年2月。多个变通方案（降级SHA、删除settings.json、简化配置）均失效，证明此为系统性用户体验灾难。"
+      },
+      {
+        "topic": "流式输出解析问题",
+        "count": 5,
+        "affected_repos": [
+          "langchain-ai/langchain"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langchain/issues/35516",
+          "https://github.com/langchain-ai/langchain/issues/35514",
+          "https://github.com/langchain-ai/langchain/issues/35509"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "用户核心功能受影响：DeepSeek推理内容丢失导致无法获取完整响应；流式工具调用参数为空导致工具执行失败；Anthropic流式输出token计数错误导致计费和监控数据不准确。高频问题且直接阻断主流程功能。"
+      },
+      {
+        "topic": "Application crashes and uncaught exceptions",
+        "count": 5,
+        "affected_repos": [
+          "paul-gauthier/aider"
+        ],
+        "sample_urls": [
+          "https://github.com/Aider-AI/aider/issues/4876",
+          "https://github.com/Aider-AI/aider/issues/4862",
+          "https://github.com/Aider-AI/aider/issues/4861",
+          "https://github.com/Aider-AI/aider/issues/4860",
+          "https://github.com/Aider-AI/aider/issues/4867"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "高频崩溃问题（5个issue），涵盖启动时崩溃（NoSuchPathError）、运行时崩溃（analytics.py TypeError）、特定文件触发崩溃（Julia）等多种场景。崩溃完全阻断用户无法使用工具，属于最高优先级用户痛点"
+      },
+      {
+        "topic": "Core system features broken (Git diff, autosave, worktree security UI, sign-in, Agent permissions)",
+        "count": 5,
+        "affected_repos": [
+          "zed-industries/zed"
+        ],
+        "sample_urls": [
+          "https://github.com/zed-industries/zed/issues/50497",
+          "https://github.com/zed-industries/zed/issues/50526",
+          "https://github.com/zed-industries/zed/issues/50469",
+          "https://github.com/zed-industries/zed/issues/50484",
+          "https://github.com/zed-industries/zed/issues/50462"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "Git diff 视图完全空白阻断代码审查工作流，多缓冲区自动保存失效增加数据丢失风险，登录功能失败阻止账户同步，Agent 权限不记忆导致重复操作。5 个高频 issue 影响核心系统功能，符合 P0 标准。"
+      },
+      {
+        "topic": "包发布和依赖兼容性问题",
+        "count": 4,
+        "affected_repos": [
+          "langchain-ai/langchain"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langchain/issues/35483",
+          "https://github.com/langchain-ai/langchain/issues/35437",
+          "https://github.com/langchain-ai/langchain/issues/35443",
+          "https://github.com/langchain-ai/langchain/issues/35521"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "用户安装和使用完全阻断：PyPI版本缺失导致无法安装依赖；导入错误和兼容性破坏导致应用启动失败；Azure User-Agent强制覆盖导致403错误阻断API调用。高频阻断性问题。"
+      }
+    ],
+    "expected_files": 42,
+    "generated_files": 42,
+    "parsed_files": 42,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "good"
+  }
+}
