@@ -1,0 +1,872 @@
+{
+  "week_id": "2026-W09",
+  "start_date": "2026-02-23",
+  "end_date": "2026-03-01",
+  "summary_brief": "本周标志着 AI 工程化从'功能探索'全面迈向'生产级标准化'。核心驱动力在于 OpenAI 确立 WebSocket 实时交互标准、CI/CD 集成达到 v1.0 成熟度，以及行业在多层安全防护（HITL/沙箱）和协议互通（ACP/MCP）上达成的共识，共同构建了高可靠、低延迟且可协同的下一代 AI 基础设施。",
+  "core_trends": [
+    {
+      "title": "CI/CD 与 AIOps 工作流全面进入生产级",
+      "theme": "workflow",
+      "description": "Claude Code Action v1.0 的发布标志着 AI 辅助开发正式从实验性工具转向标准化的 DevOps 基础设施。这一趋势不仅包含 GitHub Action 的标准化集成，还涵盖了从 Mock 测试向真实集成环境迁移、智能 CI 成本过滤（节省 Token 成本）以及 AI 系统诊断能力的增强，表明行业关注点正从单纯的 AI 功能交付转向工程化运维与成本控制。",
+      "signal_ids": [
+        "signal-workflow-v1",
+        "trend-ci-cd-ai",
+        "res-004",
+        "signal-testcontainers",
+        "eng-2",
+        "eng-003",
+        "trend-devops-maturity",
+        "eng-007"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "实时全双工通信重构 AI 交互范式",
+      "theme": "architecture",
+      "description": "OpenAI SDK 官方支持 WebSocket，配合 Zed 编辑器的流式工具输入和 Agno 的实时反馈优化，共同确立了实时双向通信取代传统 SSE/轮询的新标准。同时，40 万 token 的超长上下文模型（GPT-5.3-Codex）被主流工具集成，消除了长文本处理的瓶颈，使得低延迟、高保真的沉浸式 AI 交互体验成为可能。",
+      "signal_ids": [
+        "eng-1",
+        "signal-0",
+        "signal-codex-model",
+        "signal-streaming-ux",
+        "signal-4"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "AI 安全边界从沙箱隔离迈向治理标准化",
+      "theme": "safety",
+      "description": "安全建设呈现出多层防御特征：CLI 工具链（如 gh.sh）普遍采纳最小权限白名单模式，多代理系统强化了子代理的文件隔离与工作流级人工确认（HITL），同时修复了多个 CVE 漏洞。此外，通过 gh.sh 安全包装器跨项目落地，行业正在为高风险的自动化场景（如 Issue Triage、生产环境部署）建立可复用的安全治理范式。",
+      "signal_ids": [
+        "signal-gh-wrapper",
+        "eng-001",
+        "eng-002",
+        "signal-security-hardening",
+        "eng-006",
+        "eng-3"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "Agent 生态协议标准化打破工具孤岛",
+      "theme": "ecosystem",
+      "description": "通过 ACP（Agent Communication Protocol）和 MCP（Model Context Protocol）的广泛适配，AI 工具正在从各自为战的闭环走向开放互通。多个项目（gptme, CrewAI, OpenCode）同时支持协议互操作，结合动态模型发现机制，降低了 Agent 跨平台协作的集成成本，推动了可组合式 AI 生态的形成。",
+      "signal_ids": [
+        "trend-protocol-standardization",
+        "eng-5",
+        "signal-mcp-ecosystem",
+        "trend-dynamic-discovery"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "编辑器环境向远程化与跨模态演进",
+      "theme": "tooling",
+      "description": "AI 编程工具正突破本地文件系统的限制。OpenCode 支持远程工作区，Zed 引入流式文件编辑，Codex 支持浏览器 Agent 和多模态内容输出，表明 AI 编辑器正转变为可操控 Web 浏览器、处理富媒体内容且支持远程协作的综合操作平台。",
+      "signal_ids": [
+        "trend-workspace-editor-evolution",
+        "res-001",
+        "trend-multimodal",
+        "eng-004"
+      ],
+      "impact_level": 4
+    }
+  ],
+  "engineering_signals": [
+    {
+      "id": "eng-1",
+      "title": "WebSocket 实时通信成为 AI 交互新范式",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI 官方 Python SDK 新增 WebSocket 支持，与 Cline 的预连接机制形成呼应，表明实时双向通信正在取代传统 SSE/轮询，成为 AI 应用的标准基础设施，显著降低流式响应延迟。",
+      "sources": [
+        "https://github.com/openai/openai-python/commit/e273d622e85d7380f5ce715172c23d55ce8625a9",
+        "https://github.com/openai/openai-python/releases/tag/v2.22.0",
+        "https://github.com/cline/cline/commit/9e7a30bd34f04dbafd5058ba8ad528bc5ab31e73"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "commit-0",
+        "commit-1"
+      ]
+    },
+    {
+      "id": "signal-0",
+      "title": "OpenAI 引入 WebSocket 实时响应",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Python 库新增 WebSocket 支持，标志着 API 交互模式从传统的 HTTP 轮询/SSE 向全双工实时通信演进，显著降低了延迟，为构建实时 AI 交互应用奠定了基础。",
+      "sources": [
+        "https://github.com/openai/openai-python/releases/tag/v2.22.0"
+      ],
+      "related_repos": [
+        "openai/openai-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "eng-001",
+      "title": "多代理系统安全隔离与权限管控体系成熟",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多个项目同时推出安全隔离机制，包括 Profile 角色权限控制、子代理 Worktree 文件系统隔离、安全审查工作流自动化，标志着多代理系统从原型探索走向企业级安全部署，为大规模代理协作提供了必要的安全沙箱和治理框架。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/15b83765415c6e82d73c18de3a3fd4d977a09b03",
+        "https://github.com/gptme/gptme/issues/1157",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.51",
+        "https://github.com/anthropics/claude-code/pull/28243",
+        "https://github.com/gptme/gptme/pull/1463",
+        "https://github.com/gptme/gptme/pull/1455",
+        "https://github.com/gptme/gptme/pull/1460",
+        "https://github.com/gptme/gptme/pull/1465",
+        "https://github.com/anthropics/claude-code-action/pull/973"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "anthropics/claude-code-action",
+        "gptme/gptme",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "pr-14",
+        "pr-10",
+        "pr-4",
+        "pr-5",
+        "pr-12",
+        "release-1",
+        "commit-3",
+        "pr-18"
+      ]
+    },
+    {
+      "id": "eng-002",
+      "title": "Agent 工作流人机交互确认（HITL）成为共识模式",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Agno 和其他框架同时在工作流级别引入步骤级人工确认机制，允许在关键步骤前暂停并请求用户输入，这解决了自主 Agent 在高风险场景（如生产环境部署、敏感数据操作）中的可控性问题，是实现安全 AI 自动化的关键基础设施。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.41",
+        "https://github.com/agno-agi/agno/commit/f73d0b65f0d50dcde9562853d23ae75aa7ee6527"
+      ],
+      "related_repos": [
+        "agno-agi/agno",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "release-2"
+      ]
+    },
+    {
+      "id": "signal-gh-wrapper",
+      "title": "CLI 安全包装器模式跨项目落地",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "gh.sh 白名单包装器模式同时在 Claude Agent SDK、Claude Code、Claude Code Action 三个仓库落地，建立了 CI/CD 自动化工作流的安全边界。这种「最小权限暴露」设计为 CLI 工具集成提供了可复制的安全范式，尤其对 Issue Triage 等高风险自动化场景至关重要。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/pull/203",
+        "https://github.com/anthropics/claude-code/pull/28533",
+        "https://github.com/anthropics/claude-code-action/pull/975",
+        "https://github.com/anthropics/claude-code/pull/28756"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "pr-2",
+        "pr-3",
+        "pr-1"
+      ]
+    },
+    {
+      "id": "signal-codex-model",
+      "title": "超长上下文代码模型（GPT-5.3-Codex）工具链全面集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "GPT-5.3-Codex 模型（40 万上下文）同日被 Zed 编辑器、OpenCode、Cline 等主流工具集成，标志着新一代超长上下文能力已成为 AI 编程工具的标准配置。Zed 还同步引入 `ToolInput` 结构体支持增量流式输入，为低延迟实时工具调用打下基础。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/a18b7727eec635dda18ed25ff3e0ee96cb32f3ab",
+        "https://github.com/zed-industries/zed/commit/c235d539dd720a1e224c4e5cbf2e430da2353e38",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.42",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.56"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python",
+        "anomalyco/opencode",
+        "openai/codex",
+        "zed-industries/zed",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "commit-5",
+        "commit-2",
+        "release-1",
+        "release-5"
+      ]
+    },
+    {
+      "id": "signal-workflow-v1",
+      "title": "AI 辅助开发工作流进入 v1.0 成熟阶段",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code GitHub Action 发布 v1.0 正式版，统一交互与自动化模式并支持所有 CLI 功能，标志着 AI 辅助开发工作流已从实验阶段进入生产可用阶段。同期 Zed 支持多种 Agent 会话历史持久化，OpenAI Codex 引入 CSV 驱动的并行任务分发与可视化进度追踪，多 Agent 协作的可观测性和易用性大幅提升。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.53",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.55",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.58"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-code-action",
+        "zed-industries/zed",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "release-2",
+        "release-3"
+      ]
+    },
+    {
+      "id": "trend-ci-cd-ai",
+      "title": "AI 辅助编程 CI/CD 集成标准化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code Action v1.0 发布统一了交互与自动化模式，大幅简化 DevOps 集成 AI 的复杂度；同时 LangGraph、gptme 等项目持续优化 CI/CD 基础设施（手动触发、结构化 Changelog、分支保护绕过），表明 AI 编程工具正从单点辅助向全链路自动化演进。",
+      "sources": [
+        "https://github.com/langchain-ai/langgraph/pull/6952",
+        "https://github.com/langchain-ai/langgraph/pull/6951",
+        "https://github.com/gptme/gptme/pull/1548",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.62",
+        "https://github.com/gptme/gptme/pull/1550"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "langchain-ai/langgraph",
+        "anthropics/claude-code",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "pr-8",
+        "pr-9",
+        "pr-12",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "trend-workspace-editor-evolution",
+      "title": "编辑器/IDE 向远程化与流式化演进",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 实现远程工作区支持打破本地开发限制，Zed 推出流式文件编辑降低延迟并支持自托管 OpenAI，Cline 补全 Windows PowerShell 兼容——三大平台竞相拓展编辑边界，从「本地编辑」走向「远程+流式+跨平台」，为 AI 代理提供更强大的操作环境。",
+      "sources": [
+        "https://github.com/cline/cline/commit/a502bd865360adb007f2f7555d796f3a2a1644ed",
+        "https://github.com/zed-industries/zed/commit/c9425f2a904d9bc5855e53fac8dd66dff7cdffda",
+        "https://github.com/anomalyco/opencode/commit/c12ce2ffff38fae11e22762292c56f1e71c387e7",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.61"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anomalyco/opencode",
+        "anthropics/claude-code",
+        "zed-industries/zed",
+        "cline/cline",
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-1",
+        "release-1",
+        "commit-4"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "CI/CD 成本优化成为 AI 项目工程共识",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "gptme 通过智能拆分 API/非 API 测试作业节省 $100/月，与 Fork PR 跳过 API 测试的策略形成完整的成本控制实践，体现了随着 LLM Token 成本上升，AI 工程正在从'功能优先'转向'成本与质量并重'的新阶段。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1436",
+        "https://github.com/gptme/gptme/pull/1441"
+      ],
+      "related_repos": [
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-13",
+        "pr-11"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-001",
+      "title": "AI Agent 操作能力从本地系统向 Web 浏览器扩展",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Google Gemini CLI 引入实验性浏览器 Agent，配合 OpenAI Codex 的网络代理 MITM 支持和实时语音对话模式，标志着 AI Agent 正在突破本地文件系统限制，向通用 Web 自动化和多模态交互演进，这是实现真正通用 AI 代理的关键技术突破。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/9e95b8b3c53d9c70e9845bb3822cab58722b35b9",
+        "https://github.com/openai/codex/commit/8d3d58f992792d62de13f8e3b638ed6626f5fc10",
+        "https://github.com/openai/codex/commit/b6ab2214e32493ea84cdf5a45bbe481a50c0ab9e"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "commit-5",
+        "commit-4"
+      ]
+    },
+    {
+      "id": "res-004",
+      "title": "AI 辅助编码 CI/CD 集成进入生产就绪阶段",
+      "type": "workflow",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code GitHub Action v1.0 正式发布，配合 Slack 插件从临时版本迁移到官方稳定版本，以及 Cline 向多代理平台演进（Responses API、文件式 Agent 配置），标志着 AI 辅助编码从本地开发工具向生产级 CI/CD 基础设施转型，自动化 PR Review 和 CI 修复即将成为标准实践。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.52",
+        "https://github.com/anthropics/claude-plugins-official/pull/454",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.40"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-code",
+        "anthropics/claude-plugins-official",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "pr-3",
+        "release-3"
+      ]
+    },
+    {
+      "id": "res-002",
+      "title": "AI 批量任务编排与大规模自动化管理能力浮现",
+      "type": "workflow",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "OpenAI Codex 引入从 CSV 生成批量子代理任务并导出到 SQLite 的功能，配合 Anthropic SRE Agent 实战教程的发布，展示了 AI Agent 从单点辅助向大规模任务编排和 DevOps 自动化演进的趋势，为 AIOps 的落地提供了技术路径验证。",
+      "sources": [
+        "https://github.com/openai/codex/commit/dcab40123f5e64ba8af962ae27abe6cbcc205344",
+        "https://github.com/anthropics/claude-cookbooks/pull/391",
+        "https://github.com/anthropics/claude-cookbooks/pull/392"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-cookbooks"
+      ],
+      "source_signal_ids": [
+        "commit-7",
+        "pr-2",
+        "pr-1"
+      ]
+    },
+    {
+      "id": "res-003",
+      "title": "AI 文本生成检测与质量控制成为新方向",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "Zed 编辑器新增基于维基百科指南的 AI 写作检测与修正能力（24 种常见模式），配合 Agno 的细粒度指标追踪系统，标志着 AI 工具从单纯的生成能力向生成质量控制、检测和评估体系建设演进，反映了 AI 信任与可解释性研究的工程化落地。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/0912dc9973950593c92e3d40c09dbb637986cb2c",
+        "https://github.com/agno-agi/agno/commit/15108d1daa0885f90bcb4e8a90c887b52111b649"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "trend-multimodal",
+      "title": "多模态输出能力成为 AI 工具新方向",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "OpenCodex 支持自定义工具返回多模态内容（如图像），打破 AI 代理仅处理文本的限制。这使得 AI 不仅生成代码，还能操作和生成富媒体内容，为未来的跨模态任务（如代码生成配套图表、UI 原型生成）奠定基础。",
+      "sources": [
+        "https://github.com/openai/codex/commit/7e980d7db665ebfe365c6aeb546405d59d91ff32"
+      ],
+      "related_repos": [
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-3"
+      ]
+    },
+    {
+      "id": "trend-context-compression",
+      "title": "上下文压缩优化：降低 LLM 调用成本",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "DeepAgents 引入压缩钩子在发送给 LLM 前自动压缩上下文，Dify 重构依赖注入提升可测试性，CrewAI 异步回调优化并发性能——这些抽象层改进共同指向「如何更高效地使用 LLM」，反映工程实践对成本与性能优化的持续探索。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/e87cdaddb9a984c4fd189b4f71303881edb32cb2",
+        "https://github.com/langgenius/dify/commit/a694533fc9d1cc9f607e50758099307f228bfc",
+        "https://github.com/crewAIInc/crewAI/commit/1bdb9496a32d6dd0e2821f4e31d3d16d805973ce"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "langgenius/dify",
+        "crewAIInc/crewAI"
+      ],
+      "source_signal_ids": [
+        "commit-6",
+        "commit-11",
+        "commit-13"
+      ]
+    },
+    {
+      "id": "trend-gpu-performance",
+      "title": "GPU 加速与性能优化实践",
+      "type": "performance",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "Zed 通过动态设备检测放宽 WGPU 限制修复 Linux GPU 渲染问题，并引入启发式算法提升 Edit Prediction 准确性——这些底层优化展示了 AI 工具在资源受限环境下的适配能力，对桌面端 AI 应用的性能体验至关重要。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/f0535ddc3ce1027368ee469e1c0b03bb90ec60ad",
+        "https://github.com/zed-industries/zed/commit/a759000b167ad148e29541ac35b004eaad8bbfb5"
+      ],
+      "related_repos": [
+        "zed-industries/zed"
+      ],
+      "source_signal_ids": [
+        "commit-8",
+        "commit-14"
+      ]
+    },
+    {
+      "id": "trend-dynamic-discovery",
+      "title": "动态模型发现与服务治理",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "Cline 实现从后端动态获取可用模型，Gemini CLI 引入策略引擎统一扩展管理——这反映了 AI 工具生态向「模型无关化」演进，通过抽象层实现运行时模型发现与策略控制，降低对特定模型的硬编码依赖。",
+      "sources": [
+        "https://github.com/cline/cline/commit/913cf4b74d61f16c090cbda2674bc87bf637d813",
+        "https://github.com/anthropics/claude-agent-sdk-python/commit/7297bdcb0a4221a7f477f39296d63485af261395"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "commit-9",
+        "commit-2"
+      ]
+    }
+  ],
+  "daily_reports_count": 6,
+  "total_prs_analyzed": 115,
+  "high_impact_signals": 25,
+  "total_commits": 1279,
+  "total_releases": 68,
+  "weekly_activity": {
+    "total_commits": 1279,
+    "active_repos_count": 52,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 189,
+        "top_contributors": [
+          "DeltaCalcium",
+          "morgankrey",
+          "smitbarmase"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 165,
+        "top_contributors": [
+          "fjord-oai",
+          "bolinfest",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 155,
+        "top_contributors": [
+          "jayair",
+          "opencode-agent[bot]",
+          "jlongster"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 138,
+        "top_contributors": [
+          "aviralgarg05",
+          "Nixxx19",
+          "sehoon38"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 125,
+        "top_contributors": [
+          "hj24",
+          "ajuijas",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 92,
+        "top_contributors": [
+          "FrederickStempfle",
+          "TimeToBuildBob",
+          "ErikBjare"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 45,
+        "top_contributors": [
+          "dependabot[bot]",
+          "cbagwell",
+          "amanape"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 39,
+        "top_contributors": [
+          "ChaiEranki",
+          "arafatkatze",
+          "BarreiroT"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 37,
+        "top_contributors": [
+          "fehmisener",
+          "Mustafa-Esoofally",
+          "ysolanky"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 25,
+        "top_contributors": [
+          "sestinj"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 24,
+        "top_contributors": [
+          "github-actions[bot]",
+          "konstantint",
+          "ksylvan"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 24,
+        "top_contributors": [
+          "zouyonghe",
+          "dependabot[bot]",
+          "Alex-wuhu"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 20,
+        "top_contributors": [
+          "AdemBoukhris457",
+          "OiPunk",
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 19,
+        "top_contributors": [
+          "claude",
+          "OctavianGuzu",
+          "bogini"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 19,
+        "top_contributors": [
+          "jkennedyvz",
+          "dependabot[bot]",
+          "hinthornw"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 19,
+        "top_contributors": [
+          "nicoferdi96",
+          "greysonlalonde",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 18,
+        "top_contributors": [
+          "AtharvaJaiswal005",
+          "dependabot[bot]",
+          "TuanaCelik"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 17,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 16,
+        "top_contributors": [
+          "actions-user",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 16,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "felixfbecker",
+          "RobertCraigie"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 13,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 11,
+        "top_contributors": [
+          "OctavianGuzu",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 11,
+        "top_contributors": [
+          "OctavianGuzu",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 11,
+        "top_contributors": [
+          "bansalkanav",
+          "dependabot[bot]",
+          "jkennedyvz"
+        ]
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 9,
+        "top_contributors": [
+          "albertvillanova",
+          "dubin555",
+          "Barcavin"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 6,
+        "top_contributors": [
+          "roji",
+          "moonbox3",
+          "Copilot"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 4,
+        "top_contributors": [
+          "benlehrburger-ant",
+          "PedramNavid"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 4,
+        "top_contributors": [
+          "dicksontsai",
+          "kencheeto"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 3,
+        "top_contributors": [
+          "mem0-bot[bot]",
+          "whysosaket",
+          "mgoulart"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 3,
+        "top_contributors": [
+          "paul-gauthier"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 1,
+        "top_contributors": [
+          "kencheeto"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 1,
+        "top_contributors": [
+          "Otto-AGPT"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  }
+}
