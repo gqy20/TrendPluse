@@ -1,0 +1,891 @@
+{
+  "date": "2026-03-03",
+  "summary_brief": "AI 编程助手正经历多模态与远程协作的范式转变。OpenAI Codex 支持富媒体工件、Semantic Kernel 集成实时音频、Zed/OpenCode 推出 Git Worktree 与远程工作空间，三大趋势显示 AI 工具正从单一文本编辑演变为全栈生产力平台。同时，OpenHands/LlamaIndex/OpenDevin 等企业级项目全面转向异步架构，表明高并发场景下的性能优化已成为行业共识。",
+  "engineering_signals": [
+    {
+      "id": "trend-async-arch-2026-03-03",
+      "title": "企业级 AI 平台异步化架构重构",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenHands（OrgMemberStore/SlackTeamStore）、OpenDevin 和 Llama Index 同时将核心存储与认证模块迁移至全异步架构，表明同步阻塞已成为高并发 AI Agent 的性能瓶颈，异步化是支持大规模部署的必经之路。",
+      "sources": [
+        "https://github.com/OpenDevin/OpenDevin/commit/2f11f6a39a6bb653bc4aad4406da30f420e85a48",
+        "https://github.com/OpenHands/OpenHands/pull/13160",
+        "https://github.com/OpenHands/OpenHands/pull/13173",
+        "https://github.com/run-llama/llama_index/commit/31e887118a929492fe7e8e6c4fd4c03e347bc47b"
+      ],
+      "related_repos": [
+        "run-llama/llama_index",
+        "OpenDevin/OpenDevin",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "pr-15",
+        "pr-19",
+        "commit-4",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "trend-multimodal-2026-03-03",
+      "title": "AI 编程助手多模态交互演进",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 引入 Spreadsheet/Presentation 富媒体工件、Semantic Kernel 原生支持实时音频 API，两大突破显示 AI 编码助手正从单一文本编辑器向全栈生产力工具演进，语音与多文档协同将成为新战场。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.45",
+        "https://github.com/openai/codex/commit/8c5e50ef3962614180e3fb84393cdc669764d6a1"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-python",
+        "microsoft/semantic-kernel",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "release-0"
+      ]
+    },
+    {
+      "id": "trend-git-worktree-2026-03-03",
+      "title": "Git Worktree 与远程工作空间成为协作新范式",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Zed 在 Worktree 中启动 Agent 线程、OpenCode 支持远程服务器连接，两者共同解决了 AI 辅助编程中的并发安全与物理限制问题，支持多分支并行与云端开发，这是复杂场景下的关键能力升级。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/v3.69.0",
+        "https://github.com/zed-industries/zed/commit/7c9a9d40c06c58c30d555d4398224a4737cd5f98"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anomalyco/opencode",
+        "zed-industries/zed"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "release-1"
+      ]
+    },
+    {
+      "id": "trend-type-safety-2026-03-03",
+      "title": "企业代码库系统性类型安全强化",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenHands 连续 4 个 PR 使用 mypy 修复 GitLab/企业集成中的类型错误（从 149 降至 92），LangGraph 推进参数化类型，表明成熟项目正通过静态类型检查规避运行时风险，企业级可靠性要求驱动了这一趋势。",
+      "sources": [
+        "https://github.com/langchain-ai/langgraph/pull/7009",
+        "https://github.com/OpenHands/OpenHands/issues/13138",
+        "https://github.com/OpenHands/OpenHands/pull/13176",
+        "https://github.com/OpenHands/OpenHands/pull/13171",
+        "https://github.com/OpenHands/OpenHands/pull/13172",
+        "https://github.com/OpenHands/OpenHands/pull/13138"
+      ],
+      "related_repos": [
+        "langchain-ai/langgraph",
+        "OpenHands/OpenHands"
+      ],
+      "source_signal_ids": [
+        "pr-12",
+        "pr-16",
+        "pr-17",
+        "pr-6"
+      ]
+    },
+    {
+      "id": "trend-agent-std-2026-03-03",
+      "title": "Agent SDK 标准化与类型系统对齐",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic Python SDK 与 TypeScript 版本功能对齐、新增 agent_id 跟踪与类型化消息，降低跨语言 Agent 开发门槛；同时 OpenHands 推进 Manager 类泛型化，显示 Agent 工具链正走向类型安全与跨平台一致性。",
+      "sources": [
+        "https://github.com/OpenHands/OpenHands/pull/13174",
+        "anthropics/claude-cli-internal#20180",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/628",
+        "https://github.com/anthropics/claude-agent-sdk-python/commit/2c418f713168f812e048f1448c2c0c5e6dd189e5"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-python",
+        "OpenHands/OpenHands",
+        "anthropics/claude-cli-internal",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "pr-0",
+        "pr-14"
+      ]
+    },
+    {
+      "id": "trend-context-stab-2026-03-03",
+      "title": "上下文稳定性与压缩机制成为刚需",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 修复 React 无限 RPC 循环（useState 引用问题）、OpenCode 实施 413 错误自动压缩，两者共同指向上下文管理的稳定性挑战——在大型代码库场景中，引用稳定性与自动压缩是保障会话连续性的关键机制。",
+      "sources": [
+        "https://github.com/cline/cline/pull/9643",
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-core==1.2.17"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "langchain-ai/langchain",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": [
+        "pr-1",
+        "release-2"
+      ]
+    },
+    {
+      "id": "trend-mcp-std-2026-03-03",
+      "title": "MCP 工具系统可靠性与配置标准化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "CrewAI 修复空工具列表时 MCP 被静默丢弃、gptme 修复 config.local.toml API 密钥读取，显示 MCP 生态正从功能集成转向工程稳定性，配置层级与工具初始化的健壮性成为用户体验的基石。",
+      "sources": [
+        "https://github.com/gptme/gptme/pull/1584",
+        "https://github.com/crewAIInc/crewAI/pull/4678"
+      ],
+      "related_repos": [
+        "crewAIInc/crewAI",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "pr-3"
+      ]
+    },
+    {
+      "id": "trend-eval-std-2026-03-03",
+      "title": "评估基准标准化与矩阵扩展",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme 集成 Terminal-Bench、LangChain DeepAgents 将模型评估矩阵从 10 扩展至 28，两大项目同时强化评估基础设施，表明 Agent 性能可量化、可比较已成为行业共识，标准化测试驱动持续改进。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/8733ca4c85aebed76685f46724dee6269afe47ee",
+        "https://github.com/gptme/gptme/pull/1582"
+      ],
+      "related_repos": [
+        "clockwork-ai/terminal-bench",
+        "gptme/gptme",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "commit-3"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "OpenAI 实时音频模型支持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Semantic Kernel 原生支持 OpenAI 实时音频 API，标志着 AI 交互从纯文本向多模态实时语音对话演进，降低了构建语音助手的门槛。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.45"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-python",
+        "microsoft/semantic-kernel"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenCode 远程工作空间",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenCode 引入远程工作空间支持，允许开发者连接并操作远程服务器环境，打破了本地 AI 编程助手的物理限制，适应云端开发需求。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/v3.69.0"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "OpenCode 自动上下文压缩",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "针对 413 (Entity Too Large) 错误实施自动上下文压缩机制，显著提升了 AI Agent 处理大型代码库时的稳定性和连续性，避免会话中断。",
+      "sources": [
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-core==1.2.17"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Cline 原生文件编辑恢复",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "恢复了 GPT-OSS 模型在 OpenAI 兼容接口下的原生文件编辑能力，确保了非官方模型在 Cline 中也能获得高效的代码修改体验。",
+      "sources": [
+        "https://github.com/microsoft/semantic-kernel/releases/tag/python-1.40.0"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "microsoft/semantic-kernel"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 32,
+    "pr_count": 20,
+    "commit_count": 8,
+    "release_count": 4,
+    "unique_repos": 17,
+    "total_prs_analyzed": 20,
+    "total_releases": 6,
+    "high_impact_signals": 6,
+    "total_commits_analyzed": 257,
+    "total_releases_analyzed": 6,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 257,
+    "active_repos_count": 20,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 39,
+        "top_contributors": [
+          "adamdotdevin",
+          "opencode-agent[bot]",
+          "fwang",
+          "thdxr",
+          "ryanskidmore"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 37,
+        "top_contributors": [
+          "jif-oai",
+          "owenlin0",
+          "aibrahim-oai",
+          "pash-openai",
+          "euroelessar"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 36,
+        "top_contributors": [
+          "ConradIrwin",
+          "probably-neb",
+          "maxbrunsfeld",
+          "Anthony-Eid",
+          "osyvokon"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 28,
+        "top_contributors": [
+          "mdrxy",
+          "eyurtsev",
+          "Taylor0819",
+          "keenborder786"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 26,
+        "top_contributors": [
+          "Adib234",
+          "gundermanc",
+          "scidomino",
+          "jerop",
+          "g-samroberts"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 25,
+        "top_contributors": [
+          "malhotra5",
+          "tofarr",
+          "aivong-openhands",
+          "mamoodi",
+          "hieptl"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 16,
+        "top_contributors": [
+          "hyoban",
+          "lyzno1",
+          "KinomotoMio",
+          "dependabot[bot]",
+          "Br1an67"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 11,
+        "top_contributors": [
+          "Br1an67",
+          "adrianlyjak",
+          "debu-sinha",
+          "ObinnaIheanachor",
+          "noor-malaika"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 7,
+        "top_contributors": [
+          "qing-ant",
+          "github-actions[bot]",
+          "james-m-thomas"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 6,
+        "top_contributors": [
+          "saoudrizwan",
+          "dominiccooney",
+          "reneehuang1",
+          "candieduniverse"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 5,
+        "top_contributors": [
+          "greysonlalonde",
+          "mplachta"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 4,
+        "top_contributors": [
+          "paul-gauthier"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 4,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 4,
+        "top_contributors": [
+          "harshsinha03",
+          "giulio-leone",
+          "hztBUAA",
+          "willemcdejongh"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 3,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 2,
+        "top_contributors": [
+          "foreleven",
+          "fancyboi999"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 1,
+        "top_contributors": [
+          "rodrigo-olivares"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 1,
+        "top_contributors": [
+          "sestinj"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 1,
+        "top_contributors": [
+          "moonbox3"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 1,
+        "top_contributors": [
+          "WeiSibo"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 6,
+    "unique_repos_count": 6,
+    "releases": [
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.45",
+        "author": "github-actions[bot]",
+        "date": "2026-03-03",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.63\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.45/\n\n```bash\npip install claude-agent-sdk==0.1.45\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "更新集成的 Claude CLI 至版本 2.1.63",
+            "这是一个内部更新版本",
+            "不包含对外部 API 的变更"
+          ],
+          "summary_cn": "此版本主要更新了内置的 Claude CLI 工具至 v2.1.63 版本，属于内部维护性更新。该版本不涉及对 SDK 公共 API 的任何变更，对现有用户的使用影响较小。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.16",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-03",
+        "summary": "## Core\n- Normalize trailing slashes in auth login URLs (@elithrar)\n- Upgrade OpenTUI to v0.1.86 and enable markdown rendering by default\n- Avoid Gemini combiner schema sibling injection\n- Forward metadata options to Cloudflare AI Gateway provider (@ryanskidmore)\n- Clone part data in Bus event to preserve token values (@ryanskidmore)\n- Recover from 413 Request Entity Too Large errors via automatic compaction (@bentrd)\n- Show human-readable message for HTML error responses (@rianvdm)\n- Kill orphaned MCP child processes and expose OPENCODE_PID on shutdown (@ryanwyler)\n- Add workspace_id to session table\n- Add WorkspaceContext to core\n- Basic implementation of remote workspace support\n- Change keybindings to navigate between child sessions\n- Fixed test issues\n- Fixed terminal rendering and interaction issues in the application\n## TUI\n- Replace curved arrow with straight arrow for better terminal compatibility\n- Show pending tool call count in TUI instead of generic 'Running...' message\n- Use arrow indicator for active tool execution in TUI\n- Disable session navigation commands when no parent session (@jerome-benoit)\n- Fixed project ID conflict and updated handling for same session ID (@noamzbr)\n- Improve task tool display with subagent keybind hints and spinner animations\n- Add Go provider list command\n## Desktop\n- Defer diff rendering\n- Fixed timeline performance jank in the application\n- Tighten up header elements in the app\n- Stabilize project close navigation\n- Add comprehensive animation system with multiple easing functions and transition utilities\n- Default auto-respond to false\n- Refactor app to use SolidJS\n- Move session review bottom padding to UI layer\n- Fix latest.json finalizer in desktop application\n- Revert Polish Turkish translations\n- Use correct download link in finalize-latest-json script\n- Faster session switching via windowed rendering and staged timeline\n- Add compact UI to the app (@neriousy)\n- Polish Turkish translations (@vaur94)\n- Fallback to synthetic icon for unknown provider IDs (@rexdotsh)\n- Fixed scroll issues in the app\n- Synchronize internationalization translations\n- Add Warp to the open menu\n- Add latest.json finalizer script for desktop builds\n- Auto-accept permissions in app\n- Add Turkish locale support for app and UI packages (@vaur94)\n- Add recent projects section to command palette (@neriousy)\n- Move desktop open_path functionality to Rust\n- Allow providing username and password when connecting to remote server\n- Fixed permission indicator in app\n- Add permission notifications to app\n- Show keybind on context tab close button\n- Better diff and code comments in app\n- Deduplicate file tree scroll state management\n- Align review changes select height\n- Mute inactive file tab icons\n- Set max-width on session when review is closed but file tree is open\n- Add border to file tree on scroll\n- Fix session tab alignment in compact view to prevent vertical overflow\n- New tabs styling in the app\n- Auto-accept all permissions mode\n- Enhance project tile interaction with suppress hover functionality (@OpeOginni)\n- Simplify review layout\n- Restore shell path environment for desktop sidecar\n- Open app in PowerShell instead of Command Prompt on Windows (@neriousy)\n## SDK\n- Add zen mode feature\n\n**Thank you to 17 community contributors:**\n- @neriousy:\n  - fix(app): open in powershell (#15112)\n  - feat(app): recent projects section in command pallette (#15270)\n  - fix(app): show proper usage limit errors (#15496)\n  - fix(app): make provider icon resolved id reactive (#15583)\n  - feat(app): add compact ui (#15578)\n  - feat(app): show which messages are queued (#15587)\n- @niushuai1991:\n  - docs: Sync zh_CN docs with English Version (#15228)\n- @OpeOginni:\n  - refactor(desktop): enhance project tile interaction with suppress hover functionality (#15214)\n- @pirrozani:\n  - docs(readme): add Greek translation and update language navigation (#15281)\n- @vaur94:\n  - feat(app): add Turkish (tr) locale for app and ui packages (#15278)\n  - fix(i18n): polish turkish translations (#15491)\n- @Niraj12chaudhary:\n  - docs: add missing Bosanski link to Arabic README (#15399)\n- @alexyaroshuk:\n  - fix(app): make bash output selectable (#15378)\n  - fix(app): display skill name in skill tool call (#15413)\n- @rexdotsh:\n  - fix(app): fallback to synthetic icon for unknown provider IDs (#15295)\n- @inkdust2021:\n  - docs(ecosystem): add opencode-vibeguard (#15464)\n- @ryanwyler:\n  - fix: kill orphaned MCP child processes and expose OPENCODE_PID on shu… (#15516)\n- @rianvdm:\n  - fix(opencode): show human-readable message for HTML error responses (#15407)\n- @noamzbr:\n  - fix: project ID conflict, and update on same session id (#15596)\n- @bentrd:\n  - fix: recover from 413 Request Entity Too Large via auto-compaction (#14707)\n- @ryanskidmore:\n  - fix(opencode): clone part data in Bus event to preserve token values (#15780)\n  - fix(provider): forward metadata options to cloudflare-ai-gateway provider (#15619)\n- @jerome-benoit:\n  - fix(opencode): disable session navigation commands when no parent session (#15762)\n- @06ergin06:\n  - fix: update Turkish translations (#15835)\n- @elithrar:\n  - fix(auth): normalize trailing slashes in auth login URLs (#15874)",
+        "assets_count": 28,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.16",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增远程工作区支持基础实现，添加 WorkspaceContext 和 workspace_id 字段",
+            "Desktop 应用重构为使用 SolidJS，新增动画系统和紧凑 UI 模式",
+            "优化 TUI 界面，启用 Markdown 渲染，改进工具调用状态显示",
+            "增强错误处理：413 自动压缩恢复、HTML 错误可读化、清理孤儿进程",
+            "提升性能：会话切换窗口化渲染、延迟差异渲染、修复时间轴性能卡顿"
+          ],
+          "summary_cn": "v1.2.16 是一个功能丰富的更新版本，核心亮点包括新增远程工作区支持、Desktop 应用采用 SolidJS 重构并引入完整动画系统、TUI 界面体验优化（Markdown 渲染、更好的工具执行状态显示）。同时包含多项性能和稳定性改进，如会话切换加速、413 错误自动恢复、孤儿进程清理等，以及修复了终端渲染和测试相关的问题。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.225.12",
+        "author": "github-actions[bot]",
+        "date": "2026-03-03",
+        "summary": "- linux: Reduce crashes in the face of transient GPU errors ([#50539](https://github.com/zed-industries/zed/pull/50539))\r\n- Linux: Select a more appropriate GPU ([#50528](https://github.com/zed-industries/zed/pull/50528))\r\n\r\n",
+        "assets_count": 12,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.225.12",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "优化 Linux 平台 GPU 错误处理，减少瞬时 GPU 错误导致的崩溃",
+            "改进 Linux 平台的 GPU 选择机制，自动选择更合适的 GPU"
+          ],
+          "summary_cn": "本次版本修复了 Linux 平台的两个 GPU 相关问题，主要针对 GPU 错误处理和 GPU 选择逻辑进行了改进。这些修复将减少 Linux 用户在使用过程中遇到的崩溃问题，提升编辑器在 Linux 系统上的稳定性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.69.0",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "\n### Added\n\n- Add `User-Agent` header to requests sent to the Cline backend\n- Add default auto-tag workflow for publish release flow\n- Show Cline SDK docs on the Cline page\n\n### Fixed\n\n- Retry nested git restore and prevent silent `.git_disabled` leftovers in checkpoints\n- Prevent Chinese filename escaping in diff view\n- Trigger auto-compaction on OpenRouter context overflow errors\n- Restore GPT-OSS native file editing on OpenAI-compatible models\n\n### Changed\n\n- Update Cline SDK docs\n- Improve hooks support for Windows PowerShell\n\n**Full Changelog**: https://github.com/cline/cline/compare/v2.5.1-cli...v3.69.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.69.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "为后端请求添加 User-Agent 头标识",
+            "优化发布流程，新增自动标签工作流",
+            "在 Cline 页面展示 SDK 文档",
+            "修复中文字符文件名在 diff 视图中的转义问题",
+            "改进 Windows PowerShell 的 hooks 支持"
+          ],
+          "summary_cn": "v3.69.0 版本主要增强了后端请求标识和发布流程自动化，新增了 SDK 文档展示功能。修复了多个重要问题，包括中文字符文件名显示、git 恢复重试机制以及 OpenAI 兼容模型的文件编辑功能。同时改进了 Windows PowerShell 下的 hooks 支持。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-core==1.2.17",
+        "author": "github-actions[bot]",
+        "date": "2026-03-02",
+        "summary": "Changes since langchain-core==1.2.16\n\nrelease(core): 1.2.17 (#35527)\nfix(core): extract usage metadata from serialized tracer message outputs (#35526)\nchore: bump the langchain-deps group across 3 directories with 7 updates (#35513)\nchore: bump the langchain-deps group across 3 directories with 14 updates (#35441)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.17",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 tracer 消息输出序列化时的 usage metadata 提取问题",
+            "升级 langchain-deps 依赖组（7 个更新）",
+            "升级 langchain-deps 依赖组（14 个更新）"
+          ],
+          "summary_cn": "langchain-core 1.2.17 是一个修复版本，主要修复了从序列化的 tracer 消息输出中提取使用元数据的问题。同时包含了两次依赖升级，共更新了 langchain-deps 依赖组中的 21 个依赖包。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "version": "python-1.40.0",
+        "author": "moonbox3",
+        "date": "2026-03-02",
+        "summary": "## What's Changed\r\n* Remove unused workflow by @moonbox3 in https://github.com/microsoft/semantic-kernel/pull/13545\r\n* Python: support (Azure) OpenAI realtime audio models by @moonbox3 in https://github.com/microsoft/semantic-kernel/pull/13291\r\n* Python: Bump py version to 1.40.0 for a release by @moonbox3 in https://github.com/microsoft/semantic-kernel/pull/13619\r\n\r\n\r\n**Full Changelog**: https://github.com/microsoft/semantic-kernel/compare/python-1.39.4...python-1.40.0",
+        "assets_count": 2,
+        "url": "https://github.com/microsoft/semantic-kernel/releases/tag/python-1.40.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增对 Azure OpenAI 和 OpenAI 实时音频模型的支持",
+            "移除未使用的工作流以优化仓库配置",
+            "Python 版本升级至 1.40.0"
+          ],
+          "summary_cn": "此版本引入了重要的新功能，主要为 Python SDK 添加了对 (Azure) OpenAI 实时音频模型的支持，扩展了语音处理能力。同时进行了维护性优化，移除了未使用的 GitHub 工作流，并完成版本号升级。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "top_pain_points": [
+      {
+        "topic": "API quota and balance errors blocking AI assistant usage",
+        "count": 9,
+        "affected_repos": [
+          "continuedev/continue"
+        ],
+        "sample_urls": [
+          "https://github.com/continuedev/continue/issues/11009",
+          "https://github.com/continuedev/continue/issues/11000",
+          "https://github.com/continuedev/continue/issues/10999",
+          "https://github.com/continuedev/continue/issues/10995",
+          "https://github.com/continuedev/continue/issues/10992"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "9个用户在同一天报告因配额超限或余额不足导致AI助手完全无法使用，核心功能被完全阻断，高频且影响严重，直接影响产品可用性"
+      },
+      {
+        "topic": "Vector store provider configuration and functionality issues",
+        "count": 5,
+        "affected_repos": [
+          "mem0ai/mem0"
+        ],
+        "sample_urls": [
+          "https://github.com/mem0ai/mem0/issues/4195",
+          "https://github.com/mem0ai/mem0/issues/4173",
+          "https://github.com/mem0ai/mem0/issues/3881",
+          "https://github.com/mem0ai/mem0/issues/4153",
+          "https://github.com/mem0ai/mem0/issues/4207"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "Vector dimension mismatches cause data corruption - Qdrant collections created with wrong dimensions (1536 instead of Ollama's 768/1024) prevent proper storage/retrieval. Path validation bugs prevent Chroma setup. UpstashVector namespace bug breaks batch queries. These block the core vector storage functionality that mem0 entirely depends on."
+      },
+      {
+        "topic": "SDK initialization crashes due to AJV schema validation failures",
+        "count": 4,
+        "affected_repos": [
+          "anthropics/claude-code-action"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-code-action/issues/892",
+          "https://github.com/anthropics/claude-code-action/issues/874",
+          "https://github.com/anthropics/claude-code-action/issues/980",
+          "https://github.com/anthropics/claude-code-action/issues/944"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "P0: 阻断性崩溃问题，影响action的核心初始化流程。4个独立issue报告相同AJV崩溃错误签名，用户必须pin到旧版本才能绕过（#892提供workaround）。崩溃发生在API调用前（total_cost_usd:0），导致CI/CD完全失败，无workaround则无法使用。#892有17条评论，#944有14条评论，显示广泛的用户影响。"
+      },
+      {
+        "topic": "Streaming output failures and crashes",
+        "count": 4,
+        "affected_repos": [
+          "langchain-ai/langchain"
+        ],
+        "sample_urls": [
+          "https://github.com/langchain-ai/langchain/issues/35442",
+          "https://github.com/langchain-ai/langchain/issues/35436",
+          "https://github.com/langchain-ai/langchain/issues/35509",
+          "https://github.com/langchain-ai/langchain/issues/35516"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "35442和35436产生明确的崩溃错误（ValueError: No generation chunks returned, AttributeError: 'AsyncStream' object has no attribute 'model_dump'），完全阻断streaming主流程。streaming是LangChain核心功能，影响用户无法正常使用流式输出。有详细错误堆栈和复现代码支撑。"
+      },
+      {
+        "topic": "Cloud provider connector inconsistencies and breaking changes",
+        "count": 4,
+        "affected_repos": [
+          "microsoft/semantic-kernel"
+        ],
+        "sample_urls": [
+          "https://github.com/microsoft/semantic-kernel/issues/13620",
+          "https://github.com/microsoft/semantic-kernel/issues/13362",
+          "https://github.com/microsoft/semantic-kernel/issues/13267",
+          "https://github.com/microsoft/semantic-kernel/issues/12988"
+        ],
+        "aliases": [],
+        "confidence": null,
+        "priority": "P0",
+        "review_reason": "4个issues都证明云服务连接器存在阻塞性问题：VertexAI global端点完全不可用（#13620）、Azure项目客户端更新导致生产环境崩溃（#13362）、不支持GA版本的Azure OpenAI实时模型（#13267）、VertexAI嵌入维度参数失效（#12988）。所有问题都有明确的错误证据和用户影响，且count=4达到P0标准。"
+      }
+    ],
+    "expected_files": 41,
+    "generated_files": 41,
+    "parsed_files": 41,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "good"
+  }
+}
