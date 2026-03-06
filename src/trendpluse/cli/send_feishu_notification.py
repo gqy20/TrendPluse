@@ -7,13 +7,13 @@
 
 import argparse
 import os
-from datetime import datetime
 
 from dotenv import load_dotenv
 from rich.console import Console
 
 from trendpluse.app.feishu_notifications import (
     find_daily_report_json,
+    find_latest_daily_report_json,
     load_daily_report_from_json,
 )
 from trendpluse.cli.feishu_common import (
@@ -37,12 +37,12 @@ def build_daily_report_url_template(deployment_url: str) -> str | None:
     return f"{base_url}/reports/report-{{date}}/"
 
 
-def resolve_report_date(raw_report_date: str | None) -> str:
-    """解析报告日期，空值时回退到当天。"""
+def resolve_report_date(raw_report_date: str | None) -> str | None:
+    """解析报告日期，空值时返回 None。"""
     cleaned = (raw_report_date or "").strip()
     if cleaned:
         return cleaned
-    return datetime.now().strftime("%Y-%m-%d")
+    return None
 
 
 def main():
@@ -60,15 +60,23 @@ def main():
     ensure_webhook_configured(console, config)
 
     console.print("[bold]发送飞书通知[/bold]")
-    console.print(f"  日期: {report_date}")
+    console.print(f"  日期: {report_date or '自动选择最新日报'}")
     console.print(f"  部署 URL: {deployment_url or '未设置'}")
     console.print(f"  @ 提醒: {len(config.at_mobiles)} 个")
 
     # 查找 JSON 报告文件
-    json_path = find_daily_report_json(report_date)
+    if report_date:
+        json_path = find_daily_report_json(report_date)
+    else:
+        json_path = find_latest_daily_report_json()
+        if json_path:
+            report_date = json_path.stem.removeprefix("report-")
 
     if not json_path:
-        console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
+        if report_date:
+            console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
+        else:
+            console.print("[yellow]未找到任何日报 JSON 文件[/yellow]")
         raise SystemExit(1)
 
     console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")

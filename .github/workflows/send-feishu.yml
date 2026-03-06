@@ -39,16 +39,9 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Resolve report date
-        run: |
-          if [ -n "${{ inputs.report_date }}" ]; then
-            echo "REPORT_DATE=${{ inputs.report_date }}" >> $GITHUB_ENV
-          else
-            echo "REPORT_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
-          fi
-
       - name: Send Feishu notification
         env:
+          REPORT_DATE: ${{ inputs.report_date }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'glm-4.7' }}

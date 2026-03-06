@@ -1,7 +1,5 @@
 """测试飞书通知脚本的辅助函数"""
 
-from datetime import datetime
-
 
 class TestFindReportJson:
     """测试报告 JSON 文件查找功能"""
@@ -40,6 +38,24 @@ class TestFindReportJson:
         # Assert
         assert result is None
 
+    def test_find_latest_daily_report_json(self, tmp_path, monkeypatch):
+        """测试：空日期时应找到最新日报。"""
+        reports_daily_dir = tmp_path / "reports" / "daily"
+        reports_daily_dir.mkdir(parents=True)
+        older_file = reports_daily_dir / "report-2026-03-05.json"
+        latest_file = reports_daily_dir / "report-2026-03-06.json"
+        older_file.write_text("{}", encoding="utf-8")
+        latest_file.write_text("{}", encoding="utf-8")
+
+        monkeypatch.chdir(tmp_path)
+
+        from trendpluse.app.feishu_notifications import find_latest_daily_report_json
+
+        result = find_latest_daily_report_json()
+
+        assert result is not None
+        assert result.resolve() == latest_file.resolve()
+
 
 class TestResolveReportDate:
     """测试日报日期解析。"""
@@ -50,18 +66,11 @@ class TestResolveReportDate:
 
         assert resolve_report_date("2026-03-06") == "2026-03-06"
 
-    def test_resolve_report_date_falls_back_to_today(self, monkeypatch):
-        """测试：空值应回退到当天。"""
-        from trendpluse.cli import send_feishu_notification as module
+    def test_resolve_report_date_returns_none_for_empty_value(self):
+        """测试：空值应返回 None，由调用方决定默认策略。"""
+        from trendpluse.cli.send_feishu_notification import resolve_report_date
 
-        class _FakeDatetime(datetime):
-            @classmethod
-            def now(cls, tz=None):  # noqa: ARG003
-                return cls(2026, 3, 6)
-
-        monkeypatch.setattr(module, "datetime", _FakeDatetime)
-
-        assert module.resolve_report_date("") == "2026-03-06"
+        assert resolve_report_date("") is None
 
 
 class TestWeeklyNotificationHelpers:

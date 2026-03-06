@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from rich.console import Console
@@ -18,6 +19,26 @@ def find_daily_report_json(report_date: str) -> Path | None:
     """查找日报 JSON 文件。"""
     filename = f"report-{report_date}.json"
     return find_report_json_file(f"reports/daily/{filename}")
+
+
+def find_latest_daily_report_json() -> Path | None:
+    """查找最新存在的日报 JSON 文件。"""
+    reports_dir = Path("reports/daily")
+    if not reports_dir.exists():
+        return None
+
+    pattern = re.compile(r"report-(\d{4}-\d{2}-\d{2})\.json$")
+    candidates = []
+    for path in reports_dir.glob("report-*.json"):
+        match = pattern.match(path.name)
+        if match:
+            candidates.append((match.group(1), path))
+
+    if not candidates:
+        return None
+
+    _, latest_path = max(candidates, key=lambda item: item[0])
+    return latest_path
 
 
 def load_daily_report_from_json(json_path: str, console: Console) -> DailyReport:
