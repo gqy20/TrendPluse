@@ -1,11 +1,16 @@
 """Issue Agent 解析测试"""
 
+from __future__ import annotations
+
+import asyncio
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
 from claude_agent_sdk.types import ResultMessage
 
 from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
+from trendpluse.models.issue_agent import IssueAgentReport
 
 
 class DummyText:
@@ -77,6 +82,46 @@ async def test_run_agent_query_prefers_structured_output() -> None:
 
 
 @pytest.mark.asyncio
+async def test_run_agent_query_includes_stderr_tail_on_process_error() -> None:
+    runner = IssueAgentRunner(model=None)
+
+    async def fake_query(*, prompt, options=None, transport=None):
+        assert options is not None
+        assert options.stderr is not None
+        options.stderr("first stderr line")
+        options.stderr("second stderr line")
+        raise RuntimeError("Command failed with exit code 1")
+        yield  # pragma: no cover
+
+    with (
+        patch("claude_agent_sdk.query", fake_query),
+        pytest.raises(RuntimeError, match="stderr_tail=.*first stderr line"),
+    ):
+        await runner._run_agent_query("[ROUND1] test")
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_raises_timeout_error(tmp_path) -> None:
+    class _TimeoutRunner(IssueAgentRunner):
+        async def _run_three_round_analysis(self, input_path: Path) -> IssueAgentReport:
+            await asyncio.sleep(0.05)
+            return IssueAgentReport(top_pain_points=[])
+
+    runner = _TimeoutRunner(
+        model=None,
+        retry_max_attempts=1,
+        retry_wait_seconds=0,
+        analysis_timeout_seconds=0.01,
+    )
+    output_path = tmp_path / "x.analysis.json"
+    input_path = tmp_path / "x.jsonl"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="kind=timeout"):
+        await runner.analyze_file(input_path, output_path)
+
+
+@pytest.mark.asyncio
 async def test_analyze_file_retries_on_invalid_then_success(tmp_path) -> None:
     class _RetryRunner(IssueAgentRunner):
         def __init__(self) -> None:
@@ -135,7 +180,7 @@ async def test_analyze_file_raises_after_retry_exhausted(tmp_path) -> None:
     output_path = tmp_path / "x.analysis.json"
     input_path = tmp_path / "x.jsonl"
     input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
-    with pytest.raises(RuntimeError, match="仍未通过校验"):
+    with pytest.raises(RuntimeError, match="kind=validation_error"):
         await runner.analyze_file(input_path, output_path)
 
 

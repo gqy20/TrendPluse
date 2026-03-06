@@ -24,12 +24,17 @@ logger = logging.getLogger(__name__)
 class IssueAgentRunner:
     """使用 Claude Agent SDK 分析 Issue 文件。"""
 
+    DEFAULT_ANALYSIS_TIMEOUT_SECONDS = 300.0
+    DEFAULT_STDERR_TAIL_LINES = 20
+
     def __init__(
         self,
         model: str | None = None,
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
         review_confidence_threshold: float = 0.6,
+        analysis_timeout_seconds: float = DEFAULT_ANALYSIS_TIMEOUT_SECONDS,
+        stderr_tail_lines: int = DEFAULT_STDERR_TAIL_LINES,
     ) -> None:
         self.model = model
         self.retry_max_attempts = max(1, retry_max_attempts)
@@ -37,6 +42,8 @@ class IssueAgentRunner:
         self.review_confidence_threshold = min(
             1.0, max(0.0, review_confidence_threshold)
         )
+        self.analysis_timeout_seconds = max(0.0, analysis_timeout_seconds)
+        self.stderr_tail_lines = max(1, stderr_tail_lines)
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
         """分析单个 JSONL 文件并写入 JSON 结果。"""
@@ -46,27 +53,33 @@ class IssueAgentRunner:
         last_exc: Exception | None = None
         for attempt in range(1, self.retry_max_attempts + 1):
             try:
-                validated = await self._run_three_round_analysis(input_path)
+                validated = await self._run_with_timeout(
+                    self._run_three_round_analysis(input_path)
+                )
                 normalized_text = json.dumps(
                     validated.model_dump(), ensure_ascii=False, indent=2
                 )
                 output_path.write_text(normalized_text, encoding="utf-8")
                 return normalized_text
-            except (ValidationError, ValueError) as exc:
+            except Exception as exc:
                 last_exc = exc
                 if attempt >= self.retry_max_attempts:
                     break
                 logger.warning(
-                    "Issue Agent 输出校验失败，准备重试: attempt=%d/%d, error=%s",
+                    "Issue Agent 分析失败，准备重试: attempt=%d/%d, kind=%s, error=%s",
                     attempt,
                     self.retry_max_attempts,
-                    exc,
+                    self._classify_exception(exc),
+                    self._format_exception_message(exc),
                 )
                 if self.retry_wait_seconds > 0:
                     await asyncio.sleep(self.retry_wait_seconds)
         assert last_exc is not None
         raise RuntimeError(
-            f"Issue Agent 输出在 {self.retry_max_attempts} 次尝试后仍未通过校验"
+            "Issue Agent 在 "
+            f"{self.retry_max_attempts} 次尝试后仍失败"
+            f"（kind={self._classify_exception(last_exc)}）: "
+            f"{self._format_exception_message(last_exc)}"
         ) from last_exc
 
     async def _run_three_round_analysis(self, input_path: Path) -> IssueAgentReport:
@@ -287,19 +300,23 @@ class IssueAgentRunner:
             model=self.model,
             allowed_tools=["Read"],
             output_format=self._resolve_output_format(prompt),
+            stderr=self._build_stderr_handler(),
         )
 
         text_chunks: list[str] = []
         result_text: str | None = None
         structured_output: Any = None
-        async for message in query(prompt=prompt, options=options):
-            if isinstance(message, AssistantMessage):
-                text_chunks.append(self._extract_text_blocks(message.content))
-            elif isinstance(message, ResultMessage):
-                if message.structured_output is not None:
-                    structured_output = message.structured_output
-                if isinstance(message.result, str) and message.result.strip():
-                    result_text = message.result.strip()
+        try:
+            async for message in query(prompt=prompt, options=options):
+                if isinstance(message, AssistantMessage):
+                    text_chunks.append(self._extract_text_blocks(message.content))
+                elif isinstance(message, ResultMessage):
+                    if message.structured_output is not None:
+                        structured_output = message.structured_output
+                    if isinstance(message.result, str) and message.result.strip():
+                        result_text = message.result.strip()
+        except Exception as exc:
+            raise RuntimeError(self._build_cli_error_message(exc)) from exc
 
         if structured_output is not None:
             if isinstance(structured_output, str):
@@ -470,3 +487,67 @@ class IssueAgentRunner:
         except json.JSONDecodeError:
             return None
         return parsed if isinstance(parsed, dict) else None
+
+    async def _run_with_timeout(self, coroutine: Any) -> IssueAgentReport:
+        """为单文件分析增加超时保护。"""
+        if self.analysis_timeout_seconds <= 0:
+            return await coroutine
+        try:
+            async with asyncio.timeout(self.analysis_timeout_seconds):
+                return await coroutine
+        except TimeoutError as exc:
+            raise TimeoutError(
+                f"Issue Agent 单文件分析超时 ({self.analysis_timeout_seconds:.0f}s)"
+            ) from exc
+
+    def _build_stderr_handler(self) -> Any:
+        """构建 SDK stderr 回调，保存最近几行诊断信息。"""
+        stderr_lines: list[str] = []
+
+        def _handle(message: str) -> None:
+            cleaned = message.strip()
+            if not cleaned:
+                return
+            stderr_lines.append(cleaned)
+            if len(stderr_lines) > self.stderr_tail_lines:
+                del stderr_lines[0 : len(stderr_lines) - self.stderr_tail_lines]
+            logger.debug("Issue Agent SDK stderr: %s", cleaned)
+
+        self._last_stderr_lines = stderr_lines
+        return _handle
+
+    def _build_cli_error_message(self, exc: Exception) -> str:
+        """拼装带 stderr 摘要的 CLI 错误消息。"""
+        base = str(exc).strip() or exc.__class__.__name__
+        stderr_tail = self._get_stderr_tail()
+        if not stderr_tail:
+            return base
+        return f"{base}; stderr_tail={stderr_tail}"
+
+    def _get_stderr_tail(self) -> str:
+        """获取最近的 stderr 摘要。"""
+        stderr_lines = getattr(self, "_last_stderr_lines", [])
+        if not isinstance(stderr_lines, list) or not stderr_lines:
+            return ""
+        return " | ".join(str(line) for line in stderr_lines[-self.stderr_tail_lines :])
+
+    def _classify_exception(self, exc: Exception) -> str:
+        """将异常归类为稳定的失败类别。"""
+        if isinstance(exc, TimeoutError):
+            return "timeout"
+        if isinstance(exc, ValidationError | ValueError):
+            return "validation_error"
+
+        message = str(exc).lower()
+        if "exit code" in message or "command failed" in message:
+            return "process_error"
+        if "canceled" in message or "cancelled" in message:
+            return "cancelled"
+        return "unknown"
+
+    def _format_exception_message(self, exc: Exception) -> str:
+        """生成适合日志的异常信息。"""
+        message = str(exc).strip() or exc.__class__.__name__
+        if len(message) > 500:
+            return message[:500] + "..."
+        return message
