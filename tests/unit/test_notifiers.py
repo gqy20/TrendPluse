@@ -18,6 +18,52 @@ from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.feishu import FeishuNotifier
 
 
+def _build_signal(**overrides) -> Signal:
+    """构造测试用信号。"""
+    defaults = {
+        "id": "test-signal-1",
+        "title": "测试信号：新功能发布",
+        "type": "capability",
+        "category": "engineering",
+        "impact_score": 5,
+        "why_it_matters": "这是一个非常重要的功能更新",
+        "sources": ["https://github.com/test/repo/pull/123"],
+        "related_repos": ["test/repo"],
+    }
+    defaults.update(overrides)
+    return Signal(**defaults)
+
+
+def _build_activity() -> ActivityData:
+    """构造测试用活跃度数据。"""
+    return ActivityData(
+        total_commits=500,
+        active_repos_count=23,
+        top_repos=[
+            RepoActivity(
+                repo="anthropics/claude-code",
+                commits=127,
+                top_contributors=["user1", "user2", "user3"],
+            ),
+            RepoActivity(
+                repo="cline/cline",
+                commits=45,
+                top_contributors=["user4"],
+            ),
+            RepoActivity(
+                repo="openai/swarm",
+                commits=32,
+                top_contributors=[],
+            ),
+            RepoActivity(
+                repo="significant-gravitas/autogpt",
+                commits=20,
+                top_contributors=["user5", "user6"],
+            ),
+        ],
+    )
+
+
 def _get_all_card_content(elements: list) -> list[str]:
     """提取卡片中所有元素的内容（包括折叠面板内的内容和标题）
 
@@ -253,30 +299,13 @@ class TestFeishuNotifier:
 
 
 @pytest.fixture
-def sample_signal() -> Signal:
-    """创建示例信号"""
-    return Signal(
-        id="test-signal-1",
-        title="测试信号：新功能发布",
-        type="capability",
-        category="engineering",
-        impact_score=5,
-        why_it_matters="这是一个非常重要的功能更新",
-        sources=["https://github.com/test/repo/pull/123"],
-        related_repos=["test/repo"],
-    )
-
-
-@pytest.fixture
 def sample_report() -> DailyReport:
     """创建示例日报"""
     # 创建不同评分的信号
     high_impact_signals = [
-        Signal(
+        _build_signal(
             id=f"high-{i}",
             title=f"高影响信号 {i}",
-            type="capability",
-            category="engineering",
             impact_score=5,
             why_it_matters=f"重要原因 {i}",
             sources=[f"https://github.com/test/repo/pull/{i}"],
@@ -286,11 +315,10 @@ def sample_report() -> DailyReport:
     ]
 
     medium_impact_signals = [
-        Signal(
+        _build_signal(
             id=f"medium-{i}",
             title=f"中等影响信号 {i}",
             type="workflow",
-            category="engineering",
             impact_score=3,
             why_it_matters=f"原因 {i}",
             sources=[f"https://github.com/test/repo/pull/{i + 10}"],
@@ -314,32 +342,7 @@ def sample_report() -> DailyReport:
             "high_impact_signals": 6,
             "total_commits_analyzed": 120,
         },
-        activity=ActivityData(
-            total_commits=500,
-            active_repos_count=23,
-            top_repos=[
-                RepoActivity(
-                    repo="anthropics/claude-code",
-                    commits=127,
-                    top_contributors=["user1", "user2", "user3"],
-                ),
-                RepoActivity(
-                    repo="cline/cline",
-                    commits=45,
-                    top_contributors=["user4"],
-                ),
-                RepoActivity(
-                    repo="openai/swarm",
-                    commits=32,
-                    top_contributors=[],
-                ),
-                RepoActivity(
-                    repo="significant-gravitas/autogpt",
-                    commits=20,
-                    top_contributors=["user5", "user6"],
-                ),
-            ],
-        ),
+        activity=_build_activity(),
         releases=None,
         breaking_changes=None,
         monitored_repos=None,

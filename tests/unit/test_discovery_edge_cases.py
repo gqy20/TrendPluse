@@ -6,13 +6,50 @@
 from datetime import UTC, datetime, timedelta
 from unittest.mock import Mock, patch
 
-import pytest  # noqa: F401 (used for @pytest.mark)
-
 from trendpluse.discovery.deduplicator import Deduplicator
 from trendpluse.discovery.evaluator import QualityEvaluator
 from trendpluse.discovery.keyword_searcher import KeywordSearcher
 from trendpluse.discovery.trending import TrendingCollector
 from trendpluse.models.discovery import DiscoveredProject
+
+
+def _build_project(**overrides) -> DiscoveredProject:
+    """构造测试用发现项目。"""
+    defaults = {
+        "repo": "owner/repo",
+        "name": "repo",
+        "description": "Test",
+        "stars": 1000,
+        "language": "Python",
+        "topics": ["ai"],
+        "license": "MIT",
+        "open_issues": 10,
+        "forks": 50,
+        "watchers": 20,
+        "last_commit_at": datetime.now(UTC),
+        "discovery_source": "keyword",
+        "discovery_reason": "Test",
+    }
+    defaults.update(overrides)
+    return DiscoveredProject(**defaults)
+
+
+def _build_mock_repo(*, license_name=None):
+    """构造测试用 GitHub repo mock。"""
+    repo = Mock()
+    repo.full_name = "owner/repo"
+    repo.name = "repo"
+    repo.description = "Test"
+    repo.stargazers_count = 1000
+    repo.language = "Python"
+    repo.license = None if license_name is None else Mock(name="license")
+    if repo.license is not None:
+        repo.license.name = license_name
+    repo.open_issues_count = 5
+    repo.forks_count = 10
+    repo.watchers_count = 5
+    repo.pushed_at = datetime.now(UTC)
+    return repo
 
 
 class TestEdgeCases:
@@ -24,35 +61,24 @@ class TestEdgeCases:
         deduplicator = Deduplicator()
 
         # 创建两个重复项目，第二个没有 discovery_reason
-        project1 = DiscoveredProject(
+        project1 = _build_project(
             repo="owner/repo1",
             name="repo1",
             description="First",
-            stars=1000,
-            language="Python",
-            topics=["ai"],
-            license="MIT",
-            open_issues=10,
-            forks=50,
-            watchers=20,
             last_commit_at=datetime.now(UTC) - timedelta(days=5),
             discovery_source="trending",
             discovery_reason="Trending",
         )
 
-        project2 = DiscoveredProject(
+        project2 = _build_project(
             repo="owner/repo1",
             name="repo1",
             description="Second",
             stars=1100,
-            language="Python",
-            topics=["ai"],
-            license="MIT",
             open_issues=12,
             forks=55,
             watchers=22,
             last_commit_at=datetime.now(UTC) - timedelta(days=3),
-            discovery_source="keyword",
             discovery_reason="",  # 空 reason
         )
 
@@ -68,19 +94,11 @@ class TestEdgeCases:
         evaluator = QualityEvaluator()
 
         # 创建包含多个相关关键词的项目
-        project = DiscoveredProject(
+        project = _build_project(
             repo="owner/repo",
             name="repo",
             description="An AI agent framework with LLM and Claude support",
-            stars=1000,
-            language="Python",
             topics=["agent", "ai", "llm", "claude", "rag"],
-            license="MIT",
-            open_issues=10,
-            forks=50,
-            watchers=20,
-            last_commit_at=datetime.now(UTC),
-            discovery_source="keyword",
             discovery_reason="AI",
         )
 
@@ -95,17 +113,7 @@ class TestEdgeCases:
             mock_github.return_value = mock_client
 
             # 创建一个会抛出异常的 repo 对象
-            mock_repo = Mock()
-            mock_repo.full_name = "owner/repo"
-            mock_repo.name = "repo"
-            mock_repo.description = "Test"
-            mock_repo.stargazers_count = 1000
-            mock_repo.language = "Python"
-            mock_repo.license = None
-            mock_repo.open_issues_count = 5
-            mock_repo.forks_count = 10
-            mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now(UTC)
+            mock_repo = _build_mock_repo()
 
             # topics 属性抛出异常
             type(mock_repo).topics = property(
@@ -130,17 +138,7 @@ class TestEdgeCases:
             mock_client = Mock()
             mock_github.return_value = mock_client
 
-            mock_repo = Mock()
-            mock_repo.full_name = "owner/repo"
-            mock_repo.name = "repo"
-            mock_repo.description = "Test"
-            mock_repo.stargazers_count = 1000
-            mock_repo.language = "Python"
-            mock_repo.license = None
-            mock_repo.open_issues_count = 5
-            mock_repo.forks_count = 10
-            mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now(UTC)
+            mock_repo = _build_mock_repo()
 
             # topics 和 get_topics 都抛出异常
             type(mock_repo).topics = property(
@@ -208,18 +206,7 @@ class TestEdgeCases:
             mock_client = Mock()
             mock_github.return_value = mock_client
 
-            mock_repo = Mock()
-            mock_repo.full_name = "owner/repo"
-            mock_repo.name = "repo"
-            mock_repo.description = "Test"
-            mock_repo.stargazers_count = 1000
-            mock_repo.language = "Python"
-            mock_repo.license = Mock()
-            mock_repo.license.name = "MIT"
-            mock_repo.open_issues_count = 5
-            mock_repo.forks_count = 10
-            mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now(UTC)
+            mock_repo = _build_mock_repo(license_name="MIT")
 
             # topics 属性抛出异常
             type(mock_repo).topics = property(
@@ -243,18 +230,7 @@ class TestEdgeCases:
             mock_client = Mock()
             mock_github.return_value = mock_client
 
-            mock_repo = Mock()
-            mock_repo.full_name = "owner/repo"
-            mock_repo.name = "repo"
-            mock_repo.description = "Test"
-            mock_repo.stargazers_count = 1000
-            mock_repo.language = "Python"
-            mock_repo.license = Mock()
-            mock_repo.license.name = "MIT"
-            mock_repo.open_issues_count = 5
-            mock_repo.forks_count = 10
-            mock_repo.watchers_count = 5
-            mock_repo.pushed_at = datetime.now(UTC)
+            mock_repo = _build_mock_repo(license_name="MIT")
 
             # topics 和 get_topics 都抛出异常
             type(mock_repo).topics = property(
@@ -278,19 +254,11 @@ class TestEdgeCases:
         evaluator = QualityEvaluator()
 
         # 描述中包含多个关键词
-        project = DiscoveredProject(
+        project = _build_project(
             repo="owner/repo",
             name="repo",
             description="AI agent LLM Claude agent agent agent",  # 多个关键词
-            stars=1000,
-            language="Python",
             topics=["agent"],
-            license="MIT",
-            open_issues=10,
-            forks=50,
-            watchers=20,
-            last_commit_at=datetime.now(UTC),
-            discovery_source="keyword",
             discovery_reason="AI",
         )
 
@@ -314,19 +282,16 @@ class TestEdgeCases:
                 repo = f"owner/repo{i}"
 
             projects.append(
-                DiscoveredProject(
+                _build_project(
                     repo=repo,
                     name=repo.split("/")[1],
                     description=f"Project {i}",
                     stars=100 + i * 10,
-                    language="Python",
                     topics=[],
-                    license="MIT",
                     open_issues=5,
                     forks=10,
                     watchers=5,
                     last_commit_at=datetime.now(UTC) - timedelta(days=i % 30),
-                    discovery_source="keyword",
                     discovery_reason=f"Keyword{i}",
                 )
             )
@@ -343,7 +308,7 @@ class TestEdgeCases:
         """测试所有维度都是 0 分的情况"""
         evaluator = QualityEvaluator()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="owner/repo",
             name="repo",
             description="",  # 无描述
@@ -355,7 +320,6 @@ class TestEdgeCases:
             forks=0,
             watchers=0,
             last_commit_at=datetime.now(UTC) - timedelta(days=365),  # 很久没更新
-            discovery_source="keyword",
             discovery_reason="Test",
         )
 
@@ -367,14 +331,12 @@ class TestEdgeCases:
         """测试所有维度都是满分的情况"""
         evaluator = QualityEvaluator()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="owner/repo",
             name="repo",
             description="AI agent LLM Claude",  # 相关描述
             stars=20000,  # 高 star
-            language="Python",
             topics=["agent", "ai", "llm", "claude", "rag"],  # 相关 topics
-            license="MIT",
             open_issues=50,
             forks=500,
             watchers=200,
