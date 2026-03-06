@@ -13,6 +13,42 @@ from trendpluse.app.discovery import discover, load_monitored_repos
 from trendpluse.models.discovery import DiscoveredProject
 
 
+def _build_project(**overrides) -> DiscoveredProject:
+    """构造测试用发现项目。"""
+    defaults = {
+        "repo": "owner/project",
+        "name": "project",
+        "description": "Test project",
+        "stars": 1000,
+        "language": "Python",
+        "topics": ["ai"],
+        "license": "MIT",
+        "open_issues": 10,
+        "forks": 20,
+        "watchers": 10,
+        "last_commit_at": datetime.now(UTC),
+        "discovery_source": "trending",
+        "discovery_reason": "Trending",
+    }
+    defaults.update(overrides)
+    return DiscoveredProject(**defaults)
+
+
+def _build_highlight_settings(**overrides) -> Mock:
+    """构造 discovery 用的 settings mock。"""
+    settings = Mock(
+        anthropic_api_key="",
+        anthropic_model="glm-4.7",
+        anthropic_base_url="",
+        llm_retry_max_attempts=3,
+        llm_retry_wait_min=1,
+        llm_retry_wait_max=10,
+    )
+    for key, value in overrides.items():
+        setattr(settings, key, value)
+    return settings
+
+
 class TestDiscoverProjectsIntegration:
     """项目发现集成测试"""
 
@@ -34,35 +70,24 @@ class TestDiscoverProjectsIntegration:
         mock_trending = Mock()
         mock_trending_collector.return_value = mock_trending
         mock_trending.discover.return_value = [
-            DiscoveredProject(
+            _build_project(
                 repo="owner/trending1",
                 name="trending1",
                 description="Trending project 1",
                 stars=3000,
-                language="Python",
-                topics=["ai"],
-                license="MIT",
                 open_issues=20,
                 forks=100,
                 watchers=50,
-                last_commit_at=datetime.now(UTC),
-                discovery_source="trending",
-                discovery_reason="Trending",
             ),
-            DiscoveredProject(
+            _build_project(
                 repo="owner/monitored",  # 已监控
                 name="monitored",
                 description="Already monitored",
                 stars=5000,
-                language="Python",
                 topics=[],
-                license="MIT",
                 open_issues=10,
                 forks=50,
                 watchers=20,
-                last_commit_at=datetime.now(UTC),
-                discovery_source="trending",
-                discovery_reason="Trending",
             ),
         ]
 
@@ -70,7 +95,7 @@ class TestDiscoverProjectsIntegration:
         mock_keyword = Mock()
         mock_keyword_searcher.return_value = mock_keyword
         mock_keyword.discover.return_value = [
-            DiscoveredProject(
+            _build_project(
                 repo="owner/keyword1",
                 name="keyword1",
                 description="Keyword project 1",
@@ -81,7 +106,6 @@ class TestDiscoverProjectsIntegration:
                 open_issues=10,
                 forks=30,
                 watchers=15,
-                last_commit_at=datetime.now(UTC),
                 discovery_source="keyword",
                 discovery_reason="Keyword: AI",
             ),
@@ -201,20 +225,13 @@ class TestDiscoverProjectsIntegration:
         mock_load_monitored.return_value = set()
 
         # 同一个项目来自不同来源
-        project = DiscoveredProject(
+        project = _build_project(
             repo="owner/duplicate",
             name="duplicate",
             description="Duplicate project",
-            stars=1000,
-            language="Python",
-            topics=["ai"],
-            license="MIT",
             open_issues=5,
             forks=20,
             watchers=10,
-            last_commit_at=datetime.now(UTC),
-            discovery_source="trending",
-            discovery_reason="Trending",
         )
 
         mock_trending = Mock()
@@ -224,18 +241,14 @@ class TestDiscoverProjectsIntegration:
         mock_keyword = Mock()
         mock_keyword_searcher.return_value = mock_keyword
         # 关键词也返回同一个项目（不同来源）
-        duplicate_project = DiscoveredProject(
+        duplicate_project = _build_project(
             repo="owner/duplicate",
             name="duplicate",
             description="From keyword search",
             stars=1100,
-            language="Python",
-            topics=["ai"],
-            license="MIT",
             open_issues=5,
             forks=22,
             watchers=11,
-            last_commit_at=datetime.now(UTC),
             discovery_source="keyword",
             discovery_reason="Keyword: AI",
         )
@@ -264,39 +277,27 @@ class TestDiscoverProjectsIntegration:
     ):
         """测试：保存可执行候选清单（仅 high/medium）"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = Mock(
-            anthropic_api_key="",
-            anthropic_model="glm-4.7",
-            anthropic_base_url="",
-            llm_retry_max_attempts=3,
-            llm_retry_wait_min=1,
-            llm_retry_wait_max=10,
-        )
+        mock_get_settings.return_value = _build_highlight_settings()
 
         mock_trending = Mock()
         mock_trending_collector.return_value = mock_trending
         mock_trending.discover.return_value = [
-            DiscoveredProject(
+            _build_project(
                 repo="owner/high-priority",
                 name="high-priority",
                 description="AI agent project",
                 stars=15000,
-                language="Python",
                 topics=["agent", "ai"],
-                license="MIT",
                 open_issues=20,
                 forks=800,
                 watchers=100,
-                last_commit_at=datetime.now(UTC),
-                discovery_source="trending",
-                discovery_reason="Trending",
             )
         ]
 
         mock_keyword = Mock()
         mock_keyword_searcher.return_value = mock_keyword
         mock_keyword.discover.return_value = [
-            DiscoveredProject(
+            _build_project(
                 repo="owner/low-priority",
                 name="low-priority",
                 description="",
@@ -340,33 +341,21 @@ class TestDiscoverProjectsIntegration:
     ):
         """测试：actionable 默认最多输出 10 个"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = Mock(
-            anthropic_api_key="",
-            anthropic_model="glm-4.7",
-            anthropic_base_url="",
-            llm_retry_max_attempts=3,
-            llm_retry_wait_min=1,
-            llm_retry_wait_max=10,
-        )
+        mock_get_settings.return_value = _build_highlight_settings()
 
         # 生成 12 个高优先级候选，默认应只输出 10 个
         trending_projects = []
         for i in range(12):
             trending_projects.append(
-                DiscoveredProject(
+                _build_project(
                     repo=f"owner/high-{i}",
                     name=f"high-{i}",
                     description="AI agent project",
                     stars=12000 - i * 100,
-                    language="Python",
                     topics=["agent", "ai"],
-                    license="MIT",
                     open_issues=10,
                     forks=200,
                     watchers=50,
-                    last_commit_at=datetime.now(UTC),
-                    discovery_source="trending",
-                    discovery_reason="Trending",
                 )
             )
 
@@ -404,32 +393,22 @@ class TestDiscoverProjectsIntegration:
     ):
         """测试：AI 亮点分析默认最多分析 10 个项目"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = Mock(
+        mock_get_settings.return_value = _build_highlight_settings(
             anthropic_api_key="test-key",
-            anthropic_model="glm-4.7",
-            anthropic_base_url="",
-            llm_retry_max_attempts=3,
-            llm_retry_wait_min=1,
-            llm_retry_wait_max=10,
         )
 
         trending_projects = []
         for i in range(15):
             trending_projects.append(
-                DiscoveredProject(
+                _build_project(
                     repo=f"owner/high-highlight-{i}",
                     name=f"high-highlight-{i}",
                     description="AI agent project",
                     stars=15000 - i * 50,
-                    language="Python",
                     topics=["agent", "ai"],
-                    license="MIT",
                     open_issues=10,
                     forks=300,
                     watchers=100,
-                    last_commit_at=datetime.now(UTC),
-                    discovery_source="trending",
-                    discovery_reason="Trending",
                 )
             )
 

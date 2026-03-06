@@ -11,6 +11,29 @@ import pytest
 from trendpluse.models.signal import Signal
 
 
+def _build_signal(**overrides) -> Signal:
+    """构造测试用信号。"""
+    defaults = {
+        "id": "signal-1",
+        "title": "测试信号",
+        "type": "capability",
+        "category": "engineering",
+        "impact_score": 4,
+        "why_it_matters": "测试",
+        "sources": ["https://github.com/test/repo/pull/1"],
+        "related_repos": ["test/repo"],
+    }
+    defaults.update(overrides)
+    return Signal(**defaults)
+
+
+def _mock_llm_result(mock_llm_client, text: str) -> None:
+    """配置 LLM 返回结果。"""
+    mock_llm_client.messages.create.return_value = MagicMock(
+        content=[MagicMock(text=text)]
+    )
+
+
 class TestSignalDeduplicator:
     """SignalDeduplicator 测试类"""
 
@@ -40,35 +63,27 @@ class TestSignalDeduplicator:
     def sample_signals(self):
         """创建示例信号"""
         return [
-            Signal(
+            _build_signal(
                 id="signal-1",
                 title="Agent 上下文感知",
-                type="capability",
-                category="engineering",
                 impact_score=5,
                 why_it_matters="AI Agent 从被动执行向主动感知演进",
                 sources=["https://github.com/test/repo/pull/123"],
-                related_repos=["test/repo"],
             ),
-            Signal(
+            _build_signal(
                 id="signal-2",
                 title="Agent 安全增强",
                 type="safety",
-                category="engineering",
                 impact_score=4,
                 why_it_matters="提升 AI Agent 安全性",
                 sources=["https://github.com/test/repo/pull/124"],
-                related_repos=["test/repo"],
             ),
-            Signal(
+            _build_signal(
                 id="signal-3",
                 title="Agent 上下文感知",
-                type="capability",
-                category="engineering",
                 impact_score=5,
                 why_it_matters="AI Agent 从被动执行向主动感知演进",
                 sources=["https://github.com/test/repo/pull/125"],
-                related_repos=["test/repo"],
             ),
         ]
 
@@ -140,23 +155,18 @@ class TestSignalDeduplicator:
         """测试：标题相似时应调用 LLM 判断"""
         # Arrange
         # 创建一个标题相似的信号（编辑距离 <= 2）
-        similar_signal = Signal(
+        similar_signal = _build_signal(
             id="signal-new",
             title="Agent 上下文",  # 与 "Agent 上下文感知" 相似
-            type="capability",
-            category="engineering",
             impact_score=5,
             why_it_matters="测试",
             sources=["https://github.com/test/repo/pull/126"],
-            related_repos=["test/repo"],
         )
 
         history = [sample_signals[0]]
 
         # Mock LLM 返回非重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="UNIQUE")]
-        )
+        _mock_llm_result(mock_llm_client, "UNIQUE")
 
         # Act
         is_dup = deduplicator._is_duplicate(similar_signal, history)
@@ -172,9 +182,7 @@ class TestSignalDeduplicator:
         """测试：去重应移除重复信号"""
         # Arrange
         # Mock LLM 返回重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="DUPLICATE")]
-        )
+        _mock_llm_result(mock_llm_client, "DUPLICATE")
 
         # Act
         unique_signals = deduplicator.deduplicate(sample_signals)
@@ -201,9 +209,7 @@ class TestSignalDeduplicator:
         deduplicator.history_path = Path(history_path)
 
         # Mock LLM 返回非重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="UNIQUE")]
-        )
+        _mock_llm_result(mock_llm_client, "UNIQUE")
 
         # Act
         deduplicator.deduplicate(sample_signals)
@@ -298,32 +304,24 @@ class TestSignalDeduplicator:
     ):
         """测试：LLM 应正确识别重复信号"""
         # Arrange
-        new_signal = Signal(
+        new_signal = _build_signal(
             id="new",
             title="Agent 优化",
-            type="capability",
-            category="engineering",
             impact_score=4,
             why_it_matters="测试",
             sources=["https://github.com/test/new"],
-            related_repos=["test/repo"],
         )
 
-        existing_signal = Signal(
+        existing_signal = _build_signal(
             id="existing",
             title="Agent 改进",
-            type="capability",
-            category="engineering",
             impact_score=4,
             why_it_matters="测试",
             sources=["https://github.com/test/existing"],
-            related_repos=["test/repo"],
         )
 
         # Mock LLM 返回重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="DUPLICATE")]
-        )
+        _mock_llm_result(mock_llm_client, "DUPLICATE")
 
         # Act
         is_dup = deduplicator._llm_check_duplicate(new_signal, [existing_signal])
@@ -336,32 +334,25 @@ class TestSignalDeduplicator:
     ):
         """测试：LLM 应正确识别非重复信号"""
         # Arrange
-        new_signal = Signal(
+        new_signal = _build_signal(
             id="new",
             title="Agent 上下文感知",
-            type="capability",
-            category="engineering",
             impact_score=5,
             why_it_matters="新特性",
             sources=["https://github.com/test/new"],
-            related_repos=["test/repo"],
         )
 
-        existing_signal = Signal(
+        existing_signal = _build_signal(
             id="existing",
             title="Agent 安全增强",
             type="safety",
-            category="engineering",
             impact_score=4,
             why_it_matters="安全改进",
             sources=["https://github.com/test/existing"],
-            related_repos=["test/repo"],
         )
 
         # Mock LLM 返回非重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="UNIQUE")]
-        )
+        _mock_llm_result(mock_llm_client, "UNIQUE")
 
         # Act
         is_dup = deduplicator._llm_check_duplicate(new_signal, [existing_signal])
@@ -377,33 +368,25 @@ class TestSignalDeduplicator:
         """测试：PR 和 Commit 描述同一趋势时应合并为一个信号"""
         # Arrange
         # PR 提取的信号
-        pr_signal = Signal(
+        pr_signal = _build_signal(
             id="pr-1",
             title="流式处理支持",
-            type="capability",  # 业务类型
-            category="engineering",
             impact_score=5,
             why_it_matters="音频流处理能力",
             sources=["https://github.com/test/repo/pull/123"],
-            related_repos=["test/repo"],
         )
 
         # Commit 提取的信号（描述同一趋势）
-        commit_signal = Signal(
+        commit_signal = _build_signal(
             id="commit-1",
             title="音频流处理支持",  # 标题略有不同但本质相同
-            type="capability",  # 业务类型
-            category="engineering",
             impact_score=4,
             why_it_matters="实现音频流功能",
             sources=["https://github.com/test/repo/commit/abc123"],
-            related_repos=["test/repo"],
         )
 
         # Mock LLM 返回重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="DUPLICATE")]
-        )
+        _mock_llm_result(mock_llm_client, "DUPLICATE")
 
         # Act
         unique_signals = deduplicator.deduplicate([pr_signal, commit_signal])
@@ -420,32 +403,24 @@ class TestSignalDeduplicator:
     ):
         """测试：合并时应保留影响评分最高的信号"""
         # Arrange
-        low_score_signal = Signal(
+        low_score_signal = _build_signal(
             id="low",
             title="MCP 集成",
-            type="capability",
-            category="engineering",
             impact_score=3,
             why_it_matters="低评分",
             sources=["https://github.com/test/repo/commit/low"],
-            related_repos=["test/repo"],
         )
 
-        high_score_signal = Signal(
+        high_score_signal = _build_signal(
             id="high",
             title="MCP 资源协议集成",
-            type="capability",
-            category="engineering",
             impact_score=5,
             why_it_matters="高评分",
             sources=["https://github.com/test/repo/pull/high"],
-            related_repos=["test/repo"],
         )
 
         # Mock LLM 返回重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="DUPLICATE")]
-        )
+        _mock_llm_result(mock_llm_client, "DUPLICATE")
 
         # Act
         unique_signals = deduplicator.deduplicate([low_score_signal, high_score_signal])
@@ -459,43 +434,35 @@ class TestSignalDeduplicator:
     def test_deduplicate_aggregates_all_sources(self, deduplicator, mock_llm_client):
         """测试：合并时应聚合所有来源"""
         # Arrange
-        pr_signal = Signal(
+        pr_signal = _build_signal(
             id="pr-1",
             title="RAG 优化",
             type="performance",
-            category="engineering",
             impact_score=4,
             why_it_matters="检索增强",
             sources=["https://github.com/test/repo/pull/100"],
-            related_repos=["test/repo"],
         )
 
-        commit_signal_1 = Signal(
+        commit_signal_1 = _build_signal(
             id="commit-1",
             title="RAG 性能优化",
             type="performance",
-            category="engineering",
             impact_score=4,
             why_it_matters="提升检索速度",
             sources=["https://github.com/test/repo/commit/aaa"],
-            related_repos=["test/repo"],
         )
 
-        commit_signal_2 = Signal(
+        commit_signal_2 = _build_signal(
             id="commit-2",
             title="RAG 优化",
             type="performance",
-            category="engineering",
             impact_score=3,
             why_it_matters="缓存优化",
             sources=["https://github.com/test/repo/commit/bbb"],
-            related_repos=["test/repo"],
         )
 
         # Mock LLM 返回重复
-        mock_llm_client.messages.create.return_value = MagicMock(
-            content=[MagicMock(text="DUPLICATE")]
-        )
+        _mock_llm_result(mock_llm_client, "DUPLICATE")
 
         # Act
         unique_signals = deduplicator.deduplicate(
