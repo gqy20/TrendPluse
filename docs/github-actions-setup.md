@@ -57,6 +57,7 @@
 | Secret 名称 | 说明 | 默认值 |
 |------------|------|--------|
 | `ANTHROPIC_BASE_URL` | API 基础 URL | `https://open.bigmodel.cn/api/anthropic` |
+| `ANTHROPIC_MODEL` | 工作流默认使用的模型名 | `glm-4.7` |
 | `GITHUB_TOKEN` | GitHub Token | 自动提供 |
 | `GITHUB_PAT` / `PAT_TOKEN` | 推荐使用的 GitHub PAT 别名 | 无 |
 | `FEISHU_WEBHOOK_URL` | 飞书 Webhook URL | 无（不发送通知） |
