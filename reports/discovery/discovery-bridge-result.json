@@ -1,0 +1,15 @@
+{
+  "actionable_file": "reports/discovery/discovery-2026-03-06-actionable.json",
+  "min_priority": "medium",
+  "max_add_per_run": 1,
+  "total_candidates": 10,
+  "selected_before_cap": 10,
+  "selected_count": 1,
+  "selected_items": [
+    {
+      "repo": "OpenBB-finance/OpenBB",
+      "category": "Anthropic 研究与评估"
+    }
+  ],
+  "batch_result": null
+}
