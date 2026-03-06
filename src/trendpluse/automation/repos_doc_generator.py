@@ -5,6 +5,8 @@
 
 from dataclasses import dataclass
 
+from trendpluse.models.repository import MonitoredRepo
+
 # 定义仓库分类规则
 REPO_CATEGORIES: dict[str, list[str]] = {
     "Anthropic 核心产品": [
@@ -84,25 +86,25 @@ class RepoCategory:
     """仓库分类"""
 
     name: str
-    repos: list[str]
+    repos: list[MonitoredRepo]
 
 
-def parse_repos_from_config(repos: list[str]) -> list[RepoCategory]:
+def parse_repos_from_config(repos: list[MonitoredRepo]) -> list[RepoCategory]:
     """从配置解析仓库列表到分类
 
     Args:
-        repos: 仓库列表，格式为 owner/repo
+        repos: 结构化仓库配置列表
 
     Returns:
         仓库分类列表
     """
     # 初始化分类
-    categories: dict[str, list[str]] = {name: [] for name in REPO_CATEGORIES}
+    categories: dict[str, list[MonitoredRepo]] = {name: [] for name in REPO_CATEGORIES}
 
     # 分配仓库到分类
     for repo in repos:
         # 提取仓库名部分
-        repo_name = repo.split("/")[-1] if "/" in repo else repo
+        repo_name = repo.repo.split("/")[-1] if "/" in repo.repo else repo.repo
 
         # 查找匹配的分类
         assigned = False
@@ -111,7 +113,7 @@ def parse_repos_from_config(repos: list[str]) -> list[RepoCategory]:
             for pattern in patterns:
                 if "/" in pattern:
                     # 完整匹配 owner/repo
-                    if repo == pattern:
+                    if repo.repo == pattern:
                         categories[category_name].append(repo)
                         assigned = True
                         break
@@ -159,9 +161,10 @@ def generate_repos_markdown(categories: list[RepoCategory]) -> str:
 
         for repo in category.repos:
             # 转义下划线（Markdown 特殊字符）
-            escaped_repo = repo.replace("_", "\\_")
-            repo_link = f"[{escaped_repo}](https://github.com/{repo})"
-            lines.append(f"- **{repo_link}**\n")
+            escaped_repo = repo.repo.replace("_", "\\_")
+            repo_link = f"[{escaped_repo}]({repo.url})"
+            description = f": {repo.description}" if repo.description else ""
+            lines.append(f"- **{repo_link}**{description}\n")
 
         lines.append("\n")
 

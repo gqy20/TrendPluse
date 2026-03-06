@@ -10,6 +10,7 @@ from trendpluse.automation.repos_doc_generator import (
     generate_repos_markdown,
     parse_repos_from_config,
 )
+from trendpluse.models.repository import MonitoredRepo
 
 
 class TestRepoCategory:
@@ -19,11 +20,25 @@ class TestRepoCategory:
         """测试创建仓库分类"""
         category = RepoCategory(
             name="Anthropic 核心产品",
-            repos=["anthropics/claude-code", "anthropics/skills"],
+            repos=[
+                MonitoredRepo(
+                    repo="anthropics/claude-code",
+                    url="https://github.com/anthropics/claude-code",
+                    description="Claude Code",
+                ),
+                MonitoredRepo(
+                    repo="anthropics/skills",
+                    url="https://github.com/anthropics/skills",
+                    description="Skills",
+                ),
+            ],
         )
 
         assert category.name == "Anthropic 核心产品"
-        assert category.repos == ["anthropics/claude-code", "anthropics/skills"]
+        assert [repo.repo for repo in category.repos] == [
+            "anthropics/claude-code",
+            "anthropics/skills",
+        ]
 
     def test_repo_category_empty_repos(self) -> None:
         """测试空仓库列表的分类"""
@@ -38,9 +53,21 @@ class TestParseReposFromConfig:
     def test_parse_anthropic_core_products(self) -> None:
         """测试解析 Anthropic 核心产品"""
         repos = [
-            "anthropics/claude-code",
-            "anthropics/skills",
-            "anthropics/claude-cookbooks",
+            MonitoredRepo(
+                repo="anthropics/claude-code",
+                url="https://github.com/anthropics/claude-code",
+                description="Claude Code",
+            ),
+            MonitoredRepo(
+                repo="anthropics/skills",
+                url="https://github.com/anthropics/skills",
+                description="Skills",
+            ),
+            MonitoredRepo(
+                repo="anthropics/claude-cookbooks",
+                url="https://github.com/anthropics/claude-cookbooks",
+                description="Cookbooks",
+            ),
         ]
 
         categories = parse_repos_from_config(repos)
@@ -50,13 +77,21 @@ class TestParseReposFromConfig:
             (c for c in categories if c.name == "Anthropic 核心产品"), None
         )
         assert anthropic_core is not None
-        assert "anthropics/claude-code" in anthropic_core.repos
+        assert "anthropics/claude-code" in [repo.repo for repo in anthropic_core.repos]
 
     def test_parse_sdk_repos(self) -> None:
         """测试解析 SDK 仓库"""
         repos = [
-            "anthropics/claude-agent-sdk-python",
-            "anthropics/anthropic-sdk-python",
+            MonitoredRepo(
+                repo="anthropics/claude-agent-sdk-python",
+                url="https://github.com/anthropics/claude-agent-sdk-python",
+                description="SDK Python",
+            ),
+            MonitoredRepo(
+                repo="anthropics/anthropic-sdk-python",
+                url="https://github.com/anthropics/anthropic-sdk-python",
+                description="Anthropic SDK Python",
+            ),
         ]
 
         categories = parse_repos_from_config(repos)
@@ -66,25 +101,55 @@ class TestParseReposFromConfig:
             (c for c in categories if c.name == "Anthropic SDK & Agent"), None
         )
         assert sdk_category is not None
-        assert "anthropics/claude-agent-sdk-python" in sdk_category.repos
+        assert "anthropics/claude-agent-sdk-python" in [
+            repo.repo for repo in sdk_category.repos
+        ]
 
     def test_parse_ai_assistant_repos(self) -> None:
         """测试解析 AI 编程助手仓库"""
-        repos = ["cline/cline", "paul-gauthier/aider", "continuedev/continue"]
+        repos = [
+            MonitoredRepo(
+                repo="cline/cline",
+                url="https://github.com/cline/cline",
+                description="Cline",
+            ),
+            MonitoredRepo(
+                repo="paul-gauthier/aider",
+                url="https://github.com/paul-gauthier/aider",
+                description="Aider",
+            ),
+            MonitoredRepo(
+                repo="continuedev/continue",
+                url="https://github.com/continuedev/continue",
+                description="Continue",
+            ),
+        ]
 
         categories = parse_repos_from_config(repos)
 
         # 验证存在 AI 编程助手分类
         ai_assistant = next((c for c in categories if c.name == "AI 编程助手"), None)
         assert ai_assistant is not None
-        assert "cline/cline" in ai_assistant.repos
+        assert "cline/cline" in [repo.repo for repo in ai_assistant.repos]
 
     def test_parse_agent_framework_repos(self) -> None:
         """测试解析 Agent 框架仓库"""
         repos = [
-            "langchain-ai/langchain",
-            "langgenius/dify",
-            "run-llama/llama_index",
+            MonitoredRepo(
+                repo="langchain-ai/langchain",
+                url="https://github.com/langchain-ai/langchain",
+                description="LangChain",
+            ),
+            MonitoredRepo(
+                repo="langgenius/dify",
+                url="https://github.com/langgenius/dify",
+                description="Dify",
+            ),
+            MonitoredRepo(
+                repo="run-llama/llama_index",
+                url="https://github.com/run-llama/llama_index",
+                description="LlamaIndex",
+            ),
         ]
 
         categories = parse_repos_from_config(repos)
@@ -92,11 +157,22 @@ class TestParseReposFromConfig:
         # 验证存在 Agent 框架分类
         agent_framework = next((c for c in categories if c.name == "Agent 框架"), None)
         assert agent_framework is not None
-        assert "langchain-ai/langchain" in agent_framework.repos
+        assert "langchain-ai/langchain" in [repo.repo for repo in agent_framework.repos]
 
     def test_parse_unknown_repo_returns_empty_category(self) -> None:
         """测试解析未知仓库时返回空分类而不是抛出异常"""
-        repos = ["unknown/user/repo", "invalid-format"]
+        repos = [
+            MonitoredRepo(
+                repo="unknown/user/repo",
+                url="https://github.com/unknown/user",
+                description="Unknown",
+            ),
+            MonitoredRepo(
+                repo="invalid-format",
+                url="https://github.com/invalid-format",
+                description="Invalid",
+            ),
+        ]
 
         # 应该不抛出异常，但返回空或默认分类
         categories = parse_repos_from_config(repos)
@@ -107,7 +183,7 @@ class TestParseReposFromConfig:
 
     def test_parse_empty_repos_list(self) -> None:
         """测试解析空仓库列表"""
-        repos: list[str] = []
+        repos: list[MonitoredRepo] = []
 
         categories = parse_repos_from_config(repos)
 
@@ -119,7 +195,18 @@ class TestGenerateReposMarkdown:
 
     def test_generate_markdown_header(self) -> None:
         """测试生成 Markdown 头部"""
-        categories = [RepoCategory(name="测试分类", repos=["anthropics/claude-code"])]
+        categories = [
+            RepoCategory(
+                name="测试分类",
+                repos=[
+                    MonitoredRepo(
+                        repo="anthropics/claude-code",
+                        url="https://github.com/anthropics/claude-code",
+                        description="Claude Code",
+                    )
+                ],
+            )
+        ]
 
         markdown = generate_repos_markdown(categories)
 
@@ -132,7 +219,18 @@ class TestGenerateReposMarkdown:
         categories = [
             RepoCategory(
                 name="Anthropic 核心产品",
-                repos=["anthropics/claude-code", "anthropics/skills"],
+                repos=[
+                    MonitoredRepo(
+                        repo="anthropics/claude-code",
+                        url="https://github.com/anthropics/claude-code",
+                        description="Claude Code",
+                    ),
+                    MonitoredRepo(
+                        repo="anthropics/skills",
+                        url="https://github.com/anthropics/skills",
+                        description="Skills",
+                    ),
+                ],
             )
         ]
 
@@ -150,8 +248,26 @@ class TestGenerateReposMarkdown:
     def test_generate_markdown_with_multiple_categories(self) -> None:
         """测试生成多个分类的 Markdown"""
         categories = [
-            RepoCategory(name="分类 A", repos=["user/repo1"]),
-            RepoCategory(name="分类 B", repos=["user/repo2"]),
+            RepoCategory(
+                name="分类 A",
+                repos=[
+                    MonitoredRepo(
+                        repo="user/repo1",
+                        url="https://github.com/user/repo1",
+                        description="Repo 1",
+                    )
+                ],
+            ),
+            RepoCategory(
+                name="分类 B",
+                repos=[
+                    MonitoredRepo(
+                        repo="user/repo2",
+                        url="https://github.com/user/repo2",
+                        description="Repo 2",
+                    )
+                ],
+            ),
         ]
 
         markdown = generate_repos_markdown(categories)
@@ -168,7 +284,23 @@ class TestGenerateReposMarkdown:
         categories = [
             RepoCategory(
                 name="测试分类",
-                repos=["user/repo1", "user/repo2", "user/repo3"],
+                repos=[
+                    MonitoredRepo(
+                        repo="user/repo1",
+                        url="https://github.com/user/repo1",
+                        description="Repo 1",
+                    ),
+                    MonitoredRepo(
+                        repo="user/repo2",
+                        url="https://github.com/user/repo2",
+                        description="Repo 2",
+                    ),
+                    MonitoredRepo(
+                        repo="user/repo3",
+                        url="https://github.com/user/repo3",
+                        description="Repo 3",
+                    ),
+                ],
             )
         ]
 
@@ -182,7 +314,13 @@ class TestGenerateReposMarkdown:
         categories = [
             RepoCategory(
                 name="测试分类",
-                repos=["run-llama/llama_index"],
+                repos=[
+                    MonitoredRepo(
+                        repo="run-llama/llama_index",
+                        url="https://github.com/run-llama/llama_index",
+                        description="LlamaIndex",
+                    )
+                ],
             )
         ]
 
@@ -195,6 +333,25 @@ class TestGenerateReposMarkdown:
             in markdown
         )
 
+    def test_generate_markdown_includes_description(self) -> None:
+        """测试生成 Markdown 时包含仓库简介。"""
+        categories = [
+            RepoCategory(
+                name="测试分类",
+                repos=[
+                    MonitoredRepo(
+                        repo="anthropics/claude-code",
+                        url="https://github.com/anthropics/claude-code",
+                        description="Anthropic 的 CLI 编码代理工具。",
+                    )
+                ],
+            )
+        ]
+
+        markdown = generate_repos_markdown(categories)
+
+        assert "Anthropic 的 CLI 编码代理工具" in markdown
+
 
 class TestIntegration:
     """集成测试"""
@@ -203,10 +360,26 @@ class TestIntegration:
         """测试完整工作流：从配置到 Markdown 生成"""
         # Arrange: 准备测试数据
         repos = [
-            "anthropics/claude-code",
-            "anthropics/skills",
-            "cline/cline",
-            "langchain-ai/langchain",
+            MonitoredRepo(
+                repo="anthropics/claude-code",
+                url="https://github.com/anthropics/claude-code",
+                description="Claude Code",
+            ),
+            MonitoredRepo(
+                repo="anthropics/skills",
+                url="https://github.com/anthropics/skills",
+                description="Skills",
+            ),
+            MonitoredRepo(
+                repo="cline/cline",
+                url="https://github.com/cline/cline",
+                description="Cline",
+            ),
+            MonitoredRepo(
+                repo="langchain-ai/langchain",
+                url="https://github.com/langchain-ai/langchain",
+                description="LangChain",
+            ),
         ]
 
         # Act: 执行解析和生成

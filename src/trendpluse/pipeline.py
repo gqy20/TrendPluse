@@ -11,7 +11,6 @@ from typing import Any
 
 from anthropic import Anthropic
 
-from trendpluse.agents.issue_agent import IssueAgentRunner
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
 )
@@ -43,8 +42,9 @@ from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
 from trendpluse.readers.github_pr_reader import GitHubPRReader
 from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
-from trendpluse.utils.issue_agent_io import load_issue_agent_report
-from trendpluse.utils.issue_io import dump_issues_to_jsonl
+from trendpluse.services.issue_workflow_service import IssueWorkflowService
+from trendpluse.services.release_workflow_service import ReleaseWorkflowService
+from trendpluse.services.report_output_service import ReportOutputService
 
 logger = get_logger(__name__)
 
@@ -143,6 +143,29 @@ class TrendPulsePipeline:
                 max_signals=self.settings.feishu_max_signals,
                 secret=self.settings.feishu_secret or None,
             )
+        self.output_service = ReportOutputService(
+            reporter=self.reporter,
+            daily_output_dir=self.settings.output_dir,
+            weekly_output_dir="reports/weekly",
+            notifier=self.notifier,
+        )
+        self.issue_workflow = IssueWorkflowService(
+            issue_collector=self.issue_collector,
+            issue_dump_dir=self.settings.issue_dump_dir,
+            enable_issue_agent_analysis=self.settings.enable_issue_agent_analysis,
+            anthropic_api_key=self.settings.anthropic_api_key,
+            max_parallel_workers=self.settings.max_parallel_workers,
+            max_issues_per_repo=self.settings.max_issues_per_repo,
+            issue_agent_model=self.settings.issue_agent_model,
+            issue_agent_retry_max_attempts=self.settings.issue_agent_retry_max_attempts,
+            issue_agent_retry_wait_seconds=self.settings.issue_agent_retry_wait_seconds,
+        )
+        self.release_workflow = ReleaseWorkflowService(
+            release_material_builder=self.release_material_builder,
+            release_summarizer=self.release_summarizer,
+            release_analyzer=self.release_analyzer,
+            breaking_changes_detector=self.breaking_changes_detector,
+        )
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:
         """运行每日分析流程
@@ -333,15 +356,15 @@ class TrendPulsePipeline:
             include_prereleases=self.settings.include_prereleases,
             max_workers=self.settings.max_parallel_workers,
         )
-        self._apply_release_summaries(releases_data, detailed_releases)
+        release_result = self.release_workflow.run(releases_data, detailed_releases)
         commit_signals = self._analyze_commit_signals(detailed_commits)
-        release_signals = self._analyze_release_signals(detailed_releases)
-        breaking_changes = self._detect_breaking_changes(detailed_releases)
+        release_signals = release_result.release_signals
+        breaking_changes = release_result.breaking_changes
         return (
             activity_data,
             detailed_commits,
-            releases_data,
-            detailed_releases,
+            release_result.releases_data,
+            release_result.detailed_releases,
             commit_signals,
             release_signals,
             breaking_changes,
@@ -391,22 +414,18 @@ class TrendPulsePipeline:
             detailed_releases=detailed_releases,
             snapshot_date=snapshot_date,
         )
-        commit_signals, release_signals, breaking_changes = (
-            self._resolve_async_analysis_results(results, detailed_releases)
+        release_result = await self.release_workflow.run_async(
+            releases_data, detailed_releases
         )
-        self._apply_release_summary_results(
-            releases_data=releases_data,
-            detailed_releases=detailed_releases,
-            results=results,
-        )
+        commit_signals = self._resolve_async_commit_signals(results)
         return (
             activity_data,
             detailed_commits,
-            releases_data,
-            detailed_releases,
+            release_result.releases_data,
+            release_result.detailed_releases,
             commit_signals,
-            release_signals,
-            breaking_changes,
+            release_result.release_signals,
+            release_result.breaking_changes,
         )
 
     async def _run_async_analysis_tasks(
@@ -420,18 +439,8 @@ class TrendPulsePipeline:
         tasks: dict[str, asyncio.Task[Any]] = {}
 
         if detailed_releases:
-            release_materials = self.release_material_builder.build(detailed_releases)
-            tasks["release_summaries"] = asyncio.create_task(
-                self.release_summarizer.summarize_materials_async(release_materials)
-            )
-            tasks["release_signals"] = asyncio.create_task(
-                self.release_analyzer.analyze_materials_async(release_materials)
-            )
-            tasks["breaking_changes"] = asyncio.create_task(
-                self.breaking_changes_detector.detect_breaking_changes_async(
-                    {"detailed_releases": detailed_releases}
-                )
-            )
+            # release 分析改由 release_workflow 统一编排
+            pass
 
         if detailed_commits:
             commit_materials = self.commit_material_builder.build(detailed_commits)
@@ -440,23 +449,13 @@ class TrendPulsePipeline:
             )
 
         step_start = time.perf_counter()
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=self.settings.github_repos,
-            snapshot_date=snapshot_date,
-            max_workers=self.settings.max_parallel_workers,
-            max_issues_per_repo=self.settings.max_issues_per_repo,
+        await self.issue_workflow.collect_and_analyze_async(
+            self.settings.github_repos,
+            snapshot_date,
         )
-        if detailed_issues:
-            dump_issues_to_jsonl(
-                detailed_issues,
-                self.settings.issue_dump_dir,
-                snapshot_date,
-            )
-        await self._run_issue_agent_analysis_async(snapshot_date)
         logger.info(
-            "Issue collection done in %.2fs (issues=%d)",
+            "Issue workflow done in %.2fs",
             time.perf_counter() - step_start,
-            len(detailed_issues),
         )
 
         if not tasks:
@@ -472,35 +471,13 @@ class TrendPulsePipeline:
         )
         return dict(zip(task_names, task_results))
 
-    def _resolve_async_analysis_results(
-        self,
-        results: dict[str, object],
-        detailed_releases: list[dict[str, Any]],
-    ) -> tuple[list[Any], list[Any], list[Any]]:
-        """解析异步分析结果。"""
+    def _resolve_async_commit_signals(self, results: dict[str, object]) -> list[Any]:
+        """解析异步 commit 分析结果。"""
         commit_signals: list[Any] = []
         commit_result = results.get("commit_signals")
         if isinstance(commit_result, list):
             commit_signals = commit_result
-
-        release_signals: list[Any] = []
-        release_result = results.get("release_signals")
-        if isinstance(release_result, list):
-            release_signals = release_result
-        if detailed_releases and not release_signals:
-            logger.warning(
-                "ReleaseAnalyzer(异步) 未产出信号，启用 deterministic fallback "
-                "(releases=%d)",
-                len(detailed_releases),
-            )
-            release_signals = self._build_release_fallback_signals(detailed_releases)
-
-        breaking_changes: list[Any] = []
-        breaking_result = results.get("breaking_changes")
-        if isinstance(breaking_result, list):
-            breaking_changes = breaking_result
-
-        return commit_signals, release_signals, breaking_changes
+        return commit_signals
 
     def _apply_release_summary_results(
         self,
@@ -511,25 +488,20 @@ class TrendPulsePipeline:
     ) -> None:
         """将异步 release 总结结果回填到 release 数据。"""
         summary_result = results.get("release_summaries")
-        if not detailed_releases or not isinstance(summary_result, dict):
-            return
-        for release in releases_data.releases:
-            key = f"{release.repo}@{release.version}"
-            if key in summary_result:
-                release.ai_summary = summary_result[key]
+        normalized_summary_result = (
+            summary_result if isinstance(summary_result, dict) else {}
+        )
+        self.release_workflow.apply_summary_result(
+            releases_data,
+            detailed_releases,
+            normalized_summary_result,
+        )
 
     def _apply_release_summaries(
         self, releases_data: ReleasesData, detailed_releases: list[dict[str, Any]]
     ) -> None:
         """为 release 数据附加 AI 总结。"""
-        if not detailed_releases:
-            return
-        release_materials = self.release_material_builder.build(detailed_releases)
-        summaries = self.release_summarizer.summarize_materials(release_materials)
-        for release in releases_data.releases:
-            key = f"{release.repo}@{release.version}"
-            if key in summaries:
-                release.ai_summary = summaries[key]
+        self.release_workflow.apply_summaries(releases_data, detailed_releases)
 
     def _analyze_commit_signals(
         self, detailed_commits: list[dict[str, Any]]
@@ -544,43 +516,20 @@ class TrendPulsePipeline:
         self, detailed_releases: list[dict[str, Any]]
     ) -> list[Any]:
         """分析 release 信号。"""
-        if not detailed_releases:
-            return []
-        release_materials = self.release_material_builder.build(detailed_releases)
-        release_signals = self.release_analyzer.analyze_materials(release_materials)
-        if release_signals:
-            return release_signals
-        logger.warning(
-            "ReleaseAnalyzer 未产出信号，启用 deterministic fallback (releases=%d)",
-            len(detailed_releases),
-        )
-        return self._build_release_fallback_signals(detailed_releases)
+        return self.release_workflow.analyze_signals(detailed_releases)
 
     def _detect_breaking_changes(
         self, detailed_releases: list[dict[str, Any]]
     ) -> list[Any]:
         """检测 breaking changes。"""
-        if not detailed_releases:
-            return []
-        return self.breaking_changes_detector.detect_breaking_changes(
-            {"detailed_releases": detailed_releases}
-        )
+        return self.release_workflow.detect_breaking_changes(detailed_releases)
 
     def _collect_issue_artifacts(self, snapshot_date: str) -> None:
         """收集 issue 落盘与 agent 分析产物。"""
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=self.settings.github_repos,
-            snapshot_date=snapshot_date,
-            max_workers=self.settings.max_parallel_workers,
-            max_issues_per_repo=self.settings.max_issues_per_repo,
+        self.issue_workflow.collect_and_analyze(
+            self.settings.github_repos,
+            snapshot_date,
         )
-        if detailed_issues:
-            dump_issues_to_jsonl(
-                detailed_issues,
-                self.settings.issue_dump_dir,
-                snapshot_date,
-            )
-        self._run_issue_agent_analysis(snapshot_date)
 
     def _collect_pr_candidates(self, day_ago: datetime) -> list[dict[str, Any]]:
         """收集并筛选 PR 候选事件。"""
@@ -621,9 +570,8 @@ class TrendPulsePipeline:
         report.releases = releases_data
         report.breaking_changes = breaking_changes if breaking_changes else None
         report.monitored_repos = self.settings.github_repos
-        report.issue_insights = load_issue_agent_report(
-            self.settings.issue_dump_dir,
-            date.strftime("%Y-%m-%d"),
+        report.issue_insights = self.issue_workflow.load_insights(
+            date.strftime("%Y-%m-%d")
         )
         self._finalize_report_stats(
             report=report,
@@ -635,53 +583,14 @@ class TrendPulsePipeline:
             total_releases_analyzed=len(detailed_releases),
             total_breaking_changes=len(breaking_changes),
         )
-        output_path = self._get_output_path(date)
-        self.reporter.save_report(report, output_path)
-        self._save_report_json(report, output_path)
-        self._send_notification(report)
+        self.output_service.save_daily(report, date)
+        self.output_service.notify_daily(report)
 
     def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
-        if getattr(self.settings, "enable_issue_agent_analysis", False) is not True:
-            return
-        if not self.settings.anthropic_api_key:
-            logger.warning("已启用 Issue Agent 分析但未配置 ANTHROPIC_API_KEY，跳过")
-            return
-        try:
-            asyncio.run(self._run_issue_agent_analysis_async(snapshot_date))
-        except Exception as exc:  # pragma: no cover - 防御性日志
-            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
+        self.issue_workflow.run_issue_agent_analysis(snapshot_date)
 
     async def _run_issue_agent_analysis_async(self, snapshot_date: str) -> None:
-        if getattr(self.settings, "enable_issue_agent_analysis", False) is not True:
-            return
-
-        input_dir = Path(self.settings.issue_dump_dir) / snapshot_date
-        if not input_dir.exists():
-            return
-        if not any(input_dir.glob("*.jsonl")):
-            return
-
-        output_dir = input_dir / "analysis"
-        try:
-            runner = IssueAgentRunner(
-                model=self.settings.issue_agent_model,
-                retry_max_attempts=self.settings.issue_agent_retry_max_attempts,
-                retry_wait_seconds=self.settings.issue_agent_retry_wait_seconds,
-            )
-            result = await runner.analyze_directory(input_dir, output_dir)
-            if isinstance(result, int):  # 兼容旧实现
-                logger.info("Issue Agent 分析完成: files=%d", result)
-            else:
-                logger.info(
-                    "Issue Agent 分析完成: expected=%d, succeeded=%d, failed=%d, "
-                    "failed_samples=%s",
-                    result.expected_files,
-                    result.succeeded_files,
-                    result.failed_files,
-                    ",".join(result.failed_samples) if result.failed_samples else "-",
-                )
-        except Exception as exc:  # pragma: no cover - 防御性日志
-            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
+        await self.issue_workflow.run_issue_agent_analysis_async(snapshot_date)
 
     def _generate_empty_report(
         self,
@@ -748,9 +657,8 @@ class TrendPulsePipeline:
 
         # 添加监控的仓库列表
         report.monitored_repos = self.settings.github_repos
-        report.issue_insights = load_issue_agent_report(
-            self.settings.issue_dump_dir,
-            date.strftime("%Y-%m-%d"),
+        report.issue_insights = self.issue_workflow.load_insights(
+            date.strftime("%Y-%m-%d")
         )
         self._finalize_report_stats(
             report=report,
@@ -788,10 +696,8 @@ class TrendPulsePipeline:
         report = self._generate_empty_report(
             date, activity_data, commit_signals, releases_data
         )
-        output_path = self._get_output_path(date)
-        self.reporter.save_report(report, output_path)
-        self._save_report_json(report, output_path)
-        self._send_notification(report)
+        self.output_service.save_daily(report, date)
+        self.output_service.notify_daily(report)
         return report
 
     def _send_notification(self, report: DailyReport) -> None:
@@ -800,12 +706,7 @@ class TrendPulsePipeline:
         Args:
             report: 每日报告
         """
-        if self.notifier:
-            try:
-                self.notifier.send_report(report)
-            except Exception as e:
-                # 通知失败不影响主流程，但记录日志以便排查
-                logger.warning(f"发送飞书通知失败: {e}")
+        self.output_service.notify_daily(report)
 
     def _get_output_path(self, date: datetime) -> str:
         """获取报告输出路径
@@ -816,8 +717,7 @@ class TrendPulsePipeline:
         Returns:
             输出文件路径
         """
-        # 输出到 reports/daily 子目录
-        reports_dir = Path("reports/daily")
+        reports_dir = Path(self.settings.output_dir)
         filename = f"report-{date.strftime('%Y-%m-%d')}.md"
         return str(reports_dir / filename)
 
@@ -828,13 +728,7 @@ class TrendPulsePipeline:
             report: 每日报告对象
             output_path: Markdown 输出路径（用于推断 JSON 路径）
         """
-        # 将 .md 替换为 .json
-        json_path = str(Path(output_path).with_suffix(".json"))
-
-        # Pydantic 模型支持 .model_dump_json() 直接序列化为 JSON
-        json_data = report.model_dump_json(indent=2, ensure_ascii=False)
-
-        Path(json_path).write_text(json_data, encoding="utf-8")
+        self.output_service._save_json(report, Path(output_path))
 
     def _build_release_fallback_signals(
         self, detailed_releases: list[dict[str, Any]]
@@ -844,38 +738,7 @@ class TrendPulsePipeline:
         当 LLM 解析失败或返回空列表时，使用确定性规则产出最基础的 release 信号，
         避免“有 release 数据但无 release 信号”的数据断层。
         """
-        signals: list[Signal] = []
-        for idx, release in enumerate(detailed_releases):
-            repo = str(release.get("repo", "")).strip()
-            tag_name = str(
-                release.get("tag_name") or release.get("name") or f"unknown-{idx + 1}"
-            ).strip()
-            source_url = str(release.get("html_url", "")).strip()
-            version_info = release.get("version_info") or {}
-            major = int(version_info.get("major", 0)) if version_info else 0
-            is_prerelease = bool(version_info.get("is_prerelease", False))
-
-            impact_score = 4 if major >= 1 and not is_prerelease else 3
-            title = f"{repo} 发布 {tag_name}" if repo else f"版本发布 {tag_name}"
-            why_it_matters = (
-                f"{repo} 发布新版本 {tag_name}，建议评估变更影响与兼容性。"
-                if repo
-                else f"检测到新版本 {tag_name}，建议评估变更影响与兼容性。"
-            )
-
-            signals.append(
-                Signal(
-                    id=f"release-fallback-{idx}",
-                    title=title,
-                    type="release",
-                    category="engineering",
-                    impact_score=impact_score,
-                    why_it_matters=why_it_matters,
-                    sources=[source_url] if source_url else [],
-                    related_repos=[repo] if repo else [],
-                )
-            )
-        return signals
+        return self.release_workflow.build_fallback_signals(detailed_releases)
 
     def _finalize_report_stats(
         self,
@@ -1186,6 +1049,4 @@ class TrendPulsePipeline:
             report: 周报对象
             output_path: Markdown 输出路径（用于推断 JSON 路径）
         """
-        json_path = str(Path(output_path).with_suffix(".json"))
-        json_data = report.model_dump_json(indent=2, ensure_ascii=False)
-        Path(json_path).write_text(json_data, encoding="utf-8")
+        self.output_service._save_json(report, Path(output_path))

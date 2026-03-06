@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""同步监控仓库列表到文档
-
-从 config.py 读取 github_repos，自动更新 docs/index.md 中的监控项目部分。
-"""
+"""同步监控仓库列表到文档。"""
 
 import re
 import sys
@@ -52,14 +49,11 @@ def find_monitored_repos_section(content: str) -> tuple[int, int] | None:
     return start_idx, end_idx
 
 
-def update_index_file(
-    index_path: Path, repos: list[str], dry_run: bool = False
-) -> bool:
+def update_index_file(index_path: Path, dry_run: bool = False) -> bool:
     """更新 index.md 文件
 
     Args:
         index_path: index.md 文件路径
-        repos: 仓库列表
         dry_run: 是否为试运行
 
     Returns:
@@ -69,7 +63,7 @@ def update_index_file(
     content = index_path.read_text(encoding="utf-8")
 
     # 生成新的监控项目部分
-    categories = parse_repos_from_config(repos)
+    categories = parse_repos_from_config(Settings().monitored_repo_configs)
     new_section = generate_repos_markdown(categories)
 
     # 查找并替换监控项目部分
@@ -122,7 +116,7 @@ def main() -> int:
 
     # 获取配置
     settings = Settings()
-    repos = settings.github_repos
+    repos = settings.monitored_repo_configs
 
     print(f"📊 从配置读取到 {len(repos)} 个仓库")
 
@@ -174,7 +168,7 @@ def main() -> int:
             return 0
 
     # 正常更新模式
-    success = update_index_file(index_path, repos, dry_run=args.dry_run)
+    success = update_index_file(index_path, dry_run=args.dry_run)
 
     return 0 if success else 1
 

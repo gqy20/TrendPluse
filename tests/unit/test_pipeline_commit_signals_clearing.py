@@ -74,6 +74,7 @@ class TestCommitSignalsClearing:
         mock_settings_instance.enable_parallel_collection = False
         mock_settings_instance.max_parallel_workers = 4
         mock_settings_instance.include_prereleases = False
+        mock_settings_instance.output_dir = "reports/daily"
         mock_settings_instance.feishu_webhook_url = ""
         mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
@@ -240,6 +241,7 @@ class TestCommitSignalsClearing:
         mock_settings_instance.enable_parallel_collection = False
         mock_settings_instance.max_parallel_workers = 4
         mock_settings_instance.include_prereleases = False
+        mock_settings_instance.output_dir = "reports/daily"
         mock_settings_instance.feishu_webhook_url = ""
         mock_settings_instance.feishu_at_mobiles_list = []
         mock_settings.return_value = mock_settings_instance
