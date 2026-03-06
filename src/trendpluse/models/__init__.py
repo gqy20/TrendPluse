@@ -11,6 +11,7 @@ from trendpluse.models.signal import (
     RepoActivity,
     Signal,
 )
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 __all__ = [
     "Signal",
@@ -19,4 +20,6 @@ __all__ = [
     "ActivityData",
     "ReleaseInfo",
     "ReleasesData",
+    "SourceRef",
+    "AnalysisMaterial",
 ]

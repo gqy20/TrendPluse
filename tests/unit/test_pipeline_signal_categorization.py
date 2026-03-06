@@ -34,14 +34,14 @@ class TestSignalCategorization:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_commit_signals_categorized_in_empty_report(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -167,7 +167,7 @@ class TestSignalCategorization:
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_prs.return_value = []
+        mock_analyzer_instance.analyze_materials.return_value = []
         mock_analyzer.return_value = mock_analyzer_instance
 
         # Act - 运行 pipeline

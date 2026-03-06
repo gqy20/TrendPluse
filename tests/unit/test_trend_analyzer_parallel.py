@@ -136,15 +136,14 @@ class TestTrendAnalyzerParallel:
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
 
-        # 使用 patch 来控制 analyze_pr 的行为
+        # 使用 patch 来控制 analyze_material 的行为
         from unittest.mock import patch
 
-        def mock_analyze_pr(pr_details):
+        def mock_analyze_material(material):
             """模拟分析：特定 PR 失败"""
-            if pr_details.get("repo_name") == failed_repo:
+            if material.source_ref.repo == failed_repo:
                 raise Exception("模拟 API 失败")
-            # 调用原始方法
-            return TrendAnalyzer.analyze_pr(analyzer, pr_details)
+            return TrendAnalyzer.analyze_material(analyzer, material)
 
         prs = [
             {
@@ -158,7 +157,9 @@ class TestTrendAnalyzerParallel:
             for i in range(5)
         ]
 
-        with patch.object(analyzer, "analyze_pr", side_effect=mock_analyze_pr):
+        with patch.object(
+            analyzer, "analyze_material", side_effect=mock_analyze_material
+        ):
             signals = analyzer.analyze_prs(prs, max_workers=3)
 
         # 应该成功处理 4 个（1 个失败）

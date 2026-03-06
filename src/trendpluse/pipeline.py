@@ -23,7 +23,6 @@ from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.analyzers.weekly_aggregator import WeeklyAggregator
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.filter import EventFilter
-from trendpluse.collectors.github_api import GitHubDetailFetcher
 from trendpluse.collectors.github_events import GitHubEventsCollector
 from trendpluse.collectors.issues import IssueCollector
 from trendpluse.collectors.releases import ReleaseCollector
@@ -40,6 +39,7 @@ from trendpluse.models.signal import (
     WeeklyReport,
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
+from trendpluse.readers.github_pr_reader import GitHubPRReader
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
 from trendpluse.utils.issue_agent_io import load_issue_agent_report
 from trendpluse.utils.issue_io import dump_issues_to_jsonl
@@ -109,7 +109,7 @@ class TrendPulsePipeline:
             enable_open_prs=self.settings.enable_open_prs,
             open_pr_min_changed_files=self.settings.open_pr_min_changed_files,
         )
-        self.fetcher = GitHubDetailFetcher(token=self.settings.github_token)
+        self.pr_reader = GitHubPRReader(token=self.settings.github_token)
         self.analyzer = TrendAnalyzer(
             api_key=self.settings.anthropic_api_key,
             model=self.settings.anthropic_model,
@@ -247,18 +247,19 @@ class TrendPulsePipeline:
             )
 
         # 3. 获取详细信息
-        pr_details = self.fetcher.fetch_multiple_pr_details(
-            candidates,
+        pr_refs = self.pr_reader.refs_from_candidates(candidates)
+        pr_materials = self.pr_reader.read_many(
+            pr_refs,
             max_workers=self.settings.max_parallel_workers,
         )
 
-        if not pr_details:
+        if not pr_materials:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
 
         # 4. AI 分析提取信号
-        signals = self.analyzer.analyze_prs(pr_details)
+        signals = self.analyzer.analyze_materials(pr_materials)
 
         if not signals:
             return self._handle_empty_report(
@@ -472,23 +473,24 @@ class TrendPulsePipeline:
             )
 
         step_start = time.perf_counter()
-        pr_details = self.fetcher.fetch_multiple_pr_details(
-            candidates,
+        pr_refs = self.pr_reader.refs_from_candidates(candidates)
+        pr_materials = self.pr_reader.read_many(
+            pr_refs,
             max_workers=self.settings.max_parallel_workers,
         )
         logger.info(
             "PR detail fetch done in %.2fs (prs=%d)",
             time.perf_counter() - step_start,
-            len(pr_details),
+            len(pr_materials),
         )
 
-        if not pr_details:
+        if not pr_materials:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
 
         step_start = time.perf_counter()
-        signals = await self.analyzer.analyze_prs_async(pr_details)
+        signals = await self.analyzer.analyze_materials_async(pr_materials)
         logger.info(
             "PR analysis done in %.2fs (signals=%d)",
             time.perf_counter() - step_start,

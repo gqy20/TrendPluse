@@ -11,6 +11,7 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport, ReportStats, Signal
+from trendpluse.models.source import AnalysisMaterial
 
 logger = get_logger(__name__)
 
@@ -48,78 +49,61 @@ class TrendAnalyzer(BaseLLMAnalyzer):
             retry_wait_max=retry_wait_max,
         )
 
-    def analyze_pr(self, pr_details: dict) -> Signal:
-        """分析单个 PR 提取信号
+    def _build_material_prompt(self, material: AnalysisMaterial) -> str:
+        """基于分析材料构建提示词。"""
+        number = material.source_ref.external_id
+        return f"""分析以下 GitHub PR，提取趋势信号。
 
-        Args:
-            pr_details: PR 详情字典
-
-        Returns:
-            提取的信号
-        """
-        # 构建 Prompt
-        prompt = f"""分析以下 GitHub PR，提取趋势信号。
-
-PR 标题: {pr_details.get("title", "")}
-PR 描述: {pr_details.get("body", "")}
-仓库: {pr_details.get("repo_name", "")}
-作者: {pr_details.get("author", "")}
-链接: {pr_details.get("url", "")}
+PR 编号: {number}
+PR 标题: {material.title}
+PR 描述: {material.body}
+仓库: {material.source_ref.repo}
+作者: {material.author}
+链接: {material.source_ref.url}
 
 请提取关键信息并返回结构化信号。
 """
 
-        # 使用带重试机制的 LLM 调用
-        signal = self._call_llm_for_signal(prompt)
-
-        # 确保 ID 格式
+    def _apply_material_defaults(
+        self, signal: Signal, material: AnalysisMaterial
+    ) -> Signal:
+        """用材料信息补齐信号默认字段。"""
         if not signal.id:
             signal.id = (
-                f"{pr_details.get('repo_name', 'unknown')}-"
-                f"{pr_details.get('number', 0)}"
+                f"{material.source_ref.repo or 'unknown'}-"
+                f"{material.source_ref.external_id or '0'}"
             )
 
-        # 确保源包含 PR URL
         if not signal.sources:
-            signal.sources = [pr_details.get("url", "")]
+            signal.sources = [material.source_ref.url]
 
-        # 确保相关仓库
-        if not signal.related_repos:
-            repo_name = pr_details.get("repo_name")
-            if repo_name:
-                signal.related_repos = [repo_name]
+        if not signal.related_repos and material.source_ref.repo:
+            signal.related_repos = [material.source_ref.repo]
 
-        return signal  # type: ignore[no-any-return]
+        return signal
 
-    async def analyze_pr_async(self, pr_details: dict) -> Signal:
-        prompt = f"""分析以下 GitHub PR，提取趋势信号。
+    def analyze_material(self, material: AnalysisMaterial) -> Signal:
+        """分析单个材料提取信号。"""
+        prompt = self._build_material_prompt(material)
 
-PR 标题: {pr_details.get("title", "")}
-PR 描述: {pr_details.get("body", "")}
-仓库: {pr_details.get("repo_name", "")}
-作者: {pr_details.get("author", "")}
-链接: {pr_details.get("url", "")}
+        signal = self._call_llm_for_signal(prompt)
+        return self._apply_material_defaults(signal, material)  # type: ignore[no-any-return]
 
-请提取关键信息并返回结构化信号。
-"""
+    async def analyze_material_async(self, material: AnalysisMaterial) -> Signal:
+        prompt = self._build_material_prompt(material)
 
         signal = await self._call_llm_for_signal_async(prompt)
+        return self._apply_material_defaults(signal, material)  # type: ignore[no-any-return]
 
-        if not signal.id:
-            signal.id = (
-                f"{pr_details.get('repo_name', 'unknown')}-"
-                f"{pr_details.get('number', 0)}"
-            )
+    def analyze_pr(self, pr_details: dict) -> Signal:
+        """兼容旧接口：分析单个 PR 详情字典。"""
+        return self.analyze_material(AnalysisMaterial.from_pr_details(pr_details))
 
-        if not signal.sources:
-            signal.sources = [pr_details.get("url", "")]
-
-        if not signal.related_repos:
-            repo_name = pr_details.get("repo_name")
-            if repo_name:
-                signal.related_repos = [repo_name]
-
-        return signal  # type: ignore[no-any-return]
+    async def analyze_pr_async(self, pr_details: dict) -> Signal:
+        """兼容旧接口：异步分析单个 PR 详情字典。"""
+        return await self.analyze_material_async(
+            AnalysisMaterial.from_pr_details(pr_details)
+        )
 
     def _call_llm_for_signal(self, prompt: str) -> Signal:
         """调用 LLM 提取 PR 信号（带重试机制）
@@ -165,70 +149,66 @@ PR 描述: {pr_details.get("body", "")}
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
 
-    def analyze_prs(self, pr_list: list[dict], max_workers: int = 5) -> list[Signal]:
-        """批量分析多个 PR（并行处理）
+    def analyze_materials(
+        self, materials: list[AnalysisMaterial], max_workers: int = 5
+    ) -> list[Signal]:
+        """批量分析多个材料（并行处理）
 
         Args:
-            pr_list: PR 详情列表
-            max_workers: 最大并行线程数（默认 3）
+            materials: 分析材料列表
+            max_workers: 最大并行线程数
 
         Returns:
             信号列表
         """
-        # 处理空列表
-        if not pr_list:
+        if not materials:
             return []
 
-        # 单个 PR 时直接调用，避免线程池开销
-        if len(pr_list) == 1:
-            pr = pr_list[0]
+        if len(materials) == 1:
+            material = materials[0]
             try:
-                return [self.analyze_pr(pr)]
+                return [self.analyze_material(material)]
             except Exception as e:
-                repo_name = pr.get("repo_name", "unknown")
-                number = pr.get("number", 0)
+                repo_name = material.source_ref.repo
+                number = material.source_ref.external_id
                 logger.debug(f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}")
                 return []
 
-        # 并行处理多个 PRs
         signals = []
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            # 提交所有任务
-            future_to_pr: dict = {}
-            for pr in pr_list:
-                future = executor.submit(self.analyze_pr, pr)
-                future_to_pr[future] = pr
+            future_to_material: dict = {}
+            for material in materials:
+                future = executor.submit(self.analyze_material, material)
+                future_to_material[future] = material
 
-            # 收集结果
-            for future in as_completed(future_to_pr):
-                pr = future_to_pr[future]
+            for future in as_completed(future_to_material):
+                material = future_to_material[future]
                 try:
                     signal = future.result()
                     signals.append(signal)
                 except Exception as e:
-                    # 单个失败不影响其他 PRs
-                    repo_name = pr.get("repo_name", "unknown")
-                    number = pr.get("number", 0)
+                    repo_name = material.source_ref.repo
+                    number = material.source_ref.external_id
                     logger.debug(
                         f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}"
                     )
 
         return signals
 
-    async def analyze_prs_async(
-        self, pr_list: list[dict], max_workers: int = 5
+    async def analyze_materials_async(
+        self, materials: list[AnalysisMaterial], max_workers: int = 5
     ) -> list[Signal]:
-        if not pr_list:
+        if not materials:
             return []
 
-        if len(pr_list) == 1:
-            pr = pr_list[0]
+        if len(materials) == 1:
+            material = materials[0]
             try:
-                return [await self.analyze_pr_async(pr)]
+                return [await self.analyze_material_async(material)]
             except Exception as e:
-                repo_name = pr.get("repo_name", "unknown")
-                number = pr.get("number", 0)
+                repo_name = material.source_ref.repo
+                number = material.source_ref.external_id
                 logger.debug(
                     f"TrendAnalyzer: 异步分析 PR {repo_name}#{number} 失败: {e}"
                 )
@@ -236,18 +216,18 @@ PR 描述: {pr_details.get("body", "")}
 
         semaphore = asyncio.Semaphore(max_workers)
 
-        async def _run(pr):
+        async def _run(material: AnalysisMaterial):
             async with semaphore:
-                return await self.analyze_pr_async(pr)
+                return await self.analyze_material_async(material)
 
-        tasks = [_run(pr) for pr in pr_list]
+        tasks = [_run(material) for material in materials]
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         signals: list[Signal] = []
-        for pr, result in zip(pr_list, results):
+        for material, result in zip(materials, results):
             if isinstance(result, Exception):
-                repo_name = pr.get("repo_name", "unknown")
-                number = pr.get("number", 0)
+                repo_name = material.source_ref.repo
+                number = material.source_ref.external_id
                 logger.debug(
                     f"TrendAnalyzer: 异步分析 PR {repo_name}#{number} 失败: {result}"
                 )
@@ -255,6 +235,18 @@ PR 描述: {pr_details.get("body", "")}
             signals.append(cast(Signal, result))
 
         return signals
+
+    def analyze_prs(self, pr_list: list[dict], max_workers: int = 5) -> list[Signal]:
+        """兼容旧接口：批量分析 PR 详情字典。"""
+        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
+        return self.analyze_materials(materials, max_workers=max_workers)
+
+    async def analyze_prs_async(
+        self, pr_list: list[dict], max_workers: int = 5
+    ) -> list[Signal]:
+        """兼容旧接口：异步批量分析 PR 详情字典。"""
+        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
+        return await self.analyze_materials_async(materials, max_workers=max_workers)
 
     def aggregate_and_generate_report(
         self,

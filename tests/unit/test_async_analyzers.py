@@ -5,6 +5,7 @@ import pytest
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import ReleaseSummary, Signal
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 
 class _AsyncChatStub:
@@ -54,6 +55,42 @@ async def test_trend_analyzer_analyze_prs_async():
     results = await analyzer.analyze_prs_async(pr_list, max_workers=2)
     assert len(results) == 1
     assert results[0].id == "pr-1"
+
+
+@pytest.mark.asyncio
+async def test_trend_analyzer_analyze_materials_async():
+    analyzer = TrendAnalyzer(api_key="test", model="test")
+    analyzer.async_instructor_client = _AsyncInstructorClientStub(
+        Signal(
+            id="",
+            title="测试",
+            type="capability",
+            category="engineering",
+            impact_score=3,
+            why_it_matters="测试",
+            sources=[],
+            related_repos=[],
+        )
+    )
+
+    materials = [
+        AnalysisMaterial(
+            source_ref=SourceRef(
+                source_type="pull_request",
+                provider="github",
+                repo="repo/a",
+                external_id="1",
+                url="https://github.com/repo/a/pull/1",
+            ),
+            title="Test",
+            body="Body",
+            author="alice",
+        )
+    ]
+
+    results = await analyzer.analyze_materials_async(materials, max_workers=2)
+    assert len(results) == 1
+    assert results[0].sources == ["https://github.com/repo/a/pull/1"]
 
 
 @pytest.mark.asyncio

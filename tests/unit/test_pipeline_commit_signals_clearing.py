@@ -32,14 +32,14 @@ class TestCommitSignalsClearing:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_aggregated_commit_signals_should_be_cleared(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -91,11 +91,10 @@ class TestCommitSignalsClearing:
         ]
         mock_filter.return_value = mock_filter_instance
 
-        mock_fetcher_instance = Mock()
-        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
-            {"number": 1, "title": "Test PR", "repo_name": "test/repo"}
-        ]
-        mock_fetcher.return_value = mock_fetcher_instance
+        mock_reader_instance = Mock()
+        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
+        mock_reader_instance.read_many.return_value = [Mock()]
+        mock_reader.return_value = mock_reader_instance
 
         # 配置活跃度数据
         mock_activity_collector_instance = Mock()
@@ -166,7 +165,7 @@ class TestCommitSignalsClearing:
             sources=["https://github.com/test/repo/pull/1"],
         )
         mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_prs.return_value = [mock_pr_signal]
+        mock_analyzer_instance.analyze_materials.return_value = [mock_pr_signal]
 
         # 关键：模拟 LLM 返回的对象保留了 commit_signals（这是 Bug）
         # 实际中，instructor + LLM 可能不会遵守代码中的清空操作
@@ -211,14 +210,14 @@ class TestCommitSignalsClearing:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_release_signals_should_be_preserved(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -257,11 +256,10 @@ class TestCommitSignalsClearing:
         ]
         mock_filter.return_value = mock_filter_instance
 
-        mock_fetcher_instance = Mock()
-        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
-            {"number": 1, "title": "Test PR", "repo_name": "test/repo"}
-        ]
-        mock_fetcher.return_value = mock_fetcher_instance
+        mock_reader_instance = Mock()
+        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
+        mock_reader_instance.read_many.return_value = [Mock()]
+        mock_reader.return_value = mock_reader_instance
 
         mock_activity_collector_instance = Mock()
         mock_activity_data = ActivityData(
@@ -325,7 +323,7 @@ class TestCommitSignalsClearing:
             sources=["https://github.com/test/repo/pull/1"],
         )
         mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_prs.return_value = [mock_pr_signal]
+        mock_analyzer_instance.analyze_materials.return_value = [mock_pr_signal]
 
         mock_report_obj = Mock()
         mock_report_obj.date = "2026-01-12"

@@ -29,14 +29,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_init_creates_components(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -76,7 +76,7 @@ class TestTrendPulsePipeline:
         mock_activity_collector.assert_called_once_with(token="test_token")
         mock_release_collector.assert_called_once_with(token="test_token")
         mock_filter.assert_called_once()
-        mock_fetcher.assert_called_once_with(token="test_token")
+        mock_reader.assert_called_once_with(token="test_token")
         mock_commit_analyzer.assert_called_once_with(
             api_key="test_api_key",
             model="glm-4.7",
@@ -112,14 +112,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_run_daily(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -216,17 +216,16 @@ class TestTrendPulsePipeline:
         ]
         mock_filter.return_value = mock_filter_instance
 
-        mock_fetcher_instance = Mock()
-        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
-            {"number": 1, "title": "PR 1", "repo_name": "anthropics/skills"}
-        ]
-        mock_fetcher.return_value = mock_fetcher_instance
+        mock_reader_instance = Mock()
+        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
+        mock_reader_instance.read_many.return_value = [Mock()]
+        mock_reader.return_value = mock_reader_instance
 
         mock_analyzer_instance = Mock()
         mock_signal = Mock()
         mock_signal.id = "test-1"
         mock_signal.title = "测试信号"
-        mock_analyzer_instance.analyze_prs.return_value = [mock_signal]
+        mock_analyzer_instance.analyze_materials.return_value = [mock_signal]
 
         # 创建一个支持属性赋值的报告对象
         mock_report_obj = Mock()
@@ -259,11 +258,14 @@ class TestTrendPulsePipeline:
         assert report is not None
         mock_collector_instance.fetch_events.assert_called_once()
         mock_filter_instance.filter_candidates.assert_called_once()
-        mock_fetcher_instance.fetch_multiple_pr_details.assert_called_once_with(
+        mock_reader_instance.refs_from_candidates.assert_called_once_with(
             mock_filter_instance.filter_candidates.return_value,
+        )
+        mock_reader_instance.read_many.assert_called_once_with(
+            mock_reader_instance.refs_from_candidates.return_value,
             max_workers=4,
         )
-        mock_analyzer_instance.analyze_prs.assert_called_once()
+        mock_analyzer_instance.analyze_materials.assert_called_once()
         mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
         mock_reporter_instance.save_report.assert_called_once()
         # 验证 commit 分析被调用
@@ -278,14 +280,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_run_daily_with_no_events(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -366,9 +368,8 @@ class TestTrendPulsePipeline:
         mock_filter_instance.filter_candidates.return_value = []
         mock_filter.return_value = mock_filter_instance
 
-        mock_fetcher_instance = Mock()
-        mock_fetcher_instance.fetch_multiple_pr_details.return_value = []
-        mock_fetcher.return_value = mock_fetcher_instance
+        mock_reader_instance = Mock()
+        mock_reader.return_value = mock_reader_instance
 
         mock_analyzer_instance = Mock()
         mock_analyzer_instance.analyze_prs.return_value = []
@@ -404,8 +405,8 @@ class TestTrendPulsePipeline:
         mock_collector_instance.fetch_events.assert_called_once()
         mock_filter_instance.filter_candidates.assert_called_once()
         # 没有候选事件时应该跳过 PR 分析，但仍分析 commits
-        mock_fetcher_instance.fetch_multiple_pr_details.assert_not_called()
-        mock_analyzer_instance.analyze_prs.assert_not_called()
+        mock_reader_instance.read_many.assert_not_called()
+        mock_analyzer_instance.analyze_materials.assert_not_called()
         # commit 分析仍应被调用
         mock_commit_analyzer_instance.analyze_commits.assert_called_once()
 
@@ -417,14 +418,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_saves_and_notifies(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -518,14 +519,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_with_pr_details(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -619,14 +620,14 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
     @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubDetailFetcher")
+    @patch("trendpluse.pipeline.GitHubPRReader")
     @patch("trendpluse.pipeline.EventFilter")
     @patch("trendpluse.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_with_no_signals(
         self,
         mock_collector,
         mock_filter,
-        mock_fetcher,
+        mock_reader,
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
@@ -701,15 +702,14 @@ class TestTrendPulsePipeline:
         ]
         mock_filter.return_value = mock_filter_instance
 
-        mock_fetcher_instance = Mock()
-        mock_fetcher_instance.fetch_multiple_pr_details.return_value = [
-            {"number": 1, "title": "PR 1", "repo_name": "test/repo"}
-        ]
-        mock_fetcher.return_value = mock_fetcher_instance
+        mock_reader_instance = Mock()
+        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
+        mock_reader_instance.read_many.return_value = [Mock()]
+        mock_reader.return_value = mock_reader_instance
 
         # AI 分析没有产生信号
         mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_prs.return_value = []
+        mock_analyzer_instance.analyze_materials.return_value = []
         mock_analyzer.return_value = mock_analyzer_instance
 
         mock_reporter_instance = Mock()
@@ -724,4 +724,4 @@ class TestTrendPulsePipeline:
         mock_reporter_instance.save_report.assert_called_once()
         assert report is not None
         # 验证 AI 分析被调用了
-        mock_analyzer_instance.analyze_prs.assert_called_once()
+        mock_analyzer_instance.analyze_materials.assert_called_once()

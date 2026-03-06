@@ -4,6 +4,7 @@ from unittest.mock import Mock, patch
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import DailyReport, Signal
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 
 class TestTrendAnalyzer:
@@ -114,6 +115,44 @@ class TestTrendAnalyzer:
         assert len(signals) == 2
         assert signals[0].title == "功能 A"
         assert signals[1].title == "功能 B"
+
+    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
+    def test_analyze_single_material(self, mock_from_anthropic):
+        """测试：分析单个材料提取信号"""
+        mock_signal = Signal(
+            id="",
+            title="新功能：支持 Python 3.13",
+            type="capability",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="扩展了对最新 Python 版本的支持",
+            sources=[],
+            related_repos=[],
+        )
+
+        mock_client = Mock()
+        mock_client.chat.completions.create.return_value = mock_signal
+        mock_from_anthropic.return_value = mock_client
+
+        analyzer = TrendAnalyzer(api_key="test_key")
+        material = AnalysisMaterial(
+            source_ref=SourceRef(
+                source_type="pull_request",
+                provider="github",
+                repo="anthropics/skills",
+                external_id="123",
+                url="https://github.com/anthropics/skills/pull/123",
+            ),
+            title="支持 Python 3.13",
+            body="添加了 Python 3.13 支持",
+            author="alice",
+        )
+
+        signal = analyzer.analyze_material(material)
+
+        assert signal.id == "anthropics/skills-123"
+        assert signal.sources == ["https://github.com/anthropics/skills/pull/123"]
+        assert signal.related_repos == ["anthropics/skills"]
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_generate_daily_report(self, mock_from_anthropic):
