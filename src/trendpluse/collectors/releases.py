@@ -105,7 +105,8 @@ class ReleaseCollector(BaseGitHubCollector):
         for release in all_releases:
             # 检查日期
             if release.created_at < since:
-                continue
+                # GitHub releases 默认按新到旧返回；一旦越过时间窗口即可停止。
+                break
 
             # 检查是否为预发布版本
             if not include_prereleases and release.prerelease:

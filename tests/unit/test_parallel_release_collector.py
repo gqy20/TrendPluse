@@ -86,7 +86,7 @@ class TestParallelReleaseCollector:
         new_release = mock_release_factory("v1.0.0", 1)  # 1 小时前
 
         mock_repo = Mock()
-        mock_repo.get_releases.return_value = [old_release, new_release]
+        mock_repo.get_releases.return_value = [new_release, old_release]
 
         with patch.object(collector, "client") as mock_client:
             mock_client.get_repo.return_value = mock_repo
@@ -151,3 +151,32 @@ class TestParallelReleaseCollector:
         # Assert
         assert releases_data.total_count == 1
         assert detailed_releases[0]["prerelease"] is False
+
+    def test_collect_releases_stops_iterating_after_old_release(
+        self, collector, mock_release_factory
+    ):
+        """测试：遇到超出时间窗口的 release 后应停止继续遍历。"""
+        repos = ["test/repo"]
+        since = datetime.now(UTC) - timedelta(hours=2)
+
+        new_release = mock_release_factory("v1.0.1", 1)
+        old_release = mock_release_factory("v1.0.0", 5)
+        trailing_release = mock_release_factory("v0.9.9", 6)
+
+        class LazyReleases:
+            def __iter__(self):
+                yield new_release
+                yield old_release
+                raise AssertionError("不应继续遍历超出时间窗口后的历史 release")
+                yield trailing_release
+
+        mock_repo = Mock()
+        mock_repo.get_releases.return_value = LazyReleases()
+
+        with patch.object(collector, "client") as mock_client:
+            mock_client.get_repo.return_value = mock_repo
+
+            releases_data, detailed_releases = collector.collect_releases(repos, since)
+
+        assert releases_data.total_count == 1
+        assert detailed_releases[0]["tag_name"] == "v1.0.1"

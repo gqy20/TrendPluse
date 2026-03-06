@@ -88,7 +88,7 @@ class TestReleaseCollector:
         new_release.assets = []
 
         mock_repo = MagicMock()
-        mock_repo.get_releases.return_value = [old_release, new_release]
+        mock_repo.get_releases.return_value = [new_release, old_release]
 
         mock_client = MagicMock()
         mock_client.get_repo.return_value = mock_repo
