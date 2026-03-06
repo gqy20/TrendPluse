@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from trendpluse.automation.generate_report_index import run_generate_report_index
+from trendpluse.app.generate_report_index import run_generate_report_index
 
 
 def main() -> None:

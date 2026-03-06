@@ -1,13 +1,9 @@
-"""仓库文档生成器
-
-从 config 生成监控仓库列表的 Markdown 文档。
-"""
+"""仓库文档生成器。"""
 
 from dataclasses import dataclass
 
 from trendpluse.models.repository import MonitoredRepo
 
-# 定义仓库分类规则
 REPO_CATEGORIES: dict[str, list[str]] = {
     "Anthropic 核心产品": [
         "claude-code",
@@ -83,42 +79,27 @@ REPO_CATEGORIES: dict[str, list[str]] = {
 
 @dataclass
 class RepoCategory:
-    """仓库分类"""
+    """仓库分类。"""
 
     name: str
     repos: list[MonitoredRepo]
 
 
 def parse_repos_from_config(repos: list[MonitoredRepo]) -> list[RepoCategory]:
-    """从配置解析仓库列表到分类
-
-    Args:
-        repos: 结构化仓库配置列表
-
-    Returns:
-        仓库分类列表
-    """
-    # 初始化分类
+    """从配置解析仓库列表到分类。"""
     categories: dict[str, list[MonitoredRepo]] = {name: [] for name in REPO_CATEGORIES}
 
-    # 分配仓库到分类
     for repo in repos:
-        # 提取仓库名部分
         repo_name = repo.repo.split("/")[-1] if "/" in repo.repo else repo.repo
-
-        # 查找匹配的分类
         assigned = False
         for category_name, patterns in REPO_CATEGORIES.items():
-            # 检查完整匹配或模式匹配
             for pattern in patterns:
                 if "/" in pattern:
-                    # 完整匹配 owner/repo
                     if repo.repo == pattern:
                         categories[category_name].append(repo)
                         assigned = True
                         break
                 else:
-                    # 仓库名匹配
                     if repo_name == pattern:
                         categories[category_name].append(repo)
                         assigned = True
@@ -126,7 +107,6 @@ def parse_repos_from_config(repos: list[MonitoredRepo]) -> list[RepoCategory]:
             if assigned:
                 break
 
-    # 转换为 RepoCategory 对象，过滤空分类
     return [
         RepoCategory(name=name, repos=repos)
         for name, repos in categories.items()
@@ -135,15 +115,7 @@ def parse_repos_from_config(repos: list[MonitoredRepo]) -> list[RepoCategory]:
 
 
 def generate_repos_markdown(categories: list[RepoCategory]) -> str:
-    """生成仓库列表的 Markdown
-
-    Args:
-        categories: 仓库分类列表
-
-    Returns:
-        Markdown 格式的仓库列表
-    """
-    # 统计总仓库数
+    """生成仓库列表的 Markdown。"""
     total_repos = sum(len(cat.repos) for cat in categories)
 
     lines = [
@@ -154,13 +126,11 @@ def generate_repos_markdown(categories: list[RepoCategory]) -> str:
         "\n",
     ]
 
-    # 生成每个分类的内容
     for category in categories:
         lines.append(f"#### {category.name}\n")
         lines.append("\n")
 
         for repo in category.repos:
-            # 转义下划线（Markdown 特殊字符）
             escaped_repo = repo.repo.replace("_", "\\_")
             repo_link = f"[{escaped_repo}]({repo.url})"
             description = f": {repo.description}" if repo.description else ""

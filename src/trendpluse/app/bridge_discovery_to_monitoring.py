@@ -1,20 +1,20 @@
-"""discovery 候选到监控列表的桥接脚本"""
+"""discovery 候选到监控列表的桥接脚本。"""
 
 import json
 from pathlib import Path
 
-from trendpluse.automation.add_repo import batch_add_repos_to_config
+from trendpluse.app.add_repo import batch_add_repos_to_config
 
 PRIORITY_ORDER = {"low": 1, "medium": 2, "high": 3}
 
 
 def _priority_allowed(priority: str, min_priority: str) -> bool:
-    """判断优先级是否满足阈值"""
+    """判断优先级是否满足阈值。"""
     return PRIORITY_ORDER.get(priority, 0) >= PRIORITY_ORDER.get(min_priority, 0)
 
 
 def _to_float(value: object) -> float:
-    """将任意值安全转换为 float"""
+    """将任意值安全转换为 float。"""
     if isinstance(value, int | float):
         return float(value)
     if isinstance(value, str):
@@ -32,7 +32,7 @@ def bridge_actionable_to_monitoring(
     max_add_per_run: int = 10,
     apply_changes: bool = False,
 ) -> dict:
-    """将 discovery actionable 清单桥接到监控列表"""
+    """将 discovery actionable 清单桥接到监控列表。"""
     data = json.loads(Path(actionable_file).read_text(encoding="utf-8"))
     candidates = data.get("candidates", [])
 
@@ -64,7 +64,6 @@ def bridge_actionable_to_monitoring(
             }
         )
 
-    # 先按优先级，再按质量分，最后按 repo 名称稳定排序
     selected_candidates.sort(
         key=lambda c: (
             -PRIORITY_ORDER.get(str(c.get("priority", "low")), 0),

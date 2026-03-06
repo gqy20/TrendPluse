@@ -39,7 +39,7 @@ class TestAddRepo:
         config_file = tmp_path / "repos.json"
         _write_repo_config(config_file)
 
-        from trendpluse.automation.add_repo import add_repo_to_config
+        from trendpluse.app.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -65,7 +65,7 @@ class TestAddRepo:
         config_file = tmp_path / "repos.json"
         _write_repo_config(config_file)
 
-        from trendpluse.automation.add_repo import add_repo_to_config
+        from trendpluse.app.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -80,7 +80,7 @@ class TestAddRepo:
         config_file = tmp_path / "repos.json"
         config_file.write_text("[]\n", encoding="utf-8")
 
-        from trendpluse.automation.add_repo import add_repo_to_config
+        from trendpluse.app.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
             config_file=str(config_file),
@@ -92,7 +92,7 @@ class TestAddRepo:
 
     def test_validate_repo_format(self):
         """测试：仓库格式验证。"""
-        from trendpluse.automation.add_repo import validate_repo_format
+        from trendpluse.app.add_repo import validate_repo_format
 
         assert validate_repo_format("anthropics/claude-code") is True
         assert validate_repo_format("openai/swarm") is True
@@ -106,7 +106,7 @@ class TestAddRepo:
 
     def test_parse_issue_body(self):
         """测试：解析 Issue 表单内容。"""
-        from trendpluse.automation.add_repo import parse_issue_body
+        from trendpluse.app.add_repo import parse_issue_body
 
         body = """
         ### GitHub 仓库
@@ -130,7 +130,7 @@ class TestAddRepo:
 
     def test_category_to_marker_mapping(self):
         """测试：分类校验映射存在。"""
-        from trendpluse.automation.add_repo import get_category_markers
+        from trendpluse.app.add_repo import get_category_markers
 
         markers = get_category_markers("Agentic AI 核心框架")
         assert markers is not None
@@ -144,7 +144,7 @@ class TestAddRepo:
         config_file = tmp_path / "repos.json"
         _write_repo_config(config_file)
 
-        from trendpluse.automation.add_repo import batch_add_repos_to_config
+        from trendpluse.app.add_repo import batch_add_repos_to_config
 
         result = batch_add_repos_to_config(
             config_file=str(config_file),

@@ -2,7 +2,7 @@
 
 import argparse
 
-from trendpluse.automation.normalize_daily_report_stats import (
+from trendpluse.app.normalize_daily_report_stats import (
     run_normalize_daily_report_stats,
 )
 

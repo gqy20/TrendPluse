@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from trendpluse.automation.sync_repos_to_docs import run_sync_repos_to_docs
+from trendpluse.app.sync_repos_to_docs import run_sync_repos_to_docs
 
 
 def main() -> int:

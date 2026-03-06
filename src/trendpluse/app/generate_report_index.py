@@ -1,4 +1,4 @@
-"""生成报告索引
+"""生成报告索引。
 
 从 reports/ 目录读取所有报告，生成 MkDocs 索引页面。
 """
@@ -10,18 +10,14 @@ from typing import TypedDict
 
 
 class _ProjectInfo(TypedDict):
-    """项目信息"""
+    """项目信息。"""
 
     repo: str
     stars: int
 
 
 def ensure_reports_structure(reports_dir: Path) -> None:
-    """确保 reports 目录结构存在
-
-    Args:
-        reports_dir: 报告根目录
-    """
+    """确保 reports 目录结构存在。"""
     (reports_dir / "daily").mkdir(parents=True, exist_ok=True)
     (reports_dir / "weekly").mkdir(parents=True, exist_ok=True)
     (reports_dir / "discovery").mkdir(parents=True, exist_ok=True)
@@ -29,25 +25,15 @@ def ensure_reports_structure(reports_dir: Path) -> None:
 
 
 def extract_report_info(report_path: Path) -> dict | None:
-    """从报告文件中提取信息
-
-    Args:
-        report_path: 报告文件路径
-
-    Returns:
-        包含报告信息的字典，如果解析失败返回 None
-    """
+    """从报告文件中提取信息。"""
     try:
         content = report_path.read_text(encoding="utf-8")
 
-        # 提取日期
         date_match = re.search(r"# TrendPulse 每日报告 - (\d{4}-\d{2}-\d{2})", content)
         if not date_match:
             return None
         date_str = date_match.group(1)
 
-        # 提取摘要（第一行引用块）
-        # 摘要在标题后的空行之后，找到第一个非空行
         lines = content.split("\n")
         summary_match = None
         for i in range(2, min(10, len(lines))):
@@ -57,14 +43,11 @@ def extract_report_info(report_path: Path) -> dict | None:
 
         summary = summary_match.group(1) if summary_match else "暂无摘要"
 
-        # 提取统计信息
         stats = {}
         stats_pattern = r"- \*\*(.+?)\*\*:\s*(\d+)"
         for match in re.finditer(stats_pattern, content):
             stats[match.group(1)] = match.group(2)
 
-        # 使用报告日期作为发布时间（而非文件修改时间，避免 CI 环境时间戳问题）
-        # 从文件名中提取的日期已经足够准确
         published_date = datetime.strptime(date_str, "%Y-%m-%d")
         published = published_date.strftime("%Y-%m-%d")
 
@@ -81,18 +64,10 @@ def extract_report_info(report_path: Path) -> dict | None:
 
 
 def extract_weekly_report_info(weekly_path: Path) -> dict | None:
-    """从周报文件中提取信息
-
-    Args:
-        weekly_path: 周报文件路径
-
-    Returns:
-        包含周报信息的字典，如果解析失败返回 None
-    """
+    """从周报文件中提取信息。"""
     try:
         content = weekly_path.read_text(encoding="utf-8")
 
-        # 提取日期范围和周标识（支持多行标题）
         week_match = re.search(
             r"# TrendPulse 周报 "
             r"\((\d{4}-W\d+): (\d{4}-\d{2}-\d{2}) ~\s*"
@@ -106,7 +81,6 @@ def extract_weekly_report_info(weekly_path: Path) -> dict | None:
         start_date = week_match.group(2)
         end_date = week_match.group(3)
 
-        # 提取摘要
         lines = content.split("\n")
         summary_match = None
         for i in range(2, min(10, len(lines))):
@@ -129,13 +103,7 @@ def extract_weekly_report_info(weekly_path: Path) -> dict | None:
 
 
 def generate_index(reports_dir: Path, output_path: Path) -> None:
-    """生成报告索引页面
-
-    Args:
-        reports_dir: 报告目录
-        output_path: 输出文件路径
-    """
-    # 从子目录查找日报和周报文件
+    """生成报告索引页面。"""
     daily_dir = reports_dir / "daily"
     weekly_dir = reports_dir / "weekly"
 
@@ -148,14 +116,12 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
     if weekly_dir.exists():
         weekly_files = sorted(weekly_dir.glob("weekly-*.md"), reverse=True)
 
-    # 提取日报信息
     daily_reports = []
     for report_file in daily_files:
         info = extract_report_info(report_file)
         if info:
             daily_reports.append(info)
 
-    # 提取周报信息
     weekly_reports = []
     for weekly_file in weekly_files:
         info = extract_weekly_report_info(weekly_file)
@@ -164,7 +130,6 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
 
     if not daily_reports and not weekly_reports:
         print("没有找到报告文件")
-        # 生成空索引
         index_content = """# 趋势报告归档
 
 !!! warning "暂无报告"
@@ -175,7 +140,6 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         output_path.write_text(index_content, encoding="utf-8")
         return
 
-    # 生成索引内容
     index_lines = [
         "# 趋势报告归档\n",
         "!!! note \n",
@@ -184,7 +148,6 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         "## 最新周报\n",
     ]
 
-    # 最新周报（显示最近 4 周）
     for report in weekly_reports[:4]:
         week_id = report["week_id"]
         start_date = report["start_date"]
@@ -204,7 +167,6 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
 
     index_lines.extend(["\n", "## 最新日报\n"])
 
-    # 最新日报列表
     for report in daily_reports[:10]:
         date = report["date"]
         summary = report["summary"]
@@ -221,10 +183,7 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
             ]
         )
 
-    # 统计信息
     total_signals = sum(int(r["stats"].get("分析 PR 数", 0)) for r in daily_reports)
-
-    # 计算本月报告数
     current_month = datetime.now().strftime("%Y-%m")
     monthly_count = len([r for r in daily_reports if r["date"][:7] == current_month])
 
@@ -241,8 +200,7 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         ]
     )
 
-    # 写入文件
-    index_content = "".join(index_lines)  # 元素已包含 \n，直接拼接
+    index_content = "".join(index_lines)
     output_path.write_text(index_content, encoding="utf-8")
 
     print(f"索引已生成: {output_path}")
@@ -251,15 +209,9 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
 
 
 def sync_reports_to_docs(reports_dir: Path, docs_reports_dir: Path) -> None:
-    """同步报告文件到 docs 目录
-
-    Args:
-        reports_dir: 源报告目录
-        docs_reports_dir: 目标文档报告目录
-    """
+    """同步报告文件到 docs 目录。"""
     docs_reports_dir.mkdir(parents=True, exist_ok=True)
 
-    # 从子目录复制日报和周报文件
     daily_dir = reports_dir / "daily"
     weekly_dir = reports_dir / "weekly"
 
@@ -281,23 +233,14 @@ def sync_reports_to_docs(reports_dir: Path, docs_reports_dir: Path) -> None:
 
 
 def sync_discovery_reports_to_docs(reports_dir: Path, docs_dir: Path) -> None:
-    """同步发现报告到 docs 目录
-
-    将发现报告同步到 docs/discovery-reports/ 子目录（不是根目录）。
-
-    Args:
-        reports_dir: 源报告目录
-        docs_dir: 目标文档目录
-    """
+    """同步发现报告到 docs 目录。"""
     discovery_dir = reports_dir / "discovery"
     if not discovery_dir.exists():
         return
 
-    # 创建 discovery-reports 子目录
     discovery_reports_dir = docs_dir / "discovery-reports"
     discovery_reports_dir.mkdir(parents=True, exist_ok=True)
 
-    # 只同步 Markdown 文件（JSON 不需要同步到 docs）
     for report_file in discovery_dir.glob("discovery-*.md"):
         dest_file = discovery_reports_dir / report_file.name
         dest_file.write_text(report_file.read_text(encoding="utf-8"), encoding="utf-8")
@@ -305,24 +248,15 @@ def sync_discovery_reports_to_docs(reports_dir: Path, docs_dir: Path) -> None:
 
 
 def extract_discovery_report_info(report_path: Path) -> dict | None:
-    """从发现报告中提取信息
-
-    Args:
-        report_path: 发现报告文件路径
-
-    Returns:
-        包含报告信息的字典，如果解析失败返回 None
-    """
+    """从发现报告中提取信息。"""
     try:
         content = report_path.read_text(encoding="utf-8")
 
-        # 提取日期
         date_match = re.search(r"# 项目发现报告 \((\d{4}-\d{2}-\d{2})\)", content)
         if not date_match:
             return None
         date_str = date_match.group(1)
 
-        # 提取概览数据
         stats = {}
         stats_pattern = r"\|\s*(.+?)\s*\|\s*(\d+)\s*\|"
         in_overview = False
@@ -340,7 +274,6 @@ def extract_discovery_report_info(report_path: Path) -> dict | None:
                 elif line.startswith("##"):
                     break
 
-        # 映射中文字段名
         key_mapping = {
             "总发现数": "total_discovered",
             "通过质量评估": "passed_quality",
@@ -353,13 +286,10 @@ def extract_discovery_report_info(report_path: Path) -> dict | None:
             if cn_key in stats:
                 mapped_stats[en_key] = stats[cn_key]
 
-        # 提取高优先级推荐 Top 5
         top_projects: list[_ProjectInfo] = []
         in_high_priority = False
-        project_header_pattern = (
-            r"###\s+\d+\.\s+([/\w.-]+)"  # 匹配 "### 1. owner/repo" (包含 .)
-        )
-        stars_pattern = r"\|\s*Stars\s*\|\s*([\d,]+)\s*\|"  # 匹配表格中的 Stars 行
+        project_header_pattern = r"###\s+\d+\.\s+([/\w.-]+)"
+        stars_pattern = r"\|\s*Stars\s*\|\s*([\d,]+)\s*\|"
 
         for line in content.split("\n"):
             if "## 🌟 高优先级推荐" in line or "## 高优先级推荐" in line:
@@ -393,17 +323,11 @@ def extract_discovery_report_info(report_path: Path) -> dict | None:
 
 
 def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
-    """生成发现历史索引页面
-
-    Args:
-        reports_dir: 报告目录
-        docs_dir: 文档目录
-    """
+    """生成发现历史索引页面。"""
     discovery_dir = reports_dir / "discovery"
     if not discovery_dir.exists():
         return
 
-    # 查找最新的发现报告
     discovery_files = sorted(discovery_dir.glob("discovery-*.md"), reverse=True)
     if not discovery_files:
         print("没有找到发现报告文件")
@@ -420,7 +344,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
     stats = info["stats"]
     top_projects = info["top_projects"]
 
-    # 生成内容
     lines = [
         "# 项目发现历史\n",
         "\n",
@@ -433,7 +356,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         "**发现概览**:<br/>\n",
     ]
 
-    # 添加概览数据
     overview_lines = [
         f"- 总发现数: {stats.get('total_discovered', 'N/A')}<br/>\n",
         f"- 通过质量评估: {stats.get('passed_quality', 'N/A')}<br/>\n",
@@ -445,14 +367,12 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         "\n",
     ]
 
-    # 添加 Top 5 项目
     for i, project in enumerate(top_projects, 1):
         repo_link = f"[{project['repo']}](https://github.com/{project['repo']})"
         overview_lines.append(f"{i}. {repo_link} - {project['stars']:,} ⭐<br/>\n")
 
     lines.extend(overview_lines)
 
-    # 添加历史报告表格（包含所有报告）
     lines.extend(
         [
             "\n",
@@ -463,7 +383,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         ]
     )
 
-    for report_file in discovery_files[:10]:  # 显示最近 10 个
+    for report_file in discovery_files[:10]:
         info = extract_discovery_report_info(report_file)
         if info:
             date = info["date"]
@@ -472,7 +392,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
             report_url = f"discovery-reports/discovery-{date}.md"
             lines.append(f"| {date} | {total} | {high} | [查看]({report_url}) |\n")
 
-    # 添加说明部分
     lines.extend(
         [
             "\n",
@@ -526,7 +445,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         ]
     )
 
-    # 写入文件
     discovery_index_path = docs_dir / "discovery.md"
     discovery_index_path.write_text("".join(lines), encoding="utf-8")
     print(f"发现索引已生成: {discovery_index_path}")
@@ -534,24 +452,14 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
 
 def run_generate_report_index(project_root: Path | None = None) -> None:
     """生成报告索引并同步文档。"""
-    # 默认以当前工作目录作为项目根目录，便于在仓库中直接执行
     project_root = project_root or Path.cwd().resolve()
     reports_dir = project_root / "reports"
     docs_reports_dir = project_root / "docs" / "reports"
     docs_dir = project_root / "docs"
     index_path = docs_reports_dir / "index.md"
 
-    # 确保目录结构存在
     ensure_reports_structure(reports_dir)
-
-    # 同步报告文件
     sync_reports_to_docs(reports_dir, docs_reports_dir)
-
-    # 同步发现报告
     sync_discovery_reports_to_docs(reports_dir, docs_dir)
-
-    # 生成发现历史索引
     generate_discovery_index(reports_dir, docs_dir)
-
-    # 生成索引
     generate_index(reports_dir, index_path)

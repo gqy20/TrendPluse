@@ -2,7 +2,7 @@
 
 import argparse
 
-from trendpluse.automation.bridge_discovery_to_monitoring import (
+from trendpluse.app.bridge_discovery_to_monitoring import (
     run_bridge_discovery_command,
 )
 

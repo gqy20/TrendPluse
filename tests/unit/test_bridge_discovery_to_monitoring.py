@@ -59,7 +59,7 @@ def test_bridge_actionable_to_monitoring(tmp_path: Path):
     config_path = tmp_path / "repos.json"
     _write_repo_config(config_path)
 
-    from trendpluse.automation.bridge_discovery_to_monitoring import (
+    from trendpluse.app.bridge_discovery_to_monitoring import (
         bridge_actionable_to_monitoring,
     )
 
@@ -117,7 +117,7 @@ def test_bridge_respects_max_add_per_run(tmp_path: Path):
     config_path = tmp_path / "repos.json"
     _write_repo_config(config_path)
 
-    from trendpluse.automation.bridge_discovery_to_monitoring import (
+    from trendpluse.app.bridge_discovery_to_monitoring import (
         bridge_actionable_to_monitoring,
     )
 

@@ -5,7 +5,7 @@
 
 from pathlib import Path
 
-from trendpluse.automation.repos_doc_generator import (
+from trendpluse.app.repos_doc_generator import (
     RepoCategory,
     generate_repos_markdown,
     parse_repos_from_config,

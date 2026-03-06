@@ -2,7 +2,7 @@
 
 import argparse
 
-from trendpluse.automation.add_repo import run_add_repo_command
+from trendpluse.app.add_repo import run_add_repo_command
 
 
 def main() -> None:
