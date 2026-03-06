@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from trendpluse.models.signal import DailyReport, WeeklyReport
-from trendpluse.services.report_output_service import ReportOutputService
+from trendpluse.workflows.report_output import ReportOutputService
 
 
 class DummyReporter:

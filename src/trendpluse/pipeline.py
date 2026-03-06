@@ -42,9 +42,9 @@ from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
 from trendpluse.readers.github_pr_reader import GitHubPRReader
 from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
-from trendpluse.services.issue_workflow_service import IssueWorkflowService
-from trendpluse.services.release_workflow_service import ReleaseWorkflowService
-from trendpluse.services.report_output_service import ReportOutputService
+from trendpluse.workflows.issue_workflow import IssueWorkflowService
+from trendpluse.workflows.release_workflow import ReleaseWorkflowService
+from trendpluse.workflows.report_output import ReportOutputService
 
 logger = get_logger(__name__)
 

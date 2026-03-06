@@ -10,7 +10,7 @@ from trendpluse.models.signal import (
     ReleaseSummary,
     Signal,
 )
-from trendpluse.services.release_workflow_service import ReleaseWorkflowService
+from trendpluse.workflows.release_workflow import ReleaseWorkflowService
 
 
 class DummyReleaseMaterialBuilder:

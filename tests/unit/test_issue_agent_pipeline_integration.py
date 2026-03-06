@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from typing import Any, cast
 
 import trendpluse.pipeline as pipeline_module
-from trendpluse.services.issue_workflow_service import IssueWorkflowService
+from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
 class _StubIssueAgentRunner:

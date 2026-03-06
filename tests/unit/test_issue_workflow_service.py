@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from trendpluse.services.issue_workflow_service import IssueWorkflowService
+from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
 class DummyIssueCollector:
@@ -67,7 +67,7 @@ def test_collect_and_analyze_dumps_issue_files(tmp_path, monkeypatch) -> None:
         return {"owner/repo": issue_dir / "owner__repo.jsonl"}
 
     monkeypatch.setattr(
-        "trendpluse.services.issue_workflow_service.dump_issues_to_jsonl", fake_dump
+        "trendpluse.workflows.issue_workflow.dump_issues_to_jsonl", fake_dump
     )
 
     service = IssueWorkflowService(
@@ -102,7 +102,7 @@ async def test_collect_and_analyze_async_runs_issue_agent(
         return {"owner/repo": issue_dir / "owner__repo.jsonl"}
 
     monkeypatch.setattr(
-        "trendpluse.services.issue_workflow_service.dump_issues_to_jsonl", fake_dump
+        "trendpluse.workflows.issue_workflow.dump_issues_to_jsonl", fake_dump
     )
 
     service = IssueWorkflowService(
@@ -136,7 +136,7 @@ def test_load_insights_delegates_to_loader(tmp_path, monkeypatch) -> None:
         return {"ok": True}
 
     monkeypatch.setattr(
-        "trendpluse.services.issue_workflow_service.load_issue_agent_report",
+        "trendpluse.workflows.issue_workflow.load_issue_agent_report",
         fake_loader,
     )
 

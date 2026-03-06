@@ -9,7 +9,7 @@ import re
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from pydantic import ValidationError
 
@@ -92,7 +92,7 @@ class IssueAgentRunner:
             raise ValueError("ROUND3 输出不是合法 JSON 对象")
 
         if "top_pain_points" in round3_data:
-            return IssueAgentReport.model_validate(round3_data)
+            return cast(IssueAgentReport, IssueAgentReport.model_validate(round3_data))
 
         reviewed = round3_data.get("reviewed_pain_points")
         if not isinstance(reviewed, list):
@@ -319,7 +319,7 @@ class IssueAgentRunner:
         parsed = self._parse_json_like_text(text)
         if not isinstance(parsed, dict):
             raise ValueError("Agent 输出不是合法 JSON 对象")
-        return IssueAgentReport.model_validate(parsed)
+        return cast(IssueAgentReport, IssueAgentReport.model_validate(parsed))
 
     def _parse_json_like_text(self, text: str) -> dict[str, Any] | None:
         stripped = text.strip()
