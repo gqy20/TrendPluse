@@ -6,26 +6,26 @@
 |------|------|
 | 总发现数 | 200 |
 | 通过质量评估 | 200 |
-| 高优先级 | 140 |
-| 去重移除 | 40 |
-| 已在监控 | 20 |
+| 高优先级 | 136 |
+| 去重移除 | 32 |
+| 已在监控 | 21 |
 
 
 ### 📋 分类分布
 
 | 分类 | 数量 |
 |------|------|
-| 🤖 AI Agents | 30 |
-| 🔍 RAG/检索 | 18 |
-| 💬 LLM 界面 | 22 |
-| 🧠 机器学习框架 | 11 |
+| 🤖 AI Agents | 27 |
+| 🔍 RAG/检索 | 17 |
+| 💬 LLM 界面 | 26 |
+| 🧠 机器学习框架 | 13 |
 | 🛠️ 开发工具 | 18 |
 | ⚙️ DevOps/基础设施 | 17 |
-| 📈 监控/观测 | 3 |
-| 🌐 Web 框架 | 13 |
-| 📊 数据/基础设施 | 6 |
-| 📚 学习资源 | 6 |
-| 📁 其他 | 52 |
+| 📈 监控/观测 | 2 |
+| 🌐 Web 框架 | 14 |
+| 📊 数据/基础设施 | 4 |
+| 📚 学习资源 | 8 |
+| 📁 其他 | 62 |
 
 ## 📑 快速导航
 
@@ -43,7 +43,7 @@
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (30 个项目) { #ai-agents }
+## 🤖 AI Agents (27 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -63,28 +63,28 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 125,952 |
+| Stars | 125,989 |
 | 语言 | Python |
-| Forks | 17,821 |
-| Issues | 326 |
+| Forks | 17,826 |
+| Issues | 338 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支持多种LLM后端（Ollama、OpenAI API等）。作为目前最受欢迎的开源LLM Web UI之一（超过12.5万星标），它提供了类似ChatGPT的现代化界面，支持RAG、模型切换、代码高亮等企业级功能，是构建私有化AI对话平台的理想选择。
+这是一个功能强大且高度成熟的 AI 界面项目，拥有超过 12 万 stars，支持多种主流 LLM 后端（Ollama、OpenAI 等），提供了开箱即用的自托管解决方案，特别适合希望快速部署私有 AI 对话平台的团队和个人开发者。
 
 **技术亮点**:
-- 🤖 多后端支持：集成Ollama、OpenAI API等多种LLM服务，实现模型灵活切换
-- 🔍 RAG集成：内置检索增强生成能力，支持文档上传和知识库构建
-- 🎨 现代化Web界面：提供类似ChatGPT的流畅用户体验，支持代码语法高亮和Markdown渲染
-- 🔐 完全自托管：支持本地部署，数据完全可控，适合企业内网和隐私敏感场景
-- 🔌 MCP协议支持：集成Model Context Protocol，扩展AI交互能力
+- 支持多种 LLM 后端引擎（Ollama、OpenAI API 等），提供统一友好的 Web 界面
+- 集成 RAG（检索增强生成）能力，支持基于文档的智能问答
+- 支持 MCP（Model Context Protocol）协议，便于与外部工具和上下文集成
+- 完全自托管架构，数据隐私可控，适合企业和个人私有化部署
+- 基于 Python 开发，社区活跃，功能迭代快速
 
 **适用场景**:
-- 企业私有化部署：为公司内部搭建安全可控的AI助手平台，保护敏感数据不外泄
-- 个人开发者环境：在本地或私有服务器上运行，通过Ollama等工具使用开源模型（如Llama、Qwen）
-- AI应用快速原型：作为AI聊天应用的前端模板，快速集成自定义LLM功能
+- 企业内部 AI 助手部署：搭建私有的 ChatGPT 替代方案，保护敏感数据不外泄
+- 个人开发者学习与研究：本地运行开源 LLM，快速实验和测试不同模型
+- 构建知识库问答系统：利用 RAG 能力，基于企业文档构建智能问答服务
 
 
 
@@ -102,67 +102,28 @@ Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,273 |
+| Stars | 74,292 |
 | 语言 | Python |
-| Forks | 8,268 |
-| Issues | 3,048 |
+| Forks | 8,271 |
+| Issues | 3,051 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, context-engineering, context-retrieval, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow是一个领先的检索增强生成(RAG)开源引擎，创新性地融合了RAG技术与Agent能力，为大语言模型构建卓越的上下文层。拥有74K+ Stars和活跃社区，采用Apache 2.0许可，是构建企业级AI应用和智能搜索的理想选择。
+RAGFlow 是目前最热门的开源 RAG 引擎之一（74K+ Stars），其核心优势在于将前沿的 RAG 技术与 Agent 能力深度融合，为 LLM 提供高质量的上下文层。相比传统 RAG 方案，它集成了 GraphRAG、MCP 协议、深度文档解析等先进能力，是构建企业级 AI 应用的理想选择。
 
 **技术亮点**:
-- 融合RAG与Agent能力，提供强大的上下文工程和智能工作流
-- 支持文档解析与理解，结合GraphRAG实现深度研究
-- 兼容主流LLM生态，包括OpenAI、Ollama、DeepSeek等
-- 提供MCP协议支持，增强Agent互操作性
-- 企业级AI搜索引擎架构，专注高精度上下文检索
+- 深度融合 RAG + Agent 双引擎，支持 Agentic Workflow 自动化编排
+- 集成 GraphRAG 图检索增强技术，提升复杂知识推理能力
+- 强大的文档解析引擎，支持多格式文档深度理解与结构化提取
+- 支持 MCP 协议、Ollama、OpenAI、DeepSeek 等多种 LLM 后端，生态兼容性强
+- 内置 AI 搜索与 Context Engineering 能力，优化 LLM 上下文质量
 
 **适用场景**:
-- 企业知识库构建与智能问答系统：快速部署基于企业文档的AI助手，实现精准的文档理解和知识检索
-- Agent智能工作流开发：构建能够自主进行深度研究和多步骤推理的AI Agent应用
-- 私有化LLM应用部署：结合本地模型(Ollama)实现数据隐私可控的企业级AI解决方案
-
-
-
-### hiyouga/LlamaFactory
-
-**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in Python
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 67,966 |
-| 语言 | Python |
-| Forks | 8,290 |
-| Issues | 919 |
-| Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
-| 许可证 | Apache License 2.0 |
-
----
-
-LlamaFactory 是一款被 ACL 2024 收录的统一高效微调框架，支持 100+ 大语言模型和视觉语言模型。该项目凭借 6.7万+ GitHub Stars 的极高人气，提供了从微调到部署的一站式解决方案，是个人开发者和企业进行 LLM 定制的首选工具之一。
-
-**技术亮点**:
-- 统一支持 100+ LLMs & VLMs，涵盖 Llama3、Gemma、Qwen、DeepSeek 等主流模型
-- 集 LoRA、QLoRA、PEFT、全量微调等多种高效训练方法于一体
-- 支持 RLHF（人类反馈强化学习）、指令微调和 Agent 训练等多种训练范式
-- 提供模型量化（Quantization）和 MoE（混合专家）等优化技术
-- 零代码 Web UI 界面，让非技术用户也能轻松进行模型微调
-
-**适用场景**:
-- 企业 AI 应用定制：快速微调领域专用大模型（如客服、金融、医疗等垂直场景）
-- 个人开发者研究：低成本实验不同微调方法（LoRA/QLoRA）和模型对比
-- 教学与学习：作为学习 LLM 微调技术的最佳实践平台
+- 企业知识库问答系统：快速构建基于私有文档的智能问答平台
+- AI Agent 开发：构建具备自主检索和推理能力的智能助手
+- 文档智能处理：金融、法律、医疗等领域的复杂文档分析与信息提取
 
 
 
@@ -180,67 +141,28 @@ LlamaFactory 是一款被 ACL 2024 收录的统一高效微调框架，支持 10
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 88,742 |
+| Stars | 88,859 |
 | 语言 | TypeScript |
-| Forks | 6,227 |
-| Issues | 196 |
+| Forks | 6,230 |
+| Issues | 190 |
 | Topics | ai, ai-agents, ai-crawler, ai-scraping, ai-search, crawler, data-extraction, html-to-markdown, llm, markdown, scraper, scraping, web-crawler, web-data, web-data-extraction, web-scraper, web-scraping, web-search, webscraping |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 ---
 
-Firecrawl 是一个专为 AI 应用打造的全能网页数据采集解决方案，能将任意网站转换为 LLM 可用的 Markdown 或结构化数据。该项目拥有接近 9 万星的高人气，凭借 AI 原生设计、强大的爬取能力和易于集成的 API，成为构建 AI Agent、RAG 系统和数据分析应用的理想基础设施。
+Firecrawl 是目前 GitHub 上最成熟的 LLM 数据准备工具，拥有近 9 万 Star 的社区认可度，能将任意网站自动转换为 AI 可直接消费的结构化数据，解决了 AI 应用开发中"数据准备"这一核心痛点。它提供开箱即用的 API 服务，大幅降低了企业构建 AI Agent 和 RAG 系统的技术门槛。
 
 **技术亮点**:
-- AI 原生架构，专门优化输出格式为 LLM 友好的 Markdown 和结构化数据
-- 支持完整的网站爬取，可处理动态 JavaScript 内容和复杂网页结构
-- 提供简洁的 Web API 接口，便于快速集成到各类 AI 应用和工作流中
-- 具备强大的 HTML 到 Markdown 转换能力，保留文档语义和格式
-- 兼容多种数据提取场景，支持批量处理和大规模数据采集
+- 支持将完整网站转换为 LLM-ready 的 Markdown 格式，自动处理 HTML 清理、链接转换和内容结构化
+- 提供 Web Data API，支持自动化爬取、搜索和结构化数据提取，可无缝集成到 AI Agent 工作流
+- 支持 html-to-markdown 智能转换，保留语义结构的同时优化为 LLM 友好格式
+- 内置 AI 驱动的智能爬取和搜索能力，支持复杂网站的数据提取
+- 基于 TypeScript 构建，提供现代 RESTful API，支持多种编程语言 SDK 集成
 
 **适用场景**:
-- AI Agent 和 RAG 系统开发：为 LLM 应用提供高质量、结构化的网页知识源
-- 企业数据采集与分析：将目标网站内容转换为可分析的结构化数据，用于市场研究、竞争分析等
-- 内容聚合平台：快速构建垂直领域的知识库或内容聚合系统，自动采集和标准化网页内容
-
-
-
-### lobehub/lobehub
-
-**描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in TypeScript
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 73,176 |
-| 语言 | TypeScript |
-| Forks | 14,732 |
-| Issues | 669 |
-| Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
-| 许可证 | Other |
-
----
-
-LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它开创性地将多智能体协作（multi-agent collaboration）和团队化设计（agent team design）作为核心能力，填补了 AI Agent 领域缺少系统性协作框架的空白。项目完美整合了 ChatGPT、Claude、Gemini、DeepSeek 等主流大模型，支持 MCP 协议和知识库功能，为企业构建智能工作流和开发者实现 AI Agent 应用提供了开箱即用的完整解决方案。
-
-**技术亮点**:
-- 【TypeScript 全栈架构】基于 TypeScript 开发的现代化技术栈，提供类型安全和优秀的开发体验，便于企业级应用扩展与维护
-- 【多智能体协作系统】支持 Multi-Agent 协作模式，可实现智能体之间的任务分配、信息共享和协同工作，大幅提升复杂问题解决能力
-- 【统一模型接入】同时支持 ChatGPT、Claude、Gemini、DeepSeek 等多家大模型，灵活切换避免供应商锁定
-- 【MCP 协议集成】原生支持 MCP（Model Context Protocol）标准，可轻松扩展插件生态和工具集成能力
-- 【智能体团队设计】提供可视化的 Agent Team 设计能力，将智能体作为工作交互的基本单元，支持零门槛构建智能工作流
-
-**适用场景**:
-- 【企业智能工作流搭建】企业可基于 LobeHub 快速构建客服、销售、研发等跨部门的 AI Agent 团队，实现业务流程自动化和智能化
-- 【个人知识管理与助手】个人用户可集成知识库，打造专属的 AI 研究助手、学习伙伴或生活管家，支持文档处理、信息检索和创意生成
-- 【开发者 Agent 应用开发】开发者可利用框架的扩展能力快速定制特定领域的 AI Agent 应用，如代码审查、数据分析、内容创作等场景
+- 企业 RAG 知识库构建：将公司官网、文档站、帮助中心批量转换为向量数据库可索引的结构化内容
+- AI Agent 数据源：为 LLM Agent 提供实时的网页搜索和信息提取能力，支持自动化决策和响应
+- 竞品分析与市场情报：自动化抓取和分析目标网站的产品信息、价格、评论等结构化数据
 
 
 
@@ -258,28 +180,28 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,446 |
+| Stars | 62,808 |
 | 语言 | JavaScript |
-| Forks | 7,738 |
+| Forks | 7,769 |
 | Issues | 23 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个专为 AI 代码助手打造的性能优化与能力增强系统，通过集成技能管理、记忆机制和安全防护，将 Claude Code 等工具从简单的代码生成器升级为具备自主学习和适应能力的智能开发伙伴。项目拥有超高人气（62K+ stars）和活跃的社区支持，是提升 AI 辅助编程效率的必备工具箱。
+这是一个针对 AI 编程助手（如 Claude Code、Cursor 等）的性能优化系统，集成了技能、直觉、记忆、安全和研究优先开发等核心能力，帮助开发者充分发挥 AI Agent 的潜力。超过 6 万 Star 的热度证明了它在 AI 辅助开发领域的实用价值和社区认可度。
 
 **技术亮点**:
-- 多工具兼容性：支持 Claude Code、Codex、Opencode、Cursor 等主流 AI 编程工具的统一优化框架
-- 智能记忆系统：持久化存储上下文和学习数据，让 AI 能够记住项目历史和开发偏好
-- 安全增强机制：内置企业级安全防护，确保 AI 代码生成符合安全规范和最佳实践
-- 研究优先开发：采用实验性方法持续优化，紧跟 LLM 和 AI Agent 最新技术进展
-- MCP 集成：原生支持 Model Context Protocol，实现与 AI 模型的深度协同
+- 多平台 AI Agent 统一优化框架，支持 Claude Code、Codex、Opencode、Cursor 等多种 AI 编程工具
+- 五大核心模块：Skills（技能）、Instincts（直觉）、Memory（记忆）、Security（安全）、Research-first（研究优先）
+- MCP (Model Context Protocol) 协议支持，增强 AI Agent 的上下文理解和工具调用能力
+- Agent Harness 架构设计，提供可扩展的性能优化管道
+- MIT 开源许可，便于二次开发和商业集成
 
 **适用场景**:
-- 企业级 AI 开发团队：统一团队的 AI 编程助手配置，确保代码安全性和开发规范的统一执行
-- 个人开发者效率提升：通过持久化记忆和技能定制，打造个性化的 AI 编程助手，大幅减少重复性工作
-- AI Agent 研究与实验：为研究者和早期采用者提供测试平台，探索 AI Agent 在软件开发中的前沿应用
+- 企业研发团队提升 AI 辅助编程效率，统一管理和优化多个 AI 编程助手的使用体验
+- 个人开发者优化 Claude Code、Cursor 等工具的编程能力和响应质量
+- AI 应用开发者研究和构建高性能 AI Agent 系统，学习最佳实践和架构设计
 
 
 
@@ -297,28 +219,145 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,324 |
+| Stars | 43,341 |
 | 语言 | Go |
-| Forks | 3,641 |
-| Issues | 143 |
+| Forks | 3,642 |
+| Issues | 144 |
 | Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
 ---
 
-LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件上本地运行多种AI模型（无需GPU），为开发者和企业提供成本效益极高的AI解决方案。项目采用 Go 语言实现高性能推理服务，具备去中心化推理能力，已获得超过 4.3 万颗星，是构建私有化 AI 应用的理想选择。
+LocalAI 是最成熟的本地化 AI 解决方案之一，提供与 OpenAI API 完全兼容的接口，让开发者在无需 GPU 的消费级硬件上即可运行大语言模型、图像生成、语音合成等多种 AI 能力，完美解决数据隐私和 API 成本问题。
 
 **技术亮点**:
-- 无需 GPU 即可在消费级硬件上运行，大幅降低 AI 部署成本
-- 支持多种模型格式（gguf、transformers、diffusers）和主流模型（Llama、Mistral、Stable Diffusion 等）
-- 提供与 OpenAI 兼容的 API 接口，实现零成本迁移
-- 具备分布式、P2P 和去中心化推理能力，可横向扩展
-- 集成 MCP（Model Context Protocol）协议，支持多模态生成（文本、音频、视频、图像、语音克隆）
+- OpenAI API 兼容：Drop-in 替代方案，无需修改代码即可从 OpenAI 迁移到本地部署
+- 多模型格式支持：统一支持 gguf、transformers、diffusers 等主流模型格式
+- 零 GPU 依赖：专为消费级 CPU 硬件优化，降低部署门槛
+- 多模态能力：集成文本生成、图像生成、语音合成(TTS)、视频生成、声音克隆等全栈 AI 功能
+- 分布式与 P2P 架构：基于 libp2p 实现去中心化推理，支持 MCP 协议进行模型协作
 
 **适用场景**:
-- 企业内部私有化 AI 部署：在本地服务器部署 AI 服务，保障数据隐私和安全，避免敏感数据外泄至第三方 API
-- 个人开发者本地开发环境：在个人电脑上构建和测试 AI 应用，无需承担 API 调用费用，支持离线开发
-- 边缘计算和嵌入式场景：在资源受限设备上部署 AI 能力，利用无 GPU 优势实现本地化推理
+- 企业私有化部署：对数据安全要求高的金融、医疗等行业，可在内网环境完全自主控制 AI 服务
+- 个人开发者与初创公司：避免高昂的 API 调用费用，在本地或低成本服务器上构建 AI 应用
+- 边缘计算与离线场景：物联网设备、移动应用等需要在无网络环境下运行 AI 推理的场景
+
+
+
+### lobehub/lobehub
+
+**描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 73,196 |
+| 语言 | TypeScript |
+| Forks | 14,735 |
+| Issues | 671 |
+| Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
+| 许可证 | Other |
+
+---
+
+LobeHub 是一个拥有 73k+ stars 的成熟 AI Agent 平台，它不仅支持多智能体协作，还通过 MCP 协议实现了与主流大模型（GPT、Claude、Gemini、DeepSeek）的无缝集成，是构建企业级 AI 工作流的理想选择。
+
+**技术亮点**:
+- 多智能体协作架构：支持多个 AI Agent 协同工作，实现复杂任务的分解与并行处理
+- 全栈 TypeScript 技术栈：前后端统一语言，便于开发者快速上手和二次开发
+- MCP 协议支持：通过 Model Context Protocol 实现模型间的标准化通信和知识库集成
+- 多模型兼容：同时支持 OpenAI、Claude、Gemini、DeepSeek 等主流大模型
+- 知识库管理：内置知识库功能，支持文档索引、检索和 RAG 能力
+
+**适用场景**:
+- 企业智能客服：构建多 Agent 协作的客服系统，不同 Agent 分别处理不同类型问题
+- 个人 AI 助手：整合多种 AI 能力，打造个性化的工作生活助手
+- AI 应用开发平台：作为基础设施快速构建和部署各类 AI 驱动的应用
+
+
+
+### dair-ai/Prompt-Engineering-Guide
+
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,203 |
+| 语言 | MDX |
+| Forks | 7,586 |
+| Issues | 248 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
+
+---
+
+这是一个拥有7.1万+ Stars的提示工程领域权威指南，系统性整合了Prompt Engineering、RAG、AI Agents等前沿技术的完整知识体系，是开发者快速掌握大语言模型应用开发的必备资源库。
+
+**技术亮点**:
+- 全面覆盖提示工程、上下文工程、RAG检索增强生成和AI Agents四大核心技术领域
+- 提供可交互的MDX Notebook实践教程，理论结合代码实战
+- 整合最新学术论文、最佳实践和行业案例，保持内容前沿性
+- 涵盖从基础Prompt设计到复杂Agent系统构建的完整技术栈
+- MIT开源许可，支持社区协作和持续更新迭代
+
+**适用场景**:
+- 企业AI团队构建LLM应用时，作为提示工程和RAG架构设计的最佳实践参考
+- 个人开发者学习大模型应用开发，从Prompt设计到Agent系统构建的系统教程
+- AI产品经理和研究人员快速了解提示工程领域最新进展和技术方案
+
+
+
+### hiyouga/LlamaFactory
+
+**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 67,978 |
+| 语言 | Python |
+| Forks | 8,291 |
+| Issues | 919 |
+| Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
+| 许可证 | Apache License 2.0 |
+
+---
+
+LlamaFactory 是一个统一的 LLM/VLM 微调框架，支持 100+ 模型的高效训练，已被 ACL 2024 收录，凭借其易用性和广泛的模型支持成为大模型微调领域最受欢迎的开源工具之一。
+
+**技术亮点**:
+- 统一框架支持 100+ 大语言模型和视觉语言模型的微调，覆盖 LLaMA、Qwen、DeepSeek、Gemma 等主流模型
+- 集成多种高效微调技术：LoRA、QLoRA、全量微调，支持量化训练降低显存需求
+- 完整的训练管线支持：指令微调、预训练、RLHF/DPO 对齐训练
+- 灵活的分布式训练支持，兼容 DeepSpeed、FSDP 等加速框架
+- WebUI 可视化界面，无需代码即可完成模型微调
+
+**适用场景**:
+- 企业快速定制专属大模型：基于开源基座模型进行领域适配和私有化部署
+- 学术研究与大模型实验：快速验证微调策略、对比不同模型效果
+- 个人开发者学习与实践：零门槛体验大模型微调全流程
 
 
 
@@ -336,7 +375,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,344 |
+| Stars | 45,347 |
 | 语言 | Java |
 | Forks | 15,829 |
 | Issues | 49 |
@@ -345,42 +384,20 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ---
 
-JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，通过集成LLM、RAG、LangChain4j等前沿AI技术，为企业提供从传统业务系统快速开发到AI应用构建的完整解决方案，代码生成器可一键生成前后端代码，显著提升开发效率。
+JeecgBoot是一个融合AI能力的企业级低代码开发平台，采用"低代码+零代码"双模驱动架构，独特之处在于将传统低代码开发与现代AI能力深度整合，支持AI聊天助手、知识库RAG、AI流程编排等前沿特性，同时提供强大的代码生成器实现前后端一键生成，既能快速交付又不失灵活性，是国内领先的AI低代码解决方案。
 
 **技术亮点**:
-- AI驱动的低代码平台：集成LLM、RAG、LangChain4j、DeepSeek等技术，支持AI应用构建、知识库管理、AI流程编排和聊天式业务操作
-- 强大代码生成器：前后端代码一键生成，支持SpringBoot3、MyBatis-Plus、Vue3、Ant Design Vue等主流技术栈，无需手写代码
-- 智能工作流引擎：集成Flowable/Activiti流程引擎，支持业务流程可视化配置和AI流程编排
-- 现代化技术架构：基于SpringBoot3、SpringCloud微服务架构，采用Vue3前端框架，支持MCP协议和插件扩展
-- 双模驱动开发：提供低代码和零代码两种开发模式，满足不同技术背景用户需求，灵活性与效率兼备
+- 基于SpringBoot3 + Vue3 + Ant Design Vue的现代化全栈架构，支持微服务SpringCloud
+- 深度集成AI技术栈：Langchain4j、Spring AI、DeepSeek等，支持RAG知识库和LLM应用
+- 强大的代码生成器：实现前后端代码一键生成，支持MyBatis-Plus、Flowable/Activiti工作流
+- 创新的AI能力集成：支持AI流程编排(AI Flow)、MCP协议、Agent智能体和聊天式业务操作
+- 完整的企业级特性：支持工作流引擎、零代码平台、插件生态，提供开箱即用的AI应用平台
 
 **适用场景**:
-- 企业数字化转型：中大型企业快速构建OA、ERP、CRM等管理系统，通过AI能力增强业务流程智能化
-- AI应用快速开发：企业开发者或独立开发者构建AI助手、知识库问答、智能客服、RAG检索等AI应用场景
-- 政务及SaaS平台：政府部门或SaaS服务商需要快速搭建行业解决方案，结合AI能力提供智能化服务
+- 企业数字化转型场景：快速构建ERP、CRM、OA等企业业务系统，显著降低开发成本和交付周期
+- AI应用开发场景：基于内置的AI能力快速搭建企业级AI应用、智能客服、知识库问答系统
+- 中小企业快速开发：无需专业前端团队即可通过代码生成器和可视化工具快速交付业务系统
 
-
-
-### mindsdb/mindsdb
-
-**描述**: Query Engine for AI Analytics: Build self-reasoning agents across all your live data
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 38,644 |
-| 语言 | Python |
-| Forks | 6,119 |
-| Issues | 195 |
-| Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
-| 许可证 | Other |
 
 
 ### zhayujie/chatgpt-on-wechat
@@ -397,9 +414,9 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 41,938 |
+| Stars | 41,945 |
 | 语言 | Python |
-| Forks | 9,790 |
+| Forks | 9,796 |
 | Issues | 351 |
 | Topics | ai, ai-agent, chatgpt, claude, deepseek, dingtalk, feishu-bot, gemini, kimi, linkai, llm, mcp, multi-agent, openai, openclaw, python3, qwen, skills, wechat |
 | 许可证 | MIT License |
@@ -419,10 +436,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 34,388 |
+| Stars | 34,404 |
 | 语言 | TypeScript |
-| Forks | 6,939 |
-| Issues | 430 |
+| Forks | 6,943 |
+| Issues | 435 |
 | Topics | ai, anthropic, artifacts, aws, azure, chatgpt, chatgpt-clone, claude, clone, deepseek, gemini, google, gpt-5, librechat, mcp, o1, openai, responses-api, vision, webui |
 | 许可证 | MIT License |
 
@@ -441,10 +458,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,184 |
+| Stars | 33,200 |
 | 语言 | Python |
-| Forks | 2,046 |
-| Issues | 90 |
+| Forks | 2,047 |
+| Issues | 91 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -463,21 +480,21 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,121 |
+| Stars | 33,170 |
 | 语言 | TypeScript |
-| Forks | 2,258 |
-| Issues | 78 |
+| Forks | 2,264 |
+| Issues | 79 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
 | 许可证 | Other |
 
 
-### labring/FastGPT
+### mindsdb/mindsdb
 
-**描述**: FastGPT is a knowledge-based platform built on the LLMs, offers a comprehensive suite of out-of-the-box capabilities such as data processing, RAG retrieval, and visual AI workflow orchestration, letting you easily develop and deploy complex question-answering systems without the need for extensive setup or configuration.
+**描述**: Query Engine for AI Analytics: Build self-reasoning agents across all your live data
 
 **发现来源**: keyword
 
-**发现原因**: Keyword: Claude
+**发现原因**: Keyword: RAG
 
 **质量评分**: 100/100
 
@@ -485,105 +502,17 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 27,294 |
-| 语言 | TypeScript |
-| Forks | 6,948 |
-| Issues | 172 |
-| Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
-| 许可证 | Other |
-
-
-### yamadashy/repomix
-
-**描述**: 📦 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perfect for when you need to feed your codebase to Large Language Models (LLMs) or other AI tools like Claude, ChatGPT, DeepSeek, Perplexity, Gemini, Gemma, Llama, Grok, and more.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 22,260 |
-| 语言 | TypeScript |
-| Forks | 1,031 |
-| Issues | 147 |
-| Topics | ai, anthropic, artificial-intelligence, chatbot, chatgpt, claude, deepseek, developer-tools, gemini, genai, generative-ai, gpt, javascript, language-model, llama, llm, mcp, nodejs, openai, typescript |
-| 许可证 | MIT License |
-
-
-### oraios/serena
-
-**描述**: A powerful coding agent toolkit providing semantic retrieval and editing capabilities (MCP server & other integrations)
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 21,080 |
+| Stars | 38,645 |
 | 语言 | Python |
-| Forks | 1,424 |
-| Issues | 83 |
-| Topics | agent, ai, ai-coding, claude, claude-code, language-server, llms, mcp-server, programming, vibe-coding |
-| 许可证 | MIT License |
-
-
-### datawhalechina/happy-llm
-
-**描述**: 📚 从零开始的大语言模型原理与实践教程
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,918 |
-| 语言 | Jupyter Notebook |
-| Forks | 2,490 |
-| Issues | 48 |
-| Topics | agent, llm, rag |
+| Forks | 6,119 |
+| Issues | 192 |
+| Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
 | 许可证 | Other |
 
 
-### simstudioai/sim
+### patchy631/ai-engineering-hub
 
-**描述**: Build, deploy, and orchestrate AI agents. Sim is the central intelligence layer for your AI workforce.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,853 |
-| 语言 | TypeScript |
-| Forks | 3,390 |
-| Issues | 178 |
-| Topics | agent-workflow, agentic-workflow, agents, ai, aiagents, anthropic, artificial-intelligence, automation, chatbot, deepseek, gemini, low-code, nextjs, no-code, openai, rag, react, typescript |
-| 许可证 | Apache License 2.0 |
-
-
-### chroma-core/chroma
-
-**描述**: Open-source search and retrieval database for AI applications.
+**描述**: In-depth tutorials on LLMs, RAGs and real-world AI agent applications.
 
 **发现来源**: keyword
 
@@ -595,34 +524,34 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 26,488 |
-| 语言 | Rust |
-| Forks | 2,090 |
-| Issues | 506 |
-| Topics | agents, ai, ai-agents, database, document-retrieval, embeddings, llm, llms, rag, rust, rust-lang, vector-database |
-| 许可证 | Apache License 2.0 |
+| Stars | 31,315 |
+| 语言 | Jupyter Notebook |
+| Forks | 5,095 |
+| Issues | 124 |
+| Topics | agents, ai, llms, machine-learning, mcp, rag |
+| 许可证 | MIT License |
 
 
-### OpenHands/OpenHands
+### Shubhamsaboo/awesome-llm-apps
 
-**描述**: 🙌 OpenHands: AI-Driven Development
+**描述**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.
 
 **发现来源**: trending
 
 **发现原因**: [keyword, trending] Trending in Python
 
-**质量评分**: 98/100
+**质量评分**: 99/100
 
 **活跃度**: high
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 68,652 |
+| Stars | 100,009 |
 | 语言 | Python |
-| Forks | 8,570 |
-| Issues | 356 |
-| Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
-| 许可证 | Other |
+| Forks | 14,529 |
+| Issues | 5 |
+| Topics | agents, llms, python, rag |
+| 许可证 | Apache License 2.0 |
 
 
 ### Mintplex-Labs/anything-llm
@@ -639,12 +568,34 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,710 |
+| Stars | 55,759 |
 | 语言 | JavaScript |
-| Forks | 6,023 |
-| Issues | 299 |
+| Forks | 6,027 |
+| Issues | 302 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
+
+
+### OpenHands/OpenHands
+
+**描述**: 🙌 OpenHands: AI-Driven Development
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 98/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,672 |
+| 语言 | Python |
+| Forks | 8,573 |
+| Issues | 364 |
+| Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
+| 许可证 | Other |
 
 
 ### code-yeongyu/oh-my-opencode
@@ -661,10 +612,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 37,460 |
+| Stars | 37,569 |
 | 语言 | TypeScript |
-| Forks | 2,815 |
-| Issues | 340 |
+| Forks | 2,830 |
+| Issues | 346 |
 | Topics | ai, ai-agents, amp, anthropic, chatgpt, claude, claude-code, claude-skills, cursor, gemini, ide, openai, opencode, orchestration, tui, typescript |
 | 许可证 | Other |
 
@@ -683,10 +634,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 79,751 |
+| Stars | 79,778 |
 | 语言 | Python |
-| Forks | 9,424 |
-| Issues | 233 |
+| Forks | 9,426 |
+| Issues | 225 |
 | Topics | ai-agents, ai-tools, browser-automation, browser-use, llm, playwright, python |
 | 许可证 | MIT License |
 
@@ -705,78 +656,12 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,428 |
+| Stars | 50,443 |
 | 语言 | TypeScript |
-| Forks | 23,875 |
-| Issues | 796 |
+| Forks | 23,882 |
+| Issues | 797 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
-
-
-### upstash/context7
-
-**描述**: Context7 MCP Server -- Up-to-date code documentation for LLMs and AI code editors
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: LLM
-
-**质量评分**: 96/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 47,901 |
-| 语言 | TypeScript |
-| Forks | 2,263 |
-| Issues | 176 |
-| Topics | llm, mcp, mcp-server, vibe-coding |
-| 许可证 | MIT License |
-
-
-### BloopAI/vibe-kanban
-
-**描述**: Get 10X more out of Claude Code, Codex or any coding agent
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 96/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 22,505 |
-| 语言 | Rust |
-| Forks | 2,190 |
-| Issues | 405 |
-| Topics | agent, ai-agents, kanban, management, task-manager |
-| 许可证 | Apache License 2.0 |
-
-
-### sickn33/antigravity-awesome-skills
-
-**描述**: The Ultimate Collection of 1000+ Agentic Skills for Claude Code/Antigravity/Cursor. Battle-tested, high-performance skills for AI agents including official skills from Anthropic and Vercel.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 94/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 20,755 |
-| 语言 | Python |
-| Forks | 3,614 |
-| Issues | 4 |
-| Topics | agentic-skills, ai-agents, antigravity, autonomous-coding, claude-code, mcp, react-patterns, security-auditing |
-| 许可证 | MIT License |
 
 
 ### n8n-io/n8n
@@ -793,10 +678,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 177,840 |
+| Stars | 177,898 |
 | 语言 | TypeScript |
-| Forks | 55,477 |
-| Issues | 1,411 |
+| Forks | 55,499 |
+| Issues | 1,407 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
@@ -815,10 +700,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 145,308 |
+| Stars | 145,320 |
 | 语言 | Python |
-| Forks | 8,522 |
-| Issues | 892 |
+| Forks | 8,526 |
+| Issues | 887 |
 | Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
 | 许可证 | MIT License |
 
@@ -837,15 +722,80 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 53,173 |
+| Stars | 53,201 |
 | 语言 | Jupyter Notebook |
-| Forks | 18,464 |
-| Issues | 1 |
+| Forks | 18,471 |
+| Issues | 2 |
 | Topics | agentic-ai, agentic-framework, agentic-rag, ai-agents, ai-agents-framework, autogen, generative-ai, semantic-kernel |
 | 许可证 | MIT License |
 
 
-## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
+### ItzCrazyKns/Perplexica
+
+**描述**: Perplexica is an AI-powered answering engine.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 90/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 31,601 |
+| 语言 | TypeScript |
+| Forks | 3,368 |
+| Issues | 252 |
+| Topics | ai-agents, ai-search-engine, answering-engine, artificial-intelligence, llm, machine-learning, open-source-ai-search-engine, perplexica, rag, search-engine, searxng, searxng-copilot, self-hosted-ai |
+| 许可证 | MIT License |
+
+
+### wshobson/agents
+
+**描述**: Intelligent automation and multi-agent orchestration for Claude Code
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 86/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 30,413 |
+| 语言 | Python |
+| Forks | 3,326 |
+| Issues | 8 |
+| Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
+| 许可证 | MIT License |
+
+
+### ComposioHQ/awesome-claude-skills
+
+**描述**: A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 81/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 41,399 |
+| 语言 | Python |
+| Forks | 4,119 |
+| Issues | 255 |
+| Topics | agent-skills, ai-agents, antigravity, automation, claude, claude-code, codex, composio, cursor, gemini-cli, mcp, rube, saas, skill, workflow-automation |
+
+
+## 🔍 RAG/检索 (17 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -865,28 +815,28 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 125,952 |
+| Stars | 125,989 |
 | 语言 | Python |
-| Forks | 17,821 |
-| Issues | 326 |
+| Forks | 17,826 |
+| Issues | 338 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支持多种LLM后端（Ollama、OpenAI API等）。作为目前最受欢迎的开源LLM Web UI之一（超过12.5万星标），它提供了类似ChatGPT的现代化界面，支持RAG、模型切换、代码高亮等企业级功能，是构建私有化AI对话平台的理想选择。
+这是一个功能强大且高度成熟的 AI 界面项目，拥有超过 12 万 stars，支持多种主流 LLM 后端（Ollama、OpenAI 等），提供了开箱即用的自托管解决方案，特别适合希望快速部署私有 AI 对话平台的团队和个人开发者。
 
 **技术亮点**:
-- 🤖 多后端支持：集成Ollama、OpenAI API等多种LLM服务，实现模型灵活切换
-- 🔍 RAG集成：内置检索增强生成能力，支持文档上传和知识库构建
-- 🎨 现代化Web界面：提供类似ChatGPT的流畅用户体验，支持代码语法高亮和Markdown渲染
-- 🔐 完全自托管：支持本地部署，数据完全可控，适合企业内网和隐私敏感场景
-- 🔌 MCP协议支持：集成Model Context Protocol，扩展AI交互能力
+- 支持多种 LLM 后端引擎（Ollama、OpenAI API 等），提供统一友好的 Web 界面
+- 集成 RAG（检索增强生成）能力，支持基于文档的智能问答
+- 支持 MCP（Model Context Protocol）协议，便于与外部工具和上下文集成
+- 完全自托管架构，数据隐私可控，适合企业和个人私有化部署
+- 基于 Python 开发，社区活跃，功能迭代快速
 
 **适用场景**:
-- 企业私有化部署：为公司内部搭建安全可控的AI助手平台，保护敏感数据不外泄
-- 个人开发者环境：在本地或私有服务器上运行，通过Ollama等工具使用开源模型（如Llama、Qwen）
-- AI应用快速原型：作为AI聊天应用的前端模板，快速集成自定义LLM功能
+- 企业内部 AI 助手部署：搭建私有的 ChatGPT 替代方案，保护敏感数据不外泄
+- 个人开发者学习与研究：本地运行开源 LLM，快速实验和测试不同模型
+- 构建知识库问答系统：利用 RAG 能力，基于企业文档构建智能问答服务
 
 
 
@@ -904,28 +854,28 @@ Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,273 |
+| Stars | 74,292 |
 | 语言 | Python |
-| Forks | 8,268 |
-| Issues | 3,048 |
+| Forks | 8,271 |
+| Issues | 3,051 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, context-engineering, context-retrieval, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow是一个领先的检索增强生成(RAG)开源引擎，创新性地融合了RAG技术与Agent能力，为大语言模型构建卓越的上下文层。拥有74K+ Stars和活跃社区，采用Apache 2.0许可，是构建企业级AI应用和智能搜索的理想选择。
+RAGFlow 是目前最热门的开源 RAG 引擎之一（74K+ Stars），其核心优势在于将前沿的 RAG 技术与 Agent 能力深度融合，为 LLM 提供高质量的上下文层。相比传统 RAG 方案，它集成了 GraphRAG、MCP 协议、深度文档解析等先进能力，是构建企业级 AI 应用的理想选择。
 
 **技术亮点**:
-- 融合RAG与Agent能力，提供强大的上下文工程和智能工作流
-- 支持文档解析与理解，结合GraphRAG实现深度研究
-- 兼容主流LLM生态，包括OpenAI、Ollama、DeepSeek等
-- 提供MCP协议支持，增强Agent互操作性
-- 企业级AI搜索引擎架构，专注高精度上下文检索
+- 深度融合 RAG + Agent 双引擎，支持 Agentic Workflow 自动化编排
+- 集成 GraphRAG 图检索增强技术，提升复杂知识推理能力
+- 强大的文档解析引擎，支持多格式文档深度理解与结构化提取
+- 支持 MCP 协议、Ollama、OpenAI、DeepSeek 等多种 LLM 后端，生态兼容性强
+- 内置 AI 搜索与 Context Engineering 能力，优化 LLM 上下文质量
 
 **适用场景**:
-- 企业知识库构建与智能问答系统：快速部署基于企业文档的AI助手，实现精准的文档理解和知识检索
-- Agent智能工作流开发：构建能够自主进行深度研究和多步骤推理的AI Agent应用
-- 私有化LLM应用部署：结合本地模型(Ollama)实现数据隐私可控的企业级AI解决方案
+- 企业知识库问答系统：快速构建基于私有文档的智能问答平台
+- AI Agent 开发：构建具备自主检索和推理能力的智能助手
+- 文档智能处理：金融、法律、医疗等领域的复杂文档分析与信息提取
 
 
 
@@ -933,9 +883,9 @@ RAGFlow是一个领先的检索增强生成(RAG)开源引擎，创新性地融�
 
 **描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: [keyword, trending] Trending in TypeScript
+**发现原因**: Keyword: AI agent
 
 **质量评分**: 100/100
 
@@ -943,28 +893,67 @@ RAGFlow是一个领先的检索增强生成(RAG)开源引擎，创新性地融�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 73,176 |
+| Stars | 73,196 |
 | 语言 | TypeScript |
-| Forks | 14,732 |
-| Issues | 669 |
+| Forks | 14,735 |
+| Issues | 671 |
 | Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
 | 许可证 | Other |
 
 ---
 
-LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它开创性地将多智能体协作（multi-agent collaboration）和团队化设计（agent team design）作为核心能力，填补了 AI Agent 领域缺少系统性协作框架的空白。项目完美整合了 ChatGPT、Claude、Gemini、DeepSeek 等主流大模型，支持 MCP 协议和知识库功能，为企业构建智能工作流和开发者实现 AI Agent 应用提供了开箱即用的完整解决方案。
+LobeHub 是一个拥有 73k+ stars 的成熟 AI Agent 平台，它不仅支持多智能体协作，还通过 MCP 协议实现了与主流大模型（GPT、Claude、Gemini、DeepSeek）的无缝集成，是构建企业级 AI 工作流的理想选择。
 
 **技术亮点**:
-- 【TypeScript 全栈架构】基于 TypeScript 开发的现代化技术栈，提供类型安全和优秀的开发体验，便于企业级应用扩展与维护
-- 【多智能体协作系统】支持 Multi-Agent 协作模式，可实现智能体之间的任务分配、信息共享和协同工作，大幅提升复杂问题解决能力
-- 【统一模型接入】同时支持 ChatGPT、Claude、Gemini、DeepSeek 等多家大模型，灵活切换避免供应商锁定
-- 【MCP 协议集成】原生支持 MCP（Model Context Protocol）标准，可轻松扩展插件生态和工具集成能力
-- 【智能体团队设计】提供可视化的 Agent Team 设计能力，将智能体作为工作交互的基本单元，支持零门槛构建智能工作流
+- 多智能体协作架构：支持多个 AI Agent 协同工作，实现复杂任务的分解与并行处理
+- 全栈 TypeScript 技术栈：前后端统一语言，便于开发者快速上手和二次开发
+- MCP 协议支持：通过 Model Context Protocol 实现模型间的标准化通信和知识库集成
+- 多模型兼容：同时支持 OpenAI、Claude、Gemini、DeepSeek 等主流大模型
+- 知识库管理：内置知识库功能，支持文档索引、检索和 RAG 能力
 
 **适用场景**:
-- 【企业智能工作流搭建】企业可基于 LobeHub 快速构建客服、销售、研发等跨部门的 AI Agent 团队，实现业务流程自动化和智能化
-- 【个人知识管理与助手】个人用户可集成知识库，打造专属的 AI 研究助手、学习伙伴或生活管家，支持文档处理、信息检索和创意生成
-- 【开发者 Agent 应用开发】开发者可利用框架的扩展能力快速定制特定领域的 AI Agent 应用，如代码审查、数据分析、内容创作等场景
+- 企业智能客服：构建多 Agent 协作的客服系统，不同 Agent 分别处理不同类型问题
+- 个人 AI 助手：整合多种 AI 能力，打造个性化的工作生活助手
+- AI 应用开发平台：作为基础设施快速构建和部署各类 AI 驱动的应用
+
+
+
+### dair-ai/Prompt-Engineering-Guide
+
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,203 |
+| 语言 | MDX |
+| Forks | 7,586 |
+| Issues | 248 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
+
+---
+
+这是一个拥有7.1万+ Stars的提示工程领域权威指南，系统性整合了Prompt Engineering、RAG、AI Agents等前沿技术的完整知识体系，是开发者快速掌握大语言模型应用开发的必备资源库。
+
+**技术亮点**:
+- 全面覆盖提示工程、上下文工程、RAG检索增强生成和AI Agents四大核心技术领域
+- 提供可交互的MDX Notebook实践教程，理论结合代码实战
+- 整合最新学术论文、最佳实践和行业案例，保持内容前沿性
+- 涵盖从基础Prompt设计到复杂Agent系统构建的完整技术栈
+- MIT开源许可，支持社区协作和持续更新迭代
+
+**适用场景**:
+- 企业AI团队构建LLM应用时，作为提示工程和RAG架构设计的最佳实践参考
+- 个人开发者学习大模型应用开发，从Prompt设计到Agent系统构建的系统教程
+- AI产品经理和研究人员快速了解提示工程领域最新进展和技术方案
 
 
 
@@ -982,7 +971,7 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,344 |
+| Stars | 45,347 |
 | 语言 | Java |
 | Forks | 15,829 |
 | Issues | 49 |
@@ -991,42 +980,20 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 ---
 
-JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，通过集成LLM、RAG、LangChain4j等前沿AI技术，为企业提供从传统业务系统快速开发到AI应用构建的完整解决方案，代码生成器可一键生成前后端代码，显著提升开发效率。
+JeecgBoot是一个融合AI能力的企业级低代码开发平台，采用"低代码+零代码"双模驱动架构，独特之处在于将传统低代码开发与现代AI能力深度整合，支持AI聊天助手、知识库RAG、AI流程编排等前沿特性，同时提供强大的代码生成器实现前后端一键生成，既能快速交付又不失灵活性，是国内领先的AI低代码解决方案。
 
 **技术亮点**:
-- AI驱动的低代码平台：集成LLM、RAG、LangChain4j、DeepSeek等技术，支持AI应用构建、知识库管理、AI流程编排和聊天式业务操作
-- 强大代码生成器：前后端代码一键生成，支持SpringBoot3、MyBatis-Plus、Vue3、Ant Design Vue等主流技术栈，无需手写代码
-- 智能工作流引擎：集成Flowable/Activiti流程引擎，支持业务流程可视化配置和AI流程编排
-- 现代化技术架构：基于SpringBoot3、SpringCloud微服务架构，采用Vue3前端框架，支持MCP协议和插件扩展
-- 双模驱动开发：提供低代码和零代码两种开发模式，满足不同技术背景用户需求，灵活性与效率兼备
+- 基于SpringBoot3 + Vue3 + Ant Design Vue的现代化全栈架构，支持微服务SpringCloud
+- 深度集成AI技术栈：Langchain4j、Spring AI、DeepSeek等，支持RAG知识库和LLM应用
+- 强大的代码生成器：实现前后端代码一键生成，支持MyBatis-Plus、Flowable/Activiti工作流
+- 创新的AI能力集成：支持AI流程编排(AI Flow)、MCP协议、Agent智能体和聊天式业务操作
+- 完整的企业级特性：支持工作流引擎、零代码平台、插件生态，提供开箱即用的AI应用平台
 
 **适用场景**:
-- 企业数字化转型：中大型企业快速构建OA、ERP、CRM等管理系统，通过AI能力增强业务流程智能化
-- AI应用快速开发：企业开发者或独立开发者构建AI助手、知识库问答、智能客服、RAG检索等AI应用场景
-- 政务及SaaS平台：政府部门或SaaS服务商需要快速搭建行业解决方案，结合AI能力提供智能化服务
+- 企业数字化转型场景：快速构建ERP、CRM、OA等企业业务系统，显著降低开发成本和交付周期
+- AI应用开发场景：基于内置的AI能力快速搭建企业级AI应用、智能客服、知识库问答系统
+- 中小企业快速开发：无需专业前端团队即可通过代码生成器和可视化工具快速交付业务系统
 
-
-
-### mindsdb/mindsdb
-
-**描述**: Query Engine for AI Analytics: Build self-reasoning agents across all your live data
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 38,644 |
-| 语言 | Python |
-| Forks | 6,119 |
-| Issues | 195 |
-| Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
-| 许可证 | Other |
 
 
 ### khoj-ai/khoj
@@ -1043,10 +1010,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,184 |
+| Stars | 33,200 |
 | 语言 | Python |
-| Forks | 2,046 |
-| Issues | 90 |
+| Forks | 2,047 |
+| Issues | 91 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -1065,39 +1032,17 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,121 |
+| Stars | 33,170 |
 | 语言 | TypeScript |
-| Forks | 2,258 |
-| Issues | 78 |
+| Forks | 2,264 |
+| Issues | 79 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
 | 许可证 | Other |
 
 
-### labring/FastGPT
+### mindsdb/mindsdb
 
-**描述**: FastGPT is a knowledge-based platform built on the LLMs, offers a comprehensive suite of out-of-the-box capabilities such as data processing, RAG retrieval, and visual AI workflow orchestration, letting you easily develop and deploy complex question-answering systems without the need for extensive setup or configuration.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 27,294 |
-| 语言 | TypeScript |
-| Forks | 6,948 |
-| Issues | 172 |
-| Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
-| 许可证 | Other |
-
-
-### datawhalechina/happy-llm
-
-**描述**: 📚 从零开始的大语言模型原理与实践教程
+**描述**: Query Engine for AI Analytics: Build self-reasoning agents across all your live data
 
 **发现来源**: keyword
 
@@ -1109,55 +1054,55 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 26,918 |
+| Stars | 38,645 |
+| 语言 | Python |
+| Forks | 6,119 |
+| Issues | 192 |
+| Topics | agents, ai, analytics, artificial-inteligence, bigquery, business-intelligence, databases, hacktoberfest, llms, mcp, mssql, mysql, postgresql, rag |
+| 许可证 | Other |
+
+
+### patchy631/ai-engineering-hub
+
+**描述**: In-depth tutorials on LLMs, RAGs and real-world AI agent applications.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 31,315 |
 | 语言 | Jupyter Notebook |
-| Forks | 2,490 |
-| Issues | 48 |
-| Topics | agent, llm, rag |
-| 许可证 | Other |
+| Forks | 5,095 |
+| Issues | 124 |
+| Topics | agents, ai, llms, machine-learning, mcp, rag |
+| 许可证 | MIT License |
 
 
-### simstudioai/sim
+### Shubhamsaboo/awesome-llm-apps
 
-**描述**: Build, deploy, and orchestrate AI agents. Sim is the central intelligence layer for your AI workforce.
+**描述**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.
 
-**发现来源**: keyword
+**发现来源**: trending
 
-**发现原因**: Keyword: RAG
+**发现原因**: [keyword, trending] Trending in Python
 
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,853 |
-| 语言 | TypeScript |
-| Forks | 3,390 |
-| Issues | 178 |
-| Topics | agent-workflow, agentic-workflow, agents, ai, aiagents, anthropic, artificial-intelligence, automation, chatbot, deepseek, gemini, low-code, nextjs, no-code, openai, rag, react, typescript |
-| 许可证 | Apache License 2.0 |
-
-
-### chroma-core/chroma
-
-**描述**: Open-source search and retrieval database for AI applications.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
+**质量评分**: 99/100
 
 **活跃度**: high
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 26,488 |
-| 语言 | Rust |
-| Forks | 2,090 |
-| Issues | 506 |
-| Topics | agents, ai, ai-agents, database, document-retrieval, embeddings, llm, llms, rag, rust, rust-lang, vector-database |
+| Stars | 100,009 |
+| 语言 | Python |
+| Forks | 14,529 |
+| Issues | 5 |
+| Topics | agents, llms, python, rag |
 | 许可证 | Apache License 2.0 |
 
 
@@ -1175,10 +1120,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,606 |
+| Stars | 98,624 |
 | 语言 | TypeScript |
-| Forks | 11,718 |
-| Issues | 967 |
+| Forks | 11,723 |
+| Issues | 954 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
@@ -1197,34 +1142,12 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,710 |
+| Stars | 55,759 |
 | 语言 | JavaScript |
-| Forks | 6,023 |
-| Issues | 299 |
+| Forks | 6,027 |
+| Issues | 302 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
-
-
-### PaddlePaddle/PaddleOCR
-
-**描述**: Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in Python
-
-**质量评分**: 96/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 71,676 |
-| 语言 | Python |
-| Forks | 9,902 |
-| Issues | 265 |
-| Topics | ai4science, chineseocr, document-parsing, document-translation, kie, ocr, paddleocr-vl, pdf-extractor-rag, pdf-parser, pdf2markdown, pp-ocr, pp-structure, rag |
-| 许可证 | Apache License 2.0 |
 
 
 ### FlowiseAI/Flowise
@@ -1241,12 +1164,34 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,428 |
+| Stars | 50,443 |
 | 语言 | TypeScript |
-| Forks | 23,875 |
-| Issues | 796 |
+| Forks | 23,882 |
+| Issues | 797 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
+
+
+### PaddlePaddle/PaddleOCR
+
+**描述**: Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 96/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,697 |
+| 语言 | Python |
+| Forks | 9,905 |
+| Issues | 265 |
+| Topics | ai4science, chineseocr, document-parsing, document-translation, kie, ocr, paddleocr-vl, pdf-extractor-rag, pdf-parser, pdf2markdown, pp-ocr, pp-structure, rag |
+| 许可证 | Apache License 2.0 |
 
 
 ### milvus-io/milvus
@@ -1263,10 +1208,10 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,164 |
+| Stars | 43,171 |
 | 语言 | Go |
-| Forks | 3,869 |
-| Issues | 1,049 |
+| Forks | 3,870 |
+| Issues | 1,053 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
@@ -1285,37 +1230,37 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 31,267 |
+| Stars | 31,271 |
 | 语言 | Python |
-| Forks | 3,299 |
+| Forks | 3,300 |
 | Issues | 70 |
 | Topics | gpt, gpt-4, gpt4, graphrag, llm, llms, rag |
 | 许可证 | MIT License |
 
 
-### HKUDS/LightRAG
+### ItzCrazyKns/Perplexica
 
-**描述**: [EMNLP2025] "LightRAG: Simple and Fast Retrieval-Augmented Generation"
+**描述**: Perplexica is an AI-powered answering engine.
 
 **发现来源**: keyword
 
 **发现原因**: Keyword: RAG
 
-**质量评分**: 95/100
+**质量评分**: 90/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 29,023 |
-| 语言 | Python |
-| Forks | 4,157 |
-| Issues | 189 |
-| Topics | genai, gpt, gpt-4, graphrag, knowledge-graph, large-language-models, llm, rag, retrieval-augmented-generation |
+| Stars | 31,601 |
+| 语言 | TypeScript |
+| Forks | 3,368 |
+| Issues | 252 |
+| Topics | ai-agents, ai-search-engine, answering-engine, artificial-intelligence, llm, machine-learning, open-source-ai-search-engine, perplexica, rag, search-engine, searxng, searxng-copilot, self-hosted-ai |
 | 许可证 | MIT License |
 
 
-## 💬 LLM 界面 (22 个项目) { #llm-界面 }
+## 💬 LLM 界面 (26 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -1335,28 +1280,28 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 125,952 |
+| Stars | 125,989 |
 | 语言 | Python |
-| Forks | 17,821 |
-| Issues | 326 |
+| Forks | 17,826 |
+| Issues | 338 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支持多种LLM后端（Ollama、OpenAI API等）。作为目前最受欢迎的开源LLM Web UI之一（超过12.5万星标），它提供了类似ChatGPT的现代化界面，支持RAG、模型切换、代码高亮等企业级功能，是构建私有化AI对话平台的理想选择。
+这是一个功能强大且高度成熟的 AI 界面项目，拥有超过 12 万 stars，支持多种主流 LLM 后端（Ollama、OpenAI 等），提供了开箱即用的自托管解决方案，特别适合希望快速部署私有 AI 对话平台的团队和个人开发者。
 
 **技术亮点**:
-- 🤖 多后端支持：集成Ollama、OpenAI API等多种LLM服务，实现模型灵活切换
-- 🔍 RAG集成：内置检索增强生成能力，支持文档上传和知识库构建
-- 🎨 现代化Web界面：提供类似ChatGPT的流畅用户体验，支持代码语法高亮和Markdown渲染
-- 🔐 完全自托管：支持本地部署，数据完全可控，适合企业内网和隐私敏感场景
-- 🔌 MCP协议支持：集成Model Context Protocol，扩展AI交互能力
+- 支持多种 LLM 后端引擎（Ollama、OpenAI API 等），提供统一友好的 Web 界面
+- 集成 RAG（检索增强生成）能力，支持基于文档的智能问答
+- 支持 MCP（Model Context Protocol）协议，便于与外部工具和上下文集成
+- 完全自托管架构，数据隐私可控，适合企业和个人私有化部署
+- 基于 Python 开发，社区活跃，功能迭代快速
 
 **适用场景**:
-- 企业私有化部署：为公司内部搭建安全可控的AI助手平台，保护敏感数据不外泄
-- 个人开发者环境：在本地或私有服务器上运行，通过Ollama等工具使用开源模型（如Llama、Qwen）
-- AI应用快速原型：作为AI聊天应用的前端模板，快速集成自定义LLM功能
+- 企业内部 AI 助手部署：搭建私有的 ChatGPT 替代方案，保护敏感数据不外泄
+- 个人开发者学习与研究：本地运行开源 LLM，快速实验和测试不同模型
+- 构建知识库问答系统：利用 RAG 能力，基于企业文档构建智能问答服务
 
 
 
@@ -1374,67 +1319,28 @@ Open WebUI是一个功能强大且用户友好的自托管AI聊天界面，支�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,273 |
+| Stars | 74,292 |
 | 语言 | Python |
-| Forks | 8,268 |
-| Issues | 3,048 |
+| Forks | 8,271 |
+| Issues | 3,051 |
 | Topics | agent, agentic, agentic-ai, agentic-workflow, ai, ai-search, context-engineering, context-retrieval, deep-research, deepseek, deepseek-r1, document-parser, document-understanding, graphrag, llm, mcp, ollama, openai, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-RAGFlow是一个领先的检索增强生成(RAG)开源引擎，创新性地融合了RAG技术与Agent能力，为大语言模型构建卓越的上下文层。拥有74K+ Stars和活跃社区，采用Apache 2.0许可，是构建企业级AI应用和智能搜索的理想选择。
+RAGFlow 是目前最热门的开源 RAG 引擎之一（74K+ Stars），其核心优势在于将前沿的 RAG 技术与 Agent 能力深度融合，为 LLM 提供高质量的上下文层。相比传统 RAG 方案，它集成了 GraphRAG、MCP 协议、深度文档解析等先进能力，是构建企业级 AI 应用的理想选择。
 
 **技术亮点**:
-- 融合RAG与Agent能力，提供强大的上下文工程和智能工作流
-- 支持文档解析与理解，结合GraphRAG实现深度研究
-- 兼容主流LLM生态，包括OpenAI、Ollama、DeepSeek等
-- 提供MCP协议支持，增强Agent互操作性
-- 企业级AI搜索引擎架构，专注高精度上下文检索
+- 深度融合 RAG + Agent 双引擎，支持 Agentic Workflow 自动化编排
+- 集成 GraphRAG 图检索增强技术，提升复杂知识推理能力
+- 强大的文档解析引擎，支持多格式文档深度理解与结构化提取
+- 支持 MCP 协议、Ollama、OpenAI、DeepSeek 等多种 LLM 后端，生态兼容性强
+- 内置 AI 搜索与 Context Engineering 能力，优化 LLM 上下文质量
 
 **适用场景**:
-- 企业知识库构建与智能问答系统：快速部署基于企业文档的AI助手，实现精准的文档理解和知识检索
-- Agent智能工作流开发：构建能够自主进行深度研究和多步骤推理的AI Agent应用
-- 私有化LLM应用部署：结合本地模型(Ollama)实现数据隐私可控的企业级AI解决方案
-
-
-
-### lobehub/lobehub
-
-**描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in TypeScript
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 73,176 |
-| 语言 | TypeScript |
-| Forks | 14,732 |
-| Issues | 669 |
-| Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
-| 许可证 | Other |
-
----
-
-LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它开创性地将多智能体协作（multi-agent collaboration）和团队化设计（agent team design）作为核心能力，填补了 AI Agent 领域缺少系统性协作框架的空白。项目完美整合了 ChatGPT、Claude、Gemini、DeepSeek 等主流大模型，支持 MCP 协议和知识库功能，为企业构建智能工作流和开发者实现 AI Agent 应用提供了开箱即用的完整解决方案。
-
-**技术亮点**:
-- 【TypeScript 全栈架构】基于 TypeScript 开发的现代化技术栈，提供类型安全和优秀的开发体验，便于企业级应用扩展与维护
-- 【多智能体协作系统】支持 Multi-Agent 协作模式，可实现智能体之间的任务分配、信息共享和协同工作，大幅提升复杂问题解决能力
-- 【统一模型接入】同时支持 ChatGPT、Claude、Gemini、DeepSeek 等多家大模型，灵活切换避免供应商锁定
-- 【MCP 协议集成】原生支持 MCP（Model Context Protocol）标准，可轻松扩展插件生态和工具集成能力
-- 【智能体团队设计】提供可视化的 Agent Team 设计能力，将智能体作为工作交互的基本单元，支持零门槛构建智能工作流
-
-**适用场景**:
-- 【企业智能工作流搭建】企业可基于 LobeHub 快速构建客服、销售、研发等跨部门的 AI Agent 团队，实现业务流程自动化和智能化
-- 【个人知识管理与助手】个人用户可集成知识库，打造专属的 AI 研究助手、学习伙伴或生活管家，支持文档处理、信息检索和创意生成
-- 【开发者 Agent 应用开发】开发者可利用框架的扩展能力快速定制特定领域的 AI Agent 应用，如代码审查、数据分析、内容创作等场景
+- 企业知识库问答系统：快速构建基于私有文档的智能问答平台
+- AI Agent 开发：构建具备自主检索和推理能力的智能助手
+- 文档智能处理：金融、法律、医疗等领域的复杂文档分析与信息提取
 
 
 
@@ -1452,28 +1358,106 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,446 |
+| Stars | 62,808 |
 | 语言 | JavaScript |
-| Forks | 7,738 |
+| Forks | 7,769 |
 | Issues | 23 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个专为 AI 代码助手打造的性能优化与能力增强系统，通过集成技能管理、记忆机制和安全防护，将 Claude Code 等工具从简单的代码生成器升级为具备自主学习和适应能力的智能开发伙伴。项目拥有超高人气（62K+ stars）和活跃的社区支持，是提升 AI 辅助编程效率的必备工具箱。
+这是一个针对 AI 编程助手（如 Claude Code、Cursor 等）的性能优化系统，集成了技能、直觉、记忆、安全和研究优先开发等核心能力，帮助开发者充分发挥 AI Agent 的潜力。超过 6 万 Star 的热度证明了它在 AI 辅助开发领域的实用价值和社区认可度。
 
 **技术亮点**:
-- 多工具兼容性：支持 Claude Code、Codex、Opencode、Cursor 等主流 AI 编程工具的统一优化框架
-- 智能记忆系统：持久化存储上下文和学习数据，让 AI 能够记住项目历史和开发偏好
-- 安全增强机制：内置企业级安全防护，确保 AI 代码生成符合安全规范和最佳实践
-- 研究优先开发：采用实验性方法持续优化，紧跟 LLM 和 AI Agent 最新技术进展
-- MCP 集成：原生支持 Model Context Protocol，实现与 AI 模型的深度协同
+- 多平台 AI Agent 统一优化框架，支持 Claude Code、Codex、Opencode、Cursor 等多种 AI 编程工具
+- 五大核心模块：Skills（技能）、Instincts（直觉）、Memory（记忆）、Security（安全）、Research-first（研究优先）
+- MCP (Model Context Protocol) 协议支持，增强 AI Agent 的上下文理解和工具调用能力
+- Agent Harness 架构设计，提供可扩展的性能优化管道
+- MIT 开源许可，便于二次开发和商业集成
 
 **适用场景**:
-- 企业级 AI 开发团队：统一团队的 AI 编程助手配置，确保代码安全性和开发规范的统一执行
-- 个人开发者效率提升：通过持久化记忆和技能定制，打造个性化的 AI 编程助手，大幅减少重复性工作
-- AI Agent 研究与实验：为研究者和早期采用者提供测试平台，探索 AI Agent 在软件开发中的前沿应用
+- 企业研发团队提升 AI 辅助编程效率，统一管理和优化多个 AI 编程助手的使用体验
+- 个人开发者优化 Claude Code、Cursor 等工具的编程能力和响应质量
+- AI 应用开发者研究和构建高性能 AI Agent 系统，学习最佳实践和架构设计
+
+
+
+### lobehub/lobehub
+
+**描述**: The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 73,196 |
+| 语言 | TypeScript |
+| Forks | 14,735 |
+| Issues | 671 |
+| Topics | agent, agent-collaboration, agent-harness, ai, chatgpt, claude, deepseek, gemini, gpt, knowledge-base, mcp, openai |
+| 许可证 | Other |
+
+---
+
+LobeHub 是一个拥有 73k+ stars 的成熟 AI Agent 平台，它不仅支持多智能体协作，还通过 MCP 协议实现了与主流大模型（GPT、Claude、Gemini、DeepSeek）的无缝集成，是构建企业级 AI 工作流的理想选择。
+
+**技术亮点**:
+- 多智能体协作架构：支持多个 AI Agent 协同工作，实现复杂任务的分解与并行处理
+- 全栈 TypeScript 技术栈：前后端统一语言，便于开发者快速上手和二次开发
+- MCP 协议支持：通过 Model Context Protocol 实现模型间的标准化通信和知识库集成
+- 多模型兼容：同时支持 OpenAI、Claude、Gemini、DeepSeek 等主流大模型
+- 知识库管理：内置知识库功能，支持文档索引、检索和 RAG 能力
+
+**适用场景**:
+- 企业智能客服：构建多 Agent 协作的客服系统，不同 Agent 分别处理不同类型问题
+- 个人 AI 助手：整合多种 AI 能力，打造个性化的工作生活助手
+- AI 应用开发平台：作为基础设施快速构建和部署各类 AI 驱动的应用
+
+
+
+### dair-ai/Prompt-Engineering-Guide
+
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 71,203 |
+| 语言 | MDX |
+| Forks | 7,586 |
+| Issues | 248 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
+
+---
+
+这是一个拥有7.1万+ Stars的提示工程领域权威指南，系统性整合了Prompt Engineering、RAG、AI Agents等前沿技术的完整知识体系，是开发者快速掌握大语言模型应用开发的必备资源库。
+
+**技术亮点**:
+- 全面覆盖提示工程、上下文工程、RAG检索增强生成和AI Agents四大核心技术领域
+- 提供可交互的MDX Notebook实践教程，理论结合代码实战
+- 整合最新学术论文、最佳实践和行业案例，保持内容前沿性
+- 涵盖从基础Prompt设计到复杂Agent系统构建的完整技术栈
+- MIT开源许可，支持社区协作和持续更新迭代
+
+**适用场景**:
+- 企业AI团队构建LLM应用时，作为提示工程和RAG架构设计的最佳实践参考
+- 个人开发者学习大模型应用开发，从Prompt设计到Agent系统构建的系统教程
+- AI产品经理和研究人员快速了解提示工程领域最新进展和技术方案
 
 
 
@@ -1491,12 +1475,34 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,307 |
+| Stars | 150,357 |
 | 语言 | HTML |
-| Forks | 19,744 |
+| Forks | 19,749 |
 | Issues | 12 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Creative Commons Zero v1.0 Universal |
+
+
+### rasbt/LLMs-from-scratch
+
+**描述**: Implement a ChatGPT-like LLM in PyTorch from scratch, step by step
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 87,295 |
+| 语言 | Jupyter Notebook |
+| Forks | 13,270 |
+| Issues | 0 |
+| Topics | ai, artificial-intelligence, chatbot, chatgpt, deep-learning, from-scratch, generative-ai, gpt, language-model, large-language-models, llm, machine-learning, neural-networks, python, pytorch, transformers |
+| 许可证 | Other |
 
 
 ### zhayujie/chatgpt-on-wechat
@@ -1513,9 +1519,9 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 41,938 |
+| Stars | 41,945 |
 | 语言 | Python |
-| Forks | 9,790 |
+| Forks | 9,796 |
 | Issues | 351 |
 | Topics | ai, ai-agent, chatgpt, claude, deepseek, dingtalk, feishu-bot, gemini, kimi, linkai, llm, mcp, multi-agent, openai, openclaw, python3, qwen, skills, wechat |
 | 许可证 | MIT License |
@@ -1535,10 +1541,10 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 34,388 |
+| Stars | 34,404 |
 | 语言 | TypeScript |
-| Forks | 6,939 |
-| Issues | 430 |
+| Forks | 6,943 |
+| Issues | 435 |
 | Topics | ai, anthropic, artifacts, aws, azure, chatgpt, chatgpt-clone, claude, clone, deepseek, gemini, google, gpt-5, librechat, mcp, o1, openai, responses-api, vision, webui |
 | 许可证 | MIT License |
 
@@ -1557,10 +1563,10 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,184 |
+| Stars | 33,200 |
 | 语言 | Python |
-| Forks | 2,046 |
-| Issues | 90 |
+| Forks | 2,047 |
+| Issues | 91 |
 | Topics | agent, ai, assistant, chat, chatgpt, emacs, image-generation, llama3, llamacpp, llm, obsidian, obsidian-md, offline-llm, productivity, rag, research, self-hosted, semantic-search, stt, whatsapp-ai |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -1579,143 +1585,11 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 33,121 |
+| Stars | 33,170 |
 | 语言 | TypeScript |
-| Forks | 2,258 |
-| Issues | 78 |
+| Forks | 2,264 |
+| Issues | 79 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
-| 许可证 | Other |
-
-
-### labring/FastGPT
-
-**描述**: FastGPT is a knowledge-based platform built on the LLMs, offers a comprehensive suite of out-of-the-box capabilities such as data processing, RAG retrieval, and visual AI workflow orchestration, letting you easily develop and deploy complex question-answering systems without the need for extensive setup or configuration.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 27,294 |
-| 语言 | TypeScript |
-| Forks | 6,948 |
-| Issues | 172 |
-| Topics | agent, claude, deepseek, llm, mcp, nextjs, openai, qwen, rag, workflow |
-| 许可证 | Other |
-
-
-### hesreallyhim/awesome-claude-code
-
-**描述**: A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,531 |
-| 语言 | Python |
-| Forks | 1,666 |
-| Issues | 74 |
-| Topics | agent-skills, agentic-code, agentic-coding, ai-workflow-optimization, ai-workflows, anthropic, anthropic-claude, awesome, awesome-list, awesome-lists, awesome-resources, claude, claude-code, coding-agent, coding-agents, coding-assistant, coding-assistants, llm |
-| 许可证 | Other |
-
-
-### yamadashy/repomix
-
-**描述**: 📦 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perfect for when you need to feed your codebase to Large Language Models (LLMs) or other AI tools like Claude, ChatGPT, DeepSeek, Perplexity, Gemini, Gemma, Llama, Grok, and more.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 22,260 |
-| 语言 | TypeScript |
-| Forks | 1,031 |
-| Issues | 147 |
-| Topics | ai, anthropic, artificial-intelligence, chatbot, chatgpt, claude, deepseek, developer-tools, gemini, genai, generative-ai, gpt, javascript, language-model, llama, llm, mcp, nodejs, openai, typescript |
-| 许可证 | MIT License |
-
-
-### oraios/serena
-
-**描述**: A powerful coding agent toolkit providing semantic retrieval and editing capabilities (MCP server & other integrations)
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 21,080 |
-| 语言 | Python |
-| Forks | 1,424 |
-| Issues | 83 |
-| Topics | agent, ai, ai-coding, claude, claude-code, language-server, llms, mcp-server, programming, vibe-coding |
-| 许可证 | MIT License |
-
-
-### simstudioai/sim
-
-**描述**: Build, deploy, and orchestrate AI agents. Sim is the central intelligence layer for your AI workforce.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,853 |
-| 语言 | TypeScript |
-| Forks | 3,390 |
-| Issues | 178 |
-| Topics | agent-workflow, agentic-workflow, agents, ai, aiagents, anthropic, artificial-intelligence, automation, chatbot, deepseek, gemini, low-code, nextjs, no-code, openai, rag, react, typescript |
-| 许可证 | Apache License 2.0 |
-
-
-### OpenHands/OpenHands
-
-**描述**: 🙌 OpenHands: AI-Driven Development
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in Python
-
-**质量评分**: 98/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 68,652 |
-| 语言 | Python |
-| Forks | 8,570 |
-| Issues | 356 |
-| Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
 
 
@@ -1733,12 +1607,34 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,710 |
+| Stars | 55,759 |
 | 语言 | JavaScript |
-| Forks | 6,023 |
-| Issues | 299 |
+| Forks | 6,027 |
+| Issues | 302 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
+
+
+### OpenHands/OpenHands
+
+**描述**: 🙌 OpenHands: AI-Driven Development
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 98/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,672 |
+| 语言 | Python |
+| Forks | 8,573 |
+| Issues | 364 |
+| Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
+| 许可证 | Other |
 
 
 ### code-yeongyu/oh-my-opencode
@@ -1755,10 +1651,10 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 37,460 |
+| Stars | 37,569 |
 | 语言 | TypeScript |
-| Forks | 2,815 |
-| Issues | 340 |
+| Forks | 2,830 |
+| Issues | 346 |
 | Topics | ai, ai-agents, amp, anthropic, chatgpt, claude, claude-code, claude-skills, cursor, gemini, ide, openai, opencode, orchestration, tui, typescript |
 | 许可证 | Other |
 
@@ -1777,12 +1673,33 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,428 |
+| Stars | 50,443 |
 | 语言 | TypeScript |
-| Forks | 23,875 |
-| Issues | 796 |
+| Forks | 23,882 |
+| Issues | 797 |
 | Topics | agentic-ai, agentic-workflow, agents, artificial-intelligence, chatbot, chatgpt, javascript, langchain, large-language-models, low-code, multiagent-systems, no-code, openai, rag, react, typescript, workflow-automation |
 | 许可证 | Other |
+
+
+### asgeirtj/system_prompts_leaks
+
+**描述**: Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 95/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 33,875 |
+| 语言 | HTML |
+| Forks | 5,412 |
+| Issues | 31 |
+| Topics | ai, anthropic, chatbots, chatgpt, claude, gemini, generative-ai, google-deepmind, large-language-models, llm, openai, prompt-engineering, prompt-injection, prompts |
 
 
 ### vllm-project/vllm
@@ -1799,17 +1716,17 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,208 |
+| Stars | 72,248 |
 | 语言 | Python |
-| Forks | 14,015 |
-| Issues | 3,524 |
+| Forks | 14,026 |
+| Issues | 3,533 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
 
 
-### davila7/claude-code-templates
+### nextlevelbuilder/ui-ux-pro-max-skill
 
-**描述**: CLI tool for configuring and monitoring Claude Code
+**描述**: An AI SKILL that provide design intelligence for building professional UI/UX multiple platforms
 
 **发现来源**: keyword
 
@@ -1821,11 +1738,33 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 22,211 |
+| Stars | 37,836 |
 | 语言 | Python |
-| Forks | 2,105 |
-| Issues | 103 |
-| Topics | anthropic, anthropic-claude, claude, claude-code |
+| Forks | 3,681 |
+| Issues | 62 |
+| Topics | ai-skills, antigravity, claude, claude-code, codex, command-line, copilot, cursor-ai, html5, kiro, landing-page, mobile-ui, qoder, react, tailwindcss, trae, ui-design, uikit, windsurf-ai |
+| 许可证 | MIT License |
+
+
+### chatanywhere/GPT_API_free
+
+**描述**: Free ChatGPT&DeepSeek API Key，免费ChatGPT&DeepSeek API。免费接入DeepSeek API和GPT4 API，支持 gpt | deepseek | claude | gemini | grok 等排名靠前的常用大模型。
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 36,432 |
+| 语言 | Python |
+| Forks | 2,551 |
+| Issues | 61 |
+| Topics | api, chatgpt, claude, deepseek, gemini, gpt, grok |
 | 许可证 | MIT License |
 
 
@@ -1843,10 +1782,10 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 145,308 |
+| Stars | 145,320 |
 | 语言 | Python |
-| Forks | 8,522 |
-| Issues | 892 |
+| Forks | 8,526 |
+| Issues | 887 |
 | Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
 | 许可证 | MIT License |
 
@@ -1865,27 +1804,139 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 164,260 |
+| Stars | 164,284 |
 | 语言 | Go |
-| Forks | 14,795 |
-| Issues | 2,576 |
+| Forks | 14,799 |
+| Issues | 2,586 |
 | Topics | deepseek, gemma, gemma3, glm, go, golang, gpt-oss, llama, llama3, llm, llms, minimax, mistral, ollama, qwen |
 | 许可证 | MIT License |
 
 
-## 🧠 机器学习框架 (11 个项目) { #机器学习框架 }
+### tw93/Pake
+
+**描述**: 🤱🏻 Turn any webpage into a desktop app with one command.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 90/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 46,488 |
+| 语言 | Rust |
+| Forks | 9,088 |
+| Issues | 2 |
+| Topics | chatgpt, claude, desktop, gemini, hight-performance, linux, macos, no-electron, package, rust, tauri, windows, youtube |
+| 许可证 | MIT License |
+
+
+### wshobson/agents
+
+**描述**: Intelligent automation and multi-agent orchestration for Claude Code
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 86/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 30,413 |
+| 语言 | Python |
+| Forks | 3,326 |
+| Issues | 8 |
+| Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
+| 许可证 | MIT License |
+
+
+### chatboxai/chatbox
+
+**描述**: Powerful AI Client
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 83/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 38,804 |
+| 语言 | TypeScript |
+| Forks | 3,926 |
+| Issues | 1,059 |
+| Topics | assistant, chatbot, chatgpt, claude, copilot, deepseek, gemini, gpt, gpt-5, ollama, openai |
+| 许可证 | GNU General Public License v3.0 |
+
+
+### ComposioHQ/awesome-claude-skills
+
+**描述**: A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 81/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 41,399 |
+| 语言 | Python |
+| Forks | 4,119 |
+| Issues | 255 |
+| Topics | agent-skills, ai-agents, antigravity, automation, claude, claude-code, codex, composio, cursor, gemini-cli, mcp, rube, saas, skill, workflow-automation |
+
+
+### ⭐ 中优先级
+
+
+### microsoft/markitdown
+
+**描述**: Python tool for converting files and office documents to Markdown.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 90,223 |
+| 语言 | Python |
+| Forks | 5,303 |
+| Issues | 453 |
+| Topics | autogen, autogen-extension, langchain, markdown, microsoft-office, openai, pdf |
+| 许可证 | MIT License |
+
+
+## 🧠 机器学习框架 (13 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
 
 
-### hiyouga/LlamaFactory
+### dair-ai/Prompt-Engineering-Guide
 
-**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Keyword: AI agent
 
 **质量评分**: 100/100
 
@@ -1893,28 +1944,67 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,966 |
+| Stars | 71,203 |
+| 语言 | MDX |
+| Forks | 7,586 |
+| Issues | 248 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
+
+---
+
+这是一个拥有7.1万+ Stars的提示工程领域权威指南，系统性整合了Prompt Engineering、RAG、AI Agents等前沿技术的完整知识体系，是开发者快速掌握大语言模型应用开发的必备资源库。
+
+**技术亮点**:
+- 全面覆盖提示工程、上下文工程、RAG检索增强生成和AI Agents四大核心技术领域
+- 提供可交互的MDX Notebook实践教程，理论结合代码实战
+- 整合最新学术论文、最佳实践和行业案例，保持内容前沿性
+- 涵盖从基础Prompt设计到复杂Agent系统构建的完整技术栈
+- MIT开源许可，支持社区协作和持续更新迭代
+
+**适用场景**:
+- 企业AI团队构建LLM应用时，作为提示工程和RAG架构设计的最佳实践参考
+- 个人开发者学习大模型应用开发，从Prompt设计到Agent系统构建的系统教程
+- AI产品经理和研究人员快速了解提示工程领域最新进展和技术方案
+
+
+
+### hiyouga/LlamaFactory
+
+**描述**: Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 67,978 |
 | 语言 | Python |
-| Forks | 8,290 |
+| Forks | 8,291 |
 | Issues | 919 |
 | Topics | agent, ai, deepseek, fine-tuning, gemma, gpt, instruction-tuning, large-language-models, llama, llama3, llm, lora, moe, nlp, peft, qlora, quantization, qwen, rlhf, transformers |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-LlamaFactory 是一款被 ACL 2024 收录的统一高效微调框架，支持 100+ 大语言模型和视觉语言模型。该项目凭借 6.7万+ GitHub Stars 的极高人气，提供了从微调到部署的一站式解决方案，是个人开发者和企业进行 LLM 定制的首选工具之一。
+LlamaFactory 是一个统一的 LLM/VLM 微调框架，支持 100+ 模型的高效训练，已被 ACL 2024 收录，凭借其易用性和广泛的模型支持成为大模型微调领域最受欢迎的开源工具之一。
 
 **技术亮点**:
-- 统一支持 100+ LLMs & VLMs，涵盖 Llama3、Gemma、Qwen、DeepSeek 等主流模型
-- 集 LoRA、QLoRA、PEFT、全量微调等多种高效训练方法于一体
-- 支持 RLHF（人类反馈强化学习）、指令微调和 Agent 训练等多种训练范式
-- 提供模型量化（Quantization）和 MoE（混合专家）等优化技术
-- 零代码 Web UI 界面，让非技术用户也能轻松进行模型微调
+- 统一框架支持 100+ 大语言模型和视觉语言模型的微调，覆盖 LLaMA、Qwen、DeepSeek、Gemma 等主流模型
+- 集成多种高效微调技术：LoRA、QLoRA、全量微调，支持量化训练降低显存需求
+- 完整的训练管线支持：指令微调、预训练、RLHF/DPO 对齐训练
+- 灵活的分布式训练支持，兼容 DeepSpeed、FSDP 等加速框架
+- WebUI 可视化界面，无需代码即可完成模型微调
 
 **适用场景**:
-- 企业 AI 应用定制：快速微调领域专用大模型（如客服、金融、医疗等垂直场景）
-- 个人开发者研究：低成本实验不同微调方法（LoRA/QLoRA）和模型对比
-- 教学与学习：作为学习 LLM 微调技术的最佳实践平台
+- 企业快速定制专属大模型：基于开源基座模型进行领域适配和私有化部署
+- 学术研究与大模型实验：快速验证微调策略、对比不同模型效果
+- 个人开发者学习与实践：零门槛体验大模型微调全流程
 
 
 
@@ -1922,9 +2012,9 @@ LlamaFactory 是一款被 ACL 2024 收录的统一高效微调框架，支持 10
 
 **描述**: Financial data platform for analysts, quants and AI agents.
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Keyword: AI agent
 
 **质量评分**: 100/100
 
@@ -1932,67 +2022,28 @@ LlamaFactory 是一款被 ACL 2024 收录的统一高效微调框架，支持 10
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,619 |
+| Stars | 62,636 |
 | 语言 | Python |
-| Forks | 6,126 |
+| Forks | 6,128 |
 | Issues | 59 |
 | Topics | ai, crypto, derivatives, economics, equity, finance, fixed-income, machine-learning, openbb, options, python, quantitative-finance, stocks |
 | 许可证 | Other |
 
 ---
 
-OpenBB 是金融数据平台领域的开源标杆，拥有超6.2万星标。它为分析师、量化交易员和AI开发者提供统一的金融数据访问接口，聚合股票、债券、加密货币、衍生品等全品类金融数据，显著降低了金融数据获取的技术门槛，是构建金融应用和AI Agent的理想基础设施。
+OpenBB是目前GitHub上最受欢迎的开源金融数据分析平台，它打破了传统金融数据被Bloomberg、Reuters等商业终端垄断的局面，通过统一API整合了股票、加密货币、期权、衍生品、宏观经济等多维度金融数据源，让个人投资者、量化分析师和AI应用都能免费获取专业级金融数据，真正实现了金融分析的民主化。
 
 **技术亮点**:
-- 基于 Python 构建的一体化金融数据平台，支持股票、期权、固定收益、加密货币等全资产类别
-- 专为 AI Agent 和量化分析设计，提供标准化的数据接口，便于与机器学习模型集成
-- 提供命令行工具和 Python SDK 双重使用方式，支持灵活的数据获取和处理
-- 开源生态系统覆盖经济学、衍生品、机器学习等多个金融技术领域
-- 经过大规模验证的生产级项目（62k+ stars），活跃的社区和企业级支持
+- 统一数据接口架构：将股票、加密货币、期权、固定收益、宏观经济等分散数据源整合到单一Python API中，大幅降低金融数据接入复杂度
+- AI Agent原生支持：专为AI智能体设计的数据平台，支持LLM和机器学习模型直接调用和解析金融数据
+- 模块化可扩展架构：支持自定义数据源接入和功能扩展，用户可根据需求灵活定制分析工具
+- 多资产类别覆盖：涵盖equity、crypto、derivatives、fixed-income、options等全品类金融工具的数据获取与分析
+- 活跃的开源生态：62k+ stars证明其技术成熟度和社区支持，持续迭代更新
 
 **适用场景**:
-- 金融分析师和量化研究员构建数据驱动的投资策略和回测系统
-- AI 开发者构建金融智能体和数据分析应用，提供标准化金融数据源
-- 个人投资者进行市场分析和资产配置研究，无需昂贵的数据终端订阅
-
-
-
-### lutzroeder/netron
-
-**描述**: Visualizer for neural network, deep learning and machine learning models
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 32,529 |
-| 语言 | JavaScript |
-| Forks | 3,086 |
-| Issues | 19 |
-| Topics | ai, coreml, deep-learning, deeplearning, keras, machine-learning, machinelearning, ml, neural-network, numpy, onnx, pytorch, safetensors, tensorflow, tensorflow-lite, visualizer |
-| 许可证 | MIT License |
-
----
-
-Netron 是一个功能强大且跨平台的神经网络模型可视化工具，支持 ONNX、TensorFlow、PyTorch、Keras 等 20+ 种主流模型格式。其独特价值在于纯前端实现、无需安装依赖、离线可用，是深度学习开发者和研究人员调试和解释模型的首选工具。
-
-**技术亮点**:
-- 跨平台支持：提供 Web 应用、桌面应用（Windows/macOS/Linux）以及 VS Code 插件多种使用方式
-- 丰富的格式兼容：支持 ONNX、TensorFlow、Keras、PyTorch、Core ML、Caffe、MXNet、Safetensors 等多种模型格式
-- 纯前端实现：基于 JavaScript/TypeScript 开发，无需后端服务，可直接在浏览器中本地打开模型文件
-- 可视化能力：提供模型结构图、层信息、张量形状、权重等多维度可视化展示
-- 开源免费：MIT 许可证，代码完全开源，支持自定义和二次开发
-
-**适用场景**:
-- 模型调试与分析：开发者可以快速查看神经网络的层结构、参数配置和数据流向，帮助调试模型架构问题
-- 模型文档与分享：通过可视化图形向团队或客户展示模型架构，便于技术交流和文档说明
-- 模型格式转换验证：在不同框架间迁移模型时，验证转换后的结构是否正确无误
+- 量化分析师和金融工程师构建自动化交易策略、回测系统和风险管理模型
+- 个人投资者和独立研究员进行深度基本面分析、技术分析和投资组合管理
+- 金融科技公司和AI团队开发智能投顾、金融问答机器人和预测分析应用
 
 
 
@@ -2010,17 +2061,61 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,307 |
+| Stars | 150,357 |
 | 语言 | HTML |
-| Forks | 19,744 |
+| Forks | 19,749 |
 | Issues | 12 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 
+### rasbt/LLMs-from-scratch
+
+**描述**: Implement a ChatGPT-like LLM in PyTorch from scratch, step by step
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 87,295 |
+| 语言 | Jupyter Notebook |
+| Forks | 13,270 |
+| Issues | 0 |
+| Topics | ai, artificial-intelligence, chatbot, chatgpt, deep-learning, from-scratch, generative-ai, gpt, language-model, large-language-models, llm, machine-learning, neural-networks, python, pytorch, transformers |
+| 许可证 | Other |
+
+
+### patchy631/ai-engineering-hub
+
+**描述**: In-depth tutorials on LLMs, RAGs and real-world AI agent applications.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: RAG
+
+**质量评分**: 100/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 31,315 |
+| 语言 | Jupyter Notebook |
+| Forks | 5,095 |
+| Issues | 124 |
+| Topics | agents, ai, llms, machine-learning, mcp, rag |
+| 许可证 | MIT License |
+
+
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
 
 **发现来源**: trending
 
@@ -2032,34 +2127,12 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 157,483 |
+| Stars | 157,494 |
 | 语言 | Python |
-| Forks | 32,307 |
-| Issues | 2,278 |
+| Forks | 32,312 |
+| Issues | 2,285 |
 | Topics | audio, deep-learning, deepseek, gemma, glm, hacktoberfest, llm, machine-learning, model-hub, natural-language-processing, nlp, pretrained-models, python, pytorch, pytorch-transformers, qwen, speech-recognition, transformer, vlm |
 | 许可证 | Apache License 2.0 |
-
-
-### photoprism/photoprism
-
-**描述**: AI-Powered Photos App for the Decentralized Web 🌈💎✨
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 98/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,420 |
-| 语言 | Go |
-| Forks | 2,215 |
-| Issues | 435 |
-| Topics | ai, golang, google-photos, machine-learning, photography, private-cloud, self-hosted, tensorflow |
-| 许可证 | Other |
 
 
 ### vllm-project/vllm
@@ -2076,12 +2149,34 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,208 |
+| Stars | 72,248 |
 | 语言 | Python |
-| Forks | 14,015 |
-| Issues | 3,524 |
+| Forks | 14,026 |
+| Issues | 3,533 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
+
+
+### AUTOMATIC1111/stable-diffusion-webui
+
+**描述**: Stable Diffusion web UI
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 90/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 161,521 |
+| 语言 | Python |
+| Forks | 30,125 |
+| Issues | 2,465 |
+| Topics | ai, ai-art, deep-learning, diffusion, gradio, image-generation, image2image, img2img, pytorch, stable-diffusion, text2image, torch, txt2img, unstable, upscaling, web |
+| 许可证 | GNU Affero General Public License v3.0 |
 
 
 ### Comfy-Org/ComfyUI
@@ -2098,9 +2193,9 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 105,006 |
+| Stars | 105,030 |
 | 语言 | Python |
-| Forks | 12,037 |
+| Forks | 12,039 |
 | Issues | 3,790 |
 | Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
 | 许可证 | GNU General Public License v3.0 |
@@ -2120,55 +2215,55 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,991 |
+| Stars | 98,002 |
 | 语言 | Python |
-| Forks | 27,087 |
-| Issues | 18,089 |
+| Forks | 27,092 |
+| Issues | 18,087 |
 | Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
 | 许可证 | Other |
 
 
-### scikit-learn/scikit-learn
+### ItzCrazyKns/Perplexica
 
-**描述**: scikit-learn: machine learning in Python
+**描述**: Perplexica is an AI-powered answering engine.
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: Trending in Python
-
-**质量评分**: 90/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 65,306 |
-| 语言 | Python |
-| Forks | 26,749 |
-| Issues | 2,133 |
-| Topics | data-analysis, data-science, machine-learning, python, statistics |
-| 许可证 | BSD 3-Clause "New" or "Revised" License |
-
-
-### keras-team/keras
-
-**描述**: Deep Learning for humans
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
+**发现原因**: Keyword: RAG
 
 **质量评分**: 90/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,912 |
-| 语言 | Python |
-| Forks | 19,713 |
-| Issues | 277 |
-| Topics | data-science, deep-learning, jax, machine-learning, neural-networks, python, pytorch, tensorflow |
+| Stars | 31,601 |
+| 语言 | TypeScript |
+| Forks | 3,368 |
+| Issues | 252 |
+| Topics | ai-agents, ai-search-engine, answering-engine, artificial-intelligence, llm, machine-learning, open-source-ai-search-engine, perplexica, rag, search-engine, searxng, searxng-copilot, self-hosted-ai |
+| 许可证 | MIT License |
+
+
+### mlabonne/llm-course
+
+**描述**: Course to get into Large Language Models (LLMs) with roadmaps and Colab notebooks.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 88/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 76,146 |
+| 语言 | Unknown |
+| Forks | 8,784 |
+| Issues | 77 |
+| Topics | course, large-language-models, llm, machine-learning, roadmap |
 | 许可证 | Apache License 2.0 |
 
 
@@ -2192,28 +2287,28 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,446 |
+| Stars | 62,808 |
 | 语言 | JavaScript |
-| Forks | 7,738 |
+| Forks | 7,769 |
 | Issues | 23 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-这是一个专为 AI 代码助手打造的性能优化与能力增强系统，通过集成技能管理、记忆机制和安全防护，将 Claude Code 等工具从简单的代码生成器升级为具备自主学习和适应能力的智能开发伙伴。项目拥有超高人气（62K+ stars）和活跃的社区支持，是提升 AI 辅助编程效率的必备工具箱。
+这是一个针对 AI 编程助手（如 Claude Code、Cursor 等）的性能优化系统，集成了技能、直觉、记忆、安全和研究优先开发等核心能力，帮助开发者充分发挥 AI Agent 的潜力。超过 6 万 Star 的热度证明了它在 AI 辅助开发领域的实用价值和社区认可度。
 
 **技术亮点**:
-- 多工具兼容性：支持 Claude Code、Codex、Opencode、Cursor 等主流 AI 编程工具的统一优化框架
-- 智能记忆系统：持久化存储上下文和学习数据，让 AI 能够记住项目历史和开发偏好
-- 安全增强机制：内置企业级安全防护，确保 AI 代码生成符合安全规范和最佳实践
-- 研究优先开发：采用实验性方法持续优化，紧跟 LLM 和 AI Agent 最新技术进展
-- MCP 集成：原生支持 Model Context Protocol，实现与 AI 模型的深度协同
+- 多平台 AI Agent 统一优化框架，支持 Claude Code、Codex、Opencode、Cursor 等多种 AI 编程工具
+- 五大核心模块：Skills（技能）、Instincts（直觉）、Memory（记忆）、Security（安全）、Research-first（研究优先）
+- MCP (Model Context Protocol) 协议支持，增强 AI Agent 的上下文理解和工具调用能力
+- Agent Harness 架构设计，提供可扩展的性能优化管道
+- MIT 开源许可，便于二次开发和商业集成
 
 **适用场景**:
-- 企业级 AI 开发团队：统一团队的 AI 编程助手配置，确保代码安全性和开发规范的统一执行
-- 个人开发者效率提升：通过持久化记忆和技能定制，打造个性化的 AI 编程助手，大幅减少重复性工作
-- AI Agent 研究与实验：为研究者和早期采用者提供测试平台，探索 AI Agent 在软件开发中的前沿应用
+- 企业研发团队提升 AI 辅助编程效率，统一管理和优化多个 AI 编程助手的使用体验
+- 个人开发者优化 Claude Code、Cursor 等工具的编程能力和响应质量
+- AI 应用开发者研究和构建高性能 AI Agent 系统，学习最佳实践和架构设计
 
 
 
@@ -2231,60 +2326,38 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,324 |
+| Stars | 43,341 |
 | 语言 | Go |
-| Forks | 3,641 |
-| Issues | 143 |
+| Forks | 3,642 |
+| Issues | 144 |
 | Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
 ---
 
-LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件上本地运行多种AI模型（无需GPU），为开发者和企业提供成本效益极高的AI解决方案。项目采用 Go 语言实现高性能推理服务，具备去中心化推理能力，已获得超过 4.3 万颗星，是构建私有化 AI 应用的理想选择。
+LocalAI 是最成熟的本地化 AI 解决方案之一，提供与 OpenAI API 完全兼容的接口，让开发者在无需 GPU 的消费级硬件上即可运行大语言模型、图像生成、语音合成等多种 AI 能力，完美解决数据隐私和 API 成本问题。
 
 **技术亮点**:
-- 无需 GPU 即可在消费级硬件上运行，大幅降低 AI 部署成本
-- 支持多种模型格式（gguf、transformers、diffusers）和主流模型（Llama、Mistral、Stable Diffusion 等）
-- 提供与 OpenAI 兼容的 API 接口，实现零成本迁移
-- 具备分布式、P2P 和去中心化推理能力，可横向扩展
-- 集成 MCP（Model Context Protocol）协议，支持多模态生成（文本、音频、视频、图像、语音克隆）
+- OpenAI API 兼容：Drop-in 替代方案，无需修改代码即可从 OpenAI 迁移到本地部署
+- 多模型格式支持：统一支持 gguf、transformers、diffusers 等主流模型格式
+- 零 GPU 依赖：专为消费级 CPU 硬件优化，降低部署门槛
+- 多模态能力：集成文本生成、图像生成、语音合成(TTS)、视频生成、声音克隆等全栈 AI 功能
+- 分布式与 P2P 架构：基于 libp2p 实现去中心化推理，支持 MCP 协议进行模型协作
 
 **适用场景**:
-- 企业内部私有化 AI 部署：在本地服务器部署 AI 服务，保障数据隐私和安全，避免敏感数据外泄至第三方 API
-- 个人开发者本地开发环境：在个人电脑上构建和测试 AI 应用，无需承担 API 调用费用，支持离线开发
-- 边缘计算和嵌入式场景：在资源受限设备上部署 AI 能力，利用无 GPU 优势实现本地化推理
+- 企业私有化部署：对数据安全要求高的金融、医疗等行业，可在内网环境完全自主控制 AI 服务
+- 个人开发者与初创公司：避免高昂的 API 调用费用，在本地或低成本服务器上构建 AI 应用
+- 边缘计算与离线场景：物联网设备、移动应用等需要在无网络环境下运行 AI 推理的场景
 
-
-
-### yamadashy/repomix
-
-**描述**: 📦 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perfect for when you need to feed your codebase to Large Language Models (LLMs) or other AI tools like Claude, ChatGPT, DeepSeek, Perplexity, Gemini, Gemma, Llama, Grok, and more.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: Claude
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 22,260 |
-| 语言 | TypeScript |
-| Forks | 1,031 |
-| Issues | 147 |
-| Topics | ai, anthropic, artificial-intelligence, chatbot, chatgpt, claude, deepseek, developer-tools, gemini, genai, generative-ai, gpt, javascript, language-model, llama, llm, mcp, nodejs, openai, typescript |
-| 许可证 | MIT License |
 
 
 ### OpenHands/OpenHands
 
 **描述**: 🙌 OpenHands: AI-Driven Development
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Keyword: AI agent
 
 **质量评分**: 98/100
 
@@ -2292,10 +2365,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 68,652 |
+| Stars | 68,672 |
 | 语言 | Python |
-| Forks | 8,570 |
-| Issues | 356 |
+| Forks | 8,573 |
+| Issues | 364 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | Other |
 
@@ -2314,10 +2387,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 37,460 |
+| Stars | 37,569 |
 | 语言 | TypeScript |
-| Forks | 2,815 |
-| Issues | 340 |
+| Forks | 2,830 |
+| Issues | 346 |
 | Topics | ai, ai-agents, amp, anthropic, chatgpt, claude, claude-code, claude-skills, cursor, gemini, ide, openai, opencode, orchestration, tui, typescript |
 | 许可证 | Other |
 
@@ -2336,12 +2409,56 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 177,840 |
+| Stars | 177,898 |
 | 语言 | TypeScript |
-| Forks | 55,477 |
-| Issues | 1,411 |
+| Forks | 55,499 |
+| Issues | 1,407 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
+
+
+### chatanywhere/GPT_API_free
+
+**描述**: Free ChatGPT&DeepSeek API Key，免费ChatGPT&DeepSeek API。免费接入DeepSeek API和GPT4 API，支持 gpt | deepseek | claude | gemini | grok 等排名靠前的常用大模型。
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 36,432 |
+| 语言 | Python |
+| Forks | 2,551 |
+| Issues | 61 |
+| Topics | api, chatgpt, claude, deepseek, gemini, gpt, grok |
+| 许可证 | MIT License |
+
+
+### yt-dlp/yt-dlp
+
+**描述**: A feature-rich command-line audio/video downloader
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 149,908 |
+| 语言 | Python |
+| Forks | 12,143 |
+| Issues | 2,360 |
+| Topics | cli, downloader, python, sponsorblock, youtube-dl, youtube-downloader, yt-dlp |
+| 许可证 | The Unlicense |
 
 
 ### fastapi/fastapi
@@ -2358,10 +2475,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,941 |
+| Stars | 95,953 |
 | 语言 | Python |
-| Forks | 8,789 |
-| Issues | 144 |
+| Forks | 8,792 |
+| Issues | 146 |
 | Topics | api, async, asyncio, fastapi, framework, json, json-schema, openapi, openapi3, pydantic, python, python-types, python3, redoc, rest, starlette, swagger, swagger-ui, uvicorn, web |
 | 许可证 | MIT License |
 
@@ -2380,34 +2497,12 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 73,409 |
+| Stars | 73,419 |
 | 语言 | Python |
-| Forks | 8,711 |
+| Forks | 8,713 |
 | Issues | 202 |
 | Topics | cli, cti, cybersecurity, forensics, hacktoberfest, information-gathering, infosec, linux, osint, pentesting, python, python3, reconnaissance, redteam, sherlock, tools |
 | 许可证 | MIT License |
-
-
-### localstack/localstack
-
-**描述**: 💻 A fully functional local AWS cloud stack. Develop and test your cloud & Serverless apps offline
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 64,565 |
-| 语言 | Python |
-| Forks | 4,589 |
-| Issues | 326 |
-| Topics | aws, cloud, continuous-integration, developer-tools, localstack, python, testing |
-| 许可证 | Other |
 
 
 ### microsoft/vscode
@@ -2424,10 +2519,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 182,351 |
+| Stars | 182,364 |
 | 语言 | TypeScript |
-| Forks | 38,314 |
-| Issues | 14,704 |
+| Forks | 38,326 |
+| Issues | 14,710 |
 | Topics | editor, electron, microsoft, typescript, visual-studio-code |
 | 许可证 | MIT License |
 
@@ -2446,7 +2541,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 93,726 |
+| Stars | 93,729 |
 | 语言 | TypeScript |
 | Forks | 9,378 |
 | Issues | 286 |
@@ -2468,10 +2563,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,178 |
+| Stars | 78,187 |
 | 语言 | TypeScript |
-| Forks | 5,620 |
-| Issues | 679 |
+| Forks | 5,619 |
+| Issues | 681 |
 | Topics | api, api-client, api-rest, api-testing, developer-tools, graphql, http, http-client, pwa, rest, rest-api, spa, testing, testing-tools, tools, vue, vuejs, websocket |
 | 许可证 | MIT License |
 
@@ -2490,7 +2585,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 76,503 |
+| Stars | 76,508 |
 | 语言 | TypeScript |
 | Forks | 6,538 |
 | Issues | 169 |
@@ -2498,31 +2593,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-### microsoft/monaco-editor
+### typicode/json-server
 
-**描述**: A browser based code editor
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 45,676 |
-| 语言 | JavaScript |
-| Forks | 3,999 |
-| Issues | 822 |
-| Topics | browser, editor, monaco-editor, typescript, vscode |
-| 许可证 | MIT License |
-
-
-### usebruno/bruno
-
-**描述**: Opensource IDE For Exploring and Testing API's (lightweight alternative to Postman/Insomnia)
+**描述**: Get a full fake REST API with zero coding in less than 30 seconds (seriously)
 
 **发现来源**: trending
 
@@ -2534,11 +2607,11 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 41,445 |
+| Stars | 75,641 |
 | 语言 | JavaScript |
-| Forks | 2,171 |
-| Issues | 1,743 |
-| Topics | api-client, api-testing, automation, developer-tools, git, graphql-client, http-client, javascript, openapi, openapi3, opensource, rest-api, testing, testing-tools |
+| Forks | 7,265 |
+| Issues | 706 |
+| Topics | api, fake, frontend, json, mock, rest, test |
 | 许可证 | MIT License |
 
 
@@ -2556,11 +2629,33 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,339 |
+| Stars | 78,345 |
 | 语言 | Go |
 | Forks | 2,701 |
 | Issues | 319 |
 | Topics | bash, cli, fish, fzf, go, neovim, tmux, unix, vim, zsh |
+| 许可证 | MIT License |
+
+
+### jesseduffield/lazygit
+
+**描述**: simple terminal UI for git commands
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 73,632 |
+| 语言 | Go |
+| Forks | 2,563 |
+| Issues | 916 |
+| Topics | cli, git, terminal |
 | 许可证 | MIT License |
 
 
@@ -2578,7 +2673,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 42,931 |
+| Stars | 42,939 |
 | 语言 | Go |
 | Forks | 8,025 |
 | Issues | 926 |
@@ -2586,25 +2681,28 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-### ccxt/ccxt
+### ⭐ 中优先级
 
-**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go
+
+### public-apis/public-apis
+
+**描述**: A collective list of free APIs
 
 **发现来源**: trending
 
-**发现原因**: Trending in Go
+**发现原因**: Trending in Python
 
-**质量评分**: 85/100
+**质量评分**: 75/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 41,214 |
-| 语言 | Go |
-| Forks | 8,530 |
-| Issues | 1,363 |
-| Topics | altcoin, api, arbitrage, bitcoin, bot, btc, crypto, cryptocurrencies, cryptocurrency, eth, ethereum, exchange, invest, library, market-data, memecoin, merchant, strategy, trade, trading |
+| Stars | 404,738 |
+| 语言 | Python |
+| Forks | 43,682 |
+| Issues | 936 |
+| Topics | api, apis, dataset, development, free, list, lists, open-source, public, public-api, public-apis, resources, software |
 | 许可证 | MIT License |
 
 
@@ -2612,28 +2710,6 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 
 ### 🌟 高优先级
-
-
-### simstudioai/sim
-
-**描述**: Build, deploy, and orchestrate AI agents. Sim is the central intelligence layer for your AI workforce.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,853 |
-| 语言 | TypeScript |
-| Forks | 3,390 |
-| Issues | 178 |
-| Topics | agent-workflow, agentic-workflow, agents, ai, aiagents, anthropic, artificial-intelligence, automation, chatbot, deepseek, gemini, low-code, nextjs, no-code, openai, rag, react, typescript |
-| 许可证 | Apache License 2.0 |
 
 
 ### code-yeongyu/oh-my-opencode
@@ -2650,10 +2726,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 37,460 |
+| Stars | 37,569 |
 | 语言 | TypeScript |
-| Forks | 2,815 |
-| Issues | 340 |
+| Forks | 2,830 |
+| Issues | 346 |
 | Topics | ai, ai-agents, amp, anthropic, chatgpt, claude, claude-code, claude-skills, cursor, gemini, ide, openai, opencode, orchestration, tui, typescript |
 | 许可证 | Other |
 
@@ -2672,34 +2748,12 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 177,840 |
+| Stars | 177,898 |
 | 语言 | TypeScript |
-| Forks | 55,477 |
-| Issues | 1,411 |
+| Forks | 55,499 |
+| Issues | 1,407 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
-
-
-### ToolJet/ToolJet
-
-**描述**: ToolJet is the open-source foundation of ToolJet AI - the AI-native platform for building internal tools, dashboard, business applications, workflows and AI agents 🚀
-
-**发现来源**: trending
-
-**发现原因**: [keyword, trending] Trending in JavaScript
-
-**质量评分**: 91/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 37,548 |
-| 语言 | JavaScript |
-| Forks | 4,962 |
-| Issues | 951 |
-| Topics | ai-app-builder, docker, hacktoberfest, internal-applications, internal-project, internal-tool, internal-tools, javascript, kubernetes, low-code, low-code-development-platform, low-code-framework, no-code, nodejs, reactjs, self-hosted, typescript, web-development-tools, workflow-automation |
-| 许可证 | GNU Affero General Public License v3.0 |
 
 
 ### etcd-io/etcd
@@ -2716,10 +2770,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,617 |
+| Stars | 51,620 |
 | 语言 | Go |
-| Forks | 10,337 |
-| Issues | 223 |
+| Forks | 10,335 |
+| Issues | 217 |
 | Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
 | 许可证 | Apache License 2.0 |
 
@@ -2738,10 +2792,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 120,955 |
+| Stars | 120,963 |
 | 语言 | Go |
-| Forks | 42,602 |
-| Issues | 2,683 |
+| Forks | 42,608 |
+| Issues | 2,702 |
 | Topics | cncf, containers, go, kubernetes |
 | 许可证 | Apache License 2.0 |
 
@@ -2760,10 +2814,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,483 |
+| Stars | 71,487 |
 | 语言 | Go |
-| Forks | 18,913 |
-| Issues | 3,788 |
+| Forks | 18,914 |
+| Issues | 3,792 |
 | Topics | containers, docker, go, golang |
 | 许可证 | Apache License 2.0 |
 
@@ -2782,11 +2836,55 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 54,123 |
+| Stars | 54,136 |
 | 语言 | Go |
-| Forks | 6,427 |
+| Forks | 6,429 |
 | Issues | 2,849 |
 | Topics | bitbucket, cicd, devops, docker-registry-v2, git, git-gui, git-lfs, git-server, gitea, github, github-actions, gitlab, go, golang, hacktoberfest, maven-server, npm-registry, self-hosted, typescript, vue |
+| 许可证 | MIT License |
+
+
+### gogs/gogs
+
+**描述**: Gogs is a painless self-hosted Git service
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 47,550 |
+| 语言 | Go |
+| Forks | 5,063 |
+| Issues | 962 |
+| Topics | docker, git, go, gogs, mysql, postgresql, raspberry-pi, self-hosted, source-code-management, sqlite3, version-control |
+| 许可证 | MIT License |
+
+
+### wshobson/agents
+
+**描述**: Intelligent automation and multi-agent orchestration for Claude Code
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 86/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 30,413 |
+| 语言 | Python |
+| Forks | 3,326 |
+| Issues | 8 |
+| Topics | agents, anthropic, anthropic-claude, automation, claude, claude-code, claude-code-cli, claude-code-commands, claude-code-plugin, claude-code-plugins, claude-code-skills, claude-code-subagents, claude-skills, claudecode, claudecode-config, claudecode-subagents, orchestration, sub-agents, subagents, workflows |
 | 许可证 | MIT License |
 
 
@@ -2804,7 +2902,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 93,726 |
+| Stars | 93,729 |
 | 语言 | TypeScript |
 | Forks | 9,378 |
 | Issues | 286 |
@@ -2814,7 +2912,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
 
 **发现来源**: trending
 
@@ -2826,10 +2924,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 83,607 |
+| Stars | 83,632 |
 | 语言 | TypeScript |
-| Forks | 5,235 |
-| Issues | 608 |
+| Forks | 5,237 |
+| Issues | 607 |
 | Topics | automation, chrome, chromium, e2e-testing, electron, end-to-end-testing, firefox, javascript, playwright, test, test-automation, testing, testing-tools, web, webkit |
 | 许可证 | Apache License 2.0 |
 
@@ -2848,10 +2946,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,005 |
+| Stars | 75,015 |
 | 语言 | TypeScript |
-| Forks | 6,358 |
-| Issues | 410 |
+| Forks | 6,360 |
+| Issues | 411 |
 | Topics | docker, hacktoberfest, java, pdf, pdf-converter, pdf-editor, pdf-manipulation, pdf-merger, pdf-ocr, pdf-tools, pdf-web-apps, pdfmerger |
 | 许可证 | Other |
 
@@ -2870,33 +2968,11 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 83,671 |
+| Stars | 83,703 |
 | 语言 | JavaScript |
-| Forks | 7,479 |
-| Issues | 704 |
+| Forks | 7,481 |
+| Issues | 701 |
 | Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
-| 许可证 | MIT License |
-
-
-### usebruno/bruno
-
-**描述**: Opensource IDE For Exploring and Testing API's (lightweight alternative to Postman/Insomnia)
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 41,445 |
-| 语言 | JavaScript |
-| Forks | 2,171 |
-| Issues | 1,743 |
-| Topics | api-client, api-testing, automation, developer-tools, git, graphql-client, http-client, javascript, openapi, openapi3, opensource, rest-api, testing, testing-tools |
 | 许可证 | MIT License |
 
 
@@ -2914,10 +2990,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,169 |
+| Stars | 69,175 |
 | 语言 | Go |
 | Forks | 1,871 |
-| Issues | 290 |
+| Issues | 291 |
 | Topics | ci, devops, github-actions, golang |
 | 许可证 | MIT License |
 
@@ -2938,8 +3014,8 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 |------|------|
 | Stars | 62,058 |
 | 语言 | Go |
-| Forks | 5,858 |
-| Issues | 765 |
+| Forks | 5,860 |
+| Issues | 764 |
 | Topics | consul, docker, etcd, go, golang, kubernetes, letsencrypt, load-balancer, marathon, mesos, microservice, reverse-proxy, traefik, zookeeper |
 | 许可证 | MIT License |
 
@@ -2958,62 +3034,64 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 57,522 |
+| Stars | 57,531 |
 | 语言 | Go |
-| Forks | 4,154 |
+| Forks | 4,153 |
 | Issues | 19 |
 | Topics | docker, foss, go, markdown, memo, microblog, note-taking, notecard, react, self-hosted, social-network, sqlite |
 | 许可证 | MIT License |
 
 
-### istio/istio
+### ComposioHQ/awesome-claude-skills
 
-**描述**: Connect, secure, control, and observe services.
+**描述**: A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 81/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 41,399 |
+| 语言 | Python |
+| Forks | 4,119 |
+| Issues | 255 |
+| Topics | agent-skills, ai-agents, antigravity, automation, claude, claude-code, codex, composio, cursor, gemini-cli, mcp, rube, saas, skill, workflow-automation |
+
+
+### ⭐ 中优先级
+
+
+### minio/minio
+
+**描述**: MinIO is a high-performance, S3 compatible object store, open sourced under GNU AGPLv3 license.
 
 **发现来源**: trending
 
 **发现原因**: Trending in Go
 
-**质量评分**: 85/100
+**质量评分**: 75/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 38,078 |
+| Stars | 60,437 |
 | 语言 | Go |
-| Forks | 8,259 |
-| Issues | 497 |
-| Topics | api-management, circuit-breaker, consul, enforce-policies, envoy, fault-injection, kubernetes, lyft-envoy, microservice, microservices, nomad, polyglot-microservices, proxies, request-routing, resiliency, service-mesh |
-| 许可证 | Apache License 2.0 |
+| Forks | 7,188 |
+| Issues | 80 |
+| Topics | amazon-s3, cloud, cloudnative, cloudstorage, go, k8s, kubernetes, multi-cloud, multi-cloud-kubernetes, objectstorage, s3, storage |
+| 许可证 | GNU Affero General Public License v3.0 |
 
 
-## 📈 监控/观测 (3 个项目) { #监控-观测 }
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
-
-
-### grafana/grafana
-
-**描述**: The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more.
-
-**发现来源**: trending
-
-**发现原因**: Trending in TypeScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 72,514 |
-| 语言 | TypeScript |
-| Forks | 13,510 |
-| Issues | 3,830 |
-| Topics | alerting, analytics, business-intelligence, dashboard, data-visualization, elasticsearch, go, grafana, hacktoberfest, influxdb, metrics, monitoring, mysql, postgres, prometheus |
-| 许可证 | GNU Affero General Public License v3.0 |
 
 
 ### louislam/uptime-kuma
@@ -3030,10 +3108,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 83,671 |
+| Stars | 83,703 |
 | 语言 | JavaScript |
-| Forks | 7,479 |
-| Issues | 704 |
+| Forks | 7,481 |
+| Issues | 701 |
 | Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
 | 许可证 | MIT License |
 
@@ -3052,15 +3130,15 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,071 |
+| Stars | 63,073 |
 | 语言 | Go |
-| Forks | 10,212 |
-| Issues | 753 |
+| Forks | 10,214 |
+| Issues | 762 |
 | Topics | alerting, graphing, hacktoberfest, metrics, monitoring, prometheus, time-series |
 | 许可证 | Apache License 2.0 |
 
 
-## 🌐 Web 框架 (13 个项目) { #web-框架 }
+## 🌐 Web 框架 (14 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -3080,29 +3158,51 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,324 |
+| Stars | 43,341 |
 | 语言 | Go |
-| Forks | 3,641 |
-| Issues | 143 |
+| Forks | 3,642 |
+| Issues | 144 |
 | Topics | ai, api, audio-generation, decentralized, distributed, gemma, image-generation, libp2p, llama, llm, mamba, mcp, mistral, musicgen, object-detection, rerank, rwkv, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
 ---
 
-LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件上本地运行多种AI模型（无需GPU），为开发者和企业提供成本效益极高的AI解决方案。项目采用 Go 语言实现高性能推理服务，具备去中心化推理能力，已获得超过 4.3 万颗星，是构建私有化 AI 应用的理想选择。
+LocalAI 是最成熟的本地化 AI 解决方案之一，提供与 OpenAI API 完全兼容的接口，让开发者在无需 GPU 的消费级硬件上即可运行大语言模型、图像生成、语音合成等多种 AI 能力，完美解决数据隐私和 API 成本问题。
 
 **技术亮点**:
-- 无需 GPU 即可在消费级硬件上运行，大幅降低 AI 部署成本
-- 支持多种模型格式（gguf、transformers、diffusers）和主流模型（Llama、Mistral、Stable Diffusion 等）
-- 提供与 OpenAI 兼容的 API 接口，实现零成本迁移
-- 具备分布式、P2P 和去中心化推理能力，可横向扩展
-- 集成 MCP（Model Context Protocol）协议，支持多模态生成（文本、音频、视频、图像、语音克隆）
+- OpenAI API 兼容：Drop-in 替代方案，无需修改代码即可从 OpenAI 迁移到本地部署
+- 多模型格式支持：统一支持 gguf、transformers、diffusers 等主流模型格式
+- 零 GPU 依赖：专为消费级 CPU 硬件优化，降低部署门槛
+- 多模态能力：集成文本生成、图像生成、语音合成(TTS)、视频生成、声音克隆等全栈 AI 功能
+- 分布式与 P2P 架构：基于 libp2p 实现去中心化推理，支持 MCP 协议进行模型协作
 
 **适用场景**:
-- 企业内部私有化 AI 部署：在本地服务器部署 AI 服务，保障数据隐私和安全，避免敏感数据外泄至第三方 API
-- 个人开发者本地开发环境：在个人电脑上构建和测试 AI 应用，无需承担 API 调用费用，支持离线开发
-- 边缘计算和嵌入式场景：在资源受限设备上部署 AI 能力，利用无 GPU 优势实现本地化推理
+- 企业私有化部署：对数据安全要求高的金融、医疗等行业，可在内网环境完全自主控制 AI 服务
+- 个人开发者与初创公司：避免高昂的 API 调用费用，在本地或低成本服务器上构建 AI 应用
+- 边缘计算与离线场景：物联网设备、移动应用等需要在无网络环境下运行 AI 推理的场景
 
+
+
+### chatanywhere/GPT_API_free
+
+**描述**: Free ChatGPT&DeepSeek API Key，免费ChatGPT&DeepSeek API。免费接入DeepSeek API和GPT4 API，支持 gpt | deepseek | claude | gemini | grok 等排名靠前的常用大模型。
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: Claude
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 36,432 |
+| 语言 | Python |
+| Forks | 2,551 |
+| Issues | 61 |
+| Topics | api, chatgpt, claude, deepseek, gemini, gpt, grok |
+| 许可证 | MIT License |
 
 
 ### fastapi/fastapi
@@ -3119,10 +3219,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,941 |
+| Stars | 95,953 |
 | 语言 | Python |
-| Forks | 8,789 |
-| Issues | 144 |
+| Forks | 8,792 |
+| Issues | 146 |
 | Topics | api, async, asyncio, fastapi, framework, json, json-schema, openapi, openapi3, pydantic, python, python-types, python3, redoc, rest, starlette, swagger, swagger-ui, uvicorn, web |
 | 许可证 | MIT License |
 
@@ -3141,10 +3241,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 86,983 |
+| Stars | 86,989 |
 | 语言 | Python |
 | Forks | 33,717 |
-| Issues | 426 |
+| Issues | 428 |
 | Topics | apps, django, framework, models, orm, python, templates, views, web |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
@@ -3163,10 +3263,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 100,072 |
+| Stars | 100,077 |
 | 语言 | TypeScript |
 | Forks | 27,099 |
-| Issues | 1,129 |
+| Issues | 1,132 |
 | Topics | angular, javascript, pwa, typescript, web, web-framework, web-performance |
 | 许可证 | MIT License |
 
@@ -3185,10 +3285,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,178 |
+| Stars | 78,187 |
 | 语言 | TypeScript |
-| Forks | 5,620 |
-| Issues | 679 |
+| Forks | 5,619 |
+| Issues | 681 |
 | Topics | api, api-client, api-rest, api-testing, developer-tools, graphql, http, http-client, pwa, rest, rest-api, spa, testing, testing-tools, tools, vue, vuejs, websocket |
 | 许可证 | MIT License |
 
@@ -3207,11 +3307,55 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,868 |
+| Stars | 74,874 |
 | 语言 | TypeScript |
-| Forks | 8,231 |
-| Issues | 37 |
+| Forks | 8,232 |
+| Issues | 40 |
 | Topics | framework, hacktoberfest, javascript, javascript-framework, microservices, nest, nestjs, node, nodejs, nodejs-framework, typescript, typescript-framework, websockets |
+| 许可证 | MIT License |
+
+
+### typicode/json-server
+
+**描述**: Get a full fake REST API with zero coding in less than 30 seconds (seriously)
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 75,641 |
+| 语言 | JavaScript |
+| Forks | 7,265 |
+| Issues | 706 |
+| Topics | api, fake, frontend, json, mock, rest, test |
+| 许可证 | MIT License |
+
+
+### expressjs/express
+
+**描述**: Fast, unopinionated, minimalist web framework for node.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 68,869 |
+| 语言 | JavaScript |
+| Forks | 22,734 |
+| Issues | 189 |
+| Topics | express, javascript, nodejs, server |
 | 许可证 | MIT License |
 
 
@@ -3237,13 +3381,13 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-### prettier/prettier
+### gin-gonic/gin
 
-**描述**: Prettier is an opinionated code formatter.
+**描述**: Gin is a high-performance HTTP web framework written in Go. It provides a Martini-like API but with significantly better performance—up to 40 times faster—thanks to httprouter. Gin is designed for building REST APIs, web applications, and microservices.
 
 **发现来源**: trending
 
-**发现原因**: Trending in JavaScript
+**发现原因**: Trending in Go
 
 **质量评分**: 85/100
 
@@ -3251,34 +3395,12 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,732 |
-| 语言 | JavaScript |
-| Forks | 4,662 |
-| Issues | 1,444 |
-| Topics | angular, ast, css, flow, formatter, graphql, html, javascript, json, jsx, less, markdown, prettier, printer, scss, typescript, vue, yaml |
+| Stars | 88,207 |
+| 语言 | Go |
+| Forks | 8,568 |
+| Issues | 644 |
+| Topics | framework, gin, go, middleware, performance, router, server |
 | 许可证 | MIT License |
-
-
-### meteor/meteor
-
-**描述**: Meteor, the JavaScript App Platform
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 44,779 |
-| 语言 | JavaScript |
-| Forks | 5,266 |
-| Issues | 365 |
-| Topics | build-system, framework, hacktoberfest, javascript, meteor, mongodb, nodejs, npm, react, reactive-programming, realtime, rpc, zero-configuration |
-| 许可证 | Other |
 
 
 ### caddyserver/caddy
@@ -3295,9 +3417,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 70,612 |
+| Stars | 70,621 |
 | 语言 | Go |
-| Forks | 4,658 |
+| Forks | 4,659 |
 | Issues | 230 |
 | Topics | acme, automatic-https, caddy, caddyfile, go, golang, http, http-server, http3, https, privacy, reverse-proxy, security, tls, web-server |
 | 许可证 | Apache License 2.0 |
@@ -3317,84 +3439,43 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 56,576 |
+| Stars | 56,580 |
 | 语言 | Go |
-| Forks | 3,164 |
+| Forks | 3,165 |
 | Issues | 24 |
 | Topics | authentication, backend, golang, realtime |
 | 许可证 | MIT License |
 
 
-### ccxt/ccxt
-
-**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 41,214 |
-| 语言 | Go |
-| Forks | 8,530 |
-| Issues | 1,363 |
-| Topics | altcoin, api, arbitrage, bitcoin, bot, btc, crypto, cryptocurrencies, cryptocurrency, eth, ethereum, exchange, invest, library, market-data, memecoin, merchant, strategy, trade, trading |
-| 许可证 | MIT License |
+### ⭐ 中优先级
 
 
-### gofiber/fiber
+### public-apis/public-apis
 
-**描述**: ⚡️ Express inspired web framework written in Go
+**描述**: A collective list of free APIs
 
 **发现来源**: trending
 
-**发现原因**: Trending in Go
+**发现原因**: Trending in Python
 
-**质量评分**: 85/100
+**质量评分**: 75/100
 
-**活跃度**: high
+**活跃度**: medium
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 39,338 |
-| 语言 | Go |
-| Forks | 1,961 |
-| Issues | 43 |
-| Topics | express, expressjs, fast, fiber, flexible, framework, friendly, go, golang, hacktoberfest, hacktoberfest2020, nodejs, performance, rest-api, web |
+| Stars | 404,738 |
+| 语言 | Python |
+| Forks | 43,682 |
+| Issues | 936 |
+| Topics | api, apis, dataset, development, free, list, lists, open-source, public, public-api, public-apis, resources, software |
 | 许可证 | MIT License |
 
 
-## 📊 数据/基础设施 (6 个项目) { #数据-基础设施 }
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
-
-
-### chroma-core/chroma
-
-**描述**: Open-source search and retrieval database for AI applications.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: RAG
-
-**质量评分**: 100/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 26,488 |
-| 语言 | Rust |
-| Forks | 2,090 |
-| Issues | 506 |
-| Topics | agents, ai, ai-agents, database, document-retrieval, embeddings, llm, llms, rag, rust, rust-lang, vector-database |
-| 许可证 | Apache License 2.0 |
 
 
 ### supabase/supabase
@@ -3411,10 +3492,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,606 |
+| Stars | 98,624 |
 | 语言 | TypeScript |
-| Forks | 11,718 |
-| Issues | 967 |
+| Forks | 11,723 |
+| Issues | 954 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
@@ -3433,10 +3514,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,710 |
+| Stars | 55,759 |
 | 语言 | JavaScript |
-| Forks | 6,023 |
-| Issues | 299 |
+| Forks | 6,027 |
+| Issues | 302 |
 | Topics | ai-agents, custom-ai-agents, deepseek, kimi, llama3, llm, lmstudio, local-llm, localai, mcp, mcp-servers, moonshot, multimodal, no-code, ollama, qwen3, rag, vector-database, web-scraping |
 | 许可证 | MIT License |
 
@@ -3455,10 +3536,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,164 |
+| Stars | 43,171 |
 | 语言 | Go |
-| Forks | 3,869 |
-| Issues | 1,049 |
+| Forks | 3,870 |
+| Issues | 1,053 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
@@ -3477,40 +3558,57 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,617 |
+| Stars | 51,620 |
 | 语言 | Go |
-| Forks | 10,337 |
-| Issues | 223 |
+| Forks | 10,335 |
+| Issues | 217 |
 | Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
 | 许可证 | Apache License 2.0 |
 
 
-### pingcap/tidb
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
-**描述**: TiDB - the open-source, cloud-native, distributed SQL database designed for modern applications.
 
-**发现来源**: trending
+### 🌟 高优先级
 
-**发现原因**: Trending in Go
 
-**质量评分**: 90/100
+### dair-ai/Prompt-Engineering-Guide
+
+**描述**: 🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 100/100
 
 **活跃度**: high
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 39,872 |
-| 语言 | Go |
-| Forks | 6,125 |
-| Issues | 5,763 |
-| Topics | cloud-native, database, distributed-database, distributed-transactions, go, hacktoberfest, htap, mysql, mysql-compatibility, scale, serverless, sql, tidb |
-| 许可证 | Apache License 2.0 |
+| Stars | 71,203 |
+| 语言 | MDX |
+| Forks | 7,586 |
+| Issues | 248 |
+| Topics | agent, agents, ai-agents, chatgpt, deep-learning, generative-ai, language-model, llms, openai, prompt-engineering, rag |
+| 许可证 | MIT License |
 
+---
 
-## 📚 学习资源 (6 个项目) { #学习资源 }
+这是一个拥有7.1万+ Stars的提示工程领域权威指南，系统性整合了Prompt Engineering、RAG、AI Agents等前沿技术的完整知识体系，是开发者快速掌握大语言模型应用开发的必备资源库。
 
+**技术亮点**:
+- 全面覆盖提示工程、上下文工程、RAG检索增强生成和AI Agents四大核心技术领域
+- 提供可交互的MDX Notebook实践教程，理论结合代码实战
+- 整合最新学术论文、最佳实践和行业案例，保持内容前沿性
+- 涵盖从基础Prompt设计到复杂Agent系统构建的完整技术栈
+- MIT开源许可，支持社区协作和持续更新迭代
 
-### 🌟 高优先级
+**适用场景**:
+- 企业AI团队构建LLM应用时，作为提示工程和RAG架构设计的最佳实践参考
+- 个人开发者学习大模型应用开发，从Prompt设计到Agent系统构建的系统教程
+- AI产品经理和研究人员快速了解提示工程领域最新进展和技术方案
+
 
 
 ### f/prompts.chat
@@ -3527,34 +3625,33 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,307 |
+| Stars | 150,357 |
 | 语言 | HTML |
-| Forks | 19,744 |
+| Forks | 19,749 |
 | Issues | 12 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 
-### hesreallyhim/awesome-claude-code
+### asgeirtj/system_prompts_leaks
 
-**描述**: A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic
+**描述**: Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini
 
 **发现来源**: keyword
 
 **发现原因**: Keyword: Claude
 
-**质量评分**: 100/100
+**质量评分**: 95/100
 
 **活跃度**: high
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 26,531 |
-| 语言 | Python |
-| Forks | 1,666 |
-| Issues | 74 |
-| Topics | agent-skills, agentic-code, agentic-coding, ai-workflow-optimization, ai-workflows, anthropic, anthropic-claude, awesome, awesome-list, awesome-lists, awesome-resources, claude, claude-code, coding-agent, coding-agents, coding-assistant, coding-assistants, llm |
-| 许可证 | Other |
+| Stars | 33,875 |
+| 语言 | HTML |
+| Forks | 5,412 |
+| Issues | 31 |
+| Topics | ai, anthropic, chatbots, chatgpt, claude, gemini, generative-ai, google-deepmind, large-language-models, llm, openai, prompt-engineering, prompt-injection, prompts |
 
 
 ### storybookjs/storybook
@@ -3571,10 +3668,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,369 |
+| Stars | 89,368 |
 | 语言 | TypeScript |
-| Forks | 9,883 |
-| Issues | 2,238 |
+| Forks | 9,887 |
+| Issues | 2,222 |
 | Topics | angular, components, design-systems, documentation, html, javascript, react, react-native, stories, storybook, styleguide, svelte, testing, typescript, ui, vite, vue, web-components, webpack, workshop |
 | 许可证 | MIT License |
 
@@ -3593,12 +3690,34 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 86,512 |
+| Stars | 86,522 |
 | 语言 | TypeScript |
 | Forks | 8,698 |
-| Issues | 1,621 |
+| Issues | 1,622 |
 | Topics | diagrams, diagrams-as-code, documentation, flowchart, javascript, mindmap, typescript, uml-diagrams |
 | 许可证 | MIT License |
+
+
+### Chalarangelo/30-seconds-of-code
+
+**描述**: Coding articles to level up your development skills
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 126,967 |
+| 语言 | JavaScript |
+| Forks | 12,442 |
+| Issues | 4 |
+| Topics | astro, awesome-list, css, education, es6-javascript, git, html, javascript, learn-to-code, learning-resources, nodejs, programming, snippets |
+| 许可证 | Creative Commons Attribution 4.0 International |
 
 
 ### jaywcjlove/awesome-mac
@@ -3615,10 +3734,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 99,580 |
+| Stars | 99,597 |
 | 语言 | JavaScript |
-| Forks | 7,448 |
-| Issues | 203 |
+| Forks | 7,450 |
+| Issues | 205 |
 | Topics | app, apple, application, apps, awesome, awesome-list, awesome-lists, awesome-mac, desktop-app, desktop-application, desktop-apps, list, mac, mac-osx, macos, macos-app, macos-apps, macosx, software |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
@@ -3637,15 +3756,15 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 166,678 |
+| Stars | 166,713 |
 | 语言 | Go |
-| Forks | 13,014 |
+| Forks | 13,017 |
 | Issues | 173 |
 | Topics | awesome, awesome-list, go, golang, golang-library, hacktoberfest |
 | 许可证 | MIT License |
 
 
-## 📁 其他 (52 个项目) { #其他 }
+## 📁 其他 (62 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -3665,9 +3784,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 128,730 |
+| Stars | 128,947 |
 | 语言 | Unknown |
-| Forks | 32,818 |
+| Forks | 32,890 |
 | Issues | 126 |
 | Topics | ai, bolt, cluely, copilot, cursor, cursorai, devin, github-copilot, lovable, open-source, perplexity, replit, system-prompts, trae, trae-ai, trae-ide, v0, vscode, windsurf, windsurf-ai |
 | 许可证 | GNU General Public License v3.0 |
@@ -3687,17 +3806,17 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 40,874 |
+| Stars | 40,894 |
 | 语言 | TypeScript |
-| Forks | 3,769 |
-| Issues | 665 |
+| Forks | 3,771 |
+| Issues | 666 |
 | Topics | ai-agent, claude-code, code-agent, codex, openclaw, opencode, shannon, skills, superpowers, superpowers-core-skills, vibe-coding |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
 
 **发现来源**: trending
 
@@ -3709,65 +3828,21 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 268,910 |
+| Stars | 270,642 |
 | 语言 | TypeScript |
-| Forks | 51,378 |
-| Issues | 12,818 |
+| Forks | 51,680 |
+| Issues | 10,462 |
 | Topics | ai, assistant, crustacean, molty, openclaw, own-your-data, personal |
 | 许可证 | MIT License |
-
-
-### danielmiessler/Fabric
-
-**描述**: Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Go
-
-**质量评分**: 93/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,528 |
-| 语言 | Go |
-| Forks | 3,947 |
-| Issues | 23 |
-| Topics | ai, augmentation, flourishing, life, work |
-| 许可证 | MIT License |
-
-
-### ansible/ansible
-
-**描述**: Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy and maintain. Automate everything from code deployment to network configuration to cloud management, in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com.
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 91/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 68,212 |
-| 语言 | Python |
-| Forks | 24,179 |
-| Issues | 826 |
-| Topics | ansible, python |
-| 许可证 | GNU General Public License v3.0 |
 
 
 ### unclecode/crawl4ai
 
 **描述**: 🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN
 
-**发现来源**: trending
+**发现来源**: keyword
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Keyword: LLM
 
 **质量评分**: 91/100
 
@@ -3775,32 +3850,32 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 61,447 |
+| Stars | 61,457 |
 | 语言 | Python |
-| Forks | 6,273 |
+| Forks | 6,274 |
 | Issues | 272 |
 | 许可证 | Apache License 2.0 |
 
 
-### opendatalab/MinerU
+### hacksider/Deep-Live-Cam
 
-**描述**: Transforms complex documents like PDFs into LLM-ready markdown/JSON for your Agentic workflows.
+**描述**: real time face swap and one-click video deepfake with only a single image
 
 **发现来源**: trending
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Trending in Python
 
-**质量评分**: 91/100
+**质量评分**: 90/100
 
 **活跃度**: high
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,600 |
+| Stars | 79,876 |
 | 语言 | Python |
-| Forks | 4,606 |
-| Issues | 191 |
-| Topics | ai4science, document-analysis, extract-data, layout-analysis, ocr, parser, pdf, pdf-converter, pdf-extractor-llm, pdf-extractor-pretrain, pdf-extractor-rag, pdf-parser, python |
+| Forks | 11,638 |
+| Issues | 128 |
+| Topics | ai, ai-deep-fake, ai-face, ai-webcam, artificial-intelligence, deep-fake, deepfake, deepfake-webcam, faceswap, fake-webcam, gan, real-time-deepfake, realtime, realtime-deepfake, realtime-face-changer, video-deepfake, webcam, webcamera |
 | 许可证 | GNU Affero General Public License v3.0 |
 
 
@@ -3818,21 +3893,21 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 74,515 |
+| Stars | 74,604 |
 | 语言 | Python |
-| Forks | 6,357 |
-| Issues | 633 |
+| Forks | 6,364 |
+| Issues | 635 |
 | Topics | ai, copilot, development, engineering, prd, spec, spec-driven |
 | 许可证 | MIT License |
 
 
-### pathwaycom/pathway
+### EbookFoundation/free-programming-books
 
-**描述**: Python ETL framework for stream processing, real-time analytics, LLM pipelines, and RAG.
+**描述**: :books: Freely available programming books
 
 **发现来源**: trending
 
-**发现原因**: [keyword, trending] Trending in Python
+**发现原因**: Trending in Python
 
 **质量评分**: 88/100
 
@@ -3840,12 +3915,12 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,501 |
+| Stars | 383,674 |
 | 语言 | Python |
-| Forks | 1,611 |
-| Issues | 36 |
-| Topics | batch-processing, data-analytics, data-pipelines, data-processing, dataflow, etl, etl-framework, iot-analytics, kafka, machine-learning-algorithms, pathway, python, real-time, rust, stream-processing, streaming, time-series-analysis |
-| 许可证 | Other |
+| Forks | 66,012 |
+| Issues | 68 |
+| Topics | books, education, hacktoberfest, list, resource |
+| 许可证 | Creative Commons Attribution 4.0 International |
 
 
 ### iptv-org/iptv
@@ -3862,10 +3937,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,460 |
+| Stars | 112,488 |
 | 语言 | TypeScript |
-| Forks | 5,675 |
-| Issues | 298 |
+| Forks | 5,678 |
+| Issues | 304 |
 | Topics | iptv, m3u, playlist, streams, tv |
 | 许可证 | The Unlicense |
 
@@ -3884,33 +3959,12 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 100,772 |
+| Stars | 100,844 |
 | 语言 | TypeScript |
-| Forks | 7,332 |
-| Issues | 173 |
+| Forks | 7,337 |
+| Issues | 175 |
 | Topics | clash, clash-meta, clash-verge, linux, mac, mihomo, tauri-app, windows |
 | 许可证 | GNU General Public License v3.0 |
-
-
-### abi/screenshot-to-code
-
-**描述**: Drop in a screenshot and convert it to clean code (HTML/Tailwind/React/Vue)
-
-**发现来源**: trending
-
-**发现原因**: Trending in TypeScript
-
-**质量评分**: 88/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 71,802 |
-| 语言 | TypeScript |
-| Forks | 8,859 |
-| Issues | 117 |
-| 许可证 | MIT License |
 
 
 ### hashicorp/terraform
@@ -3927,7 +3981,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,889 |
+| Stars | 47,890 |
 | 语言 | Go |
 | Forks | 10,235 |
 | Issues | 1,913 |
@@ -3949,11 +4003,77 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,908 |
+| Stars | 96,958 |
 | 语言 | C++ |
-| Forks | 15,266 |
-| Issues | 1,206 |
+| Forks | 15,279 |
+| Issues | 1,202 |
 | Topics | ggml |
+| 许可证 | MIT License |
+
+
+### pathwaycom/pathway
+
+**描述**: Python ETL framework for stream processing, real-time analytics, LLM pipelines, and RAG.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: LLM
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 59,494 |
+| 语言 | Python |
+| Forks | 1,611 |
+| Issues | 36 |
+| Topics | batch-processing, data-analytics, data-pipelines, data-processing, dataflow, etl, etl-framework, iot-analytics, kafka, machine-learning-algorithms, pathway, python, real-time, rust, stream-processing, streaming, time-series-analysis |
+| 许可证 | Other |
+
+
+### vinta/awesome-python
+
+**描述**: An opinionated list of awesome Python frameworks, libraries, software and resources.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 285,892 |
+| 语言 | Python |
+| Forks | 27,300 |
+| Issues | 16 |
+| Topics | awesome, collections, python, python-framework, python-library, python-resources |
+| 许可证 | Other |
+
+
+### TheAlgorithms/Python
+
+**描述**: All Algorithms implemented in Python
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 218,394 |
+| 语言 | Python |
+| Forks | 50,121 |
+| Issues | 926 |
+| Topics | algorithm, algorithm-competitions, algorithms-implemented, algos, community-driven, education, hacktoberfest, interview, learn, practice, python, searches, sorting-algorithms, sorts |
 | 许可证 | MIT License |
 
 
@@ -3971,10 +4091,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,167 |
+| Stars | 85,174 |
 | 语言 | Python |
 | Forks | 36,918 |
-| Issues | 3,513 |
+| Issues | 3,490 |
 | Topics | asyncio, hacktoberfest, home-automation, internet-of-things, iot, mqtt, python, raspberry-pi |
 | 许可证 | Apache License 2.0 |
 
@@ -3993,37 +4113,16 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 77,692 |
+| Stars | 77,691 |
 | 语言 | Python |
-| Forks | 45,255 |
+| Forks | 45,253 |
 | Issues | 1,282 |
 | 许可证 | Other |
 
 
-### python/cpython
+### swisskyrepo/PayloadsAllTheThings
 
-**描述**: The Python programming language
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 71,856 |
-| 语言 | Python |
-| Forks | 34,182 |
-| Issues | 9,285 |
-| 许可证 | Other |
-
-
-### commaai/openpilot
-
-**描述**: openpilot is an operating system for robotics. Currently, it upgrades the driver assistance system on 300+ supported cars.
+**描述**: A list of useful payloads and bypass for Web Application Security and Pentest/CTF
 
 **发现来源**: trending
 
@@ -4035,11 +4134,11 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 60,235 |
+| Stars | 75,774 |
 | 语言 | Python |
-| Forks | 10,674 |
-| Issues | 278 |
-| Topics | advanced-driver-assistance-systems, driver-assistance-systems, robotics |
+| Forks | 16,711 |
+| Issues | 13 |
+| Topics | bounty, bugbounty, bypass, cheatsheet, enumeration, hacking, hacktoberfest, methodology, payload, payloads, penetration-testing, pentest, privilege-escalation, redteam, security, vulnerability, web-application |
 | 许可证 | MIT License |
 
 
@@ -4057,10 +4156,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 437,833 |
+| Stars | 437,843 |
 | 语言 | TypeScript |
-| Forks | 43,522 |
-| Issues | 277 |
+| Forks | 43,524 |
+| Issues | 276 |
 | Topics | careers, certification, community, curriculum, d3, education, freecodecamp, javascript, learn-to-code, math, nodejs, nonprofits, programming, react, teachers |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
@@ -4079,9 +4178,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 350,289 |
+| Stars | 350,320 |
 | 语言 | TypeScript |
-| Forks | 43,739 |
+| Forks | 43,742 |
 | Issues | 40 |
 | Topics | angular-roadmap, backend-roadmap, blockchain-roadmap, computer-science, dba-roadmap, developer-roadmap, devops-roadmap, frontend-roadmap, go-roadmap, java-roadmap, javascript-roadmap, nodejs-roadmap, python-roadmap, qa-roadmap, react-roadmap, roadmap, software-architect-roadmap, vue-roadmap |
 | 许可证 | Other |
@@ -4101,12 +4200,34 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 118,127 |
+| Stars | 118,147 |
 | 语言 | TypeScript |
-| Forks | 12,754 |
-| Issues | 2,843 |
+| Forks | 12,763 |
+| Issues | 2,825 |
 | Topics | canvas, collaboration, diagrams, drawing, hacktoberfest, productivity, whiteboard |
 | 许可证 | MIT License |
+
+
+### microsoft/TypeScript
+
+**描述**: TypeScript is a superset of JavaScript that compiles to clean JavaScript output.
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 108,034 |
+| 语言 | TypeScript |
+| Forks | 13,261 |
+| Issues | 5,473 |
+| Topics | javascript, language, typechecker, typescript |
+| 许可证 | Apache License 2.0 |
 
 
 ### shadcn-ui/ui
@@ -4123,10 +4244,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 107,808 |
+| Stars | 107,840 |
 | 语言 | TypeScript |
-| Forks | 8,014 |
-| Issues | 1,763 |
+| Forks | 8,016 |
+| Issues | 1,767 |
 | Topics | base-ui, components, nextjs, radix-ui, react, shadcn, tailwindcss, ui |
 | 许可证 | MIT License |
 
@@ -4145,10 +4266,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,676 |
+| Stars | 97,680 |
 | 语言 | TypeScript |
-| Forks | 54,549 |
-| Issues | 1,378 |
+| Forks | 54,548 |
+| Issues | 1,368 |
 | Topics | ant-design, antd, design-systems, react, typescript, ui-kit, ui-library |
 | 许可证 | MIT License |
 
@@ -4167,12 +4288,34 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 94,124 |
+| Stars | 94,149 |
 | 语言 | TypeScript |
-| Forks | 5,016 |
-| Issues | 654 |
+| Forks | 5,020 |
+| Issues | 657 |
 | Topics | backup-tool, flutter, google-photos, google-photos-alternative, javascript, mobile-app, nestjs, nodejs, photo-gallery, photos, photos-management, self-hosted, svelte, sveltekit, typescript, videos |
 | 许可证 | GNU Affero General Public License v3.0 |
+
+
+### tailwindlabs/tailwindcss
+
+**描述**: A utility-first CSS framework for rapid UI development.
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 93,929 |
+| 语言 | TypeScript |
+| Forks | 5,097 |
+| Issues | 84 |
+| Topics | css, css-framework, functional-css, postcss, responsive, tailwindcss, utility-classes |
+| 许可证 | MIT License |
 
 
 ### realworld-apps/realworld
@@ -4192,8 +4335,29 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | Stars | 82,927 |
 | 语言 | TypeScript |
 | Forks | 7,572 |
-| Issues | 38 |
+| Issues | 37 |
 | 许可证 | MIT License |
+
+
+### modelcontextprotocol/servers
+
+**描述**: Model Context Protocol Servers
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 80,351 |
+| 语言 | TypeScript |
+| Forks | 9,789 |
+| Issues | 433 |
+| 许可证 | Other |
 
 
 ### vitejs/vite
@@ -4210,10 +4374,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 78,629 |
+| Stars | 78,631 |
 | 语言 | TypeScript |
-| Forks | 7,880 |
-| Issues | 629 |
+| Forks | 7,884 |
+| Issues | 620 |
 | Topics | build-tool, dev-server, frontend, hmr, vite |
 | 许可证 | MIT License |
 
@@ -4232,9 +4396,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 243,660 |
+| Stars | 243,682 |
 | 语言 | JavaScript |
-| Forks | 50,654 |
+| Forks | 50,661 |
 | Issues | 1,148 |
 | Topics | declarative, frontend, javascript, library, react, ui |
 | 许可证 | MIT License |
@@ -4254,10 +4418,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 138,178 |
+| Stars | 138,189 |
 | 语言 | JavaScript |
-| Forks | 30,556 |
-| Issues | 3,422 |
+| Forks | 30,558 |
+| Issues | 3,417 |
 | Topics | blog, browser, compiler, components, hybrid, nextjs, node, react, server-rendering, ssg, static, static-site-generator, universal, vercel |
 | 许可证 | MIT License |
 
@@ -4276,10 +4440,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 116,102 |
+| Stars | 116,109 |
 | 语言 | JavaScript |
-| Forks | 34,938 |
-| Issues | 2,504 |
+| Forks | 34,941 |
+| Issues | 2,506 |
 | Topics | javascript, js, linux, macos, mit, node, nodejs, runtime, windows |
 | 许可证 | Other |
 
@@ -4298,10 +4462,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 111,197 |
+| Stars | 111,200 |
 | 语言 | JavaScript |
-| Forks | 36,281 |
-| Issues | 597 |
+| Forks | 36,282 |
+| Issues | 596 |
 | Topics | 3d, augmented-reality, canvas, html5, javascript, svg, virtual-reality, webaudio, webgl, webgl2, webgpu, webxr |
 | 许可证 | MIT License |
 
@@ -4320,10 +4484,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 108,588 |
+| Stars | 108,589 |
 | 语言 | JavaScript |
-| Forks | 11,534 |
-| Issues | 349 |
+| Forks | 11,535 |
+| Issues | 348 |
 | Topics | hacktoberfest, http-client, javascript, nodejs, promise |
 | 许可证 | MIT License |
 
@@ -4342,10 +4506,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,009 |
+| Stars | 98,013 |
 | 语言 | JavaScript |
-| Forks | 32,714 |
-| Issues | 1,721 |
+| Forks | 32,713 |
+| Issues | 1,722 |
 | Topics | design-system, material-design, material-ui, react, react-components |
 | 许可证 | MIT License |
 
@@ -4364,10 +4528,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,390 |
+| Stars | 95,389 |
 | 语言 | JavaScript |
-| Forks | 15,202 |
-| Issues | 37 |
+| Forks | 15,208 |
+| Issues | 38 |
 | Topics | css, curriculum, education, html, javascript, learning, microsoft-for-beginners, tutorials |
 | 许可证 | MIT License |
 
@@ -4386,11 +4550,99 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 86,007 |
+| Stars | 86,013 |
 | 语言 | JavaScript |
-| Forks | 4,793 |
+| Forks | 4,795 |
 | Issues | 976 |
 | Topics | compiler, template, ui |
+| 许可证 | MIT License |
+
+
+### anuraghazra/github-readme-stats
+
+**描述**: :zap: Dynamically generated stats for your github readmes
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 78,636 |
+| 语言 | JavaScript |
+| Forks | 31,339 |
+| Issues | 270 |
+| Topics | dynamic, profile-readme, readme-generator, readme-stats, serverless |
+| 许可证 | MIT License |
+
+
+### hakimel/reveal.js
+
+**描述**: The HTML Presentation Framework
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 70,673 |
+| 语言 | JavaScript |
+| Forks | 16,803 |
+| Issues | 890 |
+| Topics | presentations, slides, slideshow |
+| 许可证 | MIT License |
+
+
+### chartjs/Chart.js
+
+**描述**: Simple HTML5 Charts using the <canvas> tag
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 67,223 |
+| 语言 | JavaScript |
+| Forks | 11,988 |
+| Issues | 536 |
+| Topics | canvas, chart, graph, html5, html5-charts, javascript |
+| 许可证 | MIT License |
+
+
+### leonardomso/33-js-concepts
+
+**描述**: 📜 33 JavaScript concepts every developer should know.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 66,263 |
+| 语言 | JavaScript |
+| Forks | 9,183 |
+| Issues | 1 |
+| Topics | angular, concepts, es6, es6-javascript, hacktoberfest, javascript, javascript-closures, javascript-engines, javascript-programming, nodejs, primitive-types, programming, react |
 | 许可证 | MIT License |
 
 
@@ -4408,17 +4660,17 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 66,023 |
+| Stars | 66,024 |
 | 语言 | JavaScript |
-| Forks | 9,306 |
-| Issues | 206 |
+| Forks | 9,304 |
+| Issues | 202 |
 | Topics | amd, build-tool, commonjs, compiler, es2015, es6, esm, javascript, javascript-compiler, javascript-modules, loaders, module-bundler, plugins, web, web-performance, webpack |
 | 许可证 | MIT License |
 
 
-### mozilla/pdf.js
+### gorhill/uBlock
 
-**描述**: PDF Reader in JavaScript
+**描述**: uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
 
 **发现来源**: trending
 
@@ -4430,38 +4682,61 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 52,930 |
+| Stars | 61,928 |
 | 语言 | JavaScript |
-| Forks | 10,587 |
-| Issues | 484 |
+| Forks | 3,967 |
+| Issues | 17 |
+| Topics | blocker, browser-extension, chromium, firefox, javascript, ublock, ublock-origin |
+| 许可证 | GNU General Public License v3.0 |
+
+
+### jquery/jquery
+
+**描述**: jQuery JavaScript Library
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 59,853 |
+| 语言 | JavaScript |
+| Forks | 20,472 |
+| Issues | 97 |
+| Topics | jquery |
+| 许可证 | MIT License |
+
+
+### jgraph/drawio-desktop
+
+**描述**: Official electron build of draw.io
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 59,688 |
+| 语言 | JavaScript |
+| Forks | 5,597 |
+| Issues | 65 |
+| Topics | diagram-editor, electron-app, graphics, javascript-applications |
 | 许可证 | Apache License 2.0 |
 
 
-### TryGhost/Ghost
+### h5bp/html5-boilerplate
 
-**描述**: Independent technology for modern publishing, memberships, subscriptions and newsletters.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 51,973 |
-| 语言 | JavaScript |
-| Forks | 11,354 |
-| Issues | 361 |
-| Topics | blogging, cms, ghost, javascript, journalism, nodejs, publishing, web-application |
-| 许可证 | MIT License |
-
-
-### parcel-bundler/parcel
-
-**描述**: The zero configuration build tool for the web. 📦🚀
+**描述**: A professional front-end template for building fast, robust, and adaptable web apps or sites.
 
 **发现来源**: trending
 
@@ -4473,165 +4748,11 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 44,048 |
+| Stars | 57,396 |
 | 语言 | JavaScript |
-| Forks | 2,277 |
-| Issues | 591 |
-| Topics | assets, build-tool, commonjs, compiler, css, es6, html, javascript, module-bundler, modules, web |
-| 许可证 | MIT License |
-
-
-### nwjs/nw.js
-
-**描述**: Call all Node.js modules directly from DOM/WebWorker and enable a new way of writing applications with all Web technologies.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 41,565 |
-| 语言 | JavaScript |
-| Forks | 3,871 |
-| Issues | 959 |
-| Topics | desktop, javascript, node-webkit, nodejs, nwjs, web-application-framework |
-| 许可证 | MIT License |
-
-
-### dcloudio/uni-app
-
-**描述**: A cross-platform framework using Vue.js
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 41,446 |
-| 语言 | JavaScript |
-| Forks | 3,717 |
-| Issues | 716 |
-| Topics | android, cross-platform, crossplatform, hbuilderx, ios, javascript, miniprogram, uni, uni-app, uniapp, vue, vue3 |
-| 许可证 | Apache License 2.0 |
-
-
-### zen-browser/desktop
-
-**描述**: Welcome to a calmer internet
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 40,484 |
-| 语言 | JavaScript |
-| Forks | 1,358 |
-| Issues | 529 |
-| Topics | firefox, firefox-based, firefox-browser, zen-browser |
-| 许可证 | Mozilla Public License 2.0 |
-
-
-### HeyPuter/puter
-
-**描述**: 🌐 The Internet Computer! Free, Open-Source, and Self-Hostable.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,816 |
-| 语言 | JavaScript |
-| Forks | 3,527 |
-| Issues | 193 |
-| Topics | cloud, cloud-os, cloud-storage, desktop, desktop-environment, dropbox, good-first-issue, gui, javascript, nas, open-source, operating-system, os, osjs, puter, remote-desktop, storage, web-desktop, web-os, webtop |
-| 许可证 | GNU Affero General Public License v3.0 |
-
-
-### phaserjs/phaser
-
-**描述**: Phaser is a fun, free and fast 2D game framework for making HTML5 games for desktop and mobile web browsers, supporting Canvas and WebGL rendering.
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 39,129 |
-| 语言 | JavaScript |
-| Forks | 7,129 |
-| Issues | 114 |
-| Topics | canvas, discord-activities, facebook-instant-games, game-development, game-frameworks, gamedev, html5-game-development, javascript, phaser, phaser-development, phaserjs, webgl, youtube-playables |
-| 许可证 | MIT License |
-
-
-### fastify/fastify
-
-**描述**: Fast and low overhead web framework, for Node.js
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 35,755 |
-| 语言 | JavaScript |
-| Forks | 2,607 |
-| Issues | 125 |
-| Topics | hacktoberfest, nodejs, performance, speed, webframework |
-| 许可证 | MIT License |
-
-
-### sahat/hackathon-starter
-
-**描述**: A boilerplate for Node.js web applications
-
-**发现来源**: trending
-
-**发现原因**: Trending in JavaScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 35,211 |
-| 语言 | JavaScript |
-| Forks | 8,180 |
-| Issues | 1 |
-| Topics | boilerplate, hackathon, hacktoberfest, nodejs, oauth2, starter-kit |
+| Forks | 12,309 |
+| Issues | 24 |
+| Topics | best-practices, css, html, html5, html5-boilerplate, javascript, robust |
 | 许可证 | MIT License |
 
 
@@ -4649,10 +4770,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 132,914 |
+| Stars | 132,920 |
 | 语言 | Go |
-| Forks | 18,842 |
-| Issues | 9,826 |
+| Forks | 18,845 |
+| Issues | 9,820 |
 | Topics | go, golang, language, programming-language |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
@@ -4671,11 +4792,33 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 104,921 |
+| Stars | 104,930 |
 | 语言 | Go |
 | Forks | 14,921 |
 | Issues | 40 |
 | Topics | expose, firewall, frp, go, http-proxy, nat, p2p, proxy, reverse-proxy, tunnel |
+| 许可证 | Apache License 2.0 |
+
+
+### gohugoio/hugo
+
+**描述**: The world’s fastest framework for building websites.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 85/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 86,937 |
+| 语言 | Go |
+| Forks | 8,197 |
+| Issues | 273 |
+| Topics | blog-engine, cms, content-management-system, documentation-tool, go, hugo, static-site-generator |
 | 许可证 | Apache License 2.0 |
 
 
@@ -4693,7 +4836,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,551 |
+| Stars | 80,559 |
 | 语言 | Go |
 | Forks | 4,947 |
 | Issues | 403 |
@@ -4715,7 +4858,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 68,707 |
+| Stars | 68,708 |
 | 语言 | Go |
 | Forks | 3,215 |
 | Issues | 15 |
@@ -4736,9 +4879,9 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,874 |
+| Stars | 55,882 |
 | 语言 | Go |
-| Forks | 4,946 |
+| Forks | 4,947 |
 | Issues | 1,130 |
 | Topics | azure-blob, azure-blob-storage, azure-files, backblaze-b2, cloud-storage, dropbox, encryption, ftp, fuse-filesystem, go, golang, google-cloud-storage, google-drive, onedrive, openstack-swift, rclone, s3, sftp, sync, webdav |
 | 许可证 | MIT License |
@@ -4758,10 +4901,10 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,892 |
+| Stars | 50,895 |
 | 语言 | Go |
-| Forks | 21,827 |
-| Issues | 390 |
+| Forks | 21,829 |
+| Issues | 385 |
 | Topics | blockchain, ethereum, geth, go, p2p |
 | 许可证 | GNU Lesser General Public License v3.0 |
 
@@ -4780,9 +4923,208 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,114 |
+| Stars | 49,116 |
 | 语言 | Go |
-| Forks | 7,983 |
-| Issues | 577 |
+| Forks | 7,982 |
+| Issues | 572 |
 | Topics | file-server, gin, golang, onedrive, solidjs, webdav |
 | 许可证 | GNU Affero General Public License v3.0 |
+
+
+### 521xueweihan/HelloGitHub
+
+**描述**: :octocat: 分享 GitHub 上有趣、入门级的开源项目。Share interesting, entry-level open source projects on GitHub.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 80/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 145,027 |
+| 语言 | Python |
+| Forks | 11,174 |
+| Issues | 286 |
+| Topics | awesome, github, hellogithub, python |
+
+
+### ⭐ 中优先级
+
+
+### ytdl-org/youtube-dl
+
+**描述**: Command-line program to download videos from YouTube.com and other video sites
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 139,808 |
+| 语言 | Python |
+| Forks | 10,602 |
+| Issues | 4,118 |
+| 许可证 | The Unlicense |
+
+
+### 3b1b/manim
+
+**描述**: Animation engine for explanatory math videos
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 84,999 |
+| 语言 | Python |
+| Forks | 7,150 |
+| Issues | 474 |
+| Topics | 3b1b-videos, animation, explanatory-math-videos, python |
+| 许可证 | MIT License |
+
+
+### trekhleb/javascript-algorithms
+
+**描述**: 📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 195,748 |
+| 语言 | JavaScript |
+| Forks | 31,113 |
+| Issues | 393 |
+| Topics | algorithm, algorithms, computer-science, data-structures, interview, interview-preparation, javascript, javascript-algorithms |
+| 许可证 | MIT License |
+
+
+### airbnb/javascript
+
+**描述**: JavaScript Style Guide
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 148,101 |
+| 语言 | JavaScript |
+| Forks | 26,775 |
+| Issues | 188 |
+| Topics | arrow-functions, es2015, es2016, es2017, es2018, es6, eslint, javascript, linting, naming-conventions, style-guide, style-linter, styleguide, tc39 |
+| 许可证 | MIT License |
+
+
+### FortAwesome/Font-Awesome
+
+**描述**: The iconic SVG, font, and CSS toolkit
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 76,397 |
+| 语言 | JavaScript |
+| Forks | 12,243 |
+| Issues | 315 |
+| Topics | css, font, fontawesome, icons, svg-icons, svg-sprites, webfont |
+| 许可证 | Other |
+
+
+### juliangarnier/anime
+
+**描述**: JavaScript animation engine
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 66,752 |
+| 语言 | JavaScript |
+| Forks | 4,464 |
+| Issues | 93 |
+| Topics | animation, anime, canvas, css, javascript, javascript-library, svg |
+| 许可证 | MIT License |
+
+
+### lodash/lodash
+
+**描述**: A modern JavaScript utility library delivering modularity, performance, & extras.
+
+**发现来源**: trending
+
+**发现原因**: Trending in JavaScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 61,581 |
+| 语言 | JavaScript |
+| Forks | 7,124 |
+| Issues | 125 |
+| Topics | javascript, lodash, modules, utilities |
+| 许可证 | Other |
+
+
+### coreybutler/nvm-windows
+
+**描述**: A node.js version management utility for Windows. Ironically written in Go.
+
+**发现来源**: trending
+
+**发现原因**: Trending in Go
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 45,257 |
+| 语言 | Go |
+| Forks | 3,747 |
+| Issues | 95 |
+| Topics | go, management, node, node-version-manager, nodejs, nvm, switch, version, version-manager, versioning, windows |
+| 许可证 | MIT License |
