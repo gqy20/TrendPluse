@@ -7,7 +7,7 @@
 import argparse
 import os
 
-from trendpluse.app.pipeline import TrendPulsePipeline
+from trendpluse.app.runtime import run_weekly_pipeline
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
 
@@ -25,10 +25,10 @@ def main():
     logger.info("开始生成周报...")
 
     settings = Settings()
-    pipeline = TrendPulsePipeline(settings=settings)
 
     try:
-        weekly_report = pipeline.run_weekly()
+        result = run_weekly_pipeline(settings=settings)
+        weekly_report = result.report
         logger.info(f"周报生成成功: {weekly_report.week_id}")
         logger.info(f"  - 包含日报: {weekly_report.daily_reports_count} 天")
         signal_count = len(
@@ -36,6 +36,7 @@ def main():
         )
         logger.info(f"  - 趋势信号: {signal_count} 个")
         logger.info(f"  - 高影响信号: {weekly_report.high_impact_signals} 个")
+        logger.info(f"  - 输出路径: {result.output_path}")
     except Exception as e:
         logger.error(f"周报生成失败: {e}")
         raise

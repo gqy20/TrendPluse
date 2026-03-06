@@ -8,13 +8,12 @@ import asyncio
 import os
 import sys
 from datetime import datetime
-from pathlib import Path
 
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 
-from trendpluse.app.pipeline import TrendPulsePipeline
+from trendpluse.app.runtime import run_daily_pipeline
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
 
@@ -90,16 +89,12 @@ def main():
         console.print(f"  ✓ 模型: {settings.anthropic_model}")
         console.print(f"  ✓ API: {settings.anthropic_base_url}")
 
-        # 初始化 Pipeline
-        console.print("\n[bold]初始化 Pipeline...[/bold]")
-        pipeline = TrendPulsePipeline(settings=settings)
-        console.print("  ✓ 所有组件已就绪")
-
         # 运行每日分析
         console.print("\n[bold]开始分析...[/bold]")
         logger.info("Daily pipeline started")
         date = datetime.now()
-        report = asyncio.run(pipeline.run_daily_async(date=date))
+        result = asyncio.run(run_daily_pipeline(settings=settings, date=date))
+        report = result.report
         logger.info("Daily pipeline finished")
 
         # 显示结果
@@ -129,9 +124,8 @@ def main():
         )
 
         # 显示报告路径
-        output_path = pipeline._get_output_path(date)
-        if Path(output_path).exists():
-            console.print(f"\n[green]报告已保存到:[/green] {output_path}")
+        if result.output_path.exists():
+            console.print(f"\n[green]报告已保存到:[/green] {result.output_path}")
 
     except Exception as e:
         console.print(
