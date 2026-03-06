@@ -12,6 +12,7 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial
 
 logger = get_logger(__name__)
 
@@ -48,6 +49,54 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             retry_max_attempts=retry_max_attempts,
             retry_wait_min=retry_wait_min,
             retry_wait_max=retry_wait_max,
+        )
+
+    @staticmethod
+    def _material_to_release(material: AnalysisMaterial) -> dict[str, Any]:
+        """将分析材料还原为 release 分析所需结构。"""
+        raw_payload = dict(material.raw_payload)
+        if "repo" not in raw_payload:
+            raw_payload["repo"] = material.source_ref.repo
+        if "tag_name" not in raw_payload:
+            raw_payload["tag_name"] = material.source_ref.external_id
+        if "html_url" not in raw_payload:
+            raw_payload["html_url"] = material.source_ref.url
+        if "body" not in raw_payload:
+            raw_payload["body"] = material.body
+        if "name" not in raw_payload:
+            raw_payload["name"] = material.title
+        if "author" not in raw_payload:
+            raw_payload["author"] = material.author
+        if "created_at" not in raw_payload:
+            raw_payload["created_at"] = material.created_at
+        if "published_at" not in raw_payload:
+            raw_payload["published_at"] = material.updated_at
+        if "version_info" not in raw_payload:
+            raw_payload["version_info"] = material.source_ref.metadata.get(
+                "version_info", {}
+            )
+        return raw_payload
+
+    def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
+        """分析 release 材料列表。"""
+        detailed_releases = [
+            self._material_to_release(material)
+            for material in materials
+            if material.source_ref.source_type == "release"
+        ]
+        return self.analyze_releases({"detailed_releases": detailed_releases})
+
+    async def analyze_materials_async(
+        self, materials: list[AnalysisMaterial]
+    ) -> list[Signal]:
+        """异步分析 release 材料列表。"""
+        detailed_releases = [
+            self._material_to_release(material)
+            for material in materials
+            if material.source_ref.source_type == "release"
+        ]
+        return await self.analyze_releases_async(
+            {"detailed_releases": detailed_releases}
         )
 
     def analyze_releases(self, releases: dict[str, Any]) -> list[Signal]:

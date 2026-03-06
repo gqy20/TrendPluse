@@ -7,6 +7,7 @@ import pytest
 
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.models.signal import ReleaseSummary
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 
 class TestReleaseSummarizer:
@@ -170,3 +171,47 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
                 summary_cn="测试",
                 impact_level=6,  # 高于最大值
             )
+
+    def test_summarize_materials_batch(self, summarizer):
+        """测试基于材料批量总结 Releases。"""
+        materials = [
+            AnalysisMaterial(
+                source_ref=SourceRef(
+                    source_type="release",
+                    provider="github",
+                    repo="anomalyco/opencode",
+                    external_id="v1.1.13",
+                    url="https://github.com/anomalyco/opencode/releases/tag/v1.1.13",
+                ),
+                title="v1.1.13",
+                body="Feature: Added new capabilities",
+                raw_payload={
+                    "repo": "anomalyco/opencode",
+                    "tag_name": "v1.1.13",
+                    "body": "Feature: Added new capabilities",
+                },
+            ),
+            AnalysisMaterial(
+                source_ref=SourceRef(
+                    source_type="release",
+                    provider="github",
+                    repo="test/repo",
+                    external_id="v2.0.0",
+                    url="https://github.com/test/repo/releases/tag/v2.0.0",
+                ),
+                title="v2.0.0",
+                body="Breaking: Major API changes",
+                raw_payload={
+                    "repo": "test/repo",
+                    "tag_name": "v2.0.0",
+                    "body": "Breaking: Major API changes",
+                },
+            ),
+        ]
+
+        summaries = summarizer.summarize_materials(materials)
+
+        assert isinstance(summaries, dict)
+        assert len(summaries) == 2
+        assert "anomalyco/opencode@v1.1.13" in summaries
+        assert "test/repo@v2.0.0" in summaries

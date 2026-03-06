@@ -13,6 +13,7 @@ from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import ReleaseSummary
+from trendpluse.models.source import AnalysisMaterial
 
 logger = get_logger(__name__)
 
@@ -108,6 +109,31 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
         return summaries
 
+    @staticmethod
+    def _material_to_release(material: AnalysisMaterial) -> dict:
+        """将分析材料还原为 release 总结所需结构。"""
+        raw_payload = dict(material.raw_payload)
+        if "repo" not in raw_payload:
+            raw_payload["repo"] = material.source_ref.repo
+        if "tag_name" not in raw_payload:
+            raw_payload["tag_name"] = material.source_ref.external_id
+        if "body" not in raw_payload:
+            raw_payload["body"] = material.body
+        return raw_payload
+
+    def summarize_materials(
+        self,
+        materials: list[AnalysisMaterial],
+        max_workers: int = 5,
+    ) -> dict[str, ReleaseSummary]:
+        """基于分析材料批量总结 Releases。"""
+        releases = [
+            self._material_to_release(material)
+            for material in materials
+            if material.source_ref.source_type == "release"
+        ]
+        return self.summarize_releases(releases, max_workers=max_workers)
+
     async def summarize_releases_async(
         self, detailed_releases: list[dict], max_workers: int = 5
     ) -> dict[str, ReleaseSummary]:
@@ -138,6 +164,17 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             summaries[key] = summary
 
         return summaries
+
+    async def summarize_materials_async(
+        self, materials: list[AnalysisMaterial], max_workers: int = 5
+    ) -> dict[str, ReleaseSummary]:
+        """基于分析材料异步批量总结 Releases。"""
+        releases = [
+            self._material_to_release(material)
+            for material in materials
+            if material.source_ref.source_type == "release"
+        ]
+        return await self.summarize_releases_async(releases, max_workers=max_workers)
 
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）

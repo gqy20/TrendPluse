@@ -143,14 +143,14 @@ class TestCommitSignalsClearing:
             related_repos=["test/repo"],
             sources=["https://github.com/test/repo/commit/abc123"],
         )
-        mock_commit_analyzer_instance.analyze_commits.return_value = [
+        mock_commit_analyzer_instance.analyze_materials.return_value = [
             mock_commit_signal
         ]
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         # 配置 Release 分析器
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         # 配置 Trend Analyzer
@@ -295,7 +295,7 @@ class TestCommitSignalsClearing:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         release_signal = Signal(
@@ -309,7 +309,7 @@ class TestCommitSignalsClearing:
             sources=["https://github.com/test/repo/releases/tag/v1.0.0"],
         )
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = [release_signal]
+        mock_release_analyzer_instance.analyze_materials.return_value = [release_signal]
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_pr_signal = Signal(

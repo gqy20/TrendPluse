@@ -4,6 +4,7 @@ from typing import Any
 from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 
 class TestReleaseAnalyzer:
@@ -227,3 +228,46 @@ class TestReleaseAnalyzer:
         assert len(signals) == 1
         assert signals[0].impact_score == 5
         assert "2.0" in signals[0].title
+
+    @patch("trendpluse.analyzers.base.Anthropic")
+    def test_analyze_materials_returns_signals(self, mock_anthropic):
+        """测试：分析 release 材料应返回信号列表。"""
+        mock_client = MagicMock()
+        mock_message = MagicMock()
+        response_json = (
+            '[{"title": "新版本发布", "type": "capability", '
+            '"category": "engineering", "impact_score": 4, '
+            '"why_it_matters": "重要功能更新", '
+            '"related_repos": ["test/repo"], '
+            '"sources": ["https://github.com/test/repo/releases/tag/v1.0.0"]}]'
+        )
+        mock_message.content = [MagicMock(text=response_json)]
+        mock_client.messages.create.return_value = mock_message
+        mock_anthropic.return_value = mock_client
+
+        analyzer = ReleaseAnalyzer(api_key="test_key")
+        materials = [
+            AnalysisMaterial(
+                source_ref=SourceRef(
+                    source_type="release",
+                    provider="github",
+                    repo="test/repo",
+                    external_id="v1.0.0",
+                    url="https://github.com/test/repo/releases/tag/v1.0.0",
+                ),
+                title="First Release",
+                body="Initial release",
+                author="alice",
+                raw_payload={
+                    "repo": "test/repo",
+                    "tag_name": "v1.0.0",
+                    "name": "First Release",
+                    "body": "Initial release",
+                },
+            )
+        ]
+
+        signals = analyzer.analyze_materials(materials)
+
+        assert len(signals) == 1
+        assert signals[0].title == "新版本发布"

@@ -39,7 +39,9 @@ from trendpluse.models.signal import (
     WeeklyReport,
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
+from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
 from trendpluse.readers.github_pr_reader import GitHubPRReader
+from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.reporters.markdown_reporter import MarkdownReporter
 from trendpluse.utils.issue_agent_io import load_issue_agent_report
 from trendpluse.utils.issue_io import dump_issues_to_jsonl
@@ -129,6 +131,8 @@ class TrendPulsePipeline:
             retry_wait_max=self.settings.llm_retry_wait_max,
         )
         self.reporter = MarkdownReporter()
+        self.commit_material_builder = CommitMaterialBuilder()
+        self.release_material_builder = ReleaseMaterialBuilder()
 
         # 初始化飞书通知器（如果配置了 webhook URL）
         self.notifier: FeishuNotifier | None = None
@@ -152,165 +156,56 @@ class TrendPulsePipeline:
         if date is None:
             date = datetime.now()
 
-        # 从当前时间往前推 24 小时
         day_ago = date - timedelta(days=1)
+        (
+            activity_data,
+            detailed_commits,
+            releases_data,
+            detailed_releases,
+            commit_signals,
+            release_signals,
+            breaking_changes,
+        ) = self._collect_daily_inputs(day_ago)
+        self._collect_issue_artifacts(date.strftime("%Y-%m-%d"))
 
-        # 0. 收集仓库活跃度数据（使用 GraphQL API，查询最近 24 小时）
-        activity_data, detailed_commits = (
-            self.activity_collector.collect_activity_graphql(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        )
+        candidates = self._collect_pr_candidates(day_ago)
 
-        # 0.3. 收集 Releases 数据（只分析最近 24 小时）
-        releases_data, detailed_releases = self.release_collector.collect_releases(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            include_prereleases=self.settings.include_prereleases,
-            max_workers=self.settings.max_parallel_workers,
-        )
-
-        # 0.4. 为 Releases 生成 AI 总结
-        if detailed_releases:
-            summaries = self.release_summarizer.summarize_releases(detailed_releases)
-            # 将 AI 总结附加到对应的 ReleaseInfo
-            for release in releases_data.releases:
-                key = f"{release.repo}@{release.version}"
-                if key in summaries:
-                    release.ai_summary = summaries[key]
-
-        # 0.5. 分析 commits 提取信号
-        commit_signals = []
-        if detailed_commits:
-            commit_signals = self.commit_analyzer.analyze_commits(detailed_commits)
-
-        # 0.6. 分析 releases 提取信号
-        release_signals = []
-        if detailed_releases:
-            # 构造分析器需要的格式
-            release_analysis_data = {"detailed_releases": detailed_releases}
-            release_signals = self.release_analyzer.analyze_releases(
-                release_analysis_data
-            )
-            if not release_signals:
-                logger.warning(
-                    "ReleaseAnalyzer 未产出信号，启用 deterministic fallback "
-                    "(releases=%d)",
-                    len(detailed_releases),
-                )
-                release_signals = self._build_release_fallback_signals(
-                    detailed_releases
-                )
-
-        # 0.7. 检测 breaking changes
-        breaking_changes = []
-        if detailed_releases:
-            release_analysis_data = {"detailed_releases": detailed_releases}
-            breaking_changes = self.breaking_changes_detector.detect_breaking_changes(
-                release_analysis_data
-            )
-
-        # 0.8. 收集 Issues（创建时间 90 天内，最近 3 天活跃）
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=self.settings.github_repos,
-            snapshot_date=date.strftime("%Y-%m-%d"),
-            max_workers=self.settings.max_parallel_workers,
-            max_issues_per_repo=self.settings.max_issues_per_repo,
-        )
-        if detailed_issues:
-            dump_issues_to_jsonl(
-                detailed_issues,
-                self.settings.issue_dump_dir,
-                date.strftime("%Y-%m-%d"),
-            )
-        self._run_issue_agent_analysis(date.strftime("%Y-%m-%d"))
-
-        # 0.9. Issue 分析已迁移到 Agent SDK（此处仅落盘）
-
-        # 1. 从 GitHub API 获取 PR（只分析最近 24 小时）
-        # 从当前时间往前推 24 小时
-        events = self.collector.fetch_events(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            max_workers=self.settings.max_parallel_workers,
-        )
-
-        # 2. 筛选候选事件
-        candidates = self.filter.filter_candidates(events)
-
-        # 如果没有候选事件，返回带活跃度、commit 和 release 信号的空报告
         if not candidates:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
 
-        # 3. 获取详细信息
-        pr_refs = self.pr_reader.refs_from_candidates(candidates)
-        pr_materials = self.pr_reader.read_many(
-            pr_refs,
-            max_workers=self.settings.max_parallel_workers,
-        )
-
+        pr_materials = self._read_pr_materials(candidates)
         if not pr_materials:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
 
-        # 4. AI 分析提取信号
         signals = self.analyzer.analyze_materials(pr_materials)
-
         if not signals:
             return self._handle_empty_report(
                 date, activity_data, commit_signals, releases_data
             )
 
-        # 4.5. 信号去重（只对 PR 信号去重）
         pr_signals = self.deduplicator.deduplicate(signals)
-
-        # 5. 使用跨类型聚合生成高层次趋势报告
         report = self.analyzer.aggregate_and_generate_report(
             pr_signals=pr_signals,
             commit_signals=commit_signals,
             release_signals=release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
-        if not isinstance(report.release_signals, list) or not report.release_signals:
-            report.release_signals = release_signals
-
-        # 5.5. 确保低层次 commit 信号被清空（避免重复显示）
-        # 虽然 TrendAnalyzer 尝试清空这些字段，但 LLM 返回的对象可能不遵守
-        # 这里强制清空以确保 Markdown 报告不会重复显示
-        report.commit_signals = []
-
-        # 6. 添加活跃度、release 数据和 breaking changes
-        report.activity = activity_data
-        report.releases = releases_data
-        report.breaking_changes = breaking_changes if breaking_changes else None
-        report.monitored_repos = self.settings.github_repos
-        report.issue_insights = load_issue_agent_report(
-            self.settings.issue_dump_dir,
-            date.strftime("%Y-%m-%d"),
-        )
-        # 使用统一口径覆盖统计，避免每日字段漂移
-        self._finalize_report_stats(
+        self._finalize_daily_report(
             report=report,
-            pr_signals_count=len(pr_signals),
-            commit_signals_count=len(commit_signals),
-            release_signals_count=len(release_signals),
-            total_commits_analyzed=len(detailed_commits),
-            total_releases=releases_data.total_count,
-            total_releases_analyzed=len(detailed_releases),
-            total_breaking_changes=len(breaking_changes),
+            date=date,
+            activity_data=activity_data,
+            releases_data=releases_data,
+            breaking_changes=breaking_changes,
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+            detailed_commits=detailed_commits,
+            detailed_releases=detailed_releases,
         )
-
-        # 7. 保存报告（同时保存 Markdown 和 JSON）
-        output_path = self._get_output_path(date)
-        self.reporter.save_report(report, output_path)
-        self._save_report_json(report, output_path)
-        self._send_notification(report)
-
         return report
 
     async def run_daily_async(self, date: datetime | None = None) -> DailyReport:
@@ -328,141 +223,20 @@ class TrendPulsePipeline:
             date = datetime.now()
 
         day_ago = date - timedelta(days=1)
+        (
+            activity_data,
+            detailed_commits,
+            releases_data,
+            detailed_releases,
+            commit_signals,
+            release_signals,
+            breaking_changes,
+        ) = await self._collect_daily_inputs_async(day_ago, date.strftime("%Y-%m-%d"))
 
         step_start = time.perf_counter()
-        activity_data, detailed_commits = (
-            self.activity_collector.collect_activity_graphql(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        )
+        candidates = self._collect_pr_candidates(day_ago)
         logger.info(
-            "Activity collection done in %.2fs (commits=%d)",
-            time.perf_counter() - step_start,
-            len(detailed_commits),
-        )
-
-        step_start = time.perf_counter()
-        releases_data, detailed_releases = self.release_collector.collect_releases(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            include_prereleases=self.settings.include_prereleases,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        logger.info(
-            "Release collection done in %.2fs (releases=%d)",
-            time.perf_counter() - step_start,
-            len(detailed_releases),
-        )
-
-        tasks: dict[str, asyncio.Task[Any]] = {}
-
-        if detailed_releases:
-            tasks["release_summaries"] = asyncio.create_task(
-                self.release_summarizer.summarize_releases_async(detailed_releases)
-            )
-            tasks["release_signals"] = asyncio.create_task(
-                self.release_analyzer.analyze_releases_async(
-                    {"detailed_releases": detailed_releases}
-                )
-            )
-            tasks["breaking_changes"] = asyncio.create_task(
-                self.breaking_changes_detector.detect_breaking_changes_async(
-                    {"detailed_releases": detailed_releases}
-                )
-            )
-
-        if detailed_commits:
-            tasks["commit_signals"] = asyncio.create_task(
-                self.commit_analyzer.analyze_commits_async(detailed_commits)
-            )
-
-        step_start = time.perf_counter()
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=self.settings.github_repos,
-            snapshot_date=date.strftime("%Y-%m-%d"),
-            max_workers=self.settings.max_parallel_workers,
-            max_issues_per_repo=self.settings.max_issues_per_repo,
-        )
-        if detailed_issues:
-            dump_issues_to_jsonl(
-                detailed_issues,
-                self.settings.issue_dump_dir,
-                date.strftime("%Y-%m-%d"),
-            )
-        await self._run_issue_agent_analysis_async(date.strftime("%Y-%m-%d"))
-        logger.info(
-            "Issue collection done in %.2fs (issues=%d)",
-            time.perf_counter() - step_start,
-            len(detailed_issues),
-        )
-
-        # Issue 分析已迁移到 Agent SDK（此处仅落盘）
-
-        results: dict[str, object] = {}
-        if tasks:
-            task_names = list(tasks.keys())
-            async_start = time.perf_counter()
-            task_results = await asyncio.gather(*tasks.values(), return_exceptions=True)
-            logger.info(
-                "Async analysis done in %.2fs (tasks=%d)",
-                time.perf_counter() - async_start,
-                len(task_names),
-            )
-            results = dict(zip(task_names, task_results))
-
-        summaries: dict[str, Any] = {}
-        summary_result = results.get("release_summaries")
-        if isinstance(summary_result, dict):
-            summaries = summary_result
-
-        if detailed_releases and summaries:
-            for release in releases_data.releases:
-                key = f"{release.repo}@{release.version}"
-                if key in summaries:
-                    release.ai_summary = summaries[key]
-
-        commit_signals: list[Any] = []
-        commit_result = results.get("commit_signals")
-        if isinstance(commit_result, list):
-            commit_signals = commit_result
-
-        release_signals: list[Any] = []
-        release_result = results.get("release_signals")
-        if isinstance(release_result, list):
-            release_signals = release_result
-        if detailed_releases and not release_signals:
-            logger.warning(
-                "ReleaseAnalyzer(异步) 未产出信号，启用 deterministic fallback "
-                "(releases=%d)",
-                len(detailed_releases),
-            )
-            release_signals = self._build_release_fallback_signals(detailed_releases)
-
-        breaking_changes: list[Any] = []
-        breaking_result = results.get("breaking_changes")
-        if isinstance(breaking_result, list):
-            breaking_changes = breaking_result
-
-        # Issue 分析已迁移到 Agent SDK（此处仅落盘）
-
-        step_start = time.perf_counter()
-        events = self.collector.fetch_events(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        logger.info(
-            "Event collection done in %.2fs (events=%d)",
-            time.perf_counter() - step_start,
-            len(events),
-        )
-
-        step_start = time.perf_counter()
-        candidates = self.filter.filter_candidates(events)
-        logger.info(
-            "Candidate filtering done in %.2fs (candidates=%d)",
+            "Candidate collection done in %.2fs (candidates=%d)",
             time.perf_counter() - step_start,
             len(candidates),
         )
@@ -517,10 +291,331 @@ class TrendPulsePipeline:
             release_signals=release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
+        logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
+        self._finalize_daily_report(
+            report=report,
+            date=date,
+            activity_data=activity_data,
+            releases_data=releases_data,
+            breaking_changes=breaking_changes,
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+            detailed_commits=detailed_commits,
+            detailed_releases=detailed_releases,
+        )
+        logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
+
+        return report
+
+    def _collect_daily_inputs(
+        self, day_ago: datetime
+    ) -> tuple[
+        ActivityData,
+        list[dict[str, Any]],
+        ReleasesData,
+        list[dict[str, Any]],
+        list[Any],
+        list[Any],
+        list[Any],
+    ]:
+        """同步收集日报所需的基础输入。"""
+        activity_data, detailed_commits = (
+            self.activity_collector.collect_activity_graphql(
+                repos=self.settings.github_repos,
+                since=day_ago,
+                max_workers=self.settings.max_parallel_workers,
+            )
+        )
+        releases_data, detailed_releases = self.release_collector.collect_releases(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            include_prereleases=self.settings.include_prereleases,
+            max_workers=self.settings.max_parallel_workers,
+        )
+        self._apply_release_summaries(releases_data, detailed_releases)
+        commit_signals = self._analyze_commit_signals(detailed_commits)
+        release_signals = self._analyze_release_signals(detailed_releases)
+        breaking_changes = self._detect_breaking_changes(detailed_releases)
+        return (
+            activity_data,
+            detailed_commits,
+            releases_data,
+            detailed_releases,
+            commit_signals,
+            release_signals,
+            breaking_changes,
+        )
+
+    async def _collect_daily_inputs_async(
+        self, day_ago: datetime, snapshot_date: str
+    ) -> tuple[
+        ActivityData,
+        list[dict[str, Any]],
+        ReleasesData,
+        list[dict[str, Any]],
+        list[Any],
+        list[Any],
+        list[Any],
+    ]:
+        """异步收集日报所需的基础输入。"""
+        step_start = time.perf_counter()
+        activity_data, detailed_commits = (
+            self.activity_collector.collect_activity_graphql(
+                repos=self.settings.github_repos,
+                since=day_ago,
+                max_workers=self.settings.max_parallel_workers,
+            )
+        )
+        logger.info(
+            "Activity collection done in %.2fs (commits=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_commits),
+        )
+
+        step_start = time.perf_counter()
+        releases_data, detailed_releases = self.release_collector.collect_releases(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            include_prereleases=self.settings.include_prereleases,
+            max_workers=self.settings.max_parallel_workers,
+        )
+        logger.info(
+            "Release collection done in %.2fs (releases=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_releases),
+        )
+
+        results = await self._run_async_analysis_tasks(
+            detailed_commits=detailed_commits,
+            detailed_releases=detailed_releases,
+            snapshot_date=snapshot_date,
+        )
+        commit_signals, release_signals, breaking_changes = (
+            self._resolve_async_analysis_results(results, detailed_releases)
+        )
+        self._apply_release_summary_results(
+            releases_data=releases_data,
+            detailed_releases=detailed_releases,
+            results=results,
+        )
+        return (
+            activity_data,
+            detailed_commits,
+            releases_data,
+            detailed_releases,
+            commit_signals,
+            release_signals,
+            breaking_changes,
+        )
+
+    async def _run_async_analysis_tasks(
+        self,
+        *,
+        detailed_commits: list[dict[str, Any]],
+        detailed_releases: list[dict[str, Any]],
+        snapshot_date: str,
+    ) -> dict[str, object]:
+        """运行异步分析任务并返回结果映射。"""
+        tasks: dict[str, asyncio.Task[Any]] = {}
+
+        if detailed_releases:
+            release_materials = self.release_material_builder.build(detailed_releases)
+            tasks["release_summaries"] = asyncio.create_task(
+                self.release_summarizer.summarize_materials_async(release_materials)
+            )
+            tasks["release_signals"] = asyncio.create_task(
+                self.release_analyzer.analyze_materials_async(release_materials)
+            )
+            tasks["breaking_changes"] = asyncio.create_task(
+                self.breaking_changes_detector.detect_breaking_changes_async(
+                    {"detailed_releases": detailed_releases}
+                )
+            )
+
+        if detailed_commits:
+            commit_materials = self.commit_material_builder.build(detailed_commits)
+            tasks["commit_signals"] = asyncio.create_task(
+                self.commit_analyzer.analyze_materials_async(commit_materials)
+            )
+
+        step_start = time.perf_counter()
+        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
+            repos=self.settings.github_repos,
+            snapshot_date=snapshot_date,
+            max_workers=self.settings.max_parallel_workers,
+            max_issues_per_repo=self.settings.max_issues_per_repo,
+        )
+        if detailed_issues:
+            dump_issues_to_jsonl(
+                detailed_issues,
+                self.settings.issue_dump_dir,
+                snapshot_date,
+            )
+        await self._run_issue_agent_analysis_async(snapshot_date)
+        logger.info(
+            "Issue collection done in %.2fs (issues=%d)",
+            time.perf_counter() - step_start,
+            len(detailed_issues),
+        )
+
+        if not tasks:
+            return {}
+
+        task_names = list(tasks.keys())
+        async_start = time.perf_counter()
+        task_results = await asyncio.gather(*tasks.values(), return_exceptions=True)
+        logger.info(
+            "Async analysis done in %.2fs (tasks=%d)",
+            time.perf_counter() - async_start,
+            len(task_names),
+        )
+        return dict(zip(task_names, task_results))
+
+    def _resolve_async_analysis_results(
+        self,
+        results: dict[str, object],
+        detailed_releases: list[dict[str, Any]],
+    ) -> tuple[list[Any], list[Any], list[Any]]:
+        """解析异步分析结果。"""
+        commit_signals: list[Any] = []
+        commit_result = results.get("commit_signals")
+        if isinstance(commit_result, list):
+            commit_signals = commit_result
+
+        release_signals: list[Any] = []
+        release_result = results.get("release_signals")
+        if isinstance(release_result, list):
+            release_signals = release_result
+        if detailed_releases and not release_signals:
+            logger.warning(
+                "ReleaseAnalyzer(异步) 未产出信号，启用 deterministic fallback "
+                "(releases=%d)",
+                len(detailed_releases),
+            )
+            release_signals = self._build_release_fallback_signals(detailed_releases)
+
+        breaking_changes: list[Any] = []
+        breaking_result = results.get("breaking_changes")
+        if isinstance(breaking_result, list):
+            breaking_changes = breaking_result
+
+        return commit_signals, release_signals, breaking_changes
+
+    def _apply_release_summary_results(
+        self,
+        *,
+        releases_data: ReleasesData,
+        detailed_releases: list[dict[str, Any]],
+        results: dict[str, object],
+    ) -> None:
+        """将异步 release 总结结果回填到 release 数据。"""
+        summary_result = results.get("release_summaries")
+        if not detailed_releases or not isinstance(summary_result, dict):
+            return
+        for release in releases_data.releases:
+            key = f"{release.repo}@{release.version}"
+            if key in summary_result:
+                release.ai_summary = summary_result[key]
+
+    def _apply_release_summaries(
+        self, releases_data: ReleasesData, detailed_releases: list[dict[str, Any]]
+    ) -> None:
+        """为 release 数据附加 AI 总结。"""
+        if not detailed_releases:
+            return
+        release_materials = self.release_material_builder.build(detailed_releases)
+        summaries = self.release_summarizer.summarize_materials(release_materials)
+        for release in releases_data.releases:
+            key = f"{release.repo}@{release.version}"
+            if key in summaries:
+                release.ai_summary = summaries[key]
+
+    def _analyze_commit_signals(
+        self, detailed_commits: list[dict[str, Any]]
+    ) -> list[Any]:
+        """分析 commit 技术信号。"""
+        if not detailed_commits:
+            return []
+        commit_materials = self.commit_material_builder.build(detailed_commits)
+        return self.commit_analyzer.analyze_materials(commit_materials)
+
+    def _analyze_release_signals(
+        self, detailed_releases: list[dict[str, Any]]
+    ) -> list[Any]:
+        """分析 release 信号。"""
+        if not detailed_releases:
+            return []
+        release_materials = self.release_material_builder.build(detailed_releases)
+        release_signals = self.release_analyzer.analyze_materials(release_materials)
+        if release_signals:
+            return release_signals
+        logger.warning(
+            "ReleaseAnalyzer 未产出信号，启用 deterministic fallback (releases=%d)",
+            len(detailed_releases),
+        )
+        return self._build_release_fallback_signals(detailed_releases)
+
+    def _detect_breaking_changes(
+        self, detailed_releases: list[dict[str, Any]]
+    ) -> list[Any]:
+        """检测 breaking changes。"""
+        if not detailed_releases:
+            return []
+        return self.breaking_changes_detector.detect_breaking_changes(
+            {"detailed_releases": detailed_releases}
+        )
+
+    def _collect_issue_artifacts(self, snapshot_date: str) -> None:
+        """收集 issue 落盘与 agent 分析产物。"""
+        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
+            repos=self.settings.github_repos,
+            snapshot_date=snapshot_date,
+            max_workers=self.settings.max_parallel_workers,
+            max_issues_per_repo=self.settings.max_issues_per_repo,
+        )
+        if detailed_issues:
+            dump_issues_to_jsonl(
+                detailed_issues,
+                self.settings.issue_dump_dir,
+                snapshot_date,
+            )
+        self._run_issue_agent_analysis(snapshot_date)
+
+    def _collect_pr_candidates(self, day_ago: datetime) -> list[dict[str, Any]]:
+        """收集并筛选 PR 候选事件。"""
+        events = self.collector.fetch_events(
+            repos=self.settings.github_repos,
+            since=day_ago,
+            max_workers=self.settings.max_parallel_workers,
+        )
+        return self.filter.filter_candidates(events)
+
+    def _read_pr_materials(self, candidates: list[dict[str, Any]]) -> list[Any]:
+        """读取 PR 分析材料。"""
+        pr_refs = self.pr_reader.refs_from_candidates(candidates)
+        return self.pr_reader.read_many(
+            pr_refs,
+            max_workers=self.settings.max_parallel_workers,
+        )
+
+    def _finalize_daily_report(
+        self,
+        *,
+        report: DailyReport,
+        date: datetime,
+        activity_data: ActivityData,
+        releases_data: ReleasesData,
+        breaking_changes: list[Any],
+        pr_signals: list[Any],
+        commit_signals: list[Any],
+        release_signals: list[Any],
+        detailed_commits: list[dict[str, Any]],
+        detailed_releases: list[dict[str, Any]],
+    ) -> None:
+        """填充日报对象并保存发送。"""
         if not isinstance(report.release_signals, list) or not report.release_signals:
             report.release_signals = release_signals
-        logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
-
         report.commit_signals = []
         report.activity = activity_data
         report.releases = releases_data
@@ -540,14 +635,10 @@ class TrendPulsePipeline:
             total_releases_analyzed=len(detailed_releases),
             total_breaking_changes=len(breaking_changes),
         )
-
         output_path = self._get_output_path(date)
         self.reporter.save_report(report, output_path)
         self._save_report_json(report, output_path)
         self._send_notification(report)
-        logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
-
-        return report
 
     def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
         if getattr(self.settings, "enable_issue_agent_analysis", False) is not True:

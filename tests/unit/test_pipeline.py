@@ -23,6 +23,8 @@ class TestTrendPulsePipeline:
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ReleaseMaterialBuilder")
+    @patch("trendpluse.pipeline.CommitMaterialBuilder")
     @patch("trendpluse.pipeline.ActivityCollector")
     @patch("trendpluse.pipeline.ReleaseCollector")
     @patch("trendpluse.pipeline.CommitAnalyzer")
@@ -42,6 +44,8 @@ class TestTrendPulsePipeline:
         mock_commit_analyzer,
         mock_release_collector,
         mock_activity_collector,
+        mock_commit_material_builder,
+        mock_release_material_builder,
         mock_reporter,
         mock_settings,
     ):
@@ -77,6 +81,8 @@ class TestTrendPulsePipeline:
         mock_release_collector.assert_called_once_with(token="test_token")
         mock_filter.assert_called_once()
         mock_reader.assert_called_once_with(token="test_token")
+        mock_commit_material_builder.assert_called_once()
+        mock_release_material_builder.assert_called_once()
         mock_commit_analyzer.assert_called_once_with(
             api_key="test_api_key",
             model="glm-4.7",
@@ -108,6 +114,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.pipeline.MarkdownReporter")
     @patch("trendpluse.pipeline.ActivityCollector")
     @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.ReleaseSummarizer")
     @patch("trendpluse.pipeline.CommitAnalyzer")
     @patch("trendpluse.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.pipeline.TrendAnalyzer")
@@ -123,6 +130,7 @@ class TestTrendPulsePipeline:
         mock_analyzer,
         mock_release_analyzer,
         mock_commit_analyzer,
+        mock_release_summarizer,
         mock_release_collector,
         mock_activity_collector,
         mock_reporter,
@@ -198,12 +206,16 @@ class TestTrendPulsePipeline:
         )
         mock_release_collector.return_value = mock_release_collector_instance
 
+        mock_release_summarizer_instance = Mock()
+        mock_release_summarizer_instance.summarize_materials.return_value = {}
+        mock_release_summarizer.return_value = mock_release_summarizer_instance
+
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()
@@ -269,7 +281,113 @@ class TestTrendPulsePipeline:
         mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
         mock_reporter_instance.save_report.assert_called_once()
         # 验证 commit 分析被调用
-        mock_commit_analyzer_instance.analyze_commits.assert_called_once()
+        mock_commit_analyzer_instance.analyze_materials.assert_called_once()
+
+    @patch("pathlib.Path.write_text")
+    @patch("trendpluse.pipeline.Settings")
+    @patch("trendpluse.pipeline.MarkdownReporter")
+    @patch("trendpluse.pipeline.ActivityCollector")
+    @patch("trendpluse.pipeline.ReleaseCollector")
+    @patch("trendpluse.pipeline.ReleaseSummarizer")
+    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.pipeline.TrendAnalyzer")
+    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.pipeline.GitHubPRReader")
+    @patch("trendpluse.pipeline.EventFilter")
+    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    def test_run_daily_uses_release_material_summarizer(
+        self,
+        mock_collector,
+        mock_filter,
+        mock_reader,
+        mock_analyzer,
+        mock_release_analyzer,
+        mock_commit_analyzer,
+        mock_release_summarizer,
+        mock_release_collector,
+        mock_activity_collector,
+        mock_reporter,
+        mock_settings,
+        mock_write_text,
+    ):
+        """测试：release 总结应走材料接口。"""
+        mock_settings_instance = Mock()
+        mock_settings_instance.github_token = "test_token"
+        mock_settings_instance.anthropic_api_key = "test_api_key"
+        mock_settings_instance.anthropic_model = "glm-4.7"
+        mock_settings_instance.anthropic_base_url = (
+            "https://open.bigmodel.cn/api/anthropic"
+        )
+        mock_settings_instance.github_repos = ["anthropics/skills"]
+        mock_settings_instance.max_candidates = 20
+        mock_settings_instance.days_to_lookback = 1
+        mock_settings_instance.enable_parallel_collection = False
+        mock_settings_instance.max_parallel_workers = 4
+        mock_settings_instance.include_prereleases = False
+        mock_settings_instance.feishu_webhook_url = ""
+        mock_settings_instance.feishu_at_mobiles_list = []
+        mock_settings_instance.llm_retry_max_attempts = 3
+        mock_settings_instance.llm_retry_wait_min = 1
+        mock_settings_instance.llm_retry_wait_max = 10
+        mock_settings.return_value = mock_settings_instance
+
+        mock_collector_instance = Mock()
+        mock_collector_instance.fetch_events.return_value = []
+        mock_collector.return_value = mock_collector_instance
+
+        mock_activity_collector_instance = Mock()
+        mock_activity_collector_instance.collect_activity_graphql.return_value = (
+            ActivityData(total_commits=0, active_repos_count=0, top_repos=[]),
+            [],
+        )
+        mock_activity_collector.return_value = mock_activity_collector_instance
+
+        mock_releases_data = ReleasesData(
+            total_count=1,
+            unique_repos_count=1,
+            releases=[],
+        )
+        detailed_releases = [
+            {
+                "repo": "anthropics/skills",
+                "tag_name": "v1.0.0",
+                "name": "v1.0.0",
+                "body": "Release notes",
+                "html_url": "https://github.com/anthropics/skills/releases/tag/v1.0.0",
+            }
+        ]
+        mock_release_collector_instance = Mock()
+        mock_release_collector_instance.collect_releases.return_value = (
+            mock_releases_data,
+            detailed_releases,
+        )
+        mock_release_collector.return_value = mock_release_collector_instance
+
+        mock_release_summarizer_instance = Mock()
+        mock_release_summarizer_instance.summarize_materials.return_value = {}
+        mock_release_summarizer.return_value = mock_release_summarizer_instance
+
+        mock_commit_analyzer_instance = Mock()
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
+        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+
+        mock_release_analyzer_instance = Mock()
+        mock_release_analyzer_instance.analyze_materials.return_value = []
+        mock_release_analyzer.return_value = mock_release_analyzer_instance
+
+        mock_filter_instance = Mock()
+        mock_filter_instance.filter_candidates.return_value = []
+        mock_filter.return_value = mock_filter_instance
+
+        mock_reader.return_value = Mock()
+        mock_analyzer.return_value = Mock()
+        mock_reporter.return_value = Mock()
+
+        pipeline = TrendPulsePipeline()
+        pipeline.run_daily(date=datetime(2026, 1, 2))
+
+        mock_release_summarizer_instance.summarize_materials.assert_called_once()
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.pipeline.Settings")
@@ -357,11 +475,11 @@ class TestTrendPulsePipeline:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()
@@ -408,7 +526,7 @@ class TestTrendPulsePipeline:
         mock_reader_instance.read_many.assert_not_called()
         mock_analyzer_instance.analyze_materials.assert_not_called()
         # commit 分析仍应被调用
-        mock_commit_analyzer_instance.analyze_commits.assert_called_once()
+        mock_commit_analyzer_instance.analyze_materials.assert_called_once()
 
     @patch("trendpluse.pipeline.Settings")
     @patch("trendpluse.pipeline.MarkdownReporter")
@@ -488,11 +606,11 @@ class TestTrendPulsePipeline:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()
@@ -588,11 +706,11 @@ class TestTrendPulsePipeline:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         # 有候选事件但筛选后为空
@@ -689,11 +807,11 @@ class TestTrendPulsePipeline:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = []
+        mock_commit_analyzer_instance.analyze_materials.return_value = []
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_filter_instance = Mock()

@@ -116,11 +116,13 @@ class TestEmptyReportSummary:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = mock_commit_signals
+        mock_commit_analyzer_instance.analyze_materials.return_value = (
+            mock_commit_signals
+        )
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = (
+        mock_release_analyzer_instance.analyze_materials.return_value = (
             mock_release_signals
         )
         mock_release_analyzer.return_value = mock_release_analyzer_instance
@@ -261,11 +263,13 @@ class TestEmptyReportSummary:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = mock_commit_signals
+        mock_commit_analyzer_instance.analyze_materials.return_value = (
+            mock_commit_signals
+        )
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = (
+        mock_release_analyzer_instance.analyze_materials.return_value = (
             mock_release_signals
         )
         mock_release_analyzer.return_value = mock_release_analyzer_instance
@@ -398,11 +402,13 @@ class TestEmptyReportSummary:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = mock_commit_signals
+        mock_commit_analyzer_instance.analyze_materials.return_value = (
+            mock_commit_signals
+        )
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = (
+        mock_release_analyzer_instance.analyze_materials.return_value = (
             mock_release_signals
         )
         mock_release_analyzer.return_value = mock_release_analyzer_instance
@@ -537,11 +543,13 @@ class TestEmptyReportSummary:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = mock_commit_signals
+        mock_commit_analyzer_instance.analyze_materials.return_value = (
+            mock_commit_signals
+        )
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = (
+        mock_release_analyzer_instance.analyze_materials.return_value = (
             mock_release_signals
         )
         mock_release_analyzer.return_value = mock_release_analyzer_instance
@@ -681,11 +689,13 @@ class TestEmptyReportSummary:
         mock_release_collector.return_value = mock_release_collector_instance
 
         mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_commits.return_value = mock_commit_signals
+        mock_commit_analyzer_instance.analyze_materials.return_value = (
+            mock_commit_signals
+        )
         mock_commit_analyzer.return_value = mock_commit_analyzer_instance
 
         mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_releases.return_value = []
+        mock_release_analyzer_instance.analyze_materials.return_value = []
         mock_release_analyzer.return_value = mock_release_analyzer_instance
 
         mock_analyzer_instance = Mock()

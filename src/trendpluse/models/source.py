@@ -8,7 +8,9 @@ from pydantic import BaseModel, Field
 class SourceRef(BaseModel):
     """待读取来源的统一引用。"""
 
-    source_type: Literal["pull_request"] = Field(description="来源类型")
+    source_type: Literal["pull_request", "release", "commit"] = Field(
+        description="来源类型"
+    )
     provider: Literal["github"] = Field(description="来源提供方")
     repo: str = Field(description="仓库名称 owner/repo")
     external_id: str = Field(description="外部系统中的对象 ID")
@@ -91,4 +93,66 @@ class AnalysisMaterial(BaseModel):
             created_at=pr_details.get("created_at"),
             updated_at=pr_details.get("updated_at") or pr_details.get("closed_at"),
             raw_payload=dict(pr_details),
+        )
+
+    @classmethod
+    def from_release_details(
+        cls, release_details: dict[str, Any]
+    ) -> "AnalysisMaterial":
+        """从 release 详情字典构建分析材料。"""
+        repo = str(release_details.get("repo") or "unknown").strip()
+        tag_name = str(
+            release_details.get("tag_name") or release_details.get("name") or ""
+        ).strip()
+        url = str(
+            release_details.get("html_url")
+            or release_details.get("url")
+            or f"https://github.com/{repo}/releases/tag/{tag_name}"
+        ).strip()
+
+        return cls(
+            source_ref=SourceRef(
+                source_type="release",
+                provider="github",
+                repo=repo,
+                external_id=tag_name,
+                url=url,
+                metadata={"version_info": release_details.get("version_info", {})},
+            ),
+            title=str(release_details.get("name") or tag_name),
+            body=str(release_details.get("body", "")),
+            author=str(release_details.get("author", "")),
+            created_at=release_details.get("created_at"),
+            updated_at=release_details.get("published_at"),
+            raw_payload=dict(release_details),
+        )
+
+    @classmethod
+    def from_commit_details(cls, commit_details: dict[str, Any]) -> "AnalysisMaterial":
+        """从 commit 详情字典构建分析材料。"""
+        repo = str(commit_details.get("repo") or "unknown").strip()
+        sha = str(commit_details.get("sha") or "").strip()
+        url = str(
+            commit_details.get("url") or f"https://github.com/{repo}/commit/{sha}"
+        ).strip()
+
+        return cls(
+            source_ref=SourceRef(
+                source_type="commit",
+                provider="github",
+                repo=repo,
+                external_id=sha,
+                url=url,
+                metadata={
+                    "files_changed": commit_details.get("files_changed", 0),
+                    "additions": commit_details.get("additions", 0),
+                    "deletions": commit_details.get("deletions", 0),
+                },
+            ),
+            title=str(commit_details.get("message", "")),
+            body=str(commit_details.get("message", "")),
+            author=str(commit_details.get("author", "")),
+            created_at=commit_details.get("timestamp"),
+            updated_at=commit_details.get("timestamp"),
+            raw_payload=dict(commit_details),
         )

@@ -9,6 +9,7 @@ from unittest.mock import patch
 import pytest
 
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial, SourceRef
 
 
 class TestCommitAnalyzer:
@@ -122,6 +123,40 @@ class TestCommitAnalyzer:
             assert signal.impact_score <= 5
             assert len(signal.related_repos) > 0
             assert len(signal.sources) > 0
+
+    def test_analyze_materials(self, analyzer, sample_commit_data):
+        """测试分析材料接口。"""
+        materials = [
+            AnalysisMaterial(
+                source_ref=SourceRef(
+                    source_type="commit",
+                    provider="github",
+                    repo=commit["repo"],
+                    external_id=commit["sha"],
+                    url=f"https://github.com/{commit['repo']}/commit/{commit['sha']}",
+                    metadata={
+                        "files_changed": commit.get("files_changed", 0),
+                        "additions": commit.get("additions", 0),
+                        "deletions": commit.get("deletions", 0),
+                    },
+                ),
+                title=commit["message"],
+                body=commit["message"],
+                author=commit["author"],
+                created_at=commit["timestamp"],
+                updated_at=commit["timestamp"],
+                raw_payload=commit,
+            )
+            for commit in sample_commit_data
+        ]
+
+        with patch.object(
+            analyzer, "_call_llm", return_value=self._mock_llm_response()
+        ):
+            signals = analyzer.analyze_materials(materials)
+
+        assert len(signals) == 1
+        assert signals[0].sources[0].endswith("/abc123")
 
     def _mock_llm_response(self):
         """Mock LLM 响应"""

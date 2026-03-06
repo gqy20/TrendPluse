@@ -11,6 +11,7 @@ from pydantic import ValidationError
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial
 
 logger = get_logger(__name__)
 
@@ -48,6 +49,39 @@ class CommitAnalyzer(BaseLLMAnalyzer):
             retry_wait_min=retry_wait_min,
             retry_wait_max=retry_wait_max,
         )
+
+    @staticmethod
+    def _material_to_commit(material: AnalysisMaterial) -> dict[str, Any]:
+        """将分析材料还原为 commit 分析所需结构。"""
+        return {
+            "repo": material.source_ref.repo,
+            "sha": material.source_ref.external_id,
+            "message": material.raw_payload.get("message", material.title),
+            "author": material.author,
+            "timestamp": material.created_at or "",
+            "files_changed": material.source_ref.metadata.get("files_changed", 0),
+            "additions": material.source_ref.metadata.get("additions", 0),
+            "deletions": material.source_ref.metadata.get("deletions", 0),
+        }
+
+    def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
+        """分析 commit 材料列表。
+
+        Args:
+            materials: commit 材料列表
+
+        Returns:
+            信号列表
+        """
+        commits = [self._material_to_commit(material) for material in materials]
+        return self.analyze_commits(commits)
+
+    async def analyze_materials_async(
+        self, materials: list[AnalysisMaterial]
+    ) -> list[Signal]:
+        """异步分析 commit 材料列表。"""
+        commits = [self._material_to_commit(material) for material in materials]
+        return await self.analyze_commits_async(commits)
 
     def analyze_commits(self, commits: list[dict[str, Any]]) -> list[Signal]:
         """分析 commit 列表

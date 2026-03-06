@@ -41,3 +41,37 @@ def test_analysis_material_from_pr_details():
     assert material.source_ref.external_id == "7"
     assert material.title == "Add feature"
     assert material.raw_payload["author"] == "alice"
+
+
+def test_analysis_material_from_release_details():
+    details = {
+        "repo": "owner/repo",
+        "tag_name": "v1.2.3",
+        "name": "Release v1.2.3",
+        "body": "Release notes",
+        "html_url": "https://github.com/owner/repo/releases/tag/v1.2.3",
+    }
+
+    material = AnalysisMaterial.from_release_details(details)
+
+    assert material.source_ref.source_type == "release"
+    assert material.source_ref.external_id == "v1.2.3"
+    assert material.source_ref.url.endswith("/v1.2.3")
+    assert material.body == "Release notes"
+
+
+def test_analysis_material_from_commit_details():
+    details = {
+        "repo": "owner/repo",
+        "sha": "abc123",
+        "message": "feat: add feature",
+        "author": "alice",
+        "timestamp": "2026-01-01T00:00:00Z",
+    }
+
+    material = AnalysisMaterial.from_commit_details(details)
+
+    assert material.source_ref.source_type == "commit"
+    assert material.source_ref.external_id == "abc123"
+    assert material.source_ref.url.endswith("/abc123")
+    assert material.title == "feat: add feature"
