@@ -11,10 +11,10 @@
 - 只负责参数解析、环境加载、调用应用层
 - 对外暴露 `pyproject.toml` 中的 CLI entrypoints
 
-### `automation/`
+### `app/`
 
-- 只保留可复用批处理实现
-- 不再承担最终命令入口职责
+- 承担 daily / weekly / discovery / repo 管理等应用编排
+- 放置运行时辅助、报告收尾、飞书通知辅助等主流程逻辑
 
 ### `collectors/`
 
@@ -26,16 +26,7 @@
 
 - LLM 结构化抽取
 - 信号去重、聚合、release 总结、breaking change 检测
-
-### `workflows/`
-
-- `daily_report_finalizer.py`
-- `weekly_report_workflow.py`
-- `issue_workflow.py`
-- `issue_agent_runner.py`
-- `report_output.py`
-
-这一层负责串起多个 collector / analyzer，不直接承担读写参数解析。
+- issue agent runner、weekly aggregator 等分析侧能力
 
 ### `models/`
 
@@ -47,22 +38,32 @@
 
 全部放在统一的结构化模型层，避免模型反向依赖业务实现。
 
-### `pipeline.py`
+### `reports/`
 
-`pipeline.py` 仍放在包根，是因为它不是某一个 workflow，而是**调用多个 workflow 的总编排入口**。它不应放到 `cli/`，也暂时不需要单独再造 `application/` 目录。
+- 报告构建、Markdown 渲染、发布与持久化
+- 区分“生成报告对象”和“输出报告产物”
+
+### `notifiers/`
+
+- 飞书通知发送器与消息格式化
+
+### `discovery/`
+
+- 项目发现子系统的采集、评估、去重、分类与报告能力
 
 ## 当前主链路
 
 ```text
-CLI -> pipeline -> collectors -> analyzers -> workflows -> notifiers / report output
+CLI -> app -> collectors / analyzers / reports / notifiers
 ```
 
 ## 当前已完成的结构收敛
 
-- `services/` 已重命名并收敛到 `workflows/`
+- `automation/` 已收敛到 `app/`
+- `workflows/` 已删除
+- `pipeline.py` 已迁移到 `app/pipeline.py`
 - `readers/` 已并入 `collectors/`
-- `reporters/` 已平铺到根模块
-- `agents/` 已拆分为 `workflows/issue_agent_runner.py` + `models/issue_agent.py`
+- `IssueAgentRunner` 已收敛到 `analyzers/issue_agent_runner.py`
 - 飞书 CLI 公共逻辑已抽到 `cli/feishu_common.py` 与 `cli/report_json_common.py`
 
 ## 后续适合继续演进的方向

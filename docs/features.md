@@ -34,14 +34,13 @@ TrendPulse 是一个围绕 GitHub 活动、LLM 分析和文档发布构建的自
 
 ```text
 cli/           命令入口与参数解析
-automation/    可复用批处理实现
+app/           daily / weekly / discovery / repo 管理等应用编排
 collectors/    外部数据采集与 AnalysisMaterial 构建
 analyzers/     LLM 分析、聚合、去重
-workflows/     日报/周报/issue/report 输出编排
+reports/       报告构建、渲染与发布
 models/        结构化数据模型
 notifiers/     飞书通知与格式化
 discovery/     独立的项目发现子系统
-pipeline.py    主应用编排入口
 ```
 
 ## 关键工作流
@@ -50,15 +49,15 @@ pipeline.py    主应用编排入口
 
 1. `collectors` 拉取活动、PR、release、issue
 2. `analyzers` 提取趋势信号与摘要
-3. `workflows.daily_report_finalizer` 生成日报对象
-4. `workflows.report_output` 持久化产物
+3. `app/daily.py` 串联主流程并调用 `reports/`
+4. `reports` 构建并持久化产物
 5. `notifiers` 可选发送飞书
 
 ### Weekly
 
-1. `workflows.weekly_report_workflow` 读取 daily JSON
+1. `app/weekly.py` 读取 daily JSON
 2. `WeeklyAggregator` 聚合高价值信号和活跃度
-3. `workflows.report_output` 统一输出 weekly 产物
+3. `reports` 输出 weekly 产物
 
 ### Discovery
 
@@ -80,9 +79,9 @@ docs/discovery-reports/
 ## 自动化工作流
 
 - `ci.yml`: Ruff、mypy、pytest、打包验证
-- `run-daily.yml`: 每日分析
+- `run-daily.yml`: 每日分析与可选日报通知
 - `run-weekly.yml`: 周报聚合
 - `discover-projects.yml`: 项目发现
 - `issue-analyzer.yml`: Issue / Comment 触发分析
 - `send-feishu.yml`: 飞书补发
-- `deploy-pages.yml`: MkDocs 部署
+- `deploy-pages.yml`: MkDocs 构建与 Pages 部署

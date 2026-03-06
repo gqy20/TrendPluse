@@ -123,14 +123,13 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 ```text
 src/trendpluse/
   cli/         # 命令入口
-  automation/  # 可复用批处理实现
+  app/         # daily / weekly / discovery / repo 编排
   collectors/  # 数据采集与材料构建
   analyzers/   # LLM 分析与去重聚合
-  workflows/   # 日报/周报/issue/output 编排
+  reports/     # 报告构建、渲染与发布
   models/      # 结构化模型
   discovery/   # 项目发现子系统
   notifiers/   # 飞书通知
-  pipeline.py  # 总编排入口
 ```
 
 ---
