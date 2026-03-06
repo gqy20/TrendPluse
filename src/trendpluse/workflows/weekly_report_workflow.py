@@ -20,9 +20,8 @@ logger = get_logger(__name__)
 class WeeklyReportWorkflow:
     """负责周报加载、聚合与输出。"""
 
-    def __init__(self, *, settings, reporter, output_service) -> None:
+    def __init__(self, *, settings, output_service) -> None:
         self.settings = settings
-        self.reporter = reporter
         self.output_service = output_service
 
     def run(self, date: datetime | None = None) -> WeeklyReport:
@@ -43,9 +42,7 @@ class WeeklyReportWorkflow:
             start_date=start_date,
             end_date=end_date,
         )
-        output_path = self.get_output_path(end_date)
-        self.reporter.save_weekly_report(weekly_report, output_path)
-        self.save_weekly_report_json(weekly_report, output_path)
+        self.output_service.save_weekly(weekly_report, end_date)
         return weekly_report
 
     def get_last_week_range(self, date: datetime) -> tuple[datetime, datetime]:
@@ -173,14 +170,3 @@ class WeeklyReportWorkflow:
             active_repos_count=len(repo_commits),
             top_repos=top_repos,
         )
-
-    def get_output_path(self, date: datetime) -> str:
-        """获取周报输出路径。"""
-        reports_dir = Path("reports/weekly")
-        week_id = WeeklyReport.get_week_id(date)
-        filename = f"weekly-{week_id}.md"
-        return str(reports_dir / filename)
-
-    def save_weekly_report_json(self, report: WeeklyReport, output_path: str) -> None:
-        """保存周报 JSON 数据。"""
-        self.output_service._save_json(report, Path(output_path))

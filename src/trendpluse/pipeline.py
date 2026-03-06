@@ -158,7 +158,6 @@ class TrendPulsePipeline:
         )
         self.weekly_report_workflow = WeeklyReportWorkflow(
             settings=self.settings,
-            reporter=self.reporter,
             output_service=self.output_service,
         )
         self.daily_report_finalizer = DailyReportFinalizer(

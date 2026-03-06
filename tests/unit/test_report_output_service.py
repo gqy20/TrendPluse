@@ -62,3 +62,26 @@ def test_notify_daily_report_is_delegated() -> None:
     service.notify_daily(report)
 
     assert notifier.reports == [report]
+
+
+def test_save_weekly_report_uses_configured_output_dir(tmp_path) -> None:
+    """测试周报输出使用配置目录。"""
+    reporter = DummyReporter()
+    service = ReportOutputService(
+        reporter=reporter,
+        daily_output_dir=str(tmp_path / "daily"),
+        weekly_output_dir=str(tmp_path / "weekly"),
+    )
+    report = WeeklyReport(
+        week_id="2026-W10",
+        start_date="2026-03-02",
+        end_date="2026-03-08",
+        summary_brief="test",
+    )
+
+    service.save_weekly(report, datetime(2026, 3, 8))
+
+    assert reporter.weekly_calls[0][1].endswith("weekly/weekly-2026-W10.md")
+    json_path = tmp_path / "weekly" / "weekly-2026-W10.json"
+    assert json_path.exists()
+    assert "2026-W10" in json_path.read_text(encoding="utf-8")

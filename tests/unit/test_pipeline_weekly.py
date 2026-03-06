@@ -10,7 +10,6 @@ from trendpluse.models.signal import (
     DailyReport,
     RepoActivity,
     Signal,
-    WeeklyReport,
 )
 from trendpluse.workflows.weekly_report_workflow import WeeklyReportWorkflow
 
@@ -19,7 +18,6 @@ def create_workflow(settings: Settings) -> WeeklyReportWorkflow:
     """创建用于测试的周报工作流。"""
     return WeeklyReportWorkflow(
         settings=settings,
-        reporter=Mock(),
         output_service=Mock(),
     )
 
@@ -333,47 +331,50 @@ class TestAggregateActivity:
         }
 
 
-class TestGetWeeklyOutputPath:
-    """测试 get_output_path 方法。"""
+class TestRunWeeklyOutput:
+    """测试 run 方法的输出委托。"""
 
-    def test_get_weekly_output_path(self):
-        """测试获取周报输出路径。"""
-        workflow = create_workflow(Settings())
-
-        path = workflow.get_output_path(datetime(2026, 1, 27))
-
-        assert path == "reports/weekly/weekly-2026-W05.md"
-
-
-class TestSaveWeeklyReportJson:
-    """测试 save_weekly_report_json 方法。"""
-
-    def test_save_weekly_report_json(self, temp_file):
-        """测试保存周报 JSON。"""
+    @patch(
+        "trendpluse.workflows.weekly_report_workflow.WeeklyAggregator.aggregate",
+        return_value=WeeklyAggregationResult(
+            core_trends=[],
+            summary_brief="测试摘要",
+            total_signals=1,
+        ),
+    )
+    def test_run_delegates_output_to_service(self, _mock_aggregator, temp_dir):
+        """测试周报输出委托给 ReportOutputService。"""
+        daily_output_dir = temp_dir / "reports" / "daily"
+        daily_output_dir.mkdir(parents=True)
+        report = DailyReport(
+            date="2026-01-20",
+            summary_brief="测试日报",
+            engineering_signals=[
+                Signal(
+                    id="sig-1",
+                    title="测试信号",
+                    type="capability",
+                    category="engineering",
+                    impact_score=5,
+                    why_it_matters="重要",
+                    sources=["https://github.com/test/pr/1"],
+                    related_repos=["test/repo"],
+                )
+            ],
+        )
+        (daily_output_dir / "report-2026-01-20.json").write_text(
+            report.model_dump_json(),
+            encoding="utf-8",
+        )
         output_service = Mock()
         workflow = WeeklyReportWorkflow(
-            settings=Settings(),
-            reporter=Mock(),
+            settings=Settings(output_dir=str(daily_output_dir)),
             output_service=output_service,
         )
-        report = WeeklyReport(
-            week_id="2026-W05",
-            start_date="2026-01-20",
-            end_date="2026-01-26",
-            summary_brief="测试周报",
+
+        weekly_report = workflow.run(datetime(2026, 1, 27))
+
+        output_service.save_weekly.assert_called_once_with(
+            weekly_report,
+            datetime(2026, 1, 25, 23, 59, 59, 999999),
         )
-
-        def save_json_side_effect(saved_report, output_path):
-            json_path = output_path.with_suffix(".json")
-            json_path.write_text(saved_report.model_dump_json())
-
-        output_service._save_json.side_effect = save_json_side_effect
-
-        workflow.save_weekly_report_json(report, str(temp_file))
-
-        json_path = temp_file.with_suffix(".json")
-        assert json_path.exists()
-        content = json_path.read_text()
-        assert "2026-W05" in content
-        loaded = WeeklyReport.model_validate_json(content)
-        assert loaded.week_id == "2026-W05"
