@@ -5,9 +5,85 @@ from trendpluse.models.signal import (
     DailyReport,
     ReleaseInfo,
     ReleasesData,
+    ReleaseSummary,
     RepoActivity,
     Signal,
 )
+
+
+def _build_signal(**overrides) -> Signal:
+    """构造测试用信号。"""
+    defaults = {
+        "id": "sig-1",
+        "title": "Test Signal",
+        "type": "capability",
+        "category": "engineering",
+        "impact_score": 4,
+        "why_it_matters": "Test signal",
+        "sources": ["https://github.com/test/repo/pull/1"],
+        "related_repos": ["test/repo"],
+    }
+    defaults.update(overrides)
+    return Signal(**defaults)
+
+
+def _build_activity(
+    total_commits=150, active_repos_count=3, top_repos=None
+) -> ActivityData:
+    """构造测试用活跃度数据。"""
+    repos = top_repos or [
+        RepoActivity(repo="owner/repo1", commits=80, top_contributors=[]),
+        RepoActivity(repo="owner/repo2", commits=50, top_contributors=[]),
+        RepoActivity(repo="owner/repo3", commits=20, top_contributors=[]),
+    ]
+    return ActivityData(
+        total_commits=total_commits,
+        active_repos_count=active_repos_count,
+        top_repos=repos,
+    )
+
+
+def _build_release(**overrides) -> ReleaseInfo:
+    """构造测试用发布信息。"""
+    defaults = {
+        "repo": "owner/repo",
+        "version": "v1.0.0",
+        "author": "user1",
+        "date": "2026-01-04",
+        "summary": "Test release",
+        "assets_count": 1,
+        "url": "https://github.com/owner/repo/releases/tag/v1.0.0",
+    }
+    defaults.update(overrides)
+    return ReleaseInfo(**defaults)
+
+
+def _build_releases(
+    total_count: int,
+    unique_repos_count: int,
+    releases: list[ReleaseInfo],
+) -> ReleasesData:
+    """构造测试用发布集合。"""
+    return ReleasesData(
+        total_count=total_count,
+        unique_repos_count=unique_repos_count,
+        releases=releases,
+    )
+
+
+def _build_report(**overrides) -> DailyReport:
+    """构造测试用日报。"""
+    defaults = {
+        "date": "2026-01-04",
+        "summary_brief": "Test",
+        "engineering_signals": [],
+        "research_signals": [],
+        "commit_signals": [],
+        "release_signals": [],
+        "stats": {},
+    }
+    defaults.update(overrides)
+    return DailyReport(**defaults)
 
 
 class TestFeishuFormatter:
@@ -68,88 +144,59 @@ class TestFeishuFormatter:
     def test_format_card_with_structured_data(self):
         """测试：使用结构化数据生成飞书卡片"""
         # Arrange
-        # 这个测试会失败，因为 FeishuFormatter 类还不存在
         from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
-        activity = ActivityData(
+        activity = _build_activity(
             total_commits=100,
             active_repos_count=5,
             top_repos=[
-                RepoActivity(
-                    repo="owner/repo1",
-                    commits=50,
-                    top_contributors=[],
-                ),
-                RepoActivity(
-                    repo="owner/repo2",
-                    commits=30,
-                    top_contributors=[],
-                ),
-                RepoActivity(
-                    repo="owner/repo3",
-                    commits=20,
-                    top_contributors=[],
-                ),
+                RepoActivity(repo="owner/repo1", commits=50, top_contributors=[]),
+                RepoActivity(repo="owner/repo2", commits=30, top_contributors=[]),
+                RepoActivity(repo="owner/repo3", commits=20, top_contributors=[]),
             ],
         )
 
-        releases = ReleasesData(
+        releases = _build_releases(
             total_count=2,
             unique_repos_count=1,
             releases=[
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v1.0.0",
-                    author="user1",
-                    date="2026-01-04",
                     summary="Test release 1",
                     assets_count=5,
-                    url="https://github.com/owner/repo/releases/tag/v1.0.0",
                 ),
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v1.1.0",
                     author="user2",
                     date="2026-01-05",
                     summary="Test release 2",
                     assets_count=3,
-                    url="https://github.com/owner/repo/releases/tag/v1.1.0",
                 ),
             ],
         )
 
         signals = [
-            Signal(
+            _build_signal(
                 id="sig-1",
                 title="Test Signal 1",
-                type="capability",
-                category="engineering",
                 impact_score=5,
                 why_it_matters="Important test signal",
-                sources=["https://github.com/test/repo/pull/1"],
-                related_repos=["test/repo"],
             ),
-            Signal(
+            _build_signal(
                 id="sig-2",
                 title="Test Signal 2",
                 type="safety",
-                category="engineering",
                 impact_score=4,
                 why_it_matters="Security improvement",
                 sources=["https://github.com/test/repo/pull/2"],
-                related_repos=["test/repo"],
             ),
         ]
 
-        report = DailyReport(
-            date="2026-01-04",
+        report = _build_report(
             summary_brief="今日发现了 2 个高影响趋势信号。",
             engineering_signals=signals,
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             activity=activity,
             releases=releases,
             stats={
@@ -209,13 +256,8 @@ class TestFeishuFormatter:
 
         formatter = FeishuFormatter()
 
-        report = DailyReport(
-            date="2026-01-04",
+        report = _build_report(
             summary_brief="今日暂无信号。",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             stats={
                 "total_prs_analyzed": 0,
                 "total_releases": 0,
@@ -240,35 +282,9 @@ class TestFeishuFormatter:
 
         formatter = FeishuFormatter()
 
-        activity = ActivityData(
-            total_commits=150,
-            active_repos_count=3,
-            top_repos=[
-                RepoActivity(
-                    repo="owner/repo1",
-                    commits=80,
-                    top_contributors=[],
-                ),
-                RepoActivity(
-                    repo="owner/repo2",
-                    commits=50,
-                    top_contributors=[],
-                ),
-                RepoActivity(
-                    repo="owner/repo3",
-                    commits=20,
-                    top_contributors=[],
-                ),
-            ],
-        )
+        activity = _build_activity()
 
-        report = DailyReport(
-            date="2026-01-04",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
+        report = _build_report(
             activity=activity,
             stats={
                 "total_prs_analyzed": 0,
@@ -298,47 +314,33 @@ class TestFeishuFormatter:
         formatter = FeishuFormatter()
 
         # 同一仓库有 3 个版本，都应该显示（最多 5 个）
-        releases = ReleasesData(
+        releases = _build_releases(
             total_count=3,
             unique_repos_count=1,
             releases=[
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v1.0.0",
-                    author="user1",
-                    date="2026-01-03",
                     summary="First release",
-                    assets_count=1,
-                    url="https://github.com/owner/repo/releases/tag/v1.0.0",
+                    date="2026-01-03",
                 ),
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v1.1.0",
                     author="user2",
-                    date="2026-01-04",
                     summary="Second release",
                     assets_count=2,
-                    url="https://github.com/owner/repo/releases/tag/v1.1.0",
                 ),
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v1.2.0",
                     author="user3",
                     date="2026-01-05",
                     summary="Third release",
                     assets_count=3,
-                    url="https://github.com/owner/repo/releases/tag/v1.2.0",
                 ),
             ],
         )
 
-        report = DailyReport(
+        report = _build_report(
             date="2026-01-05",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             releases=releases,
             stats={
                 "total_prs_analyzed": 0,
@@ -371,38 +373,27 @@ class TestFeishuFormatter:
 
         formatter = FeishuFormatter()
 
-        releases = ReleasesData(
+        releases = _build_releases(
             total_count=2,
             unique_repos_count=2,
             releases=[
-                ReleaseInfo(
+                _build_release(
                     repo="owner/repo1",
                     version="v2.0.0",
-                    author="user1",
-                    date="2026-01-04",
                     summary="Test release with some details",
-                    assets_count=1,
                     url="https://github.com/owner/repo1/releases/tag/v2.0.0",
                 ),
-                ReleaseInfo(
+                _build_release(
                     repo="owner/repo2",
                     version="v1.5.0",
                     author="user2",
-                    date="2026-01-04",
                     summary="Another test release",
-                    assets_count=1,
                     url="https://github.com/owner/repo2/releases/tag/v1.5.0",
                 ),
             ],
         )
 
-        report = DailyReport(
-            date="2026-01-04",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
+        report = _build_report(
             releases=releases,
             stats={
                 "total_prs_analyzed": 0,
@@ -448,24 +439,17 @@ class TestFeishuFormatter:
         formatter = FeishuFormatter()
 
         release_signals = [
-            Signal(
+            _build_signal(
                 id="release-sig-1",
                 title="Major Version Update",
-                type="capability",
-                category="engineering",
                 impact_score=5,
                 why_it_matters="重要版本更新",
                 sources=["https://github.com/test/repo/releases/tag/v2.0.0"],
-                related_repos=["test/repo"],
             ),
         ]
 
-        report = DailyReport(
+        report = _build_report(
             date="2026-01-05",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
             release_signals=release_signals,
             stats={"total_prs_analyzed": 0, "high_impact_signals": 1},
         )
@@ -507,13 +491,8 @@ class TestFeishuFormatter:
             }
         ]
 
-        report = DailyReport(
+        report = _build_report(
             date="2026-01-05",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             breaking_changes=breaking_changes,
             stats={"total_prs_analyzed": 0},
         )
@@ -553,25 +532,14 @@ class TestFeishuFormatter:
 
         formatter = FeishuFormatter()
 
-        activity = ActivityData(
-            total_commits=150,
-            active_repos_count=3,
+        activity = _build_activity(
             top_repos=[
-                RepoActivity(
-                    repo="owner/repo1",
-                    commits=80,
-                    top_contributors=[],
-                ),
-            ],
+                RepoActivity(repo="owner/repo1", commits=80, top_contributors=[])
+            ]
         )
 
-        report = DailyReport(
+        report = _build_report(
             date="2026-01-05",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             activity=activity,
             stats={"total_prs_analyzed": 0},
         )
@@ -589,23 +557,19 @@ class TestFeishuFormatter:
     def test_format_releases_includes_ai_summary(self):
         """测试：版本发布包含 AI 总结（与 Markdown 一致）"""
         # Arrange
-        from trendpluse.models.signal import ReleaseSummary
         from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
-        releases = ReleasesData(
+        releases = _build_releases(
             total_count=1,
             unique_repos_count=1,
             releases=[
-                ReleaseInfo(
-                    repo="owner/repo",
+                _build_release(
                     version="v2.0.0",
-                    author="user1",
                     date="2026-01-05",
                     summary="Original summary",
                     assets_count=5,
-                    url="https://github.com/owner/repo/releases/tag/v2.0.0",
                     ai_summary=ReleaseSummary(
                         change_type="feature",
                         key_changes=["新功能 A", "新功能 B", "性能优化"],
@@ -616,13 +580,8 @@ class TestFeishuFormatter:
             ],
         )
 
-        report = DailyReport(
+        report = _build_report(
             date="2026-01-05",
-            summary_brief="Test",
-            engineering_signals=[],
-            research_signals=[],
-            commit_signals=[],
-            release_signals=[],
             releases=releases,
             stats={"total_prs_analyzed": 0},
         )
