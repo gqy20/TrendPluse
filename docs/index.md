@@ -51,7 +51,8 @@
     <div class="stat-trend">把用户故障和抱怨收成可读结论</div>
   </div>
 </div>
-<p class="tp-stats-timestamp">最新日报: <a href="reports/report-2026-03-05.md">2026-03-05</a> · 最新发现: <a href="discovery-reports/discovery-2026-03-06.md">2026-03-06</a></p>
+
+<p class="tp-stats-timestamp">最新日报: <a href="reports/report-2026-03-05.html">2026-03-05</a> · 最新发现: <a href="discovery-reports/discovery-2026-03-06.html">2026-03-06</a></p>
 
 ## 核心入口
 

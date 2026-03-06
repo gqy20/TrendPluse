@@ -495,10 +495,21 @@ body {
 
 .tp-focus-card h3 {
   margin-top: 0 !important;
-  font-size: 1.2rem;
-  color: var(--trendpluse-electric-blue);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.95);
   border: none !important;
   padding: 0 !important;
+}
+
+.tp-focus-card h3 a {
+  color: rgba(248, 250, 252, 0.95);
+  text-decoration: none;
+}
+
+.tp-focus-card h3 a:hover {
+  color: var(--trendpluse-electric-blue);
+  text-decoration: none;
 }
 
 .tp-focus-card p {
