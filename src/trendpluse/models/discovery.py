@@ -8,7 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from trendpluse.discovery.highlight_analyzer import ProjectHighlight
+from trendpluse.models.project_highlight import ProjectHighlight
 
 
 class DiscoveredProject(BaseModel):

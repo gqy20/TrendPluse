@@ -27,6 +27,7 @@ from trendpluse.collectors.issues import IssueCollector
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH, Settings
 from trendpluse.logger import get_logger
+from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.models.signal import (
     ActivityData,
     DailyReport,
@@ -41,7 +42,6 @@ from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
 from trendpluse.readers.github_pr_reader import GitHubPRReader
 from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
-from trendpluse.reporters.markdown_reporter import MarkdownReporter
 from trendpluse.services.issue_workflow_service import IssueWorkflowService
 from trendpluse.services.release_workflow_service import ReleaseWorkflowService
 from trendpluse.services.report_output_service import ReportOutputService

@@ -3,6 +3,7 @@
 导出所有数据模型类。
 """
 
+from trendpluse.models.project_highlight import ProjectHighlight
 from trendpluse.models.repository import MonitoredRepo
 from trendpluse.models.signal import (
     ActivityData,
@@ -22,6 +23,7 @@ __all__ = [
     "ReleaseInfo",
     "ReleasesData",
     "MonitoredRepo",
+    "ProjectHighlight",
     "SourceRef",
     "AnalysisMaterial",
 ]

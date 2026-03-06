@@ -5,8 +5,8 @@
 
 import pytest
 
+from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.models.signal import Signal
-from trendpluse.reporters.markdown_reporter import MarkdownReporter
 
 
 class TestMarkdownReporter:

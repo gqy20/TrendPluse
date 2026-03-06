@@ -15,7 +15,7 @@ class TestMarkdownFormatterActivity:
     def test_render_activity_with_structured_data(self):
         """测试：使用结构化 ActivityData 渲染活跃度信息"""
         # Arrange
-        from trendpluse.reporters.markdown_reporter import MarkdownReporter
+        from trendpluse.markdown_reporter import MarkdownReporter
 
         formatter = MarkdownReporter()
 
@@ -52,7 +52,7 @@ class TestMarkdownFormatterReleases:
     def test_render_releases_with_structured_data(self):
         """测试：使用结构化 ReleasesData 渲染版本发布信息"""
         # Arrange
-        from trendpluse.reporters.markdown_reporter import MarkdownReporter
+        from trendpluse.markdown_reporter import MarkdownReporter
 
         formatter = MarkdownReporter()
 
@@ -98,7 +98,7 @@ class TestMarkdownFormatterFullReport:
     def test_render_full_report_with_structured_data(self):
         """测试：使用结构化数据渲染完整报告"""
         # Arrange
-        from trendpluse.reporters.markdown_reporter import MarkdownReporter
+        from trendpluse.markdown_reporter import MarkdownReporter
 
         formatter = MarkdownReporter()
 

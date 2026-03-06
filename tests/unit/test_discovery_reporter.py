@@ -7,9 +7,9 @@ from datetime import UTC, datetime
 
 import pytest
 
-from trendpluse.discovery.highlight_analyzer import ProjectHighlight
 from trendpluse.discovery.reporter import DiscoveryReporter
 from trendpluse.models.discovery import DiscoveredProject, DiscoveryReport
+from trendpluse.models.project_highlight import ProjectHighlight
 
 
 class TestDiscoveryReporter:

@@ -3,6 +3,7 @@
 测试 MarkdownReporter 的周报渲染功能。
 """
 
+from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.models.signal import (
     CoreTrend,
     RepoActivity,
@@ -10,7 +11,6 @@ from trendpluse.models.signal import (
     WeeklyActivity,
     WeeklyReport,
 )
-from trendpluse.reporters.markdown_reporter import MarkdownReporter
 
 
 class TestRenderWeeklyReport:

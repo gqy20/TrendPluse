@@ -5,10 +5,8 @@
 
 from unittest.mock import MagicMock, patch
 
-from trendpluse.discovery.highlight_analyzer import (
-    ProjectHighlight,
-    ProjectHighlightAnalyzer,
-)
+from trendpluse.discovery.highlight_analyzer import ProjectHighlightAnalyzer
+from trendpluse.models.project_highlight import ProjectHighlight
 
 
 class MockProject:
