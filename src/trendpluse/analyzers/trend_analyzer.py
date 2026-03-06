@@ -226,6 +226,13 @@ PR 描述: {material.body}
 
         return signals
 
+    async def analyze_prs_async(
+        self, pr_list: list[dict], max_workers: int = 5
+    ) -> list[Signal]:
+        """兼容旧版 PR 详情输入的异步批量分析入口。"""
+        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
+        return await self.analyze_materials_async(materials, max_workers=max_workers)
+
     def aggregate_and_generate_report(
         self,
         pr_signals: list[Signal],

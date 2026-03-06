@@ -170,6 +170,16 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             releases, max_workers=max_workers
         )
 
+    async def summarize_releases_async(
+        self, detailed_releases: list[dict], max_workers: int = 5
+    ) -> dict[str, ReleaseSummary]:
+        """兼容旧版 release 详情字典输入的异步批量总结入口。"""
+        materials = [
+            AnalysisMaterial.from_release_details(release)
+            for release in detailed_releases
+        ]
+        return await self.summarize_materials_async(materials, max_workers=max_workers)
+
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）
 
