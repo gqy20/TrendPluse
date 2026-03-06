@@ -18,7 +18,7 @@ from tenacity import (
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport
 from trendpluse.notifiers.base import BaseNotifier
-from trendpluse.notifiers.formatters import FeishuFormatter
+from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
 logger = get_logger(__name__)
 

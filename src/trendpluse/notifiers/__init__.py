@@ -5,5 +5,6 @@
 
 from trendpluse.notifiers.base import BaseNotifier
 from trendpluse.notifiers.feishu import FeishuNotifier
+from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
-__all__ = ["BaseNotifier", "FeishuNotifier"]
+__all__ = ["BaseNotifier", "FeishuNotifier", "FeishuFormatter"]

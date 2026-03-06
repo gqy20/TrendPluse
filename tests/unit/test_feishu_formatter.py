@@ -69,7 +69,7 @@ class TestFeishuFormatter:
         """测试：使用结构化数据生成飞书卡片"""
         # Arrange
         # 这个测试会失败，因为 FeishuFormatter 类还不存在
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -205,7 +205,7 @@ class TestFeishuFormatter:
     def test_format_card_with_minimal_data(self):
         """测试：最小数据集也能生成有效卡片"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -236,7 +236,7 @@ class TestFeishuFormatter:
     def test_format_card_includes_top_repos(self):
         """测试：卡片包含 TOP 3 活跃仓库"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -293,7 +293,7 @@ class TestFeishuFormatter:
     def test_format_releases_shows_all_versions(self):
         """测试：版本发布显示所有版本（与 MarkdownReporter 一致）"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -367,7 +367,7 @@ class TestFeishuFormatter:
     def test_format_releases_includes_detailed_info(self):
         """测试：版本发布包含详细信息（发布者、时间、摘要、链接）"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -443,7 +443,7 @@ class TestFeishuFormatter:
     def test_format_card_includes_release_signals(self):
         """测试：卡片包含 Release 信号部分（与 Markdown 一致）"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -488,7 +488,7 @@ class TestFeishuFormatter:
     def test_format_card_includes_breaking_changes(self):
         """测试：卡片包含 Breaking Changes 部分（使用折叠面板）"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -549,7 +549,7 @@ class TestFeishuFormatter:
     def test_format_activity_includes_overview(self):
         """测试：活跃度部分包含总览指标（与 Markdown 一致）"""
         # Arrange
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 
@@ -590,7 +590,7 @@ class TestFeishuFormatter:
         """测试：版本发布包含 AI 总结（与 Markdown 一致）"""
         # Arrange
         from trendpluse.models.signal import ReleaseSummary
-        from trendpluse.notifiers.formatters import FeishuFormatter
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
 
         formatter = FeishuFormatter()
 

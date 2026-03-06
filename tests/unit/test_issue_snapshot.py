@@ -6,7 +6,7 @@
 import json
 from pathlib import Path
 
-from trendpluse.snapshots.issue_snapshot import IssueSnapshot
+from trendpluse.collectors.issue_snapshot import IssueSnapshot
 
 
 class TestIssueSnapshot:

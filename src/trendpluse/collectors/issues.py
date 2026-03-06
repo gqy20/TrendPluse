@@ -8,10 +8,10 @@ from datetime import UTC, datetime, timedelta
 from github import GithubException
 
 from trendpluse.collectors.base import BaseGitHubCollector
+from trendpluse.collectors.issue_snapshot import IssueSnapshot
 from trendpluse.collectors.parallel import parallel_execute
 from trendpluse.logger import get_logger
 from trendpluse.models.issue import IssueInfo
-from trendpluse.snapshots.issue_snapshot import IssueSnapshot
 
 logger = get_logger(__name__)
 
