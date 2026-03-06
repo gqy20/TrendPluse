@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """归一化每日报告 JSON 的 stats 字段。
 
 将历史 reports/daily/report-*.json 中不稳定的 stats key
@@ -7,7 +6,6 @@
 
 from __future__ import annotations
 
-import argparse
 import json
 from pathlib import Path
 from typing import Any
@@ -192,21 +190,11 @@ def normalize_file(path: Path, apply: bool) -> tuple[bool, dict[str, int] | None
     return changed, normalized
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="归一化日报 stats 字段")
-    parser.add_argument(
-        "--reports-dir",
-        default="reports/daily",
-        help="日报目录路径（默认: reports/daily）",
-    )
-    parser.add_argument(
-        "--apply",
-        action="store_true",
-        help="执行写入修复（默认仅预览）",
-    )
-    args = parser.parse_args()
-
-    report_dir = Path(args.reports_dir)
+def run_normalize_daily_report_stats(
+    reports_dir: str = "reports/daily", *, apply: bool = False
+) -> None:
+    """执行日报 stats 归一化。"""
+    report_dir = Path(reports_dir)
     files = sorted(report_dir.glob("report-*.json"))
     if not files:
         print(f"未找到文件: {report_dir}")
@@ -215,7 +203,7 @@ def main() -> None:
     changed_count = 0
     sample: list[str] = []
     for path in files:
-        changed, normalized = normalize_file(path, apply=args.apply)
+        changed, normalized = normalize_file(path, apply=apply)
         if changed:
             changed_count += 1
             if len(sample) < 5 and normalized:
@@ -226,13 +214,9 @@ def main() -> None:
                     f"release={normalized['release_count']}"
                 )
 
-    mode = "已修复" if args.apply else "可修复"
+    mode = "已修复" if apply else "可修复"
     print(f"{mode}: {changed_count}/{len(files)}")
     for line in sample:
         print(f"- {line}")
-    if not args.apply:
+    if not apply:
         print("提示: 添加 --apply 执行写入")
-
-
-if __name__ == "__main__":
-    main()

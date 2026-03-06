@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 """生成报告索引
 
 从 reports/ 目录读取所有报告，生成 MkDocs 索引页面。
 """
 
-import argparse
 import re
 from datetime import datetime
 from pathlib import Path
@@ -534,13 +532,10 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
     print(f"发现索引已生成: {discovery_index_path}")
 
 
-def main():
-    """主函数"""
-    parser = argparse.ArgumentParser(description="生成报告索引并同步文档")
-    parser.parse_args()
-
+def run_generate_report_index(project_root: Path | None = None) -> None:
+    """生成报告索引并同步文档。"""
     # 默认以当前工作目录作为项目根目录，便于在仓库中直接执行
-    project_root = Path.cwd().resolve()
+    project_root = project_root or Path.cwd().resolve()
     reports_dir = project_root / "reports"
     docs_reports_dir = project_root / "docs" / "reports"
     docs_dir = project_root / "docs"
@@ -560,7 +555,3 @@ def main():
 
     # 生成索引
     generate_index(reports_dir, index_path)
-
-
-if __name__ == "__main__":
-    main()

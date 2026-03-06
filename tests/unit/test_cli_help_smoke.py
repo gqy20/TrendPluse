@@ -8,11 +8,6 @@ from collections.abc import Callable
 
 import pytest
 
-from trendpluse.automation.generate_report_index import main as generate_index_main
-from trendpluse.automation.normalize_daily_report_stats import (
-    main as normalize_stats_main,
-)
-from trendpluse.automation.sync_repos_to_docs import main as sync_repos_main
 from trendpluse.cli.add_repo import main as add_repo_main
 from trendpluse.cli.analyze_issues_with_agent import main as analyze_issues_main
 from trendpluse.cli.analyze_repo import main as analyze_repo_main
@@ -20,10 +15,13 @@ from trendpluse.cli.bridge_discovery_to_monitoring import (
     main as bridge_discovery_main,
 )
 from trendpluse.cli.discover_projects import main as discover_projects_main
+from trendpluse.cli.generate_report_index import main as generate_index_main
+from trendpluse.cli.normalize_daily_report_stats import main as normalize_stats_main
 from trendpluse.cli.run import main as run_main
 from trendpluse.cli.run_weekly import main as run_weekly_main
 from trendpluse.cli.send_feishu_notification import main as send_feishu_main
 from trendpluse.cli.send_weekly_feishu import main as send_weekly_feishu_main
+from trendpluse.cli.sync_repos_to_docs import main as sync_repos_main
 
 
 @pytest.mark.parametrize(

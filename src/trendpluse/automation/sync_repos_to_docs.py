@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
 """同步监控仓库列表到文档。"""
 
 import re
-import sys
 from pathlib import Path
 
 from trendpluse.automation.repos_doc_generator import (
@@ -92,28 +90,13 @@ def update_index_file(index_path: Path, dry_run: bool = False) -> bool:
     return True
 
 
-def main() -> int:
-    """主函数
-
-    Returns:
-        退出码
-    """
-    import argparse
-
-    parser = argparse.ArgumentParser(description="同步监控仓库列表到文档")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="试运行模式，不修改文件",
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="检查模式，如果文档不是最新的则返回非零退出码",
-    )
-
-    args = parser.parse_args()
-
+def run_sync_repos_to_docs(
+    *,
+    dry_run: bool = False,
+    check: bool = False,
+    project_root: Path | None = None,
+) -> int:
+    """执行监控仓库文档同步。"""
     # 获取配置
     settings = Settings()
     repos = settings.monitored_repo_configs
@@ -121,14 +104,14 @@ def main() -> int:
     print(f"📊 从配置读取到 {len(repos)} 个仓库")
 
     # 默认以当前工作目录作为项目根目录，便于在仓库中直接执行
-    project_root = Path.cwd().resolve()
+    project_root = project_root or Path.cwd().resolve()
     index_path = project_root / "docs" / "index.md"
 
     if not index_path.exists():
         print(f"❌ 文件不存在: {index_path}")
         return 1
 
-    if args.check:
+    if check:
         # 检查模式：重新生成并比较
         content = index_path.read_text(encoding="utf-8")
         categories = parse_repos_from_config(repos)
@@ -168,10 +151,6 @@ def main() -> int:
             return 0
 
     # 正常更新模式
-    success = update_index_file(index_path, dry_run=args.dry_run)
+    success = update_index_file(index_path, dry_run=dry_run)
 
     return 0 if success else 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())

@@ -1,13 +1,10 @@
-#!/usr/bin/env python3
 """添加仓库到配置脚本
 
 用于 GitHub Action 自动添加新仓库到监控列表。
 """
 
-import argparse
 import json
 import re
-import sys
 from pathlib import Path
 
 # 分类到注释标记的映射
@@ -253,32 +250,17 @@ def load_batch_items(batch_file: str) -> list[dict[str, str]]:
     return items
 
 
-def main():
-    """主函数"""
-    parser = argparse.ArgumentParser(description="添加仓库到配置")
-    parser.add_argument("--repo", help="仓库路径，格式：owner/repo")
-    parser.add_argument("--category", help="分类名称")
-    parser.add_argument(
-        "--batch-file",
-        help=(
-            "批量输入文件（JSON），支持 [{repo,category}] 或 discovery actionable 格式"
-        ),
-    )
-    parser.add_argument(
-        "--config-file",
-        default="src/trendpluse/config.py",
-        help="配置文件路径",
-    )
-    parser.add_argument(
-        "--parse-issue",
-        help="解析 Issue 表单内容",
-    )
-
-    args = parser.parse_args()
-
-    if args.batch_file:
-        items = load_batch_items(args.batch_file)
-        result = batch_add_repos_to_config(args.config_file, items)
+def run_add_repo_command(
+    *,
+    repo: str | None = None,
+    category: str | None = None,
+    batch_file: str | None = None,
+    config_file: str = "src/trendpluse/config.py",
+) -> int:
+    """执行添加仓库命令。"""
+    if batch_file:
+        items = load_batch_items(batch_file)
+        result = batch_add_repos_to_config(config_file, items)
         print(
             "批量添加结果: "
             f"added={len(result['added'])}, "
@@ -290,21 +272,17 @@ def main():
         has_errors = bool(
             result["invalid_format"] or result["invalid_category"] or result["failed"]
         )
-        sys.exit(1 if has_errors else 0)
+        return 1 if has_errors else 0
 
-    if not args.repo or not args.category:
+    if not repo or not category:
         print("单仓模式必须提供 --repo 和 --category")
-        sys.exit(1)
+        return 1
 
     # 验证仓库格式
-    if not validate_repo_format(args.repo):
-        print(f"无效仓库格式: {args.repo}")
-        sys.exit(1)
+    if not validate_repo_format(repo):
+        print(f"无效仓库格式: {repo}")
+        return 1
 
     # 添加仓库
-    success = add_repo_to_config(args.config_file, args.repo, args.category)
-    sys.exit(0 if success else 1)
-
-
-if __name__ == "__main__":
-    main()
+    success = add_repo_to_config(config_file, repo, category)
+    return 0 if success else 1

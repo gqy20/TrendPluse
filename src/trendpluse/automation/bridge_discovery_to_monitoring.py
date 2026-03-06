@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 """discovery 候选到监控列表的桥接脚本"""
 
-import argparse
 import json
 from pathlib import Path
 
@@ -101,50 +99,22 @@ def bridge_actionable_to_monitoring(
     return result
 
 
-def main() -> int:
-    """命令行入口"""
-    parser = argparse.ArgumentParser(description="桥接 discovery 候选到监控列表")
-    parser.add_argument(
-        "--actionable-file",
-        required=True,
-        help="discover 生成的 actionable 文件路径",
-    )
-    parser.add_argument(
-        "--config-file",
-        default="src/trendpluse/config.py",
-        help="配置文件路径",
-    )
-    parser.add_argument(
-        "--min-priority",
-        default="medium",
-        choices=["low", "medium", "high"],
-        help="最小优先级阈值",
-    )
-    parser.add_argument(
-        "--max-add-per-run",
-        type=int,
-        default=10,
-        help="每次最多新增仓库数量（默认 10）",
-    )
-    parser.add_argument(
-        "--apply",
-        action="store_true",
-        help="是否实际写入配置文件（默认仅预览）",
-    )
-
-    args = parser.parse_args()
-
+def run_bridge_discovery_command(
+    *,
+    actionable_file: str,
+    config_file: str = "src/trendpluse/config.py",
+    min_priority: str = "medium",
+    max_add_per_run: int = 10,
+    apply: bool = False,
+) -> int:
+    """执行 discovery 桥接命令。"""
     result = bridge_actionable_to_monitoring(
-        actionable_file=args.actionable_file,
-        config_file=args.config_file,
-        min_priority=args.min_priority,
-        max_add_per_run=args.max_add_per_run,
-        apply_changes=args.apply,
+        actionable_file=actionable_file,
+        config_file=config_file,
+        min_priority=min_priority,
+        max_add_per_run=max_add_per_run,
+        apply_changes=apply,
     )
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

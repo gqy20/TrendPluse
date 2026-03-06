@@ -79,9 +79,9 @@ trendpluse-send-feishu = "trendpluse.cli.send_feishu_notification:main"
 trendpluse-send-weekly-feishu = "trendpluse.cli.send_weekly_feishu:main"
 trendpluse-add-repo = "trendpluse.cli.add_repo:main"
 trendpluse-bridge-discovery = "trendpluse.cli.bridge_discovery_to_monitoring:main"
-trendpluse-generate-report-index = "trendpluse.automation.generate_report_index:main"
-trendpluse-sync-repos-to-docs = "trendpluse.automation.sync_repos_to_docs:main"
-trendpluse-normalize-daily-stats = "trendpluse.automation.normalize_daily_report_stats:main"
+trendpluse-generate-report-index = "trendpluse.cli.generate_report_index:main"
+trendpluse-sync-repos-to-docs = "trendpluse.cli.sync_repos_to_docs:main"
+trendpluse-normalize-daily-stats = "trendpluse.cli.normalize_daily_report_stats:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/trendpluse"]
