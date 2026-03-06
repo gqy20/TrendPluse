@@ -1,6 +1,9 @@
 """Issue Agent 解析测试"""
 
+from unittest.mock import patch
+
 import pytest
+from claude_agent_sdk.types import ResultMessage
 
 from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
 
@@ -37,6 +40,40 @@ def test_normalize_and_validate_output_accepts_fenced_json() -> None:
     report = runner._normalize_and_validate_output(text)
     assert len(report.top_pain_points) == 1
     assert report.top_pain_points[0].topic == "安装失败"
+
+
+@pytest.mark.asyncio
+async def test_run_agent_query_prefers_structured_output() -> None:
+    runner = IssueAgentRunner(model=None)
+
+    async def fake_query(*, prompt, options=None, transport=None):
+        assert options is not None
+        assert options.output_format is not None
+        yield ResultMessage(
+            subtype="success",
+            duration_ms=1,
+            duration_api_ms=1,
+            is_error=False,
+            num_turns=1,
+            session_id="s1",
+            structured_output={
+                "candidate_pain_points": [
+                    {
+                        "topic": "安装失败",
+                        "count": 2,
+                        "affected_repos": ["a/b"],
+                        "sample_urls": ["u1"],
+                        "aliases": [],
+                    }
+                ]
+            },
+        )
+
+    with patch("claude_agent_sdk.query", fake_query):
+        text = await runner._run_agent_query("[ROUND1] test")
+
+    assert "candidate_pain_points" in text
+    assert "安装失败" in text
 
 
 @pytest.mark.asyncio

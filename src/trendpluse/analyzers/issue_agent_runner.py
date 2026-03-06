@@ -272,7 +272,12 @@ class IssueAgentRunner:
 
     async def _run_agent_query(self, prompt: str) -> str:
         try:
-            from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, query
+            from claude_agent_sdk import (
+                AssistantMessage,
+                ClaudeAgentOptions,
+                ResultMessage,
+                query,
+            )
         except Exception as exc:  # pragma: no cover - 仅在缺少依赖时触发
             raise RuntimeError(
                 "未安装 claude-agent-sdk，请先安装依赖后再运行。"
@@ -281,14 +286,138 @@ class IssueAgentRunner:
         options = ClaudeAgentOptions(
             model=self.model,
             allowed_tools=["Read"],
+            output_format=self._resolve_output_format(prompt),
         )
 
         text_chunks: list[str] = []
+        result_text: str | None = None
+        structured_output: Any = None
         async for message in query(prompt=prompt, options=options):
             if isinstance(message, AssistantMessage):
                 text_chunks.append(self._extract_text_blocks(message.content))
+            elif isinstance(message, ResultMessage):
+                if message.structured_output is not None:
+                    structured_output = message.structured_output
+                if isinstance(message.result, str) and message.result.strip():
+                    result_text = message.result.strip()
+
+        if structured_output is not None:
+            if isinstance(structured_output, str):
+                return structured_output
+            return json.dumps(structured_output, ensure_ascii=False)
+
+        if result_text:
+            return result_text
 
         return "".join(text_chunks).strip()
+
+    def _resolve_output_format(self, prompt: str) -> dict[str, Any] | None:
+        """根据轮次提示选择结构化输出 schema。"""
+        if "[ROUND1]" in prompt:
+            return self._build_round1_output_format()
+        if "[ROUND2]" in prompt:
+            return self._build_round2_output_format()
+        if "[ROUND3]" in prompt:
+            return self._build_round3_output_format()
+        return None
+
+    def _build_round1_output_format(self) -> dict[str, Any]:
+        """ROUND1 结构化输出 schema。"""
+        return {
+            "type": "json_schema",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "candidate_pain_points": self._pain_point_array_schema(
+                        include_review_fields=False
+                    )
+                },
+                "required": ["candidate_pain_points"],
+                "additionalProperties": False,
+            },
+        }
+
+    def _build_round2_output_format(self) -> dict[str, Any]:
+        """ROUND2 结构化输出 schema。"""
+        return {
+            "type": "json_schema",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "merged_pain_points": self._pain_point_array_schema(
+                        include_review_fields=False
+                    )
+                },
+                "required": ["merged_pain_points"],
+                "additionalProperties": False,
+            },
+        }
+
+    def _build_round3_output_format(self) -> dict[str, Any]:
+        """ROUND3 结构化输出 schema。"""
+        return {
+            "type": "json_schema",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "reviewed_pain_points": self._pain_point_array_schema(
+                        include_review_fields=True
+                    )
+                },
+                "required": ["reviewed_pain_points"],
+                "additionalProperties": False,
+            },
+        }
+
+    def _pain_point_array_schema(
+        self, *, include_review_fields: bool
+    ) -> dict[str, Any]:
+        """构建痛点数组 schema。"""
+        properties: dict[str, Any] = {
+            "topic": {"type": "string"},
+            "count": {"type": "integer", "minimum": 1},
+            "affected_repos": {
+                "type": "array",
+                "items": {"type": "string"},
+            },
+            "sample_urls": {
+                "type": "array",
+                "items": {"type": "string"},
+            },
+            "aliases": {
+                "type": "array",
+                "items": {"type": "string"},
+            },
+        }
+        required = ["topic", "count", "affected_repos", "sample_urls"]
+
+        if include_review_fields:
+            properties.update(
+                {
+                    "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1,
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": ["P0", "P1", "P2"],
+                    },
+                    "keep": {"type": "boolean"},
+                    "review_reason": {"type": "string"},
+                }
+            )
+            required.extend(["confidence", "priority", "keep"])
+
+        return {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": properties,
+                "required": required,
+                "additionalProperties": False,
+            },
+        }
 
     def _extract_text_blocks(self, content: Iterable[object]) -> str:
         parts: list[str] = []
