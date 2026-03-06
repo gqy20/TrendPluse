@@ -1,7 +1,7 @@
 """分析材料构建器测试。"""
 
-from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
-from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
+from trendpluse.collectors.commit_material_builder import CommitMaterialBuilder
+from trendpluse.collectors.release_material_builder import ReleaseMaterialBuilder
 
 
 def test_build_commit_materials():

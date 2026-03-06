@@ -2,8 +2,8 @@
 
 from unittest.mock import Mock, patch
 
+from trendpluse.collectors.github_pr_reader import GitHubPRReader
 from trendpluse.models.source import SourceRef
-from trendpluse.readers.github_pr_reader import GitHubPRReader
 
 
 def test_refs_from_candidates_filters_non_pr_events():
@@ -26,7 +26,7 @@ def test_refs_from_candidates_filters_non_pr_events():
     assert refs[0].external_id == "1"
 
 
-@patch("trendpluse.readers.github_pr_reader.GitHubDetailFetcher")
+@patch("trendpluse.collectors.github_pr_reader.GitHubDetailFetcher")
 def test_read_many_returns_analysis_materials(mock_fetcher_class):
     mock_fetcher = Mock()
     mock_fetcher.fetch_pr_details.return_value = {

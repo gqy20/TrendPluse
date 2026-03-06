@@ -21,9 +21,12 @@ from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.analyzers.weekly_aggregator import WeeklyAggregator
 from trendpluse.collectors.activity import ActivityCollector
+from trendpluse.collectors.commit_material_builder import CommitMaterialBuilder
 from trendpluse.collectors.filter import EventFilter
 from trendpluse.collectors.github_events import GitHubEventsCollector
+from trendpluse.collectors.github_pr_reader import GitHubPRReader
 from trendpluse.collectors.issues import IssueCollector
+from trendpluse.collectors.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH, Settings
 from trendpluse.logger import get_logger
@@ -39,9 +42,6 @@ from trendpluse.models.signal import (
     WeeklyReport,
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
-from trendpluse.readers.commit_material_builder import CommitMaterialBuilder
-from trendpluse.readers.github_pr_reader import GitHubPRReader
-from trendpluse.readers.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.workflows.issue_workflow import IssueWorkflowService
 from trendpluse.workflows.release_workflow import ReleaseWorkflowService
 from trendpluse.workflows.report_output import ReportOutputService
