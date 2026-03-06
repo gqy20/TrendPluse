@@ -8,11 +8,14 @@
 import argparse
 import os
 from datetime import datetime
-from pathlib import Path
 
 from dotenv import load_dotenv
 from rich.console import Console
 
+from trendpluse.app.feishu_notifications import (
+    find_daily_report_json,
+    load_daily_report_from_json,
+)
 from trendpluse.cli.feishu_common import (
     build_feishu_notifier,
     ensure_webhook_configured,
@@ -21,44 +24,9 @@ from trendpluse.cli.feishu_common import (
     print_exception_and_exit,
     print_feishu_target,
 )
-from trendpluse.cli.report_json_common import (
-    find_report_json_file,
-    load_daily_report_model,
-    print_daily_report_summary,
-)
-from trendpluse.models.signal import DailyReport
+from trendpluse.cli.report_json_common import print_daily_report_summary
 
 console = Console()
-
-
-def find_report_json(report_date: str) -> Path | None:
-    """查找报告 JSON 文件
-
-    仅支持仓库内新目录结构：
-    1. reports/daily/report-{date}.json
-
-    Args:
-        report_date: 报告日期 (YYYY-MM-DD)
-
-    Returns:
-        找到的文件路径（绝对路径），未找到返回 None
-    """
-    filename = f"report-{report_date}.json"
-    return find_report_json_file(f"reports/daily/{filename}")
-
-
-def load_report_from_json(json_path: str) -> DailyReport:
-    """从 JSON 文件加载 DailyReport 对象
-
-    如果数据不完整（例如只包含 date），会提供默认值以确保返回有效的 DailyReport。
-
-    Args:
-        json_path: JSON 文件路径
-
-    Returns:
-        DailyReport 对象
-    """
-    return load_daily_report_model(json_path, console)
 
 
 def main():
@@ -81,7 +49,7 @@ def main():
     console.print(f"  @ 提醒: {len(config.at_mobiles)} 个")
 
     # 查找 JSON 报告文件
-    json_path = find_report_json(report_date)
+    json_path = find_daily_report_json(report_date)
 
     if not json_path:
         console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
@@ -89,7 +57,7 @@ def main():
     else:
         # 直接读取 JSON
         console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
-        report = load_report_from_json(str(json_path))
+        report = load_daily_report_from_json(str(json_path), console)
 
     try:
         print_daily_report_summary(console, report)

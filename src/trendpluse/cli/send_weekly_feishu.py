@@ -6,11 +6,16 @@
 import argparse
 import os
 from datetime import datetime
-from pathlib import Path
 
 from dotenv import load_dotenv
 from rich.console import Console
 
+from trendpluse.app.feishu_notifications import (
+    build_weekly_notification_content,
+    build_weekly_notification_url,
+    find_weekly_report_json,
+    load_weekly_report_from_json,
+)
 from trendpluse.cli.feishu_common import (
     build_feishu_notifier,
     ensure_webhook_configured,
@@ -20,38 +25,11 @@ from trendpluse.cli.feishu_common import (
     print_feishu_target,
 )
 from trendpluse.cli.report_json_common import (
-    find_report_json_file,
-    load_report_model,
     print_weekly_report_summary,
     resolve_week_id,
 )
-from trendpluse.models.signal import WeeklyReport
 
 console = Console()
-
-
-def find_weekly_report_json(week_id: str) -> Path | None:
-    """查找周报 JSON 文件
-
-    Args:
-        week_id: 周标识 (YYYY-Www)
-
-    Returns:
-        找到的文件路径（绝对路径），未找到返回 None
-    """
-    return find_report_json_file(f"reports/weekly/weekly-{week_id}.json")
-
-
-def load_weekly_report_from_json(json_path: str) -> WeeklyReport:
-    """从 JSON 文件加载 WeeklyReport 对象
-
-    Args:
-        json_path: JSON 文件路径
-
-    Returns:
-        WeeklyReport 对象
-    """
-    return load_report_model(json_path, WeeklyReport)
 
 
 def main():
@@ -95,17 +73,8 @@ def main():
 
         # 发送周报摘要文本，避免 WeeklyReport -> DailyReport 的临时转换层
         console.print("  正在发送...")
-        weekly_url = (
-            f"https://home.gqy20.top/TrendPluse/reports/weekly-{report.week_id}/"
-        )
-        content = (
-            f"📅 周期: {report.start_date} ~ {report.end_date}\n"
-            f"🧭 摘要: {report.summary_brief}\n"
-            f"📊 日报天数: {report.daily_reports_count}\n"
-            f"📌 核心趋势: {len(report.core_trends)}\n"
-            f"🔧 工程信号: {len(report.engineering_signals)}\n"
-            f"🔬 研究信号: {len(report.research_signals)}"
-        )
+        weekly_url = build_weekly_notification_url(report)
+        content = build_weekly_notification_content(report)
         success = notifier.send(
             title=f"TrendPulse 周报 {report.week_id}",
             content=content,

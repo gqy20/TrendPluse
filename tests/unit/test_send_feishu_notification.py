@@ -16,9 +16,9 @@ class TestFindReportJson:
         monkeypatch.chdir(tmp_path)
 
         # Act
-        from trendpluse.cli.send_feishu_notification import find_report_json
+        from trendpluse.app.feishu_notifications import find_daily_report_json
 
-        result = find_report_json(report_date)
+        result = find_daily_report_json(report_date)
 
         # Assert
         assert result == json_file
@@ -31,9 +31,80 @@ class TestFindReportJson:
         monkeypatch.chdir(tmp_path)
 
         # Act
-        from trendpluse.cli.send_feishu_notification import find_report_json
+        from trendpluse.app.feishu_notifications import find_daily_report_json
 
-        result = find_report_json(report_date)
+        result = find_daily_report_json(report_date)
 
         # Assert
         assert result is None
+
+
+class TestWeeklyNotificationHelpers:
+    """测试周报通知辅助。"""
+
+    def test_build_weekly_notification_content(self):
+        """测试：生成周报通知正文。"""
+        from trendpluse.app.feishu_notifications import (
+            build_weekly_notification_content,
+        )
+        from trendpluse.models.signal import WeeklyReport
+
+        report = WeeklyReport(
+            week_id="2026-W10",
+            start_date="2026-03-02",
+            end_date="2026-03-08",
+            summary_brief="本周聚焦 SDK 与 Agent 编排。",
+            core_trends=[
+                {
+                    "title": "SDK",
+                    "theme": "tooling",
+                    "description": "SDK 迭代明显",
+                    "signal_ids": [],
+                    "impact_level": 4,
+                },
+                {
+                    "title": "Agent",
+                    "theme": "architecture",
+                    "description": "Agent 编排活跃",
+                    "signal_ids": [],
+                    "impact_level": 4,
+                },
+            ],
+            engineering_signals=[],
+            research_signals=[],
+            daily_reports_count=7,
+            total_prs_analyzed=12,
+            high_impact_signals=3,
+            total_commits=20,
+            total_releases=2,
+        )
+
+        content = build_weekly_notification_content(report)
+
+        assert "2026-03-02 ~ 2026-03-08" in content
+        assert "本周聚焦 SDK 与 Agent 编排。" in content
+        assert "日报天数: 7" in content
+
+    def test_build_weekly_notification_url(self):
+        """测试：生成周报通知链接。"""
+        from trendpluse.app.feishu_notifications import build_weekly_notification_url
+        from trendpluse.models.signal import WeeklyReport
+
+        report = WeeklyReport(
+            week_id="2026-W10",
+            start_date="2026-03-02",
+            end_date="2026-03-08",
+            summary_brief="摘要",
+            core_trends=[],
+            engineering_signals=[],
+            research_signals=[],
+            daily_reports_count=7,
+            total_prs_analyzed=12,
+            high_impact_signals=3,
+            total_commits=20,
+            total_releases=2,
+        )
+
+        url = build_weekly_notification_url(report)
+
+        assert url.endswith("/weekly-2026-W10/")
