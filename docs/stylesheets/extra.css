@@ -484,70 +484,68 @@ body {
 
 /* 今日聚焦卡片 */
 .tp-focus-card {
-  padding: 1.6rem 1.8rem;
+  padding: 1.4rem 1.6rem;
   margin: 1rem 0 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(102, 227, 255, 0.22);
-  border-left: 4px solid var(--trendpluse-electric-blue);
-  background: linear-gradient(135deg, rgba(6, 10, 20, 0.96), rgba(10, 16, 30, 0.9));
-  box-shadow: 0 20px 44px rgba(2, 6, 23, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid var(--md-primary-fg-color);
+  background: var(--md-code-bg-color);
 }
 
 .tp-focus-card h3 {
   margin-top: 0 !important;
   font-size: 1.1rem;
   font-weight: 600;
-  color: rgba(248, 250, 252, 0.95);
+  color: var(--md-default-fg-color) !important;
   border: none !important;
   padding: 0 !important;
 }
 
 .tp-focus-card h3 a {
-  color: rgba(248, 250, 252, 0.95);
+  color: var(--md-default-fg-color) !important;
   text-decoration: none;
 }
 
 .tp-focus-card h3 a:hover {
-  color: var(--trendpluse-electric-blue);
+  color: var(--md-primary-fg-color) !important;
   text-decoration: none;
 }
 
 .tp-focus-card p {
-  color: rgba(226, 232, 240, 0.88);
-  line-height: 1.85;
-  margin-bottom: 1.2rem;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.75;
+  margin-bottom: 1rem;
 }
 
 .tp-focus-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 1rem;
 }
 
 .tp-focus-stat {
-  padding: 0.4rem 0.85rem;
+  padding: 0.3rem 0.8rem;
   border-radius: 999px;
-  background: rgba(102, 227, 255, 0.08);
-  color: rgba(191, 219, 254, 0.88);
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
   font-size: 0.82rem;
-  border: 1px solid rgba(102, 227, 255, 0.12);
+  border: 1px solid var(--md-default-fg-color--lighter);
 }
 
 .tp-focus-stat strong {
-  color: white;
+  color: var(--md-default-fg-color);
 }
 
 .tp-focus-stat--highlight {
-  background: rgba(102, 227, 255, 0.15);
-  border-color: rgba(102, 227, 255, 0.3);
-  color: var(--trendpluse-electric-blue);
+  background: var(--md-primary-fg-color--transparent, rgba(99,179,237,0.15));
+  border-color: var(--md-primary-fg-color);
+  color: var(--md-primary-fg-color);
 }
 
 .tp-focus-stat--warn {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.25);
-  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
 }
 
 [data-md-color-scheme="slate"] .tp-live-card,
