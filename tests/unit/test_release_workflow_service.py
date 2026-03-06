@@ -154,6 +154,66 @@ def test_run_falls_back_when_release_analyzer_returns_empty() -> None:
     ]
 
 
+def test_run_deduplicates_breaking_changes_preferring_specific_tags() -> None:
+    """测试 breaking changes 去重时优先保留具体版本 tag。"""
+    releases_data = ReleasesData(total_count=0, unique_repos_count=0, releases=[])
+    detailed_releases = [
+        {
+            "repo": "test/repo",
+            "tag_name": "v1.0.69",
+            "html_url": "https://github.com/test/repo/releases/tag/v1.0.69",
+            "version_info": {"major": 1, "minor": 0, "patch": 69},
+        }
+    ]
+    duplicated_changes = [
+        {
+            "repo": "test/repo",
+            "tag_name": "v1",
+            "changes": [
+                {
+                    "description": "统一 prompt 输入",
+                    "impact": "high",
+                    "category": "Config",
+                }
+            ],
+        },
+        {
+            "repo": "test/repo",
+            "tag_name": "v1.0.69",
+            "changes": [
+                {
+                    "description": "统一 prompt 输入",
+                    "impact": "high",
+                    "category": "Config",
+                }
+            ],
+        },
+    ]
+
+    service = ReleaseProcessor(
+        release_material_builder=DummyReleaseMaterialBuilder(),
+        release_summarizer=DummyReleaseSummarizer(),
+        release_analyzer=DummyReleaseAnalyzer([]),
+        breaking_changes_detector=DummyBreakingChangesDetector(duplicated_changes),
+    )
+
+    result = service.run(releases_data, detailed_releases)
+
+    assert result.breaking_changes == [
+        {
+            "repo": "test/repo",
+            "tag_name": "v1.0.69",
+            "changes": [
+                {
+                    "description": "统一 prompt 输入",
+                    "impact": "high",
+                    "category": "Config",
+                }
+            ],
+        }
+    ]
+
+
 @pytest.mark.asyncio
 async def test_run_async_uses_same_fallback_behavior() -> None:
     """测试异步 workflow 也会使用相同 fallback。"""

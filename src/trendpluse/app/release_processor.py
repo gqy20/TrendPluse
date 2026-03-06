@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from re import match
 from typing import Any, cast
 
 from trendpluse.models.signal import ReleasesData, Signal
@@ -140,7 +141,7 @@ class ReleaseProcessor:
         breaking_changes = self.breaking_changes_detector.detect_breaking_changes(
             {"detailed_releases": detailed_releases}
         )
-        return cast(list[Any], breaking_changes)
+        return cast(list[Any], self.deduplicate_breaking_changes(breaking_changes))
 
     async def detect_breaking_changes_async(
         self, detailed_releases: list[dict[str, Any]]
@@ -151,7 +152,83 @@ class ReleaseProcessor:
         payload = {"detailed_releases": detailed_releases}
         detector = self.breaking_changes_detector
         breaking_changes = await detector.detect_breaking_changes_async(payload)
-        return cast(list[Any], breaking_changes)
+        return cast(list[Any], self.deduplicate_breaking_changes(breaking_changes))
+
+    def deduplicate_breaking_changes(
+        self, breaking_changes: Any
+    ) -> list[dict[str, Any]]:
+        """按 repo 和变更指纹去重，优先保留具体版本 tag。"""
+        if not isinstance(breaking_changes, list):
+            return []
+
+        deduplicated: dict[tuple[str, tuple[str, ...]], dict[str, Any]] = {}
+        for entry in breaking_changes:
+            if not isinstance(entry, dict):
+                continue
+
+            fingerprint = self._breaking_change_fingerprint(entry)
+            if fingerprint is None:
+                continue
+
+            existing = deduplicated.get(fingerprint)
+            if existing is None or self._prefer_breaking_change(entry, existing):
+                deduplicated[fingerprint] = entry
+
+        return list(deduplicated.values())
+
+    def _breaking_change_fingerprint(
+        self, entry: dict[str, Any]
+    ) -> tuple[str, tuple[str, ...]] | None:
+        """构建 breaking changes 去重指纹。"""
+        repo = str(entry.get("repo", "")).strip()
+        changes = entry.get("changes")
+        if not repo or not isinstance(changes, list):
+            tag_name = str(entry.get("tag_name", "")).strip()
+            fallback_key = (
+                tag_name or str(entry.get("version", "")).strip() or "unknown"
+            )
+            return repo, (fallback_key,)
+
+        normalized_changes = []
+        for change in changes:
+            if not isinstance(change, dict):
+                continue
+            description = str(change.get("description", "")).strip().lower()
+            category = str(change.get("category", "")).strip().lower()
+            impact = str(change.get("impact", "")).strip().lower()
+            if description:
+                normalized_changes.append(f"{category}|{impact}|{description}")
+
+        if not normalized_changes:
+            tag_name = str(entry.get("tag_name", "")).strip()
+            fallback_key = (
+                tag_name or str(entry.get("version", "")).strip() or "unknown"
+            )
+            return repo, (fallback_key,)
+        return repo, tuple(sorted(normalized_changes))
+
+    def _prefer_breaking_change(
+        self, candidate: dict[str, Any], existing: dict[str, Any]
+    ) -> bool:
+        """判断 candidate 是否比 existing 更适合作为保留项。"""
+        candidate_tag = str(candidate.get("tag_name", "")).strip()
+        existing_tag = str(existing.get("tag_name", "")).strip()
+
+        candidate_is_floating = self._is_floating_major_tag(candidate_tag)
+        existing_is_floating = self._is_floating_major_tag(existing_tag)
+
+        if candidate_is_floating != existing_is_floating:
+            return not candidate_is_floating
+
+        if len(candidate_tag) != len(existing_tag):
+            return len(candidate_tag) > len(existing_tag)
+
+        return candidate_tag > existing_tag
+
+    def _is_floating_major_tag(self, tag_name: str) -> bool:
+        """判断 tag 是否为浮动主版本别名。"""
+        normalized = tag_name.lstrip("v")
+        return bool(match(r"^\d+$", normalized))
 
     def build_fallback_signals(
         self, detailed_releases: list[dict[str, Any]]

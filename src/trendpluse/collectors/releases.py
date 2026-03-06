@@ -100,8 +100,7 @@ class ReleaseCollector(BaseGitHubCollector):
         repo_obj = self.client.get_repo(repo)
         all_releases = repo_obj.get_releases()
 
-        release_infos: list[ReleaseInfo] = []
-        detailed_releases: list[dict] = []
+        release_pairs: list[tuple[ReleaseInfo, dict[str, Any]]] = []
 
         for release in all_releases:
             # 检查日期
@@ -125,7 +124,6 @@ class ReleaseCollector(BaseGitHubCollector):
                 assets_count=len(release.assets),
                 url=release.html_url,
             )
-            release_infos.append(release_info)
 
             # 构建详细 Release 信息（用于 ReleaseAnalyzer）
             detailed = {
@@ -150,9 +148,76 @@ class ReleaseCollector(BaseGitHubCollector):
                 ],
                 "version_info": version_info,
             }
-            detailed_releases.append(detailed)
+            release_pairs.append((release_info, detailed))
 
+        deduplicated_pairs = self._deduplicate_release_pairs(release_pairs)
+        release_infos = [release_info for release_info, _ in deduplicated_pairs]
+        detailed_releases = [detailed for _, detailed in deduplicated_pairs]
         return release_infos, detailed_releases
+
+    def _deduplicate_release_pairs(
+        self, release_pairs: list[tuple[ReleaseInfo, dict[str, Any]]]
+    ) -> list[tuple[ReleaseInfo, dict[str, Any]]]:
+        """去重同仓库 release，优先保留具体版本 tag。"""
+        if not release_pairs:
+            return []
+
+        sorted_pairs = sorted(
+            release_pairs,
+            key=lambda pair: pair[1].get("created_at", ""),
+            reverse=True,
+        )
+        specific_pairs: list[tuple[ReleaseInfo, dict[str, Any]]] = []
+        other_pairs: list[tuple[ReleaseInfo, dict[str, Any]]] = []
+        floating_pairs_by_major: dict[int, tuple[ReleaseInfo, dict[str, Any]]] = {}
+        specific_majors: set[int] = set()
+
+        for pair in sorted_pairs:
+            detailed = pair[1]
+            tag_name = str(detailed.get("tag_name", "")).strip()
+            major = self._extract_major_version(
+                detailed.get("version_info"), tag_name=tag_name
+            )
+
+            if major is None:
+                other_pairs.append(pair)
+                continue
+
+            if self._is_floating_major_tag(tag_name):
+                if major in specific_majors or major in floating_pairs_by_major:
+                    continue
+                floating_pairs_by_major[major] = pair
+                continue
+
+            specific_majors.add(major)
+            floating_pairs_by_major.pop(major, None)
+            specific_pairs.append(pair)
+
+        return sorted(
+            specific_pairs + other_pairs + list(floating_pairs_by_major.values()),
+            key=lambda pair: pair[1].get("created_at", ""),
+            reverse=True,
+        )
+
+    def _extract_major_version(
+        self, version_info: dict[str, Any] | None, *, tag_name: str
+    ) -> int | None:
+        """提取 major 版本号。"""
+        if version_info and "major" in version_info:
+            try:
+                return int(version_info["major"])
+            except (TypeError, ValueError):
+                return None
+
+        normalized = tag_name.lstrip("v")
+        if normalized.isdigit():
+            return int(normalized)
+        return None
+
+    def _is_floating_major_tag(self, tag_name: str) -> bool:
+        """判断 tag 是否为浮动主版本别名。"""
+        normalized = tag_name.strip().lstrip("v")
+        return normalized.isdigit()
 
     def _parse_version(self, tag_name: str) -> dict[str, Any] | None:
         """解析版本号

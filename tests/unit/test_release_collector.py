@@ -239,6 +239,52 @@ class TestReleaseCollector:
         assert releases_data.releases[0].version == "v1.0.0"  # 最新的
         assert releases_data.releases[2].version == "v1.0.2"  # 最旧的
 
+    @patch("trendpluse.collectors.base.Github")
+    def test_collect_releases_prefers_specific_tag_over_floating_major(
+        self, mock_github
+    ):
+        """测试：同主版本同时存在时优先保留具体版本 tag。"""
+        floating_release = Mock()
+        floating_release.created_at = datetime.now(UTC)
+        floating_release.tag_name = "v1"
+        floating_release.title = "GA"
+        floating_release.body = "Major release"
+        floating_release.prerelease = False
+        floating_release.author = Mock()
+        floating_release.author.login = "testuser"
+        floating_release.html_url = "https://github.com/test/test/releases/v1"
+        floating_release.assets = []
+        floating_release.published_at = datetime.now(UTC)
+
+        specific_release = Mock()
+        specific_release.created_at = datetime.now(UTC)
+        specific_release.tag_name = "v1.0.69"
+        specific_release.title = "Patch"
+        specific_release.body = "Patch release"
+        specific_release.prerelease = False
+        specific_release.author = Mock()
+        specific_release.author.login = "testuser"
+        specific_release.html_url = "https://github.com/test/test/releases/v1.0.69"
+        specific_release.assets = []
+        specific_release.published_at = datetime.now(UTC)
+
+        mock_repo = MagicMock()
+        mock_repo.get_releases.return_value = [floating_release, specific_release]
+
+        mock_client = MagicMock()
+        mock_client.get_repo.return_value = mock_repo
+        mock_github.return_value = mock_client
+
+        collector = ReleaseCollector(token="test_token")
+
+        releases_data, detailed_releases = collector.collect_releases(
+            repos=["test/repo"], since=datetime.now(UTC) - timedelta(days=1)
+        )
+
+        assert releases_data.total_count == 1
+        assert [release.version for release in releases_data.releases] == ["v1.0.69"]
+        assert [release["tag_name"] for release in detailed_releases] == ["v1.0.69"]
+
 
 class TestReleaseCollectorStructuredData:
     """ReleaseCollector 结构化数据返回测试"""
