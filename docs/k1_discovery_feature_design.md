@@ -4,6 +4,7 @@
 > **Issue**: [#37](https://github.com/gqy20/TrendPluse/issues/37)
 > **创建日期**: 2026-01-31
 > **预计工作量**: 6-7 小时
+> **状态**: 历史方案文档，当前仓库实现已演进，结构以 `src/trendpluse/app/discovery.py`、`src/trendpluse/cli/discover_projects.py` 和 `src/trendpluse/discovery/` 实际代码为准
 
 ---
 
@@ -162,6 +163,8 @@ q = f"language:python {keyword} stars:>500 pushed:>2026-01-01"
 ---
 
 ## 四、文件结构设计
+
+> 以下结构为设计阶段方案，包含已删除或已重组的路径（例如 `scripts/discover_projects.py`、`discovery/base.py`）。请勿将本节视为当前代码结构。
 
 ```
 src/trendpluse/
