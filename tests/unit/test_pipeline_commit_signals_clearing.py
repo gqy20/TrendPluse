@@ -20,6 +20,108 @@ class MockSignalDeduplicator:
         return signals
 
 
+def _build_mock_settings(**overrides):
+    """构造测试用 Settings mock。"""
+    settings = Mock()
+    settings.github_token = "test_token"
+    settings.anthropic_api_key = "test_api_key"
+    settings.anthropic_model = "glm-4.7"
+    settings.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
+    settings.github_repos = ["test/repo"]
+    settings.max_candidates = 20
+    settings.days_to_lookback = 1
+    settings.enable_parallel_collection = False
+    settings.max_parallel_workers = 4
+    settings.include_prereleases = False
+    settings.output_dir = "reports/daily"
+    settings.feishu_webhook_url = ""
+    settings.feishu_at_mobiles_list = []
+    for key, value in overrides.items():
+        setattr(settings, key, value)
+    return settings
+
+
+def _mock_pipeline_inputs(
+    mock_collector,
+    mock_filter,
+    mock_reader,
+    *,
+    detailed_commits=None,
+    detailed_releases=None,
+    total_commits=5,
+    active_repos_count=1,
+    total_releases=0,
+    unique_release_repos=0,
+):
+    """配置 PR、活跃度和 release 输入。"""
+    collector = Mock()
+    collector.fetch_events.return_value = [
+        {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+    ]
+    mock_collector.return_value = collector
+
+    event_filter = Mock()
+    event_filter.filter_candidates.return_value = [
+        {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
+    ]
+    mock_filter.return_value = event_filter
+
+    reader = Mock()
+    reader.refs_from_candidates.return_value = [Mock()]
+    reader.read_many.return_value = [Mock()]
+    mock_reader.return_value = reader
+
+    activity_collector = Mock()
+    activity_collector.collect_activity_graphql.return_value = (
+        ActivityData(
+            total_commits=total_commits,
+            active_repos_count=active_repos_count,
+            top_repos=[],
+        ),
+        detailed_commits or [],
+    )
+
+    release_collector = Mock()
+    release_collector.collect_releases.return_value = (
+        ReleasesData(
+            total_count=total_releases,
+            unique_repos_count=unique_release_repos,
+            releases=[],
+        ),
+        detailed_releases or [],
+    )
+
+    return activity_collector, release_collector
+
+
+def _mock_material_analyzer(mock_factory, signals):
+    """配置 analyze_materials 返回指定信号列表的 analyzer。"""
+    analyzer = Mock()
+    analyzer.analyze_materials.return_value = signals
+    mock_factory.return_value = analyzer
+    return analyzer
+
+
+def _build_mock_report(
+    *,
+    engineering_signals,
+    commit_signals,
+    stats,
+    release_signals=None,
+):
+    """构造报告 mock。"""
+    report = Mock()
+    report.date = "2026-01-12"
+    report.engineering_signals = engineering_signals
+    report.research_signals = []
+    report.commit_signals = commit_signals
+    report.release_signals = release_signals or []
+    report.activity = {}
+    report.stats = stats
+    report.model_dump_json = Mock(return_value='{"date": "2026-01-12"}')
+    return report
+
+
 class TestCommitSignalsClearing:
     """测试聚合后 commit_signals 被正确清空"""
 
@@ -61,49 +163,9 @@ class TestCommitSignalsClearing:
         - 这导致工程信号/研究信号和 Commit 信号重复显示
         """
         # Arrange - 配置所有 Mock
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["test/repo"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = ""
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
-
-        # 配置 PR 数据（有 PR 触发聚合流程）
-        mock_collector_instance = Mock()
-        mock_collector_instance.fetch_events.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
-        ]
-        mock_collector.return_value = mock_collector_instance
-
-        mock_filter_instance = Mock()
-        mock_filter_instance.filter_candidates.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
-        ]
-        mock_filter.return_value = mock_filter_instance
-
-        mock_reader_instance = Mock()
-        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
-        mock_reader_instance.read_many.return_value = [Mock()]
-        mock_reader.return_value = mock_reader_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # 配置活跃度数据
-        mock_activity_collector_instance = Mock()
-        mock_activity_data = ActivityData(
-            total_commits=5,
-            active_repos_count=1,
-            top_repos=[],
-        )
         detailed_commits = [
             {
                 "repo": "test/repo",
@@ -113,27 +175,19 @@ class TestCommitSignalsClearing:
                 "timestamp": "2026-01-12T10:00:00Z",
             }
         ]
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            detailed_commits,
+        (
+            mock_activity_collector_instance,
+            mock_release_collector_instance,
+        ) = _mock_pipeline_inputs(
+            mock_collector,
+            mock_filter,
+            mock_reader,
+            detailed_commits=detailed_commits,
         )
         mock_activity_collector.return_value = mock_activity_collector_instance
-
-        # 配置 Release 数据
-        mock_release_collector_instance = Mock()
-        mock_releases_data = ReleasesData(
-            total_count=0,
-            unique_repos_count=0,
-            releases=[],
-        )
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
         mock_release_collector.return_value = mock_release_collector_instance
 
         # 配置 Commit 分析器（返回一些信号）
-        mock_commit_analyzer_instance = Mock()
         mock_commit_signal = Signal(
             id="commit-1",
             title="Commit Signal",
@@ -144,15 +198,10 @@ class TestCommitSignalsClearing:
             related_repos=["test/repo"],
             sources=["https://github.com/test/repo/commit/abc123"],
         )
-        mock_commit_analyzer_instance.analyze_materials.return_value = [
-            mock_commit_signal
-        ]
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+        _mock_material_analyzer(mock_commit_analyzer, [mock_commit_signal])
 
         # 配置 Release 分析器
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = []
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
+        _mock_material_analyzer(mock_release_analyzer, [])
 
         # 配置 Trend Analyzer
         mock_pr_signal = Signal(
@@ -165,24 +214,20 @@ class TestCommitSignalsClearing:
             related_repos=["test/repo"],
             sources=["https://github.com/test/repo/pull/1"],
         )
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = [mock_pr_signal]
+        mock_analyzer_instance = _mock_material_analyzer(
+            mock_analyzer, [mock_pr_signal]
+        )
 
         # 关键：模拟 LLM 返回的对象保留了 commit_signals（这是 Bug）
         # 实际中，instructor + LLM 可能不会遵守代码中的清空操作
-        mock_report_obj = Mock()
-        mock_report_obj.date = "2026-01-12"
-        mock_report_obj.engineering_signals = [mock_pr_signal]
-        mock_report_obj.research_signals = []
-        # 模拟 LLM 没有清空 commit_signals（问题所在）
-        mock_report_obj.commit_signals = [mock_commit_signal]
-        mock_report_obj.activity = {}
-        mock_report_obj.stats = {"total_prs_analyzed": 1}
-        mock_report_obj.model_dump_json = Mock(return_value='{"date": "2026-01-12"}')
+        mock_report_obj = _build_mock_report(
+            engineering_signals=[mock_pr_signal],
+            commit_signals=[mock_commit_signal],
+            stats={"total_prs_analyzed": 1},
+        )
         mock_analyzer_instance.aggregate_and_generate_report.return_value = (
             mock_report_obj
         )
-        mock_analyzer.return_value = mock_analyzer_instance
 
         # 配置 Reporter
         mock_reporter_instance = Mock()
@@ -228,59 +273,8 @@ class TestCommitSignalsClearing:
         mock_settings,
     ):
         """测试：聚合后 release_signals 不应被清空。"""
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["test/repo"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = ""
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
-        mock_collector_instance = Mock()
-        mock_collector_instance.fetch_events.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
-        ]
-        mock_collector.return_value = mock_collector_instance
-
-        mock_filter_instance = Mock()
-        mock_filter_instance.filter_candidates.return_value = [
-            {"type": "PullRequestEvent", "repo": {"name": "test/repo"}}
-        ]
-        mock_filter.return_value = mock_filter_instance
-
-        mock_reader_instance = Mock()
-        mock_reader_instance.refs_from_candidates.return_value = [Mock()]
-        mock_reader_instance.read_many.return_value = [Mock()]
-        mock_reader.return_value = mock_reader_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_data = ActivityData(
-            total_commits=1,
-            active_repos_count=1,
-            top_repos=[],
-        )
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            [],
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_releases_data = ReleasesData(
-            total_count=1,
-            unique_repos_count=1,
-            releases=[],
-        )
         detailed_releases = [
             {
                 "repo": "test/repo",
@@ -290,15 +284,23 @@ class TestCommitSignalsClearing:
                 "version_info": {"major": 1, "minor": 0, "patch": 0},
             }
         ]
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            detailed_releases,
+        (
+            mock_activity_collector_instance,
+            mock_release_collector_instance,
+        ) = _mock_pipeline_inputs(
+            mock_collector,
+            mock_filter,
+            mock_reader,
+            total_commits=1,
+            active_repos_count=1,
+            total_releases=1,
+            unique_release_repos=1,
+            detailed_releases=detailed_releases,
         )
+        mock_activity_collector.return_value = mock_activity_collector_instance
         mock_release_collector.return_value = mock_release_collector_instance
 
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = []
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
+        _mock_material_analyzer(mock_commit_analyzer, [])
 
         release_signal = Signal(
             id="release-1",
@@ -310,9 +312,7 @@ class TestCommitSignalsClearing:
             related_repos=["test/repo"],
             sources=["https://github.com/test/repo/releases/tag/v1.0.0"],
         )
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = [release_signal]
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
+        _mock_material_analyzer(mock_release_analyzer, [release_signal])
 
         mock_pr_signal = Signal(
             id="pr-1",
@@ -324,22 +324,19 @@ class TestCommitSignalsClearing:
             related_repos=["test/repo"],
             sources=["https://github.com/test/repo/pull/1"],
         )
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = [mock_pr_signal]
+        mock_analyzer_instance = _mock_material_analyzer(
+            mock_analyzer, [mock_pr_signal]
+        )
 
-        mock_report_obj = Mock()
-        mock_report_obj.date = "2026-01-12"
-        mock_report_obj.engineering_signals = [mock_pr_signal]
-        mock_report_obj.research_signals = []
-        mock_report_obj.commit_signals = []
-        mock_report_obj.release_signals = [release_signal]
-        mock_report_obj.activity = {}
-        mock_report_obj.stats = {"total_prs_analyzed": 1}
-        mock_report_obj.model_dump_json = Mock(return_value='{"date": "2026-01-12"}')
+        mock_report_obj = _build_mock_report(
+            engineering_signals=[mock_pr_signal],
+            commit_signals=[],
+            release_signals=[release_signal],
+            stats={"total_prs_analyzed": 1},
+        )
         mock_analyzer_instance.aggregate_and_generate_report.return_value = (
             mock_report_obj
         )
-        mock_analyzer.return_value = mock_analyzer_instance
 
         mock_reporter_instance = Mock()
         mock_reporter.return_value = mock_reporter_instance

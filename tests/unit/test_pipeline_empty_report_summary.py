@@ -21,6 +21,98 @@ class MockSignalDeduplicator:
         return signals
 
 
+def _build_mock_settings(**overrides):
+    """构造测试用 Settings mock。"""
+    settings = Mock()
+    settings.github_token = "test_token"
+    settings.anthropic_api_key = "test_api_key"
+    settings.anthropic_model = "glm-4.7"
+    settings.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
+    settings.github_repos = ["anthropics/skills"]
+    settings.max_candidates = 20
+    settings.days_to_lookback = 1
+    settings.enable_parallel_collection = False
+    settings.max_parallel_workers = 4
+    settings.include_prereleases = False
+    settings.output_dir = "reports/daily"
+    settings.feishu_webhook_url = None
+    settings.feishu_at_mobiles_list = []
+    for key, value in overrides.items():
+        setattr(settings, key, value)
+    return settings
+
+
+def _build_detailed_commits(count=3):
+    """构造测试用 commit 明细。"""
+    return [
+        {
+            "sha": f"abc{i}",
+            "repo": "test/repo",
+            "message": f"Test commit {i}",
+            "author": "test",
+            "date": "2026-01-02",
+        }
+        for i in range(count)
+    ]
+
+
+def _mock_activity_collection(
+    mock_activity_collector,
+    *,
+    total_commits=100,
+    active_repos_count=5,
+    detailed_commits=None,
+):
+    """配置 ActivityCollector 返回值。"""
+    collector = Mock()
+    collector.collect_activity_graphql.return_value = (
+        ActivityData(
+            total_commits=total_commits,
+            active_repos_count=active_repos_count,
+            top_repos=[],
+        ),
+        detailed_commits or _build_detailed_commits(),
+    )
+    mock_activity_collector.return_value = collector
+    return collector
+
+
+def _mock_release_collection(
+    mock_release_collector,
+    *,
+    total_count=0,
+    unique_repos_count=0,
+):
+    """配置 ReleaseCollector 返回值。"""
+    collector = Mock()
+    collector.collect_releases.return_value = (
+        ReleasesData(
+            total_count=total_count,
+            unique_repos_count=unique_repos_count,
+            releases=[],
+        ),
+        [],
+    )
+    mock_release_collector.return_value = collector
+    return collector
+
+
+def _mock_material_analyzer(mock_factory, signals):
+    """配置 analyze_materials 返回指定信号列表的 analyzer。"""
+    analyzer = Mock()
+    analyzer.analyze_materials.return_value = signals
+    mock_factory.return_value = analyzer
+    return analyzer
+
+
+def _mock_empty_events_collector(mock_collector):
+    """配置无事件输入。"""
+    collector = Mock()
+    collector.fetch_events.return_value = []
+    mock_collector.return_value = collector
+    return collector
+
+
 class TestEmptyReportSummary:
     """测试空报告的摘要生成"""
 
@@ -53,84 +145,19 @@ class TestEmptyReportSummary:
     ):
         """测试：无信号时摘要正确"""
         # Arrange - 设置 mock settings
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = None
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # Mock 空信号列表
         mock_commit_signals: list[Signal] = []
         mock_release_signals: list[Signal] = []
 
         # Mock 活跃度数据
-        mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, top_repos=[]
-        )
-
-        # Mock 详细 commits 数据（用于 commit 分析）
-        mock_detailed_commits = [
-            {
-                "sha": f"abc{i}",
-                "repo": "test/repo",
-                "message": f"Test commit {i}",
-                "author": "test",
-                "date": "2026-01-02",
-            }
-            for i in range(3)  # 3 个 commits
-        ]
-
-        # Mock release 数据
-        mock_releases_data = ReleasesData(
-            total_count=0, unique_repos_count=0, releases=[]
-        )
-
-        # 设置 mock 行为
-        mock_ghec_instance = Mock()
-        mock_ghec_instance.fetch_events.return_value = []
-        mock_collector.return_value = mock_ghec_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            mock_detailed_commits,
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
-        mock_release_collector.return_value = mock_release_collector_instance
-
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = (
-            mock_commit_signals
-        )
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
-
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = (
-            mock_release_signals
-        )
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
-
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = []
-        mock_analyzer.return_value = mock_analyzer_instance
+        _mock_empty_events_collector(mock_collector)
+        _mock_activity_collection(mock_activity_collector)
+        _mock_release_collection(mock_release_collector)
+        _mock_material_analyzer(mock_commit_analyzer, mock_commit_signals)
+        _mock_material_analyzer(mock_release_analyzer, mock_release_signals)
+        _mock_material_analyzer(mock_analyzer, [])
 
         # Act - 运行 pipeline
         pipeline = TrendPulsePipeline()
@@ -168,23 +195,7 @@ class TestEmptyReportSummary:
     ):
         """测试：只有 commit 信号时摘要正确"""
         # Arrange - 设置 mock settings
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = None
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # 创建 mock commit 信号
         mock_commit_signals = [
@@ -223,62 +234,12 @@ class TestEmptyReportSummary:
         # Mock release 信号为空
         mock_release_signals: list[Signal] = []
 
-        # Mock 活跃度数据
-        mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, top_repos=[]
-        )
-
-        # Mock 详细 commits 数据（用于 commit 分析）
-        mock_detailed_commits = [
-            {
-                "sha": f"abc{i}",
-                "repo": "test/repo",
-                "message": f"Test commit {i}",
-                "author": "test",
-                "date": "2026-01-02",
-            }
-            for i in range(3)  # 3 个 commits
-        ]
-
-        # Mock release 数据
-        mock_releases_data = ReleasesData(
-            total_count=0, unique_repos_count=0, releases=[]
-        )
-
-        # 设置 mock 行为
-        mock_ghec_instance = Mock()
-        mock_ghec_instance.fetch_events.return_value = []
-        mock_collector.return_value = mock_ghec_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            mock_detailed_commits,
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
-        mock_release_collector.return_value = mock_release_collector_instance
-
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = (
-            mock_commit_signals
-        )
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
-
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = (
-            mock_release_signals
-        )
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
-
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = []
-        mock_analyzer.return_value = mock_analyzer_instance
+        _mock_empty_events_collector(mock_collector)
+        _mock_activity_collection(mock_activity_collector)
+        _mock_release_collection(mock_release_collector)
+        _mock_material_analyzer(mock_commit_analyzer, mock_commit_signals)
+        _mock_material_analyzer(mock_release_analyzer, mock_release_signals)
+        _mock_material_analyzer(mock_analyzer, [])
 
         # Act - 运行 pipeline
         pipeline = TrendPulsePipeline()
@@ -318,23 +279,7 @@ class TestEmptyReportSummary:
     ):
         """测试：只有 release 信号时摘要正确"""
         # Arrange - 设置 mock settings
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = None
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # Mock commit 信号为空
         mock_commit_signals: list[Signal] = []
@@ -363,62 +308,16 @@ class TestEmptyReportSummary:
             ),
         ]
 
-        # Mock 活跃度数据
-        mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, top_repos=[]
+        _mock_empty_events_collector(mock_collector)
+        _mock_activity_collection(mock_activity_collector)
+        _mock_release_collection(
+            mock_release_collector,
+            total_count=2,
+            unique_repos_count=1,
         )
-
-        # Mock 详细 commits 数据（用于 commit 分析）
-        mock_detailed_commits = [
-            {
-                "sha": f"abc{i}",
-                "repo": "test/repo",
-                "message": f"Test commit {i}",
-                "author": "test",
-                "date": "2026-01-02",
-            }
-            for i in range(3)  # 3 个 commits
-        ]
-
-        # Mock release 数据
-        mock_releases_data = ReleasesData(
-            total_count=2, unique_repos_count=1, releases=[]
-        )
-
-        # 设置 mock 行为
-        mock_ghec_instance = Mock()
-        mock_ghec_instance.fetch_events.return_value = []
-        mock_collector.return_value = mock_ghec_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            mock_detailed_commits,
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
-        mock_release_collector.return_value = mock_release_collector_instance
-
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = (
-            mock_commit_signals
-        )
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
-
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = (
-            mock_release_signals
-        )
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
-
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = []
-        mock_analyzer.return_value = mock_analyzer_instance
+        _mock_material_analyzer(mock_commit_analyzer, mock_commit_signals)
+        _mock_material_analyzer(mock_release_analyzer, mock_release_signals)
+        _mock_material_analyzer(mock_analyzer, [])
 
         # Act - 运行 pipeline
         pipeline = TrendPulsePipeline()
@@ -458,23 +357,7 @@ class TestEmptyReportSummary:
     ):
         """测试：同时有 commit 和 release 信号时摘要正确"""
         # Arrange - 设置 mock settings
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = None
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # 创建 mock commit 信号（5个）
         mock_commit_signals = [
@@ -505,62 +388,16 @@ class TestEmptyReportSummary:
             )
         ]
 
-        # Mock 活跃度数据
-        mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, top_repos=[]
+        _mock_empty_events_collector(mock_collector)
+        _mock_activity_collection(mock_activity_collector)
+        _mock_release_collection(
+            mock_release_collector,
+            total_count=1,
+            unique_repos_count=1,
         )
-
-        # Mock 详细 commits 数据（用于 commit 分析）
-        mock_detailed_commits = [
-            {
-                "sha": f"abc{i}",
-                "repo": "test/repo",
-                "message": f"Test commit {i}",
-                "author": "test",
-                "date": "2026-01-02",
-            }
-            for i in range(3)  # 3 个 commits
-        ]
-
-        # Mock release 数据
-        mock_releases_data = ReleasesData(
-            total_count=1, unique_repos_count=1, releases=[]
-        )
-
-        # 设置 mock 行为
-        mock_ghec_instance = Mock()
-        mock_ghec_instance.fetch_events.return_value = []
-        mock_collector.return_value = mock_ghec_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            mock_detailed_commits,
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
-        mock_release_collector.return_value = mock_release_collector_instance
-
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = (
-            mock_commit_signals
-        )
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
-
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = (
-            mock_release_signals
-        )
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
-
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = []
-        mock_analyzer.return_value = mock_analyzer_instance
+        _mock_material_analyzer(mock_commit_analyzer, mock_commit_signals)
+        _mock_material_analyzer(mock_release_analyzer, mock_release_signals)
+        _mock_material_analyzer(mock_analyzer, [])
 
         # Act - 运行 pipeline
         pipeline = TrendPulsePipeline()
@@ -600,23 +437,7 @@ class TestEmptyReportSummary:
     ):
         """测试：空报告应该统计高影响 commit 信号"""
         # Arrange - 设置 mock settings
-        mock_settings_instance = Mock()
-        mock_settings_instance.github_token = "test_token"
-        mock_settings_instance.anthropic_api_key = "test_api_key"
-        mock_settings_instance.anthropic_model = "glm-4.7"
-        mock_settings_instance.anthropic_base_url = (
-            "https://open.bigmodel.cn/api/anthropic"
-        )
-        mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
-        mock_settings_instance.days_to_lookback = 1
-        mock_settings_instance.enable_parallel_collection = False
-        mock_settings_instance.max_parallel_workers = 4
-        mock_settings_instance.include_prereleases = False
-        mock_settings_instance.output_dir = "reports/daily"
-        mock_settings_instance.feishu_webhook_url = None
-        mock_settings_instance.feishu_at_mobiles_list = []
-        mock_settings.return_value = mock_settings_instance
+        mock_settings.return_value = _build_mock_settings()
 
         # 创建包含高影响信号的 commit 信号列表
         mock_commit_signals = [
@@ -652,60 +473,12 @@ class TestEmptyReportSummary:
             ),
         ]
 
-        # Mock 活跃度数据
-        mock_activity_data = ActivityData(
-            total_commits=100, active_repos_count=5, top_repos=[]
-        )
-
-        # Mock 详细 commits 数据（用于 commit 分析）
-        mock_detailed_commits = [
-            {
-                "sha": f"abc{i}",
-                "repo": "test/repo",
-                "message": f"Test commit {i}",
-                "author": "test",
-                "date": "2026-01-02",
-            }
-            for i in range(3)  # 3 个 commits
-        ]
-
-        # Mock release 数据
-        mock_releases_data = ReleasesData(
-            total_count=0, unique_repos_count=0, releases=[]
-        )
-
-        # 设置 mock 行为
-        mock_ghec_instance = Mock()
-        mock_ghec_instance.fetch_events.return_value = []
-        mock_collector.return_value = mock_ghec_instance
-
-        mock_activity_collector_instance = Mock()
-        mock_activity_collector_instance.collect_activity_graphql.return_value = (
-            mock_activity_data,
-            mock_detailed_commits,
-        )
-        mock_activity_collector.return_value = mock_activity_collector_instance
-
-        mock_release_collector_instance = Mock()
-        mock_release_collector_instance.collect_releases.return_value = (
-            mock_releases_data,
-            [],
-        )
-        mock_release_collector.return_value = mock_release_collector_instance
-
-        mock_commit_analyzer_instance = Mock()
-        mock_commit_analyzer_instance.analyze_materials.return_value = (
-            mock_commit_signals
-        )
-        mock_commit_analyzer.return_value = mock_commit_analyzer_instance
-
-        mock_release_analyzer_instance = Mock()
-        mock_release_analyzer_instance.analyze_materials.return_value = []
-        mock_release_analyzer.return_value = mock_release_analyzer_instance
-
-        mock_analyzer_instance = Mock()
-        mock_analyzer_instance.analyze_materials.return_value = []
-        mock_analyzer.return_value = mock_analyzer_instance
+        _mock_empty_events_collector(mock_collector)
+        _mock_activity_collection(mock_activity_collector)
+        _mock_release_collection(mock_release_collector)
+        _mock_material_analyzer(mock_commit_analyzer, mock_commit_signals)
+        _mock_material_analyzer(mock_release_analyzer, [])
+        _mock_material_analyzer(mock_analyzer, [])
 
         # Act
         pipeline = TrendPulsePipeline()
