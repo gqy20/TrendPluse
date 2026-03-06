@@ -12,7 +12,7 @@
 
 ## 今日聚焦
 
-<div class="tp-focus-card">
+<div class="tp-focus-card" markdown>
 
 ### [2026-03-05](report-2026-03-05.md)
 
