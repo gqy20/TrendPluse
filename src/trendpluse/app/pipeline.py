@@ -73,7 +73,6 @@ class TrendPulsePipeline:
             analyzers=analyzers,
             reporting=reporting,
         )
-        self.issue_workflow = apps.issue_workflow
         self.daily_app = apps.daily_app
         self.weekly_app = apps.weekly_app
 
@@ -95,11 +94,7 @@ class TrendPulsePipeline:
         return await self.daily_app.run_daily_async(date)
 
     def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
-        daily_app = getattr(self, "daily_app", None)
-        if daily_app is not None:
-            daily_app.run_issue_agent_analysis(snapshot_date)
-            return
-        self.issue_workflow.run_issue_agent_analysis(snapshot_date)
+        self.daily_app.run_issue_agent_analysis(snapshot_date)
 
     def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
         """运行周报生成流程。"""
