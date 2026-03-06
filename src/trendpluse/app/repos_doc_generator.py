@@ -139,3 +139,46 @@ def generate_repos_markdown(categories: list[RepoCategory]) -> str:
         lines.append("\n")
 
     return "".join(lines)
+
+
+def generate_homepage_repos_section(categories: list[RepoCategory]) -> str:
+    """生成首页监控仓库概览区块。"""
+    total_repos = sum(len(category.repos) for category in categories)
+    total_categories = len(categories)
+
+    lines = [
+        "## 监控范围概览\n",
+        "\n",
+        f"当前监控 **{total_repos}** 个 GitHub 仓库，覆盖 "
+        f"**{total_categories}** 个主要方向：\n",
+        "\n",
+        '<div class="tp-coverage-grid">\n',
+    ]
+
+    for category in categories:
+        lines.append(f'  <div class="tp-coverage-pill">{category.name}</div>\n')
+
+    lines.extend(
+        [
+            "</div>\n",
+            "\n",
+            '<details class="tp-details-card">\n',
+            "<summary><strong>展开查看完整监控仓库清单</strong></summary>\n",
+            "\n",
+        ]
+    )
+
+    for category in categories:
+        lines.append(f"### {category.name}\n")
+        lines.append("\n")
+
+        for repo in category.repos:
+            escaped_repo = repo.repo.replace("_", "\\_")
+            repo_link = f"[{escaped_repo}]({repo.url})"
+            description = f": {repo.description}" if repo.description else ""
+            lines.append(f"- **{repo_link}**{description}\n")
+
+        lines.append("\n")
+
+    lines.append("</details>\n")
+    return "".join(lines)

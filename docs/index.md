@@ -1,28 +1,122 @@
 # TrendPulse GitHub 趋势报告
 
-![GitHub trends](https://img.shields.io/badge/GitHub-趋势分析-blue)
-![AI Agents](https://img.shields.io/badge/AI-智能体-orange)
-![Daily](https://img.shields.io/badge/更新-每日-green)
+<section class="tp-hero">
+  <div class="tp-hero__content">
+    <p class="tp-eyebrow">Signal Console / 2026</p>
+    <h1>给 AI 编程生态做一块干净的情报屏</h1>
+    <p class="tp-hero__lead">
+      这里只保留有用的东西: 趋势、发布、故障、项目发现。
+      不在前端堆产品说明，不在页面里灌架构废话。
+    </p>
+    <div class="tp-hero__actions">
+      <a class="md-button md-button--primary" href="reports/index.md">阅读最新趋势</a>
+      <a class="md-button" href="discovery.md">查看项目发现</a>
+      <a class="md-button" href="https://github.com/gqy20/TrendPluse">查看源码</a>
+    </div>
+  </div>
+  <div class="tp-hero__panel">
+    <div class="tp-live-card">
+      <div class="tp-live-card__label">TL;DR</div>
+      <div class="tp-terminal-lines">
+        <div><span>$</span> daily report</div>
+        <div><span>&gt;</span> 看当天最高价值变化</div>
+        <div><span>$</span> weekly digest</div>
+        <div><span>&gt;</span> 判断是否形成持续趋势</div>
+        <div><span>$</span> discovery</div>
+        <div><span>&gt;</span> 决定是否扩充监控池</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-## 欢迎使用 TrendPulse
+<div class="stats-dashboard">
+  <div class="stat-dashboard-card">
+    <div class="stat-value">51</div>
+    <div class="stat-label">监控仓库</div>
+    <div class="stat-trend">多源追踪 AI Coding / Agent / SDK</div>
+  </div>
+  <div class="stat-dashboard-card">
+    <div class="stat-value">Daily</div>
+    <div class="stat-label">日报更新</div>
+    <div class="stat-trend">压缩当天高影响信号</div>
+  </div>
+  <div class="stat-dashboard-card">
+    <div class="stat-value">Weekly</div>
+    <div class="stat-label">周报聚合</div>
+    <div class="stat-trend">识别连续演进，而不是孤立噪音</div>
+  </div>
+  <div class="stat-dashboard-card">
+    <div class="stat-value">Issue</div>
+    <div class="stat-label">问题洞察</div>
+    <div class="stat-trend">把用户故障和抱怨收成可读结论</div>
+  </div>
+</div>
 
-TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI 编程工具和智能体**的最新动态。
+## 核心入口
 
-### 核心功能
+<div class="tp-entry-grid">
+  <a class="tp-entry-card" href="reports/index.md">
+    <span class="tp-entry-card__icon">📈</span>
+    <strong>趋势报告</strong>
+    <p>直接进入日报、周报和今日聚焦。这里是主入口。</p>
+    <span class="tp-entry-card__meta">默认先看这里</span>
+  </a>
+  <a class="tp-entry-card" href="discovery.md">
+    <span class="tp-entry-card__icon">🧭</span>
+    <strong>项目发现</strong>
+    <p>看新仓库、分类分布和高优先级候选，用于补充监控池。</p>
+    <span class="tp-entry-card__meta">用于扩充观察面</span>
+  </a>
+  <a class="tp-entry-card" href="https://github.com/gqy20/TrendPluse">
+    <span class="tp-entry-card__icon">🔗</span>
+    <strong>GitHub 仓库</strong>
+    <p>实现细节、配置和自动化流程都回源码仓库，不在站点里堆文档。</p>
+    <span class="tp-entry-card__meta">说明文档退出前台</span>
+  </a>
+</div>
 
-- 🔍 **智能筛选**: 从海量 GitHub 活动中筛选重要趋势
-- 🤖 **AI 分析**: 使用 glm-4.7 提取关键信号和洞察
-- 📊 **每日报告**: 自动生成结构化的趋势分析报告
-- 🧠 **Issue 洞察**: 基于 Agent 提取用户痛点并输出质量分
-- 🧭 **项目发现**: 自动发现并评估热门候选项目
-- 📆 **周报聚合**: 聚合近 7 天日报生成 weekly 报告
-- 🎯 **多维度**: 工程实践、研究成果、生态动向
+## 关注什么
 
-### 📋 监控项目
+<div class="tp-signal-grid">
+  <div class="tp-signal-tile">
+    <h3>🔧 工程信号</h3>
+    <p>SDK、工作流、性能、平台化、安全。</p>
+  </div>
+  <div class="tp-signal-tile">
+    <h3>🔬 研究信号</h3>
+    <p>评测、实验、能力边界、方法演进。</p>
+  </div>
+  <div class="tp-signal-tile">
+    <h3>🎯 Release 动态</h3>
+    <p>正式发布、重大升级、破坏性变更。</p>
+  </div>
+  <div class="tp-signal-tile">
+    <h3>🧠 Issue 洞察</h3>
+    <p>高频故障、失败样例、用户真实抱怨。</p>
+  </div>
+</div>
 
-我们监控以下 **51 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
+<!-- monitored-repos-section:start -->
+## 监控范围概览
 
-#### Anthropic 核心产品
+当前监控 **51** 个 GitHub 仓库，覆盖 **9** 个主要方向：
+
+<div class="tp-coverage-grid">
+  <div class="tp-coverage-pill">Anthropic 核心产品</div>
+  <div class="tp-coverage-pill">Anthropic SDK & Agent</div>
+  <div class="tp-coverage-pill">Anthropic 工具与集成</div>
+  <div class="tp-coverage-pill">Anthropic 研究与评估</div>
+  <div class="tp-coverage-pill">AI 编程助手</div>
+  <div class="tp-coverage-pill">Agent 框架</div>
+  <div class="tp-coverage-pill">自主 AI 编程</div>
+  <div class="tp-coverage-pill">AI 编程模型</div>
+  <div class="tp-coverage-pill">其他工具</div>
+</div>
+
+<details class="tp-details-card">
+<summary><strong>展开查看完整监控仓库清单</strong></summary>
+
+### Anthropic 核心产品
 
 - **[anthropics/claude-code](https://github.com/anthropics/claude-code)**: Anthropic 的 CLI 编码代理工具。
 - **[anthropics/skills](https://github.com/anthropics/skills)**: Anthropic 官方技能与工作流示例集合。
@@ -31,7 +125,7 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 - **[anthropics/courses](https://github.com/anthropics/courses)**: Anthropic 官方课程与教学材料。
 - **[anthropics/prompt-eng-interactive-tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)**: Prompt Engineering 交互式教程。
 
-#### Anthropic SDK & Agent
+### Anthropic SDK & Agent
 
 - **[anthropics/claude-agent-sdk-python](https://github.com/anthropics/claude-agent-sdk-python)**: Claude Agent SDK Python 版。
 - **[anthropics/claude-agent-sdk-typescript](https://github.com/anthropics/claude-agent-sdk-typescript)**: Claude Agent SDK TypeScript 版。
@@ -41,20 +135,20 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 - **[anthropics/anthropic-sdk-go](https://github.com/anthropics/anthropic-sdk-go)**: Anthropic Go 官方 SDK。
 - **[anthropics/anthropic-sdk-java](https://github.com/anthropics/anthropic-sdk-java)**: Anthropic Java 官方 SDK。
 
-#### Anthropic 工具与集成
+### Anthropic 工具与集成
 
 - **[anthropics/claude-code-action](https://github.com/anthropics/claude-code-action)**: Claude Code 的 GitHub Action 集成。
 - **[anthropics/claude-code-security-review](https://github.com/anthropics/claude-code-security-review)**: Claude Code 安全审查工具。
 - **[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)**: Anthropic 官方插件仓库。
 - **[anthropics/devcontainer-features](https://github.com/anthropics/devcontainer-features)**: Anthropic 开发容器功能集合。
 
-#### Anthropic 研究与评估
+### Anthropic 研究与评估
 
 - **[anthropics/evals](https://github.com/anthropics/evals)**: Anthropic 模型评测与评估工具。
 - **[anthropics/political-neutrality-eval](https://github.com/anthropics/political-neutrality-eval)**: 政治中立性评测项目。
 - **[anthropics/hh-rlhf](https://github.com/anthropics/hh-rlhf)**: Anthropic HH-RLHF 数据与研究仓库。
 
-#### AI 编程助手
+### AI 编程助手
 
 - **[cline/cline](https://github.com/cline/cline)**: 面向开发者的开源 AI 编码助手。
 - **[paul-gauthier/aider](https://github.com/paul-gauthier/aider)**: 终端中的 AI 结对编程工具。
@@ -64,7 +158,7 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 - **[danielmiessler/fabric](https://github.com/danielmiessler/fabric)**: 面向提示与工作流的知识自动化工具。
 - **[ErikBjare/gptme](https://github.com/ErikBjare/gptme)**: 终端中的个人 AI 助手。
 
-#### Agent 框架
+### Agent 框架
 
 - **[TransformerOptimus/SuperAGI](https://github.com/TransformerOptimus/SuperAGI)**: 多代理自动化框架。
 - **[Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)**: 经典自主代理框架。
@@ -83,57 +177,24 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
 - **[huggingface/smolagents](https://github.com/huggingface/smolagents)**: Hugging Face 的轻量智能体框架。
 - **[langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)**: LangChain 的深度代理实验项目。
 
-#### 自主 AI 编程
+### 自主 AI 编程
 
 - **[AndyMik90/Auto-Claude](https://github.com/AndyMik90/Auto-Claude)**: 围绕 Claude 的自主编码代理项目。
 - **[anomalyco/opencode](https://github.com/anomalyco/opencode)**: 面向开发流程的开源 AI 编码工具。
 - **[zed-industries/zed](https://github.com/zed-industries/zed)**: 面向协作与 AI 的现代编辑器。
 
-#### AI 编程模型
+### AI 编程模型
 
 - **[openai/codex](https://github.com/openai/codex)**: OpenAI 代码代理相关项目。
 - **[TabbyML/tabby](https://github.com/TabbyML/tabby)**: 自托管代码补全与助手平台。
 
-#### 其他工具
+### 其他工具
 
 - **[ruvnet/claude-flow](https://github.com/ruvnet/claude-flow)**: Claude 工作流与代理编排项目。
 - **[bytedance/deer-flow](https://github.com/bytedance/deer-flow)**: 字节跳动开源的工作流项目。
 - **[openinterpreter/open-interpreter](https://github.com/openinterpreter/open-interpreter)**: 可执行系统命令的开放解释器代理。
-### 最新报告
 
-!!! info "最新报告"
-    查看 [今日趋势报告](reports/index.md) 了解最新动态。
+</details>
+<!-- monitored-repos-section:end -->
 
-### 报告分类
-
-| 分类 | 说明 | 示例 |
-|------|------|------|
-| 🔧 **工程信号** | Claude 工具链、SDK、框架更新 | 新增 API、性能优化 |
-| 🔬 **研究信号** | 论文、实验、技术探索 | 新模型、评估方法 |
-
-### 使用方式
-
-!!! tip "快速开始"
-    1. 本地运行: `uv run trendpluse-run`
-    2. 查看报告: 访问 GitHub Pages
-    3. 订阅更新: Star 仓库接收通知
-
-### 当前代码结构
-
-```text
-src/trendpluse/
-  cli/         # 命令入口
-  app/         # daily / weekly / discovery / repo 编排
-  collectors/  # 数据采集与材料构建
-  analyzers/   # LLM 分析与去重聚合
-  reports/     # 报告构建、渲染与发布
-  models/      # 结构化模型
-  discovery/   # 项目发现子系统
-  notifiers/   # 飞书通知
-```
-
----
-
-**📅 报告归档**: 查看 [历史报告](reports/index.md)
-
-**🔗 项目链接**: [GitHub 仓库](https://github.com/gqy20/TrendPluse)
+**项目仓库**: [gqy20/TrendPluse](https://github.com/gqy20/TrendPluse)

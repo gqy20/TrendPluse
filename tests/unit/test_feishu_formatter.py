@@ -469,6 +469,41 @@ class TestFeishuFormatter:
         # 应该包含 Release 信号标题（使用粗体而非标题）
         assert "**🎯 Release 信号**" in combined_content
 
+    def test_format_card_respects_max_signals(self):
+        """测试：卡片信号数量受 max_signals 限制"""
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
+
+        formatter = FeishuFormatter(max_signals=1)
+        report = _build_report(
+            engineering_signals=[
+                _build_signal(id="sig-1", title="Signal 1", impact_score=5),
+                _build_signal(id="sig-2", title="Signal 2", impact_score=4),
+            ],
+            stats={"total_prs_analyzed": 2, "high_impact_signals": 2},
+        )
+
+        card = formatter.format_card(report)
+        elements = card["card"]["body"]["elements"]
+
+        assert self._content_contains(elements, "Signal 1")
+        assert not self._content_contains(elements, "Signal 2")
+
+    def test_format_card_uses_custom_report_url_template(self):
+        """测试：详情按钮使用自定义链接模板"""
+        from trendpluse.notifiers.feishu_formatter import FeishuFormatter
+
+        formatter = FeishuFormatter(
+            report_url_template="https://example.com/reports/report-{date}/"
+        )
+        report = _build_report(date="2026-01-05")
+
+        card = formatter.format_card(report)
+        button = next(
+            el for el in card["card"]["body"]["elements"] if el.get("tag") == "button"
+        )
+
+        assert button["url"] == "https://example.com/reports/report-2026-01-05/"
+
     def test_format_card_includes_breaking_changes(self):
         """测试：卡片包含 Breaking Changes 部分（使用折叠面板）"""
         # Arrange

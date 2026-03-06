@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (28 个项目)
+## 🤖 AI Agents (28 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -1140,7 +1140,7 @@ Perplexica 是一个开源的 AI 搜索引擎，通过结合 LLM 和 RAG 技术�
 
 
 
-## 🔍 RAG/检索 (18 个项目)
+## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1847,7 +1847,7 @@ Perplexica 是一个开源的 AI 搜索引擎，通过结合 LLM 和 RAG 技术�
 
 
 
-## 💬 LLM 界面 (26 个项目)
+## 💬 LLM 界面 (26 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -2866,7 +2866,7 @@ Chatbox 是一款拥有 3.8 万+ Star 的开源 AI 客户端应用，支持 Chat
 
 
 
-## 🧠 机器学习框架 (12 个项目)
+## 🧠 机器学习框架 (12 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -3109,7 +3109,7 @@ OpenBB 是一个为金融分析师、量化研究员和 AI 代理量身打造的
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -3341,7 +3341,7 @@ Perplexica 是一个开源的 AI 搜索引擎，通过结合 LLM 和 RAG 技术�
 
 
 
-## 🛠️ 开发工具 (17 个项目)
+## 🛠️ 开发工具 (17 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -4016,7 +4016,7 @@ public-apis 是 GitHub 上最受欢迎的 API 索引项目之一（超过 40 万
 
 
 
-## ⚙️ DevOps/基础设施 (17 个项目)
+## ⚙️ DevOps/基础设施 (17 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -4336,7 +4336,7 @@ Puppeteer 是 Google 官方维护的浏览器自动化框架，提供开箱即�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -4687,7 +4687,7 @@ MinIO 是高性能对象存储领域的标杆项目，提供与 AWS S3 完全兼
 
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -4771,7 +4771,7 @@ Prometheus 是云原生监控领域的标杆项目，已被 CNCF（云原生计�
 
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -5288,7 +5288,7 @@ public-apis 是 GitHub 上最受欢迎的 API 索引项目之一（超过 40 万
 
 
 
-## 📊 数据/基础设施 (4 个项目)
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -5450,7 +5450,7 @@ etcd 是云原生时代的基石项目，作为 Kubernetes 的核心数据存储
 
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -5768,7 +5768,7 @@ Mermaid 是一款非常独特且强大的"图表即代码"(Diagrams as Code)工�
 
 
 
-## 📁 其他 (64 个项目)
+## 📁 其他 (64 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -5815,7 +5815,7 @@ Cherry Studio 是一个集成了智能对话、自主代理和300+助手的AI生
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 
@@ -8264,4 +8264,3 @@ Alist 是一个功能强大的多云存储文件管理解决方案，通过统�
 - 开源学习：适合开源新手、编程初学者快速发现优质学习资源
 - 项目发现：帮助开发者和团队快速找到适合参考或集成的优秀开源项目
 - 内容创作：为技术博主、开源推广者提供丰富的项目素材来源
-

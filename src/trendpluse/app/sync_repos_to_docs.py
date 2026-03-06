@@ -4,14 +4,22 @@ import re
 from pathlib import Path
 
 from trendpluse.app.repos_doc_generator import (
-    generate_repos_markdown,
+    generate_homepage_repos_section,
     parse_repos_from_config,
 )
 from trendpluse.config import Settings
 
+SECTION_START_MARKER = "<!-- monitored-repos-section:start -->"
+SECTION_END_MARKER = "<!-- monitored-repos-section:end -->"
+
 
 def find_monitored_repos_section(content: str) -> tuple[int, int] | None:
     """查找监控项目部分的位置。"""
+    start_marker = content.find(SECTION_START_MARKER)
+    end_marker = content.find(SECTION_END_MARKER)
+    if start_marker != -1 and end_marker != -1 and end_marker > start_marker:
+        return start_marker, end_marker + len(SECTION_END_MARKER)
+
     lines = content.split("\n")
 
     start_idx = None
@@ -37,21 +45,53 @@ def find_monitored_repos_section(content: str) -> tuple[int, int] | None:
     return start_idx, end_idx
 
 
+def replace_monitored_repos_section(content: str, new_section: str) -> str:
+    """替换首页中的监控仓库区块。"""
+    start_marker = content.find(SECTION_START_MARKER)
+    end_marker = content.find(SECTION_END_MARKER)
+    if start_marker != -1 and end_marker != -1 and end_marker > start_marker:
+        end_pos = end_marker + len(SECTION_END_MARKER)
+        return (
+            f"{content[:start_marker].rstrip()}\n\n"
+            f"{new_section}\n\n"
+            f"{content[end_pos:].lstrip()}"
+        )
+
+    section_range = find_monitored_repos_section(content)
+    if section_range is None:
+        print("⚠️  未找到现有监控项目部分，将在文件末尾追加")
+        return content.rstrip() + "\n\n" + new_section + "\n"
+
+    start_idx, end_idx = section_range
+    lines = content.split("\n")
+    updated_lines = lines[:start_idx] + [new_section.strip()] + lines[end_idx:]
+    return "\n".join(updated_lines)
+
+
+def extract_existing_monitored_repos_section(content: str) -> str | None:
+    """提取首页中的监控仓库区块文本。"""
+    start_marker = content.find(SECTION_START_MARKER)
+    end_marker = content.find(SECTION_END_MARKER)
+    if start_marker != -1 and end_marker != -1 and end_marker > start_marker:
+        end_pos = end_marker + len(SECTION_END_MARKER)
+        return content[start_marker:end_pos].strip()
+
+    section_range = find_monitored_repos_section(content)
+    if section_range is None:
+        return None
+
+    start_idx, end_idx = section_range
+    lines = content.split("\n")
+    return "\n".join(lines[start_idx:end_idx]).strip()
+
+
 def update_index_file(index_path: Path, dry_run: bool = False) -> bool:
     """更新 index.md 文件。"""
     content = index_path.read_text(encoding="utf-8")
     categories = parse_repos_from_config(Settings().monitored_repo_configs)
-    new_section = generate_repos_markdown(categories)
-    section_range = find_monitored_repos_section(content)
-
-    if section_range is None:
-        print("⚠️  未找到现有监控项目部分，将在文件末尾追加")
-        updated_content = content + "\n" + new_section
-    else:
-        start_idx, end_idx = section_range
-        lines = content.split("\n")
-        updated_lines = lines[:start_idx] + [new_section.strip()] + lines[end_idx:]
-        updated_content = "\n".join(updated_lines)
+    generated_block = generate_homepage_repos_section(categories).strip()
+    new_section = f"{SECTION_START_MARKER}\n{generated_block}\n{SECTION_END_MARKER}"
+    updated_content = replace_monitored_repos_section(content, new_section)
 
     if dry_run:
         print("📋 试运行模式，不会修改文件：")
@@ -85,16 +125,13 @@ def run_sync_repos_to_docs(
     if check:
         content = index_path.read_text(encoding="utf-8")
         categories = parse_repos_from_config(repos)
-        new_section = generate_repos_markdown(categories).strip()
+        generated_block = generate_homepage_repos_section(categories).strip()
+        new_section = f"{SECTION_START_MARKER}\n{generated_block}\n{SECTION_END_MARKER}"
 
-        section_range = find_monitored_repos_section(content)
-        if section_range is None:
+        existing_section = extract_existing_monitored_repos_section(content)
+        if existing_section is None:
             print("❌ 未找到监控项目部分")
             return 1
-
-        start_idx, end_idx = section_range
-        lines = content.split("\n")
-        existing_section = "\n".join(lines[start_idx:end_idx]).strip()
 
         existing_normalized = re.sub(r"\s+", "", existing_section)
         new_normalized = re.sub(r"\s+", "", new_section)

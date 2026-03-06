@@ -10,20 +10,20 @@
 
 ## 目录
 
-- [一、背景与需求](#一背景与需求)
-- [二、技术方案概述](#二技术方案概述)
-- [三、数据源分析](#三数据源分析)
-- [四、文件结构设计](#四文件结构设计)
-- [五、核心数据模型](#五核心数据模型)
-- [六、质量评分算法](#六质量评分算法)
-- [七、模块实现细节](#七模块实现细节)
-- [八、代码量评估](#八代码量评估)
-- [九、实施步骤](#九实施步骤)
-- [十、风险与缓解](#十风险与缓解)
+- [一、背景与需求](#section-1-background)
+- [二、技术方案概述](#section-2-solution)
+- [三、数据源分析](#section-3-data-sources)
+- [四、文件结构设计](#section-4-file-structure)
+- [五、核心数据模型](#section-5-data-models)
+- [六、质量评分算法](#section-6-scoring)
+- [七、模块实现细节](#section-7-implementation)
+- [八、代码量评估](#section-8-estimation)
+- [九、实施步骤](#section-9-rollout)
+- [十、风险与缓解](#section-10-risks)
 
 ---
 
-## 一、背景与需求
+## 一、背景与需求 { #section-1-background }
 
 ### 1.1 问题陈述
 
@@ -52,7 +52,7 @@
 
 ---
 
-## 二、技术方案概述
+## 二、技术方案概述 { #section-2-solution }
 
 ### 2.1 核心架构
 
@@ -118,7 +118,7 @@ GitHub API / Trending
 
 ---
 
-## 三、数据源分析
+## 三、数据源分析 { #section-3-data-sources }
 
 ### 3.1 GitHub Trending 方案对比
 
@@ -162,7 +162,7 @@ q = f"language:python {keyword} stars:>500 pushed:>2026-01-01"
 
 ---
 
-## 四、文件结构设计
+## 四、文件结构设计 { #section-4-file-structure }
 
 > 以下结构为设计阶段方案，包含已删除或已重组的路径（例如 `scripts/discover_projects.py`、`discovery/base.py`）。请勿将本节视为当前代码结构。
 
@@ -203,7 +203,7 @@ tests/
 
 ---
 
-## 五、核心数据模型
+## 五、核心数据模型 { #section-5-data-models }
 
 ### 5.1 DiscoveredProject
 
@@ -324,7 +324,7 @@ class DiscoveryConfig(BaseSettings):
 
 ---
 
-## 六、质量评分算法
+## 六、质量评分算法 { #section-6-scoring }
 
 ### 6.1 评分维度
 
@@ -408,7 +408,7 @@ def calculate_quality_score(
 
 ---
 
-## 七、模块实现细节
+## 七、模块实现细节 { #section-7-implementation }
 
 ### 7.1 BaseDiscoverer 基类
 
@@ -713,7 +713,7 @@ class DiscoveryReporter:
 
 ---
 
-## 八、代码量评估
+## 八、代码量评估 { #section-8-estimation }
 
 ### 8.1 源代码预估
 
@@ -768,7 +768,7 @@ class DiscoveryReporter:
 
 ---
 
-## 九、实施步骤
+## 九、实施步骤 { #section-9-rollout }
 
 ### 9.1 Phase 1: 基础框架 (0.5h)
 
@@ -857,7 +857,7 @@ class TrendingCollector(BaseDiscoverer):
 
 ---
 
-## 十、风险与缓解
+## 十、风险与缓解 { #section-10-risks }
 
 ### 10.1 技术风险
 

@@ -29,6 +29,14 @@ from trendpluse.cli.report_json_common import print_daily_report_summary
 console = Console()
 
 
+def build_daily_report_url_template(deployment_url: str) -> str | None:
+    """根据部署地址构建日报链接模板。"""
+    base_url = deployment_url.strip().rstrip("/")
+    if not base_url:
+        return None
+    return f"{base_url}/reports/report-{{date}}/"
+
+
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="发送 TrendPulse 日报飞书通知")
@@ -62,7 +70,10 @@ def main():
         print_daily_report_summary(console, report)
 
         # 初始化通知器
-        notifier = build_feishu_notifier(config)
+        notifier = build_feishu_notifier(
+            config,
+            report_url_template=build_daily_report_url_template(deployment_url),
+        )
         print_feishu_target(console, config)
 
         # 发送通知

@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (28 个项目)
+## 🤖 AI Agents (28 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -818,7 +818,7 @@ LlamaFactory 是目前最全面的 LLM 微调框架之一，支持 100+ 种大�
 | Topics | agent-skills, ai-agents, antigravity, automation, claude, claude-code, codex, composio, cursor, gemini-cli, mcp, rube, saas, skill, workflow-automation |
 
 
-## 🔍 RAG/检索 (18 个项目)
+## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1305,7 +1305,7 @@ LobeHub 是一个领先的多智能体协作平台，在 GitHub 上获得了超�
 | 许可证 | MIT License |
 
 
-## 💬 LLM 界面 (26 个项目)
+## 💬 LLM 界面 (26 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -1986,7 +1986,7 @@ LobeHub 是一个领先的多智能体协作平台，在 GitHub 上获得了超�
 | 许可证 | MIT License |
 
 
-## 🧠 机器学习框架 (13 个项目)
+## 🧠 机器学习框架 (13 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -2177,7 +2177,7 @@ OpenBB是一个功能强大的开源金融数据平台，凭借62k+星标成为P
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -2329,7 +2329,7 @@ OpenBB是一个功能强大的开源金融数据平台，凭借62k+星标成为P
 | 许可证 | Apache License 2.0 |
 
 
-## 🛠️ 开发工具 (17 个项目)
+## 🛠️ 开发工具 (17 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -2746,7 +2746,7 @@ LocalAI 是一个革命性的开源项目，作为 OpenAI、Claude 等商业 AI 
 | 许可证 | MIT License |
 
 
-## ⚙️ DevOps/基础设施 (17 个项目)
+## ⚙️ DevOps/基础设施 (17 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -2952,7 +2952,7 @@ LocalAI 是一个革命性的开源项目，作为 OpenAI、Claude 等商业 AI 
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -3128,7 +3128,7 @@ LocalAI 是一个革命性的开源项目，作为 OpenAI、Claude 等商业 AI 
 | 许可证 | GNU Affero General Public License v3.0 |
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -3178,7 +3178,7 @@ LocalAI 是一个革命性的开源项目，作为 OpenAI、Claude 等商业 AI 
 | 许可证 | Apache License 2.0 |
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -3490,7 +3490,7 @@ LocalAI 是一个革命性的开源项目，作为 OpenAI、Claude 等商业 AI 
 | 许可证 | MIT License |
 
 
-## 📊 数据/基础设施 (4 个项目)
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -3601,7 +3601,7 @@ AnythingLLM 是一个功能完备的"全栈式"AI应用解决方案，打破了�
 | 许可证 | Apache License 2.0 |
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -3799,7 +3799,7 @@ AnythingLLM 是一个功能完备的"全栈式"AI应用解决方案，打破了�
 | 许可证 | MIT License |
 
 
-## 📁 其他 (63 个项目)
+## 📁 其他 (63 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -3829,7 +3829,7 @@ AnythingLLM 是一个功能完备的"全栈式"AI应用解决方案，打破了�
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 

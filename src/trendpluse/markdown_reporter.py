@@ -103,10 +103,10 @@ class MarkdownReporter:
 """
 
         # 工程信号
-        engineering_section = self.render_signals(report.engineering_signals, "工程")
+        engineering_section = self.render_bento_grid(report.engineering_signals, "工程")
 
         # 研究信号
-        research_section = self.render_signals(report.research_signals, "研究")
+        research_section = self.render_bento_grid(report.research_signals, "研究")
 
         # Commit 信号（仅在有内容时渲染）
         commit_section = ""

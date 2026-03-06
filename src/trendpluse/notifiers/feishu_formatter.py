@@ -32,13 +32,19 @@ class FeishuFormatter:
     将 DailyReport 对象转换为飞书交互卡片格式。
     """
 
-    def __init__(self, report_url_template: str | None = None):
+    def __init__(
+        self,
+        report_url_template: str | None = None,
+        max_signals: int = 5,
+    ):
         """初始化格式化器
 
         Args:
             report_url_template: 报告 URL 模板，使用 {date} 作为占位符
+            max_signals: 飞书卡片中每类最多显示的信号数
         """
         self.report_url_template = report_url_template or DEFAULT_REPORT_URL_TEMPLATE
+        self.max_signals = max_signals
 
     def format_card(self, report: DailyReport) -> dict:
         """将日报格式化为飞书卡片
@@ -205,7 +211,7 @@ class FeishuFormatter:
         # 工程信号（使用折叠面板，默认折叠与其他面板一致）
         engineering_signals = filter_high_impact(
             report.engineering_signals, threshold=4
-        )
+        )[: self.max_signals]
         if engineering_signals:
             elements.append({"tag": "hr"})
             content = self._generate_signals_content(engineering_signals)
@@ -228,7 +234,9 @@ class FeishuFormatter:
             )
 
         # 研究信号（使用折叠面板）
-        research_signals = filter_high_impact(report.research_signals, threshold=4)
+        research_signals = filter_high_impact(report.research_signals, threshold=4)[
+            : self.max_signals
+        ]
         if research_signals:
             elements.append({"tag": "hr"})
             content = self._generate_signals_content(research_signals)
@@ -252,7 +260,9 @@ class FeishuFormatter:
 
         # Commit 信号（仅在有内容时显示，与 MarkdownReporter 一致）
         if report.commit_signals:
-            commit_signals = filter_high_impact(report.commit_signals, threshold=4)
+            commit_signals = filter_high_impact(report.commit_signals, threshold=4)[
+                : self.max_signals
+            ]
             elements.append({"tag": "hr"})
             elements.append(
                 {
@@ -474,7 +484,7 @@ class FeishuFormatter:
 
         # 按评分降序，最多 5 个
         sorted_signals = sorted(high_impact, key=lambda x: (-x.impact_score, x.title))[
-            :5
+            : self.max_signals
         ]
 
         elements.extend(self._create_signal_items(sorted_signals))

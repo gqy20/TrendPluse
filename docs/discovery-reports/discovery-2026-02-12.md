@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (27 个项目)
+## 🤖 AI Agents (27 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -1096,7 +1096,7 @@ MetaGPT 是革命性的多智能体框架项目，它将 AI 智能体模拟成�
 
 
 
-## 🔍 RAG/检索 (17 个项目)
+## 🔍 RAG/检索 (17 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1760,7 +1760,7 @@ LightRAG 是发表在 EMNLP 2025 的轻量级 RAG 框架，以其简单快速的
 
 
 
-## 💬 LLM 界面 (25 个项目)
+## 💬 LLM 界面 (25 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -2733,7 +2733,7 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持包括 ChatGPT、Cla
 
 
 
-## 🧠 机器学习框架 (11 个项目)
+## 🧠 机器学习框架 (11 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -2897,7 +2897,7 @@ OpenBB 是金融数据领域的开源标杆项目，凭借超过 6 万颗星成�
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -3168,7 +3168,7 @@ PyTorch 是深度学习领域的旗舰框架，凭借动态计算图和直观的
 
 
 
-## 🛠️ 开发工具 (14 个项目)
+## 🛠️ 开发工具 (14 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -3720,7 +3720,7 @@ Lazygit 是一款革命性的 Git 终端交互工具，通过优雅的 TUI 界�
 
 
 
-## ⚙️ DevOps/基础设施 (16 个项目)
+## ⚙️ DevOps/基础设施 (16 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -4118,7 +4118,7 @@ Puppeteer 是由 Google Chrome 官方团队维护的 Node.js 库，提供强大�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -4350,7 +4350,7 @@ Memos 是一款开源自托管笔记服务，强调数据隐私和用户控制�
 
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -4434,7 +4434,7 @@ Prometheus 是云原生监控领域的黄金标准，也是 CNCF（云原生计�
 
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -4952,7 +4952,7 @@ Gin 是 Go 语言生态中最受欢迎的高性能 HTTP Web 框架之一，拥�
 
 
 
-## 📊 数据/基础设施 (4 个项目)
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -5115,7 +5115,7 @@ etcd 是云原生计算基金会（CNCF）毕业项目，也是 Kubernetes 背�
 
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -5434,7 +5434,7 @@ Mermaid 是最受欢迎的图表即代码（Diagrams-as-Code）解决方案之�
 
 
 
-## 📁 其他 (66 个项目)
+## 📁 其他 (66 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -5481,7 +5481,7 @@ Mermaid 是最受欢迎的图表即代码（Diagrams-as-Code）解决方案之�
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 
@@ -7999,4 +7999,3 @@ lazydocker 是一款为 Docker 管理优化的终端 UI 工具，拥有近 5 万
 
 **适用场景**:
 - Python 开发项目
-

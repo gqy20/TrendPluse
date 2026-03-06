@@ -5,7 +5,7 @@ venv:
 	uv venv
 
 install: venv
-	uv sync --all-dev
+	uv sync --all-extras
 	uv run pre-commit install
 
 check:
@@ -37,11 +37,11 @@ sync-repos:
 
 # 构建文档
 docs-build:
-	uv run mkdocs build
+	uv run python -m mkdocs build
 
 # 预览文档（本地）
 docs-serve:
-	uv run mkdocs serve
+	uv run python -m mkdocs serve
 
 # 文档命令别名
 docs: docs-build

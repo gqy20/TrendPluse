@@ -17,6 +17,7 @@ class FeishuCliConfig:
     webhook_url: str
     secret: str
     at_mobiles: list[str]
+    max_signals: int
 
 
 def parse_at_mobiles(raw_value: str) -> list[str]:
@@ -26,12 +27,22 @@ def parse_at_mobiles(raw_value: str) -> list[str]:
     return [mobile.strip() for mobile in raw_value.split(",") if mobile.strip()]
 
 
+def parse_max_signals(raw_value: str) -> int:
+    """解析飞书最大信号数配置。"""
+    try:
+        value = int(raw_value)
+    except ValueError:
+        return 5
+    return max(1, min(10, value))
+
+
 def load_feishu_cli_config() -> FeishuCliConfig:
     """从环境变量加载飞书 CLI 配置。"""
     return FeishuCliConfig(
         webhook_url=os.getenv("FEISHU_WEBHOOK_URL", ""),
         secret=os.getenv("FEISHU_SECRET", ""),
         at_mobiles=parse_at_mobiles(os.getenv("FEISHU_AT_MOBILES", "")),
+        max_signals=parse_max_signals(os.getenv("FEISHU_MAX_SIGNALS", "5")),
     )
 
 
@@ -43,12 +54,17 @@ def ensure_webhook_configured(console: Console, config: FeishuCliConfig) -> None
     raise SystemExit(0)
 
 
-def build_feishu_notifier(config: FeishuCliConfig) -> FeishuNotifier:
+def build_feishu_notifier(
+    config: FeishuCliConfig,
+    report_url_template: str | None = None,
+) -> FeishuNotifier:
     """根据 CLI 配置创建飞书通知器。"""
     return FeishuNotifier(
         webhook_url=config.webhook_url,
         at_mobiles=config.at_mobiles,
+        max_signals=config.max_signals,
         secret=config.secret or None,
+        report_url_template=report_url_template,
     )
 
 

@@ -77,8 +77,9 @@ class TestMarkdownReporter:
         # Assert
         assert "# TrendPulse 每日报告 - 2026-01-02" in markdown
         assert "今日共分析 5 个 PR，发现 3 个高影响信号" in markdown
-        assert "🔧 工程信号" in markdown  # emoji + 文本
-        assert "🔬 研究信号" in markdown  # emoji + 文本
+        assert "<h2>🔧 工程信号</h2>" in markdown
+        assert "<h2>🔬 研究信号</h2>" in markdown
+        assert '<div class="bento-grid">' in markdown
         assert "工程信号 A" in markdown
         assert "研究信号 B" in markdown
         assert "## 📊 统计信息" in markdown  # 实际的标题
@@ -206,3 +207,4 @@ class TestMarkdownReporter:
         assert output_path.exists()
         content = output_path.read_text()
         assert "TrendPulse 每日报告 - 2026-01-02" in content
+        assert '<div class="bento-grid">' in content

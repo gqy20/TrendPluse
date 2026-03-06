@@ -14,21 +14,18 @@ theme:
   name: material
   language: zh
   palette:
-    # 自动切换亮/暗模式
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: 切换到深色模式
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: indigo
-      accent: indigo
+    - scheme: slate
+      primary: black
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: 切换到浅色模式
+    - scheme: default
+      primary: blue grey
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
   features:
     # 导航功能
     - navigation.instant
@@ -126,6 +123,29 @@ extra_css:
   - stylesheets/extra.css
   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css
 
+# 内部设计与历史方案文档不进入站点
+exclude_docs: |
+  AI_RESEARCH_REPORT.md
+  CHANGELOG.md
+  PRD.md
+  REFACTOR_BLUEPRINT_INTERNAL.md
+  REFACTOR_PHASE1_TASKS_INTERNAL.md
+  TECH_SPEC_V3_INTEGRATION.md
+  k1_discovery_feature_design.md
+  architecture.md
+  configuration.md
+  features.md
+  future-feature-development.md
+  github-actions-setup.md
+  quickstart.md
+  testing.md
+
+# 历史归档页保留直链访问，但不出现在主导航
+not_in_nav: |
+  discovery-reports/**
+  reports/report-*.md
+  reports/weekly-*.md
+
 # 额外配置
 extra:
   social:
@@ -153,11 +173,7 @@ nav:
   - 首页: index.md
   - 趋势报告: reports/index.md
   - 项目发现: discovery.md
-  - 项目说明:
-      - 功能概述: features.md
-      - 架构说明: architecture.md
-      - 测试说明: testing.md
-      - 快速开始: quickstart.md
-      - 配置指南: configuration.md
-      - GitHub Actions: github-actions-setup.md
-      - 后续功能开发说明: future-feature-development.md
+
+validation:
+  links:
+    absolute_links: ignore

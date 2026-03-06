@@ -8,12 +8,23 @@ from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
 
+from trendpluse.app.sync_repos_to_docs import update_index_file
+
 
 class _ProjectInfo(TypedDict):
     """项目信息。"""
 
     repo: str
     stars: int
+
+
+def _get_stat_value(stats: dict[str, str], *keys: str) -> str:
+    """按候选键顺序读取统计值。"""
+    for key in keys:
+        value = stats.get(key)
+        if isinstance(value, str) and value:
+            return value
+    return "0"
 
 
 def ensure_reports_structure(reports_dir: Path) -> None:
@@ -140,63 +151,113 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         output_path.write_text(index_content, encoding="utf-8")
         return
 
-    index_lines = [
-        "# 趋势报告归档\n",
-        "!!! note \n",
-        "    所有报告按时间倒序排列，最新的报告在最前面。\n",
-        "\n",
-        "## 最新周报\n",
-    ]
-
-    for report in weekly_reports[:4]:
-        week_id = report["week_id"]
-        start_date = report["start_date"]
-        end_date = report["end_date"]
-        summary = report["summary"]
-
-        index_lines.extend(
-            [
-                f"### [{week_id}](weekly-{week_id}.md)\n",
-                "\n",
-                f"**时间范围**: {start_date} ~ {end_date}\n",
-                "\n",
-                f"{summary}\n",
-                "\n",
-            ]
-        )
-
-    index_lines.extend(["\n", "## 最新日报\n"])
-
-    for report in daily_reports[:10]:
-        date = report["date"]
-        summary = report["summary"]
-        published = report["published"]
-
-        index_lines.extend(
-            [
-                f"### [{date}](report-{date}.md)\n",
-                "\n",
-                f"{summary}\n",
-                "\n",
-                f"*发布时间: {published}*\n",
-                "\n",
-            ]
-        )
+    latest_daily = daily_reports[0] if daily_reports else None
+    latest_weekly = weekly_reports[0] if weekly_reports else None
 
     total_signals = sum(int(r["stats"].get("分析 PR 数", 0)) for r in daily_reports)
     current_month = datetime.now().strftime("%Y-%m")
     monthly_count = len([r for r in daily_reports if r["date"][:7] == current_month])
 
+    index_lines = [
+        "# 趋势报告归档\n",
+        "\n",
+        "!!! note\n",
+        "    所有报告按时间倒序排列，最新的报告在最前面。\n",
+        "\n",
+        "## 站点概览\n",
+        "\n",
+        "| 指标 | 数值 | 指标 | 数值 |\n",
+        "|------|------|------|------|\n",
+        f"| 总日报数 | {len(daily_reports)} | 总周报数 | {len(weekly_reports)} |\n",
+        f"| 总分析 PR 数 | {total_signals} | 本月报告数 | {monthly_count} |\n",
+        "\n",
+    ]
+
+    if latest_daily:
+        latest_stats = latest_daily["stats"]
+        index_lines.extend(
+            [
+                "## 今日聚焦\n",
+                "\n",
+                f"### [{latest_daily['date']}](report-{latest_daily['date']}.md)\n",
+                "\n",
+                f"> {latest_daily['summary']}\n",
+                "\n",
+                "| 指标 | 数值 | 指标 | 数值 |\n",
+                "|------|------|------|------|\n",
+                f"| 分析 PR 数 | {_get_stat_value(latest_stats, '分析 PR 数')} | "
+                f"高影响信号 | {_get_stat_value(latest_stats, '高影响信号数')} |\n",
+                f"| 涉及仓库数 | {_get_stat_value(latest_stats, '涉及仓库数')} | "
+                "Release 数 | "
+                f"{_get_stat_value(latest_stats, 'Release 数', '分析 Release 数')} |\n",
+                f"| Commit 数 | {_get_stat_value(latest_stats, '分析 Commit 数')} | "
+                "Breaking Changes | "
+                f"{_get_stat_value(latest_stats, 'Breaking Changes 数')} |\n",
+                "\n",
+            ]
+        )
+
+    if latest_weekly:
+        index_lines.extend(
+            [
+                "## 最新周报\n",
+                "\n",
+                f"### [{latest_weekly['week_id']}]"
+                f"(weekly-{latest_weekly['week_id']}.md)\n",
+                "\n",
+                f"**时间范围**: {latest_weekly['start_date']} ~ "
+                f"{latest_weekly['end_date']}\n",
+                "\n",
+                f"{latest_weekly['summary']}\n",
+                "\n",
+            ]
+        )
+
+    index_lines.extend(
+        [
+            "## 最近日报\n",
+            "\n",
+            "| 日期 | 高影响 | 分析 PR | Release | 报告 |\n",
+            "|------|----------|---------|---------|------|\n",
+        ]
+    )
+
+    for report in daily_reports[:10]:
+        stats = report["stats"]
+        date = report["date"]
+        high_impact = _get_stat_value(stats, "高影响信号数")
+        prs = _get_stat_value(stats, "分析 PR 数")
+        releases = _get_stat_value(stats, "Release 数", "分析 Release 数")
+        index_lines.append(
+            f"| {date} | {high_impact} | {prs} | {releases} | "
+            f"[查看](report-{date}.md) |\n"
+        )
+
     index_lines.extend(
         [
             "\n",
-            "## 统计信息\n",
+            "## 最近周报\n",
             "\n",
-            "| 指标 | 数值 |\n",
-            "|------|------|\n",
-            f"| 总报告数 | {len(daily_reports)} |\n",
-            f"| 总分析 PR 数 | {total_signals} |\n",
-            f"| 本月报告数 | {monthly_count} |\n",
+            "| 周期 | 起止时间 | 报告 |\n",
+            "|------|----------|------|\n",
+        ]
+    )
+
+    for report in weekly_reports[:8]:
+        week_id = report["week_id"]
+        index_lines.append(
+            f"| {week_id} | {report['start_date']} ~ {report['end_date']} | "
+            f"[查看](weekly-{week_id}.md) |\n"
+        )
+
+    index_lines.extend(
+        [
+            "\n",
+            "## 阅读建议\n",
+            "\n",
+            "- 想快速掌握当天变化，先看“今日聚焦”。\n",
+            "- 想追踪连续趋势，优先读最新周报。\n",
+            "- 想按时间回看，使用最近日报和最近周报表格入口。\n",
         ]
     )
 
@@ -287,11 +348,27 @@ def extract_discovery_report_info(report_path: Path) -> dict | None:
                 mapped_stats[en_key] = stats[cn_key]
 
         top_projects: list[_ProjectInfo] = []
+        category_distribution: list[dict[str, str]] = []
         in_high_priority = False
-        project_header_pattern = r"###\s+\d+\.\s+([/\w.-]+)"
+        in_category_distribution = False
+        project_header_pattern = r"^###\s+([/\w.-]+)\s*$"
         stars_pattern = r"\|\s*Stars\s*\|\s*([\d,]+)\s*\|"
+        category_row_pattern = r"\|\s*(.+?)\s*\|\s*(\d+)\s*\|"
 
         for line in content.split("\n"):
+            if "### 📋 分类分布" in line:
+                in_category_distribution = True
+                continue
+            if in_category_distribution:
+                if line.startswith("|") and "---" not in line and "分类" not in line:
+                    match = re.search(category_row_pattern, line)
+                    if match:
+                        category_distribution.append(
+                            {"name": match.group(1).strip(), "count": match.group(2)}
+                        )
+                elif line.startswith("##"):
+                    in_category_distribution = False
+
             if "## 🌟 高优先级推荐" in line or "## 高优先级推荐" in line:
                 in_high_priority = True
                 continue
@@ -316,6 +393,7 @@ def extract_discovery_report_info(report_path: Path) -> dict | None:
             "date": date_str,
             "stats": mapped_stats,
             "top_projects": top_projects,
+            "category_distribution": category_distribution[:5],
         }
     except Exception as e:
         print(f"解析发现报告失败 {report_path}: {e}")
@@ -343,33 +421,71 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
     date = info["date"]
     stats = info["stats"]
     top_projects = info["top_projects"]
+    category_distribution = info.get("category_distribution", [])
 
     lines = [
         "# 项目发现历史\n",
         "\n",
-        "自动发现的 GitHub 热门项目报告，每周一更新。\n",
+        "自动发现 GitHub 热门项目，并按质量、相关性与可跟踪性进行筛选与归档。\n",
         "\n",
-        "## 最新报告\n",
+        "## 页面说明\n",
+        "\n",
+        "- 先看“本期概览”，判断本轮发现规模与推荐密度。\n",
+        "- 再看“高优先级推荐 Top 5”，快速锁定值得纳入监控的项目。\n",
+        "- 最后用“历史报告”表格回看不同日期的发现结果。\n",
+        "\n",
+        "## 本期概览\n",
         "\n",
         f"### [{date}](discovery-reports/discovery-{date}.md)\n",
         "\n",
-        "**发现概览**:<br/>\n",
+        "| 指标 | 数值 | 指标 | 数值 |\n",
+        "|------|------|------|------|\n",
     ]
 
     overview_lines = [
-        f"- 总发现数: {stats.get('total_discovered', 'N/A')}<br/>\n",
-        f"- 通过质量评估: {stats.get('passed_quality', 'N/A')}<br/>\n",
-        f"- 高优先级: {stats.get('high_priority', 'N/A')}<br/>\n",
-        f"- 去重移除: {stats.get('duplicates_removed', 'N/A')}<br/>\n",
-        f"- 已在监控: {stats.get('already_monitored', 'N/A')}<br/>\n",
-        "\n",
-        "**高优先级推荐 Top 5**:<br/>\n",
+        f"| 总发现数 | {stats.get('total_discovered', 'N/A')} | "
+        f"通过质量评估 | {stats.get('passed_quality', 'N/A')} |\n",
+        f"| 高优先级 | {stats.get('high_priority', 'N/A')} | "
+        f"去重移除 | {stats.get('duplicates_removed', 'N/A')} |\n",
+        f"| 已在监控 | {stats.get('already_monitored', 'N/A')} | "
+        f"完整报告 | [查看](discovery-reports/discovery-{date}.md) |\n",
         "\n",
     ]
 
-    for i, project in enumerate(top_projects, 1):
+    if category_distribution:
+        overview_lines.extend(
+            [
+                "### 分类分布 Top 5\n",
+                "\n",
+                "| 分类 | 数量 |\n",
+                "|------|------|\n",
+            ]
+        )
+        for item in category_distribution:
+            overview_lines.append(f"| {item['name']} | {item['count']} |\n")
+        overview_lines.append("\n")
+
+    overview_lines.extend(
+        [
+            "## 高优先级推荐 Top 5\n",
+            "\n",
+            "| 项目 | Stars |\n",
+            "|------|-------|\n",
+        ]
+    )
+
+    for project in top_projects:
         repo_link = f"[{project['repo']}](https://github.com/{project['repo']})"
-        overview_lines.append(f"{i}. {repo_link} - {project['stars']:,} ⭐<br/>\n")
+        overview_lines.append(f"| {repo_link} | {project['stars']:,} |\n")
+
+    if not top_projects:
+        overview_lines.append("| 暂无 | - |\n")
+
+    overview_lines.extend(
+        [
+            "\n",
+        ]
+    )
 
     lines.extend(overview_lines)
 
@@ -463,3 +579,4 @@ def run_generate_report_index(project_root: Path | None = None) -> None:
     sync_discovery_reports_to_docs(reports_dir, docs_dir)
     generate_discovery_index(reports_dir, docs_dir)
     generate_index(reports_dir, index_path)
+    update_index_file(docs_dir / "index.md")

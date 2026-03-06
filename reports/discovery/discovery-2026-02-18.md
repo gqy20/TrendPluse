@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (28 个项目)
+## 🤖 AI Agents (28 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -1139,7 +1139,7 @@ MetaGPT 是一个极具创新性的多智能体框架，它将 GPT 赋予多个�
 
 
 
-## 🔍 RAG/检索 (18 个项目)
+## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1847,7 +1847,7 @@ LightRAG 是 EMNLP 2025 收录的轻量级 RAG 框架，以知识图谱+检索�
 
 
 
-## 💬 LLM 界面 (26 个项目)
+## 💬 LLM 界面 (26 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -2866,7 +2866,7 @@ Pake 是一个革命性的轻量级桌面应用生成工具，它解决了 Elect
 
 
 
-## 🧠 机器学习框架 (12 个项目)
+## 🧠 机器学习框架 (12 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -3069,7 +3069,7 @@ Perplexica 是一个开源的 AI 智能搜索引擎，结合了 RAG 技术和 LL
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -3340,7 +3340,7 @@ PyTorch 是深度学习领域最受欢迎的开源框架之一，以其动态计
 
 
 
-## 🛠️ 开发工具 (15 个项目)
+## 🛠️ 开发工具 (15 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -3930,7 +3930,7 @@ lazygit 是一款极受欢迎的 Git 终端交互工具，在拥有 7.2 万+ sta
 
 
 
-## ⚙️ DevOps/基础设施 (17 个项目)
+## ⚙️ DevOps/基础设施 (17 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -4328,7 +4328,7 @@ Puppeteer 是由 Google Chrome 团队官方维护的浏览器自动化标杆项�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -4603,7 +4603,7 @@ act 是 GitHub Actions 的本地运行工具，填补了 CI/CD 本地调试的�
 
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -4688,7 +4688,7 @@ Prometheus 是云原生监控领域的标杆项目，拥有超过 6.2 万颗星�
 
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -5201,7 +5201,7 @@ PocketBase 是一个创新的"开箱即用"后端解决方案，采用单文件�
 
 
 
-## 📊 数据/基础设施 (4 个项目)
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -5364,7 +5364,7 @@ etcd 是分布式系统领域的标杆项目，作为 Kubernetes 的核心存储
 
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -5684,7 +5684,7 @@ Mermaid 是全球最受欢迎的图表即代码解决方案，拥有 86k+ stars�
 
 
 
-## 📁 其他 (63 个项目)
+## 📁 其他 (63 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -5731,7 +5731,7 @@ Mermaid 是全球最受欢迎的图表即代码解决方案，拥有 86k+ stars�
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 
@@ -8141,4 +8141,3 @@ HelloGitHub 是一个面向开源新手的优质内容推荐平台，拥有超�
 - 个人开发者：想学习开源但不知道从哪里入手的新手开发者，可以通过该项目快速找到适合自己的入门级开源项目进行学习和实践
 - 企业技术团队：团队Leader可以将其作为技术学习资源库，帮助团队成员扩展技术视野和了解新兴的开源项目趋势
 - 教育机构：编程培训机构和高校教师可以使用该项目的精选资源作为教学案例和课后实践素材，提供结构化的学习路径
-

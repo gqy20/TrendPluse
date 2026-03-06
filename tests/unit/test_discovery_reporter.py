@@ -79,6 +79,17 @@ class TestDiscoveryReporter:
         assert "# 项目发现报告" in markdown
         assert "## 发现概览" in markdown
 
+    def test_generate_markdown_navigation_uses_valid_anchor_slug(self, sample_report):
+        """测试快速导航链接使用与标题兼容的锚点格式"""
+        reporter = DiscoveryReporter()
+
+        markdown = reporter.generate_markdown(sample_report)
+
+        assert "(#llm 界面)" not in markdown
+        assert "(#ai agents)" not in markdown
+        assert "(#web 框架)" not in markdown
+        assert "{ #机器学习框架 }" in markdown or "{ #其他 }" in markdown
+
     def test_markdown_includes_summary_table(self, sample_report):
         """测试 Markdown 包含概览表格"""
         reporter = DiscoveryReporter()

@@ -294,6 +294,33 @@ class TestFeishuNotifier:
         assert sign1 != sign2
         assert sign1 != sign3
 
+    def test_build_card_respects_max_signals(self, sample_report: DailyReport):
+        """通知器应将 max_signals 传递给格式化器"""
+        notifier = FeishuNotifier(
+            webhook_url="https://example.com/webhook",
+            max_signals=1,
+        )
+        card = notifier._build_card(sample_report)
+        elements = card["card"]["body"]["elements"]
+
+        assert _content_contains(elements, "高影响信号 0")
+        assert not _content_contains(elements, "高影响信号 1")
+
+    def test_build_card_uses_custom_report_url_template(
+        self, sample_report: DailyReport
+    ):
+        """通知器应使用自定义报告链接模板"""
+        notifier = FeishuNotifier(
+            webhook_url="https://example.com/webhook",
+            report_url_template="https://example.com/reports/report-{date}/",
+        )
+        card = notifier._build_card(sample_report)
+        button = next(
+            el for el in card["card"]["body"]["elements"] if el.get("tag") == "button"
+        )
+
+        assert button["url"] == "https://example.com/reports/report-2026-01-04/"
+
 
 # ========== Fixtures ==========
 

@@ -4,6 +4,7 @@
 """
 
 import json
+import re
 from collections import defaultdict
 from collections.abc import Collection
 from pathlib import Path
@@ -84,7 +85,10 @@ class DiscoveryReporter:
 
             icon = self.CATEGORY_ICONS.get(category, "📁")
             count = category_stats.get(category, 0)
-            lines.extend(["", f"## {icon} {category} ({count} 个项目)", ""])
+            anchor = self._to_anchor_slug(category)
+            lines.extend(
+                ["", f"## {icon} {category} ({count} 个项目) {{ #{anchor} }}", ""]
+            )
 
             # 先显示高优先级
             if "high" in projects_by_category_and_priority[category]:
@@ -217,11 +221,19 @@ class DiscoveryReporter:
             for category in self._get_category_order(categories):
                 icon = self.CATEGORY_ICONS.get(category, "📁")
                 lines.append(
-                    f"- [{icon} {category}](#{category.lower().replace('/', '-')})"
+                    f"- [{icon} {category}](#{self._to_anchor_slug(category)})"
                 )
             lines.append("")
 
         return lines
+
+    def _to_anchor_slug(self, text: str) -> str:
+        """将分类名称转换为 MkDocs 兼容锚点。"""
+        slug = text.lower().replace("/", "-")
+        slug = re.sub(r"\s+", "-", slug)
+        slug = re.sub(r"[^a-z0-9\u4e00-\u9fff-]", "", slug)
+        slug = re.sub(r"-{2,}", "-", slug)
+        return slug.strip("-")
 
     def _format_project(self, project) -> list[str]:
         """格式化单个项目信息

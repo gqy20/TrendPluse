@@ -171,11 +171,11 @@ make sync-repos
 ```bash
 # 构建文档
 make docs
-# 或: uv run mkdocs build
+# 或: uv run python -m mkdocs build
 
 # 预览文档（本地）
 make docs-serve
-# 或: uv run mkdocs serve
+# 或: uv run python -m mkdocs serve
 ```
 
 ## GitHub Actions

@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (30 个项目)
+## 🤖 AI Agents (30 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -845,7 +845,7 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 | 许可证 | MIT License |
 
 
-## 🔍 RAG/检索 (18 个项目)
+## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1315,7 +1315,7 @@ JeecgBoot是一款创新的"低代码+零代码+AI"三位一体开发平台，�
 | 许可证 | MIT License |
 
 
-## 💬 LLM 界面 (22 个项目)
+## 💬 LLM 界面 (22 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -1873,7 +1873,7 @@ LobeHub 是一个获得 7.3 万+ Star 的现象级 AI Agent 开源项目，它�
 | 许可证 | MIT License |
 
 
-## 🧠 机器学习框架 (11 个项目)
+## 🧠 机器学习框架 (11 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -2020,7 +2020,7 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -2172,7 +2172,7 @@ Netron 是一个功能强大且跨平台的神经网络模型可视化工具，�
 | 许可证 | Apache License 2.0 |
 
 
-## 🛠️ 开发工具 (18 个项目)
+## 🛠️ 开发工具 (18 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -2588,7 +2588,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### ccxt/ccxt
 
-**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go 
+**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go
 
 **发现来源**: trending
 
@@ -2608,7 +2608,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-## ⚙️ DevOps/基础设施 (17 个项目)
+## ⚙️ DevOps/基础设施 (17 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -2814,7 +2814,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -2988,7 +2988,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | Apache License 2.0 |
 
 
-## 📈 监控/观测 (3 个项目)
+## 📈 监控/观测 (3 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -2996,7 +2996,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### grafana/grafana
 
-**描述**: The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more. 
+**描述**: The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more.
 
 **发现来源**: trending
 
@@ -3060,7 +3060,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | Apache License 2.0 |
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -3327,7 +3327,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### ccxt/ccxt
 
-**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go 
+**描述**: A cryptocurrency trading API with more than 100 exchanges in JavaScript / TypeScript / Python / C# / PHP / Go
 
 **发现来源**: trending
 
@@ -3369,7 +3369,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-## 📊 数据/基础设施 (6 个项目)
+## 📊 数据/基础设施 (6 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -3507,7 +3507,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | Apache License 2.0 |
 
 
-## 📚 学习资源 (6 个项目)
+## 📚 学习资源 (6 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -3645,7 +3645,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 | 许可证 | MIT License |
 
 
-## 📁 其他 (52 个项目)
+## 📁 其他 (52 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -3697,7 +3697,7 @@ LocalAI 是 OpenAI 和 Claude 的开源替代方案，支持在消费级硬件�
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 

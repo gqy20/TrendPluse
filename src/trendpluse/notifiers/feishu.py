@@ -35,6 +35,7 @@ class FeishuNotifier(BaseNotifier):
         at_mobiles: list[str] | None = None,
         max_signals: int = 5,
         secret: str | None = None,
+        report_url_template: str | None = None,
     ):
         """初始化飞书通知器
 
@@ -43,6 +44,7 @@ class FeishuNotifier(BaseNotifier):
             at_mobiles: @ 提醒的用户手机号列表
             max_signals: 卡片中显示的信号数量
             secret: 飞书机器人签名验证密钥（可选）
+            report_url_template: 报告详情链接模板
 
         Raises:
             ValueError: webhook_url 为空
@@ -53,7 +55,10 @@ class FeishuNotifier(BaseNotifier):
         self.at_mobiles = at_mobiles or []
         self.max_signals = max_signals
         self.secret = secret
-        self.formatter = FeishuFormatter()
+        self.formatter = FeishuFormatter(
+            report_url_template=report_url_template,
+            max_signals=max_signals,
+        )
 
     def send(self, title: str, content: str, url: str | None = None) -> bool:
         """发送简单文本通知

@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (27 个项目)
+## 🤖 AI Agents (27 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -1095,7 +1095,7 @@ MetaGPT 是一个革命性的多智能体框架，它创新性地将AI智能体�
 
 
 
-## 🔍 RAG/检索 (17 个项目)
+## 🔍 RAG/检索 (17 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1762,7 +1762,7 @@ LightRAG 是一个发表于 EMNLP2025 的高性能检索增强生成框架，在
 
 
 
-## 💬 LLM 界面 (26 个项目)
+## 💬 LLM 界面 (26 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -2739,7 +2739,7 @@ Chatbox 是一款强大的多模型 AI 客户端应用，支持 ChatGPT、Claude
 
 ### voideditor/void
 
-**描述**: 
+**描述**:
 
 **发现来源**: keyword
 
@@ -2776,7 +2776,7 @@ Void 是一个集成多种 AI 能力的下一代代码编辑器，融合了 Chat
 
 
 
-## 🧠 机器学习框架 (12 个项目)
+## 🧠 机器学习框架 (12 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -2974,7 +2974,7 @@ f/prompts.chat 是一个HTML项目，拥有 144,996 Stars。a.k.a. Awesome ChatG
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -3245,7 +3245,7 @@ PyTorch 是目前最流行的深度学习框架之一，凭借动态计算图和
 
 
 
-## 🛠️ 开发工具 (16 个项目)
+## 🛠️ 开发工具 (16 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -3837,7 +3837,7 @@ Lazygit 是一款革命性的 Git 终端 UI 工具，通过交互式界面大幅
 
 ### voideditor/void
 
-**描述**: 
+**描述**:
 
 **发现来源**: keyword
 
@@ -3874,7 +3874,7 @@ Void 是一个集成多种 AI 能力的下一代代码编辑器，融合了 Chat
 
 
 
-## ⚙️ DevOps/基础设施 (15 个项目)
+## ⚙️ DevOps/基础设施 (15 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -4265,7 +4265,7 @@ Puppeteer 是 Google 官方维护的无头浏览器自动化工具，提供了�
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -4460,7 +4460,7 @@ Memos 是一个强调隐私保护和数据自主权的开源笔记服务，完�
 
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -4544,7 +4544,7 @@ Prometheus 是云原生监控领域的开源标准项目，已被 CNCF（云原�
 
 
 
-## 🌐 Web 框架 (13 个项目)
+## 🌐 Web 框架 (13 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -5060,7 +5060,7 @@ PocketBase 是一个极具创新性的后端解决方案，以单文件形式集
 
 
 
-## 📊 数据/基础设施 (4 个项目)
+## 📊 数据/基础设施 (4 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -5222,7 +5222,7 @@ etcd 是云原生领域的基石项目，作为 Kubernetes 的核心存储后端
 
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -5535,7 +5535,7 @@ Mermaid 是目前最流行的图表即代码(Diagrams-as-Code)解决方案，拥
 
 
 
-## 📁 其他 (65 个项目)
+## 📁 其他 (65 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -5582,7 +5582,7 @@ Mermaid 是目前最流行的图表即代码(Diagrams-as-Code)解决方案，拥
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 
@@ -8060,4 +8060,3 @@ HelloGitHub 是一个专注于分享入门级开源项目的优质内容平台�
 - 开源新手：寻找合适的第一款开源项目进行学习和贡献
 - 内容创作者：发掘有趣的开源项目进行技术写作和分享
 - 企业培训：为新人提供优质的学习资源和实践项目库
-

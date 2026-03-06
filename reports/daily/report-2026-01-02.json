@@ -32,12 +32,5 @@
   "monitored_repos": [
     "anthropics/skills"
   ],
-  "issue_insights": {
-    "top_pain_points": [],
-    "expected_files": 0,
-    "generated_files": 0,
-    "parsed_files": 0,
-    "failed_files": 0,
-    "failed_samples": []
-  }
+  "issue_insights": null
 }

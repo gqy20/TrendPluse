@@ -30,20 +30,20 @@
 ## 📑 快速导航
 
 ### 按技术分类
-- [🤖 AI Agents](#ai agents)
+- [🤖 AI Agents](#ai-agents)
 - [🔍 RAG/检索](#rag-检索)
-- [💬 LLM 界面](#llm 界面)
+- [💬 LLM 界面](#llm-界面)
 - [🧠 机器学习框架](#机器学习框架)
 - [🛠️ 开发工具](#开发工具)
 - [⚙️ DevOps/基础设施](#devops-基础设施)
 - [📈 监控/观测](#监控-观测)
-- [🌐 Web 框架](#web 框架)
+- [🌐 Web 框架](#web-框架)
 - [📊 数据/基础设施](#数据-基础设施)
 - [📚 学习资源](#学习资源)
 - [📁 其他](#其他)
 
 
-## 🤖 AI Agents (25 个项目)
+## 🤖 AI Agents (25 个项目) { #ai-agents }
 
 
 ### 🌟 高优先级
@@ -1026,7 +1026,7 @@ Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity �
 
 
 
-## 🔍 RAG/检索 (18 个项目)
+## 🔍 RAG/检索 (18 个项目) { #rag-检索 }
 
 
 ### 🌟 高优先级
@@ -1734,7 +1734,7 @@ Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity �
 
 
 
-## 💬 LLM 界面 (28 个项目)
+## 💬 LLM 界面 (28 个项目) { #llm-界面 }
 
 
 ### 🌟 高优先级
@@ -2797,7 +2797,7 @@ Chatbox 是一款功能强大的 AI 客户端应用，支持 ChatGPT、Claude、
 
 ### voideditor/void
 
-**描述**: 
+**描述**:
 
 **发现来源**: keyword
 
@@ -2834,7 +2834,7 @@ Void 是一个基于 VS Code 架构构建的新一代代码编辑器，专注于
 
 
 
-## 🧠 机器学习框架 (12 个项目)
+## 🧠 机器学习框架 (12 个项目) { #机器学习框架 }
 
 
 ### 🌟 高优先级
@@ -3037,7 +3037,7 @@ OpenBB 是一个功能全面且开源的金融数据平台，专为分析师、�
 
 ### huggingface/transformers
 
-**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. 
+**描述**: 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.
 
 **发现来源**: trending
 
@@ -3308,7 +3308,7 @@ Perplexica 是一个开源的 AI 驱动智能搜索引擎，作为 Perplexity �
 
 
 
-## 🛠️ 开发工具 (17 个项目)
+## 🛠️ 开发工具 (17 个项目) { #开发工具 }
 
 
 ### 🌟 高优先级
@@ -3943,7 +3943,7 @@ lazygit 是一款极受欢迎的 Git 终端交互工具，拥有超过 7.1 万�
 
 ### voideditor/void
 
-**描述**: 
+**描述**:
 
 **发现来源**: keyword
 
@@ -3980,7 +3980,7 @@ Void 是一个基于 VS Code 架构构建的新一代代码编辑器，专注于
 
 
 
-## ⚙️ DevOps/基础设施 (14 个项目)
+## ⚙️ DevOps/基础设施 (14 个项目) { #devops-基础设施 }
 
 
 ### 🌟 高优先级
@@ -4301,7 +4301,7 @@ Puppeteer 是 Node.js 生态中最流行的无头浏览器自动化工具，由 
 
 ### microsoft/playwright
 
-**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. 
+**描述**: Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.
 
 **发现来源**: trending
 
@@ -4535,7 +4535,7 @@ MinIO 是业界领先的开源对象存储解决方案，完全兼容 Amazon S3 
 
 
 
-## 📈 监控/观测 (2 个项目)
+## 📈 监控/观测 (2 个项目) { #监控-观测 }
 
 
 ### 🌟 高优先级
@@ -4619,7 +4619,7 @@ Prometheus 是云原生监控领域的开源事实标准，被 CNCF 纳入并成
 
 
 
-## 🌐 Web 框架 (14 个项目)
+## 🌐 Web 框架 (14 个项目) { #web-框架 }
 
 
 ### 🌟 高优先级
@@ -5174,7 +5174,7 @@ Express.js 是 Node.js 生态系统中最成熟、应用最广泛的 Web 框架�
 
 
 
-## 📊 数据/基础设施 (5 个项目)
+## 📊 数据/基础设施 (5 个项目) { #数据-基础设施 }
 
 
 ### 🌟 高优先级
@@ -5375,7 +5375,7 @@ Pathway 的 llm-app 是一个高星（55K+）企业级 LLM 应用模板库，专
 
 
 
-## 📚 学习资源 (8 个项目)
+## 📚 学习资源 (8 个项目) { #学习资源 }
 
 
 ### 🌟 高优先级
@@ -5696,7 +5696,7 @@ Mermaid 是将"图表即代码"理念发挥到极致的开源项目，让开发�
 
 
 
-## 📁 其他 (62 个项目)
+## 📁 其他 (62 个项目) { #其他 }
 
 
 ### 🌟 高优先级
@@ -5704,7 +5704,7 @@ Mermaid 是将"图表即代码"理念发挥到极致的开源项目，让开发�
 
 ### openclaw/openclaw
 
-**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 
+**描述**: Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞
 
 **发现来源**: trending
 
@@ -8110,4 +8110,3 @@ Alist 是一个优秀的开源文件管理系统，凭借近 5 万颗 GitHub Sta
 - 个人云盘整合：将分散在不同云存储平台的文件统一管理，避免存储服务割裂
 - 企业文件共享：搭建内部文件服务器，支持多存储后挂载和 WebDAV 客户端访问
 - NAS/私有云部署：在本地服务器或 NAS 上搭建个人文件管理系统，实现多源文件聚合
-
