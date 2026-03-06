@@ -52,7 +52,7 @@
 优先级如下：
 
 1. 显式传入 `GITHUB_REPOS`
-2. `github_repos_file` 指向的 JSON 文件
+2. `GITHUB_REPOS_FILE` / `github_repos_file` 指向的 JSON 文件
 3. 空列表
 
 如果需要切换配置文件，可使用：
@@ -60,6 +60,8 @@
 ```bash
 export GITHUB_REPOS_FILE=path/to/repos.json
 ```
+
+`repos.json` 现在是 GitHub Actions 自动加仓库、discovery bridge apply 和本地 `trendpluse-add-repo` 的统一写入目标。
 
 ## `.env` 示例
 
@@ -101,3 +103,4 @@ DAILY_TOKEN_BUDGET=100000
 - 本地开发优先使用 `.env`
 - CI 中优先使用 `GITHUB_PAT` / `PAT_TOKEN`，不要依赖匿名 GitHub API 额度
 - 仓库列表放在 `repos.json`，不要再通过直接修改 `config.py` 维护
+- GitHub Actions 中与仓库列表相关的自动化流程，也应统一写入 `repos.json`

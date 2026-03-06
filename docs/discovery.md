@@ -46,6 +46,8 @@ docs/discovery-reports/
 
 项目发现由 GitHub Actions 工作流 [discover-projects.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-projects.yml) 定时执行。
 
+当以 apply 模式运行 bridge 步骤时，候选仓库会统一写回仓库根目录的 `repos.json`，而不是修改 Python 配置文件。
+
 ## 历史报告
 
 | 日期 | 总发现 | 高优先级 | 报告 |

@@ -195,7 +195,7 @@ act -j analyze
 1. **使用 PAT 获得更高速率限制**
    - 创建 PAT: https://github.com/settings/tokens
    - 权限: `public_repo` 即可
-   - 添加到 Secrets: `GITHUB_TOKEN`
+   - 添加到 Secrets: `GITHUB_PAT` 或 `PAT_TOKEN`
 
 2. **调整运行频率**
    - 编辑 `.github/workflows/run-daily.yml`

@@ -45,11 +45,22 @@ def check_env_vars() -> bool:
         return False
 
     # 显示可选变量状态
-    optional_vars = ["GITHUB_TOKEN", "ANTHROPIC_BASE_URL"]
-    for var in optional_vars:
-        value = os.getenv(var)
-        status = "[green]✓[/green]" if value else "[yellow]✗[/yellow] (未设置)"
-        console.print(f"{var}: {status}")
+    token_aliases = ["PAT_TOKEN", "GITHUB_PAT", "GITHUB_TOKEN"]
+    configured_token = next((name for name in token_aliases if os.getenv(name)), None)
+    if configured_token:
+        console.print(f"GitHub Token: [green]✓[/green] ({configured_token})")
+    else:
+        console.print(
+            "GitHub Token: [yellow]✗[/yellow] "
+            "(PAT_TOKEN / GITHUB_PAT / GITHUB_TOKEN 未设置)"
+        )
+
+    base_url_status = (
+        "[green]✓[/green]"
+        if os.getenv("ANTHROPIC_BASE_URL")
+        else "[yellow]✗[/yellow] (未设置)"
+    )
+    console.print(f"ANTHROPIC_BASE_URL: {base_url_status}")
 
     return True
 
@@ -77,7 +88,7 @@ def main():
             "\n  # 或使用备选环境变量:"
             "\n  # ANTHROPIC_AUTH_KEY=your-api-key"
             "\n  ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic"
-            "\n  GITHUB_TOKEN=your-github-token"
+            "\n  GITHUB_PAT=your-github-token"
         )
         sys.exit(1)
 
