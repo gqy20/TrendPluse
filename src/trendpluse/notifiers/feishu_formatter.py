@@ -77,7 +77,7 @@ class FeishuFormatter:
         # 3. Release 信号（如果有，与 MarkdownReporter 一致）
         if report.release_signals:
             elements.append({"tag": "hr"})
-            elements.extend(
+            elements.append(
                 self._create_release_signals_section(report.release_signals)
             )
 
@@ -444,52 +444,39 @@ class FeishuFormatter:
 
         return "".join(lines)
 
-    def _create_release_signals_section(self, signals: list[Signal]) -> list[dict]:
-        """创建 Release 信号部分（与 MarkdownReporter 一致）
+    def _create_release_signals_section(self, signals: list[Signal]) -> dict:
+        """创建 Release 信号部分（折叠面板形式）
 
         Args:
             signals: Release 信号列表
 
         Returns:
-            Release 信号元素列表
+            Release 信号折叠面板元素
         """
-        elements: list[dict] = []
-
         if not signals:
-            return elements
-
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": "**🎯 Release 信号**\n\n",
-                },
-            }
-        )
+            return {}
 
         # 筛选高影响信号（评分 >= 4）
         high_impact = [s for s in signals if s.impact_score >= 4]
         if not high_impact:
-            elements.append(
-                {
-                    "tag": "div",
-                    "text": {
-                        "tag": "lark_md",
-                        "content": "暂无 release 信号。\n",
-                    },
-                }
+            return self._create_collapsible_panel(
+                title="🎯 Release 信号",
+                content="暂无 release 信号。\n",
+                expanded=False,
             )
-            return elements
 
         # 按评分降序，最多 5 个
         sorted_signals = sorted(high_impact, key=lambda x: (-x.impact_score, x.title))[
             : self.max_signals
         ]
 
-        elements.extend(self._create_signal_items(sorted_signals))
+        content = self._generate_signals_content(sorted_signals)
 
-        return elements
+        return self._create_collapsible_panel(
+            title=f"🎯 Release 信号 ({len(sorted_signals)}个)",
+            content=content,
+            expanded=False,
+        )
 
     def _generate_breaking_changes_content(self, breaking_changes: list[dict]) -> str:
         """生成 Breaking Changes 内容（不包含外层标题，用于折叠面板）
