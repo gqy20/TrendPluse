@@ -118,6 +118,21 @@ TrendPulse 是一个智能的 GitHub 趋势分析工具，专注于追踪 **AI �
     2. 查看报告: 访问 GitHub Pages
     3. 订阅更新: Star 仓库接收通知
 
+### 当前代码结构
+
+```text
+src/trendpluse/
+  cli/         # 命令入口
+  automation/  # 可复用批处理实现
+  collectors/  # 数据采集与材料构建
+  analyzers/   # LLM 分析与去重聚合
+  workflows/   # 日报/周报/issue/output 编排
+  models/      # 结构化模型
+  discovery/   # 项目发现子系统
+  notifiers/   # 飞书通知
+  pipeline.py  # 总编排入口
+```
+
 ---
 
 **📅 报告归档**: 查看 [历史报告](reports/index.md)

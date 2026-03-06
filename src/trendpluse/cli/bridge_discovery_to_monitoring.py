@@ -17,7 +17,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--config-file",
-        default="src/trendpluse/config.py",
+        default="repos.json",
         help="配置文件路径",
     )
     parser.add_argument(

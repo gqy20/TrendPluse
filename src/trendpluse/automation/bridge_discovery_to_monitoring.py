@@ -102,7 +102,7 @@ def bridge_actionable_to_monitoring(
 def run_bridge_discovery_command(
     *,
     actionable_file: str,
-    config_file: str = "src/trendpluse/config.py",
+    config_file: str = "repos.json",
     min_priority: str = "medium",
     max_add_per_run: int = 10,
     apply: bool = False,

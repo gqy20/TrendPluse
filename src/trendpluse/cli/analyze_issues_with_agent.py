@@ -1,7 +1,7 @@
 """使用 Claude Agent SDK 分析 Issue 文件。
 
 示例：
-  uv run python scripts/analyze_issues_with_agent.py --input data/issues/2026-02-05 \\
+  uv run trendpluse-analyze-issues --input data/issues/2026-02-05 \\
       --output data/issues/2026-02-05/analysis
 """
 

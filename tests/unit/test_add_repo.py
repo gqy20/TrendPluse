@@ -1,38 +1,44 @@
-"""测试添加仓库到配置脚本"""
+"""测试添加仓库到监控配置。"""
 
+from __future__ import annotations
+
+import json
 from pathlib import Path
 
 
+def _write_repo_config(path: Path) -> None:
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "url": "https://github.com/anthropics/claude-code",
+                    "description": "Claude Code",
+                },
+                {
+                    "url": "https://github.com/openai/swarm",
+                    "description": "Swarm",
+                    "category": "Agentic AI 核心框架",
+                },
+                {
+                    "url": "https://github.com/cline/cline",
+                    "description": "Cline",
+                },
+            ],
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+
 class TestAddRepo:
-    """测试 add_repo.py 脚本功能"""
+    """测试 add_repo.py 功能。"""
 
     def test_add_repo_to_category(self, tmp_path: Path):
-        """测试：添加仓库到指定分类"""
-        # Arrange - 准备临时配置文件
-        config_content = '''"""配置管理模块"""
+        """测试：仓库可写入 repos.json 配置。"""
+        config_file = tmp_path / "repos.json"
+        _write_repo_config(config_file)
 
-from pydantic import Field
-
-class Settings:
-    github_repos: list[str] = Field(
-        default=[
-            # Anthropic 核心产品
-            "anthropics/claude-code",
-            "anthropics/skills",
-            # Anthropic SDK & Agent
-            "anthropics/anthropic-sdk-python",
-            # Agentic AI 核心框架
-            "openai/swarm",
-            "crewAIInc/crewAI",
-            # 自主 AI 编程代理
-            "cline/cline",
-        ]
-    )
-'''
-        config_file = tmp_path / "config.py"
-        config_file.write_text(config_content)
-
-        # Act - 添加新仓库
         from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
@@ -41,42 +47,24 @@ class Settings:
             category="Agentic AI 核心框架",
         )
 
-        # Assert - 验证添加成功
         assert result is True
-        updated_content = config_file.read_text()
 
-        # 检查仓库已添加
-        assert (
-            '"openai/codex"' in updated_content or "'openai/codex'" in updated_content
+        updated_entries = json.loads(config_file.read_text(encoding="utf-8"))
+        urls = [entry["url"] for entry in updated_entries]
+        assert "https://github.com/openai/codex" in urls
+
+        codex_entry = next(
+            entry
+            for entry in updated_entries
+            if entry["url"] == "https://github.com/openai/codex"
         )
-
-        # 检查添加位置正确（在 Agentic AI 核心框架分类下）
-        lines = updated_content.split("\n")
-        swarm_line = next(i for i, line in enumerate(lines) if "openai/swarm" in line)
-        codex_line = next(i for i, line in enumerate(lines) if "openai/codex" in line)
-        next_section_line = next(
-            i for i, line in enumerate(lines) if "# 自主 AI 编程代理" in line
-        )
-
-        # codex 应该在 swarm 之后，下一个分类之前
-        assert swarm_line < codex_line < next_section_line
+        assert codex_entry["category"] == "Agentic AI 核心框架"
 
     def test_add_duplicate_repo_returns_false(self, tmp_path: Path):
-        """测试：添加已存在的仓库返回 False"""
-        # Arrange
-        config_content = '''"""配置管理模块"""
+        """测试：添加已存在的仓库返回 False。"""
+        config_file = tmp_path / "repos.json"
+        _write_repo_config(config_file)
 
-class Settings:
-    github_repos: list[str] = Field(
-        default=[
-            "anthropics/claude-code",
-        ]
-    )
-'''
-        config_file = tmp_path / "config.py"
-        config_file.write_text(config_content)
-
-        # Act
         from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
@@ -85,21 +73,13 @@ class Settings:
             category="Anthropic 核心产品",
         )
 
-        # Assert
         assert result is False
 
     def test_add_repo_invalid_category(self, tmp_path: Path):
-        """测试：无效分类返回 False"""
-        # Arrange
-        config_content = '''"""配置管理模块"""
+        """测试：无效分类返回 False。"""
+        config_file = tmp_path / "repos.json"
+        config_file.write_text("[]\n", encoding="utf-8")
 
-class Settings:
-    github_repos: list[str] = Field(default=[])
-'''
-        config_file = tmp_path / "config.py"
-        config_file.write_text(config_content)
-
-        # Act
         from trendpluse.automation.add_repo import add_repo_to_config
 
         result = add_repo_to_config(
@@ -108,19 +88,16 @@ class Settings:
             category="不存在的分类",
         )
 
-        # Assert
         assert result is False
 
     def test_validate_repo_format(self):
-        """测试：仓库格式验证"""
+        """测试：仓库格式验证。"""
         from trendpluse.automation.add_repo import validate_repo_format
 
-        # 有效格式
         assert validate_repo_format("anthropics/claude-code") is True
         assert validate_repo_format("openai/swarm") is True
         assert validate_repo_format("a/b") is True
 
-        # 无效格式
         assert validate_repo_format("anthropics-claude-code") is False
         assert validate_repo_format("anthropics/claude/code") is False
         assert validate_repo_format("/claude-code") is False
@@ -128,7 +105,7 @@ class Settings:
         assert validate_repo_format("") is False
 
     def test_parse_issue_body(self):
-        """测试：解析 Issue 表单内容"""
+        """测试：解析 Issue 表单内容。"""
         from trendpluse.automation.add_repo import parse_issue_body
 
         body = """
@@ -145,48 +122,27 @@ class Settings:
         这是一个终端编程代理工具
         """
 
-        # Act
         result = parse_issue_body(body)
 
-        # Assert
         assert result["repo"] == "openai/codex"
         assert result["category"] == "Agentic AI 核心框架"
         assert "终端编程代理" in result["reason"]
 
     def test_category_to_marker_mapping(self):
-        """测试：分类到注释标记的映射"""
+        """测试：分类校验映射存在。"""
         from trendpluse.automation.add_repo import get_category_markers
 
-        # 测试主要分类
         markers = get_category_markers("Agentic AI 核心框架")
         assert markers is not None
         assert "start" in markers
         assert "end" in markers
-        assert markers["start"] is not None
-        assert "Agentic AI" in markers["start"]
 
-        # 无效分类
         assert get_category_markers("不存在的分类") is None
 
     def test_batch_add_repos_to_config(self, tmp_path: Path):
-        """测试：批量添加仓库，返回结构化结果"""
-        config_content = '''"""配置管理模块"""
-
-class Settings:
-    github_repos: list[str] = Field(
-        default=[
-            # Anthropic 核心产品
-            "anthropics/skills",
-            # Agentic AI 核心框架
-            "openai/swarm",
-            # 自主 AI 编程代理
-            "cline/cline",
-            # 其他
-        ]
-    )
-'''
-        config_file = tmp_path / "config.py"
-        config_file.write_text(config_content)
+        """测试：批量添加仓库，返回结构化结果。"""
+        config_file = tmp_path / "repos.json"
+        _write_repo_config(config_file)
 
         from trendpluse.automation.add_repo import batch_add_repos_to_config
 
@@ -198,7 +154,7 @@ class Settings:
                     "category": "Agentic AI 核心框架",
                 },
                 {
-                    "repo": "anthropics/skills",
+                    "repo": "anthropics/claude-code",
                     "category": "Anthropic 核心产品",
                 },
                 {
@@ -213,9 +169,10 @@ class Settings:
         )
 
         assert "openai/codex" in result["added"]
-        assert "anthropics/skills" in result["duplicates"]
+        assert "anthropics/claude-code" in result["duplicates"]
         assert "invalid-format" in result["invalid_format"]
         assert "foo/bar" in result["invalid_category"]
 
-        updated_content = config_file.read_text()
-        assert '"openai/codex"' in updated_content
+        updated_entries = json.loads(config_file.read_text(encoding="utf-8"))
+        urls = [entry["url"] for entry in updated_entries]
+        assert "https://github.com/openai/codex" in urls

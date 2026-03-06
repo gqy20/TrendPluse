@@ -1,11 +1,33 @@
-"""discovery 到监控列表桥接脚本测试"""
+"""discovery 到监控列表桥接脚本测试。"""
+
+from __future__ import annotations
 
 import json
 from pathlib import Path
 
 
+def _write_repo_config(path: Path) -> None:
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "url": "https://github.com/openai/swarm",
+                    "description": "Swarm",
+                },
+                {
+                    "url": "https://github.com/cline/cline",
+                    "description": "Cline",
+                },
+            ],
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+
 def test_bridge_actionable_to_monitoring(tmp_path: Path):
-    """测试：仅将高/中优先级仓库写入监控列表"""
+    """测试：仅将高/中优先级仓库写入监控列表。"""
     actionable_path = tmp_path / "discovery-actionable.json"
     actionable_path.write_text(
         json.dumps(
@@ -34,21 +56,8 @@ def test_bridge_actionable_to_monitoring(tmp_path: Path):
         encoding="utf-8",
     )
 
-    config_content = '''"""配置管理模块"""
-
-class Settings:
-    github_repos: list[str] = Field(
-        default=[
-            # Agentic AI 核心框架
-            "openai/swarm",
-            # 自主 AI 编程代理
-            "cline/cline",
-            # 其他
-        ]
-    )
-'''
-    config_path = tmp_path / "config.py"
-    config_path.write_text(config_content, encoding="utf-8")
+    config_path = tmp_path / "repos.json"
+    _write_repo_config(config_path)
 
     from trendpluse.automation.bridge_discovery_to_monitoring import (
         bridge_actionable_to_monitoring,
@@ -66,9 +75,14 @@ class Settings:
     assert "owner/medium-one" in result["batch_result"]["added"]
     assert "owner/low-one" not in result["batch_result"]["added"]
 
+    updated_entries = json.loads(config_path.read_text(encoding="utf-8"))
+    urls = [entry["url"] for entry in updated_entries]
+    assert "https://github.com/owner/high-one" in urls
+    assert "https://github.com/owner/medium-one" in urls
+
 
 def test_bridge_respects_max_add_per_run(tmp_path: Path):
-    """测试：bridge 应限制每次最多新增数量，默认按优先级+质量分选择"""
+    """测试：bridge 应限制每次最多新增数量。"""
     actionable_path = tmp_path / "discovery-actionable.json"
     actionable_path.write_text(
         json.dumps(
@@ -100,21 +114,8 @@ def test_bridge_respects_max_add_per_run(tmp_path: Path):
         encoding="utf-8",
     )
 
-    config_content = '''"""配置管理模块"""
-
-class Settings:
-    github_repos: list[str] = Field(
-        default=[
-            # Agentic AI 核心框架
-            "openai/swarm",
-            # 自主 AI 编程代理
-            "cline/cline",
-            # 其他
-        ]
-    )
-'''
-    config_path = tmp_path / "config.py"
-    config_path.write_text(config_content, encoding="utf-8")
+    config_path = tmp_path / "repos.json"
+    _write_repo_config(config_path)
 
     from trendpluse.automation.bridge_discovery_to_monitoring import (
         bridge_actionable_to_monitoring,

@@ -58,11 +58,12 @@
 |------------|------|--------|
 | `ANTHROPIC_BASE_URL` | API 基础 URL | `https://open.bigmodel.cn/api/anthropic` |
 | `GITHUB_TOKEN` | GitHub Token | 自动提供 |
+| `GITHUB_PAT` / `PAT_TOKEN` | 推荐使用的 GitHub PAT 别名 | 无 |
 | `FEISHU_WEBHOOK_URL` | 飞书 Webhook URL | 无（不发送通知） |
 | `FEISHU_SECRET` | 飞书签名验证密钥 | 无 |
 | `FEISHU_AT_MOBILES` | 飞书 @ 提醒手机号 | 无 |
 
-**建议：** 使用 Personal Access Token 替代默认 `GITHUB_TOKEN` 获得 5000 次/小时限制
+**建议：** 使用 `GITHUB_PAT` 或 `PAT_TOKEN` 配置 Personal Access Token，避免依赖默认 `GITHUB_TOKEN`
 
 ---
 
@@ -177,7 +178,7 @@ act -j analyze
 
 3. **常见错误**
    - `ANTHROPIC_API_KEY` 未设置 → 添加 Secret
-   - 速率限制 → 使用 PAT 替代默认 GITHUB_TOKEN
+   - 速率限制 → 使用 `GITHUB_PAT` / `PAT_TOKEN`
    - 测试失败 → 本地运行 `uv run pytest` 确认
 
 ### 飞书通知失败

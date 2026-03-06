@@ -93,6 +93,21 @@ ls reports/daily reports/weekly
 # reports/weekly/weekly-2026-W04.md
 ```
 
+## 项目结构
+
+```text
+src/trendpluse/
+  cli/         # 命令入口与参数解析
+  automation/  # 可复用批处理实现
+  collectors/  # 数据采集与材料构建
+  analyzers/   # LLM 分析、去重、聚合
+  workflows/   # 日报/周报/issue/output 工作流
+  models/      # 结构化模型
+  discovery/   # 项目发现子系统
+  notifiers/   # 飞书通知
+  pipeline.py  # 总编排入口
+```
+
 ## 常用命令
 
 ### 代码检查
@@ -124,6 +139,9 @@ make test
 # 运行测试并生成覆盖率报告
 make test-cov
 # 或: uv run pytest --cov=src/trendpluse --cov-report=html
+
+# 关键异步/主流程回归
+uv run pytest tests/unit/test_async_analyzers.py tests/unit/test_pipeline.py -q
 ```
 
 ### 运行主程序
@@ -215,13 +233,13 @@ make docs-serve
 vim tests/unit/test_feature.py
 
 # 2. 运行测试（失败）
-make test tests/unit/test_feature.py
+uv run pytest tests/unit/test_feature.py
 
 # 3. 实现功能
 vim src/trendpluse/feature.py
 
 # 4. 运行测试（通过）
-make test tests/unit/test_feature.py
+uv run pytest tests/unit/test_feature.py
 
 # 5. 代码检查
 make check
@@ -305,7 +323,18 @@ git commit -m "feat: add new feature"
 - `bytedance/deer-flow` - 深度研究框架
 - `langchain-ai/deepagents` - 深度代理
 
-可在 `src/trendpluse/config.py` 中添加更多仓库。
+推荐修改仓库根目录的 `repos.json`，或通过环境变量覆盖：
+
+```bash
+export GITHUB_REPOS="anthropics/claude-code,your-org/your-repo"
+```
+
+## 测试策略
+
+- 顶层 `tests/test_*.py` 覆盖基础模块与包级行为
+- `tests/unit/` 覆盖 collectors、analyzers、workflows、CLI 和配置
+- CLI 收口通过 [test_cli_help_smoke.py](/home/qy113/workspace/project/2603/TrendPluse/tests/unit/test_cli_help_smoke.py) 做冒烟保护
+- 配置测试会显式清理环境变量，避免受本机或 CI 环境污染
 
 ## 故障排查
 

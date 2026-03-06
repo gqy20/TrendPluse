@@ -2,7 +2,7 @@
 """GitHub 仓库深度分析脚本
 
 从 GitHub URL 分析仓库趋势，生成 Markdown 报告。
-用法: python scripts/analyze_repo.py <github_url> --output <output_file>
+用法: uv run trendpluse-analyze-repo <github_url> --output <output_file>
 """
 
 import argparse
@@ -388,9 +388,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例:
-  python scripts/analyze_repo.py https://github.com/anthropics/claude-code
-  python scripts/analyze_repo.py anthropics/claude-code --output report.md
-  python scripts/analyze_repo.py anthropics/claude-code --days 30
+  uv run trendpluse-analyze-repo https://github.com/anthropics/claude-code
+  uv run trendpluse-analyze-repo anthropics/claude-code --output report.md
+  uv run trendpluse-analyze-repo anthropics/claude-code --days 30
         """,
     )
     parser.add_argument(

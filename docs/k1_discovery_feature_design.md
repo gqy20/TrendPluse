@@ -725,7 +725,7 @@ class DiscoveryReporter:
 | **去重器** | `discovery/deduplicator.py` | **120** |
 | **报告生成器** | `discovery/reporter.py` | **180** |
 | **模块导出** | `discovery/__init__.py` | **30** |
-| **主入口脚本** | `scripts/discover_projects.py` | **150** |
+| **主入口脚本** | `trendpluse.cli.discover_projects` | **150** |
 | **配置扩展** | `config.py` (追加) | **80** |
 | **源代码小计** | | ****1,540 行*** | |
 
@@ -839,7 +839,7 @@ class TrendingCollector(BaseDiscoverer):
 ### 9.6 Phase 6: 主脚本与 CI (0.5h)
 
 **任务清单**:
-- [ ] 实现 `scripts/discover_projects.py`
+- [ ] 实现 `trendpluse.cli.discover_projects`
 - [ ] 创建 `.github/workflows/discover-projects.yml`
 - [ ] 集成测试
 - [ ] 文档更新

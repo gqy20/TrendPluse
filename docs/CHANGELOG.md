@@ -7,17 +7,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Changed
+- 目录结构收敛：`services` 合并为 `workflows`，`readers` 合并到 `collectors`
+- 命令入口统一收口到 `cli/`，`automation/` 退回为实现层
+- `pipeline.py` 拆出 weekly / daily finalizer 等 workflow，显著缩小编排文件体积
 - JSON-first 架构重构：数据模型从 dict 迁移到 Pydantic BaseModel
 - 活跃度数据 (`ActivityData`) 使用结构化模型
 - Release 数据 (`ReleasesData`) 使用结构化模型
 - 飞书配置 `feishu_at_mobiles` 从列表类型改为逗号分隔字符串
 
 ### Fixed
+- 恢复异步分析器兼容入口：`TrendAnalyzer.analyze_prs_async()` 与 `ReleaseSummarizer.summarize_releases_async()`
+- GitHub Actions 配置测试改为显式隔离 GitHub Token 环境变量，避免受运行环境污染
 - 修复 `feishu_at_mobiles` 空字符串导致的 JSON 解析错误
-- 修复 `scripts/run.py` 中对 `ActivityData` 的访问方式
+- 修复 `run` 主流程中对结构化模型的访问方式
 - 修复飞书通知报告提取的多项问题
 
 ### Added
+- 架构说明与测试说明文档
 - Commit 信号分析功能
 - Release 监控和分析功能
 - Breaking Changes 检测功能
