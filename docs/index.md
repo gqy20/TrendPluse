@@ -114,8 +114,8 @@
   <div class="tp-coverage-pill">其他工具</div>
 </div>
 
-<details class="tp-details-card">
-<summary><strong>展开查看完整监控仓库清单</strong></summary>
+<details class="tp-details-card" markdown>
+<summary markdown><strong>展开查看完整监控仓库清单</strong></summary>
 
 ### Anthropic 核心产品
 

@@ -162,8 +162,8 @@ def generate_homepage_repos_section(categories: list[RepoCategory]) -> str:
         [
             "</div>\n",
             "\n",
-            '<details class="tp-details-card">\n',
-            "<summary><strong>展开查看完整监控仓库清单</strong></summary>\n",
+            '<details class="tp-details-card" markdown>\n',
+            "<summary markdown><strong>展开查看完整监控仓库清单</strong></summary>\n",
             "\n",
         ]
     )
