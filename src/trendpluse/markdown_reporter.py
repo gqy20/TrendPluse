@@ -267,7 +267,7 @@ class MarkdownReporter:
 
         return "".join(lines)
 
-    def _render_stats(self, stats: ReportStats | dict) -> str:
+    def _render_stats(self, stats: ReportStats) -> str:
         """渲染统计信息
 
         Args:
@@ -291,12 +291,12 @@ class MarkdownReporter:
             "total_breaking_changes",
         ]
 
-        stats_data = stats.model_dump() if isinstance(stats, ReportStats) else stats
-
         for key in ordered_keys:
-            if key not in stats_data:
+            if key not in type(stats).model_fields:
                 continue
-            value = stats_data[key]
+            value = getattr(stats, key)
+            if value is None:
+                continue
             label = self._format_stat_label(key)
             lines.append(f"- **{label}**: {value}\n")
 
