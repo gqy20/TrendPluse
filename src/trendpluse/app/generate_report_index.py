@@ -441,7 +441,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
             "项目发现通过 GitHub Actions 每周一 UTC 00:10\n",
             "(北京时间 08:10) 自动运行。\n",
             "\n",
-            "查看工作流: [discover-repos.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-repos.yml)\n",
+            "查看工作流: [discover-projects.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-projects.yml)\n",
         ]
     )
 

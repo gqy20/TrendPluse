@@ -10,7 +10,7 @@
 ### 2. 每日分析 (`.github/workflows/run-daily.yml`)
 
 - 触发：`schedule` + `workflow_dispatch`
-- 功能：生成日报、同步索引、提交产物、触发后续部署/通知
+- 功能：生成日报、同步索引、提交产物，并按配置发送日报飞书通知
 
 ### 3. 周报生成 (`.github/workflows/run-weekly.yml`)
 
@@ -20,7 +20,7 @@
 ### 4. 项目发现 (`.github/workflows/discover-projects.yml`)
 
 - 触发：`schedule` + `workflow_dispatch` + `workflow_call`
-- 功能：发现候选项目、生成 discovery 报告并同步 docs
+- 功能：发现候选项目、生成 discovery 报告，并可将候选仓库写入 `repos.json`
 
 ### 5. Issue 仓库分析 (`.github/workflows/issue-analyzer.yml`)
 
@@ -34,7 +34,7 @@
 
 ### 7. Pages 部署 (`.github/workflows/deploy-pages.yml`)
 
-- 触发：日报工作流完成后
+- 触发：`push`（`docs/**`、`reports/**`、`mkdocs.yml`）+ `workflow_dispatch`
 - 功能：构建 MkDocs 并部署 GitHub Pages
 
 ### 8. 飞书通知 (`.github/workflows/send-feishu.yml`)
@@ -74,7 +74,7 @@
 1. 进入仓库的 **Actions** 标签
 2. 选择 **Run Daily Analysis** workflow
 3. 点击 **Run workflow** 按钮
-4. 选择是否发送飞书通知
+4. 按需填写输入参数并运行
 
 ### 方式 2: GitHub CLI
 
@@ -82,7 +82,7 @@
 # 运行每日分析
 gh workflow run run-daily.yml
 
-# 发送飞书通知
+# 运行每日分析并发送飞书通知
 gh workflow run run-daily.yml -f send_notification=true
 
 # 发送指定日期的飞书通知
@@ -92,15 +92,6 @@ gh workflow run send-feishu.yml -f report_date=2026-01-12
 ---
 
 ## 报告位置
-
-### Artifacts
-
-每次运行后，报告会上传为 artifact，保留 30 天：
-- Actions → 选择运行 → Artifacts 部分
-
-**可用 Artifacts：**
-- `trend-report-YYYY-MM-DD` - 趋势报告 (Markdown + JSON)
-- `feishu-card-YYYY-MM-DD` - 飞书卡片 (JSON)
 
 ### 仓库提交
 
@@ -133,8 +124,8 @@ brew install act  # macOS
 # 或
 curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 
-# 运行测试
-act -j test
+# 运行 CI
+act -j lint
 
 # 运行每日分析
 act -j analyze

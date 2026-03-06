@@ -1,6 +1,8 @@
 # TrendPulse 技术方案 v3.0 - 基于现有项目的集成方案
 
 > 站在巨人的肩膀上，而不是重新造轮子
+>
+> 状态：历史方案文档。当前仓库结构与执行链已演进，代码组织以 `src/trendpluse/app/`、`src/trendpluse/cli/`、`src/trendpluse/discovery/` 和 `.github/workflows/` 实际实现为准。
 
 ---
 

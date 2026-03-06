@@ -7,9 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Changed
-- 目录结构收敛：`services` 合并为 `workflows`，`readers` 合并到 `collectors`
-- 命令入口统一收口到 `cli/`，`automation/` 退回为实现层
-- `pipeline.py` 拆出 weekly / daily finalizer 等 workflow，显著缩小编排文件体积
+- 目录结构收敛：主业务编排统一迁入 `app/`，`workflows/` 与 `automation/` 已删除
+- 命令入口统一收口到 `cli/`，CLI 只保留参数解析、展示和退出码处理
+- 根级 `pipeline.py` 已迁移到 `app/pipeline.py`，日报、周报、发现流程均以 `app/` 为主入口
 - JSON-first 架构重构：数据模型从 dict 迁移到 Pydantic BaseModel
 - 活跃度数据 (`ActivityData`) 使用结构化模型
 - Release 数据 (`ReleasesData`) 使用结构化模型
@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - 架构说明与测试说明文档
+- GitHub Actions 流程收敛：Pages 部署、日报通知与配置写入链路已按重构后的 `app/` / `repos.json` 主流程对齐
 - Commit 信号分析功能
 - Release 监控和分析功能
 - Breaking Changes 检测功能
