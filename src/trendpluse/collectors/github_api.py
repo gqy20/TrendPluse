@@ -101,38 +101,10 @@ class GitHubDetailFetcher(BaseGitHubCollector):
 
         return comments
 
-    def fetch_multiple_pr_details(self, candidates: list[dict]) -> list[dict]:
-        """批量获取 PR 详情（串行版本，保留向后兼容）
-
-        Args:
-            candidates: 候选事件列表
-
-        Returns:
-            PR 详情列表
-        """
-        details_list = []
-
-        for event in candidates:
-            if event.get("type") == "PullRequestEvent":
-                repo_name = event["repo"]["name"]
-                pr_number = event["payload"]["pull_request"]["number"]
-
-                try:
-                    details = self.fetch_pr_details(repo_name, pr_number)
-                    details_list.append(details)
-                except GithubException as e:
-                    # 记录错误但继续处理其他 PR
-                    logger.error(f"获取 PR {repo_name}#{pr_number} 失败: {e}")
-                    continue
-
-        return details_list
-
-    def fetch_multiple_pr_details_concurrent(
+    def fetch_multiple_pr_details(
         self, candidates: list[dict], max_workers: int = 10
     ) -> list[dict]:
-        """批量获取 PR 详情（并发版本）
-
-        使用线程池并发获取多个 PR 的详情，显著提升性能。
+        """批量获取 PR 详情
 
         Args:
             candidates: 候选事件列表
@@ -144,7 +116,6 @@ class GitHubDetailFetcher(BaseGitHubCollector):
         if not candidates:
             return []
 
-        # 提取 PR 任务：(repo_name, pr_number)
         pr_tasks = []
         for event in candidates:
             if event.get("type") == "PullRequestEvent":
@@ -152,24 +123,22 @@ class GitHubDetailFetcher(BaseGitHubCollector):
                 pr_number = event["payload"]["pull_request"]["number"]
                 pr_tasks.append((repo_name, pr_number))
 
-        # 并发获取 PR 详情
-        results = []
+        if not pr_tasks:
+            return []
 
+        results = []
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            # 提交所有任务
             future_to_task = {
                 executor.submit(self.fetch_pr_details, repo, num): (repo, num)
                 for repo, num in pr_tasks
             }
 
-            # 收集结果
             for future in as_completed(future_to_task):
                 repo, num = future_to_task[future]
                 try:
                     details = future.result()
                     results.append(details)
                 except GithubException as e:
-                    # 记录错误但继续处理其他 PR
                     logger.debug(
                         f"获取 PR {repo}#{num} 失败: {e}",
                         extra={"repo": repo, "pr_number": num},

@@ -247,7 +247,10 @@ class TrendPulsePipeline:
             )
 
         # 3. 获取详细信息
-        pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
+        pr_details = self.fetcher.fetch_multiple_pr_details(
+            candidates,
+            max_workers=self.settings.max_parallel_workers,
+        )
 
         if not pr_details:
             return self._handle_empty_report(
@@ -469,7 +472,10 @@ class TrendPulsePipeline:
             )
 
         step_start = time.perf_counter()
-        pr_details = self.fetcher.fetch_multiple_pr_details(candidates)
+        pr_details = self.fetcher.fetch_multiple_pr_details(
+            candidates,
+            max_workers=self.settings.max_parallel_workers,
+        )
         logger.info(
             "PR detail fetch done in %.2fs (prs=%d)",
             time.perf_counter() - step_start,

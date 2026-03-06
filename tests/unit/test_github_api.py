@@ -127,7 +127,7 @@ class TestGitHubDetailFetcher:
 
     @patch("trendpluse.collectors.base.Github")
     def test_fetch_multiple_pr_details(self, mock_github_class):
-        """测试：批量获取 PR 详情"""
+        """测试：批量获取 PR 详情默认走并发实现"""
         # Arrange
         mock_pr_1 = Mock()
         mock_pr_1.number = 1
@@ -182,7 +182,7 @@ class TestGitHubDetailFetcher:
         ]
 
         # Act
-        details_list = fetcher.fetch_multiple_pr_details(candidates)
+        details_list = fetcher.fetch_multiple_pr_details(candidates, max_workers=2)
 
         # Assert
         assert len(details_list) == 2
@@ -211,8 +211,8 @@ class TestGitHubDetailFetcher:
             fetcher.fetch_pr_details("owner/repo", 123)
 
     @patch("trendpluse.collectors.base.Github")
-    def test_fetch_multiple_pr_details_concurrent(self, mock_github_class):
-        """测试：并发批量获取 PR 详情"""
+    def test_fetch_multiple_pr_details_respects_max_workers(self, mock_github_class):
+        """测试：批量获取 PR 详情支持配置并发度"""
         # Arrange - 模拟 5 个 PR
         mock_prs = []
         for i in range(5):
@@ -256,9 +256,7 @@ class TestGitHubDetailFetcher:
         ]
 
         # Act
-        details_list = fetcher.fetch_multiple_pr_details_concurrent(
-            candidates, max_workers=3
-        )
+        details_list = fetcher.fetch_multiple_pr_details(candidates, max_workers=3)
 
         # Assert
         assert len(details_list) == 5
@@ -270,8 +268,8 @@ class TestGitHubDetailFetcher:
             assert details["author"] == f"user{i}"
 
     @patch("trendpluse.collectors.base.Github")
-    def test_fetch_multiple_pr_details_concurrent_empty_list(self, mock_github_class):
-        """测试：并发批量获取空列表"""
+    def test_fetch_multiple_pr_details_empty_list(self, mock_github_class):
+        """测试：批量获取空列表"""
         # Arrange
         mock_github = Mock()
         mock_github_class.return_value = mock_github
@@ -279,14 +277,14 @@ class TestGitHubDetailFetcher:
         fetcher = GitHubDetailFetcher(token="test_token")
 
         # Act
-        details_list = fetcher.fetch_multiple_pr_details_concurrent([])
+        details_list = fetcher.fetch_multiple_pr_details([])
 
         # Assert
         assert details_list == []
 
     @patch("trendpluse.collectors.base.Github")
-    def test_fetch_multiple_pr_details_concurrent_with_errors(self, mock_github_class):
-        """测试：并发批量获取时部分失败"""
+    def test_fetch_multiple_pr_details_with_errors(self, mock_github_class):
+        """测试：批量获取时部分失败"""
         # Arrange - 3 个 PR，中间的会失败
         from github.GithubException import GithubException
 
@@ -359,9 +357,7 @@ class TestGitHubDetailFetcher:
         ]
 
         # Act
-        details_list = fetcher.fetch_multiple_pr_details_concurrent(
-            candidates, max_workers=2
-        )
+        details_list = fetcher.fetch_multiple_pr_details(candidates, max_workers=2)
 
         # Assert - 应该只返回成功的 2 个
         assert len(details_list) == 2

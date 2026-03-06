@@ -259,7 +259,10 @@ class TestTrendPulsePipeline:
         assert report is not None
         mock_collector_instance.fetch_events.assert_called_once()
         mock_filter_instance.filter_candidates.assert_called_once()
-        mock_fetcher_instance.fetch_multiple_pr_details.assert_called_once()
+        mock_fetcher_instance.fetch_multiple_pr_details.assert_called_once_with(
+            mock_filter_instance.filter_candidates.return_value,
+            max_workers=4,
+        )
         mock_analyzer_instance.analyze_prs.assert_called_once()
         mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
         mock_reporter_instance.save_report.assert_called_once()
