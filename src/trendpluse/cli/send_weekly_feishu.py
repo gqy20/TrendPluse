@@ -64,12 +64,12 @@ def main():
     week_id_input = os.getenv("WEEK_ID", "")
 
     # 计算上周的 week_id（如果没有指定）
-    # 使用与 pipeline._get_last_week_range() 相同的逻辑
+    # 使用与 WeeklyReportWorkflow.get_last_week_range() 相同的逻辑
     if week_id_input:
         week_id = week_id_input
     else:
         today = datetime.now()
-        # 获取上周日（与 pipeline.run_weekly() 的 end_date 一致）
+        # 获取上周日（与 WeeklyReportWorkflow.run() 的 end_date 一致）
         weekday = today.weekday()  # 0=周一, 6=周日
         this_monday = today - timedelta(days=weekday)
         last_sunday = this_monday - timedelta(days=1)
