@@ -71,8 +71,9 @@ jobs:
         id: check_duplicate
         run: |
           REPO="${{ steps.parse.outputs.repo }}"
+          REPO_URL="https://github.com/${REPO}"
 
-          if grep -q "\"${REPO}\"" src/trendpluse/config.py; then
+          if grep -q "\"${REPO_URL}\"" repos.json; then
             echo "❌ 仓库已在监控列表中: $REPO"
             echo "duplicate=true" >> $GITHUB_OUTPUT
             exit 1
@@ -94,7 +95,8 @@ jobs:
         run: |
           uv run trendpluse-add-repo \
             --repo "${{ steps.parse.outputs.repo }}" \
-            --category "${{ steps.parse.outputs.category }}"
+            --category "${{ steps.parse.outputs.category }}" \
+            --config-file repos.json
 
       - name: 提交并推送变更
         run: |
@@ -103,7 +105,7 @@ jobs:
           git stash
           git pull --rebase origin main
           git stash pop || true
-          git add src/trendpluse/config.py
+          git add repos.json
           git diff --quiet && git diff --staged --quiet || git commit -m "feat: 添加监控仓库 ${{ steps.parse.outputs.repo }}"
           git push
 

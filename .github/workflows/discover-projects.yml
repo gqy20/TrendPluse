@@ -121,7 +121,7 @@ jobs:
 
           uv run trendpluse-bridge-discovery \
             --actionable-file "$ACTIONABLE_FILE" \
-            --config-file src/trendpluse/config.py \
+            --config-file repos.json \
             --min-priority medium \
             --max-add-per-run "$MAX_ADD_PER_RUN" \
             $APPLY_FLAG | tee "$BRIDGE_RESULT_FILE"
@@ -156,6 +156,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/discovery/*.md reports/discovery/*.json docs/discovery-reports/*.md docs/discovery.md src/trendpluse/config.py || true
+          git add reports/discovery/*.md reports/discovery/*.json docs/discovery-reports/*.md docs/discovery.md repos.json || true
           git diff --quiet && git diff --staged --quiet || git commit -m "chore: update discovery outputs and monitoring list [skip ci]"
           git push
