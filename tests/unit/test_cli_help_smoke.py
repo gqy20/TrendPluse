@@ -8,17 +8,17 @@ from collections.abc import Callable
 
 import pytest
 
-from trendpluse.automation.add_repo import main as add_repo_main
-from trendpluse.automation.bridge_discovery_to_monitoring import (
-    main as bridge_discovery_main,
-)
 from trendpluse.automation.generate_report_index import main as generate_index_main
 from trendpluse.automation.normalize_daily_report_stats import (
     main as normalize_stats_main,
 )
 from trendpluse.automation.sync_repos_to_docs import main as sync_repos_main
+from trendpluse.cli.add_repo import main as add_repo_main
 from trendpluse.cli.analyze_issues_with_agent import main as analyze_issues_main
 from trendpluse.cli.analyze_repo import main as analyze_repo_main
+from trendpluse.cli.bridge_discovery_to_monitoring import (
+    main as bridge_discovery_main,
+)
 from trendpluse.cli.discover_projects import main as discover_projects_main
 from trendpluse.cli.run import main as run_main
 from trendpluse.cli.run_weekly import main as run_weekly_main
