@@ -39,6 +39,14 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Resolve report date
+        run: |
+          if [ -n "${{ inputs.report_date }}" ]; then
+            echo "REPORT_DATE=${{ inputs.report_date }}" >> $GITHUB_ENV
+          else
+            echo "REPORT_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+          fi
+
       - name: Send Feishu notification
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -48,5 +56,4 @@ jobs:
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
           FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
-          REPORT_DATE: ${{ inputs.report_date || github.event.schedule.run_time }}
         run: uv run trendpluse-send-feishu

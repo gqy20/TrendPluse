@@ -37,6 +37,14 @@ def build_daily_report_url_template(deployment_url: str) -> str | None:
     return f"{base_url}/reports/report-{{date}}/"
 
 
+def resolve_report_date(raw_report_date: str | None) -> str:
+    """解析报告日期，空值时回退到当天。"""
+    cleaned = (raw_report_date or "").strip()
+    if cleaned:
+        return cleaned
+    return datetime.now().strftime("%Y-%m-%d")
+
+
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="发送 TrendPulse 日报飞书通知")
@@ -47,7 +55,7 @@ def main():
     # 获取环境变量
     config = load_feishu_cli_config()
     deployment_url = os.getenv("DEPLOYMENT_URL", "")
-    report_date = os.getenv("REPORT_DATE", datetime.now().strftime("%Y-%m-%d"))
+    report_date = resolve_report_date(os.getenv("REPORT_DATE"))
 
     ensure_webhook_configured(console, config)
 

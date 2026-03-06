@@ -1,5 +1,7 @@
 """测试飞书通知脚本的辅助函数"""
 
+from datetime import datetime
+
 
 class TestFindReportJson:
     """测试报告 JSON 文件查找功能"""
@@ -37,6 +39,29 @@ class TestFindReportJson:
 
         # Assert
         assert result is None
+
+
+class TestResolveReportDate:
+    """测试日报日期解析。"""
+
+    def test_resolve_report_date_uses_value_when_present(self):
+        """测试：显式日期应原样返回。"""
+        from trendpluse.cli.send_feishu_notification import resolve_report_date
+
+        assert resolve_report_date("2026-03-06") == "2026-03-06"
+
+    def test_resolve_report_date_falls_back_to_today(self, monkeypatch):
+        """测试：空值应回退到当天。"""
+        from trendpluse.cli import send_feishu_notification as module
+
+        class _FakeDatetime(datetime):
+            @classmethod
+            def now(cls, tz=None):  # noqa: ARG003
+                return cls(2026, 3, 6)
+
+        monkeypatch.setattr(module, "datetime", _FakeDatetime)
+
+        assert module.resolve_report_date("") == "2026-03-06"
 
 
 class TestWeeklyNotificationHelpers:
