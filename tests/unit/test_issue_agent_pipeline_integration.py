@@ -1,12 +1,9 @@
-"""Issue Agent 与 Pipeline 集成测试"""
+"""Issue Agent 协调器集成测试"""
 
 from __future__ import annotations
 
 from pathlib import Path
-from types import SimpleNamespace
-from typing import Any, cast
 
-import trendpluse.app.pipeline as pipeline_module
 from trendpluse.app.issue_agent import IssueWorkflowCoordinator
 from trendpluse.models.issue_agent import IssueAgentBatchResult
 
@@ -49,37 +46,20 @@ def test_pipeline_runs_issue_agent_when_enabled(tmp_path, monkeypatch):
         '{"repo":"owner/repo","issue_id":1}\n', encoding="utf-8"
     )
 
-    pipeline = object.__new__(pipeline_module.TrendPulsePipeline)
-    pipeline.settings = cast(
-        Any,
-        SimpleNamespace(
-            enable_issue_agent_analysis=True,
-            anthropic_api_key="test-key",
-            issue_dump_dir=str(tmp_path),
-            issue_agent_model=None,
-            issue_agent_retry_max_attempts=2,
-            issue_agent_retry_wait_seconds=0.0,
-        ),
-    )
-    pipeline.daily_app = cast(
-        Any,
-        SimpleNamespace(
-            run_issue_agent_analysis=IssueWorkflowCoordinator(
-                issue_collector=None,
-                issue_dump_dir=str(tmp_path),
-                enable_issue_agent_analysis=True,
-                anthropic_api_key="test-key",
-                max_parallel_workers=4,
-                max_issues_per_repo=20,
-                issue_agent_model=None,
-                issue_agent_retry_max_attempts=2,
-                issue_agent_retry_wait_seconds=0.0,
-                runner_factory=_StubIssueAgentRunner,
-            ).run_issue_agent_analysis
-        ),
+    coordinator = IssueWorkflowCoordinator(
+        issue_collector=None,
+        issue_dump_dir=str(tmp_path),
+        enable_issue_agent_analysis=True,
+        anthropic_api_key="test-key",
+        max_parallel_workers=4,
+        max_issues_per_repo=20,
+        issue_agent_model=None,
+        issue_agent_retry_max_attempts=2,
+        issue_agent_retry_wait_seconds=0.0,
+        runner_factory=_StubIssueAgentRunner,
     )
 
-    pipeline._run_issue_agent_analysis(date)
+    coordinator.run_issue_agent_analysis(date)
 
     assert _StubIssueAgentRunner.called is True
     assert (issue_dir / "analysis" / "repo.analysis.json").exists()

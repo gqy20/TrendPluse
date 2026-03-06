@@ -8,7 +8,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from trendpluse.config import get_settings
+from trendpluse.config import Settings
 from trendpluse.discovery import (
     Deduplicator,
     DiscoveryReporter,
@@ -84,14 +84,15 @@ def build_actionable_candidates(
     return actionable[:max_candidates]
 
 
-def load_monitored_repos() -> set[str]:
+def load_monitored_repos(settings: Settings | None = None) -> set[str]:
     """加载已在监控的仓库列表。"""
-    settings = get_settings()
-    return set(settings.github_repos)
+    actual_settings = settings or Settings()
+    return set(actual_settings.github_repos)
 
 
 def discover(
     github_token: str,
+    settings: Settings | None = None,
     languages: list[str] | None = None,
     keywords: list[str] | None = None,
     min_quality_score: float = 60.0,
@@ -101,12 +102,13 @@ def discover(
     output_dir: Path | None = None,
 ) -> DiscoveryReport:
     """执行项目发现流程。"""
+    actual_settings = settings or Settings()
     if languages is None:
         languages = ["python", "typescript", "javascript", "go"]
     if keywords is None:
         keywords = ["AI agent", "LLM", "Claude", "RAG"]
 
-    monitored_repos = load_monitored_repos()
+    monitored_repos = load_monitored_repos(actual_settings)
     logger.info(f"已监控仓库: {len(monitored_repos)} 个")
 
     console.print("[cyan]采集 Trending 项目...[/cyan]")
@@ -146,15 +148,14 @@ def discover(
     deduplicated.sort(key=lambda p: p.quality_score, reverse=True)
 
     console.print("[cyan]AI 分析项目亮点...[/cyan]")
-    settings = get_settings()
-    if settings.anthropic_api_key:
+    if actual_settings.anthropic_api_key:
         highlight_analyzer = ProjectHighlightAnalyzer(
-            api_key=settings.anthropic_api_key,
-            model=settings.anthropic_model,
-            base_url=settings.anthropic_base_url,
-            retry_max_attempts=settings.llm_retry_max_attempts,
-            retry_wait_min=settings.llm_retry_wait_min,
-            retry_wait_max=settings.llm_retry_wait_max,
+            api_key=actual_settings.anthropic_api_key,
+            model=actual_settings.anthropic_model,
+            base_url=actual_settings.anthropic_base_url,
+            retry_max_attempts=actual_settings.llm_retry_max_attempts,
+            retry_wait_min=actual_settings.llm_retry_wait_min,
+            retry_wait_max=actual_settings.llm_retry_wait_max,
         )
         projects_to_analyze = [
             p for p in deduplicated if p.recommendation_priority in ("high", "medium")

@@ -263,7 +263,6 @@ class TestDiscoverProjectsIntegration:
         assert len(report.candidates) == 1
         assert report.duplicates_removed == 1
 
-    @patch("trendpluse.app.discovery.get_settings")
     @patch("trendpluse.app.discovery.TrendingCollector")
     @patch("trendpluse.app.discovery.KeywordSearcher")
     @patch("trendpluse.app.discovery.load_monitored_repos")
@@ -272,12 +271,11 @@ class TestDiscoverProjectsIntegration:
         mock_load_monitored,
         mock_keyword_searcher,
         mock_trending_collector,
-        mock_get_settings,
         tmp_path,
     ):
         """测试：保存可执行候选清单（仅 high/medium）"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = _build_highlight_settings()
+        settings = _build_highlight_settings()
 
         mock_trending = Mock()
         mock_trending_collector.return_value = mock_trending
@@ -316,6 +314,7 @@ class TestDiscoverProjectsIntegration:
 
         discover(
             github_token="test_token",
+            settings=settings,
             output_dir=tmp_path,
         )
 
@@ -327,7 +326,6 @@ class TestDiscoverProjectsIntegration:
         assert len(data["candidates"]) == 1
         assert data["candidates"][0]["repo"] == "owner/high-priority"
 
-    @patch("trendpluse.app.discovery.get_settings")
     @patch("trendpluse.app.discovery.TrendingCollector")
     @patch("trendpluse.app.discovery.KeywordSearcher")
     @patch("trendpluse.app.discovery.load_monitored_repos")
@@ -336,12 +334,11 @@ class TestDiscoverProjectsIntegration:
         mock_load_monitored,
         mock_keyword_searcher,
         mock_trending_collector,
-        mock_get_settings,
         tmp_path,
     ):
         """测试：actionable 默认最多输出 10 个"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = _build_highlight_settings()
+        settings = _build_highlight_settings()
 
         # 生成 12 个高优先级候选，默认应只输出 10 个
         trending_projects = []
@@ -369,6 +366,7 @@ class TestDiscoverProjectsIntegration:
 
         discover(
             github_token="test_token",
+            settings=settings,
             output_dir=tmp_path,
         )
 
@@ -378,7 +376,6 @@ class TestDiscoverProjectsIntegration:
         assert len(data["candidates"]) == 10
 
     @patch("trendpluse.app.discovery.ProjectHighlightAnalyzer")
-    @patch("trendpluse.app.discovery.get_settings")
     @patch("trendpluse.app.discovery.TrendingCollector")
     @patch("trendpluse.app.discovery.KeywordSearcher")
     @patch("trendpluse.app.discovery.load_monitored_repos")
@@ -387,13 +384,12 @@ class TestDiscoverProjectsIntegration:
         mock_load_monitored,
         mock_keyword_searcher,
         mock_trending_collector,
-        mock_get_settings,
         mock_highlight_analyzer,
         tmp_path,
     ):
         """测试：AI 亮点分析默认最多分析 10 个项目"""
         mock_load_monitored.return_value = set()
-        mock_get_settings.return_value = _build_highlight_settings(
+        settings = _build_highlight_settings(
             anthropic_api_key="test-key",
         )
 
@@ -426,6 +422,7 @@ class TestDiscoverProjectsIntegration:
 
         discover(
             github_token="test_token",
+            settings=settings,
             output_dir=tmp_path,
         )
 

@@ -93,9 +93,6 @@ class TrendPulsePipeline:
         """运行每日分析流程（异步）。"""
         return await self.daily_app.run_daily_async(date)
 
-    def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
-        self.daily_app.run_issue_agent_analysis(snapshot_date)
-
     def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
         """运行周报生成流程。"""
         return self.weekly_app.run(date)

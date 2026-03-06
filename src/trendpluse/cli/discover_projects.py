@@ -8,7 +8,7 @@ from pathlib import Path
 from rich.console import Console
 
 from trendpluse.app.discovery import discover
-from trendpluse.config import get_settings
+from trendpluse.config import Settings
 from trendpluse.logger import get_logger, setup_logger
 
 logger = get_logger(__name__)
@@ -81,9 +81,11 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    settings = Settings()
+
     # 如果没有提供 token，从配置中获取
     if args.token is None:
-        args.token = get_settings().github_token
+        args.token = settings.github_token
 
     # 设置日志级别
     setup_logger("DEBUG" if args.verbose else "INFO")
@@ -97,6 +99,7 @@ def main() -> int:
     try:
         report = discover(
             github_token=args.token,
+            settings=settings,
             languages=args.languages,
             keywords=args.keywords,
             min_quality_score=args.min_quality,
