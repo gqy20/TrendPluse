@@ -8,14 +8,13 @@ from typing import Literal
 
 from github import Github
 
-from trendpluse.discovery.base import BaseDiscoverer
 from trendpluse.logger import get_logger
 from trendpluse.models.discovery import DiscoveredProject
 
 logger = get_logger(__name__)
 
 
-class TrendingCollector(BaseDiscoverer):
+class TrendingCollector:
     """采集 GitHub Trending 项目
 
     使用 GitHub Search API 组合搜索条件模拟 Trending 效果。
@@ -27,7 +26,7 @@ class TrendingCollector(BaseDiscoverer):
         Args:
             github_token: GitHub 访问令牌
         """
-        super().__init__(github_token)
+        self.github_token = github_token
         self.client = Github(github_token)
 
     def discover(

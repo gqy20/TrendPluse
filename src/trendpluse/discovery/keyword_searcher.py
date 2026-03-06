@@ -8,7 +8,6 @@ from typing import Literal
 
 from github import Github
 
-from trendpluse.discovery.base import BaseDiscoverer
 from trendpluse.logger import get_logger
 from trendpluse.models.discovery import DiscoveredProject
 
@@ -26,7 +25,7 @@ DEFAULT_KEYWORDS = [
 ]
 
 
-class KeywordSearcher(BaseDiscoverer):
+class KeywordSearcher:
     """基于关键词搜索发现项目
 
     使用 GitHub Search API 根据关键词搜索相关项目。
@@ -47,14 +46,14 @@ class KeywordSearcher(BaseDiscoverer):
             min_stars: 最低 star 数，默认 500
             max_results: 每个关键词最多返回结果数，默认 20
         """
-        super().__init__(github_token)
+        self.github_token = github_token
         self.client = Github(github_token)
         self.keywords = keywords if keywords is not None else DEFAULT_KEYWORDS[:]
         self.min_stars = min_stars
         self.max_results = max_results
 
     def discover(self, days: int = 30) -> list[DiscoveredProject]:
-        """发现项目（实现 BaseDiscoverer 接口）
+        """发现项目。
 
         Args:
             days: 回溯天数，默认 30 天

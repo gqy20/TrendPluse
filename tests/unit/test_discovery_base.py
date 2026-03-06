@@ -1,17 +1,8 @@
-"""Discovery 模块基础测试
-
-测试 BaseDiscoverer 基类和相关数据模型。
-"""
-
-from typing import TYPE_CHECKING
+"""Discovery 模块基础测试。"""
 
 import pytest
 
-from trendpluse.discovery.base import BaseDiscoverer
 from trendpluse.models.discovery import DiscoveredProject, DiscoveryReport
-
-if TYPE_CHECKING:
-    pass
 
 
 class TestDiscoveredProject:
@@ -181,38 +172,6 @@ class TestDiscoveryReport:
         assert source_count["keyword"] == 1
 
 
-class TestBaseDiscoverer:
-    """BaseDiscoverer 基类测试"""
-
-    def test_base_discoverer_cannot_be_instantiated(self):
-        """测试基类是抽象的，不能直接实例化"""
-        # Python ABC 会阻止直接实例化抽象类
-        with pytest.raises(TypeError, match="abstract"):
-            BaseDiscoverer(github_token="test_token")
-
-    def test_base_discoverer_requires_implementation(self):
-        """测试子类必须实现 discover 方法"""
-
-        # 创建一个不实现 discover 方法的子类
-        class IncompleteDiscoverer(BaseDiscoverer):
-            pass
-
-        with pytest.raises(TypeError, match="abstract"):
-            IncompleteDiscoverer(github_token="test_token")
-
-    def test_concrete_discoverer_can_be_instantiated(self):
-        """测试实现了 discover 方法的子类可以实例化"""
-
-        # 创建一个实现了 discover 方法的具体子类
-        class ConcreteDiscoverer(BaseDiscoverer):
-            def discover(self):
-                return []
-
-        discoverer = ConcreteDiscoverer(github_token="test_token_123")
-        assert discoverer.github_token == "test_token_123"
-        assert discoverer.discover() == []
-
-
 @pytest.mark.integration
 @pytest.mark.skip(reason="TrendingCollector 尚未实现，将在 Phase 2 实现")
 class TestDiscoveryIntegration:
@@ -232,7 +191,7 @@ class TestDiscoveryIntegration:
         """测试使用真实 API 发现项目"""
         # 这个测试需要真实的 GitHub token，只在 CI 环境运行
         # TrendingCollector 将在 Phase 2 实现
-        from trendpluse.discovery import trending  # type: ignore[attr-defined]
+        from trendpluse.discovery import trending
 
         collector = trending.TrendingCollector(github_token=real_github_token)
         results = collector.discover(languages=["python"], days=30)

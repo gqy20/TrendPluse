@@ -266,19 +266,3 @@ class Settings(BaseSettings):
             )
             for repo in self.github_repos
         ]
-
-
-# 全局配置实例（延迟初始化）
-_settings_instance = None
-
-
-def get_settings() -> Settings:
-    """获取全局配置实例
-
-    Returns:
-        Settings 实例
-    """
-    global _settings_instance
-    if _settings_instance is None:
-        _settings_instance = Settings()
-    return _settings_instance
