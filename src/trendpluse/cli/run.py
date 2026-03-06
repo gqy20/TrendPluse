@@ -109,7 +109,7 @@ def main():
             f"摘要: {report.summary_brief}\n"
             f"工程信号: {len(report.engineering_signals)}\n"
             f"研究信号: {len(report.research_signals)}\n"
-            f"分析 PR 数: {report.stats.get('total_prs_analyzed', 0)}"
+            f"分析 PR 数: {report.stats.total_prs_analyzed}"
         )
 
         # 添加活跃度数据（如果有）

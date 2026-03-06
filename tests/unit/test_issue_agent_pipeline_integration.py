@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from typing import Any, cast
 
 import trendpluse.pipeline as pipeline_module
+from trendpluse.agents.issue_agent import IssueAgentBatchResult
 from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
@@ -23,13 +24,20 @@ class _StubIssueAgentRunner:
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
 
-    async def analyze_directory(self, input_dir: Path, output_dir: Path) -> int:
+    async def analyze_directory(
+        self, input_dir: Path, output_dir: Path
+    ) -> IssueAgentBatchResult:
         _StubIssueAgentRunner.called = True
         output_dir.mkdir(parents=True, exist_ok=True)
         (output_dir / "repo.analysis.json").write_text(
             '{"top_pain_points": []}', encoding="utf-8"
         )
-        return 1
+        return IssueAgentBatchResult(
+            expected_files=1,
+            succeeded_files=1,
+            failed_files=0,
+            failed_samples=[],
+        )
 
 
 def test_pipeline_runs_issue_agent_when_enabled(tmp_path, monkeypatch):

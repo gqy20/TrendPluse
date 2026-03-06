@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from trendpluse.agents.issue_agent import IssueAgentBatchResult
 from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
@@ -50,7 +51,12 @@ class DummyIssueRunner:
         (output_dir / "repo.analysis.json").write_text(
             '{"top_pain_points": []}', encoding="utf-8"
         )
-        return 1
+        return IssueAgentBatchResult(
+            expected_files=1,
+            succeeded_files=1,
+            failed_files=0,
+            failed_samples=[],
+        )
 
 
 def test_collect_and_analyze_dumps_issue_files(tmp_path, monkeypatch) -> None:

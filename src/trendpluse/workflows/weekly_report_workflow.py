@@ -118,12 +118,12 @@ class WeeklyReportWorkflow:
         engineering_signals.sort(key=lambda s: s.impact_score, reverse=True)
         research_signals.sort(key=lambda s: s.impact_score, reverse=True)
 
-        total_prs = sum(r.stats.get("total_prs_analyzed", 0) for r in daily_reports)
+        total_prs = sum(r.stats.total_prs_analyzed for r in daily_reports)
         high_impact = sum(1 for s in all_signals if s.impact_score >= 4)
         total_commits = sum(
             r.activity.total_commits for r in daily_reports if r.activity
         )
-        total_releases = sum(r.stats.get("total_releases", 0) for r in daily_reports)
+        total_releases = sum(r.stats.total_releases for r in daily_reports)
         weekly_activity = self.aggregate_activity(daily_reports)
 
         return WeeklyReport(

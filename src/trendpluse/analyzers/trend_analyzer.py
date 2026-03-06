@@ -317,10 +317,10 @@ PR 描述: {material.body}
 
         # 确保统计数据正确
         report.stats = ReportStats()
-        report.stats["total_prs_analyzed"] = len(pr_signals)
-        report.stats["total_commits_analyzed"] = len(commit_signals)
-        report.stats["total_releases"] = len(release_signals)
-        report.stats["high_impact_signals"] = len(
+        report.stats.total_prs_analyzed = len(pr_signals)
+        report.stats.total_commits_analyzed = len(commit_signals)
+        report.stats.total_releases = len(release_signals)
+        report.stats.high_impact_signals = len(
             self.filter_high_impact(report.engineering_signals, threshold=4)
         )
 
@@ -420,10 +420,10 @@ PR 描述: {material.body}
 
         report.date = date
         report.stats = ReportStats()
-        report.stats["total_prs_analyzed"] = len(pr_signals)
-        report.stats["total_commits_analyzed"] = len(commit_signals)
-        report.stats["total_releases"] = len(release_signals)
-        report.stats["high_impact_signals"] = len(
+        report.stats.total_prs_analyzed = len(pr_signals)
+        report.stats.total_commits_analyzed = len(commit_signals)
+        report.stats.total_releases = len(release_signals)
+        report.stats.high_impact_signals = len(
             self.filter_high_impact(report.engineering_signals, threshold=4)
         )
 
@@ -489,8 +489,8 @@ PR 描述: {material.body}
 
         # 确保统计数据正确
         report.stats = ReportStats()
-        report.stats["total_prs_analyzed"] = len(signals)
-        report.stats["high_impact_signals"] = high_impact_count
+        report.stats.total_prs_analyzed = len(signals)
+        report.stats.high_impact_signals = high_impact_count
 
         return report  # type: ignore[no-any-return]
 
@@ -548,8 +548,8 @@ PR 描述: {material.body}
 
         report.date = date
         report.stats = ReportStats()
-        report.stats["total_prs_analyzed"] = len(signals)
-        report.stats["high_impact_signals"] = high_impact_count
+        report.stats.total_prs_analyzed = len(signals)
+        report.stats.high_impact_signals = high_impact_count
 
         return report  # type: ignore[no-any-return]
 

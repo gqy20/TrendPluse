@@ -7,7 +7,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from trendpluse.agents.issue_agent import IssueAgentRunner
+from trendpluse.agents.issue_agent import IssueAgentBatchResult, IssueAgentRunner
 from trendpluse.logger import get_logger
 from trendpluse.utils.issue_agent_io import load_issue_agent_report
 from trendpluse.utils.issue_io import dump_issues_to_jsonl
@@ -99,18 +99,17 @@ class IssueWorkflowService:
                 retry_max_attempts=self.issue_agent_retry_max_attempts,
                 retry_wait_seconds=self.issue_agent_retry_wait_seconds,
             )
-            result = await runner.analyze_directory(input_dir, output_dir)
-            if isinstance(result, int):  # 兼容旧实现
-                logger.info("Issue Agent 分析完成: files=%d", result)
-            else:
-                logger.info(
-                    "Issue Agent 分析完成: expected=%d, succeeded=%d, failed=%d, "
-                    "failed_samples=%s",
-                    result.expected_files,
-                    result.succeeded_files,
-                    result.failed_files,
-                    ",".join(result.failed_samples) if result.failed_samples else "-",
-                )
+            result: IssueAgentBatchResult = await runner.analyze_directory(
+                input_dir, output_dir
+            )
+            logger.info(
+                "Issue Agent 分析完成: expected=%d, succeeded=%d, failed=%d, "
+                "failed_samples=%s",
+                result.expected_files,
+                result.succeeded_files,
+                result.failed_files,
+                ",".join(result.failed_samples) if result.failed_samples else "-",
+            )
         except Exception as exc:  # pragma: no cover - 防御性日志
             logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
 

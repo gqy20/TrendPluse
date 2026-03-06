@@ -539,17 +539,17 @@ class FeishuFormatter:
         """生成统计信息内容（不包含外层标题，用于折叠面板）
 
         Args:
-            stats: 统计数据字典
+            stats: 统计数据
 
         Returns:
             Markdown 格式的内容字符串
         """
         # 不包含外层标题，因为已在折叠面板标题中
         content = ""
-        content += f"• 分析 PR 数: {stats.get('total_prs_analyzed', 0)}\n"
-        content += f"• 高影响信号: {stats.get('high_impact_signals', 0)}\n"
-        content += f"• 新发布版本: {stats.get('total_releases', 0)}\n"
-        content += f"• 分析 Commit 数: {stats.get('total_commits_analyzed', 0)}\n"
+        content += f"• 分析 PR 数: {stats.total_prs_analyzed}\n"
+        content += f"• 高影响信号: {stats.high_impact_signals}\n"
+        content += f"• 新发布版本: {stats.total_releases}\n"
+        content += f"• 分析 Commit 数: {stats.total_commits_analyzed}\n"
         return content
 
     def _generate_issue_insights_content(self, report: IssueAgentReport) -> str:
