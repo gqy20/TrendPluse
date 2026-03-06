@@ -9,6 +9,27 @@ from trendpluse.discovery.classifier import ProjectClassifier
 from trendpluse.models.discovery import DiscoveredProject
 
 
+def _build_project(**overrides) -> DiscoveredProject:
+    """构造测试用项目。"""
+    defaults = {
+        "repo": "test/project",
+        "name": "project",
+        "description": "Test project",
+        "stars": 1000,
+        "language": "Python",
+        "topics": ["ai"],
+        "license": "MIT",
+        "open_issues": 10,
+        "forks": 100,
+        "watchers": 1000,
+        "last_commit_at": None,
+        "discovery_source": "trending",
+        "discovery_reason": "Test project",
+    }
+    defaults.update(overrides)
+    return DiscoveredProject(**defaults)
+
+
 class TestProjectClassifier:
     """项目分类器测试"""
 
@@ -19,37 +40,27 @@ class TestProjectClassifier:
 
         # AI Agent 项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/agent-1",
                 name="agent-1",
                 description="Multi-agent AI system",
-                stars=1000,
-                language="Python",
                 topics=["agent", "multi-agent", "autonomous", "ai-agents"],
-                license="MIT",
-                open_issues=10,
-                forks=100,
-                watchers=1000,
-                last_commit_at=None,
-                discovery_source="trending",
                 discovery_reason="AI agent project",
             )
         )
 
         # RAG 项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/rag-1",
                 name="rag-1",
                 description="RAG retrieval system",
                 stars=2000,
-                language="Python",
                 topics=["rag", "retrieval", "vector", "embeddings"],
                 license="Apache-2.0",
                 open_issues=20,
                 forks=200,
                 watchers=2000,
-                last_commit_at=None,
                 discovery_source="keyword",
                 discovery_reason="RAG system",
             )
@@ -57,37 +68,32 @@ class TestProjectClassifier:
 
         # LLM 界面项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/llm-ui-1",
                 name="llm-ui-1",
                 description="LLM chat interface",
                 stars=5000,
                 language="TypeScript",
                 topics=["llm-ui", "webui", "chatbot", "openai", "ollama"],
-                license="MIT",
                 open_issues=30,
                 forks=500,
                 watchers=5000,
-                last_commit_at=None,
-                discovery_source="trending",
                 discovery_reason="LLM UI",
             )
         )
 
         # 开发工具项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/devtools-1",
                 name="devtools-1",
                 description="Developer CLI tool",
                 stars=1500,
                 language="Go",
                 topics=["developer-tools", "cli", "sdk"],
-                license="MIT",
                 open_issues=15,
                 forks=150,
                 watchers=1500,
-                last_commit_at=None,
                 discovery_source="keyword",
                 discovery_reason="Dev tool",
             )
@@ -95,7 +101,7 @@ class TestProjectClassifier:
 
         # 学习资源项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/awesome-1",
                 name="awesome-1",
                 description="Awesome list of AI tools",
@@ -106,7 +112,6 @@ class TestProjectClassifier:
                 open_issues=5,
                 forks=300,
                 watchers=3000,
-                last_commit_at=None,
                 discovery_source="keyword",
                 discovery_reason="Awesome list",
             )
@@ -114,18 +119,16 @@ class TestProjectClassifier:
 
         # 无明确分类的项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/other-1",
                 name="other-1",
                 description="Random web project",
                 stars=500,
                 language="JavaScript",
                 topics=["web", "frontend"],
-                license="MIT",
                 open_issues=25,
                 forks=50,
                 watchers=500,
-                last_commit_at=None,
                 discovery_source="keyword",
                 discovery_reason="Web project",
             )
@@ -133,19 +136,15 @@ class TestProjectClassifier:
 
         # 同时属于多个分类的项目
         projects.append(
-            DiscoveredProject(
+            _build_project(
                 repo="test/multi-1",
                 name="multi-1",
                 description="AI agent framework with RAG",
                 stars=4000,
-                language="Python",
                 topics=["agent", "multi-agent", "rag", "llm"],
-                license="MIT",
                 open_issues=40,
                 forks=400,
                 watchers=4000,
-                last_commit_at=None,
-                discovery_source="trending",
                 discovery_reason="Multi-category",
             )
         )
@@ -255,18 +254,15 @@ class TestProjectClassifier:
     def test_empty_topics_returns_other(self):
         """测试空 topics 返回默认分类"""
         classifier = ProjectClassifier()
-        project = DiscoveredProject(
+        project = _build_project(
             repo="test/no-topics",
             name="no-topics",
             description="No topics project",
             stars=100,
-            language="Python",
             topics=[],
-            license="MIT",
             open_issues=5,
             forks=10,
             watchers=100,
-            last_commit_at=None,
             discovery_source="keyword",
             discovery_reason="No topics",
         )
@@ -358,19 +354,11 @@ class TestTopicCleaning:
         classifier = ProjectClassifier()
 
         # 使用未规范化的 topics
-        project = DiscoveredProject(
+        project = _build_project(
             repo="test/test-agent",
             name="test-agent",
             description="Test",
-            stars=1000,
-            language="Python",
             topics=["AI-Agents", "Multi-Agent", "hacktoberfest"],  # 未规范化
-            license="MIT",
-            open_issues=10,
-            forks=100,
-            watchers=1000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="Test",
         )
 
@@ -388,12 +376,11 @@ class TestExtendedCategories:
         classifier = ProjectClassifier()
 
         # Transformers 类项目
-        project = DiscoveredProject(
+        project = _build_project(
             repo="huggingface/transformers",
             name="transformers",
             description="ML framework",
             stars=100000,
-            language="Python",
             topics=[
                 "deep-learning",
                 "machine-learning",
@@ -406,8 +393,6 @@ class TestExtendedCategories:
             open_issues=100,
             forks=10000,
             watchers=100000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="ML framework",
         )
 
@@ -419,7 +404,7 @@ class TestExtendedCategories:
         """测试监控工具项目分类"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="prometheus/prometheus",
             name="prometheus",
             description="Monitoring system",
@@ -430,8 +415,6 @@ class TestExtendedCategories:
             open_issues=50,
             forks=5000,
             watchers=50000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="Monitoring tool",
         )
 
@@ -443,12 +426,11 @@ class TestExtendedCategories:
         """测试 DevOps/基础设施项目分类"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="ansible/ansible",
             name="ansible",
             description="Automation tool",
             stars=60000,
-            language="Python",
             topics=[
                 "devops",
                 "automation",
@@ -460,8 +442,6 @@ class TestExtendedCategories:
             open_issues=80,
             forks=10000,
             watchers=60000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="DevOps tool",
         )
 
@@ -473,19 +453,15 @@ class TestExtendedCategories:
         """测试 Web 框架项目分类"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="example/fastapi",
             name="fastapi",
             description="Web framework",
             stars=70000,
-            language="Python",
             topics=["api", "backend", "http", "rest", "web-framework"],
-            license="MIT",
             open_issues=30,
             forks=5000,
             watchers=70000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="Web framework",
         )
 
@@ -497,7 +473,7 @@ class TestExtendedCategories:
         """测试 Kubernetes 被分类为 DevOps"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="kubernetes/kubernetes",
             name="kubernetes",
             description="Container orchestrator",
@@ -508,8 +484,6 @@ class TestExtendedCategories:
             open_issues=200,
             forks=30000,
             watchers=100000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="Kubernetes",
         )
 
@@ -522,12 +496,11 @@ class TestExtendedCategories:
         """测试 TensorFlow 被分类为机器学习框架"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="tensorflow/tensorflow",
             name="tensorflow",
             description="ML framework",
             stars=180000,
-            language="Python",
             topics=[
                 "machine-learning",
                 "deep-learning",
@@ -538,8 +511,6 @@ class TestExtendedCategories:
             open_issues=150,
             forks=90000,
             watchers=180000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="ML framework",
         )
 
@@ -551,7 +522,7 @@ class TestExtendedCategories:
         """测试 Grafana 被分类为监控工具"""
         classifier = ProjectClassifier()
 
-        project = DiscoveredProject(
+        project = _build_project(
             repo="grafana/grafana",
             name="grafana",
             description="Dashboard",
@@ -562,8 +533,6 @@ class TestExtendedCategories:
             open_issues=70,
             forks=12000,
             watchers=60000,
-            last_commit_at=None,
-            discovery_source="trending",
             discovery_reason="Monitoring",
         )
 
