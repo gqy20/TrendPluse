@@ -9,6 +9,7 @@
 from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestCommitAnalyzerRefactored:
@@ -38,6 +39,8 @@ class TestCommitAnalyzerRefactored:
                 "timestamp": "2026-01-04T11:00:00Z",
             },
         ]
+
+        materials = [AnalysisMaterial.from_commit_details(commit) for commit in commits]
 
         # Mock LLM 响应 - 返回技术点，每个对应单个 commit
         llm_response = """```json
@@ -69,7 +72,7 @@ class TestCommitAnalyzerRefactored:
             mock_response.content = [MagicMock(text=llm_response)]
             mock_create.return_value = mock_response
 
-            signals = analyzer.analyze_commits(commits)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert
         assert len(signals) == 2
@@ -98,6 +101,7 @@ class TestCommitAnalyzerRefactored:
             {"repo": "repo/b", "sha": "bbb222", "message": "Important feature"},
             {"repo": "repo/c", "sha": "ccc333", "message": "Another fix"},
         ]
+        materials = [AnalysisMaterial.from_commit_details(commit) for commit in commits]
 
         # LLM 只提取有价值的 commit（bbb222）
         llm_response = """```json
@@ -120,7 +124,7 @@ class TestCommitAnalyzerRefactored:
             mock_response.content = [MagicMock(text=llm_response)]
             mock_create.return_value = mock_response
 
-            signals = analyzer.analyze_commits(commits)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert
         assert len(signals) == 1
@@ -136,6 +140,7 @@ class TestCommitAnalyzerRefactored:
             {"repo": "repo/a", "sha": "aaa111", "message": "fix typo"},
             {"repo": "repo/b", "sha": "bbb222", "message": "update readme"},
         ]
+        materials = [AnalysisMaterial.from_commit_details(commit) for commit in commits]
 
         llm_response = """```json
 []
@@ -147,7 +152,7 @@ class TestCommitAnalyzerRefactored:
             mock_response.content = [MagicMock(text=llm_response)]
             mock_create.return_value = mock_response
 
-            signals = analyzer.analyze_commits(commits)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert
         assert signals == []
@@ -160,12 +165,13 @@ class TestCommitAnalyzerRefactored:
         commits = [
             {"repo": "test/repo", "sha": "abc123", "message": "Test commit"},
         ]
+        materials = [AnalysisMaterial.from_commit_details(commit) for commit in commits]
 
         # Act
         with patch.object(analyzer.client.messages, "create") as mock_create:
             mock_create.return_value = MagicMock(content=[MagicMock(text="[]")])
 
-            analyzer.analyze_commits(commits)
+            analyzer.analyze_materials(materials)
 
             # Assert
             call_args = mock_create.call_args
@@ -183,6 +189,7 @@ class TestCommitAnalyzerRefactored:
         commits = [
             {"repo": "test/repo", "sha": "abc123", "message": "Test"},
         ]
+        materials = [AnalysisMaterial.from_commit_details(commit) for commit in commits]
 
         # LLM 没有返回 commit_sha
         llm_response = """```json
@@ -203,7 +210,7 @@ class TestCommitAnalyzerRefactored:
             mock_response.content = [MagicMock(text=llm_response)]
             mock_create.return_value = mock_response
 
-            signals = analyzer.analyze_commits(commits)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert - 应该回退到索引匹配（旧行为）
         assert len(signals) == 1

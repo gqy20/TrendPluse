@@ -21,8 +21,8 @@ class TestTrendAnalyzer:
         assert mock_from_anthropic.call_count == 2
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_analyze_single_pr(self, mock_from_anthropic):
-        """测试：分析单个 PR 提取信号"""
+    def test_analyze_single_material_from_pr_details(self, mock_from_anthropic):
+        """测试：分析单个 PR 材料提取信号。"""
         # Arrange
         mock_signal = Signal(
             id="test-1",
@@ -50,8 +50,10 @@ class TestTrendAnalyzer:
             "repo_name": "anthropics/skills",
         }
 
+        material = AnalysisMaterial.from_pr_details(pr_details)
+
         # Act
-        signal = analyzer.analyze_pr(pr_details)
+        signal = analyzer.analyze_material(material)
 
         # Assert
         assert signal.title == "新功能：支持 Python 3.13"
@@ -59,8 +61,8 @@ class TestTrendAnalyzer:
         assert signal.impact_score == 4
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_analyze_multiple_prs(self, mock_from_anthropic):
-        """测试：批量分析多个 PR"""
+    def test_analyze_multiple_materials_from_pr_details(self, mock_from_anthropic):
+        """测试：批量分析多个 PR 材料。"""
         # Arrange
         mock_signal_1 = Signal(
             id="test-1",
@@ -107,9 +109,10 @@ class TestTrendAnalyzer:
                 "repo_name": "owner/repo",
             },
         ]
+        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
 
         # Act
-        signals = analyzer.analyze_prs(pr_list)
+        signals = analyzer.analyze_materials(materials)
 
         # Assert
         assert len(signals) == 2

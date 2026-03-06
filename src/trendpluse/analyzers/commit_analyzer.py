@@ -65,33 +65,19 @@ class CommitAnalyzer(BaseLLMAnalyzer):
         }
 
     def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
-        """分析 commit 材料列表。
-
-        Args:
-            materials: commit 材料列表
-
-        Returns:
-            信号列表
-        """
+        """分析 commit 材料列表。"""
         commits = [self._material_to_commit(material) for material in materials]
-        return self.analyze_commits(commits)
+        return self._analyze_commit_payloads(commits)
 
     async def analyze_materials_async(
         self, materials: list[AnalysisMaterial]
     ) -> list[Signal]:
         """异步分析 commit 材料列表。"""
         commits = [self._material_to_commit(material) for material in materials]
-        return await self.analyze_commits_async(commits)
+        return await self._analyze_commit_payloads_async(commits)
 
-    def analyze_commits(self, commits: list[dict[str, Any]]) -> list[Signal]:
-        """分析 commit 列表
-
-        Args:
-            commits: commit 数据列表
-
-        Returns:
-            信号列表
-        """
+    def _analyze_commit_payloads(self, commits: list[dict[str, Any]]) -> list[Signal]:
+        """分析 commit 数据列表。"""
         # 处理空列表
         if not commits:
             logger.debug("CommitAnalyzer: 收到空 commit 列表")
@@ -117,10 +103,10 @@ class CommitAnalyzer(BaseLLMAnalyzer):
             logger.debug(f"CommitAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
-    async def analyze_commits_async(
+    async def _analyze_commit_payloads_async(
         self, commits: list[dict[str, Any]]
     ) -> list[Signal]:
-        """异步分析 commit 列表"""
+        """异步分析 commit 数据列表。"""
         if not commits:
             logger.debug("CommitAnalyzer: 收到空 commit 列表")
             return []

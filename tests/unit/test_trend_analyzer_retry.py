@@ -9,6 +9,7 @@ import pytest
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestTrendAnalyzerRetry:
@@ -50,17 +51,19 @@ class TestTrendAnalyzerRetry:
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
 
-        pr = {
-            "repo_name": "test/repo",
-            "number": 1,
-            "title": "Test PR",
-            "body": "Test body",
-            "author": "user1",
-            "url": "https://github.com/test/repo/pull/1",
-        }
+        material = AnalysisMaterial.from_pr_details(
+            {
+                "repo_name": "test/repo",
+                "number": 1,
+                "title": "Test PR",
+                "body": "Test body",
+                "author": "user1",
+                "url": "https://github.com/test/repo/pull/1",
+            }
+        )
 
         # 应该在重试后成功
-        signal = analyzer.analyze_pr(pr)
+        signal = analyzer.analyze_material(material)
 
         # 验证调用了 3 次（初始调用 + 2 次重试）
         assert call_count[0] == 3
@@ -80,18 +83,20 @@ class TestTrendAnalyzerRetry:
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
 
-        pr = {
-            "repo_name": "test/repo",
-            "number": 1,
-            "title": "Test PR",
-            "body": "Test body",
-            "author": "user1",
-            "url": "https://github.com/test/repo/pull/1",
-        }
+        material = AnalysisMaterial.from_pr_details(
+            {
+                "repo_name": "test/repo",
+                "number": 1,
+                "title": "Test PR",
+                "body": "Test body",
+                "author": "user1",
+                "url": "https://github.com/test/repo/pull/1",
+            }
+        )
 
         # 应该在重试耗尽后抛出异常
         with pytest.raises(Exception):
-            analyzer.analyze_pr(pr)
+            analyzer.analyze_material(material)
 
     def test_no_retry_on_permanent_error(self):
         """测试：永久性错误不应重试（如认证错误）"""
@@ -110,18 +115,20 @@ class TestTrendAnalyzerRetry:
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
 
-        pr = {
-            "repo_name": "test/repo",
-            "number": 1,
-            "title": "Test PR",
-            "body": "Test body",
-            "author": "user1",
-            "url": "https://github.com/test/repo/pull/1",
-        }
+        material = AnalysisMaterial.from_pr_details(
+            {
+                "repo_name": "test/repo",
+                "number": 1,
+                "title": "Test PR",
+                "body": "Test body",
+                "author": "user1",
+                "url": "https://github.com/test/repo/pull/1",
+            }
+        )
 
         # 认证错误应该快速失败
         try:
-            analyzer.analyze_pr(pr)
+            analyzer.analyze_material(material)
         except Exception:
             pass
 

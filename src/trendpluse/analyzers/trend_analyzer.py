@@ -95,16 +95,6 @@ PR 描述: {material.body}
         signal = await self._call_llm_for_signal_async(prompt)
         return self._apply_material_defaults(signal, material)  # type: ignore[no-any-return]
 
-    def analyze_pr(self, pr_details: dict) -> Signal:
-        """兼容旧接口：分析单个 PR 详情字典。"""
-        return self.analyze_material(AnalysisMaterial.from_pr_details(pr_details))
-
-    async def analyze_pr_async(self, pr_details: dict) -> Signal:
-        """兼容旧接口：异步分析单个 PR 详情字典。"""
-        return await self.analyze_material_async(
-            AnalysisMaterial.from_pr_details(pr_details)
-        )
-
     def _call_llm_for_signal(self, prompt: str) -> Signal:
         """调用 LLM 提取 PR 信号（带重试机制）
 
@@ -235,18 +225,6 @@ PR 描述: {material.body}
             signals.append(cast(Signal, result))
 
         return signals
-
-    def analyze_prs(self, pr_list: list[dict], max_workers: int = 5) -> list[Signal]:
-        """兼容旧接口：批量分析 PR 详情字典。"""
-        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
-        return self.analyze_materials(materials, max_workers=max_workers)
-
-    async def analyze_prs_async(
-        self, pr_list: list[dict], max_workers: int = 5
-    ) -> list[Signal]:
-        """兼容旧接口：异步批量分析 PR 详情字典。"""
-        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
-        return await self.analyze_materials_async(materials, max_workers=max_workers)
 
     def aggregate_and_generate_report(
         self,

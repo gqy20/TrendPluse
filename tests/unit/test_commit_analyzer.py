@@ -3,13 +3,12 @@
 测试 commit 分析器的核心功能。
 """
 
-from typing import Any
 from unittest.mock import patch
 
 import pytest
 
 from trendpluse.models.signal import Signal
-from trendpluse.models.source import AnalysisMaterial, SourceRef
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestCommitAnalyzer:
@@ -58,42 +57,41 @@ class TestCommitAnalyzer:
             },
         ]
 
-    def test_analyze_commits_returns_signals(self, analyzer, sample_commit_data):
-        """测试分析 commits - 应返回信号列表"""
-        # Arrange
-        expected_signal_count = 1  # Mock 响应只有 1 个信号
+    def test_analyze_materials_returns_signals(self, analyzer, sample_commit_data):
+        """测试分析 commit 材料 - 应返回信号列表"""
+        expected_signal_count = 1
+        materials = [
+            AnalysisMaterial.from_commit_details(commit)
+            for commit in sample_commit_data
+        ]
 
-        # Act
         with patch.object(
             analyzer, "_call_llm", return_value=self._mock_llm_response()
         ):
-            signals = analyzer.analyze_commits(sample_commit_data)
+            signals = analyzer.analyze_materials(materials)
 
-        # Assert
         assert isinstance(signals, list)
         assert len(signals) == expected_signal_count
         assert all(isinstance(signal, Signal) for signal in signals)
 
-    def test_analyze_commits_with_empty_list(self, analyzer):
-        """测试分析空 commit 列表 - 应返回空列表"""
-        # Arrange
-        empty_commits: list[dict[str, Any]] = []
+    def test_analyze_materials_with_empty_list(self, analyzer):
+        """测试分析空 commit 材料列表 - 应返回空列表"""
+        assert analyzer.analyze_materials([]) == []
 
-        # Act
-        signals = analyzer.analyze_commits(empty_commits)
-
-        # Assert
-        assert signals == []
-
-    def test_analyze_commits_sets_correct_signal_type(
+    def test_analyze_materials_sets_correct_signal_type(
         self, analyzer, sample_commit_data
     ):
         """测试分析结果 - 信号类型应有效"""
+        materials = [
+            AnalysisMaterial.from_commit_details(commit)
+            for commit in sample_commit_data
+        ]
+
         # Act
         with patch.object(
             analyzer, "_call_llm", return_value=self._mock_llm_response()
         ):
-            signals = analyzer.analyze_commits(sample_commit_data)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert
         valid_types = [
@@ -107,15 +105,20 @@ class TestCommitAnalyzer:
         ]
         assert all(signal.type in valid_types for signal in signals)
 
-    def test_analyze_commits_includes_stats_in_signals(
+    def test_analyze_materials_includes_stats_in_signals(
         self, analyzer, sample_commit_data
     ):
         """测试分析结果 - 信号应包含统计信息"""
+        materials = [
+            AnalysisMaterial.from_commit_details(commit)
+            for commit in sample_commit_data
+        ]
+
         # Act
         with patch.object(
             analyzer, "_call_llm", return_value=self._mock_llm_response()
         ):
-            signals = analyzer.analyze_commits(sample_commit_data)
+            signals = analyzer.analyze_materials(materials)
 
         # Assert
         for signal in signals:
@@ -127,26 +130,7 @@ class TestCommitAnalyzer:
     def test_analyze_materials(self, analyzer, sample_commit_data):
         """测试分析材料接口。"""
         materials = [
-            AnalysisMaterial(
-                source_ref=SourceRef(
-                    source_type="commit",
-                    provider="github",
-                    repo=commit["repo"],
-                    external_id=commit["sha"],
-                    url=f"https://github.com/{commit['repo']}/commit/{commit['sha']}",
-                    metadata={
-                        "files_changed": commit.get("files_changed", 0),
-                        "additions": commit.get("additions", 0),
-                        "deletions": commit.get("deletions", 0),
-                    },
-                ),
-                title=commit["message"],
-                body=commit["message"],
-                author=commit["author"],
-                created_at=commit["timestamp"],
-                updated_at=commit["timestamp"],
-                raw_payload=commit,
-            )
+            AnalysisMaterial.from_commit_details(commit)
             for commit in sample_commit_data
         ]
 
@@ -173,16 +157,21 @@ class TestCommitAnalyzer:
     }
 ]"""
 
-    def test_analyze_commits_handles_llm_error_gracefully(
+    def test_analyze_materials_handles_llm_error_gracefully(
         self, analyzer, sample_commit_data
     ):
         """测试 LLM 错误处理 - 应返回空列表而不是崩溃"""
+        materials = [
+            AnalysisMaterial.from_commit_details(commit)
+            for commit in sample_commit_data
+        ]
+
         # Arrange
         with patch.object(
             analyzer, "_call_llm", side_effect=Exception("LLM API Error")
         ):
             # Act
-            signals = analyzer.analyze_commits(sample_commit_data)
+            signals = analyzer.analyze_materials(materials)
 
             # Assert - 应该优雅地处理错误
             assert signals == []

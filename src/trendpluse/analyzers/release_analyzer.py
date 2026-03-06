@@ -84,7 +84,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             for material in materials
             if material.source_ref.source_type == "release"
         ]
-        return self.analyze_releases({"detailed_releases": detailed_releases})
+        return self._analyze_release_payloads(detailed_releases)
 
     async def analyze_materials_async(
         self, materials: list[AnalysisMaterial]
@@ -95,22 +95,12 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             for material in materials
             if material.source_ref.source_type == "release"
         ]
-        return await self.analyze_releases_async(
-            {"detailed_releases": detailed_releases}
-        )
+        return await self._analyze_release_payloads_async(detailed_releases)
 
-    def analyze_releases(self, releases: dict[str, Any]) -> list[Signal]:
-        """分析 release 列表
-
-        Args:
-            releases: release 数据字典
-
-        Returns:
-            信号列表
-        """
-        # 获取详细的 release 列表
-        detailed_releases = releases.get("detailed_releases", [])
-
+    def _analyze_release_payloads(
+        self, detailed_releases: list[dict[str, Any]]
+    ) -> list[Signal]:
+        """分析 release 数据列表。"""
         # 处理空列表
         if not detailed_releases:
             logger.debug("ReleaseAnalyzer: 收到空 release 列表")
@@ -136,8 +126,9 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             logger.debug(f"ReleaseAnalyzer: 分析失败 - {type(e).__name__}: {e}")
             return []
 
-    async def analyze_releases_async(self, releases: dict[str, Any]) -> list[Signal]:
-        detailed_releases = releases.get("detailed_releases", [])
+    async def _analyze_release_payloads_async(
+        self, detailed_releases: list[dict[str, Any]]
+    ) -> list[Signal]:
         if not detailed_releases:
             logger.debug("ReleaseAnalyzer: 收到空 release 列表")
             return []

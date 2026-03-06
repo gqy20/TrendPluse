@@ -10,6 +10,7 @@ import pytest
 
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.models.signal import ReleaseSummary
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestReleaseSummarizerParallel:
@@ -25,20 +26,20 @@ class TestReleaseSummarizerParallel:
             impact_level=3,
         )
 
-    def test_summarize_releases_accepts_max_workers_parameter(self):
-        """测试：summarize_releases 方法应接受 max_workers 参数"""
+    def test_summarize_materials_accepts_max_workers_parameter(self):
+        """测试：summarize_materials 方法应接受 max_workers 参数"""
         summarizer = ReleaseSummarizer(
             api_key="test-key",
         )
 
         import inspect
 
-        sig = inspect.signature(summarizer.summarize_releases)
+        sig = inspect.signature(summarizer.summarize_materials)
         params = list(sig.parameters.keys())
 
-        assert "max_workers" in params, "summarize_releases 应接受 max_workers 参数"
+        assert "max_workers" in params, "summarize_materials 应接受 max_workers 参数"
 
-    def test_summarize_releases_parallel_speedup(self, mock_summary):
+    def test_summarize_materials_parallel_speedup(self, mock_summary):
         """测试：并行处理应比串行处理更快"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -56,25 +57,27 @@ class TestReleaseSummarizerParallel:
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client
 
-        releases = [
-            {
-                "repo": f"test/repo{i}",
-                "tag_name": f"v1.0.{i}",
-                "body": f"Release notes for version {i}",
-            }
-            for i in range(6)  # 6 个 releases
+        materials = [
+            AnalysisMaterial.from_release_details(
+                {
+                    "repo": f"test/repo{i}",
+                    "tag_name": f"v1.0.{i}",
+                    "body": f"Release notes for version {i}",
+                }
+            )
+            for i in range(6)
         ]
 
         # 串行处理（max_workers=1）
         call_count[0] = 0
         start = time.time()
-        summaries_serial = summarizer.summarize_releases(releases, max_workers=1)
+        summaries_serial = summarizer.summarize_materials(materials, max_workers=1)
         serial_time = time.time() - start
 
         # 并行处理（max_workers=3）
         call_count[0] = 0
         start = time.time()
-        summaries_parallel = summarizer.summarize_releases(releases, max_workers=3)
+        summaries_parallel = summarizer.summarize_materials(materials, max_workers=3)
         parallel_time = time.time() - start
 
         # 验证结果一致
@@ -86,30 +89,30 @@ class TestReleaseSummarizerParallel:
             f"并行处理 ({parallel_time:.2f}s) 应该显著快于串行 ({serial_time:.2f}s)"
         )
 
-    def test_summarize_releases_empty_list_with_max_workers(self):
+    def test_summarize_materials_empty_list_with_max_workers(self):
         """测试：空列表时 max_workers 参数不应导致错误"""
         summarizer = ReleaseSummarizer(api_key="test-key")
 
-        summaries = summarizer.summarize_releases([], max_workers=3)
+        summaries = summarizer.summarize_materials([], max_workers=3)
 
         assert summaries == {}
 
-    def test_summarize_releases_single_release_with_max_workers(self):
-        """测试：单个 release 时 max_workers=3 应正常工作"""
+    def test_summarize_materials_single_release_with_max_workers(self):
+        """测试：单个 release 材料时 max_workers=3 应正常工作"""
         summarizer = ReleaseSummarizer(api_key="test-key")
 
-        release = {
-            "repo": "test/repo",
-            "tag_name": "v1.0.0",
-            "body": "",
-        }
+        materials = [
+            AnalysisMaterial.from_release_details(
+                {"repo": "test/repo", "tag_name": "v1.0.0", "body": ""}
+            )
+        ]
 
-        summaries = summarizer.summarize_releases([release], max_workers=3)
+        summaries = summarizer.summarize_materials(materials, max_workers=3)
 
         assert len(summaries) == 1
         assert "test/repo@v1.0.0" in summaries
 
-    def test_summarize_releases_handles_individual_failures_gracefully(
+    def test_summarize_materials_handles_individual_failures_gracefully(
         self, mock_summary
     ):
         """测试：单个 release 失败不应影响其他 releases"""
@@ -131,16 +134,18 @@ class TestReleaseSummarizerParallel:
             "_summarize_single_release",
             side_effect=mock_summarize_with_one_failure,
         ):
-            releases = [
-                {
-                    "repo": f"test/repo{i}",
-                    "tag_name": f"v1.0.{i}",
-                    "body": "test",
-                }
+            materials = [
+                AnalysisMaterial.from_release_details(
+                    {
+                        "repo": f"test/repo{i}",
+                        "tag_name": f"v1.0.{i}",
+                        "body": "test",
+                    }
+                )
                 for i in range(5)
             ]
 
-            summaries = summarizer.summarize_releases(releases, max_workers=3)
+            summaries = summarizer.summarize_materials(materials, max_workers=3)
 
             # 所有 5 个都应有结果（失败的返回默认值）
             assert len(summaries) == 5
@@ -152,7 +157,7 @@ class TestReleaseSummarizerParallel:
             )
             assert success_count == 4, f"应该有 4 个成功，实际有 {success_count} 个"
 
-    def test_summarize_releases_default_max_workers(self, mock_summary):
+    def test_summarize_materials_default_max_workers(self, mock_summary):
         """测试：不提供 max_workers 时应使用默认值"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -161,15 +166,13 @@ class TestReleaseSummarizerParallel:
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client
 
-        releases = [
-            {
-                "repo": "test/repo",
-                "tag_name": "v1.0.0",
-                "body": "test",
-            }
+        materials = [
+            AnalysisMaterial.from_release_details(
+                {"repo": "test/repo", "tag_name": "v1.0.0", "body": "test"}
+            )
         ]
 
         # 应该能正常调用（使用默认 max_workers）
-        summaries = summarizer.summarize_releases(releases)
+        summaries = summarizer.summarize_materials(materials)
 
         assert len(summaries) == 1

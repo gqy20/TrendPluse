@@ -55,20 +55,12 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             retry_wait_max=retry_wait_max,
         )
 
-    def summarize_releases(
+    def _summarize_release_payloads(
         self,
         detailed_releases: list[dict],
         max_workers: int = 5,
     ) -> dict[str, ReleaseSummary]:
-        """批量总结 Releases（并行处理）
-
-        Args:
-            detailed_releases: 详细 Release 信息列表
-            max_workers: 最大并行线程数（默认 3）
-
-        Returns:
-            {version: ReleaseSummary} 字典
-        """
+        """批量总结 release 数据。"""
         # 处理空列表
         if not detailed_releases:
             return {}
@@ -132,9 +124,9 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             for material in materials
             if material.source_ref.source_type == "release"
         ]
-        return self.summarize_releases(releases, max_workers=max_workers)
+        return self._summarize_release_payloads(releases, max_workers=max_workers)
 
-    async def summarize_releases_async(
+    async def _summarize_release_payloads_async(
         self, detailed_releases: list[dict], max_workers: int = 5
     ) -> dict[str, ReleaseSummary]:
         if not detailed_releases:
@@ -174,7 +166,9 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             for material in materials
             if material.source_ref.source_type == "release"
         ]
-        return await self.summarize_releases_async(releases, max_workers=max_workers)
+        return await self._summarize_release_payloads_async(
+            releases, max_workers=max_workers
+        )
 
     def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
         """调用 LLM 生成 Release 总结（带重试机制）

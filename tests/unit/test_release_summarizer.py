@@ -7,7 +7,7 @@ import pytest
 
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.models.signal import ReleaseSummary
-from trendpluse.models.source import AnalysisMaterial, SourceRef
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestReleaseSummarizer:
@@ -113,35 +113,6 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
         assert summary.key_changes == []
         assert summary.impact_level == 1
 
-    def test_summarize_releases_batch(self, summarizer):
-        """测试批量总结 Releases"""
-        releases = [
-            {
-                "repo": "anomalyco/opencode",
-                "tag_name": "v1.1.13",
-                "body": "Feature: Added new capabilities",
-            },
-            {
-                "repo": "test/repo",
-                "tag_name": "v2.0.0",
-                "body": "Breaking: Major API changes",
-            },
-        ]
-
-        summaries = summarizer.summarize_releases(releases)
-
-        # 验证返回字典结构
-        assert isinstance(summaries, dict)
-        assert len(summaries) == 2
-
-        # 验证 key 格式为 repo@version
-        assert "anomalyco/opencode@v1.1.13" in summaries
-        assert "test/repo@v2.0.0" in summaries
-
-        # 验证每个值都是 ReleaseSummary
-        for summary in summaries.values():
-            assert isinstance(summary, ReleaseSummary)
-
     def test_release_summary_field_validation(self):
         """测试 ReleaseSummary 字段验证"""
         # 有效的 ReleaseSummary
@@ -175,37 +146,19 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
     def test_summarize_materials_batch(self, summarizer):
         """测试基于材料批量总结 Releases。"""
         materials = [
-            AnalysisMaterial(
-                source_ref=SourceRef(
-                    source_type="release",
-                    provider="github",
-                    repo="anomalyco/opencode",
-                    external_id="v1.1.13",
-                    url="https://github.com/anomalyco/opencode/releases/tag/v1.1.13",
-                ),
-                title="v1.1.13",
-                body="Feature: Added new capabilities",
-                raw_payload={
+            AnalysisMaterial.from_release_details(
+                {
                     "repo": "anomalyco/opencode",
                     "tag_name": "v1.1.13",
                     "body": "Feature: Added new capabilities",
-                },
+                }
             ),
-            AnalysisMaterial(
-                source_ref=SourceRef(
-                    source_type="release",
-                    provider="github",
-                    repo="test/repo",
-                    external_id="v2.0.0",
-                    url="https://github.com/test/repo/releases/tag/v2.0.0",
-                ),
-                title="v2.0.0",
-                body="Breaking: Major API changes",
-                raw_payload={
+            AnalysisMaterial.from_release_details(
+                {
                     "repo": "test/repo",
                     "tag_name": "v2.0.0",
                     "body": "Breaking: Major API changes",
-                },
+                }
             ),
         ]
 

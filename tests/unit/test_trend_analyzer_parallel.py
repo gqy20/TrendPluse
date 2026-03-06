@@ -10,6 +10,7 @@ import pytest
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestTrendAnalyzerParallel:
@@ -30,34 +31,36 @@ class TestTrendAnalyzerParallel:
         )
 
     @pytest.fixture
-    def sample_prs(self):
-        """示例 PR 数据"""
+    def sample_materials(self):
+        """示例 PR 材料。"""
         return [
-            {
-                "repo_name": f"test/repo{i}",
-                "number": i,
-                "title": f"Test PR {i}",
-                "body": f"Test body {i}",
-                "author": f"user{i}",
-                "url": f"https://github.com/test/repo{i}/pull/{i}",
-            }
+            AnalysisMaterial.from_pr_details(
+                {
+                    "repo_name": f"test/repo{i}",
+                    "number": i,
+                    "title": f"Test PR {i}",
+                    "body": f"Test body {i}",
+                    "author": f"user{i}",
+                    "url": f"https://github.com/test/repo{i}/pull/{i}",
+                }
+            )
             for i in range(6)
         ]
 
-    def test_analyze_prs_accepts_max_workers_parameter(self):
-        """测试：analyze_prs 方法应接受 max_workers 参数"""
+    def test_analyze_materials_accepts_max_workers_parameter(self):
+        """测试：analyze_materials 方法应接受 max_workers 参数"""
         analyzer = TrendAnalyzer(
             api_key="test-key",
         )
 
         import inspect
 
-        sig = inspect.signature(analyzer.analyze_prs)
+        sig = inspect.signature(analyzer.analyze_materials)
         params = list(sig.parameters.keys())
 
-        assert "max_workers" in params, "analyze_prs 应接受 max_workers 参数"
+        assert "max_workers" in params, "analyze_materials 应接受 max_workers 参数"
 
-    def test_analyze_prs_parallel_speedup(self, sample_prs, mock_signal):
+    def test_analyze_materials_parallel_speedup(self, sample_materials, mock_signal):
         """测试：并行处理应比串行处理更快"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -77,13 +80,13 @@ class TestTrendAnalyzerParallel:
         # 串行处理（max_workers=1）
         call_count[0] = 0
         start = time.time()
-        signals_serial = analyzer.analyze_prs(sample_prs, max_workers=1)
+        signals_serial = analyzer.analyze_materials(sample_materials, max_workers=1)
         serial_time = time.time() - start
 
         # 并行处理（max_workers=3）
         call_count[0] = 0
         start = time.time()
-        signals_parallel = analyzer.analyze_prs(sample_prs, max_workers=3)
+        signals_parallel = analyzer.analyze_materials(sample_materials, max_workers=3)
         parallel_time = time.time() - start
 
         # 验证结果一致
@@ -95,37 +98,41 @@ class TestTrendAnalyzerParallel:
             f"并行处理 ({parallel_time:.2f}s) 应该显著快于串行 ({serial_time:.2f}s)"
         )
 
-    def test_analyze_prs_empty_list_with_max_workers(self):
+    def test_analyze_materials_empty_list_with_max_workers(self):
         """测试：空列表时 max_workers 参数不应导致错误"""
         analyzer = TrendAnalyzer(api_key="test-key")
 
-        signals = analyzer.analyze_prs([], max_workers=3)
+        signals = analyzer.analyze_materials([], max_workers=3)
 
         assert signals == []
 
-    def test_analyze_prs_single_pr_with_max_workers(self, mock_signal):
-        """测试：单个 PR 时 max_workers=3 应正常工作"""
+    def test_analyze_materials_single_pr_with_max_workers(self, mock_signal):
+        """测试：单个 PR 材料时 max_workers=3 应正常工作"""
         mock_client = MagicMock()
         mock_client.chat.completions.create.return_value = mock_signal
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
 
-        pr = {
-            "repo_name": "test/repo",
-            "number": 1,
-            "title": "Test PR",
-            "body": "Test body",
-            "author": "user1",
-            "url": "https://github.com/test/repo/pull/1",
-        }
+        material = AnalysisMaterial.from_pr_details(
+            {
+                "repo_name": "test/repo",
+                "number": 1,
+                "title": "Test PR",
+                "body": "Test body",
+                "author": "user1",
+                "url": "https://github.com/test/repo/pull/1",
+            }
+        )
 
-        signals = analyzer.analyze_prs([pr], max_workers=3)
+        signals = analyzer.analyze_materials([material], max_workers=3)
 
         assert len(signals) == 1
 
-    def test_analyze_prs_handles_individual_failures_gracefully(self, mock_signal):
-        """测试：单个 PR 失败不应影响其他 PRs"""
+    def test_analyze_materials_handles_individual_failures_gracefully(
+        self, mock_signal
+    ):
+        """测试：单个 PR 材料失败不应影响其他材料。"""
         # 使用索引来确定哪些 PR 失败（确定性好于共享计数器）
         # 让 PR #2 失败
         failed_repo = "test/repo2"
@@ -145,22 +152,24 @@ class TestTrendAnalyzerParallel:
                 raise Exception("模拟 API 失败")
             return TrendAnalyzer.analyze_material(analyzer, material)
 
-        prs = [
-            {
-                "repo_name": f"test/repo{i}",
-                "number": i,
-                "title": f"Test PR {i}",
-                "body": "Test body",
-                "author": f"user{i}",
-                "url": f"https://github.com/test/repo{i}/pull/{i}",
-            }
+        materials = [
+            AnalysisMaterial.from_pr_details(
+                {
+                    "repo_name": f"test/repo{i}",
+                    "number": i,
+                    "title": f"Test PR {i}",
+                    "body": "Test body",
+                    "author": f"user{i}",
+                    "url": f"https://github.com/test/repo{i}/pull/{i}",
+                }
+            )
             for i in range(5)
         ]
 
         with patch.object(
             analyzer, "analyze_material", side_effect=mock_analyze_material
         ):
-            signals = analyzer.analyze_prs(prs, max_workers=3)
+            signals = analyzer.analyze_materials(materials, max_workers=3)
 
         # 应该成功处理 4 个（1 个失败）
         assert len(signals) == 4, f"期望 4 个信号，实际返回 {len(signals)} 个"
@@ -168,7 +177,7 @@ class TestTrendAnalyzerParallel:
         signal_repos = [s.related_repos[0] for s in signals if s.related_repos]
         assert failed_repo not in signal_repos, f"失败的 PR {failed_repo} 不应在结果中"
 
-    def test_analyze_prs_default_max_workers(self, sample_prs, mock_signal):
+    def test_analyze_materials_default_max_workers(self, sample_materials, mock_signal):
         """测试：不提供 max_workers 时应使用默认值"""
         mock_client = MagicMock()
         mock_client.chat.completions.create.return_value = mock_signal
@@ -177,6 +186,6 @@ class TestTrendAnalyzerParallel:
         analyzer.client = mock_client
 
         # 应该能正常调用（使用默认 max_workers）
-        signals = analyzer.analyze_prs(sample_prs)
+        signals = analyzer.analyze_materials(sample_materials)
 
         assert len(signals) == 6
