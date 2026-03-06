@@ -16,8 +16,8 @@ logger = get_logger(__name__)
 
 
 def _default_issue_runner_factory(**kwargs: Any) -> Any:
-    """延迟导入 IssueAgentRunner，避免 app/workflows 间循环依赖。"""
-    from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
+    """延迟导入 IssueAgentRunner。"""
+    from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
 
     return IssueAgentRunner(**kwargs)
 

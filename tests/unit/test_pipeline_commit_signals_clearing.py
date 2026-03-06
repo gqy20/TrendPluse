@@ -6,8 +6,8 @@
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData, Signal
-from trendpluse.pipeline import TrendPulsePipeline
 
 
 class MockSignalDeduplicator:
@@ -24,17 +24,17 @@ class TestCommitSignalsClearing:
     """测试聚合后 commit_signals 被正确清空"""
 
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_aggregated_commit_signals_should_be_cleared(
         self,
         mock_collector,
@@ -203,17 +203,17 @@ class TestCommitSignalsClearing:
         assert len(report.engineering_signals) > 0, "engineering_signals 不应该为空"
 
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_release_signals_should_be_preserved(
         self,
         mock_collector,

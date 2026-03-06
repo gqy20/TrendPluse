@@ -4,6 +4,7 @@ from datetime import datetime
 from unittest.mock import Mock, patch
 
 from trendpluse.analyzers.weekly_aggregator import WeeklyAggregationResult
+from trendpluse.app.weekly import WeeklyPipelineApp
 from trendpluse.config import Settings
 from trendpluse.models.signal import (
     ActivityData,
@@ -11,12 +12,11 @@ from trendpluse.models.signal import (
     RepoActivity,
     Signal,
 )
-from trendpluse.workflows.weekly_report_workflow import WeeklyReportWorkflow
 
 
-def create_workflow(settings: Settings) -> WeeklyReportWorkflow:
+def create_workflow(settings: Settings) -> WeeklyPipelineApp:
     """创建用于测试的周报工作流。"""
-    return WeeklyReportWorkflow(
+    return WeeklyPipelineApp(
         settings=settings,
         output_service=Mock(),
     )
@@ -87,7 +87,7 @@ class TestAggregateWeeklyReport:
     """测试 aggregate_weekly_report 方法。"""
 
     @patch(
-        "trendpluse.workflows.weekly_report_workflow.WeeklyAggregator.aggregate",
+        "trendpluse.app.weekly.WeeklyAggregator.aggregate",
         return_value=WeeklyAggregationResult(
             core_trends=[],
             summary_brief="测试摘要",
@@ -150,7 +150,7 @@ class TestAggregateWeeklyReport:
         mock_aggregator.assert_called_once()
 
     @patch(
-        "trendpluse.workflows.weekly_report_workflow.WeeklyAggregator.aggregate",
+        "trendpluse.app.weekly.WeeklyAggregator.aggregate",
         return_value=WeeklyAggregationResult(
             core_trends=[],
             summary_brief="测试摘要",
@@ -196,7 +196,7 @@ class TestAggregateWeeklyReport:
         mock_aggregator.assert_called_once()
 
     @patch(
-        "trendpluse.workflows.weekly_report_workflow.WeeklyAggregator.aggregate",
+        "trendpluse.app.weekly.WeeklyAggregator.aggregate",
         return_value=WeeklyAggregationResult(
             core_trends=[],
             summary_brief="测试摘要",
@@ -335,7 +335,7 @@ class TestRunWeeklyOutput:
     """测试 run 方法的输出委托。"""
 
     @patch(
-        "trendpluse.workflows.weekly_report_workflow.WeeklyAggregator.aggregate",
+        "trendpluse.app.weekly.WeeklyAggregator.aggregate",
         return_value=WeeklyAggregationResult(
             core_trends=[],
             summary_brief="测试摘要",
@@ -367,7 +367,7 @@ class TestRunWeeklyOutput:
             encoding="utf-8",
         )
         output_service = Mock()
-        workflow = WeeklyReportWorkflow(
+        workflow = WeeklyPipelineApp(
             settings=Settings(output_dir=str(daily_output_dir)),
             output_service=output_service,
         )

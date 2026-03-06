@@ -7,8 +7,8 @@ engineering_signals 和 research_signals 中。
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData, Signal
-from trendpluse.pipeline import TrendPulsePipeline
 
 
 class MockSignalDeduplicator:
@@ -26,17 +26,17 @@ class TestSignalCategorization:
 
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
     @patch("pathlib.Path.write_text")
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_commit_signals_categorized_in_empty_report(
         self,
         mock_collector,

@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from trendpluse.models.signal import DailyReport, WeeklyReport
-from trendpluse.workflows.report_output import ReportOutputService
+from trendpluse.reports.publisher import ReportPublisher
 
 
 class DummyReporter:
@@ -33,7 +33,7 @@ class DummyNotifier:
 def test_save_daily_report_uses_configured_output_dir(tmp_path) -> None:
     """测试日报输出使用配置目录。"""
     reporter = DummyReporter()
-    service = ReportOutputService(
+    service = ReportPublisher(
         reporter=reporter,
         daily_output_dir=str(tmp_path / "daily"),
         weekly_output_dir=str(tmp_path / "weekly"),
@@ -51,7 +51,7 @@ def test_save_daily_report_uses_configured_output_dir(tmp_path) -> None:
 def test_notify_daily_report_is_delegated() -> None:
     """测试日报通知委托给 notifier。"""
     notifier = DummyNotifier()
-    service = ReportOutputService(
+    service = ReportPublisher(
         reporter=DummyReporter(),
         daily_output_dir="reports/daily",
         weekly_output_dir="reports/weekly",
@@ -67,7 +67,7 @@ def test_notify_daily_report_is_delegated() -> None:
 def test_save_weekly_report_uses_configured_output_dir(tmp_path) -> None:
     """测试周报输出使用配置目录。"""
     reporter = DummyReporter()
-    service = ReportOutputService(
+    service = ReportPublisher(
         reporter=reporter,
         daily_output_dir=str(tmp_path / "daily"),
         weekly_output_dir=str(tmp_path / "weekly"),

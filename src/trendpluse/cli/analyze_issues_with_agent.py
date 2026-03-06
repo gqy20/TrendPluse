@@ -11,7 +11,7 @@ import argparse
 import asyncio
 from pathlib import Path
 
-from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
+from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
 
 
 def _iter_input_files(input_path: Path) -> list[Path]:

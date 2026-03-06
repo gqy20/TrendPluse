@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
+from trendpluse.app.issue_agent import IssueWorkflowCoordinator
 from trendpluse.models.issue_agent import IssueAgentBatchResult
-from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
 class DummyIssueCollector:
@@ -72,11 +72,9 @@ def test_collect_and_analyze_dumps_issue_files(tmp_path, monkeypatch) -> None:
         (issue_dir / "owner__repo.jsonl").write_text("{}", encoding="utf-8")
         return {"owner/repo": issue_dir / "owner__repo.jsonl"}
 
-    monkeypatch.setattr(
-        "trendpluse.workflows.issue_workflow.dump_issues_to_jsonl", fake_dump
-    )
+    monkeypatch.setattr("trendpluse.app.issue_agent.dump_issues_to_jsonl", fake_dump)
 
-    service = IssueWorkflowService(
+    service = IssueWorkflowCoordinator(
         issue_collector=DummyIssueCollector([{"repo": "owner/repo"}]),
         issue_dump_dir=str(tmp_path),
         enable_issue_agent_analysis=False,
@@ -107,11 +105,9 @@ async def test_collect_and_analyze_async_runs_issue_agent(
         (issue_dir / "owner__repo.jsonl").write_text("{}", encoding="utf-8")
         return {"owner/repo": issue_dir / "owner__repo.jsonl"}
 
-    monkeypatch.setattr(
-        "trendpluse.workflows.issue_workflow.dump_issues_to_jsonl", fake_dump
-    )
+    monkeypatch.setattr("trendpluse.app.issue_agent.dump_issues_to_jsonl", fake_dump)
 
-    service = IssueWorkflowService(
+    service = IssueWorkflowCoordinator(
         issue_collector=DummyIssueCollector([{"repo": "owner/repo"}]),
         issue_dump_dir=str(tmp_path),
         enable_issue_agent_analysis=True,
@@ -142,11 +138,11 @@ def test_load_insights_delegates_to_loader(tmp_path, monkeypatch) -> None:
         return {"ok": True}
 
     monkeypatch.setattr(
-        "trendpluse.workflows.issue_workflow.load_issue_agent_report",
+        "trendpluse.app.issue_agent.load_issue_agent_report",
         fake_loader,
     )
 
-    service = IssueWorkflowService(
+    service = IssueWorkflowCoordinator(
         issue_collector=DummyIssueCollector([]),
         issue_dump_dir=str(tmp_path),
         enable_issue_agent_analysis=False,

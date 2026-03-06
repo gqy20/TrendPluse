@@ -8,7 +8,7 @@ import logging
 import re
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
 from pydantic import ValidationError
 
@@ -85,7 +85,7 @@ class IssueAgentRunner:
             raise ValueError("ROUND3 输出不是合法 JSON 对象")
 
         if "top_pain_points" in round3_data:
-            return cast(IssueAgentReport, IssueAgentReport.model_validate(round3_data))
+            return IssueAgentReport.model_validate(round3_data)
 
         reviewed = round3_data.get("reviewed_pain_points")
         if not isinstance(reviewed, list):
@@ -308,7 +308,7 @@ class IssueAgentRunner:
         parsed = self._parse_json_like_text(text)
         if not isinstance(parsed, dict):
             raise ValueError("Agent 输出不是合法 JSON 对象")
-        return cast(IssueAgentReport, IssueAgentReport.model_validate(parsed))
+        return IssueAgentReport.model_validate(parsed)
 
     def _parse_json_like_text(self, text: str) -> dict[str, Any] | None:
         stripped = text.strip()
@@ -319,54 +319,25 @@ class IssueAgentRunner:
         if direct is not None:
             return direct
 
-        fenced_match = re.search(
-            r"```(?:json)?\s*(\{.*?\})\s*```",
-            stripped,
-            flags=re.DOTALL | re.IGNORECASE,
-        )
+        fenced_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", stripped, re.DOTALL)
         if fenced_match:
-            fenced = self._try_parse_json(fenced_match.group(1))
-            if fenced is not None:
-                return fenced
+            parsed = self._try_parse_json(fenced_match.group(1).strip())
+            if parsed is not None:
+                return parsed
 
-        obj_text = self._extract_first_json_object(stripped)
-        if obj_text:
-            return self._try_parse_json(obj_text)
+        json_start = stripped.find("{")
+        json_end = stripped.rfind("}")
+        if json_start != -1 and json_end != -1 and json_end > json_start:
+            candidate = stripped[json_start : json_end + 1]
+            parsed = self._try_parse_json(candidate)
+            if parsed is not None:
+                return parsed
+
         return None
 
-    def _try_parse_json(self, raw: str) -> dict[str, Any] | None:
+    def _try_parse_json(self, text: str) -> dict[str, Any] | None:
         try:
-            data = json.loads(raw)
+            parsed = json.loads(text)
         except json.JSONDecodeError:
             return None
-        if isinstance(data, dict):
-            return data
-        return None
-
-    def _extract_first_json_object(self, text: str) -> str | None:
-        start = text.find("{")
-        if start < 0:
-            return None
-        depth = 0
-        in_string = False
-        escaped = False
-        for idx in range(start, len(text)):
-            ch = text[idx]
-            if in_string:
-                if escaped:
-                    escaped = False
-                elif ch == "\\":
-                    escaped = True
-                elif ch == '"':
-                    in_string = False
-                continue
-            if ch == '"':
-                in_string = True
-                continue
-            if ch == "{":
-                depth += 1
-            elif ch == "}":
-                depth -= 1
-                if depth == 0:
-                    return text[start : idx + 1]
-        return None
+        return parsed if isinstance(parsed, dict) else None

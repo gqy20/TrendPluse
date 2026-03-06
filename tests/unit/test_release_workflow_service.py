@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
+from trendpluse.app.release_processor import ReleaseProcessor
 from trendpluse.models.signal import (
     ReleaseInfo,
     ReleasesData,
     ReleaseSummary,
     Signal,
 )
-from trendpluse.workflows.release_workflow import ReleaseWorkflowService
 
 
 class DummyReleaseMaterialBuilder:
@@ -100,7 +100,7 @@ def test_run_applies_summaries_and_returns_signals() -> None:
         related_repos=["test/repo"],
     )
 
-    service = ReleaseWorkflowService(
+    service = ReleaseProcessor(
         release_material_builder=DummyReleaseMaterialBuilder(),
         release_summarizer=DummyReleaseSummarizer({"test/repo@v1.0.0": summary}),
         release_analyzer=DummyReleaseAnalyzer([signal]),
@@ -138,7 +138,7 @@ def test_run_falls_back_when_release_analyzer_returns_empty() -> None:
             "version_info": {"major": 1, "minor": 0, "patch": 0},
         }
     ]
-    service = ReleaseWorkflowService(
+    service = ReleaseProcessor(
         release_material_builder=DummyReleaseMaterialBuilder(),
         release_summarizer=DummyReleaseSummarizer(),
         release_analyzer=DummyReleaseAnalyzer([]),
@@ -166,7 +166,7 @@ async def test_run_async_uses_same_fallback_behavior() -> None:
             "version_info": {"major": 2, "minor": 0, "patch": 0},
         }
     ]
-    service = ReleaseWorkflowService(
+    service = ReleaseProcessor(
         release_material_builder=DummyReleaseMaterialBuilder(),
         release_summarizer=DummyReleaseSummarizer(),
         release_analyzer=DummyReleaseAnalyzer([]),

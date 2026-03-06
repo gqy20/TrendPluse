@@ -2,7 +2,7 @@
 
 import pytest
 
-from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
+from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
 
 
 class DummyText:

@@ -1,19 +1,36 @@
 """应用编排模块。"""
 
-from trendpluse.app.bootstrap import ReportingComponents, build_reporting_components
+from trendpluse.app.bootstrap import (
+    AnalyzerComponents,
+    AppComponents,
+    CollectorComponents,
+    ReportingComponents,
+    build_analyzer_components,
+    build_app_components,
+    build_collector_components,
+    build_reporting_components,
+)
 from trendpluse.app.daily import DailyPipelineApp
 from trendpluse.app.issue_agent import IssueWorkflowCoordinator
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.app.release_processor import ReleaseProcessor, ReleaseWorkflowResult
 from trendpluse.app.report_finalizer import DailyReportFinalizer
 from trendpluse.app.weekly import WeeklyPipelineApp
 
 __all__ = [
     "ReportingComponents",
+    "CollectorComponents",
+    "AnalyzerComponents",
+    "AppComponents",
     "DailyPipelineApp",
     "DailyReportFinalizer",
     "IssueWorkflowCoordinator",
+    "TrendPulsePipeline",
     "ReleaseProcessor",
     "ReleaseWorkflowResult",
     "WeeklyPipelineApp",
+    "build_analyzer_components",
+    "build_app_components",
+    "build_collector_components",
     "build_reporting_components",
 ]

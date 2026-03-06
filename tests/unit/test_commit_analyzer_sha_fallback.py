@@ -11,8 +11,8 @@ from unittest.mock import Mock, patch
 class TestSHAMismatch:
     """测试 SHA 匹配失败处理"""
 
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
     def test_fallback_to_index_matching_when_sha_not_found(
         self, mock_commit_analyzer, mock_settings
     ):

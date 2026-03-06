@@ -14,9 +14,9 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
-from trendpluse.pipeline import TrendPulsePipeline
 
 console = Console()
 logger = get_logger(__name__)

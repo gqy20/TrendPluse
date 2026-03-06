@@ -6,9 +6,9 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, cast
 
-import trendpluse.pipeline as pipeline_module
+import trendpluse.app.pipeline as pipeline_module
+from trendpluse.app.issue_agent import IssueWorkflowCoordinator
 from trendpluse.models.issue_agent import IssueAgentBatchResult
-from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 
 class _StubIssueAgentRunner:
@@ -61,7 +61,7 @@ def test_pipeline_runs_issue_agent_when_enabled(tmp_path, monkeypatch):
             issue_agent_retry_wait_seconds=0.0,
         ),
     )
-    pipeline.issue_workflow = IssueWorkflowService(
+    pipeline.issue_workflow = IssueWorkflowCoordinator(
         issue_collector=None,
         issue_dump_dir=str(tmp_path),
         enable_issue_agent_analysis=True,

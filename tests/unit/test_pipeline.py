@@ -3,8 +3,8 @@
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData
-from trendpluse.pipeline import TrendPulsePipeline
 
 
 class MockSignalDeduplicator:
@@ -21,19 +21,19 @@ class TestTrendPulsePipeline:
     """测试 TrendPulse 主流程"""
 
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ReleaseMaterialBuilder")
-    @patch("trendpluse.pipeline.CommitMaterialBuilder")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ReleaseMaterialBuilder")
+    @patch("trendpluse.app.pipeline.CommitMaterialBuilder")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_init_creates_components(
         self,
         mock_collector,
@@ -111,18 +111,18 @@ class TestTrendPulsePipeline:
         mock_reporter.assert_called_once()
 
     @patch("pathlib.Path.write_text")
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.ReleaseSummarizer")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.ReleaseSummarizer")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_run_daily(
         self,
         mock_collector,
@@ -286,18 +286,18 @@ class TestTrendPulsePipeline:
         mock_commit_analyzer_instance.analyze_materials.assert_called_once()
 
     @patch("pathlib.Path.write_text")
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.ReleaseSummarizer")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.ReleaseSummarizer")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_run_daily_uses_release_material_summarizer(
         self,
         mock_collector,
@@ -393,17 +393,17 @@ class TestTrendPulsePipeline:
         mock_release_summarizer_instance.summarize_materials.assert_called_once()
 
     @patch("pathlib.Path.write_text")
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_run_daily_with_no_events(
         self,
         mock_collector,
@@ -532,17 +532,17 @@ class TestTrendPulsePipeline:
         # commit 分析仍应被调用
         mock_commit_analyzer_instance.analyze_materials.assert_called_once()
 
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_saves_and_notifies(
         self,
         mock_collector,
@@ -634,17 +634,17 @@ class TestTrendPulsePipeline:
         mock_reporter_instance.save_report.assert_called_once()
         assert report is not None
 
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_with_pr_details(
         self,
         mock_collector,
@@ -736,17 +736,17 @@ class TestTrendPulsePipeline:
         mock_reporter_instance.save_report.assert_called_once()
         assert report is not None
 
-    @patch("trendpluse.pipeline.Settings")
-    @patch("trendpluse.pipeline.MarkdownReporter")
-    @patch("trendpluse.pipeline.ActivityCollector")
-    @patch("trendpluse.pipeline.ReleaseCollector")
-    @patch("trendpluse.pipeline.CommitAnalyzer")
-    @patch("trendpluse.pipeline.ReleaseAnalyzer")
-    @patch("trendpluse.pipeline.TrendAnalyzer")
-    @patch("trendpluse.pipeline.SignalDeduplicator", MockSignalDeduplicator)
-    @patch("trendpluse.pipeline.GitHubPRReader")
-    @patch("trendpluse.pipeline.EventFilter")
-    @patch("trendpluse.pipeline.GitHubEventsCollector")
+    @patch("trendpluse.app.pipeline.Settings")
+    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.pipeline.ActivityCollector")
+    @patch("trendpluse.app.pipeline.ReleaseCollector")
+    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
+    @patch("trendpluse.app.pipeline.TrendAnalyzer")
+    @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
+    @patch("trendpluse.app.pipeline.GitHubPRReader")
+    @patch("trendpluse.app.pipeline.EventFilter")
+    @patch("trendpluse.app.pipeline.GitHubEventsCollector")
     def test_handle_empty_report_with_no_signals(
         self,
         mock_collector,

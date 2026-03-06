@@ -7,9 +7,9 @@
 import argparse
 import os
 
+from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
-from trendpluse.pipeline import TrendPulsePipeline
 
 logger = get_logger(__name__)
 
