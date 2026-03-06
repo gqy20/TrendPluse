@@ -218,15 +218,13 @@ class TestFeishuFormatter:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证 body 中的醒目主标题和日期（主标题使用粗体，日期使用普通文本）
+        # 验证 header 中包含标题和日期
+        header = card["card"]["header"]
+        assert "TrendPulse 每日报告" in header["title"]["content"]
+        assert "2026-01-04" in header["subtitle"]["content"]
+        assert header["template"] == "blue"
+
         elements = card["card"]["body"]["elements"]
-        assert any(
-            "**📊 TrendPulse 每日报告**" in el.get("text", {}).get("content", "")
-            for el in elements
-        )
-        assert any(
-            "📅 2026-01-04" in el.get("text", {}).get("content", "") for el in elements
-        )
 
         # 验证摘要元素
         assert any(
@@ -459,15 +457,9 @@ class TestFeishuFormatter:
 
         # Assert
         elements = card["card"]["body"]["elements"]
-        content_parts = [
-            el.get("text", {}).get("content", "")
-            for el in elements
-            if el.get("tag") == "div"
-        ]
-        combined_content = " ".join(content_parts)
 
-        # 应该包含 Release 信号标题（使用粗体而非标题）
-        assert "**🎯 Release 信号**" in combined_content
+        # 应该包含 Release 信号标题（在折叠面板 header 中）
+        assert self._content_contains(elements, "Release 信号")
 
     def test_format_card_respects_max_signals(self):
         """测试：卡片信号数量受 max_signals 限制"""

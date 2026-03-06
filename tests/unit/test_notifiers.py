@@ -154,10 +154,10 @@ class TestFeishuNotifier:
         assert "body" in card["card"]
         assert "elements" in card["card"]["body"]
 
-        # 验证标题在 body.elements 的第一个元素中
-        first_element = card["card"]["body"]["elements"][0]
-        assert first_element["tag"] == "div"
-        assert "TrendPulse 每日报告" in first_element["text"]["content"]
+        # 验证标题在 card header 中
+        header = card["card"]["header"]
+        assert "TrendPulse 每日报告" in header["title"]["content"]
+        assert header["template"] == "blue"
 
         # 验证至少有元素
         assert len(card["card"]["body"]["elements"]) > 0
@@ -413,27 +413,20 @@ class TestFeishuNotifierJsonV2:
         )
 
     def test_json_v2_preserves_header(self, sample_report: DailyReport):
-        """测试：JSON 2.0 标题在 body.elements 第一个元素中"""
+        """测试：JSON 2.0 标题在 card header 中"""
         # Arrange
         notifier = FeishuNotifier(webhook_url="https://example.com/webhook")
 
         # Act
         card = notifier._build_card(sample_report)
 
-        # Assert - JSON 2.0 格式不使用 header，标题在 body.elements 中
+        # Assert - 使用 card header，而非 body element
         card_data = card["card"]
-        assert "body" in card_data, "JSON 2.0 要求包含 body 字段"
-        assert "elements" in card_data["body"], "elements 必须在 body 下"
-
-        # 验证标题在第一个元素中（使用粗体而非 Markdown 标题）
-        first_element = card_data["body"]["elements"][0]
-        assert first_element["tag"] == "div"
-        assert "text" in first_element
-        assert "content" in first_element["text"]
-        # 标题使用粗体格式和日期
-        assert "**" in first_element["text"]["content"]
-        assert "TrendPulse 每日报告" in first_element["text"]["content"]
-        assert sample_report.date in first_element["text"]["content"]
+        assert "header" in card_data, "card 必须包含 header 字段"
+        header = card_data["header"]
+        assert "TrendPulse 每日报告" in header["title"]["content"]
+        assert sample_report.date in header["subtitle"]["content"]
+        assert header["template"] == "blue"
 
     def test_json_v2_body_elements_are_valid(self, sample_report: DailyReport):
         """测试：JSON 2.0 body.elements 包含有效内容"""
@@ -473,8 +466,6 @@ class TestFeishuNotifierJsonV2:
 
         combined_content = " ".join(contents)
 
-        # 验证包含 Markdown 格式
-        # 主标题使用粗体 **，日期使用普通文本，折叠面板标题使用纯文本（不含标题标记）
-        assert "**" in combined_content  # 主标题存在（使用粗体）
-        # 注意：sample_report 没有信号，所以不会生成折叠面板和信号格式
-        # 实际有信号时会使用更多粗体格式
+        # 标题已迁移到 card header，body 中包含摘要文本（可能含粗体或普通文本）
+        # 确保摘要内容被包含
+        assert sample_report.summary_brief in combined_content

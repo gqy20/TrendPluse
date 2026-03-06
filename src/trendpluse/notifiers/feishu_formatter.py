@@ -57,19 +57,11 @@ class FeishuFormatter:
         """
         elements: list[dict] = []
 
-        # 0. 添加醒目的主标题和日期（使用粗体而非标题，减小字体）
-        elements.append(
-            {
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": f"**📊 TrendPulse 每日报告**\n\n📅 {report.date}",
-                },
-            }
-        )
-
         # 1. 摘要
         elements.append(self._create_summary_element(report.summary_brief))
+
+        # 2. 关键指标一行展示
+        elements.append(self._create_metrics_row(report))
 
         # 2. 高影响信号（如果有）
         elements.extend(self._create_signals_section(report))
@@ -81,7 +73,7 @@ class FeishuFormatter:
                 self._create_release_signals_section(report.release_signals)
             )
 
-        # 4. Breaking Changes（如果有，使用折叠面板）
+        # 4. Breaking Changes（如果有，使用折叠面板，橙色警示边框）
         if report.breaking_changes:
             elements.append({"tag": "hr"})
             content = self._generate_breaking_changes_content(report.breaking_changes)
@@ -89,8 +81,9 @@ class FeishuFormatter:
                 self._create_collapsible_panel(
                     title=f"⚠️ Breaking Changes ({len(report.breaking_changes)}个)",
                     content=content,
-                    expanded=False,  # 与其他面板保持一致，默认折叠
+                    expanded=False,
                     icon="down-small-ccm_outlined",
+                    border_color="orange",
                 )
             )
 
@@ -164,10 +157,65 @@ class FeishuFormatter:
                 "config": {
                     "update_multi": True,
                 },
+                "header": {
+                    "title": {
+                        "tag": "plain_text",
+                        "content": "📊 TrendPulse 每日报告",
+                    },
+                    "subtitle": {
+                        "tag": "plain_text",
+                        "content": f"📅 {report.date}",
+                    },
+                    "template": "blue",
+                },
                 "body": {
                     "elements": elements,
                 },
             },
+        }
+
+    def _create_metrics_row(self, report: DailyReport) -> dict:
+        """创建关键指标横向展示行（column_set）
+
+        Args:
+            report: 日报对象
+
+        Returns:
+            column_set 元素字典
+        """
+        high_impact = report.stats.high_impact_signals
+        total_releases = report.stats.total_releases
+        breaking = len(report.breaking_changes) if report.breaking_changes else 0
+        total_repos = report.activity.active_repos_count if report.activity else 0
+
+        def _metric_col(number: int | str, label: str) -> dict:
+            return {
+                "tag": "column",
+                "weight": 1,
+                "vertical_align": "center",
+                "elements": [
+                    {
+                        "tag": "div",
+                        "text": {
+                            "tag": "lark_md",
+                            "content": f"**{number}**\n{label}",
+                        },
+                    }
+                ],
+            }
+
+        columns = [
+            _metric_col(high_impact, "高影响信号"),
+            _metric_col(total_releases, "Release"),
+            _metric_col(breaking if breaking else "—", "Breaking"),
+            _metric_col(total_repos if total_repos else "—", "活跃仓库"),
+        ]
+
+        return {
+            "tag": "column_set",
+            "flex_mode": "none",
+            "horizontal_spacing": "default",
+            "columns": columns,
         }
 
     def _create_summary_element(self, summary: str) -> dict:
@@ -222,18 +270,7 @@ class FeishuFormatter:
                     expanded=False,  # 默认折叠，与其他面板保持一致
                 )
             )
-        else:
-            # 即使没有信号也显示空状态
-            elements.append({"tag": "hr"})
-            elements.append(
-                self._create_collapsible_panel(
-                    title="🔧 工程信号",
-                    content="暂无信号。\n",
-                    expanded=False,
-                )
-            )
-
-        # 研究信号（使用折叠面板）
+        # 研究信号（有内容时才显示）
         research_signals = filter_high_impact(report.research_signals, threshold=4)[
             : self.max_signals
         ]
@@ -244,16 +281,6 @@ class FeishuFormatter:
                 self._create_collapsible_panel(
                     title=f"🔬 研究信号 ({len(research_signals)}个)",
                     content=content,
-                    expanded=False,
-                )
-            )
-        else:
-            # 即使没有信号也显示空状态
-            elements.append({"tag": "hr"})
-            elements.append(
-                self._create_collapsible_panel(
-                    title="🔬 研究信号",
-                    content="暂无信号。\n",
                     expanded=False,
                 )
             )
@@ -599,6 +626,7 @@ class FeishuFormatter:
         content: str,
         expanded: bool = False,
         icon: str | None = None,
+        border_color: str = "grey",
     ) -> dict:
         """创建折叠面板组件
 
@@ -622,7 +650,7 @@ class FeishuFormatter:
                 "vertical_align": "center",
             },
             "border": {
-                "color": "grey",
+                "color": border_color,
                 "corner_radius": "5px",
             },
             "vertical_spacing": "8px",
