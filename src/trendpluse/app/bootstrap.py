@@ -25,9 +25,11 @@ def build_reporting_components(
     *,
     settings: Any,
     issue_insights_loader,
+    reporter_factory=MarkdownReporter,
+    notifier_factory=FeishuNotifier,
 ) -> ReportingComponents:
     """构建报告相关组件。"""
-    reporter = MarkdownReporter()
+    reporter = reporter_factory()
     notifier: FeishuNotifier | None = None
     configured_output_dir = getattr(settings, "output_dir", None)
     daily_output_dir = (
@@ -36,7 +38,7 @@ def build_reporting_components(
         else "reports/daily"
     )
     if settings.feishu_webhook_url:
-        notifier = FeishuNotifier(
+        notifier = notifier_factory(
             webhook_url=settings.feishu_webhook_url,
             at_mobiles=settings.feishu_at_mobiles_list,
             max_signals=settings.feishu_max_signals,

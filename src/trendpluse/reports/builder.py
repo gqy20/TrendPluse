@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from trendpluse.models.signal import (
     ActivityData,
@@ -11,7 +11,9 @@ from trendpluse.models.signal import (
     ReleasesData,
     ReportStats,
 )
-from trendpluse.workflows.daily_pipeline_inputs import DailyPipelineInputs
+
+if TYPE_CHECKING:
+    from trendpluse.models.report_inputs import DailyPipelineInputs
 
 
 class DailyReportBuilder:

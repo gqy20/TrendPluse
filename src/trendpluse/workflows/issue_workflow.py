@@ -2,118 +2,22 @@
 
 from __future__ import annotations
 
-import asyncio
-from collections.abc import Callable
-from pathlib import Path
-from typing import Any
-
-from trendpluse.logger import get_logger
-from trendpluse.models.issue_agent import IssueAgentBatchResult
-from trendpluse.utils.issue_agent_io import load_issue_agent_report
-from trendpluse.utils.issue_io import dump_issues_to_jsonl
-from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
-
-logger = get_logger(__name__)
+from trendpluse.app.issue_agent import IssueWorkflowCoordinator
+from trendpluse.utils.issue_agent_io import load_issue_agent_report  # noqa: F401
+from trendpluse.utils.issue_io import dump_issues_to_jsonl  # noqa: F401
+from trendpluse.workflows.issue_agent_runner import IssueAgentRunner  # noqa: F401
 
 
-class IssueWorkflowService:
+class IssueWorkflowService(IssueWorkflowCoordinator):
     """负责 issue 抓取、落盘、agent 分析与结果读取。"""
 
-    def __init__(
-        self,
-        *,
-        issue_collector: Any,
-        issue_dump_dir: str,
-        enable_issue_agent_analysis: bool,
-        anthropic_api_key: str,
-        max_parallel_workers: int,
-        max_issues_per_repo: int,
-        issue_agent_model: str | None = None,
-        issue_agent_retry_max_attempts: int = 3,
-        issue_agent_retry_wait_seconds: float = 1.0,
-        runner_factory: Callable[..., Any] = IssueAgentRunner,
-    ) -> None:
-        self.issue_collector = issue_collector
-        self.issue_dump_dir = issue_dump_dir
-        self.enable_issue_agent_analysis = enable_issue_agent_analysis
-        self.anthropic_api_key = anthropic_api_key
-        self.max_parallel_workers = max_parallel_workers
-        self.max_issues_per_repo = max_issues_per_repo
-        self.issue_agent_model = issue_agent_model
-        self.issue_agent_retry_max_attempts = issue_agent_retry_max_attempts
-        self.issue_agent_retry_wait_seconds = issue_agent_retry_wait_seconds
-        self.runner_factory = runner_factory
-
-    def collect_and_analyze(self, repos: list[str], snapshot_date: str) -> None:
-        """同步抓取 issue 并执行后续分析。"""
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=repos,
-            snapshot_date=snapshot_date,
-            max_workers=self.max_parallel_workers,
-            max_issues_per_repo=self.max_issues_per_repo,
+    def __init__(self, **kwargs):
+        """保持旧模块 patch 面稳定。"""
+        super().__init__(
+            runner_factory=kwargs.pop("runner_factory", IssueAgentRunner),
+            issue_dumper=kwargs.pop("issue_dumper", dump_issues_to_jsonl),
+            issue_report_loader=kwargs.pop(
+                "issue_report_loader", load_issue_agent_report
+            ),
+            **kwargs,
         )
-        if detailed_issues:
-            dump_issues_to_jsonl(detailed_issues, self.issue_dump_dir, snapshot_date)
-        self.run_issue_agent_analysis(snapshot_date)
-
-    async def collect_and_analyze_async(
-        self, repos: list[str], snapshot_date: str
-    ) -> None:
-        """异步抓取 issue 并执行后续分析。"""
-        detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
-            repos=repos,
-            snapshot_date=snapshot_date,
-            max_workers=self.max_parallel_workers,
-            max_issues_per_repo=self.max_issues_per_repo,
-        )
-        if detailed_issues:
-            dump_issues_to_jsonl(detailed_issues, self.issue_dump_dir, snapshot_date)
-        await self.run_issue_agent_analysis_async(snapshot_date)
-
-    def run_issue_agent_analysis(self, snapshot_date: str) -> None:
-        """同步触发 issue agent 分析。"""
-        if self.enable_issue_agent_analysis is not True:
-            return
-        if not self.anthropic_api_key:
-            logger.warning("已启用 Issue Agent 分析但未配置 ANTHROPIC_API_KEY，跳过")
-            return
-        try:
-            asyncio.run(self.run_issue_agent_analysis_async(snapshot_date))
-        except Exception as exc:  # pragma: no cover - 防御性日志
-            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
-
-    async def run_issue_agent_analysis_async(self, snapshot_date: str) -> None:
-        """异步触发 issue agent 分析。"""
-        if self.enable_issue_agent_analysis is not True:
-            return
-
-        input_dir = Path(self.issue_dump_dir) / snapshot_date
-        if not input_dir.exists():
-            return
-        if not any(input_dir.glob("*.jsonl")):
-            return
-
-        output_dir = input_dir / "analysis"
-        try:
-            runner = self.runner_factory(
-                model=self.issue_agent_model,
-                retry_max_attempts=self.issue_agent_retry_max_attempts,
-                retry_wait_seconds=self.issue_agent_retry_wait_seconds,
-            )
-            result: IssueAgentBatchResult = await runner.analyze_directory(
-                input_dir, output_dir
-            )
-            logger.info(
-                "Issue Agent 分析完成: expected=%d, succeeded=%d, failed=%d, "
-                "failed_samples=%s",
-                result.expected_files,
-                result.succeeded_files,
-                result.failed_files,
-                ",".join(result.failed_samples) if result.failed_samples else "-",
-            )
-        except Exception as exc:  # pragma: no cover - 防御性日志
-            logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
-
-    def load_insights(self, snapshot_date: str) -> Any:
-        """读取 issue agent 分析结果。"""
-        return load_issue_agent_report(self.issue_dump_dir, snapshot_date)

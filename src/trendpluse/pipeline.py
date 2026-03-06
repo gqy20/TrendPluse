@@ -3,9 +3,7 @@
 协调各个组件完成每日趋势分析。
 """
 
-import asyncio
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +17,12 @@ from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
+from trendpluse.app.bootstrap import build_reporting_components
+from trendpluse.app.daily import DailyPipelineApp
+from trendpluse.app.issue_agent import IssueWorkflowCoordinator
+from trendpluse.app.release_processor import ReleaseProcessor
+from trendpluse.app.report_finalizer import DailyReportFinalizer
+from trendpluse.app.weekly import WeeklyPipelineApp
 from trendpluse.collectors.activity import ActivityCollector
 from trendpluse.collectors.commit_material_builder import CommitMaterialBuilder
 from trendpluse.collectors.filter import EventFilter
@@ -35,12 +39,6 @@ from trendpluse.models.signal import (
     WeeklyReport,
 )
 from trendpluse.notifiers.feishu import FeishuNotifier
-from trendpluse.workflows.daily_pipeline_inputs import DailyPipelineInputs
-from trendpluse.workflows.daily_report_finalizer import DailyReportFinalizer
-from trendpluse.workflows.issue_workflow import IssueWorkflowService
-from trendpluse.workflows.release_workflow import ReleaseWorkflowService
-from trendpluse.workflows.report_output import ReportOutputService
-from trendpluse.workflows.weekly_report_workflow import WeeklyReportWorkflow
 
 logger = get_logger(__name__)
 
@@ -115,31 +113,20 @@ class TrendPulsePipeline:
 
     def _build_output_components(self) -> None:
         """初始化输出与通知组件。"""
-        self.reporter = MarkdownReporter()
-        self.notifier: FeishuNotifier | None = None
-        configured_output_dir = getattr(self.settings, "output_dir", None)
-        daily_output_dir = (
-            configured_output_dir
-            if isinstance(configured_output_dir, str) and configured_output_dir
-            else "reports/daily"
+        components = build_reporting_components(
+            settings=self.settings,
+            issue_insights_loader=lambda _date: None,
+            reporter_factory=MarkdownReporter,
+            notifier_factory=FeishuNotifier,
         )
-        if self.settings.feishu_webhook_url:
-            self.notifier = FeishuNotifier(
-                webhook_url=self.settings.feishu_webhook_url,
-                at_mobiles=self.settings.feishu_at_mobiles_list,
-                max_signals=self.settings.feishu_max_signals,
-                secret=self.settings.feishu_secret or None,
-            )
-        self.output_service = ReportOutputService(
-            reporter=self.reporter,
-            daily_output_dir=daily_output_dir,
-            weekly_output_dir="reports/weekly",
-            notifier=self.notifier,
-        )
+        self.reporter = components.reporter
+        self.notifier = components.notifier
+        self.output_service = components.publisher
+        self.daily_report_builder = components.builder
 
     def _build_workflows(self) -> None:
         """初始化业务工作流。"""
-        self.issue_workflow = IssueWorkflowService(
+        self.issue_workflow = IssueWorkflowCoordinator(
             issue_collector=self.issue_collector,
             issue_dump_dir=self.settings.issue_dump_dir,
             enable_issue_agent_analysis=self.settings.enable_issue_agent_analysis,
@@ -150,20 +137,34 @@ class TrendPulsePipeline:
             issue_agent_retry_max_attempts=self.settings.issue_agent_retry_max_attempts,
             issue_agent_retry_wait_seconds=self.settings.issue_agent_retry_wait_seconds,
         )
-        self.release_workflow = ReleaseWorkflowService(
+        self.release_workflow = ReleaseProcessor(
             release_material_builder=self.release_material_builder,
             release_summarizer=self.release_summarizer,
             release_analyzer=self.release_analyzer,
             breaking_changes_detector=self.breaking_changes_detector,
         )
-        self.weekly_report_workflow = WeeklyReportWorkflow(
+        self.weekly_app = WeeklyPipelineApp(
             settings=self.settings,
             output_service=self.output_service,
         )
         self.daily_report_finalizer = DailyReportFinalizer(
+            builder=self.daily_report_builder,
+            publisher=self.output_service,
+        )
+        self.daily_app = DailyPipelineApp(
             settings=self.settings,
+            activity_collector=self.activity_collector,
+            release_collector=self.release_collector,
             issue_workflow=self.issue_workflow,
-            output_service=self.output_service,
+            release_workflow=self.release_workflow,
+            commit_material_builder=self.commit_material_builder,
+            commit_analyzer=self.commit_analyzer,
+            collector=self.collector,
+            event_filter=self.filter,
+            pr_reader=self.pr_reader,
+            analyzer=self.analyzer,
+            deduplicator=self.deduplicator,
+            daily_report_finalizer=self.daily_report_finalizer,
         )
 
     def _get_llm_component_kwargs(self) -> dict[str, Any]:
@@ -186,27 +187,7 @@ class TrendPulsePipeline:
         Returns:
             每日报告
         """
-        if date is None:
-            date = datetime.now()
-
-        day_ago = date - timedelta(days=1)
-        daily_inputs = self._collect_daily_inputs(day_ago)
-        self._collect_issue_artifacts(date.strftime("%Y-%m-%d"))
-
-        pr_signals = self._collect_pr_signals(day_ago)
-        if not pr_signals:
-            return self.daily_report_finalizer.handle_empty_report(
-                date=date,
-                activity_data=daily_inputs.activity_data,
-                commit_signals=daily_inputs.commit_signals,
-                releases_data=daily_inputs.releases_data,
-            )
-
-        return self._build_daily_report(
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
+        return self.daily_app.run_daily(date)
 
     async def run_daily_async(self, date: datetime | None = None) -> DailyReport:
         """运行每日分析流程（异步）
@@ -217,299 +198,13 @@ class TrendPulsePipeline:
         Returns:
             每日报告
         """
-        start_time = time.perf_counter()
-
-        if date is None:
-            date = datetime.now()
-
-        day_ago = date - timedelta(days=1)
-        daily_inputs = await self._collect_daily_inputs_async(
-            day_ago, date.strftime("%Y-%m-%d")
-        )
-
-        pr_signals = await self._collect_pr_signals_async(day_ago)
-        if not pr_signals:
-            return self.daily_report_finalizer.handle_empty_report(
-                date=date,
-                activity_data=daily_inputs.activity_data,
-                commit_signals=daily_inputs.commit_signals,
-                releases_data=daily_inputs.releases_data,
-            )
-
-        report = await self._build_daily_report_async(
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
-        logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
-
-        return report
-
-    def _collect_daily_inputs(self, day_ago: datetime) -> DailyPipelineInputs:
-        """同步收集日报所需的基础输入。"""
-        activity_data, detailed_commits = (
-            self.activity_collector.collect_activity_graphql(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        )
-        releases_data, detailed_releases = self.release_collector.collect_releases(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            include_prereleases=self.settings.include_prereleases,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        release_result = self.release_workflow.run(releases_data, detailed_releases)
-        commit_signals = self._analyze_commit_signals(detailed_commits)
-        return DailyPipelineInputs(
-            activity_data,
-            detailed_commits,
-            release_result.releases_data,
-            release_result.detailed_releases,
-            commit_signals,
-            release_result.release_signals,
-            release_result.breaking_changes,
-        )
-
-    async def _collect_daily_inputs_async(
-        self, day_ago: datetime, snapshot_date: str
-    ) -> DailyPipelineInputs:
-        """异步收集日报所需的基础输入。"""
-        step_start = time.perf_counter()
-        activity_data, detailed_commits = (
-            self.activity_collector.collect_activity_graphql(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        )
-        logger.info(
-            "Activity collection done in %.2fs (commits=%d)",
-            time.perf_counter() - step_start,
-            len(detailed_commits),
-        )
-
-        step_start = time.perf_counter()
-        releases_data, detailed_releases = self.release_collector.collect_releases(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            include_prereleases=self.settings.include_prereleases,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        logger.info(
-            "Release collection done in %.2fs (releases=%d)",
-            time.perf_counter() - step_start,
-            len(detailed_releases),
-        )
-
-        results = await self._run_async_analysis_tasks(
-            detailed_commits=detailed_commits,
-            detailed_releases=detailed_releases,
-            snapshot_date=snapshot_date,
-        )
-        release_result = await self.release_workflow.run_async(
-            releases_data, detailed_releases
-        )
-        commit_signals = self._resolve_async_commit_signals(results)
-        return DailyPipelineInputs(
-            activity_data,
-            detailed_commits,
-            release_result.releases_data,
-            release_result.detailed_releases,
-            commit_signals,
-            release_result.release_signals,
-            release_result.breaking_changes,
-        )
-
-    async def _run_async_analysis_tasks(
-        self,
-        *,
-        detailed_commits: list[dict[str, Any]],
-        detailed_releases: list[dict[str, Any]],
-        snapshot_date: str,
-    ) -> dict[str, object]:
-        """运行异步分析任务并返回结果映射。"""
-        tasks: dict[str, asyncio.Task[Any]] = {}
-
-        if detailed_releases:
-            # release 分析改由 release_workflow 统一编排
-            pass
-
-        if detailed_commits:
-            commit_materials = self.commit_material_builder.build(detailed_commits)
-            tasks["commit_signals"] = asyncio.create_task(
-                self.commit_analyzer.analyze_materials_async(commit_materials)
-            )
-
-        step_start = time.perf_counter()
-        await self.issue_workflow.collect_and_analyze_async(
-            self.settings.github_repos,
-            snapshot_date,
-        )
-        logger.info(
-            "Issue workflow done in %.2fs",
-            time.perf_counter() - step_start,
-        )
-
-        if not tasks:
-            return {}
-
-        task_names = list(tasks.keys())
-        async_start = time.perf_counter()
-        task_results = await asyncio.gather(*tasks.values(), return_exceptions=True)
-        logger.info(
-            "Async analysis done in %.2fs (tasks=%d)",
-            time.perf_counter() - async_start,
-            len(task_names),
-        )
-        return dict(zip(task_names, task_results))
-
-    def _resolve_async_commit_signals(self, results: dict[str, object]) -> list[Any]:
-        """解析异步 commit 分析结果。"""
-        commit_signals: list[Any] = []
-        commit_result = results.get("commit_signals")
-        if isinstance(commit_result, list):
-            commit_signals = commit_result
-        return commit_signals
-
-    def _analyze_commit_signals(
-        self, detailed_commits: list[dict[str, Any]]
-    ) -> list[Any]:
-        """分析 commit 技术信号。"""
-        if not detailed_commits:
-            return []
-        commit_materials = self.commit_material_builder.build(detailed_commits)
-        return self.commit_analyzer.analyze_materials(commit_materials)
-
-    def _collect_pr_signals(self, day_ago: datetime) -> list[Any]:
-        """同步收集并分析 PR 信号。"""
-        candidates = self._collect_pr_candidates(day_ago)
-        if not candidates:
-            return []
-
-        pr_materials = self._read_pr_materials(candidates)
-        if not pr_materials:
-            return []
-
-        signals = self.analyzer.analyze_materials(pr_materials)
-        if not signals:
-            return []
-
-        return self.deduplicator.deduplicate(signals)
-
-    async def _collect_pr_signals_async(self, day_ago: datetime) -> list[Any]:
-        """异步收集并分析 PR 信号。"""
-        step_start = time.perf_counter()
-        candidates = self._collect_pr_candidates(day_ago)
-        logger.info(
-            "Candidate collection done in %.2fs (candidates=%d)",
-            time.perf_counter() - step_start,
-            len(candidates),
-        )
-        if not candidates:
-            return []
-
-        step_start = time.perf_counter()
-        pr_materials = self._read_pr_materials(candidates)
-        logger.info(
-            "PR detail fetch done in %.2fs (prs=%d)",
-            time.perf_counter() - step_start,
-            len(pr_materials),
-        )
-        if not pr_materials:
-            return []
-
-        step_start = time.perf_counter()
-        signals = await self.analyzer.analyze_materials_async(pr_materials)
-        logger.info(
-            "PR analysis done in %.2fs (signals=%d)",
-            time.perf_counter() - step_start,
-            len(signals),
-        )
-        if not signals:
-            return []
-
-        step_start = time.perf_counter()
-        pr_signals = self.deduplicator.deduplicate(signals)
-        logger.info(
-            "Deduplication done in %.2fs (signals=%d)",
-            time.perf_counter() - step_start,
-            len(pr_signals),
-        )
-        return pr_signals
-
-    def _collect_issue_artifacts(self, snapshot_date: str) -> None:
-        """收集 issue 落盘与 agent 分析产物。"""
-        self.issue_workflow.collect_and_analyze(
-            self.settings.github_repos,
-            snapshot_date,
-        )
-
-    def _collect_pr_candidates(self, day_ago: datetime) -> list[dict[str, Any]]:
-        """收集并筛选 PR 候选事件。"""
-        events = self.collector.fetch_events(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        return self.filter.filter_candidates(events)
-
-    def _read_pr_materials(self, candidates: list[dict[str, Any]]) -> list[Any]:
-        """读取 PR 分析材料。"""
-        pr_refs = self.pr_reader.refs_from_candidates(candidates)
-        return self.pr_reader.read_many(
-            pr_refs,
-            max_workers=self.settings.max_parallel_workers,
-        )
-
-    def _build_daily_report(
-        self,
-        *,
-        date: datetime,
-        daily_inputs: DailyPipelineInputs,
-        pr_signals: list[Any],
-    ) -> DailyReport:
-        """同步聚合并完成日报收尾。"""
-        report = self.analyzer.aggregate_and_generate_report(
-            pr_signals=pr_signals,
-            commit_signals=daily_inputs.commit_signals,
-            release_signals=daily_inputs.release_signals,
-            date=date.strftime("%Y-%m-%d"),
-        )
-        self.daily_report_finalizer.finalize_daily_report(
-            report=report,
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
-        return report
-
-    async def _build_daily_report_async(
-        self,
-        *,
-        date: datetime,
-        daily_inputs: DailyPipelineInputs,
-        pr_signals: list[Any],
-    ) -> DailyReport:
-        """异步聚合并完成日报收尾。"""
-        step_start = time.perf_counter()
-        report = await self.analyzer.aggregate_and_generate_report_async(
-            pr_signals=pr_signals,
-            commit_signals=daily_inputs.commit_signals,
-            release_signals=daily_inputs.release_signals,
-            date=date.strftime("%Y-%m-%d"),
-        )
-        logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
-        self.daily_report_finalizer.finalize_daily_report(
-            report=report,
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
-        return report
+        return await self.daily_app.run_daily_async(date)
 
     def _run_issue_agent_analysis(self, snapshot_date: str) -> None:
+        daily_app = getattr(self, "daily_app", None)
+        if daily_app is not None:
+            daily_app.run_issue_agent_analysis(snapshot_date)
+            return
         self.issue_workflow.run_issue_agent_analysis(snapshot_date)
 
     def _get_output_path(self, date: datetime) -> str:
@@ -527,4 +222,4 @@ class TrendPulsePipeline:
 
     def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
         """运行周报生成流程。"""
-        return self.weekly_report_workflow.run(date)
+        return self.weekly_app.run(date)
