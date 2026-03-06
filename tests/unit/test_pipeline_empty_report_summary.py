@@ -712,5 +712,5 @@ class TestEmptyReportSummary:
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
 
         # Assert - 验证高影响信号统计
-        assert report.stats["high_impact_signals"] == 2  # 2个高影响信号
-        assert report.stats["total_commits_analyzed"] == 100
+        assert report.stats.high_impact_signals == 2  # 2个高影响信号
+        assert report.stats.total_commits_analyzed == 100

@@ -176,29 +176,6 @@ class ReportStats(BaseModel):
     total_releases_analyzed: int = Field(default=0, ge=0, description="分析 Release 数")
     total_breaking_changes: int = Field(default=0, ge=0, description="Breaking 数")
 
-    # 兼容旧调用：stats["key"] / stats.get() / stats.items()
-    def __getitem__(self, key: str) -> int:
-        value = getattr(self, key)
-        if isinstance(value, int):
-            return value
-        raise KeyError(key)
-
-    def __setitem__(self, key: str, value: int) -> None:
-        setattr(self, key, value)
-
-    def get(self, key: str, default: int = 0) -> int:
-        value = getattr(self, key, default)
-        return value if isinstance(value, int) else default
-
-    def items(self):
-        return self.model_dump().items()
-
-    def keys(self):
-        return self.model_dump().keys()
-
-    def __contains__(self, key: object) -> bool:
-        return isinstance(key, str) and key in type(self).model_fields
-
 
 class DailyReport(BaseModel):
     """每日分析报告"""

@@ -210,8 +210,8 @@ class TestTrendAnalyzer:
         assert report.date == "2026-01-02"
         assert len(report.engineering_signals) == 1
         # stats 由实现重新计算，基于输入信号
-        assert report.stats["total_prs_analyzed"] == 1  # 传入的 signals 数量
-        assert report.stats["high_impact_signals"] == 1  # impact_score >= 4 的信号数量
+        assert report.stats.total_prs_analyzed == 1  # 传入的 signals 数量
+        assert report.stats.high_impact_signals == 1  # impact_score >= 4 的信号数量
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
     def test_filter_high_impact_signals(self, mock_from_anthropic):
