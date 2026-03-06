@@ -10,17 +10,6 @@ on:
       - "mkdocs.yml"
   # 手动触发
   workflow_dispatch:
-    inputs:
-      send_notification:
-        description: '是否发送飞书通知'
-        required: false
-        type: boolean
-        default: false
-  # 当 workflow 成功完成后自动部署
-  workflow_run:
-    workflows: ["Daily Trend Analysis", "Discover Projects"]
-    types: [completed]
-    branches: [main]
 
 # 设置权限
 permissions:
@@ -37,11 +26,6 @@ jobs:
   build:
     name: Build documentation
     runs-on: ubuntu-latest
-    # 只在 daily-analysis 成功时运行，或者手动/直接 push 触发
-    if: |
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout repository
@@ -62,10 +46,6 @@ jobs:
           uv sync --extra dev
           uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-awesome-pages-plugin
 
-      - name: Sync reports to docs
-        run: |
-          uv run trendpluse-generate-report-index
-
       - name: Build site
         run: uv run mkdocs build
 
@@ -81,73 +61,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    outputs:
-      deployment_url: ${{ steps.deployment_url.outputs.url }}
-      report_date: ${{ steps.report_date.outputs.date }}
 
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Get deployment URL
-        id: deployment_url
-        run: |
-          URL="${{ steps.deployment.outputs.page_url }}"
-          echo "url=$URL" >> $GITHUB_OUTPUT
-
-      - name: Get report date
-        id: report_date
-        run: |
-          # 获取最新的报告文件名中的日期
-          REPORT_FILE=$(ls -t reports/daily/report-*.md 2>/dev/null | head -1)
-          if [ -n "$REPORT_FILE" ]; then
-            DATE=$(basename "$REPORT_FILE" | sed 's/report-\(.*\)\.md/\1/')
-            echo "date=$DATE" >> $GITHUB_OUTPUT
-          else
-            echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
-          fi
-
-  notify:
-    name: Send Feishu Notification
-    needs: deploy
-    runs-on: ubuntu-latest
-    # 只在手动触发且选择发送通知时运行
-    if: |
-      github.event_name == 'workflow_dispatch' &&
-      inputs.send_notification == true
-    env:
-      FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
-      FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
-      FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
-      DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
-      REPORT_DATE: ${{ needs.deploy.outputs.report_date }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-
-      - name: Install dependencies
-        run: uv sync
-
-      - name: Send Feishu notification
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -z "$FEISHU_WEBHOOK_URL" ]; then
-            echo "FEISHU_WEBHOOK_URL not configured, skipping notification"
-            exit 0
-          fi
-          uv run trendpluse-send-feishu

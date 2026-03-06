@@ -14,8 +14,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: "run-daily"
@@ -105,76 +103,9 @@ jobs:
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push
 
-  deploy:
-    name: Build documentation
-    needs: analyze
-    runs-on: ubuntu-latest
-    if: needs.analyze.outputs.has_report == 'true'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0  # 获取完整历史，用于 git-revision-date-localized-plugin
-
-      - name: Pull latest changes
-        run: git pull origin main
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          version: "0.9.28"
-          enable-cache: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-
-      - name: Install dependencies
-        run: |
-          uv sync --extra dev
-          uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-awesome-pages-plugin
-
-      - name: Sync reports to docs
-        run: |
-          uv run trendpluse-generate-report-index
-
-      - name: Build site
-        run: uv run mkdocs build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./site
-
-  deploy_pages:
-    name: Deploy to GitHub Pages
-    needs: [analyze, deploy]
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Get deployment URL
-        id: deployment_url
-        run: |
-          URL="${{ steps.deployment.outputs.page_url }}"
-          echo "url=$URL" >> $GITHUB_OUTPUT
-          echo "Deployment URL: $URL"
-
-    outputs:
-      deployment_url: ${{ steps.deployment_url.outputs.url }}
-      report_date: ${{ needs.analyze.outputs.report_date }}
-
   notify:
     name: Send Feishu Notification
-    needs: [analyze, deploy_pages]
+    needs: analyze
     runs-on: ubuntu-latest
     if: |
       (inputs.send_notification != false || github.event_name == 'schedule') &&
@@ -183,7 +114,6 @@ jobs:
       FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
       FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
       FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
-      DEPLOYMENT_URL: ${{ needs.deploy_pages.outputs.deployment_url }}
       REPORT_DATE: ${{ needs.analyze.outputs.report_date }}
 
     steps:
