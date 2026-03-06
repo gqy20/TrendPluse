@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from typing import Any, cast
 
 import trendpluse.pipeline as pipeline_module
-from trendpluse.agents.issue_agent import IssueAgentBatchResult
+from trendpluse.models.issue_agent import IssueAgentBatchResult
 from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 

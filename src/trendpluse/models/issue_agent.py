@@ -1,6 +1,18 @@
 """Issue Agent 结果模型"""
 
+from dataclasses import dataclass
+
 from pydantic import BaseModel, Field
+
+
+@dataclass(slots=True)
+class IssueAgentBatchResult:
+    """Issue Agent 批量分析统计。"""
+
+    expected_files: int
+    succeeded_files: int
+    failed_files: int
+    failed_samples: list[str]
 
 
 class IssueAgentPainPoint(BaseModel):

@@ -1,4 +1,4 @@
-"""Issue 分析 Agent（Claude Agent SDK）"""
+"""Issue Agent 执行器。"""
 
 from __future__ import annotations
 
@@ -7,29 +7,22 @@ import json
 import logging
 import re
 from collections.abc import Iterable
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
 
 from pydantic import ValidationError
 
-from trendpluse.models.issue_agent import IssueAgentPainPoint, IssueAgentReport
+from trendpluse.models.issue_agent import (
+    IssueAgentBatchResult,
+    IssueAgentPainPoint,
+    IssueAgentReport,
+)
 
 logger = logging.getLogger(__name__)
 
 
-@dataclass(slots=True)
-class IssueAgentBatchResult:
-    """Issue Agent 批量分析统计。"""
-
-    expected_files: int
-    succeeded_files: int
-    failed_files: int
-    failed_samples: list[str]
-
-
 class IssueAgentRunner:
-    """使用 Claude Agent SDK 分析 Issue 文件"""
+    """使用 Claude Agent SDK 分析 Issue 文件。"""
 
     def __init__(
         self,
@@ -242,11 +235,7 @@ class IssueAgentRunner:
     async def analyze_directory(
         self, input_dir: Path, output_dir: Path
     ) -> IssueAgentBatchResult:
-        """分析目录下所有 JSONL 文件。
-
-        Returns:
-            批量分析统计。
-        """
+        """分析目录下所有 JSONL 文件。"""
         files = sorted(input_dir.glob("*.jsonl"))
         if not files:
             return IssueAgentBatchResult(

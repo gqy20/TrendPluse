@@ -2,7 +2,7 @@
 
 import pytest
 
-from trendpluse.agents.issue_agent import IssueAgentRunner
+from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
 
 
 class DummyText:
@@ -159,7 +159,7 @@ async def test_analyze_file_three_round_review_filters_low_confidence(tmp_path) 
 @pytest.mark.asyncio
 async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> None:
     class _PartialFailRunner(IssueAgentRunner):
-        async def analyze_file(self, input_path, output_path):  # type: ignore[override]
+        async def analyze_file(self, input_path, output_path):
             if input_path.name == "bad.jsonl":
                 raise RuntimeError("boom")
             output_path.write_text('{"top_pain_points":[]}', encoding="utf-8")

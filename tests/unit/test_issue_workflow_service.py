@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from trendpluse.agents.issue_agent import IssueAgentBatchResult
+from trendpluse.models.issue_agent import IssueAgentBatchResult
 from trendpluse.workflows.issue_workflow import IssueWorkflowService
 
 

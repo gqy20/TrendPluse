@@ -7,10 +7,11 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from trendpluse.agents.issue_agent import IssueAgentBatchResult, IssueAgentRunner
 from trendpluse.logger import get_logger
+from trendpluse.models.issue_agent import IssueAgentBatchResult
 from trendpluse.utils.issue_agent_io import load_issue_agent_report
 from trendpluse.utils.issue_io import dump_issues_to_jsonl
+from trendpluse.workflows.issue_agent_runner import IssueAgentRunner
 
 logger = get_logger(__name__)
 
