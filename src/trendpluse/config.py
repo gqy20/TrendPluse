@@ -3,10 +3,14 @@
 使用 pydantic-settings 管理配置，支持环境变量和 .env 文件。
 """
 
+import os
 from typing import Any
 
 from pydantic import AliasChoices, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from trendpluse.models.repository import MonitoredRepo
+from trendpluse.utils.repo_config_loader import load_monitored_repo_configs
 
 # 默认模型名称（供分析器使用）
 DEFAULT_ANTHROPIC_MODEL = "glm-4.7"
@@ -17,6 +21,7 @@ DEFAULT_ANTHROPIC_BASE_URL = "https://open.bigmodel.cn/api/anthropic"
 # 数据文件路径
 DEFAULT_SIGNAL_HISTORY_PATH = "data/signal_history.json"
 DEFAULT_SNAPSHOT_DIR = "data/snapshots"
+DEFAULT_GITHUB_REPOS_FILE = "repos.json"
 
 
 class Settings(BaseSettings):
@@ -39,69 +44,12 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("PAT_TOKEN", "GITHUB_PAT", "GITHUB_TOKEN"),
     )
     github_repos: list[str] = Field(
-        default=[
-            # Anthropic 核心产品
-            "anthropics/claude-code",
-            "anthropics/skills",
-            "anthropics/claude-cookbooks",
-            "anthropics/claude-quickstarts",
-            "anthropics/courses",
-            "anthropics/prompt-eng-interactive-tutorial",
-            # Anthropic SDK & Agent
-            "anthropics/claude-agent-sdk-python",
-            "anthropics/claude-agent-sdk-typescript",
-            "anthropics/claude-agent-sdk-demos",
-            "anthropics/anthropic-sdk-python",
-            "anthropics/anthropic-sdk-typescript",
-            "anthropics/anthropic-sdk-go",
-            "anthropics/anthropic-sdk-java",
-            # Anthropic 工具与集成
-            "anthropics/claude-code-action",
-            "anthropics/claude-code-security-review",
-            "anthropics/claude-plugins-official",
-            "anthropics/devcontainer-features",
-            # Anthropic 研究与评估
-            "anthropics/evals",
-            "anthropics/political-neutrality-eval",
-            "anthropics/hh-rlhf",
-            # AI 编程助手
-            "cline/cline",
-            "paul-gauthier/aider",
-            "continuedev/continue",
-            "openai/openai-python",
-            "openai/openai-quickstart-python",
-            "danielmiessler/fabric",
-            "ErikBjare/gptme",
-            # Agent 框架
-            "TransformerOptimus/SuperAGI",
-            "Significant-Gravitas/AutoGPT",
-            "OpenDevin/OpenDevin",
-            "langchain-ai/langchain",
-            "langchain-ai/langgraph",
-            "langgenius/dify",
-            "run-llama/llama_index",
-            "microsoft/autogen",
-            "microsoft/semantic-kernel",
-            "google-gemini/gemini-cli",
-            "agentscope-ai/agentscope",
-            "agno-agi/agno",
-            "mem0ai/mem0",
-            # Agentic AI 核心框架
-            "openai/swarm",
-            "openai/codex",
-            "crewAIInc/crewAI",
-            "huggingface/smolagents",
-            "ruvnet/claude-flow",
-            "bytedance/deer-flow",
-            "langchain-ai/deepagents",
-            # 自主 AI 编程代理
-            "AndyMik90/Auto-Claude",
-            "anomalyco/opencode",
-            "openinterpreter/open-interpreter",
-            "TabbyML/tabby",
-            "zed-industries/zed",
-        ],
+        default_factory=list,
         description="要追踪的仓库列表",
+    )
+    github_repos_file: str = Field(
+        default=DEFAULT_GITHUB_REPOS_FILE,
+        description="监控仓库 JSON 配置文件路径",
     )
     github_base_url: str = "https://api.github.com"
 
@@ -143,6 +91,23 @@ class Settings(BaseSettings):
                     or ""
                 )
                 data["anthropic_api_key"] = fallback_key
+        return data
+
+    @model_validator(mode="before")
+    @classmethod
+    def load_github_repos_from_file(cls, data: Any) -> Any:
+        """当未显式提供 GITHUB_REPOS 时，从 JSON 文件加载仓库列表。"""
+        if not isinstance(data, dict):
+            return data
+
+        if data.get("github_repos"):
+            return data
+
+        config_path = str(data.get("github_repos_file") or DEFAULT_GITHUB_REPOS_FILE)
+        repo_configs = load_monitored_repo_configs(config_path)
+        if repo_configs:
+            data["github_repos"] = [item.repo for item in repo_configs]
+
         return data
 
     # 筛选规则
@@ -275,6 +240,32 @@ class Settings(BaseSettings):
             if "/" not in repo or len(repo.split("/")) != 2:
                 raise ValueError(f'Invalid repo format: "{repo}". Must be "owner/repo"')
         return v
+
+    @property
+    def monitored_repo_configs(self) -> list[MonitoredRepo]:
+        """获取结构化监控仓库配置。"""
+        if os.getenv("GITHUB_REPOS"):
+            return [
+                MonitoredRepo(
+                    repo=repo,
+                    url=f"https://github.com/{repo}",
+                    description="",
+                )
+                for repo in self.github_repos
+            ]
+
+        repo_configs = load_monitored_repo_configs(self.github_repos_file)
+        if repo_configs:
+            return repo_configs
+
+        return [
+            MonitoredRepo(
+                repo=repo,
+                url=f"https://github.com/{repo}",
+                description="",
+            )
+            for repo in self.github_repos
+        ]
 
 
 # 全局配置实例（延迟初始化）
