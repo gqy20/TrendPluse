@@ -11,6 +11,7 @@ from trendpluse.app.bootstrap import (
     build_reporting_components,
 )
 from trendpluse.app.daily import DailyPipelineApp
+from trendpluse.app.discovery import discover, load_monitored_repos
 from trendpluse.app.issue_agent import IssueWorkflowCoordinator
 from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.app.release_processor import ReleaseProcessor, ReleaseWorkflowResult
@@ -22,9 +23,11 @@ __all__ = [
     "CollectorComponents",
     "AnalyzerComponents",
     "AppComponents",
+    "discover",
     "DailyPipelineApp",
     "DailyReportFinalizer",
     "IssueWorkflowCoordinator",
+    "load_monitored_repos",
     "TrendPulsePipeline",
     "ReleaseProcessor",
     "ReleaseWorkflowResult",
