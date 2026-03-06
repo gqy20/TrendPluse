@@ -482,6 +482,63 @@ body {
   overflow: hidden;
 }
 
+/* 今日聚焦卡片 */
+.tp-focus-card {
+  padding: 1.6rem 1.8rem;
+  margin: 1rem 0 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(102, 227, 255, 0.22);
+  border-left: 4px solid var(--trendpluse-electric-blue);
+  background: linear-gradient(135deg, rgba(6, 10, 20, 0.96), rgba(10, 16, 30, 0.9));
+  box-shadow: 0 20px 44px rgba(2, 6, 23, 0.3);
+}
+
+.tp-focus-card h3 {
+  margin-top: 0 !important;
+  font-size: 1.2rem;
+  color: var(--trendpluse-electric-blue);
+  border: none !important;
+  padding: 0 !important;
+}
+
+.tp-focus-card p {
+  color: rgba(226, 232, 240, 0.88);
+  line-height: 1.85;
+  margin-bottom: 1.2rem;
+}
+
+.tp-focus-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.tp-focus-stat {
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(102, 227, 255, 0.08);
+  color: rgba(191, 219, 254, 0.88);
+  font-size: 0.82rem;
+  border: 1px solid rgba(102, 227, 255, 0.12);
+}
+
+.tp-focus-stat strong {
+  color: white;
+}
+
+.tp-focus-stat--highlight {
+  background: rgba(102, 227, 255, 0.15);
+  border-color: rgba(102, 227, 255, 0.3);
+  color: var(--trendpluse-electric-blue);
+}
+
+.tp-focus-stat--warn {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
 [data-md-color-scheme="slate"] .tp-live-card,
 [data-md-color-scheme="slate"] .tp-entry-card,
 [data-md-color-scheme="slate"] .tp-signal-tile {
@@ -984,7 +1041,18 @@ details.signal-details .details-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  margin: 2rem 0;
+  margin: 2rem 0 0.5rem;
+}
+
+.tp-stats-timestamp {
+  margin: 0.5rem 0 2rem;
+  font-size: 0.8rem;
+  color: rgba(148, 163, 184, 0.72);
+  text-align: right;
+}
+
+.tp-stats-timestamp a {
+  color: rgba(102, 227, 255, 0.72);
 }
 
 .stat-dashboard-card {
@@ -1205,6 +1273,16 @@ body[data-md-color-scheme="slate"] {
 [data-md-color-scheme="slate"] .signal-type-badge.eval {
   background: rgba(255, 193, 7, 0.2);
   color: #ffd54f;
+}
+
+[data-md-color-scheme="slate"] .signal-type-badge.commit {
+  background: rgba(38, 166, 154, 0.2);
+  color: #80cbc4;
+}
+
+[data-md-color-scheme="slate"] .signal-type-badge.release {
+  background: rgba(255, 112, 67, 0.2);
+  color: #ffab91;
 }
 
 [data-md-color-scheme="slate"] .signal-repo-tag {
@@ -1454,13 +1532,7 @@ html {
   }
 }
 
-/* ========================================
-   13. 平滑滚动
-   ======================================== */
-
-html {
-  scroll-behavior: smooth;
-}
+/* Section 13 已合并至 Section 11，此处保留注释占位 */
 
 /* ========================================
    14. 自定义滚动条

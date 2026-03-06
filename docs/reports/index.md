@@ -12,15 +12,22 @@
 
 ## 今日聚焦
 
+<div class="tp-focus-card">
+
 ### [2026-03-05](report-2026-03-05.md)
 
-> 今日 AI 编码工具生态呈现三大核心趋势：平台化集成加速（插件系统、MCP 协议、GitHub Action 正式版）、安全与稳定性成为重心（3 个 CVE 修复、数据丢失修复、stdin 悬死问题）、以及 UX 细节优化的规模化影响（UI 回退/修复、交互流程简化）。Claude Code v2.1.69 实现了 16MB 内存优化和多个泄漏修复，标志其生产就绪度显著提升。
+今日 AI 编码工具生态呈现三大核心趋势：平台化集成加速（插件系统、MCP 协议、GitHub Action 正式版）、安全与稳定性成为重心（3 个 CVE 修复、数据丢失修复、stdin 悬死问题）、以及 UX 细节优化的规模化影响（UI 回退/修复、交互流程简化）。Claude Code v2.1.69 实现了 16MB 内存优化和多个泄漏修复，标志其生产就绪度显著提升。
 
-| 指标 | 数值 | 指标 | 数值 |
-|------|------|------|------|
-| 分析 PR 数 | 20 | 高影响信号 | 10 |
-| 涉及仓库数 | 19 | Release 数 | 17 |
-| Commit 数 | 273 | Breaking Changes | 3 |
+<div class="tp-focus-stats">
+<span class="tp-focus-stat"><strong>20</strong> PR 分析</span>
+<span class="tp-focus-stat tp-focus-stat--highlight"><strong>10</strong> 高影响信号</span>
+<span class="tp-focus-stat"><strong>19</strong> 仓库</span>
+<span class="tp-focus-stat"><strong>17</strong> Release</span>
+<span class="tp-focus-stat"><strong>273</strong> Commit</span>
+<span class="tp-focus-stat tp-focus-stat--warn"><strong>3</strong> Breaking Changes</span>
+</div>
+
+</div>
 
 ## 最新周报
 

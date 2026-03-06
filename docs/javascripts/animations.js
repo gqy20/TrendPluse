@@ -31,16 +31,48 @@
    * 初始化动画和交互
    */
   function init() {
-    // 只在报告页面启用
-    if (!document.querySelector(".bento-grid")) {
-      return;
+    const hasReportGrid = document.querySelector(".bento-grid");
+    const hasHomePage = document.querySelector(".tp-hero");
+
+    // 首页：为入口卡片添加入场动画
+    if (hasHomePage) {
+      initHomeAnimations();
+      initSmoothScroll();
     }
 
-    initCardAnimations();
-    initSmoothScroll();
-    initHoverEffects();
-    initScrollAnimations();
-    initMobileMenu();
+    // 报告页：完整动画
+    if (hasReportGrid) {
+      initCardAnimations();
+      initSmoothScroll();
+      initHoverEffects();
+      initScrollAnimations();
+      initMobileMenu();
+    }
+  }
+
+  /**
+   * 首页入场动画 - tp-entry-card、tp-signal-tile、stats-dashboard
+   */
+  function initHomeAnimations() {
+    const targets = document.querySelectorAll(
+      ".tp-entry-card, .tp-signal-tile, .stat-dashboard-card, .tp-coverage-pill"
+    );
+
+    targets.forEach((el, i) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(20px)";
+      el.style.transition = `opacity 0.4s ease ${i * 80}ms, transform 0.4s ease ${i * 80}ms`;
+    });
+
+    // 下一帧触发动画
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        targets.forEach((el) => {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        });
+      });
+    });
   }
 
   /**

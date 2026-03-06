@@ -30,9 +30,13 @@
 
 ## 高优先级推荐 Top 5
 
-| 项目 | Stars |
-|------|-------|
-| 暂无 | - |
+| 项目 | 分类 | Stars | 描述 |
+|------|------|-------|------|
+| [open-webui/open-webui](https://github.com/open-webui/open-webui) | 💬 LLM 界面 | 125,952 | 自托管 AI 聊天界面，支持 Ollama/OpenAI API/RAG |
+| [mendableai/firecrawl](https://github.com/mendableai/firecrawl) | 🛠️ 开发工具 | 88,742 | AI 专用网页数据采集 API，输出 LLM 友好 Markdown |
+| [infiniflow/ragflow](https://github.com/infiniflow/ragflow) | 🔍 RAG/检索 | 74,273 | 企业级 RAG 引擎，融合 Agent 能力 |
+| [lobehub/lobe-chat](https://github.com/lobehub/lobe-chat) | 💬 LLM 界面 | 73,176 | 多 Agent 协作空间，支持 MCP 协议 |
+| [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | 🧠 机器学习框架 | 67,966 | 统一 LLM 微调框架，支持 100+ 模型（ACL 2024）|
 
 
 ## 历史报告
