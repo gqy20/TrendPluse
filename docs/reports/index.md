@@ -7,27 +7,20 @@
 
 | 指标 | 数值 | 指标 | 数值 |
 |------|------|------|------|
-| 总日报数 | 57 | 总周报数 | 5 |
-| 总分析 PR 数 | 640 | 本月报告数 | 4 |
+| 总日报数 | 58 | 总周报数 | 5 |
+| 总分析 PR 数 | 657 | 本月报告数 | 5 |
 
 ## 今日聚焦
 
-<div class="tp-focus-card" markdown>
+### [2026-03-06](report-2026-03-06.md)
 
-### [2026-03-05](report-2026-03-05.md)
+> 2026年3月6日是 AI 编程工具生态的重大升级日。OpenAI 正式发布 GPT-5.4 模型，十余个主流工具（Cline、gptme、Zed、OpenCode 等）同日完成集成，标志着新一代大模型全面进入生产环境。同时，MCP/ACP 标准化协议、安全沙箱隔离、多 Agent UI 等技术方向呈现明显的行业协同演进趋势。
 
-今日 AI 编码工具生态呈现三大核心趋势：平台化集成加速（插件系统、MCP 协议、GitHub Action 正式版）、安全与稳定性成为重心（3 个 CVE 修复、数据丢失修复、stdin 悬死问题）、以及 UX 细节优化的规模化影响（UI 回退/修复、交互流程简化）。Claude Code v2.1.69 实现了 16MB 内存优化和多个泄漏修复，标志其生产就绪度显著提升。
-
-<div class="tp-focus-stats">
-<span class="tp-focus-stat"><strong>20</strong> PR 分析</span>
-<span class="tp-focus-stat tp-focus-stat--highlight"><strong>10</strong> 高影响信号</span>
-<span class="tp-focus-stat"><strong>19</strong> 仓库</span>
-<span class="tp-focus-stat"><strong>17</strong> Release</span>
-<span class="tp-focus-stat"><strong>273</strong> Commit</span>
-<span class="tp-focus-stat tp-focus-stat--warn"><strong>3</strong> Breaking Changes</span>
-</div>
-
-</div>
+| 指标 | 数值 | 指标 | 数值 |
+|------|------|------|------|
+| 分析 PR 数 | 17 | 高影响信号 | 9 |
+| 涉及仓库数 | 18 | Release 数 | 17 |
+| Commit 数 | 266 | Breaking Changes | 4 |
 
 ## 最新周报
 
@@ -41,6 +34,7 @@
 
 | 日期 | 高影响 | 分析 PR | Release | 报告 |
 |------|----------|---------|---------|------|
+| 2026-03-06 | 9 | 17 | 17 | [查看](report-2026-03-06.md) |
 | 2026-03-05 | 10 | 20 | 17 | [查看](report-2026-03-05.md) |
 | 2026-03-03 | 6 | 20 | 6 | [查看](report-2026-03-03.md) |
 | 2026-03-02 | 6 | 20 | 9 | [查看](report-2026-03-02.md) |
@@ -50,7 +44,6 @@
 | 2026-02-25 | 11 | 20 | 26 | [查看](report-2026-02-25.md) |
 | 2026-02-24 | 12 | 20 | 17 | [查看](report-2026-02-24.md) |
 | 2026-02-23 | 4 | 20 | 3 | [查看](report-2026-02-23.md) |
-| 2026-02-22 | 4 | 20 | 2 | [查看](report-2026-02-22.md) |
 
 ## 最近周报
 
