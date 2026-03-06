@@ -54,10 +54,9 @@ def main():
     if not json_path:
         console.print(f"[yellow]报告文件不存在: report-{report_date}.json[/yellow]")
         raise SystemExit(1)
-    else:
-        # 直接读取 JSON
-        console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
-        report = load_daily_report_from_json(str(json_path), console)
+
+    console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
+    report = load_daily_report_from_json(str(json_path), console)
 
     try:
         print_daily_report_summary(console, report)

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-from pathlib import Path
 
 from anthropic import Anthropic
 
@@ -101,12 +100,6 @@ class TrendPulsePipeline:
             daily_app.run_issue_agent_analysis(snapshot_date)
             return
         self.issue_workflow.run_issue_agent_analysis(snapshot_date)
-
-    def _get_output_path(self, date: datetime) -> str:
-        """获取报告输出路径。"""
-        reports_dir = Path(self.settings.output_dir)
-        filename = f"report-{date.strftime('%Y-%m-%d')}.md"
-        return str(reports_dir / filename)
 
     def run_weekly(self, date: datetime | None = None) -> WeeklyReport:
         """运行周报生成流程。"""

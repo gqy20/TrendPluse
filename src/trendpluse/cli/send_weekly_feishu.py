@@ -60,9 +60,9 @@ def main():
             f"[yellow]周报文件不存在: reports/weekly/weekly-{week_id}.json[/yellow]"
         )
         raise SystemExit(1)
-    else:
-        console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
-        report = load_weekly_report_from_json(str(json_path))
+
+    console.print(f"  [dim]读取 JSON 文件: {json_path}[/dim]")
+    report = load_weekly_report_from_json(str(json_path))
 
     try:
         print_weekly_report_summary(console, report)
