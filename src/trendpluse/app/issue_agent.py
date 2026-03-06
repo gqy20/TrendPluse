@@ -109,6 +109,15 @@ class IssueWorkflowCoordinator:
                 model=self.issue_agent_model,
                 retry_max_attempts=self.issue_agent_retry_max_attempts,
                 retry_wait_seconds=self.issue_agent_retry_wait_seconds,
+                review_confidence_threshold=getattr(
+                    self, "issue_agent_review_confidence_threshold", 0.6
+                ),
+                total_timeout_seconds=getattr(
+                    self, "issue_agent_total_timeout_seconds", 600.0
+                ),
+                attempt_timeout_seconds=getattr(
+                    self, "issue_agent_attempt_timeout_seconds", 120.0
+                ),
             )
             result: IssueAgentBatchResult = await runner.analyze_directory(
                 input_dir, output_dir

@@ -16,10 +16,17 @@ class _StubIssueAgentRunner:
         model=None,
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
+        review_confidence_threshold: float = 0.6,
+        total_timeout_seconds: float = 600.0,
+        attempt_timeout_seconds: float = 120.0,
+        **kwargs,  # 接受其他参数
     ):
         self.model = model
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
+        self.review_confidence_threshold = review_confidence_threshold
+        self.total_timeout_seconds = total_timeout_seconds
+        self.attempt_timeout_seconds = attempt_timeout_seconds
 
     async def analyze_directory(
         self, input_dir: Path, output_dir: Path

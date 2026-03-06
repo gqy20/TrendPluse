@@ -111,7 +111,7 @@ async def test_analyze_file_raises_timeout_error(tmp_path) -> None:
         model=None,
         retry_max_attempts=1,
         retry_wait_seconds=0,
-        analysis_timeout_seconds=0.01,
+        total_timeout_seconds=0.01,
     )
     output_path = tmp_path / "x.analysis.json"
     input_path = tmp_path / "x.jsonl"

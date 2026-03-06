@@ -204,6 +204,18 @@ class Settings(BaseSettings):
         le=30.0,
         description="Issue Agent 重试等待时间（秒）",
     )
+    issue_agent_attempt_timeout_seconds: int = Field(
+        default=120,
+        ge=30,
+        le=300,
+        description="Issue Agent 单轮分析超时时间（秒，默认120）",
+    )
+    issue_agent_total_timeout_seconds: int = Field(
+        default=600,
+        ge=60,
+        le=1800,
+        description="Issue Agent 单文件总超时时间（秒，默认600）",
+    )
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

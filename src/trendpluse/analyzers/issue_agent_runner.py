@@ -1,4 +1,9 @@
-"""Issue Agent 执行器。"""
+"""Issue Agent 执行器。
+
+借鉴 IssueLab 的设计，实现双层超时机制：
+- 单轮超时（attempt_timeout）：每轮 LLM 分析的独立超时
+- 总超时（total_timeout）：单文件分析的总时间限制
+"""
 
 from __future__ import annotations
 
@@ -20,12 +25,19 @@ from trendpluse.models.issue_agent import (
 
 logger = logging.getLogger(__name__)
 
+# 默认超时配置（借鉴 IssueLab）
+DEFAULT_TOTAL_TIMEOUT_SECONDS = 600.0  # 单文件总超时 10 分钟
+DEFAULT_ATTEMPT_TIMEOUT_SECONDS = 120.0  # 单轮分析超时 2 分钟
+DEFAULT_STDERR_TAIL_LINES = 20
+
 
 class IssueAgentRunner:
-    """使用 Claude Agent SDK 分析 Issue 文件。"""
+    """使用 Claude Agent SDK 分析 Issue 文件。
 
-    DEFAULT_ANALYSIS_TIMEOUT_SECONDS = 300.0
-    DEFAULT_STDERR_TAIL_LINES = 20
+    超时机制：
+    - 单轮超时：每轮 ROUND1/ROUND2/ROUND3 独立计时，超时后可重试当前轮
+    - 总超时：整个三轮分析的总时间限制，超时后终止
+    """
 
     def __init__(
         self,
@@ -33,7 +45,8 @@ class IssueAgentRunner:
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
         review_confidence_threshold: float = 0.6,
-        analysis_timeout_seconds: float = DEFAULT_ANALYSIS_TIMEOUT_SECONDS,
+        total_timeout_seconds: float = DEFAULT_TOTAL_TIMEOUT_SECONDS,
+        attempt_timeout_seconds: float = DEFAULT_ATTEMPT_TIMEOUT_SECONDS,
         stderr_tail_lines: int = DEFAULT_STDERR_TAIL_LINES,
     ) -> None:
         self.model = model
@@ -42,18 +55,24 @@ class IssueAgentRunner:
         self.review_confidence_threshold = min(
             1.0, max(0.0, review_confidence_threshold)
         )
-        self.analysis_timeout_seconds = max(0.0, analysis_timeout_seconds)
+        self.total_timeout_seconds = max(0.0, total_timeout_seconds)
+        self.attempt_timeout_seconds = max(0.0, attempt_timeout_seconds)
         self.stderr_tail_lines = max(1, stderr_tail_lines)
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
-        """分析单个 JSONL 文件并写入 JSON 结果。"""
+        """分析单个 JSONL 文件并写入 JSON 结果。
+
+        使用双层超时保护：
+        - 总超时：限制整个分析流程的总时间
+        - 单轮超时：每轮 ROUND1/ROUND2/ROUND3 独立计时
+        """
         input_path = input_path.resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         last_exc: Exception | None = None
         for attempt in range(1, self.retry_max_attempts + 1):
             try:
-                validated = await self._run_with_timeout(
+                validated = await self._run_with_total_timeout(
                     self._run_three_round_analysis(input_path)
                 )
                 normalized_text = json.dumps(
@@ -83,28 +102,69 @@ class IssueAgentRunner:
         ) from last_exc
 
     async def _run_three_round_analysis(self, input_path: Path) -> IssueAgentReport:
+        """执行三轮分析，每轮独立超时。
+
+        流程：
+        1. ROUND1: 候选痛点抽取（高召回）
+        2. ROUND2: 归一化合并（按根因合并）
+        3. ROUND3: 证据驱动审核（保留判定）
+        """
+        # ROUND1: 候选痛点抽取
         round1_prompt = self._build_round1_prompt(input_path)
-        round1_text = await self._run_agent_query(round1_prompt)
+        round1_text = await self._run_with_attempt_timeout(
+            self._run_agent_query(round1_prompt),
+            round_name="ROUND1",
+        )
         round1_data = self._parse_round_payload(round1_text, "candidate_pain_points")
+        logger.info(
+            "Issue Agent ROUND1 完成: file=%s, candidates=%d",
+            input_path.name,
+            len(round1_data.get("candidate_pain_points", [])),
+        )
 
+        # ROUND2: 归一化合并
         round2_prompt = self._build_round2_prompt(input_path, round1_data)
-        round2_text = await self._run_agent_query(round2_prompt)
+        round2_text = await self._run_with_attempt_timeout(
+            self._run_agent_query(round2_prompt),
+            round_name="ROUND2",
+        )
         round2_data = self._parse_round_payload(round2_text, "merged_pain_points")
+        logger.info(
+            "Issue Agent ROUND2 完成: file=%s, merged=%d",
+            input_path.name,
+            len(round2_data.get("merged_pain_points", [])),
+        )
 
+        # ROUND3: 证据驱动审核
         round3_prompt = self._build_round3_prompt(input_path, round2_data)
-        round3_text = await self._run_agent_query(round3_prompt)
+        round3_text = await self._run_with_attempt_timeout(
+            self._run_agent_query(round3_prompt),
+            round_name="ROUND3",
+        )
         round3_data = self._parse_json_like_text(round3_text)
         if not isinstance(round3_data, dict):
             raise ValueError("ROUND3 输出不是合法 JSON 对象")
 
         if "top_pain_points" in round3_data:
+            logger.info(
+                "Issue Agent ROUND3 完成: file=%s, top_pain_points=%d",
+                input_path.name,
+                len(round3_data.get("top_pain_points", [])),
+            )
             return IssueAgentReport.model_validate(round3_data)
 
         reviewed = round3_data.get("reviewed_pain_points")
         if not isinstance(reviewed, list):
             raise ValueError("ROUND3 缺少 reviewed_pain_points 字段")
 
-        return self._build_report_from_reviewed_points(reviewed)
+        report = self._build_report_from_reviewed_points(reviewed)
+        logger.info(
+            "Issue Agent ROUND3 完成: file=%s, reviewed=%d, kept=%d",
+            input_path.name,
+            len(reviewed),
+            len(report.top_pain_points),
+        )
+        return report
 
     def _build_round1_prompt(self, input_path: Path) -> str:
         return (
@@ -488,17 +548,47 @@ class IssueAgentRunner:
             return None
         return parsed if isinstance(parsed, dict) else None
 
-    async def _run_with_timeout(self, coroutine: Any) -> IssueAgentReport:
-        """为单文件分析增加超时保护。"""
-        if self.analysis_timeout_seconds <= 0:
+    async def _run_with_total_timeout(self, coroutine: Any) -> IssueAgentReport:
+        """为单文件分析增加总超时保护。"""
+        if self.total_timeout_seconds <= 0:
             return await coroutine
         try:
-            async with asyncio.timeout(self.analysis_timeout_seconds):
+            async with asyncio.timeout(self.total_timeout_seconds):
                 return await coroutine
         except TimeoutError as exc:
             raise TimeoutError(
-                f"Issue Agent 单文件分析超时 ({self.analysis_timeout_seconds:.0f}s)"
+                f"Issue Agent 单文件分析总超时 ({self.total_timeout_seconds:.0f}s)"
             ) from exc
+
+    async def _run_with_attempt_timeout(
+        self, coroutine: Any, round_name: str = "unknown"
+    ) -> str:
+        """为单轮分析增加超时保护。
+
+        Args:
+            coroutine: 要执行的协程（返回 str）
+            round_name: 轮次名称，用于错误消息
+
+        Returns:
+            LLM 返回的文本结果
+        """
+        if self.attempt_timeout_seconds <= 0:
+            return await coroutine
+        try:
+            async with asyncio.timeout(self.attempt_timeout_seconds):
+                result = await coroutine
+                logger.debug(
+                    "Issue Agent %s 完成: attempt_timeout=%ds",
+                    round_name,
+                    self.attempt_timeout_seconds,
+                )
+                return result
+        except TimeoutError as exc:
+            timeout_msg = (
+                f"Issue Agent {round_name} "
+                f"单轮超时 ({self.attempt_timeout_seconds:.0f}s)"
+            )
+            raise TimeoutError(timeout_msg) from exc
 
     def _build_stderr_handler(self) -> Any:
         """构建 SDK stderr 回调，保存最近几行诊断信息。"""
