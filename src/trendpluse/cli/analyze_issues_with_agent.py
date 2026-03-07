@@ -30,9 +30,7 @@ async def _run(input_path: Path, output_path: Path, model: str | None) -> None:
         retry_max_attempts=settings.issue_agent_retry_max_attempts,
         retry_wait_seconds=settings.issue_agent_retry_wait_seconds,
         max_concurrency=settings.max_parallel_workers,
-        review_confidence_threshold=getattr(
-            settings, "issue_agent_review_confidence_threshold", 0.6
-        ),
+        review_confidence_threshold=settings.issue_agent_review_confidence_threshold,
         total_timeout_seconds=settings.issue_agent_total_timeout_seconds,
         attempt_timeout_seconds=settings.issue_agent_attempt_timeout_seconds,
     )

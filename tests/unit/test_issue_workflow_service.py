@@ -213,6 +213,7 @@ async def test_collect_and_analyze_async_passes_timeout_settings(tmp_path) -> No
         issue_agent_model="test-model",
         issue_agent_retry_max_attempts=2,
         issue_agent_retry_wait_seconds=0.5,
+        issue_agent_review_confidence_threshold=0.75,
         issue_agent_attempt_timeout_seconds=45,
         issue_agent_total_timeout_seconds=180,
         runner_factory=fake_runner_factory,
@@ -223,6 +224,7 @@ async def test_collect_and_analyze_async_passes_timeout_settings(tmp_path) -> No
     assert runner.model == "test-model"
     assert runner.retry_max_attempts == 2
     assert runner.retry_wait_seconds == 0.5
+    assert runner.review_confidence_threshold == 0.75
     assert runner.attempt_timeout_seconds == 45
     assert runner.total_timeout_seconds == 180
     assert runner.max_concurrency == 4

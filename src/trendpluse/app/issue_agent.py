@@ -37,6 +37,7 @@ class IssueWorkflowCoordinator:
         issue_agent_model: str | None = None,
         issue_agent_retry_max_attempts: int = 3,
         issue_agent_retry_wait_seconds: float = 1.0,
+        issue_agent_review_confidence_threshold: float = 0.6,
         issue_agent_attempt_timeout_seconds: float = 120.0,
         issue_agent_total_timeout_seconds: float = 600.0,
         runner_factory: Callable[..., Any] | None = None,
@@ -52,6 +53,9 @@ class IssueWorkflowCoordinator:
         self.issue_agent_model = issue_agent_model
         self.issue_agent_retry_max_attempts = issue_agent_retry_max_attempts
         self.issue_agent_retry_wait_seconds = issue_agent_retry_wait_seconds
+        self.issue_agent_review_confidence_threshold = (
+            issue_agent_review_confidence_threshold
+        )
         self.issue_agent_attempt_timeout_seconds = issue_agent_attempt_timeout_seconds
         self.issue_agent_total_timeout_seconds = issue_agent_total_timeout_seconds
         self.runner_factory = runner_factory or _default_issue_runner_factory
@@ -116,8 +120,8 @@ class IssueWorkflowCoordinator:
                 retry_max_attempts=self.issue_agent_retry_max_attempts,
                 retry_wait_seconds=self.issue_agent_retry_wait_seconds,
                 max_concurrency=self.max_parallel_workers,
-                review_confidence_threshold=getattr(
-                    self, "issue_agent_review_confidence_threshold", 0.6
+                review_confidence_threshold=(
+                    self.issue_agent_review_confidence_threshold
                 ),
                 total_timeout_seconds=self.issue_agent_total_timeout_seconds,
                 attempt_timeout_seconds=self.issue_agent_attempt_timeout_seconds,

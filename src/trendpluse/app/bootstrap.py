@@ -206,6 +206,9 @@ def build_app_components(
         issue_agent_model=settings.issue_agent_model,
         issue_agent_retry_max_attempts=settings.issue_agent_retry_max_attempts,
         issue_agent_retry_wait_seconds=settings.issue_agent_retry_wait_seconds,
+        issue_agent_review_confidence_threshold=(
+            settings.issue_agent_review_confidence_threshold
+        ),
         issue_agent_attempt_timeout_seconds=(
             settings.issue_agent_attempt_timeout_seconds
         ),

@@ -204,6 +204,12 @@ class Settings(BaseSettings):
         le=30.0,
         description="Issue Agent 重试等待时间（秒）",
     )
+    issue_agent_review_confidence_threshold: float = Field(
+        default=0.6,
+        ge=0.0,
+        le=1.0,
+        description="Issue Agent 审核保留阈值（低于该置信度的信号会被过滤）",
+    )
     issue_agent_attempt_timeout_seconds: int = Field(
         default=120,
         ge=30,

@@ -225,6 +225,21 @@ class TestSettings:
         # Assert
         assert settings.daily_token_budget == 100_000
 
+    def test_issue_agent_review_confidence_threshold_default_value(self, monkeypatch):
+        """测试：Issue Agent 审核阈值默认值应该是 0.6"""
+        # Arrange
+        self._clear_github_token_env(monkeypatch)
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.issue_agent_review_confidence_threshold == 0.6
+
     def test_feishu_at_mobiles_empty_string(self, monkeypatch):
         """测试：空字符串应该返回空列表"""
         # Arrange
