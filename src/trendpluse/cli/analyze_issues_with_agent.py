@@ -29,6 +29,7 @@ async def _run(input_path: Path, output_path: Path, model: str | None) -> None:
         model=model or settings.issue_agent_model,
         retry_max_attempts=settings.issue_agent_retry_max_attempts,
         retry_wait_seconds=settings.issue_agent_retry_wait_seconds,
+        max_concurrency=settings.max_parallel_workers,
         review_confidence_threshold=getattr(
             settings, "issue_agent_review_confidence_threshold", 0.6
         ),
@@ -39,13 +40,17 @@ async def _run(input_path: Path, output_path: Path, model: str | None) -> None:
     if not files:
         raise SystemExit(f"未找到可分析的 jsonl 文件: {input_path}")
 
-    for file_path in files:
-        if output_path.is_dir() or output_path.suffix == "":
-            output_path.mkdir(parents=True, exist_ok=True)
-            out_file = output_path / f"{file_path.stem}.analysis.json"
-        else:
-            out_file = output_path
-        await runner.analyze_file(file_path, out_file)
+    if input_path.is_dir() or len(files) > 1:
+        await runner.analyze_directory(input_path, output_path)
+        return
+
+    file_path = files[0]
+    if output_path.is_dir() or output_path.suffix == "":
+        output_path.mkdir(parents=True, exist_ok=True)
+        out_file = output_path / f"{file_path.stem}.analysis.json"
+    else:
+        out_file = output_path
+    await runner.analyze_file(file_path, out_file)
 
 
 def main() -> None:

@@ -50,6 +50,7 @@ class IssueAgentRunner:
         total_timeout_seconds: float = DEFAULT_TOTAL_TIMEOUT_SECONDS,
         attempt_timeout_seconds: float = DEFAULT_ATTEMPT_TIMEOUT_SECONDS,
         stderr_tail_lines: int = DEFAULT_STDERR_TAIL_LINES,
+        max_concurrency: int = 4,
     ) -> None:
         self.model = model
         self.retry_max_attempts = max(1, retry_max_attempts)
@@ -60,6 +61,7 @@ class IssueAgentRunner:
         self.total_timeout_seconds = max(0.0, total_timeout_seconds)
         self.attempt_timeout_seconds = max(0.0, attempt_timeout_seconds)
         self.stderr_tail_lines = max(1, stderr_tail_lines)
+        self.max_concurrency = max(1, max_concurrency)
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
         """分析单个 JSONL 文件并写入 JSON 结果。
@@ -326,23 +328,37 @@ class IssueAgentRunner:
             )
 
         output_dir.mkdir(parents=True, exist_ok=True)
+        semaphore = asyncio.Semaphore(self.max_concurrency)
+
+        async def _analyze_single(
+            input_path: Path,
+        ) -> tuple[Path, Exception | None]:
+            output_path = output_dir / f"{input_path.stem}.analysis.json"
+            async with semaphore:
+                try:
+                    await self.analyze_file(input_path, output_path)
+                    return input_path, None
+                except Exception as exc:
+                    return input_path, exc
+
+        results = await asyncio.gather(*[_analyze_single(path) for path in files])
+
         success_count = 0
         failed_count = 0
         failed_samples: list[str] = []
-        for input_path in files:
-            output_path = output_dir / f"{input_path.stem}.analysis.json"
-            try:
-                await self.analyze_file(input_path, output_path)
+        for input_path, exc in results:
+            if exc is None:
                 success_count += 1
-            except Exception as exc:
-                failed_count += 1
-                if len(failed_samples) < 5:
-                    failed_samples.append(input_path.name)
-                logger.warning(
-                    "Issue Agent 单文件分析失败: file=%s, error=%s",
-                    input_path.name,
-                    exc,
-                )
+                continue
+
+            failed_count += 1
+            if len(failed_samples) < 5:
+                failed_samples.append(input_path.name)
+            logger.warning(
+                "Issue Agent 单文件分析失败: file=%s, error=%s",
+                input_path.name,
+                exc,
+            )
         return IssueAgentBatchResult(
             expected_files=len(files),
             succeeded_files=success_count,

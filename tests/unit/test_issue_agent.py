@@ -273,3 +273,37 @@ async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> N
     assert "bad.jsonl" in result.failed_samples
     assert (output_dir / "a.analysis.json").exists()
     assert (output_dir / "c.analysis.json").exists()
+
+
+@pytest.mark.asyncio
+async def test_analyze_directory_respects_max_concurrency(tmp_path) -> None:
+    class _ConcurrencyRunner(IssueAgentRunner):
+        def __init__(self) -> None:
+            super().__init__(model=None, max_concurrency=2)
+            self.active = 0
+            self.max_seen = 0
+
+        async def analyze_file(self, input_path, output_path):
+            self.active += 1
+            self.max_seen = max(self.max_seen, self.active)
+            await asyncio.sleep(0.02)
+            output_path.write_text('{"signals":[]}', encoding="utf-8")
+            self.active -= 1
+            return '{"signals":[]}'
+
+    runner = _ConcurrencyRunner()
+    input_dir = tmp_path / "in"
+    output_dir = tmp_path / "out"
+    input_dir.mkdir()
+    for name in ["a", "b", "c", "d"]:
+        (input_dir / f"{name}.jsonl").write_text(
+            '{"repo":"a/b","issue_id":1}\n',
+            encoding="utf-8",
+        )
+
+    result = await runner.analyze_directory(input_dir, output_dir)
+
+    assert result.expected_files == 4
+    assert result.succeeded_files == 4
+    assert result.failed_files == 0
+    assert runner.max_seen == 2

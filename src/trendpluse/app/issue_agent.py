@@ -115,6 +115,7 @@ class IssueWorkflowCoordinator:
                 model=self.issue_agent_model,
                 retry_max_attempts=self.issue_agent_retry_max_attempts,
                 retry_wait_seconds=self.issue_agent_retry_wait_seconds,
+                max_concurrency=self.max_parallel_workers,
                 review_confidence_threshold=getattr(
                     self, "issue_agent_review_confidence_threshold", 0.6
                 ),

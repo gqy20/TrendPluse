@@ -39,10 +39,17 @@ class DummyIssueCollector:
 class DummyIssueRunner:
     """测试用 IssueAgentRunner。"""
 
-    def __init__(self, model=None, retry_max_attempts=3, retry_wait_seconds=1.0):
+    def __init__(
+        self,
+        model=None,
+        retry_max_attempts=3,
+        retry_wait_seconds=1.0,
+        max_concurrency=4,
+    ):
         self.model = model
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
+        self.max_concurrency = max_concurrency
         self.calls = []
 
     async def analyze_directory(self, input_dir: Path, output_dir: Path):
@@ -71,8 +78,14 @@ class RecordingIssueRunner(DummyIssueRunner):
         review_confidence_threshold=0.6,
         total_timeout_seconds=600.0,
         attempt_timeout_seconds=120.0,
+        max_concurrency=4,
     ):
-        super().__init__(model, retry_max_attempts, retry_wait_seconds)
+        super().__init__(
+            model,
+            retry_max_attempts,
+            retry_wait_seconds,
+            max_concurrency=max_concurrency,
+        )
         self.review_confidence_threshold = review_confidence_threshold
         self.total_timeout_seconds = total_timeout_seconds
         self.attempt_timeout_seconds = attempt_timeout_seconds
@@ -212,6 +225,7 @@ async def test_collect_and_analyze_async_passes_timeout_settings(tmp_path) -> No
     assert runner.retry_wait_seconds == 0.5
     assert runner.attempt_timeout_seconds == 45
     assert runner.total_timeout_seconds == 180
+    assert runner.max_concurrency == 4
 
 
 @pytest.mark.asyncio
