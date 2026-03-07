@@ -1,0 +1,3012 @@
+{
+  "date": "2026-03-07",
+  "summary_brief": "2026年3月7日是AI编程工具生态的关键里程碑日：GPT-5.4模型在Cline、OpenCode、Zed等多个主流工具中同步集成，标志着新一代大模型正式进入生产环境。与此同时，MCP协议标准化加速推进，安全防护体系全面升级（ReDoS、Unicode欺骗、沙箱分离），AI Agent工具链正从功能迭代走向生态标准化与安全成熟期。",
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "GPT-5.4 模型广泛集成：新一代大模型进入生产环境",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Cline、OpenCode、Zed、gptme等多个主流AI编程工具同步支持GPT-5.4系列模型，代码专用变体(gpt-5.4-codex)被设为推荐默认，标志着OpenAI最新能力已在生产环境广泛落地。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48",
+        "https://github.com/ErikBjare/gptme/pull/1604",
+        "https://github.com/cline/cline/commit/8fb2e8a3aad74f11dc709bd3293a5d723a9c74f9",
+        "https://github.com/cline/cline/pull/9692"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python",
+        "zed-industries/zed",
+        "ErikBjare/gptme",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": [
+        "pr-3",
+        "pr-14",
+        "commit-3",
+        "release-2"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "MCP协议标准化加速：AI Agent工具互操作性的统一方向",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "MCP（Model Context Protocol）正成为AI Agent工具集成的标准协议，Gemini CLI、Codex、DeepAgents、Zed等多个主流项目都在实现MCP支持，配合标准化的Agent Skills目录结构，构建跨平台工具互操作性生态。",
+      "sources": [
+        "https://github.com/OpenDevin/OpenDevin/pull/13267",
+        "https://github.com/google-gemini/gemini-cli/commit/931e668b4789c9cf77733f04f460d759bc5ed14f",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.70",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.70"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "anthropics/claude-code-action",
+        "zed-industries/zed",
+        "OpenDevin/OpenDevin",
+        "anthropics/claude-code",
+        "google-gemini/gemini-cli",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "pr-16",
+        "release-1",
+        "release-7"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "AI Agent安全防护体系全面升级：从漏洞修复到主动防御",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多层面安全加固同步推进：LangChain修复ReDoS漏洞、DeepAgents检测Unicode欺骗攻击、Codex实现沙箱策略分离、Fabric修复API密钥泄露/路径遍历/Shell注入，表明AI Agent安全从被动响应转向主动防御架构。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/d4c8544bd6bf3b6df50b99f8a0c7208c20f86bd9",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.47",
+        "https://github.com/openai/codex/commit/f82678b2a466b3e6e30b8f1eb5ca2dbae528daa7",
+        "https://github.com/langchain-ai/langchain/commit/0bc831495ca20024373a4c83a7ce8ce444d941a2",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.70",
+        "https://github.com/danielmiessler/fabric/pull/2049"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "anthropics/claude-agent-sdk-python",
+        "ruvnet/claude-flow",
+        "langchain-ai/langchain",
+        "danielmiessler/fabric",
+        "openai/codex",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": [
+        "pr-1",
+        "commit-2",
+        "commit-5",
+        "commit-12",
+        "release-3",
+        "release-4",
+        "release-5"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "Hook系统与事件驱动架构：AI Agent可扩展性基础设施",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline、DeepAgents、Claude Flow等工具同步引入Hook系统，支持外部工具订阅AI Agent生命周期事件，结合Notification Hook实现关注边界检测，是构建可扩展AI工具链的基础设施。",
+      "sources": [
+        "https://github.com/cline/cline/pull/9699",
+        "https://github.com/cline/cline/commit/6ccd662a1f60956b67a5030863fdcf92a22421c3",
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.432"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "cline/cline",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": [
+        "pr-6",
+        "commit-4",
+        "release-9"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "诊断与自检系统：AI Agent工具链的DevOps成熟化",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme引入doctor命令检测配置完整性、版本过时、浏览器依赖等，配合扩展的评估套件覆盖数据处理、多文件重构等实际场景，展示AI Agent工具向自诊断和标准化评估方向演进的趋势。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/pull/1613",
+        "https://github.com/ErikBjare/gptme/pull/1607",
+        "https://github.com/ErikBjare/gptme/commit/c9a691681ebdc1383fc1838a8fe6f5d6f0db71c7",
+        "https://github.com/ErikBjare/gptme/pull/1612"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "pr-9",
+        "pr-12",
+        "commit-11"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "IDE深度集成与开发者体验优化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code新增VS Code活动栏会话管理、原生MCP服务器管理对话框和计划文档视图，结合上下文窗口利用率可视化、模型可用性过滤等特性，显著提升IDE内AI协作体验。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.70",
+        "https://github.com/ErikBjare/gptme/commit/b817e810183e0c4bff75a673a2397c277a5e5e73",
+        "https://github.com/ErikBjare/gptme/pull/1606",
+        "https://github.com/ErikBjare/gptme/pull/1611"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-7",
+        "pr-11",
+        "release-1",
+        "commit-14"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "自动化能力扩展：周期性任务与循环执行",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code新增/loop命令和cron调度工具支持周期性提示任务，Cline添加--auto-approve-all交互模式标志，表明AI Agent从单次任务执行向持续自动化工作流演进。",
+      "sources": [
+        "https://github.com/cline/cline/pull/9698",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.71"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "release-0"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "Agent记忆能力与持久化：跨会话上下文保持",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic Java SDK新增Memory Tools原生支持，使AI Agent能够持久化记忆实现跨会话上下文保持，是构建长期运行Agent系统的关键能力。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.16.0",
+        "https://github.com/cline/cline/releases/tag/v3.71.0",
+        "https://github.com/anthropics/anthropic-sdk-java/commit/b32b67ce616eaa4ec04fd60438546b217d56f576"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java",
+        "cline/cline",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": [
+        "commit-6",
+        "release-6",
+        "release-8"
+      ]
+    },
+    {
+      "id": "eng-8",
+      "title": "企业级云服务认证集成：AWS Bedrock支持扩展",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Fabric和Cline同步支持AWS Bedrock的Bearer Token (ABSK)认证方式，配合三层认证架构，简化企业级云服务集成，反映AI工具对企业部署场景的重视。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/3c879c07ce93f41e29abc7bfe7ad68225c942d76",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.47"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric",
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "commit-10",
+        "release-3"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code 新增循环任务调度",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增 `/loop` 命令和 cron 调度工具，支持在会话中运行周期性提示任务，扩展了 AI Agent 的自动化能力边界。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.71"
+      ],
+      "related_repos": [
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Claude Code VS Code 深度集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增 VS Code 活动栏会话管理、原生 MCP 服务器管理对话框和计划文档视图，显著提升 IDE 内 AI 协作体验。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.70"
+      ],
+      "related_repos": [
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "GPT-5.4 模型广泛集成",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Cline、OpenCode、Zed 等主流 AI 编程工具同步支持 GPT-5.4 模型，标志着新一代大模型进入生产环境。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python",
+        "zed-industries/zed"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Fabric 安全加固更新",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "修复 API 密钥泄露、路径遍历和 Shell 注入等安全漏洞（CWE-200/78/22），并新增 AWS Bedrock 三层认证支持。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.47"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "Claude Flow 跨平台安全修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "修复命令注入漏洞、添加包名验证和 IPFS CID 格式校验，同时实现 Windows 平台 Hook 完全兼容。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "ruvnet/claude-flow"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-5",
+      "title": "LangChain 修复 ReDoS 安全漏洞",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "修复 MRKL 和 ReAct action regex 中的正则表达式拒绝服务漏洞（CVE-2024-58340），影响广泛使用的 Agent 框架。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.70"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-6",
+      "title": "Agno 新增人类可读 ID 系统",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Agent 和 Team 采用 Docker 风格的人类可读标识符（如 brave-falcon-7x3k），替代 UUID 提升调试和监控体验。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.16.0"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java",
+        "agno-agi/agno"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-7",
+      "title": "DeepAgents 新增 MCP 工具自动发现",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "支持 MCP 工具自动加载和发现，新增欺骗性 Unicode 检测和 Hook 外部工具集成，增强 Agent 工具生态。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.70"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-8",
+      "title": "Java SDK 支持 Memory Tools",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Anthropic Java SDK 新增 Memory Tools 支持，为 Java 生态的 AI Agent 开发提供原生记忆能力。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/v3.71.0"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-9",
+      "title": "Cline 新增 Notification Hook",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增 Notification Hook 用于关注和完成边界，增强 AI Agent 的事件驱动能力和外部系统集成。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.432"
+      ],
+      "related_repos": [
+        "danielmiessler/fabric",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 44,
+    "pr_count": 19,
+    "commit_count": 15,
+    "release_count": 10,
+    "unique_repos": 17,
+    "total_prs_analyzed": 19,
+    "total_releases": 25,
+    "high_impact_signals": 13,
+    "total_commits_analyzed": 353,
+    "total_releases_analyzed": 25,
+    "total_breaking_changes": 7
+  },
+  "activity": {
+    "total_commits": 353,
+    "active_repos_count": 24,
+    "top_repos": [
+      {
+        "repo": "openai/codex",
+        "commits": 60,
+        "top_contributors": [
+          "bolinfest",
+          "jif-oai",
+          "owenlin0",
+          "charley-oai",
+          "celia-oai"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 47,
+        "top_contributors": [
+          "thdxr",
+          "opencode-agent[bot]",
+          "adamdotdevin",
+          "Hona",
+          "iamdavidhill"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 45,
+        "top_contributors": [
+          "danilo-leal",
+          "ConradIrwin",
+          "mikayla-maki",
+          "probably-neb",
+          "reflectronic"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 32,
+        "top_contributors": [
+          "abhipatel12",
+          "gemini-cli-robot",
+          "SandyTao520",
+          "ehedlund",
+          "sehoon38"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 29,
+        "top_contributors": [
+          "eyurtsev",
+          "mdrxy",
+          "dependabot[bot]",
+          "jkennedyvz",
+          "jcuypers"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 25,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "damo",
+          "dtmeadows",
+          "cameron-mcateer",
+          "nikblanchet"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 17,
+        "top_contributors": [
+          "nite-knite",
+          "hyoban",
+          "hjlarry",
+          "hj24",
+          "pepsile"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 15,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 14,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]",
+          "bvandevliet"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 13,
+        "top_contributors": [
+          "dependabot[bot]",
+          "eyurtsev",
+          "jkennedyvz",
+          "langchain-model-profile-bot[bot]"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 10,
+        "top_contributors": [
+          "tofarr",
+          "malhotra5",
+          "jamiechicago312",
+          "jlav",
+          "aivong-openhands"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 9,
+        "top_contributors": [
+          "saoudrizwan",
+          "candieduniverse",
+          "BarreiroT",
+          "ClineXDiego",
+          "maxpaulus43"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 7,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user",
+          "qing-ant"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 7,
+        "top_contributors": [
+          "kausmeows",
+          "Mustafa-Esoofally",
+          "SalimELMARDI",
+          "SamOpenClaw",
+          "Br1an67"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 7,
+        "top_contributors": [
+          "WillemJiang",
+          "fancyboi999",
+          "null4536251",
+          "infoquest-byteplus",
+          "SulphurFH"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 3,
+        "top_contributors": [
+          "majdyz",
+          "Otto-AGPT"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 3,
+        "top_contributors": [
+          "eureka928",
+          "Parth-444",
+          "lucacolombo97"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 1,
+        "top_contributors": [
+          "zack-anthropic"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "jkennedyvz"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 1,
+        "top_contributors": [
+          "SergeyMenshykh"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 1,
+        "top_contributors": [
+          "greysonlalonde"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 25,
+    "unique_repos_count": 13,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.71",
+        "author": "ashwin-ant",
+        "date": "2026-03-07",
+        "summary": "## What's changed\n\n- Added `/loop` command to run a prompt or slash command on a recurring interval (e.g. `/loop 5m check the deploy`)\n- Added cron scheduling tools for recurring prompts within a session\n- Added `voice:pushToTalk` keybinding to make the voice activation key rebindable in `keybindings.json` (default: space) — modifier+letter combos like `meta+k` have zero typing interference\n- Added `fmt`, `comm`, `cmp`, `numfmt`, `expr`, `test`, `printf`, `getconf`, `seq`, `tsort`, and `pr` to the bash auto-approval allowlist\n- Fixed stdin freeze in long-running sessions where keystrokes stop being processed but the process stays alive\n- Fixed a 5–8 second startup freeze for users with voice mode enabled, caused by CoreAudio initialization blocking the main thread after system wake\n- Fixed startup UI freeze when many claude.ai proxy connectors refresh an expired OAuth token simultaneously\n- Fixed forked conversations (`/fork`) sharing the same plan file, which caused plan edits in one fork to overwrite the other\n- Fixed the Read tool putting oversized images into context when image processing failed, breaking subsequent turns in long image-heavy sessions\n- Fixed false-positive permission prompts for compound bash commands containing heredoc commit messages\n- Fixed plugin installations being lost when running multiple Claude Code instances\n- Fixed claude.ai connectors failing to reconnect after OAuth token refresh\n- Fixed claude.ai MCP connector startup notifications appearing for every org-configured connector instead of only previously connected ones\n- Fixed background agent completion notifications missing the output file path, which made it difficult for parent agents to recover agent results after context compaction\n- Fixed duplicate output in Bash tool error messages when commands exit with non-zero status\n- Fixed Chrome extension auto-detection getting permanently stuck on \"not installed\" after running on a machine without local Chrome\n- Fixed `/plugin marketplace update` failing with merge conflicts when the marketplace is pinned to a branch/tag ref\n- Fixed `/plugin marketplace add owner/repo@ref` incorrectly parsing `@` — previously only `#` worked as a ref separator, causing undiagnosable errors with `strictKnownMarketplaces`\n- Fixed duplicate entries in `/permissions` Workspace tab when the same directory is added with and without a trailing slash\n- Fixed `--print` hanging forever when team agents are configured — the exit loop no longer waits on long-lived `in_process_teammate` tasks\n- Fixed \"❯ Tool loaded.\" appearing in the REPL after every `ToolSearch` call\n- Fixed prompting for `cd <cwd> && git ...` on Windows when the model uses a mingw-style path\n- Improved startup time by deferring native image processor loading to first use\n- Improved bridge session reconnection to complete within seconds after laptop wake from sleep, instead of waiting up to 10 minutes\n- Improved `/plugin uninstall` to disable project-scoped plugins in `.claude/settings.local.json` instead of modifying `.claude/settings.json`, so changes don't affect teammates\n- Improved plugin-provided MCP server deduplication — servers that duplicate a manually-configured server (same command/URL) are now skipped, preventing duplicate connections and tool sets. Suppressions are shown in the `/plugin` menu.\n- Updated `/debug` to toggle debug logging on mid-session, since debug logs are no longer written by default\n- Removed startup notification noise for unauthenticated org-registered claude.ai connectors\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.71",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 /loop 命令支持按设定间隔循环执行提示词或斜杠命令",
+            "新增 cron 调度工具支持会话内定时执行任务",
+            "新增 voice:pushToTalk 快捷键绑定配置，支持自定义语音激活按键",
+            "修复长时间运行会话中的 stdin 冻结和启动卡顿问题（CoreAudio 初始化阻塞）",
+            "修复分叉对话共享计划文件、图片处理失败、插件丢失等多项稳定性问题"
+          ],
+          "summary_cn": "此版本主要新增了循环执行和定时任务功能，包括 /loop 命令和 cron 调度工具，并支持自定义语音激活快捷键。同时修复了多项影响用户体验的关键问题，包括长时间会话卡顿、启动冻结、分叉对话计划文件冲突等，显著提升了系统稳定性和可用性。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.48",
+        "author": "github-actions[bot]",
+        "date": "2026-03-07",
+        "summary": "\n### Bug Fixes\n\n- **Fine-grained tool streaming**: Fixed `include_partial_messages=True` not delivering `input_json_delta` events by enabling the `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` environment variable in the subprocess. This regression affected versions 0.1.36 through 0.1.47 for users without the server-side feature flag (#644)\n\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.71\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.48/\n\n```bash\npip install claude-agent-sdk==0.1.48\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复细粒度工具流式传输问题：include_partial_messages=True 现在能正确传递 input_json_delta 事件",
+            "在子进程中启用 CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING 环境变量以修复回归问题",
+            "此回归问题影响版本 0.1.36 至 0.1.47（针对未开启服务端功能标志的用户）",
+            "更新捆绑的 Claude CLI 至版本 2.1.71"
+          ],
+          "summary_cn": "此版本主要修复了细粒度工具流式传输的回归问题，使得 include_partial_messages=True 参数能够正确传递 input_json_delta 事件。该问题影响从 0.1.36 到 0.1.47 的多个版本。同时更新了捆绑的 Claude CLI 至最新版本 2.1.71。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.71",
+        "author": "ashwin-ant",
+        "date": "2026-03-07",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.71\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.71\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.71\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.71\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.71\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "更新至与 Claude Code v2.1.71 功能对等",
+            "SDK 版本同步更新",
+            "维持与最新 Claude Code 版本的兼容性"
+          ],
+          "summary_cn": "此版本将 Claude Agent SDK 更新至与 Claude Code v2.1.71 达成功能对等。这是一次常规的同步更新，确保 SDK 与最新版本的 Claude Code 保持一致性。用户可通过 npm、yarn、pnpm 或 bun 进行升级。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.70",
+        "author": "ashwin-ant",
+        "date": "2026-03-06",
+        "summary": "## What's changed\n\n- Fixed API 400 errors when using `ANTHROPIC_BASE_URL` with a third-party gateway — tool search now correctly detects proxy endpoints and disables `tool_reference` blocks\n- Fixed `API Error: 400 This model does not support the effort parameter` when using custom Bedrock inference profiles or other model identifiers not matching standard Claude naming patterns\n- Fixed empty model responses immediately after `ToolSearch` — the server renders tool schemas with system-prompt-style tags at the prompt tail, which could confuse models into stopping early\n- Fixed prompt-cache bust when an MCP server with `instructions` connects after the first turn\n- Fixed Enter inserting a newline instead of submitting when typing over a slow SSH connection\n- Fixed clipboard corrupting non-ASCII text (CJK, emoji) on Windows/WSL by using PowerShell `Set-Clipboard`\n- Fixed extra VS Code windows opening at startup on Windows when running from the VS Code integrated terminal\n- Fixed voice mode failing on Windows native binary with \"native audio module could not be loaded\"\n- Fixed push-to-talk not activating on session start when `voiceEnabled: true` was set in settings\n- Fixed markdown links containing `#NNN` references incorrectly pointing to the current repository instead of the linked URL\n- Fixed repeated \"Model updated to Opus 4.6\" notification when a project's `.claude/settings.json` has a legacy Opus model string pinned\n- Fixed plugins showing as inaccurately installed in `/plugin`\n- Fixed plugins showing \"not found in marketplace\" errors on fresh startup by auto-refreshing after marketplace installation\n- Fixed `/security-review` command failing with `unknown option merge-base` on older git versions\n- Fixed `/color` command having no way to reset back to the default color — `/color default`, `/color gray`, `/color reset`, and `/color none` now restore the default\n- Fixed a performance regression in the `AskUserQuestion` preview dialog that re-ran markdown rendering on every keystroke in the notes input\n- Fixed feature flags read during early startup never refreshing their disk cache, causing stale values to persist across sessions\n- Fixed `permissions.defaultMode` settings values other than `acceptEdits` or `plan` being applied in Claude Code Remote environments — they are now ignored\n- Fixed skill listing being re-injected on every `--resume` (~600 tokens saved per resume)\n- Fixed teleport marker not rendering in VS Code teleported sessions\n- Improved error message when microphone captures silence to distinguish from \"no speech detected\"\n- Improved compaction to preserve images in the summarizer request, allowing prompt cache reuse for faster and cheaper compaction\n- Improved `/rename` to work while Claude is processing, instead of being silently queued\n- Reduced prompt input re-renders during turns by ~74%\n- Reduced startup memory by ~426KB for users without custom CA certificates\n- Reduced Remote Control `/poll` rate to once per 10 minutes while connected (was 1–2s), cutting server load ~300×. Reconnection is unaffected — transport loss immediately wakes fast polling.\n- [VSCode] Added spark icon in VS Code activity bar that lists all Claude Code sessions, with sessions opening as full editors\n- [VSCode] Added full markdown document view for plans in VS Code, with support for adding comments to provide feedback\n- [VSCode] Added native MCP server management dialog — use `/mcp` in the chat panel to enable/disable servers, reconnect, and manage OAuth authentication without switching to the terminal\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.70",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.70 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.47",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.70\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.47/\n\n```bash\npip install claude-agent-sdk==0.1.47\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.47",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-python v0.1.47 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.70",
+        "author": "ashwin-ant",
+        "date": "2026-03-06",
+        "summary": "## What's changed\n\n- Fixed `type: \"http\"` MCP servers failing with HTTP 406 \"Not Acceptable\" on Streamable HTTP servers that strictly enforce the `Accept: application/json, text/event-stream` header\n- Changed `AgentToolInput.subagent_type` to optional — defaults to the `general-purpose` agent when omitted\n- Updated to parity with Claude Code v2.1.70\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.70\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.70\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.70\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.70\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.70",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.2.70 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "version": "v2.16.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-03-06",
+        "summary": "## 2.16.0 (2026-03-06)\n\nFull Changelog: [v2.15.0...v2.16.0](https://github.com/anthropics/anthropic-sdk-java/compare/v2.15.0...v2.16.0)\n\n### Features\n\n* **api:** change array_format to brackets ([f9eef6e](https://github.com/anthropics/anthropic-sdk-java/commit/f9eef6ecfdfc0e4ab88a089814412ff0cbf2b04c))\n* **api:** chore(config): clean up model enum list ([#31](https://github.com/anthropics/anthropic-sdk-java/issues/31)) ([b19aa51](https://github.com/anthropics/anthropic-sdk-java/commit/b19aa51b22b53448ad11252b5f546d6fb7dc711e))\n* **api:** remove publishing section from cli target ([f802cb0](https://github.com/anthropics/anthropic-sdk-java/commit/f802cb0b4cffaaf618c51c630b61275c888d742f))\n* **client:** support memory tools ([#853](https://github.com/anthropics/anthropic-sdk-java/issues/853)) ([f824954](https://github.com/anthropics/anthropic-sdk-java/commit/f8249549dadd9761bf844b5f95f9a497624c894a))\n* **tests:** update mock server ([1ec509c](https://github.com/anthropics/anthropic-sdk-java/commit/1ec509c7fa541309bd5c21226e5a8c1737410fe4))\n\n\n### Bug Fixes\n\n* clear last tool response when user sets next params ([#895](https://github.com/anthropics/anthropic-sdk-java/issues/895)) ([5b082a0](https://github.com/anthropics/anthropic-sdk-java/commit/5b082a0121726ea1699d84b202e91203293120f1))\n* **client:** update model references from claude-4-sonnet-20250514 to claude-sonnet-4-5 ([746d5da](https://github.com/anthropics/anthropic-sdk-java/commit/746d5da19056a51be7ff5944ae02f13c75ff9859))\n* set Accept header in more places ([bc159c8](https://github.com/anthropics/anthropic-sdk-java/commit/bc159c81f3d8db19547743b6245334ba865db73d))\n\n\n### Chores\n\n* drop apache dependency ([ee7f3d4](https://github.com/anthropics/anthropic-sdk-java/commit/ee7f3d492c91958fa7fe5ca73195dd2fa96284d4))\n* **internal:** codegen related update ([159c037](https://github.com/anthropics/anthropic-sdk-java/commit/159c0376d6ad217e6f6eb675b5e56b94259be553))\n* **internal:** expand imports ([6a3adca](https://github.com/anthropics/anthropic-sdk-java/commit/6a3adca5f3ba072dbf10e3d95c3dd6116f64b353))\n* make `Properties` more resilient to `null` ([5c7ad57](https://github.com/anthropics/anthropic-sdk-java/commit/5c7ad57d2a9c6ee69fe1c96a6cd8e5e2ada67f87))\n* rename method to avoid conflict ([b9b400d](https://github.com/anthropics/anthropic-sdk-java/commit/b9b400dbd836080a1a4f5cf9eca2a2895e56430c))\n* **tests:** unskip tests that are now supported in steady ([8cad6ac](https://github.com/anthropics/anthropic-sdk-java/commit/8cad6ac00c3e7cf25666c22bee7b823bd561ba07))\n\n\n### Documentation\n\n* additional structured outputs documentation ([#302](https://github.com/anthropics/anthropic-sdk-java/issues/302)) ([3b1f131](https://github.com/anthropics/anthropic-sdk-java/commit/3b1f131312954856ecdaa66f06741e1e5f86d81d))\n* streamline README and rebrand to Claude SDK ([#815](https://github.com/anthropics/anthropic-sdk-java/issues/815)) ([6b550bf](https://github.com/anthropics/anthropic-sdk-java/commit/6b550bf8e9a3106a521eeabbda9b12240ab3bb3f))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.16.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增内存工具（Memory Tools）支持，扩展了客户端功能",
+            "更改数组格式为括号形式（brackets），优化参数传递",
+            "更新模型引用，从 claude-4-sonnet-20250514 升级到 claude-sonnet-4-5",
+            "修复工具响应清除逻辑，解决用户设置参数时的问题",
+            "移除 Apache 依赖，减少外部依赖项"
+          ],
+          "summary_cn": "此版本主要新增了内存工具（Memory Tools）支持，并更新了 Claude 模型引用到最新版本。同时修复了工具响应清除的逻辑问题，优化了数组参数格式，并移除了 Apache 依赖以减少外部依赖项。这是一个功能增强版本，建议使用工具功能的用户升级。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.70",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.70",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.70",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "版本从 v1 升级到 v1.0.70",
+            "提供了完整的版本变更日志链接",
+            "未提供具体的变更内容描述"
+          ],
+          "summary_cn": "该 Release (v1.0.70) 仅提供了从 v1 到当前版本的完整变更日志链接，未包含具体的变更说明。建议查看完整 Changelog 了解详细变更内容。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v3.71.0",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "\n### Added\n\n- Added GPT-5.4 models for ChatGPT subscription users\n- Hooks: Added a `Notification` hook for attention and completion boundaries\n\n### Fixed\n\n- Handle streamable HTTP MCP reconnects more reliably after disconnects\n\n**Full Changelog**: https://github.com/cline/cline/compare/v2.6.0-cli...v3.71.0\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v3.71.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v3.71.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.432",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "## Changes\n\n### PR [#2050](https://github.com/danielmiessler/Fabric/pull/2050) by [ksylvan](https://github.com/ksylvan): Update web dependencies - fix npm override issue\n\n- Chore: update web dependencies - fix npm override issue\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.432",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "更新 Web 依赖项",
+            "修复 npm override 问题",
+            "依赖维护更新"
+          ],
+          "summary_cn": "本次更新主要修复了 Web 依赖中的 npm override 问题。这是一个依赖维护性质的更新，解决了包管理相关的兼容性问题。更新范围集中在 Web 模块的依赖项。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.431",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "## Changes\n\n### PR [#2049](https://github.com/danielmiessler/Fabric/pull/2049) by [ksylvan](https://github.com/ksylvan): Security Hardening: API Key Redaction, Path Traversal Prevention, and Shell Injection Elimination\n\n- Fix: Redact API keys in config responses and eliminate shell injection surfaces.\n- Added `maskAPIKey` to redact all but the last 4 characters of API keys, mitigating sensitive data exposure (CWE-200).\n- Masked all provider API keys in the `GET /config` response payload to prevent accidental credential leakage.\n- Replaced `exec`/shell commands in the Obsidian route with native `fs` APIs, fully eliminating shell injection vectors (CWE-78).\n- Added path-confinement validation ensuring resolved file paths remain within their intended target directories, blocking path traversal attacks (CWE-22).\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.431",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "新增 API Key 脱敏功能，仅显示最后 4 位字符，防止敏感数据泄露",
+            "Obsidian 路由中使用原生 fs API 替代 exec/shell 命令，彻底消除 Shell 注入风险",
+            "添加路径边界验证，确保文件路径限制在目标目录内，阻止路径遍历攻击",
+            "在 GET /config 响应中对所有 Provider API Key 进行掩码处理"
+          ],
+          "summary_cn": "本次更新是一次重要的安全加固发布，重点解决了 API Key 泄露、Shell 注入和路径遍历等三个关键安全漏洞。通过引入 API Key 脱敏机制、使用原生文件系统 API 替代 shell 命令以及加强路径验证，显著提升了系统的整体安全性。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.430",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "## Changes\n\n### PR [#2044](https://github.com/danielmiessler/Fabric/pull/2044) by [PrakharMNNIT](https://github.com/PrakharMNNIT) and [ksylvan](https://github.com/ksylvan): feat: Add Bedrock bearer token (ABSK) authentication and guided setup\n\n- Adds 3-tier authentication for AWS Bedrock: bearer token (ABSK), static AWS credentials (access key + secret key), and the default AWS credential chain.\n- Introduces a custom guided setup flow covering auth method selection, region, and model configuration.\n- Removes the `hasAWSCredentials()` gate so that Bedrock always appears in the setup wizard.\n- Applies a temperature-only fix (no `top_p`) for Claude models running on Bedrock, along with API key masking during re-setup.\n- Adds a fallback model list for when the `ListFoundationModels` API is inaccessible, i18n support for 11 locales (3 new keys each), and 25 unit tests.\n\n### PR [#2047](https://github.com/danielmiessler/Fabric/pull/2047) by [bvandevliet](https://github.com/bvandevliet): Explicitly instruct YT summary task to be aware of possible transcription errors\n\n- Added one line to make YT summary task explicitly aware of possible transcript typos.\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.430",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "danielmiessler/fabric v1.4.430 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain==0.3.28",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since langchain==0.3.27\n\nfix(langchain): bump minimum langchain-core to 0.3.73 (#35608)\nrelease(langchain): 0.3.28 (#35607)\nfix(langchain): backport patch ReDoS vulnerability in MRKL and ReAct action regex (CVE-2024-58340) (#35603)\nfeat(core,langchain,text-splitters): (v0.3) use uuid7 for run ids (#34732)\nfix(core): serialization patch (#34458)\nfeat(openai): enable stream_usage when using default base URL and client (#33296)\nfix(langchain): handle `gpt-5` model name in `init_chat_model` (#33148)\nfix(langchain): add `context_management` to Anthropic chat model init (#33150)\ndocs: more standardization (#33124)\nrefactor(langchain): resolve pydantic deprecation warnings (#33125)\ndocs: standardize `.. code-block` directive usage (#33122)\nchore: bump ruff version to 0.13 (#33043)\nfix: update method calls from dict to `model_dump` in `Chain` (#33035)\nchore: update `pyproject.toml` files, remove codespell (#33028)\nchore(langchain): drop cap on python version (#32974)\nchore: restore commented out optional deps (#32971)\ndocs(langchain): add docstring for _load_map_reduce_chain (#32961)\ndocs(langchain): add docstring for `_load_stuff_chain` (#32932)\nrevert: \"chore: remove ruff target-version\" (#32895)\nfix(openai): ainvoke uses async `_aget_response`; add async tests (#32459)\nchore: remove ruff target-version (#32880)\nchore(langchain): enable ruff docstring-code-format in langchain (#32858)\nchore(langchain): add ruff rule BLE (#32868)\nchore(docs): update package `README`s (#32869)\nchore(langchain): add ruff rule ERA (#32867)\nfix(langchain): preserve supplied llm in `FlareChain.from_llm` (#32847)\nchore(langchain): add ruff rules D (except D100 and D104) (#31994)\nchore(langchain): add ruff rules N (#32098)\nchore(langchain): improve PostgreSQL Manager upsert SQLAlchemy API calls. (#32748)\nchore: adress pytest-asyncio deprecation warnings + other nits (#32696)\nchore(langchain): add mypy pydantic plugin (#32610)\nchore: update references to use the latest version of Claude-3.5 Sonnet (#32594)\nchore(langchain): add mypy `warn_unreachable` setting (#32529)\ndocs: update outdated `README.md` content (#32540)\nfix(tests): add `anthropic_proxy` to configurable test parameters\nchore(langchain): select ALL rules with exclusions (#31930)\nfeat: port various nit changes from `wip-v0.4` (#32506)\nchore: formatting across codebase (#32466)\nfeat(openai): `minimal` and `verbosity` (#32455)\nfix: use new Google model names in examples (#32288)\nfix: update `bar_model` to use the correct model version `claude-3-7-sonnet-20250219` (#32284)\nrefactor: remove references to unsupported model `claude-3-sonnet-20240229` (#32281)\nfix(core): track within-batch deduplication in indexing num_skipped count (#32273)\nfix: formatting issues in docstrings (#32265)\nfix: devcontainer (#32260)\nchore(langchain): add ruff rules ARG (#32110)\nchore(langchain): add ruff rules TC (#31921)\nfeat(docs): improve devx, fix `Makefile` targets (#32237)\nchore(langchain): add ruff rules D1 (except D100 and D104) (#32123)\nchore(langchain): add ruff rules SLF (#32112)\nchore(langchain): `strip_ansi` fucntion to remove ANSI escape sequences (#32200)\nfix(docs): capitalization, codeblock formatting, and hyperlinks, note blocks (#32235)\nrefactor(langchain): refactor unit test stub classes (#32209)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain%3D%3D0.3.28",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/langchain langchain==0.3.28 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-classic==1.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since langchain-classic==1.0.1\n\nrelease(langchain): bump langchain-classic to 1.0.2 (#35601)\nfix(langchain-classic): patch ReDoS vulnerability in MRKL and ReAct action regex (CVE-2024-58340) (#35598)\nchore: bump the langchain-deps group across 3 directories with 7 updates (#35513)\nchore: bump the langchain-deps group across 3 directories with 14 updates (#35441)\nchore: bump google-cloud-aiplatform from 1.117.0 to 1.133.0 in /libs/langchain (#35392)\ndocs: fix docstring inaccuracies and update outdated LangSmith URLs (#35283)\nfeat(openai): support automatic server-side compaction (#35212)\nchore: bump langchainhub from 0.1.18 to 0.1.21 in /libs/langchain in the langchain-deps group across 1 directory (#35280)\nchore: bump the langchain-deps group across 3 directories with 8 updates (#35257)\nstyle: bump ruff version to 0.15 (#35042)\ndocs(langchain-classic): clarify MultiVectorRetriever usage (#35053)\nfix(langchain-classic): validate ensemble retriever weights (#35078)\nchore(deps): bump pillow from 11.3.0 to 12.1.1 in /libs/langchain (#35175)\nchore(deps): bump cryptography from 46.0.1 to 46.0.5 in /libs/langchain (#35147)\nchore(deps): bump the langchain-deps group across 3 directories with 40 updates (#35129)\nchore(deps): bump the langchain-deps group across 3 directories with 11 updates (#35121)\ndocs(langchain-classic): warn about older `create_react_agent` (#35052)\ndocs(langchain-classic): add warning for `initialize_agent` function (#35051)\nfeat: support state updates from `wrap_model_call` with command(s) (#35033)\nchore: add `make type` target (#35015)\nrevert: \"chore: add typing target in `Makefile`\" (#35013)\nchore: add typing target in `Makefile` (#35012)\nchore: enrich `pyproject.toml` files (#34980)\nchore(deps): bump the uv group across 20 directories with 3 updates (#34941)\nchore: upgrade urllib3 to 2.6.3 (#34940)\nrefactor: replace print with logger.info in llm_summarization_checker (#34903)\nfix(langchain): fix typo 'safegaurd' -> 'safeguard' (#34789)\nchore(deps): bump langgraph-checkpoint from 2.1.2 to 3.0.0 in /libs/cli in the uv group across 1 directory (#34787)\nchore(deps): bump the uv group across 5 directories with 5 updates (#34785)\nchore(deps): bump the uv group across 3 directories with 1 update (#34741)\nchore: update twitter URLs (#34736)\ntest(langchain): delete ontotext graphdb test (#34710)\nfix(core): make `yield_keys` prefix keyword-only to match `BaseStore` (#34659)\nchore: ban relative imports on all packages (#34691)\nstyle: bump ruff version to 0.14.11 (#34674)\nfix(langchain,langchain-classic): more descriptive error msg when dep is not installed (#34679)\nfix(langchain): correct typo 'langchain experiment' to 'langchain_experimental' in error messages (#34608)\nfix(infra): use `langchain_v1` for dev container deps (#34534)\nchore(deps): bump mypy to v1.19 and ruff to v1.14 (#34521)\nchore(langchain-classic): bump markupsafe lock for python 3.14 (#34523)\nfix(langchain-classic): pass default to `config.getoption` (#34034)\nstyle(core): fix mypy no-any-return violations (#34204)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-classic%3D%3D1.0.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 MRKL 和 ReAct action 正则表达式中的 ReDoS 安全漏洞 (CVE-2024-58340)",
+            "新增 OpenAI 服务端自动压缩支持功能",
+            "修复 Ensemble Retriever 权重验证问题",
+            "更新多个依赖包版本（pillow、cryptography、urllib3 等）",
+            "完善文档说明，添加 MultiVectorRetriever 和 initialize_agent 相关警告"
+          ],
+          "summary_cn": "本次版本 1.0.2 是一个以安全修复为主的维护版本，重点修复了 MRKL 和 ReAct action 正则表达式中的 ReDoS 安全漏洞 (CVE-2024-58340)。同时新增了 OpenAI 服务端自动压缩支持，并进行了大量依赖包更新和文档改进。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.5.8",
+        "author": "kausmeows",
+        "date": "2026-03-06",
+        "summary": "# Changelog\r\n\r\n## New Features\r\n\r\n- **Human-Readable IDs**: Agents and teams now use human-readable identifiers (e.g., `brave-falcon-7x3k`) instead of `UUIDs`, making debugging and monitoring more intuitive.\r\n- **AgentOS**: `serve()` now supports `AGENT_OS_HOST` and `AGENT_OS_PORT` environment variables as fallbacks, simplifying container deployments.\r\n- **GitlabTools:** Added `GitlabTools` with read-focused GitLab integrations, async support, and cleaner tool configuration.\r\n- **GmailTools:** Extended `GmailTools` with new tools and service account auth.\r\n\r\n## Bug Fixes\r\n\r\n- **Media in Run Output**: Generated media (images, audio) is now always included in run output, regardless of the `store_media` setting and is rather scrubbed before storing in DB\r\n- **OpenAIResponses**: Fixed handling of mixed `external_execution` and regular tools when using OpenAI Responses API.\r\n- **MySQL**: Added `json_serializer` to MySQL engine creation for proper JSON handling.\r\n- **PostgreSQL**: Removed `session_type` filter from `get_session` to prevent session data loss when session types change.\r\n- **Workflow:** Fixed a bug where `Loop` iterations always received the original input instead of the previous iteration's output. Added a flag `forward_iteration_output` to opt-in to this behaviour.\r\n\r\n## What's Changed\r\n* feat: Docker-style human-readable IDs for agents and teams by @ysolanky in https://github.com/agno-agi/agno/pull/6869\r\n* feat: add AGENT_OS_HOST/AGENT_OS_PORT env var fallbacks to serve() by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6857\r\n* fix: remove session_type filter from PostgreSQL get_session to prevent session data loss by @kausmeows in https://github.com/agno-agi/agno/pull/6873\r\n* fix: add json_serializer to MySQL engine creation by @willemcdejongh in https://github.com/agno-agi/agno/pull/6848\r\n* [fix] handle mixed external_execution and regular tools for OpenAI by @hztBUAA in https://github.com/agno-agi/agno/pull/6630\r\n* fix: include generated media in run output regardless of store_media setting by @Br1an67 in https://github.com/agno-agi/agno/pull/6793\r\n* cookbook: add x402scan MCP tools example by @SamOpenClaw in https://github.com/agno-agi/agno/pull/6555\r\n* feat: add GitlabTools with tests and cookbook example by @SalimELMARDI in https://github.com/agno-agi/agno/pull/6721\r\n* feat: extend GmailTools with new tools, service account auth, and agentic cookbooks by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/6765\r\n* fix: loop iterations to forward output from previous iteration by @kausmeows in https://github.com/agno-agi/agno/pull/6868\r\n* fix: resolve duplicate operationId warnings in disabled feature router by @kausmeows in https://github.com/agno-agi/agno/pull/6887\r\n* chore: Release v2.5.8 by @kausmeows in https://github.com/agno-agi/agno/pull/6886\r\n\r\n## New Contributors\r\n* @SamOpenClaw made their first contribution in https://github.com/agno-agi/agno/pull/6555\r\n* @SalimELMARDI made their first contribution in https://github.com/agno-agi/agno/pull/6721\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.5.7...v2.5.8",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.5.8",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "Agents 和 Teams 现在使用人类可读的 ID（如 brave-falcon-7x3k）替代 UUID，便于调试和监控",
+            "新增 GitlabTools 工具，支持异步操作和更清晰的配置",
+            "GmailTools 扩展了新工具和服务账号认证支持",
+            "serve() 支持 AGENT_OS_HOST 和 AGENT_OS_PORT 环境变量，简化容器部署",
+            "修复 Workflow Loop 迭代接收错误输入的 bug，新增 forward_iteration_output 选项"
+          ],
+          "summary_cn": "本次 v2.5.8 版本主要带来了用户体验改进和工具集成增强。核心亮点是引入了 Docker 风格的人类可读 ID 替代 UUID，同时新增了 GitlabTools 并扩展了 GmailTools 功能。此外，还修复了多个重要问题，包括 OpenAI Responses API 混合工具处理、PostgreSQL 会话数据丢失以及 Workflow Loop 迭代输出传递等 bug。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.5.14",
+        "author": "ruvnet",
+        "date": "2026-03-06",
+        "summary": "## v3.5.14 (2026-03-06)\n\n### Security Fixes (ADR-061)\n- **S-1**: Replace `execSync` with `execFileSync` to prevent command injection in GCS storage\n- **S-2**: Add `MAX_BUFFER` constant (10MB) to prevent unbounded stdout capture\n- **S-3**: Add `validatePackageName()` to sanitize plugin names before shell use\n- **S-4**: Add IPFS CID format validation before network requests\n- **S-5**: Add buffer size limits to all `execSync` calls\n\n### Correctness Fixes (ADR-061)\n- **D-1**: Fix CFP magic-number check (use `subarray`, not `slice`)\n- **D-2**: Fix unsupported format error (throw instead of silent fallback)\n- **D-3**: Fix MCP partial-JSON accumulator (per-session buffering)\n- **D-4**: Fix duplicate provider registration guard\n- **D-5**: Fix memory namespace parameter passthrough\n- **D-6**: Fix process command error handler (use `err.message`)\n- **D-7**: Fix GCS credential loading (resolve path, validate fields)\n\n### Cross-Platform Windows Hooks (ADR-062)\n- Hook commands use `node script subcommand` (no shell quoting issues)\n- `cmd /c` prefix on Windows bypasses PowerShell stdin pipe hanging\n- StatusLine uses plain `node` (no `cmd /c`) for proper stdin forwarding\n- 500ms stdin timeout prevents Windows hanging\n- `process.exitCode = 0` guaranteed in all hook scripts\n- Fix invalid `SubagentEnd` → `SubagentStop` hook event name\n- Restore valid `SubagentStart` hook event\n\n### Testing\n- 1600 tests passed across 23 test suites\n- 10 new deep test suites covering security, plugins, MCP tools, memory, CLI parsing\n\n### Packages\n| Package | Version | Install |\n|---------|---------|---------|\n| `@claude-flow/cli` | 3.5.14 | `npx @claude-flow/cli@latest` |\n| `claude-flow` | 3.5.14 | `npx claude-flow@latest` |\n| `ruflo` | 3.5.14 | `npx ruflo@latest` |\n\n### Upgrade\n```bash\nnpx ruflo@latest init\n# or\nnpx claude-flow@latest init\n```\n\nThis regenerates `.claude/settings.json` with cross-platform hook commands.",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.5.14",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "安全修复：将 execSync 替换为 execFileSync 防止命令注入，添加缓冲区大小限制和输入验证",
+            "正确性修复：修复 CFP 魔数检查、MCP 部分 JSON 处理、GCS 凭证加载等 7 个问题",
+            "跨平台 Windows Hooks 支持：使用 node script 命令格式，解决 PowerShell stdin 管道挂起问题",
+            "测试覆盖增强：1600 个测试通过，新增 10 个深度测试套件覆盖安全、插件、MCP 等模块"
+          ],
+          "summary_cn": "v3.5.14 是一个重要的安全与稳定性修复版本，基于 ADR-061 和 ADR-062 规范进行了多项安全加固和跨平台兼容性改进。建议用户通过 `npx claude-flow@latest init` 升级以获取跨平台 Hook 命令支持。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-cli==0.0.29",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "### Features\r\n\r\n* `--model-params` flag on `/model` command ([#1679](https://github.com/langchain-ai/deepagents/issues/1679)) ([9b6433d](https://github.com/langchain-ai/deepagents/commit/9b6433d557e6e8b3d39c10577595b0ef6d741c94))\r\n* `--shell-allow-list all` ([#1695](https://github.com/langchain-ai/deepagents/issues/1695)) ([4aec7b3](https://github.com/langchain-ai/deepagents/commit/4aec7b35caa7723b8bbda189c9ca1d213e0a9a6d))\r\n* Hook dispatch for external tool integration ([#1553](https://github.com/langchain-ai/deepagents/issues/1553)) ([cdb2230](https://github.com/langchain-ai/deepagents/commit/cdb2230f04ce7a2b7ef0837cbbc223dcbf04b78e))\r\n* Detect deceptive unicode in tool args and URLs ([#1694](https://github.com/langchain-ai/deepagents/issues/1694)) ([d4c8544](https://github.com/langchain-ai/deepagents/commit/d4c8544bd6bf3b6df50b99f8a0c7208c20f86bd9))\r\n* MCP tool loading with auto-discovery ([#801](https://github.com/langchain-ai/deepagents/issues/801)) ([df0908e](https://github.com/langchain-ai/deepagents/commit/df0908ebed4e17f0fd904d83e9d4ea38dfc1207d))\r\n  * Surface mcp server/tool info in system prompt ([#1693](https://github.com/langchain-ai/deepagents/issues/1693)) ([068e075](https://github.com/langchain-ai/deepagents/commit/068e075ecd4a7f3e35219ae6b87707bd9dc3f785))\r\n\r\n### Bug Fixes\r\n\r\n* Anchor `ChatInput` below scrollable area ([#1671](https://github.com/langchain-ai/deepagents/issues/1671)) ([11105d9](https://github.com/langchain-ai/deepagents/commit/11105d93f593d802d5e120c095f16d771c674bef))\r\n  * Remove dead chat-spacer widget and resize handler ([#1686](https://github.com/langchain-ai/deepagents/issues/1686)) ([b6ecec5](https://github.com/langchain-ai/deepagents/commit/b6ecec5bd14677a878c92a1b51e950f61fabf8d3))\r\n\r\n---\r\n\r\nThanks to our contributors: @jcuypers, @eyurtsev",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli%3D%3D0.0.29",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 MCP 工具自动发现与加载功能，支持在系统提示中展示工具信息",
+            "添加 --model-params 参数支持模型配置，以及 --shell-allow-list all 选项",
+            "实现 Hook 调度机制，便于外部工具集成",
+            "增强安全性：检测工具参数和 URL 中的欺骗性 Unicode 字符",
+            "修复聊天输入框定位问题，移除冗余的 spacer 组件"
+          ],
+          "summary_cn": "本次版本主要增强了工具集成能力，新增 MCP 工具自动发现与加载功能，并引入 Hook 调度机制支持外部工具集成。同时加强了安全性，能够检测工具参数和 URL 中的欺骗性 Unicode 字符。此外还修复了聊天界面布局相关的问题。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "langchain-runloop==0.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since langchain-runloop==0.0.2\nrelease(sdk): bump partner packages (daytona 0.0.3, modal 0.0.2, runloop 0.0.3) (#1689)\nrelease(sdk): bump deepagents to 0.4.7 (#1688)\nfeat(infra): add fireworks as eval provider (#1684)\nrelease(sdk): bump deepagents to 0.4.6 (#1677)\nchore: bump lock file (#1674)\nchore(sdk): expand eval matrix and fix model name access for groq (#1623)\nrelease(deepagents): 0.4.5 (#1622)\nchore(sdk): expand eval model matrix to 28 models across 7 providers (#1617)\nchore: standardize makefile type targets/ add type CI check (#1581)\ntest: add standard tests for runloop and modal (#1537)\nrelease(deepagents): 0.4.4 (#1519)\nrelease(deepagents): 0.4.3 (#1465)\nfix(sdk): guard timeout forwarding for older backend packages (#1461)\nchore(deepagents): bump min version for langchain-anthropic (#1431)\nfeat(sdk): add per-command `timeout` override to `execute()` (#1154)\nchore: auto-generate makefile help from target annotations (#1417)\nchore: revert SDK version following yank (#1407)\nchore: enable type checking for all other packages (#1365)\nrelease(sdk): 0.4.2 (#1312)\nchore: rollback uv workspace migration, restore per-package lockfiles (#1278)\nchore: migrate to uv workspace (#1264)\nchore(deps): bump the uv group across 2 directories with 1 update (#1245)\nchore: rename `master` to `main` (#984)\nrelease(sdk): 0.4.0 (#1236)\nrelease(deepagents): 0.4 (#1234)\n\n---\n\nThanks to our contributors: @sydney-runkle, @eyurtsev, @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/langchain-runloop%3D%3D0.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents langchain-runloop==0.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "langchain-modal==0.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since langchain-modal==0.0.1\nrelease(sdk): bump partner packages (daytona 0.0.3, modal 0.0.2, runloop 0.0.3) (#1689)\nrelease(sdk): bump deepagents to 0.4.7 (#1688)\nfeat(infra): add fireworks as eval provider (#1684)\nrelease(sdk): bump deepagents to 0.4.6 (#1677)\nchore: bump lock file (#1674)\nchore(sdk): expand eval matrix and fix model name access for groq (#1623)\nrelease(deepagents): 0.4.5 (#1622)\nchore(sdk): expand eval model matrix to 28 models across 7 providers (#1617)\nchore: standardize makefile type targets/ add type CI check (#1581)\ntest: add standard tests for runloop and modal (#1537)\nrelease(deepagents): 0.4.4 (#1519)\nrelease(deepagents): 0.4.3 (#1465)\nfix(sdk): guard timeout forwarding for older backend packages (#1461)\nchore(deepagents): bump min version for langchain-anthropic (#1431)\nfeat(sdk): add per-command `timeout` override to `execute()` (#1154)\nchore: auto-generate makefile help from target annotations (#1417)\nchore: revert SDK version following yank (#1407)\nchore: enable type checking for all other packages (#1365)\nrelease(sdk): 0.4.2 (#1312)\nchore: rollback uv workspace migration, restore per-package lockfiles (#1278)\nchore: migrate to uv workspace (#1264)\nchore(deps): bump the uv group across 2 directories with 1 update (#1245)\nchore: rename `master` to `main` (#984)\nrelease(sdk): 0.4.0 (#1236)\nrelease(deepagents): 0.4 (#1234)\n\n---\n\nThanks to our contributors: @sydney-runkle, @eyurtsev, @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/langchain-modal%3D%3D0.0.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents langchain-modal==0.0.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "langchain-daytona==0.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since langchain-daytona==0.0.2\nrelease(sdk): bump partner packages (daytona 0.0.3, modal 0.0.2, runloop 0.0.3) (#1689)\nrelease(sdk): bump deepagents to 0.4.7 (#1688)\nfeat(infra): add fireworks as eval provider (#1684)\nrelease(sdk): bump deepagents to 0.4.6 (#1677)\nchore: bump lock file (#1674)\nchore(sdk): expand eval matrix and fix model name access for groq (#1623)\nrelease(deepagents): 0.4.5 (#1622)\nchore(sdk): expand eval model matrix to 28 models across 7 providers (#1617)\nchore: standardize makefile type targets/ add type CI check (#1581)\nchore(deps): bump the pip-dependencies group across 8 directories with 17 updates (#1564)\nchore(deps): bump the pip-dependencies group across 8 directories with 19 updates (#1491)\nrelease(deepagents): 0.4.4 (#1519)\nrelease(deepagents): 0.4.3 (#1465)\nfix(sdk): guard timeout forwarding for older backend packages (#1461)\nchore(deepagents): bump min version for langchain-anthropic (#1431)\nfeat(sdk): add per-command `timeout` override to `execute()` (#1154)\nchore: auto-generate makefile help from target annotations (#1417)\nchore: revert SDK version following yank (#1407)\nchore(daytona): add integration test suite to daytona (#1397)\nchore: enable type checking for all other packages (#1365)\nrelease(sdk): 0.4.2 (#1312)\nchore: rollback uv workspace migration, restore per-package lockfiles (#1278)\nchore: migrate to uv workspace (#1264)\nchore(deps): bump the pip-dependencies group across 8 directories with 9 updates (#1252)\nchore(deps): bump cryptography from 46.0.4 to 46.0.5 in /libs/partners/daytona (#1243)\nchore: rename `master` to `main` (#984)\nrelease(sdk): 0.4.0 (#1236)\nrelease(deepagents): 0.4 (#1234)\nchore(deps): bump the pip-dependencies group across 8 directories with 27 updates (#1230)\n\n---\n\nThanks to our contributors: @sydney-runkle, @eyurtsev, @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/langchain-daytona%3D%3D0.0.3",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Fireworks 作为评估提供商支持",
+            "execute() 方法新增 per-command 超时覆盖功能",
+            "评估模型矩阵扩展至 7 个提供商的 28 个模型",
+            "多个 SDK 版本升级（daytona 0.0.3, deepagents 0.4.7 等）",
+            "修复超时转发兼容性问题，增强后端包兼容性"
+          ],
+          "summary_cn": "本次版本更新主要聚焦于功能增强和生态扩展，新增了 Fireworks 评估提供商支持和 execute() 方法的超时覆盖功能。评估模型矩阵大幅扩展至 28 个模型覆盖 7 个提供商，同时修复了超时转发的兼容性问题并进行了多项依赖更新。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.4.7",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since deepagents==0.4.6\nrelease(sdk): bump deepagents to 0.4.7 (#1688)\nfix(deepagents): restore full routed path in write/edit results (#1681)\nfeat(infra): add fireworks as eval provider (#1684)\n\n---\n\nThanks to our contributors: @naga-k",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.4.7",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "版本升级至 0.4.7",
+            "修复 write/edit 结果中的完整路由路径恢复问题",
+            "新增 Fireworks 作为评估提供者"
+          ],
+          "summary_cn": "本次发布为 deepagents 0.4.7 版本，主要包含两项实质性变更：修复了 write/edit 操作结果中路由路径恢复的问题，并新增 Fireworks 作为评估提供者支持。整体为小幅功能增强和问题修复版本。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.4.6",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "Changes since deepagents==0.4.5\nrelease(sdk): bump deepagents to 0.4.6 (#1677)\nchore: bump lock file (#1674)\nfix(sdk): extract text from all content blocks for large tool result eviction (#1673)\nfix(sdk): enforce path boundaries in `CompositeBackend` routing (#1659)\nrefactor(sdk): split eval assertions into correctness and efficiency tiers (#1670)\ntest(sdk): remove an ambiguous eval test (#1661)\nchore(sdk): add tool usage evals (#1637)\ntest(deepagents): fix one more file operation test (#1653)\ntest(sdk): update eval test to be a bit less ambiguous (#1643)\ndocs(sdk): middleware module docstring (#1620)\nchore(sdk): expand eval matrix and fix model name access for groq (#1623)\n\n---\n\nThanks to our contributors: @dotuananh0712, @bracesproul, @eyurtsev, @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.4.6",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复大型工具结果驱逐时从所有内容块提取文本的问题",
+            "修复 CompositeBackend 路由中的路径边界强制执行问题",
+            "重构评估断言，拆分为正确性和效率两个层级",
+            "添加工具使用评估测试并扩展评估矩阵",
+            "完善中间件模块文档说明"
+          ],
+          "summary_cn": "此版本主要包含两个重要的 SDK 修复：一是处理大型工具结果驱逐时的文本提取问题，二是修复 CompositeBackend 路由中的路径边界安全问题。同时对评估体系进行了重构，将断言拆分为正确性和效率两个层级，并扩展了评估矩阵和工具使用评估。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.20",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-06",
+        "summary": "## Core\n- Stop leaking fsmonitor daemons that caused 60GB+ of committed memory after running tests\n- Replace Bun.which with npm which in OpenCode\n## TUI\n- Restore Bun stdin reads for prompt input",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.20",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 fsmonitor 守护进程内存泄漏问题，解决测试运行后占用 60GB+ 内存的问题",
+            "将 OpenCode 中的 Bun.which 替换为 npm which",
+            "恢复 TUI 中使用 Bun 读取标准输入的功能"
+          ],
+          "summary_cn": "此版本主要修复了 fsmonitor 守护进程的严重内存泄漏问题，解决了测试运行后占用超过 60GB 内存的 bug。同时将依赖查找工具从 Bun.which 切换到 npm which，并恢复了 TUI 的 Bun 标准输入读取功能。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.19",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-06",
+        "summary": "## Core\n- Add GPT-5.4 to Codex allowed models list (@msadiks)\n- Replace Bun.stderr and Bun.color with Node.js equivalents\n- Replace Bun.connect with net.createConnection for better compatibility\n- Use SHA1 for hash instead of unsupported xxHash3-XXH64\n- Replace Bun.hash with Hash.fast using xxhash3-xxh64\n- Replace Bun.write with Filesystem.write in config files\n- Replace Bun.write/file with Filesystem utilities in snapshot\n- Replace Bun.sleep with Node.js timers for better compatibility\n## TUI\n- Use node:stream/consumers for stdin reading\n- Replace Bun.stdin.text with Node.js stream reading for better compatibility\n## Desktop\n- Fix stale show in app (@neriousy)\n- Remove keyboard shortcut tooltips from new session and new workspace buttons in the sidebar\n- Load tab when opening file\n\n**Thank you to 3 community contributors:**\n- @Seungjun0906:\n  - fix(console): follow-up for #13108 docs/en routing and locale cookie sync (#13608)\n- @neriousy:\n  - fix(app): stale show (#16236)\n- @msadiks:\n  - feat: add \"gpt-5.4\" to codex allowed models list (#16274)",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.19",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "新增 GPT-5.4 到 Codex 允许模型列表",
+            "将 Bun 运行时 API 迁移到 Node.js 等效实现（stderr、connect、write、sleep 等）",
+            "使用 xxhash3-xxh64 哈希算法替代不支持的 xxHash3-XXH64",
+            "修复 Desktop 应用中的状态显示问题和标签页加载",
+            "社区贡献者修复了路由和 locale cookie 同步问题"
+          ],
+          "summary_cn": "本版本主要将多个 Bun 运行时专有 API 迁移到 Node.js 标准实现，以提升跨平台兼容性，包括文件写入、网络连接、哈希计算和定时器等功能。同时新增了对 GPT-5.4 模型的支持，并修复了 Desktop 应用中的若干问题。共有 3 位社区贡献者参与了此版本的开发。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v0.226.5",
+        "author": "github-actions[bot]",
+        "date": "2026-03-06",
+        "summary": "- Added GPT-5.4 and GPT-5.4-pro as available models when using your own OpenAI API key. ([#50858](https://github.com/zed-industries/zed/pull/50858))\r\n- Fixed an error when OpenRouter returns a usage-only event with empty choices. ([#50799](https://github.com/zed-industries/zed/pull/50799))\r\n- Fixed a crash when opening the settings UI. ([#50741](https://github.com/zed-industries/zed/pull/50741))\r\n\r\n",
+        "assets_count": 12,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v0.226.5",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 GPT-5.4 和 GPT-5.4-pro 模型支持（需使用自有 OpenAI API Key）",
+            "修复 OpenRouter 返回空选项的 usage-only 事件时的错误",
+            "修复打开设置界面时的崩溃问题"
+          ],
+          "summary_cn": "本版本主要新增了对 GPT-5.4 和 GPT-5.4-pro 模型的支持，用户使用自己的 OpenAI API Key 即可调用这些新模型。同时修复了两个稳定性问题：OpenRouter 返回空事件时的错误处理，以及打开设置界面时的崩溃问题。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code",
+      "tag_name": "v2.1.71",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "调试日志默认不再写入，需使用 /debug 命令在会话中手动开启",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-code",
+      "tag_name": "v2.1.70",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Remote Control /poll 轮询频率从 1-2 秒降低到每 10 分钟一次，依赖高频轮询的场景可能受影响",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "permissions.defaultMode 设置值在 Claude Code Remote 环境中仅接受 acceptEdits 或 plan，其他值将被忽略",
+          "impact": "low",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-agent-sdk-typescript",
+      "tag_name": "v0.2.70",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "AgentToolInput.subagent_type 改为可选字段，默认值为 general-purpose agent",
+          "impact": "low",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/anthropic-sdk-java",
+      "tag_name": "v2.16.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "数组参数的序列化格式从 repeat 改为 brackets（array_format 变更）",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "移除了 Apache 依赖",
+          "impact": "medium",
+          "category": "Dependency"
+        }
+      ]
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "tag_name": "langchain==0.3.28",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "最低依赖 langchain-core 版本提升至 0.3.73",
+          "impact": "medium",
+          "category": "Dependency"
+        },
+        {
+          "description": "run ids 现在使用 uuid7 格式而非之前的格式",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "agno-agi/agno",
+      "tag_name": "v2.5.8",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Agents 和 Teams 的标识符从 UUID 改为人类可读格式（如 brave-falcon-7x3k），依赖 UUID 格式的代码可能需要调整",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "Loop 迭代现在默认使用原始输入，需设置 forward_iteration_output=true 才能传递上一次迭代的输出",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "ruvnet/claude-flow",
+      "tag_name": "v3.5.14",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Hook 命令格式变更，需要重新运行 init 命令重新生成 .claude/settings.json",
+          "impact": "medium",
+          "category": "Config"
+        },
+        {
+          "description": "SubagentEnd hook 事件名修正为 SubagentStop，依赖旧事件名的代码需更新",
+          "impact": "low",
+          "category": "API"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "summary_brief": "今日 Issue 信号显示跨仓库的**工具执行与参数解析**、**Windows 平台兼容性**、以及**结构化输出/JSON Schema**是核心痛点，其中 agentscope 的工具调用完全失效、aider 与 ralph-loop 在 Windows 上崩溃、以及多 SDK 的 JSON Schema 限制导致生产可用性严重受损。",
+    "global_highlights": [
+      "agentscope 工具执行核心流程瘫痪：json_repair 兼容性问题导致所有工具参数解析为空字典，ReActAgent 直接输出纯文本而非调用工具，P0 级别阻断主流程",
+      "Windows 平台兼容性危机：aider 的 read-only 命令（3 用户 2 天内集中报告）、ralph-loop（4 个跨平台崩溃）和 skill-creator 的 eval 管道在 Windows 上均出现严重问题",
+      "结构化输出在多 SDK 中受限：Anthropic Python SDK 的 JSON Schema 大小限制、TypeScript SDK 的 HTML 标签处截断、以及 Python SDK 的 Pydantic DEBUG 日志冲突，导致复杂业务场景下无法使用",
+      "Skills 功能在 Anthropic 生态系统中大面积不可用：企业/SSO 用户因 API Key 要求无法使用、GCP/Vertex AI 用户因 beta 头不兼容被阻塞、且 Java SDK 的 JsonNode 序列化错误完全阻断创建流程"
+    ],
+    "top_pain_points": [
+      {
+        "id": null,
+        "repo": null,
+        "topic": "ralph-loop plugin crashes due to bash script bugs across platforms",
+        "summary": "4 independent crash reports across macOS and Windows with complete plugin failure. #541 shows critical session hijacking where loop from terminal A injects prompt into terminal B - clear production incident with user data corruption risk. #519 and #505/#492 show unquoted paths and bash 3.2 incompatibility causing immediate crashes on common platforms.",
+        "category": null,
+        "count": 4,
+        "affected_repos": [
+          "anthropics/claude-plugins-official"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-plugins-official/issues/541",
+          "https://github.com/anthropics/claude-plugins-official/issues/519",
+          "https://github.com/anthropics/claude-plugins-official/issues/505",
+          "https://github.com/anthropics/claude-plugins-official/issues/492"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "4 independent crash reports across macOS and Windows with complete plugin failure. #541 shows critical session hijacking where loop from terminal A injects prompt into terminal B - clear production incident with user data corruption risk. #519 and #505/#492 show unquoted paths and bash 3.2 incompatibility causing immediate crashes on common platforms.",
+        "source_issues": [
+          {
+            "repo": "anthropics/claude-plugins-official",
+            "issue_number": 541,
+            "title": "ralph-loop: stop hook inherits loop from different terminal session when state file lacks session_id",
+            "url": "https://github.com/anthropics/claude-plugins-official/issues/541",
+            "labels": [],
+            "evidence": "Session B was injected with the Korosak prompt and began executing it"
+          },
+          {
+            "repo": "anthropics/claude-plugins-official",
+            "issue_number": 519,
+            "title": "ralph-loop stop hook fails on Windows paths with spaces",
+            "url": "https://github.com/anthropics/claude-plugins-official/issues/519",
+            "labels": [],
+            "evidence": "bash: /c/Users/Evan: No such file or directory - unquoted CLAUDE_PLUGIN_ROOT"
+          },
+          {
+            "repo": "anthropics/claude-plugins-official",
+            "issue_number": 505,
+            "title": "ralph-loop: setup script crashes with 'unbound variable' when invoked without arguments",
+            "url": "https://github.com/anthropics/claude-plugins-official/issues/505",
+            "labels": [],
+            "evidence": "PROMPT_PARTS[*]: unbound variable when expanding empty array with set -u"
+          },
+          {
+            "repo": "anthropics/claude-plugins-official",
+            "issue_number": 492,
+            "title": "ralph-loop: setup script crashes on macOS due to bash 3.2 empty array bug",
+            "url": "https://github.com/anthropics/claude-plugins-official/issues/492",
+            "labels": [],
+            "evidence": "Same root cause as #505 - bash 3.2 empty array expansion with set -u"
+          }
+        ],
+        "source_signal_ids": [
+          "anthropics__claude-plugins-official-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Tool Execution and Parameter Parsing Failures",
+        "summary": "Tool execution is a core agent capability - json_repair incompatibility causes ALL tool parameters to parse as empty dict, and ReActAgent outputs plain text instead of calling tools. This completely breaks the main workflow of agents that rely on tool use.",
+        "category": null,
+        "count": 3,
+        "affected_repos": [
+          "agentscope-ai/agentscope"
+        ],
+        "sample_urls": [
+          "https://github.com/agentscope-ai/agentscope/issues/1282",
+          "https://github.com/agentscope-ai/agentscope/issues/1272",
+          "https://github.com/agentscope-ai/agentscope/issues/1285"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Tool execution is a core agent capability - json_repair incompatibility causes ALL tool parameters to parse as empty dict, and ReActAgent outputs plain text instead of calling tools. This completely breaks the main workflow of agents that rely on tool use.",
+        "source_issues": [
+          {
+            "repo": "agentscope-ai/agentscope",
+            "issue_number": null,
+            "title": "",
+            "url": "https://github.com/agentscope-ai/agentscope/issues/1282",
+            "labels": [],
+            "evidence": null
+          },
+          {
+            "repo": "agentscope-ai/agentscope",
+            "issue_number": null,
+            "title": "",
+            "url": "https://github.com/agentscope-ai/agentscope/issues/1272",
+            "labels": [],
+            "evidence": null
+          },
+          {
+            "repo": "agentscope-ai/agentscope",
+            "issue_number": null,
+            "title": "",
+            "url": "https://github.com/agentscope-ai/agentscope/issues/1285",
+            "labels": [],
+            "evidence": null
+          }
+        ],
+        "source_signal_ids": [
+          "agentscope-ai__agentscope-2"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "NotImplementedError on Windows with glob patterns in read-only command",
+        "summary": "3 independent Windows users reported the same crash within 2 days, blocking the read-only command which is a core workflow feature. High frequency + main flow blocking with clear sample links.",
+        "category": null,
+        "count": 3,
+        "affected_repos": [
+          "paul-gauthier/aider"
+        ],
+        "sample_urls": [
+          "https://github.com/Aider-AI/aider/issues/4890",
+          "https://github.com/Aider-AI/aider/issues/4886",
+          "https://github.com/Aider-AI/aider/issues/4885"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "3 independent Windows users reported the same crash within 2 days, blocking the read-only command which is a core workflow feature. High frequency + main flow blocking with clear sample links.",
+        "source_issues": [
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4890,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4890",
+            "labels": [],
+            "evidence": "NotImplementedError: Non-relative patterns are unsupported in pathlib.py line 1090 during cmd_read_only"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4886,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4886",
+            "labels": [],
+            "evidence": "Same error on Windows 11 with glob patterns in read-only command"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4885,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4885",
+            "labels": [],
+            "evidence": "Same error on Windows 11 with different Python 3.12.10 version"
+          }
+        ],
+        "source_signal_ids": [
+          "paul-gauthier__aider-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Cache token tracking not exposed in TokenUsage (Anthropic/OpenAI)",
+        "summary": "Users cannot verify prompt caching is working or track actual costs. Cache tokens (cache_creation_input_tokens, cache_read_input_tokens) are silently dropped at conversion boundary. Real-world impact: 90% cost miscalculation on multi-step agent runs ($0.94 vs $0.10). Directly affects billing visibility and cost optimization for production deployments.",
+        "category": null,
+        "count": 2,
+        "affected_repos": [
+          "huggingface/smolagents"
+        ],
+        "sample_urls": [
+          "https://github.com/huggingface/smolagents/issues/2055",
+          "https://github.com/huggingface/smolagents/issues/2054"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "Users cannot verify prompt caching is working or track actual costs. Cache tokens (cache_creation_input_tokens, cache_read_input_tokens) are silently dropped at conversion boundary. Real-world impact: 90% cost miscalculation on multi-step agent runs ($0.94 vs $0.10). Directly affects billing visibility and cost optimization for production deployments.",
+        "source_issues": [
+          {
+            "repo": "huggingface/smolagents",
+            "issue_number": 2055,
+            "title": "Surface cache token usage from Anthropic/OpenAI in TokenUsage",
+            "url": "https://github.com/huggingface/smolagents/issues/2055",
+            "labels": [],
+            "evidence": "TokenUsage only has input_tokens and output_tokens. Cache tokens from Anthropic/OpenAI are silently dropped, making it impossible to track actual cost (cache reads are 90% cheaper) or verify prompt caching is working"
+          },
+          {
+            "repo": "huggingface/smolagents",
+            "issue_number": 2054,
+            "title": "Add prompt caching support for Anthropic models (90% input token savings)",
+            "url": "https://github.com/huggingface/smolagents/issues/2054",
+            "labels": [],
+            "evidence": "The same static prefix is billed at full input price on every API call. Real-world cost impact on a CodeAgent multi-step run: Without caching: $0.94, With caching: ~$0.10 (90% reduction)"
+          }
+        ],
+        "source_signal_ids": [
+          "huggingface__smolagents-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Structured output grammar size limits blocking complex JSON schemas",
+        "summary": "Blocks adoption of structured outputs feature for production use cases with moderately complex but valid JSON schemas (~50 properties, 5 levels nesting). Users receive 400 error with misleading message and must fall back to prompt-based JSON instructions, losing guaranteed schema compliance. Clear user impact: feature becomes unusable for non-trivial real-world schemas.",
+        "category": null,
+        "count": 1,
+        "affected_repos": [
+          "anthropics/anthropic-sdk-python"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/anthropic-sdk-python/issues/1185"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "Blocks adoption of structured outputs feature for production use cases with moderately complex but valid JSON schemas (~50 properties, 5 levels nesting). Users receive 400 error with misleading message and must fall back to prompt-based JSON instructions, losing guaranteed schema compliance. Clear user impact: feature becomes unusable for non-trivial real-world schemas.",
+        "source_issues": [
+          {
+            "repo": "anthropics/anthropic-sdk-python",
+            "issue_number": null,
+            "title": "",
+            "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1185",
+            "labels": [],
+            "evidence": null
+          }
+        ],
+        "source_signal_ids": [
+          "anthropics__anthropic-sdk-python-1"
+        ]
+      }
+    ],
+    "repo_reports": [
+      {
+        "repo": "TabbyML/tabby",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "TabbyML__tabby-1",
+            "repo": "TabbyML/tabby",
+            "topic": "Repository sync re-downloads entire repos instead of incremental pull",
+            "summary": "Clear user impact: every-hour full re-downloads cause excessive network traffic and unnecessary reindexing, degrading system performance and user experience. Not P0 due to single-repo/count<3, but still significant pain point.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "TabbyML/tabby"
+            ],
+            "sample_urls": [
+              "https://github.com/TabbyML/tabby/issues/4451"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Clear user impact: every-hour full re-downloads cause excessive network traffic and unnecessary reindexing, degrading system performance and user experience. Not P0 due to single-repo/count<3, but still significant pain point.",
+            "source_issues": [
+              {
+                "repo": "TabbyML/tabby",
+                "issue_number": 4451,
+                "title": "ssh repo from config.tml behavior",
+                "url": "https://github.com/TabbyML/tabby/issues/4451",
+                "labels": [],
+                "evidence": "User reports repos are downloaded again every hour instead of only pulling changes, creating lot of traffic and always reindexing all files"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "TabbyML__tabby-2",
+            "repo": "TabbyML/tabby",
+            "topic": "Unsupported model architecture 'qwen3next' for Qwen3-Coder-Next",
+            "summary": "Blocks users from deploying a specific model - feature completely unavailable for those wanting to use Qwen3-Coder-Next GGUF. Not P0 due to single-repo/count<3, but clear blocking issue with user impact.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "TabbyML/tabby"
+            ],
+            "sample_urls": [
+              "https://github.com/TabbyML/tabby/issues/4446"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P1",
+            "review_reason": "Blocks users from deploying a specific model - feature completely unavailable for those wanting to use Qwen3-Coder-Next GGUF. Not P0 due to single-repo/count<3, but clear blocking issue with user impact.",
+            "source_issues": [
+              {
+                "repo": "TabbyML/tabby",
+                "issue_number": 4446,
+                "title": "Unknown model architecture 'qwen3next' when using Qwen3-Coder-Next",
+                "url": "https://github.com/TabbyML/tabby/issues/4446",
+                "labels": [
+                  "bug-unconfirmed"
+                ],
+                "evidence": "Error 'unknown model architecture: qwen3next' when attempting to deploy Qwen3-Coder-Next GGUF model in air-gapped Docker environment"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 3,
+        "analyzed_issue_count": 3,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "agentscope-ai__agentscope-1",
+            "repo": "agentscope-ai/agentscope",
+            "topic": "Multimodal Model Integration Failures",
+            "summary": "Multiple distinct multimodal failures: API returns InvalidParameter errors blocking qwen3.5-plus usage, sync calls block asyncio event loop causing all HTTP endpoints to become unresponsive in production, and repeated file submissions fail with FileAlreadyExists errors.",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "agentscope-ai/agentscope"
+            ],
+            "sample_urls": [
+              "https://github.com/agentscope-ai/agentscope/issues/1295",
+              "https://github.com/agentscope-ai/agentscope/issues/1277",
+              "https://github.com/agentscope-ai/agentscope/issues/1240"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Multiple distinct multimodal failures: API returns InvalidParameter errors blocking qwen3.5-plus usage, sync calls block asyncio event loop causing all HTTP endpoints to become unresponsive in production, and repeated file submissions fail with FileAlreadyExists errors.",
+            "source_issues": [
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1295",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1277",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1240",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "agentscope-ai__agentscope-2",
+            "repo": "agentscope-ai/agentscope",
+            "topic": "Tool Execution and Parameter Parsing Failures",
+            "summary": "Tool execution is a core agent capability - json_repair incompatibility causes ALL tool parameters to parse as empty dict, and ReActAgent outputs plain text instead of calling tools. This completely breaks the main workflow of agents that rely on tool use.",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "agentscope-ai/agentscope"
+            ],
+            "sample_urls": [
+              "https://github.com/agentscope-ai/agentscope/issues/1282",
+              "https://github.com/agentscope-ai/agentscope/issues/1272",
+              "https://github.com/agentscope-ai/agentscope/issues/1285"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Tool execution is a core agent capability - json_repair incompatibility causes ALL tool parameters to parse as empty dict, and ReActAgent outputs plain text instead of calling tools. This completely breaks the main workflow of agents that rely on tool use.",
+            "source_issues": [
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1282",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1272",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1285",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "agentscope-ai__agentscope-3",
+            "repo": "agentscope-ai/agentscope",
+            "topic": "Thinking Mode Not Supported in Model Formatters",
+            "summary": "Users experience broken ReActAgent reasoning workflow - thinking output is explicitly skipped/interrupted with 'Unsupported block type thinking' errors, blocking the core reasoning functionality that users expect from thinking-capable models.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "agentscope-ai/agentscope"
+            ],
+            "sample_urls": [
+              "https://github.com/agentscope-ai/agentscope/issues/1292",
+              "https://github.com/agentscope-ai/agentscope/issues/1067"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Users experience broken ReActAgent reasoning workflow - thinking output is explicitly skipped/interrupted with 'Unsupported block type thinking' errors, blocking the core reasoning functionality that users expect from thinking-capable models.",
+            "source_issues": [
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1292",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1067",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "agentscope-ai__agentscope-4",
+            "repo": "agentscope-ai/agentscope",
+            "topic": "Plan Notebook Hook Triggering Issues",
+            "summary": "Hook triggering issues affect UI/observer integrations and cause Pydantic validation errors when updating plans, but don't block core agent execution - more of a framework/observability issue.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "agentscope-ai/agentscope"
+            ],
+            "sample_urls": [
+              "https://github.com/agentscope-ai/agentscope/issues/1280",
+              "https://github.com/agentscope-ai/agentscope/issues/1293"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P2",
+            "review_reason": "Hook triggering issues affect UI/observer integrations and cause Pydantic validation errors when updating plans, but don't block core agent execution - more of a framework/observability issue.",
+            "source_issues": [
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1280",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1293",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "agentscope-ai__agentscope-5",
+            "repo": "agentscope-ai/agentscope",
+            "topic": "Studio Friday Agent Runtime Errors",
+            "summary": "Friday agent completely fails to start with TypeError due to JSONSession API mismatch, blocking users from using this Studio feature. Single report but complete functionality loss.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "agentscope-ai/agentscope"
+            ],
+            "sample_urls": [
+              "https://github.com/agentscope-ai/agentscope/issues/1276"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Friday agent completely fails to start with TypeError due to JSONSession API mismatch, blocking users from using this Studio feature. Single report but complete functionality loss.",
+            "source_issues": [
+              {
+                "repo": "agentscope-ai/agentscope",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/agentscope-ai/agentscope/issues/1276",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 18,
+        "analyzed_issue_count": 18,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-java-1",
+            "repo": "anthropics/anthropic-sdk-java",
+            "topic": "JsonNode serialization error when creating Skills",
+            "summary": "Blocking bug that completely prevents users from creating Skills via SkillService.create() - a core SDK capability. The AnthropicInvalidDataException causes total operation failure, representing clear user impact on critical functionality despite low occurrence count.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-java"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-java/issues/306"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Blocking bug that completely prevents users from creating Skills via SkillService.create() - a core SDK capability. The AnthropicInvalidDataException causes total operation failure, representing clear user impact on critical functionality despite low occurrence count.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-java",
+                "issue_number": 306,
+                "title": "Unexpected JsonNode type in array: ARRAY when creating Skill",
+                "url": "https://github.com/anthropics/anthropic-sdk-java/issues/306",
+                "labels": [
+                  "bug",
+                  "sdk"
+                ],
+                "evidence": "Stack trace showing AnthropicInvalidDataException when calling SkillService.create()"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-python-1",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "Structured output grammar size limits blocking complex JSON schemas",
+            "summary": "Blocks adoption of structured outputs feature for production use cases with moderately complex but valid JSON schemas (~50 properties, 5 levels nesting). Users receive 400 error with misleading message and must fall back to prompt-based JSON instructions, losing guaranteed schema compliance. Clear user impact: feature becomes unusable for non-trivial real-world schemas.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1185"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Blocks adoption of structured outputs feature for production use cases with moderately complex but valid JSON schemas (~50 properties, 5 levels nesting). Users receive 400 error with misleading message and must fall back to prompt-based JSON instructions, losing guaranteed schema compliance. Clear user impact: feature becomes unusable for non-trivial real-world schemas.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1185",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-python-2",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "Redundant empty text blocks in adaptive thinking streaming",
+            "summary": "Causes parsing confusion for developers using the new adaptive thinking streaming feature with Opus 4.6. The unexpected empty text block before thinking block makes it difficult to distinguish response phases. While not blocking core functionality, it creates undocumented API behavior requiring workarounds for correct output parsing.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1162"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Causes parsing confusion for developers using the new adaptive thinking streaming feature with Opus 4.6. The unexpected empty text block before thinking block makes it difficult to distinguish response phases. While not blocking core functionality, it creates undocumented API behavior requiring workarounds for correct output parsing.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1162",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 3,
+        "analyzed_issue_count": 3,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-typescript-1",
+            "repo": "anthropics/anthropic-sdk-typescript",
+            "topic": "json_schema structured output truncates content at HTML tags with quoted attributes",
+            "summary": "Blocks structured output workflows with 100% reproducibility - users lose data mid-generation with no error indication (stop_reason: 'end_turn' not 'max_tokens'). Valid JSON but truncated content is a silent data loss scenario that is particularly harmful.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-typescript"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-typescript/issues/928"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Blocks structured output workflows with 100% reproducibility - users lose data mid-generation with no error indication (stop_reason: 'end_turn' not 'max_tokens'). Valid JSON but truncated content is a silent data loss scenario that is particularly harmful.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-typescript",
+                "issue_number": 928,
+                "title": "json_schema structured output truncates content at HTML tags containing quotation marks",
+                "url": "https://github.com/anthropics/anthropic-sdk-typescript/issues/928",
+                "labels": [],
+                "evidence": "Reproduces 100% of the time. Model produces ~300 tokens and valid JSON, but body string is truncated mid-article at <cite data-src= tags."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-typescript-2",
+            "repo": "anthropics/anthropic-sdk-typescript",
+            "topic": "toolRunner drops defaultHeaders on follow-up requests breaking proxy/gateway authentication",
+            "summary": "Blocks proxy/gateway authentication for toolRunner users - causes authentication_error on follow-up requests. Confirmed by Cloudflare team as SDK-side bug. Affects Cloudflare AI Gateway and any custom proxy using header-based auth, making toolRunner unusable in these common enterprise setups.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-typescript"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-typescript/issues/922"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Blocks proxy/gateway authentication for toolRunner users - causes authentication_error on follow-up requests. Confirmed by Cloudflare team as SDK-side bug. Affects Cloudflare AI Gateway and any custom proxy using header-based auth, making toolRunner unusable in these common enterprise setups.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-typescript",
+                "issue_number": 922,
+                "title": "toolRunner drops defaultHeaders on follow-up requests (breaks proxy/gateway setups)",
+                "url": "https://github.com/anthropics/anthropic-sdk-typescript/issues/922",
+                "labels": [],
+                "evidence": "First call includes headers correctly, but follow-up calls lose custom headers. Causes authentication_error. Confirmed by Cloudflare team as SDK-side bug."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 2,
+        "analyzed_issue_count": 2,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__claude-cookbooks-1",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Rate limit errors and excessive input token usage when invoking Skills",
+            "summary": "Clear blocking evidence: 429 rate limit error prevents users from completing Skills notebooks. User cannot proceed with workflow when hitting token limits. Affects cost and productivity directly.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/324"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Clear blocking evidence: 429 rate limit error prevents users from completing Skills notebooks. User cannot proceed with workflow when hitting token limits. Affects cost and productivity directly.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": 324,
+                "title": "[Bug/Question] Excessive Input Token Usage When Invoking Skills - Rate Limit Errors",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/324",
+                "labels": [
+                  "bug"
+                ],
+                "evidence": "RateLimitError: Error code: 429 - rate limit error for 50,000 input tokens per minute exceeded"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-cookbooks-2",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Skills incompatible with AnthropicVertex (GCP)",
+            "summary": "Critical feature unavailable: Enterprise users on GCP/Vertex AI cannot use Skills at all due to beta header incompatibility. Blocks entire workflow for GCP customers.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/311"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Critical feature unavailable: Enterprise users on GCP/Vertex AI cannot use Skills at all due to beta header incompatibility. Blocks entire workflow for GCP customers.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": 311,
+                "title": "[QUESTION] how to use skills with AnthropicVertex?",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/311",
+                "labels": [
+                  "question"
+                ],
+                "evidence": "Error code: 400 - Unexpected value(s) `code-execution-2025-08-25`, `skills-2025-10-02` for the `anthropic-beta` header"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-cookbooks-3",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Session compaction breaks tool_use/tool_result pairing in multi-turn conversations",
+            "summary": "Data loss and session corruption: Compaction creates orphaned tool_result blocks that violate API requirements, rendering sessions unusable. Workaround requires deleting session files, causing conversation history loss.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/368"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Data loss and session corruption: Compaction creates orphaned tool_result blocks that violate API requirements, rendering sessions unusable. Workaround requires deleting session files, causing conversation history loss.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": 368,
+                "title": "[Bug] Session compaction causes tool_use_id mismatch in group chats",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/368",
+                "labels": [],
+                "evidence": "LLM request rejected: unexpected tool_use_id found in tool_result blocks - Each tool_result block must have a corresponding tool_use block in the previous message"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__claude-plugins-official-1",
+            "repo": "anthropics/claude-plugins-official",
+            "topic": "ralph-loop plugin crashes due to bash script bugs across platforms",
+            "summary": "4 independent crash reports across macOS and Windows with complete plugin failure. #541 shows critical session hijacking where loop from terminal A injects prompt into terminal B - clear production incident with user data corruption risk. #519 and #505/#492 show unquoted paths and bash 3.2 incompatibility causing immediate crashes on common platforms.",
+            "category": null,
+            "count": 4,
+            "affected_repos": [
+              "anthropics/claude-plugins-official"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-plugins-official/issues/541",
+              "https://github.com/anthropics/claude-plugins-official/issues/519",
+              "https://github.com/anthropics/claude-plugins-official/issues/505",
+              "https://github.com/anthropics/claude-plugins-official/issues/492"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "4 independent crash reports across macOS and Windows with complete plugin failure. #541 shows critical session hijacking where loop from terminal A injects prompt into terminal B - clear production incident with user data corruption risk. #519 and #505/#492 show unquoted paths and bash 3.2 incompatibility causing immediate crashes on common platforms.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 541,
+                "title": "ralph-loop: stop hook inherits loop from different terminal session when state file lacks session_id",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/541",
+                "labels": [],
+                "evidence": "Session B was injected with the Korosak prompt and began executing it"
+              },
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 519,
+                "title": "ralph-loop stop hook fails on Windows paths with spaces",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/519",
+                "labels": [],
+                "evidence": "bash: /c/Users/Evan: No such file or directory - unquoted CLAUDE_PLUGIN_ROOT"
+              },
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 505,
+                "title": "ralph-loop: setup script crashes with 'unbound variable' when invoked without arguments",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/505",
+                "labels": [],
+                "evidence": "PROMPT_PARTS[*]: unbound variable when expanding empty array with set -u"
+              },
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 492,
+                "title": "ralph-loop: setup script crashes on macOS due to bash 3.2 empty array bug",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/492",
+                "labels": [],
+                "evidence": "Same root cause as #505 - bash 3.2 empty array expansion with set -u"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-plugins-official-2",
+            "repo": "anthropics/claude-plugins-official",
+            "topic": "Plugins ignore user-level config paths ($CLAUDE_CONFIG_DIR or ~/.claude/)",
+            "summary": "Two separate plugins with same pattern: hardcoded paths break expected behavior. #503 - hookify rules in ~/.claude/ never fire (user explicitly states 'none' workaround exists). #512 - claude-md-improver checks wrong directory for users with CLAUDE_CONFIG_DIR set. Both cause silent failures where feature appears to work but produces wrong results.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "anthropics/claude-plugins-official"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-plugins-official/issues/503",
+              "https://github.com/anthropics/claude-plugins-official/issues/512"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Two separate plugins with same pattern: hardcoded paths break expected behavior. #503 - hookify rules in ~/.claude/ never fire (user explicitly states 'none' workaround exists). #512 - claude-md-improver checks wrong directory for users with CLAUDE_CONFIG_DIR set. Both cause silent failures where feature appears to work but produces wrong results.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 503,
+                "title": "hookify: rules in ~/.claude/ never fire (config_loader only searches project CWD)",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/503",
+                "labels": [],
+                "evidence": "config_loader.py only searches .claude/hookify.*.local.md relative to CWD, never checks ~/.claude/"
+              },
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 512,
+                "title": "claude-md-improver hardcodes ~/.claude/ path, ignores $CLAUDE_CONFIG_DIR",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/512",
+                "labels": [],
+                "evidence": "SKILL.md hardcodes ~/.claude/CLAUDE.md instead of respecting $CLAUDE_CONFIG_DIR"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-plugins-official-3",
+            "repo": "anthropics/claude-plugins-official",
+            "topic": "skill-creator eval pipeline incompatible with Windows and OAuth authentication",
+            "summary": "Single issue but documents 5 distinct blocking bugs affecting Windows + OAuth users. OSError [WinError 10093] crashes eval pipeline on Windows pipes. OAuth users (Claude Max subscription) cannot use description optimization at all. 0% trigger rate in nested sessions makes feature useless. Affects significant user segments.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-plugins-official"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-plugins-official/issues/523"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Single issue but documents 5 distinct blocking bugs affecting Windows + OAuth users. OSError [WinError 10093] crashes eval pipeline on Windows pipes. OAuth users (Claude Max subscription) cannot use description optimization at all. 0% trigger rate in nested sessions makes feature useless. Affects significant user segments.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 523,
+                "title": "skill-creator: eval pipeline broken on Windows + OAuth auth (5 issues)",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/523",
+                "labels": [],
+                "evidence": "OSError: [WinError 10093] - select.select() only works with sockets on Windows; ANTHROPIC_API_KEY required for OAuth users; 0% trigger rate in nested sessions"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-plugins-official-4",
+            "repo": "anthropics/claude-plugins-official",
+            "topic": "Plugin marketplace registration breaks existing user hooks configuration",
+            "summary": "Regression that breaks existing user workflows. UserPromptSubmit hook error banner appears and PostToolUse bash errors occur even with all plugins disabled. Uninstalling marketplace immediately resolves both. Clear cause-and-effect evidence shows marketplace registration corrupts existing hook configuration.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-plugins-official"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-plugins-official/issues/522"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Regression that breaks existing user workflows. UserPromptSubmit hook error banner appears and PostToolUse bash errors occur even with all plugins disabled. Uninstalling marketplace immediately resolves both. Clear cause-and-effect evidence shows marketplace registration corrupts existing hook configuration.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 522,
+                "title": "Marketplace registration breaks existing user hooks (UserPromptSubmit + PostToolUse errors)",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/522",
+                "labels": [],
+                "evidence": "UserPromptSubmit hook error banner appears; PostToolUse bash errors; uninstalling marketplace resolves both"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-plugins-official-5",
+            "repo": "anthropics/claude-plugins-official",
+            "topic": "Plugin installation fails with schema validation errors for unsupported keys",
+            "summary": "Complete installation blockage for Figma plugin. User cannot install plugin at all due to 'lspServers' key not recognized by schema validator. Error shows 11 plugin entries affected, indicating systemic issue not limited to single plugin. No workaround available.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-plugins-official"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-plugins-official/issues/470"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Complete installation blockage for Figma plugin. User cannot install plugin at all due to 'lspServers' key not recognized by schema validator. Error shows 11 plugin entries affected, indicating systemic issue not limited to single plugin. No workaround available.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-plugins-official",
+                "issue_number": 470,
+                "title": "Plugin installation fails with \"Unrecognized key(s) in object: 'lspServers'\" error",
+                "url": "https://github.com/anthropics/claude-plugins-official/issues/470",
+                "labels": [],
+                "evidence": "Invalid schema: plugins.0: Unrecognized key(s) in object: 'lspServers'"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "snapshot_date": "2026-03-07",
+        "signals": [],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "anthropics__skills-1",
+            "repo": "anthropics/skills",
+            "topic": "skill-creator eval/benchmark workflow bugs and UX issues",
+            "summary": "Multiple concrete workflow failures with reproducible evidence: grader writes to wrong paths causing missing results, Bash tool blocked in baseline runs inflating scores, aggregate_benchmark.py crashes on non-directory entries. Users experience broken eval loops and misleading benchmark results.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "anthropics/skills"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/skills/issues/518",
+              "https://github.com/anthropics/skills/issues/490"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Multiple concrete workflow failures with reproducible evidence: grader writes to wrong paths causing missing results, Bash tool blocked in baseline runs inflating scores, aggregate_benchmark.py crashes on non-directory entries. Users experience broken eval loops and misleading benchmark results.",
+            "source_issues": [
+              {
+                "repo": "anthropics/skills",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/skills/issues/518",
+                "labels": [],
+                "evidence": null
+              },
+              {
+                "repo": "anthropics/skills",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/skills/issues/490",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__skills-2",
+            "repo": "anthropics/skills",
+            "topic": "skill-creator unusable for enterprise/SSO users due to ANTHROPIC_API_KEY requirement",
+            "summary": "Feature completely blocked for enterprise/SSO users who cannot obtain raw API key - this is the majority of Claude Code users. Clear user impact: description optimization workflow silently fails, requires ~400-line workaround. Single issue but high-impact blocking.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/skills"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/skills/issues/532"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Feature completely blocked for enterprise/SSO users who cannot obtain raw API key - this is the majority of Claude Code users. Clear user impact: description optimization workflow silently fails, requires ~400-line workaround. Single issue but high-impact blocking.",
+            "source_issues": [
+              {
+                "repo": "anthropics/skills",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/skills/issues/532",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__skills-3",
+            "repo": "anthropics/skills",
+            "topic": "DOCX skill produces corrupted Word files with tracked changes",
+            "summary": "Data corruption with quantified evidence: 3 out of 10 attempts produce files Word refuses to open. Two distinct corruption modes: duplicate w:id collisions with existing bookmarks, and structural nesting violations. Files become completely unusable, not just degraded.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/skills"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/skills/issues/489"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Data corruption with quantified evidence: 3 out of 10 attempts produce files Word refuses to open. Two distinct corruption modes: duplicate w:id collisions with existing bookmarks, and structural nesting violations. Files become completely unusable, not just degraded.",
+            "source_issues": [
+              {
+                "repo": "anthropics/skills",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/skills/issues/489",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__skills-4",
+            "repo": "anthropics/skills",
+            "topic": "Skills do not sync automatically across Claude Code, Web, Desktop platforms",
+            "summary": "UX friction but not blocking - users can still use skills via manual UI clicks. This is a feature request for automatic cross-platform sync rather than a failure or crash. Low user pain relative to other issues.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/skills"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/skills/issues/80"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P2",
+            "review_reason": "UX friction but not blocking - users can still use skills via manual UI clicks. This is a feature request for automatic cross-platform sync rather than a failure or crash. Low user pain relative to other issues.",
+            "source_issues": [
+              {
+                "repo": "anthropics/skills",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/skills/issues/80",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 12,
+        "analyzed_issue_count": 12,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "huggingface__smolagents-1",
+            "repo": "huggingface/smolagents",
+            "topic": "Cache token tracking not exposed in TokenUsage (Anthropic/OpenAI)",
+            "summary": "Users cannot verify prompt caching is working or track actual costs. Cache tokens (cache_creation_input_tokens, cache_read_input_tokens) are silently dropped at conversion boundary. Real-world impact: 90% cost miscalculation on multi-step agent runs ($0.94 vs $0.10). Directly affects billing visibility and cost optimization for production deployments.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2055",
+              "https://github.com/huggingface/smolagents/issues/2054"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Users cannot verify prompt caching is working or track actual costs. Cache tokens (cache_creation_input_tokens, cache_read_input_tokens) are silently dropped at conversion boundary. Real-world impact: 90% cost miscalculation on multi-step agent runs ($0.94 vs $0.10). Directly affects billing visibility and cost optimization for production deployments.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2055,
+                "title": "Surface cache token usage from Anthropic/OpenAI in TokenUsage",
+                "url": "https://github.com/huggingface/smolagents/issues/2055",
+                "labels": [],
+                "evidence": "TokenUsage only has input_tokens and output_tokens. Cache tokens from Anthropic/OpenAI are silently dropped, making it impossible to track actual cost (cache reads are 90% cheaper) or verify prompt caching is working"
+              },
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2054,
+                "title": "Add prompt caching support for Anthropic models (90% input token savings)",
+                "url": "https://github.com/huggingface/smolagents/issues/2054",
+                "labels": [],
+                "evidence": "The same static prefix is billed at full input price on every API call. Real-world cost impact on a CodeAgent multi-step run: Without caching: $0.94, With caching: ~$0.10 (90% reduction)"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-2",
+            "repo": "huggingface/smolagents",
+            "topic": "LocalPythonExecutor suppresses stack traces making debugging extremely difficult",
+            "summary": "Agents receive only exception messages without stack traces when code execution fails, forcing them to waste tokens re-running with simpler code or give up entirely. This directly impacts developer productivity and token costs in agentic workflows where code generation errors are common and expected.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2053"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Agents receive only exception messages without stack traces when code execution fails, forcing them to waste tokens re-running with simpler code or give up entirely. This directly impacts developer productivity and token costs in agentic workflows where code generation errors are common and expected.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2053,
+                "title": "LocalPythonExecutor silently suppresses stack traces from code execution errors",
+                "url": "https://github.com/huggingface/smolagents/issues/2053",
+                "labels": [],
+                "evidence": "Agents receive only the exception message, forcing them to either re-run with simpler code to narrow down the issue (wasting tokens) or give up and return a generic error to the user"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-3",
+            "repo": "huggingface/smolagents",
+            "topic": "Docker executor leaves orphaned containers blocking port 8888 on unexpected exit",
+            "summary": "Subsequent CodeAgent runs crash with 'port is already allocated' error when Docker container is orphaned after unexpected script termination. User must manually clean up containers via Docker Desktop. This is a blocking issue that prevents normal usage until manual intervention.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2050"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Subsequent CodeAgent runs crash with 'port is already allocated' error when Docker container is orphaned after unexpected script termination. User must manually clean up containers via Docker Desktop. This is a blocking issue that prevents normal usage until manual intervention.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2050,
+                "title": "BUG: Docker executor leaves orphaned containers blocking port 8888 when script stops unexpectedly",
+                "url": "https://github.com/huggingface/smolagents/issues/2050",
+                "labels": [],
+                "evidence": "The jupyter-kernel container continues to run in the background and keeps port 8888 occupied. Subsequent runs crash with: Bind for 127.0.0.1:8888 failed: port is already allocated"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-4",
+            "repo": "huggingface/smolagents",
+            "topic": "GLM models via ZAI produce code parsing failures",
+            "summary": "Users encounter persistent 'Code parsing failed' errors when using GLM models (4.7, 4.6, 4.5Air) via ZAI provider, while same models work via Deepinfra. This is a model/provider-specific compatibility issue with a known workaround (use different provider), but still represents a pain point for users committed to ZAI.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/1934"
+            ],
+            "aliases": [],
+            "confidence": 0.7,
+            "priority": "P2",
+            "review_reason": "Users encounter persistent 'Code parsing failed' errors when using GLM models (4.7, 4.6, 4.5Air) via ZAI provider, while same models work via Deepinfra. This is a model/provider-specific compatibility issue with a known workaround (use different provider), but still represents a pain point for users committed to ZAI.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 1934,
+                "title": "GLM models via ZAI",
+                "url": "https://github.com/huggingface/smolagents/issues/1934",
+                "labels": [],
+                "evidence": "Code parsing failed on line 3 due to: SyntaxError: invalid syntax. I tried both LiteLLMModel and OpenAIModel and got back always same error after the very first step"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 11,
+        "analyzed_issue_count": 11,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "openai__openai-python-1",
+            "repo": "openai/openai-python",
+            "topic": "Slow import times due to openai.types module loading",
+            "summary": "Clear user impact: 2s import time makes CLI tools and dev utilities unusable. Semantic Kernel takes 30+ seconds to import, rendering libraries useless for CLI use cases. Multiple users affected (2 comments on issue).",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openai/openai-python"
+            ],
+            "sample_urls": [
+              "https://github.com/openai/openai-python/issues/2819"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Clear user impact: 2s import time makes CLI tools and dev utilities unusable. Semantic Kernel takes 30+ seconds to import, rendering libraries useless for CLI use cases. Multiple users affected (2 comments on issue).",
+            "source_issues": [
+              {
+                "repo": "openai/openai-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openai/openai-python/issues/2819",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openai__openai-python-2",
+            "repo": "openai/openai-python",
+            "topic": "Outdated example code (realtime/push_to_talk_app.py) breaks with current library version",
+            "summary": "Affects user onboarding and learning experience. Official examples failing causes confusion for new users trying to learn the API. Workaround exists (update code manually) but degrades documentation quality.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openai/openai-python"
+            ],
+            "sample_urls": [
+              "https://github.com/openai/openai-python/issues/2715"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P2",
+            "review_reason": "Affects user onboarding and learning experience. Official examples failing causes confusion for new users trying to learn the API. Workaround exists (update code manually) but degrades documentation quality.",
+            "source_issues": [
+              {
+                "repo": "openai/openai-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openai/openai-python/issues/2715",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openai__openai-python-3",
+            "repo": "openai/openai-python",
+            "topic": "Environment variable handling issues (empty OPENAI_BASE_URL breaks fallback)",
+            "summary": "Edge case with clear reproduction and confusing error message. Users following patterns like 'unset by setting empty' will hit this. Easy workaround (unset variable) but poor developer experience.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openai/openai-python"
+            ],
+            "sample_urls": [
+              "https://github.com/openai/openai-python/issues/2927"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Edge case with clear reproduction and confusing error message. Users following patterns like 'unset by setting empty' will hit this. Easy workaround (unset variable) but poor developer experience.",
+            "source_issues": [
+              {
+                "repo": "openai/openai-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openai/openai-python/issues/2927",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openai__openai-python-4",
+            "repo": "openai/openai-python",
+            "topic": "Pydantic compatibility issue with DEBUG logging enabled",
+            "summary": "Blocks debugging workflow completely - crashes before network call when DEBUG logging enabled. Affects legitimate development use case with clear reproduction steps. TypeError is a hard crash.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openai/openai-python"
+            ],
+            "sample_urls": [
+              "https://github.com/openai/openai-python/issues/2921"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Blocks debugging workflow completely - crashes before network call when DEBUG logging enabled. Affects legitimate development use case with clear reproduction steps. TypeError is a hard crash.",
+            "source_issues": [
+              {
+                "repo": "openai/openai-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openai/openai-python/issues/2921",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openai__openai-python-5",
+            "repo": "openai/openai-python",
+            "topic": "Shell tool network policy allowlist causes 500 errors",
+            "summary": "Feature regression - was working on Feb 26, now returns 500 errors. Completely blocks usage of shell tool with network allowlist configuration. Production domains affected.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openai/openai-python"
+            ],
+            "sample_urls": [
+              "https://github.com/openai/openai-python/issues/2920"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Feature regression - was working on Feb 26, now returns 500 errors. Completely blocks usage of shell tool with network allowlist configuration. Production domains affected.",
+            "source_issues": [
+              {
+                "repo": "openai/openai-python",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openai/openai-python/issues/2920",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 10,
+        "analyzed_issue_count": 10,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "openinterpreter__open-interpreter-1",
+            "repo": "openinterpreter/open-interpreter",
+            "topic": "sudo commands hang process indefinitely with no feedback",
+            "summary": "Users experience 120-second hangs with no feedback when attempting common system administration tasks (e.g., 'check systemd journal'). This blocks the main workflow and provides no actionable information. The issue is open, has 4 comments indicating community validation, and affects a frequent use case (sudo commands). While count=1, the blocking nature and poor UX (generic timeout error with no root cause indication) represent significant user pain.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openinterpreter/open-interpreter"
+            ],
+            "sample_urls": [
+              "https://github.com/openinterpreter/open-interpreter/issues/1694"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Users experience 120-second hangs with no feedback when attempting common system administration tasks (e.g., 'check systemd journal'). This blocks the main workflow and provides no actionable information. The issue is open, has 4 comments indicating community validation, and affects a frequent use case (sudo commands). While count=1, the blocking nature and poor UX (generic timeout error with no root cause indication) represent significant user pain.",
+            "source_issues": [
+              {
+                "repo": "openinterpreter/open-interpreter",
+                "issue_number": 1694,
+                "title": "Bug: sudo commands hang process indefinitely with no feedback",
+                "url": "https://github.com/openinterpreter/open-interpreter/issues/1694",
+                "labels": [],
+                "evidence": "OI uses subprocess.Popen with stdin=subprocess.PIPE — there is no terminal for password entry. The process blocks until the execution timeout fires (default 120s), with no indication of what went wrong."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 2,
+        "analyzed_issue_count": 2,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "snapshot_date": "2026-03-07",
+        "signals": [
+          {
+            "id": "paul-gauthier__aider-1",
+            "repo": "paul-gauthier/aider",
+            "topic": "NotImplementedError on Windows with glob patterns in read-only command",
+            "summary": "3 independent Windows users reported the same crash within 2 days, blocking the read-only command which is a core workflow feature. High frequency + main flow blocking with clear sample links.",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4890",
+              "https://github.com/Aider-AI/aider/issues/4886",
+              "https://github.com/Aider-AI/aider/issues/4885"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "3 independent Windows users reported the same crash within 2 days, blocking the read-only command which is a core workflow feature. High frequency + main flow blocking with clear sample links.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4890,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4890",
+                "labels": [],
+                "evidence": "NotImplementedError: Non-relative patterns are unsupported in pathlib.py line 1090 during cmd_read_only"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4886,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4886",
+                "labels": [],
+                "evidence": "Same error on Windows 11 with glob patterns in read-only command"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4885,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4885",
+                "labels": [],
+                "evidence": "Same error on Windows 11 with different Python 3.12.10 version"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-2",
+            "repo": "paul-gauthier/aider",
+            "topic": "tree-sitter QueryError when building repository map",
+            "summary": "Single report but affects repository map which is a core aider feature. Low frequency but still a real user-blocking error on an essential feature.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4888"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Single report but affects repository map which is a core aider feature. Low frequency but still a real user-blocking error on an essential feature.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4888,
+                "title": "Uncaught QueryError in repomap.py line 302",
+                "url": "https://github.com/Aider-AI/aider/issues/4888",
+                "labels": [],
+                "evidence": "tree_sitter.QueryError: Invalid node type at row 2, column 2: module in repomap.py line 302"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-3",
+            "repo": "paul-gauthier/aider",
+            "topic": "Changes discarded when LM makes edits and adds files simultaneously",
+            "summary": "Data loss is a critical user pain point. User's code changes are discarded even after they explicitly agree to add files, breaking trust and causing work loss. 10 comments on issue shows ongoing user concern.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4314"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Data loss is a critical user pain point. User's code changes are discarded even after they explicitly agree to add files, breaking trust and causing work loss. 10 comments on issue shows ongoing user concern.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4314,
+                "title": "Bug report - aider disregards changes if the LM makes changes *and* adds files (which user agrees to) in same response",
+                "url": "https://github.com/Aider-AI/aider/issues/4314",
+                "labels": [],
+                "evidence": "User reports repeated instances where LM edits are discarded when LM also requests files to be added in the same response"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 12,
+        "analyzed_issue_count": 12,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      }
+    ],
+    "expected_files": 43,
+    "generated_files": 13,
+    "parsed_files": 13,
+    "failed_files": 30,
+    "failed_samples": [
+      "AndyMik90__Auto-Claude.analysis.json (missing)",
+      "ErikBjare__gptme.analysis.json (missing)",
+      "OpenDevin__OpenDevin.analysis.json (missing)",
+      "Significant-Gravitas__AutoGPT.analysis.json (missing)",
+      "agno-agi__agno.analysis.json (missing)"
+    ],
+    "quality_score": 0.512,
+    "quality_status": "poor"
+  }
+}
