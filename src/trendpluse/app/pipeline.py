@@ -82,10 +82,8 @@ class TrendPulsePipeline:
             retry_wait_min=getattr(self.settings, "llm_retry_wait_min", 1),
             retry_wait_max=getattr(self.settings, "llm_retry_wait_max", 10),
         )
-        reporting.builder.issue_insights_loader = (
-            lambda date: issue_global_summarizer.summarize(
-                apps.issue_workflow.load_insights(date)
-            )
+        reporting.builder.issue_insights_loader = lambda date: (
+            issue_global_summarizer.summarize(apps.issue_workflow.load_insights(date))
         )
         self.daily_app = apps.daily_app
         self.weekly_app = apps.weekly_app
