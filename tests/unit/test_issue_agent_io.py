@@ -2,7 +2,11 @@
 
 from pathlib import Path
 
-from trendpluse.utils.issue_agent_io import load_issue_agent_report
+from trendpluse.models.issue_agent import IssueAgentReport
+from trendpluse.utils.issue_agent_io import (
+    load_issue_agent_report,
+    summarize_issue_agent_run_status,
+)
 
 
 def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
@@ -210,3 +214,37 @@ def test_load_issue_agent_report_has_quality_gate_metrics(tmp_path: Path) -> Non
     report = load_issue_agent_report(str(base_dir), "2026-02-08")
     assert report.quality_status == "poor"
     assert 0 <= report.quality_score < 0.8
+
+
+def test_summarize_issue_agent_run_status_variants() -> None:
+    no_data = IssueAgentReport(
+        expected_files=0,
+        generated_files=0,
+        parsed_files=0,
+        failed_files=0,
+    )
+    assert summarize_issue_agent_run_status(no_data) == "no_data"
+
+    success = IssueAgentReport(
+        expected_files=2,
+        generated_files=2,
+        parsed_files=2,
+        failed_files=0,
+    )
+    assert summarize_issue_agent_run_status(success) == "success"
+
+    partial = IssueAgentReport(
+        expected_files=3,
+        generated_files=3,
+        parsed_files=2,
+        failed_files=1,
+    )
+    assert summarize_issue_agent_run_status(partial) == "partial_failure"
+
+    failed = IssueAgentReport(
+        expected_files=3,
+        generated_files=1,
+        parsed_files=0,
+        failed_files=3,
+    )
+    assert summarize_issue_agent_run_status(failed) == "failed"

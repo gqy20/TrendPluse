@@ -48,6 +48,19 @@ def _compute_quality_metrics(
     return score, "poor"
 
 
+def summarize_issue_agent_run_status(report: IssueAgentReport) -> str:
+    """根据 Issue Agent 报告汇总运行状态。"""
+    if report.expected_files == 0 and report.generated_files == 0:
+        return "no_data"
+    if report.parsed_files > 0 and report.failed_files == 0:
+        return "success"
+    if report.parsed_files > 0 and report.failed_files > 0:
+        return "partial_failure"
+    if report.expected_files > 0 and report.parsed_files == 0:
+        return "failed"
+    return "unknown"
+
+
 def load_issue_agent_report(
     base_dir: str | PathLike[str] | object,
     snapshot_date: str,

@@ -26,6 +26,9 @@ jobs:
     outputs:
       report_date: ${{ steps.report_date.outputs.date }}
       has_report: ${{ steps.check_report.outputs.exists }}
+      issue_agent_status: ${{ steps.issue_agent_status.outputs.status }}
+      issue_agent_quality_status: ${{ steps.issue_agent_status.outputs.quality_status }}
+      issue_agent_failed_files: ${{ steps.issue_agent_status.outputs.failed_files }}
 
     steps:
       - name: Checkout repository
@@ -76,6 +79,39 @@ jobs:
             echo "Missing report: $REPORT_JSON"
           fi
 
+      - name: Evaluate Issue Agent status
+        id: issue_agent_status
+        run: |
+          uv run python - <<'PY'
+          import os
+          from trendpluse.utils.issue_agent_io import (
+              load_issue_agent_report,
+              summarize_issue_agent_run_status,
+          )
+
+          report_date = os.environ["REPORT_DATE"]
+          report = load_issue_agent_report("data/issues", report_date)
+          status = summarize_issue_agent_run_status(report)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"status={status}\n")
+              fh.write(f"quality_status={report.quality_status}\n")
+              fh.write(f"failed_files={report.failed_files}\n")
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fh:
+              fh.write("## Issue Agent 状态\n")
+              fh.write(f"- status: `{status}`\n")
+              fh.write(f"- quality_status: `{report.quality_status}`\n")
+              fh.write(f"- expected_files: `{report.expected_files}`\n")
+              fh.write(f"- parsed_files: `{report.parsed_files}`\n")
+              fh.write(f"- failed_files: `{report.failed_files}`\n")
+              if report.failed_samples:
+                  samples = ", ".join(report.failed_samples)
+                  fh.write(f"- failed_samples: `{samples}`\n")
+          PY
+        env:
+          REPORT_DATE: ${{ steps.report_date.outputs.date }}
+
       - name: Upload report artifacts
         if: steps.check_report.outputs.exists == 'true'
         uses: actions/upload-artifact@v7
@@ -104,6 +140,11 @@ jobs:
           git add reports/daily/*.md reports/daily/*.json docs/reports/*.md docs/discovery*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push
+
+      - name: Warn if Issue Agent degraded
+        if: steps.issue_agent_status.outputs.status == 'partial_failure' || steps.issue_agent_status.outputs.status == 'failed'
+        run: |
+          echo "::warning::Issue Agent status=${{ steps.issue_agent_status.outputs.status }}, quality=${{ steps.issue_agent_status.outputs.quality_status }}, failed_files=${{ steps.issue_agent_status.outputs.failed_files }}"
 
   notify:
     name: Send Feishu Notification
