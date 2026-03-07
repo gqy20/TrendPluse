@@ -37,6 +37,8 @@ class IssueWorkflowCoordinator:
         issue_agent_model: str | None = None,
         issue_agent_retry_max_attempts: int = 3,
         issue_agent_retry_wait_seconds: float = 1.0,
+        issue_agent_attempt_timeout_seconds: float = 120.0,
+        issue_agent_total_timeout_seconds: float = 600.0,
         runner_factory: Callable[..., Any] | None = None,
         issue_dumper: Callable[[list[Any], str, str], Any] | None = None,
         issue_report_loader: Callable[[str, str], Any] | None = None,
@@ -50,6 +52,8 @@ class IssueWorkflowCoordinator:
         self.issue_agent_model = issue_agent_model
         self.issue_agent_retry_max_attempts = issue_agent_retry_max_attempts
         self.issue_agent_retry_wait_seconds = issue_agent_retry_wait_seconds
+        self.issue_agent_attempt_timeout_seconds = issue_agent_attempt_timeout_seconds
+        self.issue_agent_total_timeout_seconds = issue_agent_total_timeout_seconds
         self.runner_factory = runner_factory or _default_issue_runner_factory
         self.issue_dumper = issue_dumper or dump_issues_to_jsonl
         self.issue_report_loader = issue_report_loader or load_issue_agent_report
@@ -99,8 +103,10 @@ class IssueWorkflowCoordinator:
 
         input_dir = Path(self.issue_dump_dir) / snapshot_date
         if not input_dir.exists():
+            logger.info("未找到 Issue 输入目录，跳过分析: %s", input_dir)
             return
         if not any(input_dir.glob("*.jsonl")):
+            logger.info("Issue 输入目录为空，跳过分析: %s", input_dir)
             return
 
         output_dir = input_dir / "analysis"
@@ -112,12 +118,8 @@ class IssueWorkflowCoordinator:
                 review_confidence_threshold=getattr(
                     self, "issue_agent_review_confidence_threshold", 0.6
                 ),
-                total_timeout_seconds=getattr(
-                    self, "issue_agent_total_timeout_seconds", 600.0
-                ),
-                attempt_timeout_seconds=getattr(
-                    self, "issue_agent_attempt_timeout_seconds", 120.0
-                ),
+                total_timeout_seconds=self.issue_agent_total_timeout_seconds,
+                attempt_timeout_seconds=self.issue_agent_attempt_timeout_seconds,
             )
             result: IssueAgentBatchResult = await runner.analyze_directory(
                 input_dir, output_dir
@@ -130,6 +132,12 @@ class IssueWorkflowCoordinator:
                 result.failed_files,
                 ",".join(result.failed_samples) if result.failed_samples else "-",
             )
+            if result.failed_files > 0:
+                logger.warning(
+                    "Issue Agent 存在失败样本: failed=%d, failed_samples=%s",
+                    result.failed_files,
+                    ",".join(result.failed_samples) if result.failed_samples else "-",
+                )
         except Exception as exc:  # pragma: no cover - 防御性日志
             logger.warning(f"Issue Agent 分析失败，已跳过: {exc}")
 
