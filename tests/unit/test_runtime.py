@@ -10,6 +10,7 @@ from unittest.mock import AsyncMock, Mock, patch
 from trendpluse.app.runtime import (
     build_daily_output_path,
     build_weekly_output_path,
+    build_weekly_output_path_from_week_id,
     run_daily_pipeline,
     run_weekly_pipeline,
 )
@@ -29,6 +30,13 @@ def test_build_weekly_output_path_uses_week_id() -> None:
     output_path = build_weekly_output_path(datetime(2026, 3, 8))
 
     assert str(output_path) == "reports/weekly/weekly-2026-W10.md"
+
+
+def test_build_weekly_output_path_from_week_id_uses_report_week_id() -> None:
+    """周报输出路径可直接根据周标识生成。"""
+    output_path = build_weekly_output_path_from_week_id("2026-W09")
+
+    assert str(output_path) == "reports/weekly/weekly-2026-W09.md"
 
 
 @patch("trendpluse.app.runtime.TrendPulsePipeline")

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       report_date:
-        description: '报告日期 (YYYY-MM-DD)，默认今天'
+        description: '报告日期 (YYYY-MM-DD)，默认自动选择最新日报'
         required: false
         type: string
         default: ''

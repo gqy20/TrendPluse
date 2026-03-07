@@ -49,7 +49,8 @@ class DummyIssueRunner:
         self.calls.append((input_dir, output_dir))
         output_dir.mkdir(parents=True, exist_ok=True)
         (output_dir / "repo.analysis.json").write_text(
-            '{"top_pain_points": []}', encoding="utf-8"
+            '{"repo":"owner/repo","snapshot_date":"2026-03-06","signals": []}',
+            encoding="utf-8",
         )
         return IssueAgentBatchResult(
             expected_files=1,

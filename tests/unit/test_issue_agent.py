@@ -30,21 +30,22 @@ def test_extract_text_blocks_handles_multiple_types() -> None:
     assert text == "ABC"
 
 
-def test_normalize_and_validate_output_accepts_fenced_json() -> None:
+def test_parse_json_like_text_accepts_fenced_json() -> None:
     runner = IssueAgentRunner(model=None)
     text = """
 这里是说明文字
 ```json
 {
-  "top_pain_points": [
+  "signals": [
     {"topic":"安装失败","count":2,"affected_repos":["a/b"],"sample_urls":["u1"]}
   ]
 }
 ```
 """
-    report = runner._normalize_and_validate_output(text)
-    assert len(report.top_pain_points) == 1
-    assert report.top_pain_points[0].topic == "安装失败"
+    parsed = runner._parse_json_like_text(text)
+    assert parsed is not None
+    assert len(parsed["signals"]) == 1
+    assert parsed["signals"][0]["topic"] == "安装失败"
 
 
 @pytest.mark.asyncio
@@ -154,7 +155,8 @@ async def test_analyze_file_retries_on_invalid_then_success(tmp_path) -> None:
     input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
     text = await runner.analyze_file(input_path, output_path)
     assert runner.calls == 4
-    assert "top_pain_points" in text
+    assert '"signals"' in text
+    assert "top_pain_points" not in text
 
 
 @pytest.mark.asyncio
@@ -244,8 +246,8 @@ async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> N
         async def analyze_file(self, input_path, output_path):
             if input_path.name == "bad.jsonl":
                 raise RuntimeError("boom")
-            output_path.write_text('{"top_pain_points":[]}', encoding="utf-8")
-            return '{"top_pain_points":[]}'
+            output_path.write_text('{"signals":[]}', encoding="utf-8")
+            return '{"signals":[]}'
 
     runner = _PartialFailRunner(model=None)
     input_dir = tmp_path / "in"

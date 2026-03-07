@@ -21,6 +21,8 @@ from trendpluse.models.issue_agent import (
     IssueAgentBatchResult,
     IssueAgentPainPoint,
     IssueAgentReport,
+    IssueAgentSourceIssue,
+    RepoIssueSignalReport,
 )
 
 logger = logging.getLogger(__name__)
@@ -75,8 +77,14 @@ class IssueAgentRunner:
                 validated = await self._run_with_total_timeout(
                     self._run_three_round_analysis(input_path)
                 )
+                repo_report = self._build_repo_signal_report(
+                    input_path=input_path,
+                    report=validated,
+                )
                 normalized_text = json.dumps(
-                    validated.model_dump(), ensure_ascii=False, indent=2
+                    self._serialize_repo_signal_report(repo_report),
+                    ensure_ascii=False,
+                    indent=2,
                 )
                 output_path.write_text(normalized_text, encoding="utf-8")
                 return normalized_text
@@ -144,14 +152,6 @@ class IssueAgentRunner:
         round3_data = self._parse_json_like_text(round3_text)
         if not isinstance(round3_data, dict):
             raise ValueError("ROUND3 输出不是合法 JSON 对象")
-
-        if "top_pain_points" in round3_data:
-            logger.info(
-                "Issue Agent ROUND3 完成: file=%s, top_pain_points=%d",
-                input_path.name,
-                len(round3_data.get("top_pain_points", [])),
-            )
-            return IssueAgentReport.model_validate(round3_data)
 
         reviewed = round3_data.get("reviewed_pain_points")
         if not isinstance(reviewed, list):
@@ -269,6 +269,12 @@ class IssueAgentRunner:
                 if isinstance(sample_urls, list)
                 else []
             )
+            source_issues_raw = raw.get("source_issues")
+            source_issues = self._parse_source_issues(
+                source_issues_raw=source_issues_raw,
+                fallback_repo=repos[0] if repos else "",
+                fallback_urls=urls,
+            )
 
             aliases_raw = raw.get("aliases")
             aliases = (
@@ -299,6 +305,7 @@ class IssueAgentRunner:
                     confidence=confidence,
                     priority=priority,
                     review_reason=review_reason,
+                    source_issues=source_issues,
                 )
             )
 
@@ -451,7 +458,11 @@ class IssueAgentRunner:
     ) -> dict[str, Any]:
         """构建痛点数组 schema。"""
         properties: dict[str, Any] = {
+            "id": {"type": "string"},
+            "repo": {"type": "string"},
             "topic": {"type": "string"},
+            "summary": {"type": "string"},
+            "category": {"type": "string"},
             "count": {"type": "integer", "minimum": 1},
             "affected_repos": {
                 "type": "array",
@@ -464,6 +475,25 @@ class IssueAgentRunner:
             "aliases": {
                 "type": "array",
                 "items": {"type": "string"},
+            },
+            "source_issues": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "repo": {"type": "string"},
+                        "issue_number": {"type": "integer"},
+                        "title": {"type": "string"},
+                        "url": {"type": "string"},
+                        "labels": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                        },
+                        "evidence": {"type": "string"},
+                    },
+                    "required": ["repo", "url"],
+                    "additionalProperties": False,
+                },
             },
         }
         required = ["topic", "count", "affected_repos", "sample_urls"]
@@ -496,6 +526,121 @@ class IssueAgentRunner:
             },
         }
 
+    def _parse_source_issues(
+        self,
+        *,
+        source_issues_raw: Any,
+        fallback_repo: str,
+        fallback_urls: list[str],
+    ) -> list[IssueAgentSourceIssue]:
+        """解析来源 issue，兼容旧格式 sample_urls。"""
+        results: list[IssueAgentSourceIssue] = []
+        if isinstance(source_issues_raw, list):
+            for item in source_issues_raw:
+                if not isinstance(item, dict):
+                    continue
+                url = item.get("url")
+                repo = item.get("repo") or fallback_repo
+                if not isinstance(url, str) or not url.strip():
+                    continue
+                issue_number = item.get("issue_number")
+                results.append(
+                    IssueAgentSourceIssue(
+                        repo=str(repo),
+                        issue_number=issue_number
+                        if isinstance(issue_number, int)
+                        else None,
+                        title=str(item.get("title", "")),
+                        url=url,
+                        labels=[
+                            str(label)
+                            for label in item.get("labels", [])
+                            if isinstance(label, str)
+                        ]
+                        if isinstance(item.get("labels"), list)
+                        else [],
+                        evidence=str(item.get("evidence"))
+                        if isinstance(item.get("evidence"), str)
+                        else None,
+                    )
+                )
+
+        if results:
+            return results
+
+        return [
+            IssueAgentSourceIssue(repo=fallback_repo or "", url=url)
+            for url in fallback_urls
+        ]
+
+    def _build_repo_signal_report(
+        self,
+        *,
+        input_path: Path,
+        report: IssueAgentReport,
+    ) -> RepoIssueSignalReport:
+        """构建单仓库 Issue 信号报告。"""
+        repo = self._infer_repo_from_jsonl(input_path)
+        snapshot_date = input_path.parent.name
+        signals = [
+            item.model_copy(
+                update={
+                    "id": item.id or f"{input_path.stem}-{index}",
+                    "repo": item.repo or repo,
+                    "summary": item.summary or item.review_reason or item.topic,
+                    "source_issues": item.source_issues
+                    or [
+                        IssueAgentSourceIssue(repo=repo, url=url)
+                        for url in item.sample_urls
+                    ],
+                }
+            )
+            for index, item in enumerate(report.top_pain_points, start=1)
+        ]
+        issue_count = self._count_jsonl_lines(input_path)
+        return RepoIssueSignalReport(
+            repo=repo,
+            snapshot_date=snapshot_date,
+            signals=signals,
+            expected_issue_count=issue_count,
+            analyzed_issue_count=issue_count,
+            quality_score=1.0,
+            quality_status="good",
+            errors=[],
+        )
+
+    def _serialize_repo_signal_report(
+        self,
+        report: RepoIssueSignalReport,
+    ) -> dict[str, Any]:
+        """序列化仓库级报告。"""
+        return report.model_dump()
+
+    def _infer_repo_from_jsonl(self, input_path: Path) -> str:
+        """从 JSONL 首行读取 repo，失败时回退到文件名。"""
+        try:
+            with input_path.open("r", encoding="utf-8") as handle:
+                for line in handle:
+                    stripped = line.strip()
+                    if not stripped:
+                        continue
+                    payload = json.loads(stripped)
+                    repo = payload.get("repo")
+                    if isinstance(repo, str) and repo.strip():
+                        return repo.strip()
+                    break
+        except Exception:
+            pass
+        return input_path.stem.replace("__", "/")
+
+    def _count_jsonl_lines(self, input_path: Path) -> int:
+        """统计 JSONL 非空行数。"""
+        try:
+            with input_path.open("r", encoding="utf-8") as handle:
+                return sum(1 for line in handle if line.strip())
+        except OSError:
+            return 0
+
     def _extract_text_blocks(self, content: Iterable[object]) -> str:
         parts: list[str] = []
         for block in content:
@@ -509,12 +654,6 @@ class IssueAgentRunner:
             if hasattr(block, "text"):
                 parts.append(str(getattr(block, "text")))
         return "".join(parts)
-
-    def _normalize_and_validate_output(self, text: str) -> IssueAgentReport:
-        parsed = self._parse_json_like_text(text)
-        if not isinstance(parsed, dict):
-            raise ValueError("Agent 输出不是合法 JSON 对象")
-        return IssueAgentReport.model_validate(parsed)
 
     def _parse_json_like_text(self, text: str) -> dict[str, Any] | None:
         stripped = text.strip()

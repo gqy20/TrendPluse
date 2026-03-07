@@ -24,6 +24,8 @@ jobs:
   weekly:
     name: Generate Weekly Report
     runs-on: ubuntu-latest
+    outputs:
+      week_id: ${{ steps.week_id.outputs.value }}
 
     steps:
       - name: Checkout repository
@@ -42,12 +44,25 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev
 
+      - name: Resolve week id
+        id: week_id
+        env:
+          INPUT_WEEK_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.week_id || '' }}
+        run: |
+          if [ -n "$INPUT_WEEK_ID" ]; then
+            WEEK_ID="$INPUT_WEEK_ID"
+          else
+            WEEK_ID=$(python -c "from datetime import datetime, timedelta; from trendpluse.models.signal import WeeklyReport; current = datetime.now(); weekday = current.weekday(); this_monday = current - timedelta(days=weekday); last_sunday = this_monday - timedelta(days=1); print(WeeklyReport.get_week_id(last_sunday))")
+          fi
+          echo "value=$WEEK_ID" >> "$GITHUB_OUTPUT"
+
       - name: Generate weekly report
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'glm-4.7' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WEEK_ID: ${{ steps.week_id.outputs.value }}
         run: uv run trendpluse-run-weekly
 
       - name: Sync reports to docs
@@ -93,5 +108,5 @@ jobs:
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
           FEISHU_AT_MOBILES: ${{ secrets.FEISHU_AT_MOBILES }}
-          WEEK_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.week_id || '' }}
+          WEEK_ID: ${{ needs.weekly.outputs.week_id }}
         run: uv run trendpluse-send-weekly-feishu

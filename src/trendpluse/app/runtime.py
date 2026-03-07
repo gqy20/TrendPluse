@@ -38,6 +38,11 @@ def build_weekly_output_path(date: datetime) -> Path:
     return Path("reports/weekly") / f"weekly-{week_id}.md"
 
 
+def build_weekly_output_path_from_week_id(week_id: str) -> Path:
+    """根据周标识构建周报输出路径。"""
+    return Path("reports/weekly") / f"weekly-{week_id}.md"
+
+
 async def run_daily_pipeline(
     settings: Settings,
     date: datetime | None = None,
@@ -62,5 +67,5 @@ def run_weekly_pipeline(
     report = pipeline.run_weekly(date=actual_date)
     return WeeklyRunResult(
         report=report,
-        output_path=build_weekly_output_path(actual_date),
+        output_path=build_weekly_output_path_from_week_id(report.week_id),
     )

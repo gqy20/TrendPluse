@@ -28,6 +28,7 @@ from trendpluse.collectors.issues import IssueCollector
 from trendpluse.collectors.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import Settings
+from trendpluse.issue_signal_aggregator import IssueGlobalSummarizer
 from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.models.signal import DailyReport, WeeklyReport
 from trendpluse.notifiers.feishu import FeishuNotifier
@@ -72,6 +73,19 @@ class TrendPulsePipeline:
             collectors=collectors,
             analyzers=analyzers,
             reporting=reporting,
+        )
+        issue_global_summarizer = IssueGlobalSummarizer(
+            api_key=self.settings.anthropic_api_key,
+            model=self.settings.anthropic_model,
+            base_url=self.settings.anthropic_base_url,
+            retry_max_attempts=getattr(self.settings, "llm_retry_max_attempts", 3),
+            retry_wait_min=getattr(self.settings, "llm_retry_wait_min", 1),
+            retry_wait_max=getattr(self.settings, "llm_retry_wait_max", 10),
+        )
+        reporting.builder.issue_insights_loader = (
+            lambda date: issue_global_summarizer.summarize(
+                apps.issue_workflow.load_insights(date)
+            )
         )
         self.daily_app = apps.daily_app
         self.weekly_app = apps.weekly_app

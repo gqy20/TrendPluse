@@ -586,6 +586,16 @@ class FeishuFormatter:
             f"• 质量分: {report.quality_score:.3f}\n\n",
         ]
 
+        if report.summary_brief:
+            lines.append("**全局摘要**\n\n")
+            lines.append(f"{report.summary_brief}\n\n")
+
+        if report.global_highlights:
+            lines.append("**全局亮点**\n\n")
+            for item in report.global_highlights[:3]:
+                lines.append(f"• {item}\n")
+            lines.append("\n")
+
         if not report.top_pain_points:
             lines.append("暂无可用的 Issue 洞察。\n")
             if report.failed_samples:
@@ -593,7 +603,7 @@ class FeishuFormatter:
                 lines.append(f"失败样例: {samples}\n")
             return "".join(lines)
 
-        lines.append("**用户痛点 TOP 3**\n\n")
+        lines.append("**跨仓库问题 TOP 3**\n\n")
         for idx, pain_point in enumerate(report.top_pain_points[:3], 1):
             repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
             if len(pain_point.affected_repos) > 2:
@@ -601,11 +611,31 @@ class FeishuFormatter:
             lines.append(f"{idx}. **{pain_point.topic}** ({pain_point.count}次)\n")
             lines.append(f"   受影响: {repos_str}\n")
 
-        sample_urls = report.top_pain_points[0].sample_urls
-        if sample_urls:
-            lines.append("\n**示例**\n\n")
-            for url in sample_urls[:3]:
-                lines.append(f"- {url}\n")
+        top_sources = report.top_pain_points[0].source_issues
+        if top_sources:
+            lines.append("\n**代表 Issue**\n\n")
+            for source in top_sources[:3]:
+                label = (
+                    f"#{source.issue_number} {source.title}".strip()
+                    if source.issue_number is not None
+                    else (source.title or source.url)
+                )
+                lines.append(f"- `{source.repo}` {label}\n")
+
+        if report.repo_reports:
+            lines.append("\n**仓库级信号**\n\n")
+            for repo_report in report.repo_reports[:3]:
+                lines.append(f"• `{repo_report.repo}`\n")
+                for signal in repo_report.signals[:2]:
+                    lines.append(f"  - {signal.topic}（{signal.count}次）\n")
+                    if signal.source_issues:
+                        first_issue = signal.source_issues[0]
+                        issue_label = (
+                            f"#{first_issue.issue_number} {first_issue.title}".strip()
+                            if first_issue.issue_number is not None
+                            else (first_issue.title or first_issue.url)
+                        )
+                        lines.append(f"    - {issue_label}\n")
 
         return "".join(lines)
 

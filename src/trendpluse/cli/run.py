@@ -21,6 +21,24 @@ console = Console()
 logger = get_logger(__name__)
 
 
+def resolve_report_datetime(raw_report_date: str | None) -> datetime:
+    """解析报告日期。
+
+    优先使用环境变量中传入的固定日期，避免长耗时任务跨天后
+    分析产物日期与工作流后续检查日期不一致。
+    """
+    cleaned = (raw_report_date or "").strip()
+    if not cleaned:
+        return datetime.now()
+
+    try:
+        return datetime.strptime(cleaned, "%Y-%m-%d")
+    except ValueError as exc:
+        raise ValueError(
+            f"REPORT_DATE 格式错误: {cleaned}，期望格式为 YYYY-MM-DD"
+        ) from exc
+
+
 def check_env_vars() -> bool:
     """检查必需的环境变量
 
@@ -103,7 +121,7 @@ def main():
         # 运行每日分析
         console.print("\n[bold]开始分析...[/bold]")
         logger.info("Daily pipeline started")
-        date = datetime.now()
+        date = resolve_report_datetime(os.getenv("REPORT_DATE"))
         result = asyncio.run(run_daily_pipeline(settings=settings, date=date))
         report = result.report
         logger.info("Daily pipeline finished")

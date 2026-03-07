@@ -45,6 +45,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev
 
+      - name: Get report date
+        id: report_date
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+
       - name: Run TrendPulse analysis
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -54,14 +60,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ENABLE_ISSUE_AGENT_ANALYSIS: "true"
           ISSUE_AGENT_MODEL: ${{ secrets.ISSUE_AGENT_MODEL || '' }}
+          REPORT_DATE: ${{ steps.report_date.outputs.date }}
           LOG_LEVEL: INFO
         run: uv run trendpluse-run
-
-      - name: Get report date
-        id: report_date
-        run: |
-          DATE=$(date +%Y-%m-%d)
-          echo "date=$DATE" >> $GITHUB_OUTPUT
 
       - name: Check if report exists
         id: check_report

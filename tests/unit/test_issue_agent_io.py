@@ -12,7 +12,9 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
 
     (snapshot / "repo1.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-05",
+  "signals": [
     {
       "topic": "安装失败",
       "count": 2,
@@ -29,7 +31,9 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     )
     (snapshot / "repo2.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "c/d",
+  "snapshot_date": "2026-02-05",
+  "signals": [
     {
       "topic": "安装失败",
       "count": 1,
@@ -66,7 +70,9 @@ def test_load_issue_agent_report_tracks_failed_files(tmp_path: Path) -> None:
 
     (snapshot / "valid.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-05",
+  "signals": [
     {"topic": "安装失败", "count": 2, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
   ]
 }""",
@@ -75,7 +81,9 @@ def test_load_issue_agent_report_tracks_failed_files(tmp_path: Path) -> None:
     (snapshot / "bad-json.analysis.json").write_text("{oops", encoding="utf-8")
     (snapshot / "bad-schema.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-05",
+  "signals": [
     {
       "topic": "类型错误",
       "count": "xx",
@@ -111,7 +119,9 @@ def test_load_issue_agent_report_marks_missing_analysis_outputs(tmp_path: Path) 
     )
     (analysis_dir / "repo1.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-06",
+  "signals": [
     {"topic": "安装失败", "count": 1, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
   ]
 }""",
@@ -135,7 +145,9 @@ def test_load_issue_agent_report_sorts_by_priority_then_confidence(
 
     (snapshot / "repo1.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-07",
+  "signals": [
     {
       "topic": "高频低优先级",
       "count": 20,
@@ -186,7 +198,9 @@ def test_load_issue_agent_report_has_quality_gate_metrics(tmp_path: Path) -> Non
     )
     (analysis_dir / "repo1.analysis.json").write_text(
         """{
-  "top_pain_points": [
+  "repo": "a/b",
+  "snapshot_date": "2026-02-08",
+  "signals": [
     {"topic": "安装失败", "count": 1, "affected_repos": ["a/b"], "sample_urls": ["u1"]}
   ]
 }""",

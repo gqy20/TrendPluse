@@ -173,6 +173,16 @@ class MarkdownReporter:
             f"`{report.quality_status}`，质量分: `{report.quality_score:.3f}`\n\n"
         )
 
+        if report.summary_brief:
+            lines.append("### 全局摘要\n\n")
+            lines.append(f"{report.summary_brief}\n\n")
+
+        if report.global_highlights:
+            lines.append("### 全局亮点\n\n")
+            for item in report.global_highlights:
+                lines.append(f"- {item}\n")
+            lines.append("\n")
+
         if not report.top_pain_points:
             lines.append("暂无可用的 Issue 洞察。\n")
             if report.failed_samples:
@@ -181,7 +191,7 @@ class MarkdownReporter:
                 )
             return "".join(lines)
 
-        lines.append("### 用户痛点 TOP 5\n\n")
+        lines.append("### 跨仓库问题\n\n")
         lines.append("| 排名 | 痛点 | 提及次数 | 受影响仓库 |\n")
         lines.append("|------|------|----------|------------|\n")
 
@@ -193,11 +203,33 @@ class MarkdownReporter:
                 f"| {idx} | {pain_point.topic} | {pain_point.count} | {repos_str} |\n"
             )
 
-        sample_urls = report.top_pain_points[0].sample_urls
-        if sample_urls:
-            lines.append("\n**示例**:\n\n")
-            for url in sample_urls[:3]:
-                lines.append(f"- [{format_source_url(url)}]({url})\n")
+        top_sources = report.top_pain_points[0].source_issues
+        if top_sources:
+            lines.append("\n**代表 Issue**:\n\n")
+            for source in top_sources[:3]:
+                label = source.title or format_source_url(source.url)
+                lines.append(f"- [`{source.repo}`] [{label}]({source.url})\n")
+
+        if report.repo_reports:
+            lines.append("\n### 仓库级信号\n\n")
+            for repo_report in report.repo_reports[:5]:
+                lines.append(f"#### `{repo_report.repo}`\n\n")
+                if not repo_report.signals:
+                    lines.append("- 暂无有效信号\n\n")
+                    continue
+                for signal in repo_report.signals[:3]:
+                    lines.append(f"- **{signal.topic}**（{signal.count}）")
+                    if signal.summary:
+                        lines.append(f"：{signal.summary}")
+                    lines.append("\n")
+                    for source in signal.source_issues[:2]:
+                        issue_label = (
+                            f"#{source.issue_number} {source.title}".strip()
+                            if source.issue_number is not None
+                            else (source.title or format_source_url(source.url))
+                        )
+                        lines.append(f"  - [{issue_label}]({source.url})\n")
+                lines.append("\n")
 
         return "".join(lines)
 
