@@ -1,0 +1,2233 @@
+{
+  "date": "2026-03-08",
+  "summary_brief": "2026年3月8日，AI编程助手和Agent平台呈现三大核心趋势：安全沙箱架构的精细化升级（多个项目同步引入细粒度权限控制）、插件/技能市场生态的标准化建设、以及跨平台IM集成与Agent通信协议的推进。这些变化标志着AI工具从实验性向生产级可靠性和生态化方向加速演进。",
+  "engineering_signals": [
+    {
+      "id": "eng-001",
+      "title": "AI代码执行安全沙箱架构精细化演进",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "多个主流AI编程助手（OpenAI Codex、Claude Code等）同步引入细粒度沙箱策略，将文件系统与网络权限分离，并引入AI辅助审批流程，标志着AI代码执行安全从粗放式管理进入精细化控制阶段。",
+      "sources": [
+        "https://github.com/openai/codex/commit/22ac6b9aaaa2b796f766845f32681ccfbb33a3b4",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71",
+        "https://github.com/ErikBjare/gptme/pull/1624",
+        "https://github.com/openai/codex/commit/e84ee33cc02e693a3cf66204c72cb37e8dda3ed6"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "ErikBjare/gptme",
+        "anthropics/claude-agent-sdk-typescript",
+        "openai/codex",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-5",
+        "release-2",
+        "pr-5"
+      ]
+    },
+    {
+      "id": "eng-002",
+      "title": "AI工具插件/技能市场生态标准化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex、gptme等项目同时推进插件市场和技能生态系统建设，支持插件发现、安装、验证和发布全流程，推动AI能力模块化和社区化发展，形成可扩展的工具生态。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48",
+        "https://github.com/openai/codex/commit/0243734300a9421ac887906d79252deda9b9667a",
+        "https://github.com/ErikBjare/gptme/commit/fa6680ee227bfcd287a35579c7be003e0715d476"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "ErikBjare/gptme",
+        "openai/codex",
+        "anthropics/claude-agent-sdk-python",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "commit-10",
+        "commit-2",
+        "release-1"
+      ]
+    },
+    {
+      "id": "eng-003",
+      "title": "AI Agent跨平台IM集成与通信协议标准化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "DeerFlow等平台将AI Agent桥接到飞书、Slack、Telegram等主流IM，同时DeepAgents推进ACP协议服务器模式，形成多渠道触达和Agent间通信的双重标准化趋势。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.433",
+        "https://github.com/bytedance/deer-flow/pull/1010",
+        "https://github.com/bytedance/deer-flow/commit/75b7302000c066bf2ff1ba362ee6a6337d6bfc47",
+        "https://github.com/langchain-ai/deepagents/commit/c9ba00a56b7ee5e48b56b13f9f093bb8bf639700"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "bytedance/deer-flow",
+        "OpenDevin/OpenDevin",
+        "danielmiessler/fabric",
+        "anthropics/claude-agent-sdk-python",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "pr-11",
+        "commit-3",
+        "commit-11",
+        "release-3"
+      ]
+    },
+    {
+      "id": "eng-004",
+      "title": "AI思考过程可视化与用户体验提升",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "多个AI工具（Gemini CLI、Zed编辑器、Fabric）同步引入或增强AI思考过程的可视化能力，将模型推理过程透明化，提升用户对AI决策的理解和信任度。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/dde76cd5f8a1cad88f7231681cf146f2bb697ea5",
+        "https://github.com/danielmiessler/fabric/commit/1c94fabb46fed8d77cea509777059336bd53b968",
+        "https://github.com/google-gemini/gemini-cli/commit/e5d58c2b5ab2460ffb91e8681fd31b91de909632"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "agno-agi/agno",
+        "anthropics/claude-code",
+        "openai/codex",
+        "danielmiessler/fabric",
+        "google-gemini/gemini-cli",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "commit-8",
+        "commit-13"
+      ]
+    },
+    {
+      "id": "eng-005",
+      "title": "AI对话数据导出与可移植性能力建设",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme、Dify等工具同步推出对话导出功能（支持Markdown/HTML格式），反映AI助手工具从纯交互向可导出、可归档方向的演进，满足企业合规和用户数据所有权需求。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/pull/1619",
+        "https://github.com/langgenius/dify/commit/05ab107e73c39534d4fed3e767d4943a0e8ae25c"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin",
+        "langgenius/dify",
+        "ErikBjare/gptme",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "commit-12"
+      ]
+    },
+    {
+      "id": "eng-006",
+      "title": "AI工具从被动响应向主动自动化演进",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Code引入/loop命令和cron调度工具，支持AI按设定间隔自动执行任务（如监控部署状态），标志着AI编程助手从被动问答向主动自动化运维的关键转变。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.71",
+        "https://github.com/openai/codex/commit/e9bd8b20a11ada9f674a705ebfbac1fb1aacb11e"
+      ],
+      "related_repos": [
+        "OpenDevin/OpenDevin",
+        "anthropics/claude-code",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "commit-14"
+      ]
+    },
+    {
+      "id": "eng-007",
+      "title": "MCP生态工具链完善与诊断能力增强",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme等工具为Model Context Protocol服务器提供健康检查和诊断工具，反映AI开发工具对MCP生态的持续投入，提升工具链的可靠性和可维护性。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/8ba02b92e048bb3573daefb12cbab70ad7640ae4",
+        "https://github.com/ErikBjare/gptme/pull/1617"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "openai/codex",
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-3",
+        "commit-9"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code 新增自动化循环调度能力",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "引入 `/loop` 命令和 cron 调度工具，使 AI 编程助手能够按设定间隔自动执行任务（如监控部署状态），标志着从被动响应向主动自动化运维的演进。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.71"
+      ],
+      "related_repos": [
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenAI Codex 引入插件提及系统",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增 `@plugin` 提及功能，允许用户在对话中直接引用插件并自动加载相关上下文，大幅提升了工具生态的集成体验和工作流效率。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "OpenAI Codex 沙箱权限模型精细化",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "将可执行权限配置合并到每轮对话的沙箱策略中，实现更安全、可叠加的权限管理，同时改进了 Linux 和 macOS 的沙箱隔离机制。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "openai/codex"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "DeepAgents CLI 支持 ACP 服务器模式",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增 `--acp` 模式使 CLI Agent 可作为 ACP 服务器运行，为 Agent 间通信协议标准化和分布式 Agent 协作提供了基础设施支持。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.433"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "Claude Code 语音交互体验重大改进",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增可重绑定的 Push-to-Talk 按键（支持无输入干扰的组合键），并修复了语音模式导致的启动冻结问题，显著提升了语音交互的可用性。",
+      "sources": [
+        "https://github.com/openai/codex/releases/tag/rust-v0.112.0"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "openai/codex"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 33,
+    "pr_count": 13,
+    "commit_count": 15,
+    "release_count": 5,
+    "unique_repos": 16,
+    "total_prs_analyzed": 13,
+    "total_releases": 7,
+    "high_impact_signals": 8,
+    "total_commits_analyzed": 210,
+    "total_releases_analyzed": 7,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 210,
+    "active_repos_count": 20,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 69,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "thdxr",
+          "opencode-agent[bot]",
+          "Hona"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 33,
+        "top_contributors": [
+          "bolinfest",
+          "aibrahim-oai",
+          "etraut-openai",
+          "charley-oai",
+          "dylan-hurd-oai"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 26,
+        "top_contributors": [
+          "mdrxy",
+          "eyurtsev",
+          "hwchase17",
+          "DanielKneipp",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 15,
+        "top_contributors": [
+          "dependabot[bot]",
+          "ccurme",
+          "mdrxy",
+          "gambletan",
+          "keenborder786"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 13,
+        "top_contributors": [
+          "jacob314",
+          "keithguerin",
+          "jkcinouye",
+          "gundermanc",
+          "jwhelangoog"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 12,
+        "top_contributors": [
+          "reflectronic",
+          "ishaksebsib",
+          "ConradIrwin",
+          "osyvokon",
+          "zortax"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 10,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "jnMetaCode"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 9,
+        "top_contributors": [
+          "foreleven",
+          "hetaoBackend",
+          "aworki",
+          "WillemJiang",
+          "JasonOA888"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 5,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]",
+          "pretyflaco"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 3,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 3,
+        "top_contributors": [
+          "raymyers",
+          "enyst",
+          "tofarr"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 3,
+        "top_contributors": [
+          "CoralGarden52",
+          "Stormhand",
+          "hj24"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 2,
+        "top_contributors": [
+          "fehmisener",
+          "abhi10691"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 1,
+        "top_contributors": [
+          "saoudrizwan"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 1,
+        "top_contributors": [
+          "Pwuts"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "liviaellen"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 1,
+        "top_contributors": [
+          "AndyMik90"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 7,
+    "unique_repos_count": 7,
+    "releases": [
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.112.0",
+        "author": "github-actions[bot]",
+        "date": "2026-03-08",
+        "summary": "## New Features\n- Added `@plugin` mentions so users can reference plugins directly in chat and auto-include their associated MCP/app/skill context. (#13510)\n- Added a new model-selection surface update so the latest model catalog changes are surfaced in the TUI picker flow. (#13617)\n- Merged executable permission profiles into per-turn sandbox policy for zsh-fork skill execution, allowing safer, additive privilege handling for tool runs. (#13496)\n\n## Bug Fixes\n- Fixed JS REPL state handling so previously-initialized bindings persist after a failed cell, reducing brittle restarts during iterative sessions. (#13482)\n- Treated `SIGTERM` like Ctrl-C for graceful app-server websocket shutdown instead of abrupt termination behavior. (#13594)\n- Hardened js_repl image emission to accept only `data:` URLs, preventing external URL forwarding through `emitImage`. (#13507)\n- Ensured Linux bubblewrap sandbox runs always unshare the user namespace to keep isolation consistent even for root-owned invocations. (#13624)\n- Improved macOS sandbox network and unix-socket handling in Seatbelt, improving reliability for constrained subprocess environments. (#12702)\n- Surfaced feedback/diagnostics earlier in the workflow so connectivity and diagnostics are visible before later steps. (#13604)\n\n## Documentation\n- Clarified js_repl image guidance (emission and encoding semantics), including clearer usage around repeated `emitImage` calls. (#13639)\n\n## Chores\n- Fixed a small codespell warning in the TUI theme picker path. (#13605)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.111.0...rust-v0.112.0\n\n- #13594 treat SIGTERM like ctrl-c for graceful shutdown @maxj-oai\n- #13605 Fix codespell warning about pre-selects @fjord-oai\n- #13482 Persist initialized js_repl bindings after failed cells @fjord-oai\n- #13604 [diagnostics] show diagnostics earlier in workflow @rhan-oai\n- #13496 feat: merge skill permission profiles into the turn sandbox for zsh-fork execs @celia-oai\n- #13507 Harden js_repl emitImage to accept only data: URLs @fjord-oai\n- #13602 feat(core): persist trace_id for turns in RolloutItem::TurnContext @owenlin0\n- #13624 fix(linux-sandbox): always unshare bwrap userns @viyatb-oai\n- #12702 Improve macOS Seatbelt network and unix socket handling @viyatb-oai\n- #13639 Clarify js_repl image emission and encoding guidance @fjord-oai\n- #13510 add @plugin mentions @sayan-oai\n- #13499 core/protocol: add structured macOS additional permissions and merge them into sandbox execution @celia-oai\n- #13617 Update models.json @aibrahim-oai\n\n\n",
+        "assets_count": 83,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.112.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 @plugin 提及功能，支持在聊天中直接引用插件并自动关联 MCP/app/skill 上下文",
+            "更新模型选择界面，将最新模型目录变更及时展示在 TUI 选择器中",
+            "合并可执行权限配置到逐轮沙箱策略，实现 zsh-fork 技能执行更安全的增量权限处理",
+            "修复 JS REPL 状态处理，使失败单元格后已初始化的绑定得以保留，减少重启次数",
+            "增强多项安全性和稳定性：SIGTERM 优雅关闭、沙盒隔离一致性、macOS Seatbelt 网络处理等"
+          ],
+          "summary_cn": "本次更新主要带来 @plugin 提及功能，让用户可以在聊天中直接引用插件；同时改进了模型选择界面和沙箱权限管理机制。此外，修复了多项稳定性和安全性问题，包括 JS REPL 状态持久化、优雅关闭信号处理以及各平台沙盒隔离的加固。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.71",
+        "author": "ashwin-ant",
+        "date": "2026-03-07",
+        "summary": "## What's changed\n\n- Added `/loop` command to run a prompt or slash command on a recurring interval (e.g. `/loop 5m check the deploy`)\n- Added cron scheduling tools for recurring prompts within a session\n- Added `voice:pushToTalk` keybinding to make the voice activation key rebindable in `keybindings.json` (default: space) — modifier+letter combos like `meta+k` have zero typing interference\n- Added `fmt`, `comm`, `cmp`, `numfmt`, `expr`, `test`, `printf`, `getconf`, `seq`, `tsort`, and `pr` to the bash auto-approval allowlist\n- Fixed stdin freeze in long-running sessions where keystrokes stop being processed but the process stays alive\n- Fixed a 5–8 second startup freeze for users with voice mode enabled, caused by CoreAudio initialization blocking the main thread after system wake\n- Fixed startup UI freeze when many claude.ai proxy connectors refresh an expired OAuth token simultaneously\n- Fixed forked conversations (`/fork`) sharing the same plan file, which caused plan edits in one fork to overwrite the other\n- Fixed the Read tool putting oversized images into context when image processing failed, breaking subsequent turns in long image-heavy sessions\n- Fixed false-positive permission prompts for compound bash commands containing heredoc commit messages\n- Fixed plugin installations being lost when running multiple Claude Code instances\n- Fixed claude.ai connectors failing to reconnect after OAuth token refresh\n- Fixed claude.ai MCP connector startup notifications appearing for every org-configured connector instead of only previously connected ones\n- Fixed background agent completion notifications missing the output file path, which made it difficult for parent agents to recover agent results after context compaction\n- Fixed duplicate output in Bash tool error messages when commands exit with non-zero status\n- Fixed Chrome extension auto-detection getting permanently stuck on \"not installed\" after running on a machine without local Chrome\n- Fixed `/plugin marketplace update` failing with merge conflicts when the marketplace is pinned to a branch/tag ref\n- Fixed `/plugin marketplace add owner/repo@ref` incorrectly parsing `@` — previously only `#` worked as a ref separator, causing undiagnosable errors with `strictKnownMarketplaces`\n- Fixed duplicate entries in `/permissions` Workspace tab when the same directory is added with and without a trailing slash\n- Fixed `--print` hanging forever when team agents are configured — the exit loop no longer waits on long-lived `in_process_teammate` tasks\n- Fixed \"❯ Tool loaded.\" appearing in the REPL after every `ToolSearch` call\n- Fixed prompting for `cd <cwd> && git ...` on Windows when the model uses a mingw-style path\n- Improved startup time by deferring native image processor loading to first use\n- Improved bridge session reconnection to complete within seconds after laptop wake from sleep, instead of waiting up to 10 minutes\n- Improved `/plugin uninstall` to disable project-scoped plugins in `.claude/settings.local.json` instead of modifying `.claude/settings.json`, so changes don't affect teammates\n- Improved plugin-provided MCP server deduplication — servers that duplicate a manually-configured server (same command/URL) are now skipped, preventing duplicate connections and tool sets. Suppressions are shown in the `/plugin` menu.\n- Updated `/debug` to toggle debug logging on mid-session, since debug logs are no longer written by default\n- Removed startup notification noise for unauthenticated org-registered claude.ai connectors\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.71",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 /loop 命令支持定时循环执行提示词或斜杠命令（如 /loop 5m check the deploy）",
+            "新增 cron 调度工具支持会话内的周期性提示",
+            "新增 voice:pushToTalk 快捷键绑定，支持在 keybindings.json 中重新配置语音激活键（默认空格键）",
+            "修复了长时间运行会话中的 stdin 冻结问题，解决了按键停止响应但进程仍存活的 bug",
+            "修复了启用语音模式用户启动时 5-8 秒冻结问题（由 CoreAudio 初始化阻塞主线程导致）"
+          ],
+          "summary_cn": "此版本主要新增了定时循环执行功能，包括 /loop 命令和 cron 调度工具，使用户能够设置周期性任务。同时新增了语音按键重绑定功能，提升了语音模式的可定制性。此外还修复了十余个重要问题，包括长时间会话冻结、语音模式启动延迟、fork 会话计划文件冲突等影响用户体验的关键 bug。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.1.48",
+        "author": "github-actions[bot]",
+        "date": "2026-03-07",
+        "summary": "\n### Bug Fixes\n\n- **Fine-grained tool streaming**: Fixed `include_partial_messages=True` not delivering `input_json_delta` events by enabling the `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` environment variable in the subprocess. This regression affected versions 0.1.36 through 0.1.47 for users without the server-side feature flag (#644)\n\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.71\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.1.48/\n\n```bash\npip install claude-agent-sdk==0.1.48\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.48",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复细粒度工具流式传输问题：`include_partial_messages=True` 现在能正确传递 `input_json_delta` 事件",
+            "通过在子进程中启用 `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` 环境变量解决回归问题",
+            "此 Bug 影响了 v0.1.36 至 v0.1.47 版本中未启用服务端特性标志的用户",
+            "更新内置 Claude CLI 至 2.1.71 版本"
+          ],
+          "summary_cn": "本版本主要修复了细粒度工具流式传输的回归问题，确保 `include_partial_messages=True` 参数能正确传递 `input_json_delta` 事件。此问题影响 v0.1.36 至 v0.1.47 版本的用户，现已通过在子进程中启用相关环境变量解决。同时更新了内置 Claude CLI 至 2.1.71 版本。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.2.71",
+        "author": "ashwin-ant",
+        "date": "2026-03-07",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.71\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.2.71\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.2.71\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.2.71\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.2.71\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.71",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.2.71 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.433",
+        "author": "github-actions[bot]",
+        "date": "2026-03-07",
+        "summary": "## Changes\n\n### PR [#2054](https://github.com/danielmiessler/Fabric/pull/2054) by [pretyflaco](https://github.com/pretyflaco): fix(ollama): Map thinking levels to Ollama API and convert single system-role messages\n\n- Fix(ollama): map thinking levels and convert single system-role messages\n\n### Direct commits\n\n- Fix: Manual edit of changelog.db and fixes for ChangeLog\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.433",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "danielmiessler/fabric v1.4.433 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-cli==0.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-03-07",
+        "summary": "### Features\r\n\r\n* `--acp` mode to run CLI agent as ACP server ([#1297](https://github.com/langchain-ai/deepagents/issues/1297)) ([c9ba00a](https://github.com/langchain-ai/deepagents/commit/c9ba00a56b7ee5e48b56b13f9f093bb8bf639700))\r\n* Model detail footer + persist `--profile-override` on hot-swap ([#1700](https://github.com/langchain-ai/deepagents/issues/1700)) ([f2c8b54](https://github.com/langchain-ai/deepagents/commit/f2c8b54e9b4c541bf6f91139bfb9b6a2f20c8de0))\r\n* Show message timestamp toast on click ([#1702](https://github.com/langchain-ai/deepagents/issues/1702)) ([4f403ec](https://github.com/langchain-ai/deepagents/commit/4f403ecb3332010062158ec30fd55f349654a533))\r\n\r\n### Bug Fixes\r\n\r\n* Expire `ctrl+c` quit window when toast disappears ([#1701](https://github.com/langchain-ai/deepagents/issues/1701)) ([38b5ea9](https://github.com/langchain-ai/deepagents/commit/38b5ea9484ab121c9b2919dd74469e82fce19b82))\r\n* Preserve input text when escaping shell/command mode ([#1706](https://github.com/langchain-ai/deepagents/issues/1706)) ([3c00edb](https://github.com/langchain-ai/deepagents/commit/3c00edb93eddf74e87d58526a02be72577ed65b1))\r\n* Right-align token count next to model name in status bar ([#1705](https://github.com/langchain-ai/deepagents/issues/1705)) ([311c919](https://github.com/langchain-ai/deepagents/commit/311c9191cf663540e1b62eb9452abecda5bc7b4f))\r\n\r\n---\r\n\r\nThanks to our contributors: @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli%3D%3D0.0.30",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 --acp 模式，支持将 CLI 代理作为 ACP 服务器运行",
+            "添加模型详情页脚，热切换时持久化 --profile-override 配置",
+            "点击消息显示时间戳提示",
+            "修复 Ctrl+C 退出窗口在提示消失时过期的问题",
+            "修复退出 shell/命令模式时保留输入文本，以及状态栏 token 计数右对齐显示"
+          ],
+          "summary_cn": "本次版本更新主要新增了 --acp 模式支持，允许将 CLI 代理作为 ACP 服务器运行，同时优化了模型详情展示和热切换配置持久化功能。此外还修复了多项 UI 交互问题，包括退出窗口过期、输入文本保留和状态栏显示对齐等，提升了整体用户体验。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.21",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-07",
+        "summary": "## Core\r\n- Preserve original line endings in edit tool (@ranqn)\r\n- Fix Git path resolution for modified files across Git Bash, MSYS2, and Cygwin on Windows\r\n- Fix PTY session handle leak (@kikuchan)\r\n- Sanitize preview database filenames\r\n- Log stack trace when schema validation fails\r\n- I need to see the actual commit diff to understand what was fixed and provide an accurate changelog entry.\r\n- Add project git init API\r\n- Update Drizzle and channel database handling\r\n- Speed up share loads\r\n- Enable auto-accept keybind regardless of permission config (@luisfelipesena)\r\n## TUI\r\n- Fix broken /export toggling in TUI (@natewill)\r\n## Desktop\r\n- Guard session-header current() against undefined when options is empty (@cyberprophet)\r\n- Preserve file tree tab on reopen and fix e2e test regressions (@neriousy)\r\n- Remove close button from project hover popover\r\n- New session uses agent model/variant\r\n- Model sticks to session after being changed\r\n- Based on the commit message \"fix(app): all panels transition\", here's the changelog entry:\r\n\r\nAll panels transition correctly\r\n- Can't scroll files in app\r\n- Fix maximum width on timeline component\r\n- Align session empty states in TUI\r\n- Add interactive timeline visualization feature\r\n- Share workspace slug wait helper across e2e specs\r\n- Abort sessions and wait for idle before e2e cleanup\r\n- Show skill issue when snapshotting is off in desktop app\r\n- Fix portal positioning for sidebar menus and tooltips by removing conditional mount logic\r\n- Add end-to-end tests for app (part 67) (@neriousy)\r\n- Add sidebar reveal animation, hover peek overlay, and weaker dividers to app\r\n- Better review and file tree empty states\r\n- Enable Safari autocorrect in normal mode, disable in shell mode (@alexandrereyes)\r\n- Revert stale read error fix in app\r\n- Add English to locale matchers (@KirillTregubov)\r\n\r\n**Thank you to 12 community contributors:**\r\n- @luisfelipesena:\r\n  - fix(app): enable auto-accept keybind regardless of permission config (#16259)\r\n- @imdzx:\r\n  - feat: Add Vietnamese README and update all language navigation links … (#16322)\r\n- @KirillTregubov:\r\n  - fix(app): add english to locale matchers (#16280)\r\n- @hoshiumiarata:\r\n  - fix(ui): prevent unwanted key events during composition in LineCommentEditor (#16361)\r\n- @alexandrereyes:\r\n  - fix(app): enable Safari autocorrect in normal mode, disable in shell mode (#15563)\r\n- @neriousy:\r\n  - tests(app): e2e tests part 67 (#16406)\r\n  - fix(app): preserve file tree tab on reopen + fix e2e test regressions (#16482)\r\n- @kikuchan:\r\n  - fix(pty): pty session handle leak (#15599)\r\n- @ShriKaranHanda:\r\n  - fix(config): point GitHub PR search tool at current repository (#16441)\r\n  - fix(storybook): restore build by mocking useLocation (#16472)\r\n- @natewill:\r\n  - fix(tui): fix broken /export toggling (#16443)\r\n- @ranqn:\r\n  - fix(opencode): preserve original line endings in 'edit' tool (#9443)\r\n- @cyberprophet:\r\n  - fix(app): guard session-header current() against undefined when options is empty (#16478)\r\n- @Eric-Guo:\r\n  - fix(app): text-shimmer undefined length (#16475)",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.21",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Windows 平台 Git 路径解析问题（支持 Git Bash、MSYS2 和 Cygwin）",
+            "修复 PTY 会话句柄泄漏和文件编辑工具的换行符保留问题",
+            "新增交互式时间线可视化功能",
+            "改进桌面端会话模型保持机制和面板过渡效果",
+            "优化共享加载速度和数据库处理"
+          ],
+          "summary_cn": "本次更新主要修复了 Windows 平台的兼容性问题和多项关键 Bug，包括 Git 路径解析、PTY 会话句柄泄漏等。同时新增了交互式时间线可视化功能，改进了桌面端的会话模型保持机制和 UI 动画效果，并优化了整体性能。感谢 12 位社区贡献者的参与。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "summary_brief": "启动崩溃和静默失败是当前最严重的跨仓库问题：opencode 和 aider 均出现完全阻断主流程的 P0 级启动/运行时崩溃，而 llama_index 的静默 OpenAI 回退存在隐私泄露和合规风险。",
+    "global_highlights": [
+      "应用启动稳定性问题频发：opencode（inotify耗尽/空指针）、gemini-cli（keytar阻塞20-30秒）、gptme（macOS未签名被拦截）三个仓库均存在启动阶段完全阻断用户使用的问题",
+      "静默失败/数据泄露风险突出：llama_index 在本地优先部署中静默回退 OpenAI 导致隐私泄露，claude-code-security-review 在大 PR 上返回 0 检查项制造虚假安全感",
+      "平台兼容性缺陷：aider 在 Windows 上 3 个独立用户报告 NotImplementedError 崩溃，gptme macOS 版因代码签名缺失被 Gatekeeper 拦截",
+      "SDK/API 集成问题：Anthropic Go/Java SDK 在 Skills API 流式处理和 multipart 表单上存在示例代码失败和 JSON 序列化异常"
+    ],
+    "top_pain_points": [
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Application startup/hang failures",
+        "summary": "Three distinct crash/hang scenarios blocking app startup - inotify exhaustion causes blank screen hang, null terminal entries crash desktop app, server status errors crash during planning. Users cannot use the application at all - clear main flow blocking with multiple sample links.",
+        "category": null,
+        "count": 3,
+        "affected_repos": [
+          "anomalyco/opencode"
+        ],
+        "sample_urls": [
+          "https://github.com/anomalyco/opencode/issues/16610",
+          "https://github.com/anomalyco/opencode/issues/16613",
+          "https://github.com/anomalyco/opencode/issues/16623"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Three distinct crash/hang scenarios blocking app startup - inotify exhaustion causes blank screen hang, null terminal entries crash desktop app, server status errors crash during planning. Users cannot use the application at all - clear main flow blocking with multiple sample links.",
+        "source_issues": [
+          {
+            "repo": "anomalyco/opencode",
+            "issue_number": 16610,
+            "title": "Opencode hangs at startup if a .git repo is present and inotify user instances run out",
+            "url": "https://github.com/anomalyco/opencode/issues/16610",
+            "labels": [
+              "bug",
+              "core"
+            ],
+            "evidence": "Opencode hangs at startup with a blank screen, completely unresponsive when inotify instances are exhausted."
+          },
+          {
+            "repo": "anomalyco/opencode",
+            "issue_number": 16613,
+            "title": "bug(desktop): terminal store null entries cause crash on startup and during reactive updates",
+            "url": "https://github.com/anomalyco/opencode/issues/16613",
+            "labels": [
+              "web"
+            ],
+            "evidence": "Desktop app crashes on startup when terminal store contains null entries after PTY exit events."
+          },
+          {
+            "repo": "anomalyco/opencode",
+            "issue_number": 16623,
+            "title": "Error on launch",
+            "url": "https://github.com/anomalyco/opencode/issues/16623",
+            "labels": [
+              "bug",
+              "windows",
+              "web",
+              "core"
+            ],
+            "evidence": "App crashes with 'Failed to get server status' error during planning sessions."
+          }
+        ],
+        "source_signal_ids": [
+          "anomalyco__opencode-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "NotImplementedError in pathlib.py line 1090 - Non-relative patterns unsupported on Windows",
+        "summary": "Windows平台主流程阻断：3个独立用户在Windows 11上使用read-only命令时程序崩溃，导致核心功能完全不可用，属于高频+主流程阻断问题",
+        "category": null,
+        "count": 3,
+        "affected_repos": [
+          "paul-gauthier/aider"
+        ],
+        "sample_urls": [
+          "https://github.com/Aider-AI/aider/issues/4890",
+          "https://github.com/Aider-AI/aider/issues/4886",
+          "https://github.com/Aider-AI/aider/issues/4885"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Windows平台主流程阻断：3个独立用户在Windows 11上使用read-only命令时程序崩溃，导致核心功能完全不可用，属于高频+主流程阻断问题",
+        "source_issues": [
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4890,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4890",
+            "labels": [],
+            "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.4"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4886,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4886",
+            "labels": [],
+            "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.10"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4885,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4885",
+            "labels": [],
+            "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.10"
+          }
+        ],
+        "source_signal_ids": [
+          "paul-gauthier__aider-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Silent OpenAI Fallback in Air-Gapped/Local-First Deployments",
+        "summary": "Critical security/privacy vulnerability: users building local-first or air-gapped deployments experience silent data leakage to OpenAI, breaking compliance and incurring unintended costs. Both issues provide detailed reproduction steps showing how missing kwargs cause the framework to silently attempt sending private data to api.openai.com.",
+        "category": null,
+        "count": 2,
+        "affected_repos": [
+          "run-llama/llama_index"
+        ],
+        "sample_urls": [
+          "https://github.com/run-llama/llama_index/issues/20917",
+          "https://github.com/run-llama/llama_index/issues/20912"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Critical security/privacy vulnerability: users building local-first or air-gapped deployments experience silent data leakage to OpenAI, breaking compliance and incurring unintended costs. Both issues provide detailed reproduction steps showing how missing kwargs cause the framework to silently attempt sending private data to api.openai.com.",
+        "source_issues": [
+          {
+            "repo": "run-llama/llama_index",
+            "issue_number": 20917,
+            "title": "[Bug]: Retrievers and Indexes silently fall back to OpenAI when local LLM initialization fails",
+            "url": "https://github.com/run-llama/llama_index/issues/20917",
+            "labels": [],
+            "evidence": "When local LLM fails to load, framework silently returns OpenAI() without warning - breaks air-gapped compliance and creates security gap"
+          },
+          {
+            "repo": "run-llama/llama_index",
+            "issue_number": 20912,
+            "title": "[Bug]: Silent fallback to OpenAI in Retrievers and Indexes compromises Air-Gapped/Local-First deployments",
+            "url": "https://github.com/run-llama/llama_index/issues/20912",
+            "labels": [
+              "bug",
+              "triage"
+            ],
+            "evidence": "User reports data leak attempt when missing llm kwarg in QueryFusionRetriever - framework tried to send local system-knowledge chunks to OpenAI"
+          }
+        ],
+        "source_signal_ids": [
+          "run-llama__llama_index-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "CLI Hangs on Startup / Slow Launch",
+        "summary": "Users report 20-30 second delays or indefinite hangs that block the main workflow entirely, making the CLI 'practically unusable for quick queries'. Root cause identified (keytar.setPassword() blocking on GNOME Keyring). P1 instead of P0 due to count<3, but strong evidence of main flow blocking with clear reproduction steps.",
+        "category": null,
+        "count": 2,
+        "affected_repos": [
+          "google-gemini/gemini-cli"
+        ],
+        "sample_urls": [
+          "https://github.com/google-gemini/gemini-cli/issues/21623",
+          "https://github.com/google-gemini/gemini-cli/issues/21622"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "Users report 20-30 second delays or indefinite hangs that block the main workflow entirely, making the CLI 'practically unusable for quick queries'. Root cause identified (keytar.setPassword() blocking on GNOME Keyring). P1 instead of P0 due to count<3, but strong evidence of main flow blocking with clear reproduction steps.",
+        "source_issues": [
+          {
+            "repo": "google-gemini/gemini-cli",
+            "issue_number": 21623,
+            "title": "Gemini cli starts very very slowly",
+            "url": "https://github.com/google-gemini/gemini-cli/issues/21623",
+            "labels": [],
+            "evidence": "CLI takes 20-30 seconds to initialize. No spinner, no progress indicator — the terminal simply hangs until the tool is ready."
+          },
+          {
+            "repo": "google-gemini/gemini-cli",
+            "issue_number": 21622,
+            "title": "[Bug]: CLI hangs silently on Linux when keytar.setPassword() blocks on GNOME Keyring",
+            "url": "https://github.com/google-gemini/gemini-cli/issues/21622",
+            "labels": [],
+            "evidence": "keytar.setPassword() hangs indefinitely when called via KeychainTokenStorage / HybridTokenStorage... This causes the CLI to freeze when saving OAuth tokens after authentication."
+          }
+        ],
+        "source_signal_ids": [
+          "google-gemini__gemini-cli-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Cache token tracking and prompt caching support for Anthropic/OpenAI models",
+        "summary": "Users miss 90% cost savings (documented: $0.94 vs $0.10 on 312K tokens) because cache tokens are silently dropped at TokenUsage conversion. Direct financial impact with reproduction code and real cost analysis.",
+        "category": null,
+        "count": 2,
+        "affected_repos": [
+          "huggingface/smolagents"
+        ],
+        "sample_urls": [
+          "https://github.com/huggingface/smolagents/issues/2055",
+          "https://github.com/huggingface/smolagents/issues/2054"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "Users miss 90% cost savings (documented: $0.94 vs $0.10 on 312K tokens) because cache tokens are silently dropped at TokenUsage conversion. Direct financial impact with reproduction code and real cost analysis.",
+        "source_issues": [
+          {
+            "repo": "huggingface/smolagents",
+            "issue_number": 2055,
+            "title": "Surface cache token usage from Anthropic/OpenAI in TokenUsage",
+            "url": "https://github.com/huggingface/smolagents/issues/2055",
+            "labels": [],
+            "evidence": "TokenUsage only has input_tokens/output_tokens. Cache fields from Anthropic/OpenAI dropped at models.py:1303-1306"
+          },
+          {
+            "repo": "huggingface/smolagents",
+            "issue_number": 2054,
+            "title": "Add prompt caching support for Anthropic models (90% input token savings)",
+            "url": "https://github.com/huggingface/smolagents/issues/2054",
+            "labels": [],
+            "evidence": "16-step CodeAgent run: $0.94 without caching vs ~$0.10 with caching (90% reduction)"
+          }
+        ],
+        "source_signal_ids": [
+          "huggingface__smolagents-1"
+        ]
+      }
+    ],
+    "repo_reports": [
+      {
+        "repo": "ErikBjare/gptme",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "ErikBjare__gptme-1",
+            "repo": "ErikBjare/gptme",
+            "topic": "macOS app blocked by Gatekeeper due to unsigned binaries",
+            "summary": "Issue #1590 is OPEN - macOS users cannot launch the desktop app at all due to Gatekeeper rejecting unsigned binaries. This is a complete platform-specific blockage preventing any macOS user from using the Tauri desktop app.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "ErikBjare/gptme"
+            ],
+            "sample_urls": [
+              "https://github.com/gptme/gptme/issues/1590"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Issue #1590 is OPEN - macOS users cannot launch the desktop app at all due to Gatekeeper rejecting unsigned binaries. This is a complete platform-specific blockage preventing any macOS user from using the Tauri desktop app.",
+            "source_issues": [
+              {
+                "repo": "ErikBjare/gptme",
+                "issue_number": 1590,
+                "title": "feat(tauri): finish codesigning on macOS",
+                "url": "https://github.com/gptme/gptme/issues/1590",
+                "labels": [],
+                "evidence": "Tauri doesn't sign sidecars or other binaries by default — ensure the .app bundle is properly code-signed so macOS Gatekeeper accepts it"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 10,
+        "analyzed_issue_count": 10,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "TabbyML__tabby-1",
+            "repo": "TabbyML/tabby",
+            "topic": "SSH repositories re-cloned hourly instead of incremental pull",
+            "summary": "Real user pain point with measurable impact: significant network traffic and full re-indexing overhead every hour. However, not marked as P0/P1 because: (1) only 1 issue from single repo, (2) functionality still works (not blocking), (3) affects SSH-configured repos which is a narrower use case. The inefficiency is real but represents a performance optimization rather than critical failure.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "TabbyML/tabby"
+            ],
+            "sample_urls": [
+              "https://github.com/TabbyML/tabby/issues/4451"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Real user pain point with measurable impact: significant network traffic and full re-indexing overhead every hour. However, not marked as P0/P1 because: (1) only 1 issue from single repo, (2) functionality still works (not blocking), (3) affects SSH-configured repos which is a narrower use case. The inefficiency is real but represents a performance optimization rather than critical failure.",
+            "source_issues": [
+              {
+                "repo": "TabbyML/tabby",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/TabbyML/tabby/issues/4451",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 2,
+        "analyzed_issue_count": 2,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "anomalyco__opencode-1",
+            "repo": "anomalyco/opencode",
+            "topic": "Application startup/hang failures",
+            "summary": "Three distinct crash/hang scenarios blocking app startup - inotify exhaustion causes blank screen hang, null terminal entries crash desktop app, server status errors crash during planning. Users cannot use the application at all - clear main flow blocking with multiple sample links.",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "anomalyco/opencode"
+            ],
+            "sample_urls": [
+              "https://github.com/anomalyco/opencode/issues/16610",
+              "https://github.com/anomalyco/opencode/issues/16613",
+              "https://github.com/anomalyco/opencode/issues/16623"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Three distinct crash/hang scenarios blocking app startup - inotify exhaustion causes blank screen hang, null terminal entries crash desktop app, server status errors crash during planning. Users cannot use the application at all - clear main flow blocking with multiple sample links.",
+            "source_issues": [
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16610,
+                "title": "Opencode hangs at startup if a .git repo is present and inotify user instances run out",
+                "url": "https://github.com/anomalyco/opencode/issues/16610",
+                "labels": [
+                  "bug",
+                  "core"
+                ],
+                "evidence": "Opencode hangs at startup with a blank screen, completely unresponsive when inotify instances are exhausted."
+              },
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16613,
+                "title": "bug(desktop): terminal store null entries cause crash on startup and during reactive updates",
+                "url": "https://github.com/anomalyco/opencode/issues/16613",
+                "labels": [
+                  "web"
+                ],
+                "evidence": "Desktop app crashes on startup when terminal store contains null entries after PTY exit events."
+              },
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16623,
+                "title": "Error on launch",
+                "url": "https://github.com/anomalyco/opencode/issues/16623",
+                "labels": [
+                  "bug",
+                  "windows",
+                  "web",
+                  "core"
+                ],
+                "evidence": "App crashes with 'Failed to get server status' error during planning sessions."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anomalyco__opencode-2",
+            "repo": "anomalyco/opencode",
+            "topic": "Mobile Web UI scroll flickering during AI streaming",
+            "summary": "Makes it 'impossible to view earlier content' on mobile devices during AI streaming - clear usability blocker for mobile users who need to scroll back through responses. Issue provides detailed root cause and fix verification.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anomalyco/opencode"
+            ],
+            "sample_urls": [
+              "https://github.com/anomalyco/opencode/issues/16622"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Makes it 'impossible to view earlier content' on mobile devices during AI streaming - clear usability blocker for mobile users who need to scroll back through responses. Issue provides detailed root cause and fix verification.",
+            "source_issues": [
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16622,
+                "title": "[BUG]: Mobile web UI infinite scroll flickering during AI streaming",
+                "url": "https://github.com/anomalyco/opencode/issues/16622",
+                "labels": [
+                  "web"
+                ],
+                "evidence": "When AI is streaming responses on mobile, the page continuously flickers and jumps back down, making it impossible to view earlier content."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anomalyco__opencode-3",
+            "repo": "anomalyco/opencode",
+            "topic": "Plugin @latest version not auto-updating",
+            "summary": "Plugins configured with @latest never auto-update, breaking expected functionality. Users miss security updates and new features. Requires manual cache deletion workaround which is not discoverable. Well-documented with root cause analysis.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anomalyco/opencode"
+            ],
+            "sample_urls": [
+              "https://github.com/anomalyco/opencode/issues/16608"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Plugins configured with @latest never auto-update, breaking expected functionality. Users miss security updates and new features. Requires manual cache deletion workaround which is not discoverable. Well-documented with root cause analysis.",
+            "source_issues": [
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16608,
+                "title": "Plugins configured with @latest never auto-update: bun registry cache + stale isOutdated check",
+                "url": "https://github.com/anomalyco/opencode/issues/16608",
+                "labels": [
+                  "core"
+                ],
+                "evidence": "Plugins configured with @latest never auto-update on subsequent starts, requiring manual cache deletion."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anomalyco__opencode-4",
+            "repo": "anomalyco/opencode",
+            "topic": "Assistant responds to stale context / wrong turn",
+            "summary": "Core AI functionality broken - assistant responds to previous message instead of current input, sometimes repeatedly. This causes incorrect actions/outputs that users must detect and correct, undermining trust in the tool.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anomalyco/opencode"
+            ],
+            "sample_urls": [
+              "https://github.com/anomalyco/opencode/issues/16612"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Core AI functionality broken - assistant responds to previous message instead of current input, sometimes repeatedly. This causes incorrect actions/outputs that users must detect and correct, undermining trust in the tool.",
+            "source_issues": [
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16612,
+                "title": "Sometimes replies to the previous turn (stale context): keeps repeating an earlier command/answer instead of responding to the latest input",
+                "url": "https://github.com/anomalyco/opencode/issues/16612",
+                "labels": [
+                  "bug",
+                  "core"
+                ],
+                "evidence": "Assistant responds to previous user message instead of the most recent one, and sometimes gets stuck repeating the same action."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anomalyco__opencode-5",
+            "repo": "anomalyco/opencode",
+            "topic": "Web UI browser connection limit (max 5 tabs)",
+            "summary": "Edge case affecting power users working on multiple projects simultaneously. Workaround exists (use different browsers). Not blocking but limits productivity for multi-project workflows.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anomalyco/opencode"
+            ],
+            "sample_urls": [
+              "https://github.com/anomalyco/opencode/issues/16617"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Edge case affecting power users working on multiple projects simultaneously. Workaround exists (use different browsers). Not blocking but limits productivity for multi-project workflows.",
+            "source_issues": [
+              {
+                "repo": "anomalyco/opencode",
+                "issue_number": 16617,
+                "title": "Failed to open more than 5 `opencode serve` Web UI tabs on one Chrome browser",
+                "url": "https://github.com/anomalyco/opencode/issues/16617",
+                "labels": [
+                  "bug",
+                  "core"
+                ],
+                "evidence": "After opening 5 WebUI tabs, the 6th tab never loads due to browser concurrent connection limits per origin."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-go-1",
+            "repo": "anthropics/anthropic-sdk-go",
+            "topic": "Skills API streaming: FileID extraction broken in official documentation example",
+            "summary": "Official SDK documentation example fails when used with streaming mode, forcing developers to debug and discover manual JSON unmarshalling workarounds. This undermines documentation reliability and wastes developer time for a core Skills API workflow (file downloading from code execution results).",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-go"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-go/issues/288"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Official SDK documentation example fails when used with streaming mode, forcing developers to debug and discover manual JSON unmarshalling workarounds. This undermines documentation reliability and wastes developer time for a core Skills API workflow (file downloading from code execution results).",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-go",
+                "issue_number": 288,
+                "title": "Downloading files from skills example doesn't work with streaming",
+                "url": "https://github.com/anthropics/anthropic-sdk-go/issues/288",
+                "labels": [],
+                "evidence": "User reports that the official documentation example for extracting FileIDs from BetaBashCodeExecutionToolResultBlock doesn't work with streaming responses. The documented method `v.Content.Content` is inaccessible, requiring manual JSON unmarshalling via `v.Content.JSON.Content.Raw()`."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-java-1",
+            "repo": "anthropics/anthropic-sdk-java",
+            "topic": "JSON serialization error when creating Skills with multipart form data",
+            "summary": "SDK抛出AnthropicInvalidDataException异常，完全阻断Java用户使用SkillService.create()创建Skills功能。有完整堆栈跟踪和可复现测试用例，属于关键功能不可用的用户痛点。但因count<3且单仓库，不标记为P0。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-java"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-java/issues/306"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "SDK抛出AnthropicInvalidDataException异常，完全阻断Java用户使用SkillService.create()创建Skills功能。有完整堆栈跟踪和可复现测试用例，属于关键功能不可用的用户痛点。但因count<3且单仓库，不标记为P0。",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-java",
+                "issue_number": 306,
+                "title": "Unexpected JsonNode type in array: ARRAY when creating Skill",
+                "url": "https://github.com/anthropics/anthropic-sdk-java/issues/306",
+                "labels": [
+                  "bug",
+                  "sdk"
+                ],
+                "evidence": "Stack trace shows AnthropicInvalidDataException when calling SkillService.create() due to multipart form data serialization failure"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "anthropics__claude-code-security-review-1",
+            "repo": "anthropics/claude-code-security-review",
+            "topic": "Silent failure on large PRs - security scan shows 0 findings when diff exceeds GitHub API limit",
+            "summary": "Creates false security confidence - users see green checkmark and 0 findings when no actual scan occurred. This is a critical trust/safety issue where the primary function (security review) silently fails, directly misleading users about their code's security status.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-code-security-review"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-code-security-review/issues/80"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Creates false security confidence - users see green checkmark and 0 findings when no actual scan occurred. This is a critical trust/safety issue where the primary function (security review) silently fails, directly misleading users about their code's security status.",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-code-security-review",
+                "issue_number": 80,
+                "title": "Silent failure on large PRs: 406 diff too large swallowed as 0 findings",
+                "url": "https://github.com/anthropics/claude-code-security-review/issues/80",
+                "labels": [],
+                "evidence": "The action logs warning but sets CLAUDECODE_FINDINGS: 0 and completes successfully, showing green checkmark when no scan occurred"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 3,
+        "analyzed_issue_count": 3,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "snapshot_date": "2026-03-08",
+        "signals": [],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "google-gemini__gemini-cli-1",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "CLI Hangs on Startup / Slow Launch",
+            "summary": "Users report 20-30 second delays or indefinite hangs that block the main workflow entirely, making the CLI 'practically unusable for quick queries'. Root cause identified (keytar.setPassword() blocking on GNOME Keyring). P1 instead of P0 due to count<3, but strong evidence of main flow blocking with clear reproduction steps.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21623",
+              "https://github.com/google-gemini/gemini-cli/issues/21622"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Users report 20-30 second delays or indefinite hangs that block the main workflow entirely, making the CLI 'practically unusable for quick queries'. Root cause identified (keytar.setPassword() blocking on GNOME Keyring). P1 instead of P0 due to count<3, but strong evidence of main flow blocking with clear reproduction steps.",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21623,
+                "title": "Gemini cli starts very very slowly",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21623",
+                "labels": [],
+                "evidence": "CLI takes 20-30 seconds to initialize. No spinner, no progress indicator — the terminal simply hangs until the tool is ready."
+              },
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21622,
+                "title": "[Bug]: CLI hangs silently on Linux when keytar.setPassword() blocks on GNOME Keyring",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21622",
+                "labels": [],
+                "evidence": "keytar.setPassword() hangs indefinitely when called via KeychainTokenStorage / HybridTokenStorage... This causes the CLI to freeze when saving OAuth tokens after authentication."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-2",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Image Paste Processing Hangs",
+            "summary": "Image paste feature completely broken - spinner runs indefinitely without processing. Blocks multimodal workflow but affects edge feature with single report.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21644"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Image paste feature completely broken - spinner runs indefinitely without processing. Blocks multimodal workflow but affects edge feature with single report.",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21644,
+                "title": "when pasting images gemini seems to lose track (the spinner spins but nothing happens)",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21644",
+                "labels": [],
+                "evidence": "when pasting images gemini seems to lose track (the spinner spins but nothing happens)"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-3",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Internal Model Mismatch for Tool Execution",
+            "summary": "CLI uses gemini-3-flash-preview for internal tool execution despite user selecting gemini-2.5-flash, causing unexpected quota exceeded errors. This blocks tasks requiring internal tools (e.g., web search) and creates billing confusion for free-tier users.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21630"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "CLI uses gemini-3-flash-preview for internal tool execution despite user selecting gemini-2.5-flash, causing unexpected quota exceeded errors. This blocks tasks requiring internal tools (e.g., web search) and creates billing confusion for free-tier users.",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21630,
+                "title": "Gemini CLI Model Mismatch for Tool Execution with Free Tier API Key",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21630",
+                "labels": [],
+                "evidence": "error message specifies that the quota was exceeded for the gemini-3-flash-preview model, despite gemini-2.5-flash being the active and displayed model"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-4",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Sandbox Environment Variable Parsing Incorrect",
+            "summary": "Configuration bug where SANDBOX='0'/'false' are treated as truthy, causing unexpected sandbox-mode behavior (browser not opening, wrong UI displays). Affects multiple code paths but has workaround and is edge case.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21612"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Configuration bug where SANDBOX='0'/'false' are treated as truthy, causing unexpected sandbox-mode behavior (browser not opening, wrong UI displays). Affects multiple code paths but has workaround and is edge case.",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21612,
+                "title": "[BUG]: SANDBOX='0'/'false' are still treated as inside sandbox in multiple non-config paths",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21612",
+                "labels": [],
+                "evidence": "SANDBOX='0' and SANDBOX='false' are treated as truthy in several places outside loadSandboxConfig"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-5",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Sandbox Proxy Container Name Conflict After Crash",
+            "summary": "After unclean shutdown (SIGKILL, crash, OOM), sandbox proxy container name remains in use, causing subsequent sessions to fail with 30-second health check timeouts. Clear user impact - session failures with silent/cryptic errors.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21619"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "After unclean shutdown (SIGKILL, crash, OOM), sandbox proxy container name remains in use, causing subsequent sessions to fail with 30-second health check timeouts. Clear user impact - session failures with silent/cryptic errors.",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21619,
+                "title": "fix(sandbox): proxy container name conflict after unclean shutdown causes silent health check failure",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21619",
+                "labels": [],
+                "evidence": "On the next gemini -s invocation, docker run --name gemini-cli-sandbox-proxy fails because the name is already in use. The error is not surfaced clearly."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "huggingface__smolagents-1",
+            "repo": "huggingface/smolagents",
+            "topic": "Cache token tracking and prompt caching support for Anthropic/OpenAI models",
+            "summary": "Users miss 90% cost savings (documented: $0.94 vs $0.10 on 312K tokens) because cache tokens are silently dropped at TokenUsage conversion. Direct financial impact with reproduction code and real cost analysis.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2055",
+              "https://github.com/huggingface/smolagents/issues/2054"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Users miss 90% cost savings (documented: $0.94 vs $0.10 on 312K tokens) because cache tokens are silently dropped at TokenUsage conversion. Direct financial impact with reproduction code and real cost analysis.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2055,
+                "title": "Surface cache token usage from Anthropic/OpenAI in TokenUsage",
+                "url": "https://github.com/huggingface/smolagents/issues/2055",
+                "labels": [],
+                "evidence": "TokenUsage only has input_tokens/output_tokens. Cache fields from Anthropic/OpenAI dropped at models.py:1303-1306"
+              },
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2054,
+                "title": "Add prompt caching support for Anthropic models (90% input token savings)",
+                "url": "https://github.com/huggingface/smolagents/issues/2054",
+                "labels": [],
+                "evidence": "16-step CodeAgent run: $0.94 without caching vs ~$0.10 with caching (90% reduction)"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-2",
+            "repo": "huggingface/smolagents",
+            "topic": "LocalPythonExecutor silently suppresses stack traces from code execution errors",
+            "summary": "Agents receive only exception messages without tracebacks, forcing token-wasting re-runs or task abandonment. Directly impacts agent error recovery capability and debugging efficiency.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2053"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Agents receive only exception messages without tracebacks, forcing token-wasting re-runs or task abandonment. Directly impacts agent error recovery capability and debugging efficiency.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2053,
+                "title": "LocalPythonExecutor silently suppresses stack traces from code execution errors",
+                "url": "https://github.com/huggingface/smolagents/issues/2053",
+                "labels": [],
+                "evidence": "Agents can't distinguish 'syntax error on line 5' vs 'runtime error in library call', forcing wasted tokens on re-runs"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-3",
+            "repo": "huggingface/smolagents",
+            "topic": "Docker executor leaves orphaned containers blocking port 8888 when script stops unexpectedly",
+            "summary": "Reproducible blocking bug: after unexpected script stop, subsequent runs crash with 'port is already allocated'. Requires manual Docker cleanup. Full error logs and reproduction steps provided.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2050"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Reproducible blocking bug: after unexpected script stop, subsequent runs crash with 'port is already allocated'. Requires manual Docker cleanup. Full error logs and reproduction steps provided.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2050,
+                "title": "BUG: Docker executor leaves orphaned containers blocking port 8888 when script stops unexpectedly",
+                "url": "https://github.com/huggingface/smolagents/issues/2050",
+                "labels": [
+                  "bug"
+                ],
+                "evidence": "Full traceback showing 'Bind for 127.0.0.1:8888 failed: port is already allocated' after orphaned jupyter-kernel container remains running"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-4",
+            "repo": "huggingface/smolagents",
+            "topic": "GLM models via ZAI fail with code parsing errors",
+            "summary": "Blocks use of GLM models with ZAI provider (consistent SyntaxError on line 3 after first step). Same models work via Deepinfra, suggesting provider-specific parsing issue. Limited evidence (single report, 3 comments) but clear blocking behavior for affected users.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/1934"
+            ],
+            "aliases": [],
+            "confidence": 0.6,
+            "priority": "P2",
+            "review_reason": "Blocks use of GLM models with ZAI provider (consistent SyntaxError on line 3 after first step). Same models work via Deepinfra, suggesting provider-specific parsing issue. Limited evidence (single report, 3 comments) but clear blocking behavior for affected users.",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 1934,
+                "title": "GLM models via ZAI",
+                "url": "https://github.com/huggingface/smolagents/issues/1934",
+                "labels": [],
+                "evidence": "'Code parsing failed on line 3 due to: SyntaxError: invalid syntax' consistently with GLM models via ZAI, but works via Deepinfra"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 12,
+        "analyzed_issue_count": 12,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "microsoft__autogen-1",
+            "repo": "microsoft/autogen",
+            "topic": "Database connection failure in Autogen Studio with PostgreSQL",
+            "summary": "Blocks PostgreSQL setup for Autogen Studio users - migration fails at startup despite valid credentials and working psql connections. User provided extensive debugging evidence showing the discrepancy between db_manager and Alembic's generate_revision path.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "microsoft/autogen"
+            ],
+            "sample_urls": [
+              "https://github.com/microsoft/autogen/issues/7341"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Blocks PostgreSQL setup for Autogen Studio users - migration fails at startup despite valid credentials and working psql connections. User provided extensive debugging evidence showing the discrepancy between db_manager and Alembic's generate_revision path.",
+            "source_issues": [
+              {
+                "repo": "microsoft/autogen",
+                "issue_number": 7341,
+                "title": "Autogen Studio: Alembic generate_revision fails with \"password authentication failed\" despite valid DATABASE_URI and successful psql connections",
+                "url": "https://github.com/microsoft/autogen/issues/7341",
+                "labels": [
+                  "needs-triage"
+                ],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "microsoft__autogen-2",
+            "repo": "microsoft/autogen",
+            "topic": "Cryptic error messages for missing MCP server dependencies",
+            "summary": "Poor developer experience for new users following official README quickstart - generic errors waste debugging time when the fix is a single npm install command. Not blocking but significantly impacts onboarding experience.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "microsoft/autogen"
+            ],
+            "sample_urls": [
+              "https://github.com/microsoft/autogen/issues/7337"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Poor developer experience for new users following official README quickstart - generic errors waste debugging time when the fix is a single npm install command. Not blocking but significantly impacts onboarding experience.",
+            "source_issues": [
+              {
+                "repo": "microsoft/autogen",
+                "issue_number": 7337,
+                "title": "Improve error messages for missing MCP server dependencies in AssistantAgent",
+                "url": "https://github.com/microsoft/autogen/issues/7337",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 18,
+        "analyzed_issue_count": 18,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "snapshot_date": "2026-03-08",
+        "signals": [],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "openinterpreter__open-interpreter-1",
+            "repo": "openinterpreter/open-interpreter",
+            "topic": "Linux .deb package installation fails with cross-device hard link error",
+            "summary": "Installation blocking prevents users from using the software entirely on Linux systems where /tmp and /usr are on different filesystems - this is a critical user journey blocker",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openinterpreter/open-interpreter"
+            ],
+            "sample_urls": [
+              "https://github.com/openinterpreter/open-interpreter/issues/1703"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Installation blocking prevents users from using the software entirely on Linux systems where /tmp and /usr are on different filesystems - this is a critical user journey blocker",
+            "source_issues": [
+              {
+                "repo": "openinterpreter/open-interpreter",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openinterpreter/open-interpreter/issues/1703",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openinterpreter__open-interpreter-2",
+            "repo": "openinterpreter/open-interpreter",
+            "topic": "sudo commands hang process indefinitely with no feedback",
+            "summary": "120-second hang with no feedback creates poor user experience when sudo is required, though it affects a specific edge case rather than main workflow",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openinterpreter/open-interpreter"
+            ],
+            "sample_urls": [
+              "https://github.com/openinterpreter/open-interpreter/issues/1694"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P2",
+            "review_reason": "120-second hang with no feedback creates poor user experience when sudo is required, though it affects a specific edge case rather than main workflow",
+            "source_issues": [
+              {
+                "repo": "openinterpreter/open-interpreter",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/openinterpreter/open-interpreter/issues/1694",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 3,
+        "analyzed_issue_count": 3,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "paul-gauthier__aider-1",
+            "repo": "paul-gauthier/aider",
+            "topic": "NotImplementedError in pathlib.py line 1090 - Non-relative patterns unsupported on Windows",
+            "summary": "Windows平台主流程阻断：3个独立用户在Windows 11上使用read-only命令时程序崩溃，导致核心功能完全不可用，属于高频+主流程阻断问题",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4890",
+              "https://github.com/Aider-AI/aider/issues/4886",
+              "https://github.com/Aider-AI/aider/issues/4885"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Windows平台主流程阻断：3个独立用户在Windows 11上使用read-only命令时程序崩溃，导致核心功能完全不可用，属于高频+主流程阻断问题",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4890,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4890",
+                "labels": [],
+                "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.4"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4886,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4886",
+                "labels": [],
+                "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.10"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4885,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4885",
+                "labels": [],
+                "evidence": "NotImplementedError: Non-relative patterns are unsupported - Windows 11, Python 3.12.10"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-2",
+            "repo": "paul-gauthier/aider",
+            "topic": "QueryError in repomap.py - Invalid node type during tree-sitter parsing",
+            "summary": "主聊天循环阻断：用户在运行aider时因tree-sitter解析错误导致程序崩溃，format_messages()调用链失败使核心聊天功能不可用，虽为单报告但影响明确且issue仍为OPEN状态",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4888"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "主聊天循环阻断：用户在运行aider时因tree-sitter解析错误导致程序崩溃，format_messages()调用链失败使核心聊天功能不可用，虽为单报告但影响明确且issue仍为OPEN状态",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4888,
+                "title": "Uncaught QueryError in repomap.py line 302",
+                "url": "https://github.com/Aider-AI/aider/issues/4888",
+                "labels": [],
+                "evidence": "tree_sitter.QueryError: Invalid node type at row 2, column 2: module"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-3",
+            "repo": "paul-gauthier/aider",
+            "topic": "RuntimeError - Symlink loop detection failure",
+            "summary": "边缘场景崩溃：用户目录中存在符号链接循环时触发RuntimeError，虽为罕见边缘场景但仍导致程序崩溃，应优雅处理而非抛出未捕获异常",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4892"
+            ],
+            "aliases": [],
+            "confidence": 0.7,
+            "priority": "P2",
+            "review_reason": "边缘场景崩溃：用户目录中存在符号链接循环时触发RuntimeError，虽为罕见边缘场景但仍导致程序崩溃，应优雅处理而非抛出未捕获异常",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4892,
+                "title": "Uncaught RuntimeError in pathlib.py line 1237",
+                "url": "https://github.com/Aider-AI/aider/issues/4892",
+                "labels": [],
+                "evidence": "RuntimeError: Symlink loop from '/home/Leon/Gizmo_MY_AI-main/│'"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 11,
+        "analyzed_issue_count": 11,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "snapshot_date": "2026-03-08",
+        "signals": [
+          {
+            "id": "run-llama__llama_index-1",
+            "repo": "run-llama/llama_index",
+            "topic": "Silent OpenAI Fallback in Air-Gapped/Local-First Deployments",
+            "summary": "Critical security/privacy vulnerability: users building local-first or air-gapped deployments experience silent data leakage to OpenAI, breaking compliance and incurring unintended costs. Both issues provide detailed reproduction steps showing how missing kwargs cause the framework to silently attempt sending private data to api.openai.com.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "run-llama/llama_index"
+            ],
+            "sample_urls": [
+              "https://github.com/run-llama/llama_index/issues/20917",
+              "https://github.com/run-llama/llama_index/issues/20912"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Critical security/privacy vulnerability: users building local-first or air-gapped deployments experience silent data leakage to OpenAI, breaking compliance and incurring unintended costs. Both issues provide detailed reproduction steps showing how missing kwargs cause the framework to silently attempt sending private data to api.openai.com.",
+            "source_issues": [
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20917,
+                "title": "[Bug]: Retrievers and Indexes silently fall back to OpenAI when local LLM initialization fails",
+                "url": "https://github.com/run-llama/llama_index/issues/20917",
+                "labels": [],
+                "evidence": "When local LLM fails to load, framework silently returns OpenAI() without warning - breaks air-gapped compliance and creates security gap"
+              },
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20912,
+                "title": "[Bug]: Silent fallback to OpenAI in Retrievers and Indexes compromises Air-Gapped/Local-First deployments",
+                "url": "https://github.com/run-llama/llama_index/issues/20912",
+                "labels": [
+                  "bug",
+                  "triage"
+                ],
+                "evidence": "User reports data leak attempt when missing llm kwarg in QueryFusionRetriever - framework tried to send local system-knowledge chunks to OpenAI"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "run-llama__llama_index-2",
+            "repo": "run-llama/llama_index",
+            "topic": "parse_partial_json Drops Incomplete String Values in Streamed JSON",
+            "summary": "Data loss in streaming pipelines: incomplete JSON strings are dropped instead of being preserved as partial content. Affects real-world use cases like streaming tool responses, incremental UI updates, and structured output streaming with clear reproduction examples.",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "run-llama/llama_index"
+            ],
+            "sample_urls": [
+              "https://github.com/run-llama/llama_index/issues/20881",
+              "https://github.com/run-llama/llama_index/issues/20541"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Data loss in streaming pipelines: incomplete JSON strings are dropped instead of being preserved as partial content. Affects real-world use cases like streaming tool responses, incremental UI updates, and structured output streaming with clear reproduction examples.",
+            "source_issues": [
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20881,
+                "title": "Bug: parse_partial_json drops incomplete string values in streamed JSON",
+                "url": "https://github.com/run-llama/llama_index/issues/20881",
+                "labels": [],
+                "evidence": "Provides specific failing test cases: parse_partial_json('{\"answer\": \"hel') returns {\"answer\": \"\"} instead of {\"answer\": \"hel\"}"
+              },
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20541,
+                "title": "[Bug]: parse_partial_json misclassifies incomplete string values and drops existing content",
+                "url": "https://github.com/run-llama/llama_index/issues/20541",
+                "labels": [
+                  "bug",
+                  "triage"
+                ],
+                "evidence": "Confirmed bug: parse_partial_json('{\"key\": \"value') returns {'key': None} instead of {'key': 'value'}"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "run-llama__llama_index-3",
+            "repo": "run-llama/llama_index",
+            "topic": "SubQuestionQueryEngine Partial-Failure Handling Breaks on Non-ValueError Exceptions",
+            "summary": "Production reliability issue: engine designed for partial failure tolerance fails completely on common exceptions (API errors, rate limits, timeouts) instead of gracefully continuing with remaining results. Detailed reproduction code shows entire query fails when one sub-query raises RuntimeError.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "run-llama/llama_index"
+            ],
+            "sample_urls": [
+              "https://github.com/run-llama/llama_index/issues/20904"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Production reliability issue: engine designed for partial failure tolerance fails completely on common exceptions (API errors, rate limits, timeouts) instead of gracefully continuing with remaining results. Detailed reproduction code shows entire query fails when one sub-query raises RuntimeError.",
+            "source_issues": [
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20904,
+                "title": "[Bug]: SubQuestionQueryEngine partial-failure handling breaks on non-ValueError exceptions",
+                "url": "https://github.com/run-llama/llama_index/issues/20904",
+                "labels": [
+                  "bug",
+                  "triage"
+                ],
+                "evidence": "Complete reproduction showing RuntimeError escapes uncaught, breaking the engine's partial-failure design"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "run-llama__llama_index-4",
+            "repo": "run-llama/llama_index",
+            "topic": "Streaming Chat Memory Drops Conversation Turns When Stream Not Fully Consumed",
+            "summary": "Production data loss: when streaming is interrupted (client disconnect, timeout, cancellation), the entire conversation turn is silently dropped from memory. Subsequent queries have no record of the exchange. Reproduction shows chat_history remains empty after partial stream consumption.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "run-llama/llama_index"
+            ],
+            "sample_urls": [
+              "https://github.com/run-llama/llama_index/issues/20895"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Production data loss: when streaming is interrupted (client disconnect, timeout, cancellation), the entire conversation turn is silently dropped from memory. Subsequent queries have no record of the exchange. Reproduction shows chat_history remains empty after partial stream consumption.",
+            "source_issues": [
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20895,
+                "title": "[Bug]: CondensePlusContextChatEngine.stream_chat drops conversation turn from memory if stream is not fully consumed",
+                "url": "https://github.com/run-llama/llama_index/issues/20895",
+                "labels": [
+                  "bug",
+                  "triage"
+                ],
+                "evidence": "Demonstrates memory loss: after client disconnects at 3 tokens, chat_history is [] and subsequent query loses context (\"don't know\" response)"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "run-llama__llama_index-5",
+            "repo": "run-llama/llama_index",
+            "topic": "Chat Engine Returns Empty Response When Retriever Has Zero Nodes",
+            "summary": "Silent failure in production RAG systems: multi-tenant architectures with metadata filters frequently return 0 nodes, but instead of leveraging LLM's baseline knowledge with system prompt, engine instantly returns hardcoded 'Empty Response' without any LLM call. Masks behavior from users.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "run-llama/llama_index"
+            ],
+            "sample_urls": [
+              "https://github.com/run-llama/llama_index/issues/20894"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Silent failure in production RAG systems: multi-tenant architectures with metadata filters frequently return 0 nodes, but instead of leveraging LLM's baseline knowledge with system prompt, engine instantly returns hardcoded 'Empty Response' without any LLM call. Masks behavior from users.",
+            "source_issues": [
+              {
+                "repo": "run-llama/llama_index",
+                "issue_number": 20894,
+                "title": "[Bug]: CondensePlusContextChatEngine.astream_chat silently aborts generation and yields 'Empty Response' when Retriever returns 0 nodes",
+                "url": "https://github.com/run-llama/llama_index/issues/20894",
+                "labels": [
+                  "bug",
+                  "triage"
+                ],
+                "evidence": "Empty index query returns 'Empty Response' instantly (<1.2s) without dispatching any LLM API call, breaking expected fallback behavior"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      }
+    ],
+    "expected_files": 45,
+    "generated_files": 14,
+    "parsed_files": 14,
+    "failed_files": 31,
+    "failed_samples": [
+      "AndyMik90__Auto-Claude.analysis.json (missing)",
+      "OpenDevin__OpenDevin.analysis.json (missing)",
+      "Significant-Gravitas__AutoGPT.analysis.json (missing)",
+      "agentscope-ai__agentscope.analysis.json (missing)",
+      "agno-agi__agno.analysis.json (missing)"
+    ],
+    "quality_score": 0.518,
+    "quality_status": "poor"
+  }
+}
