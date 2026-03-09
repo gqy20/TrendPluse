@@ -1,0 +1,2216 @@
+{
+  "date": "2026-03-09",
+  "summary_brief": "AI 代理的人机协作模式迎来重要演进：OpenAI Codex、DeepAgents、Gemini CLI 等多个项目同时引入权限请求和用户交互工具，标志着 AI 代理从自主执行向可控协作的转变。安全性成为行业共识，OpenAI、Google、Continue、OpenDevin 等密集修复沙箱策略、命令注入、SSRF 等安全漏洞。大模型推理优化持续推进，Anthropic Opus 4.6 Fast Mode 和 OpenCode 1M 上下文窗口显著提升开发者体验。",
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "AI 代理人机协作工具成为标配：权限请求与用户交互机制",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 的 request_permissions、DeepAgents 的 ask_user 工具代表 AI 代理设计范式的转变——从完全自主执行演进为可中断、可确认的人机协作模式，这对生产环境的安全性和可控性至关重要。",
+      "sources": [
+        "https://github.com/openai/codex/commit/07a30da3fb31b2c1f70c1ef92e0b11355039c0ab",
+        "https://github.com/cline/cline/commit/92ec126dca54c4dea25a3ed9c144bc9b6cee6116",
+        "https://github.com/openai/codex/releases/tag/rust-v0.112.0",
+        "https://github.com/langchain-ai/deepagents/commit/de7068d21fd4b932c6e53f500b0ea3b02a04c0aa"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langchain-ai/deepagents",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-1",
+        "commit-19",
+        "release-2"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "AI 代码执行安全成为行业焦点：沙箱策略拆分与漏洞批量修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex 重构沙箱策略系统、Continue 修复路径遍历漏洞、OpenDevin 修复命令注入、Gemini CLI 实现 SSRF 防护——多个头部项目同步强化安全，表明 AI 代码执行环境的安全问题已引起行业高度重视。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/e92ccec6c8219fab00c59bbafdebba942b277680",
+        "https://github.com/openai/codex/commit/07a30da3fb31b2c1f70c1ef92e0b11355039c0ab",
+        "https://github.com/continuedev/continue/commit/38848092a5177a1663ea181680ede86cfefa3fb8",
+        "https://github.com/ruvnet/claude-flow/commit/5bddae37f28d0bd805f0d4a25c8aad55ae497b56",
+        "https://github.com/OpenDevin/OpenDevin/commit/698cfc2520cdc50eac5fa869c6c1ba5c8fee9e13"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "continuedev/continue",
+        "ruvnet/claude-flow",
+        "OpenDevin/OpenDevin",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-5",
+        "commit-9",
+        "commit-10",
+        "commit-11"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "大模型推理优化：Fast Mode 与百万级上下文窗口",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic 为 Opus 4.6 推出 Fast Mode 支持 200K/1M 上下文快速响应，OpenCode 启用 1M token 上下文窗口，这些优化直接降低 API 调用成本并提升开发者体验，是大模型落地应用的关键基础设施改进。",
+      "sources": [
+        "https://github.com/cline/cline/pull/9725",
+        "https://github.com/cline/cline/commit/fa7265fa3313ebb5c4f3b661899aa5e7fac9f1ea",
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.434"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anomalyco/opencode",
+        "anthropics/anthropic-sdk-typescript",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": [
+        "pr-9",
+        "commit-18",
+        "release-0"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "AI 代理细粒度权限控制：子代理策略与内存隔离",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Gemini CLI 支持为不同子代理设置特定策略、Mem0 实现多代理内存隔离、OpenAI Codex 合并权限配置到沙箱策略——这些改进使 AI 代理系统能够安全地处理多租户和复杂工作流场景。",
+      "sources": [
+        "https://github.com/mem0ai/mem0/commit/3ffe43f99fd87090ea4d613db1f9998879234112",
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-core==1.2.18",
+        "https://github.com/google-gemini/gemini-cli/commit/527074b50a8427502c154baccdbc0ebeeb3e5309"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "mem0ai/mem0",
+        "google-gemini/gemini-cli",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "commit-3",
+        "commit-16",
+        "release-1"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "CI/CD 与发布流程自动化最佳实践",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "OpenDevin 新增版本一致性自动校验 CI、DeepAgents 发布 GitHub Action、gptme 实现 API 配额耗尽的优雅降级——这些实践解决了多制品项目版本漂移、CI 稳定性和工作流集成等常见工程痛点。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/pull/1628",
+        "https://github.com/OpenDevin/OpenDevin/pull/13315",
+        "https://github.com/langchain-ai/deepagents/commit/83df61a774326f8656fee8c00f43d6ccb8a0f7d7"
+      ],
+      "related_repos": [
+        "dspy",
+        "OpenDevin/OpenDevin",
+        "ErikBjare/gptme",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "pr-3",
+        "pr-11",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "LangGraph 生态集成扩展：类型安全与 IM 渠道接入",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "LangGraph 引入类型安全流式处理，DeerFlow 通过 LangGraph 桥接飞书/Slack/Telegram——LangGraph 正成为 AI 工作流编排的事实标准，其类型安全和多渠道集成能力降低了企业采用门槛。",
+      "sources": [
+        "https://github.com/bytedance/deer-flow/commit/75b7302000c066bf2ff1ba362ee6a6337d6bfc47",
+        "https://github.com/langchain-ai/langgraph/commit/46fed9d16156ebdad49806bb65579b7d0756ef3f"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "langchain-ai/langgraph"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "commit-4"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "AI 自主编码进入生产环境：Claude 修复 Anthropic SDK 漏洞",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Claude Opus 4.6 成功为 Anthropic 官方 Java SDK 贡献生产级 bug 修复，这是 AI 自主编程能力的重要里程碑，证明了 AI 代理在严格代码审查流程下的实用价值。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-java/pull/309"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java"
+      ],
+      "source_signal_ids": [
+        "pr-0"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "CLI 工具链体验优化：会话恢复与工作区管理",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Cline 的 --continue 标志、DeepAgents 的线程管理器重写、OpenCode 的工作区支持——这些改进降低了 AI 辅助开发工具的使用门槛，提升了开发者工作流的连续性。",
+      "sources": [
+        "https://github.com/openai/codex/releases/tag/rust-v0.112.0",
+        "https://github.com/cline/cline/commit/2eed79dcd7daa01af73532952d9ac727b6ba0d18",
+        "https://github.com/cline/cline/pull/9726",
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.434"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "danielmiessler/fabric",
+        "anomalyco/opencode",
+        "openai/codex",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "commit-8",
+        "release-0",
+        "release-2"
+      ]
+    },
+    {
+      "id": "eng-8",
+      "title": "云服务商适配：AWS Bedrock 全球覆盖与动态区域获取",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Fabric 将 AWS Bedrock 支持区域从 6 个硬编码扩展至 40+ 个，解决了云环境区域限制和凭证冲突问题，体现了 AI 工具对多云和全球部署场景的适配需求。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/commit/9057f97739dfb618b41e15a53d292481204ee62d",
+        "https://github.com/ruvnet/claude-flow/releases/tag/v3.5.15"
+      ],
+      "related_repos": [
+        "ruvnet/claude-flow",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": [
+        "commit-15",
+        "release-3"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "OpenCode 引入工作区与百万级上下文",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenCode 在 TUI 中增加了工作区支持，并通过 GitLab Beta 头部启用了 1M token 的上下文窗口，大幅提升了处理大型代码库的能力。",
+      "sources": [
+        "https://github.com/danielmiessler/fabric/releases/tag/v1.4.434"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Codex 原生插件系统与沙箱强化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "引入 `@plugin` 机制允许在聊天中直接调用插件，同时将权限配置合并到沙箱策略中，实现了更安全、更灵活的工具链集成。",
+      "sources": [
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-core==1.2.18"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "DeepAgents 增强交互式多线程能力",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "新增 `ask_user` 工具和重写的线程管理器（支持搜索、排序、工作目录追踪），显著改善了 Agent 在复杂任务中的交互体验和上下文管理。",
+      "sources": [
+        "https://github.com/openai/codex/releases/tag/rust-v0.112.0"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Fabric 扩展 AWS Bedrock 全球覆盖",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "通过动态获取 botocore 端点，将 AWS Bedrock 的支持区域从 6 个硬编码扩展至 40+ 个，解决了云环境中的区域限制和凭证冲突问题。",
+      "sources": [
+        "https://github.com/ruvnet/claude-flow/releases/tag/v3.5.15"
+      ],
+      "related_repos": [
+        "ruvnet/claude-flow",
+        "danielmiessler/fabric"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 40,
+    "pr_count": 16,
+    "commit_count": 20,
+    "release_count": 4,
+    "unique_repos": 17,
+    "total_prs_analyzed": 16,
+    "total_releases": 8,
+    "high_impact_signals": 10,
+    "total_commits_analyzed": 348,
+    "total_releases_analyzed": 8,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 348,
+    "active_repos_count": 21,
+    "top_repos": [
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 76,
+        "top_contributors": [
+          "iamdavidhill",
+          "adamdotdevin",
+          "thdxr",
+          "opencode-agent[bot]",
+          "jlongster"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 43,
+        "top_contributors": [
+          "aibrahim-oai",
+          "bolinfest",
+          "dylan-hurd-oai",
+          "charley-oai",
+          "etraut-openai"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 38,
+        "top_contributors": [
+          "Veykril",
+          "danilo-leal",
+          "kubkon",
+          "reflectronic",
+          "swannysec"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 31,
+        "top_contributors": [
+          "fatelei",
+          "rajatagarwal-oss",
+          "hyoban",
+          "dependabot[bot]",
+          "hjlarry"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 30,
+        "top_contributors": [
+          "jacob314",
+          "Adib234",
+          "joshualitt",
+          "DavidAPierce",
+          "sehoon38"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 21,
+        "top_contributors": [
+          "mdrxy",
+          "ccurme",
+          "jkennedyvz",
+          "dependabot[bot]",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 18,
+        "top_contributors": [
+          "mdrxy",
+          "ccurme",
+          "langchain-model-profile-bot[bot]",
+          "keenborder786",
+          "gambletan"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 17,
+        "top_contributors": [
+          "dependabot[bot]",
+          "sestinj",
+          "github-actions[bot]",
+          "TyDunn"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 14,
+        "top_contributors": [
+          "saoudrizwan",
+          "robinnewhouse",
+          "candieduniverse",
+          "arafatkatze",
+          "maxpaulus43"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 13,
+        "top_contributors": [
+          "ErikBjare",
+          "dependabot[bot]",
+          "TimeToBuildBob",
+          "TimeToLearnAlice",
+          "jnMetaCode"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 12,
+        "top_contributors": [
+          "foreleven",
+          "WillemJiang",
+          "aworki",
+          "hetaoBackend",
+          "lailoo"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 9,
+        "top_contributors": [
+          "tofarr",
+          "raymyers",
+          "malhotra5",
+          "xingyaoww",
+          "mamoodi"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 6,
+        "top_contributors": [
+          "ksylvan",
+          "praxstack",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 6,
+        "top_contributors": [
+          "it-education-md",
+          "WilliamEspegren",
+          "gautamvarmadatla",
+          "eureka928",
+          "Parth-444"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 4,
+        "top_contributors": [
+          "utkarsh240799"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 3,
+        "top_contributors": [
+          "hztBUAA",
+          "fehmisener"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "top_contributors": [
+          "lucasgomide",
+          "greysonlalonde"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 2,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "an-dustin"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 1,
+        "top_contributors": [
+          "Pwuts"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "sydney-runkle"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 8,
+    "unique_repos_count": 6,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.434",
+        "author": "github-actions[bot]",
+        "date": "2026-03-09",
+        "summary": "## Changes\n\n### PR [#2052](https://github.com/danielmiessler/Fabric/pull/2052) by [praxstack](https://github.com/praxstack) and [ksylvan](https://github.com/ksylvan): feat(bedrock): dynamic region fetching and AWS_PROFILE conflict fix\n\n- Added dynamic Bedrock region fetching from `botocore`'s `endpoints.json`, expanding support to 40+ regions instead of a hardcoded list of 6, with a static fallback on error.\n- Fixed `AWS_PROFILE` environment variable conflict that caused `'failed to get shared config profile'` errors for users who had `AWS_PROFILE` set for other tools (e.g., Terraform, AWS CLI) while using explicit access keys or static credentials.\n- Improved empty auth choice handling to gracefully skip the selection instead of throwing an error.\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.434",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增动态获取 AWS Bedrock 区域支持，覆盖 40+ 个区域（原仅 6 个硬编码区域）",
+            "修复 AWS_PROFILE 环境变量冲突问题，解决使用显式密钥时的配置错误",
+            "优化空认证选择的处理逻辑，改为优雅跳过而非抛出错误",
+            "引入 botocore endpoints.json 作为区域数据源，并保留静态回退机制"
+          ],
+          "summary_cn": "本次更新为 AWS Bedrock 添加了动态区域获取功能，将支持区域从 6 个扩展至 40+ 个。同时修复了 AWS_PROFILE 环境变量冲突导致的配置错误问题，并改进了认证选择的容错处理。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-core==1.2.18",
+        "author": "github-actions[bot]",
+        "date": "2026-03-09",
+        "summary": "Changes since langchain-core==1.2.17\n\nrelease(core): 1.2.18 (#35704)\nfix(core): fix double backticks in deprecation docstring for alternative_import (#35658)\nfix(core): preserve default_factory when generating tool call schema (#35550)\nfeat(openai): support tool search (#35582)\nchore: bump the minor-and-patch group across 3 directories with 7 updates (#35605)",
+        "assets_count": 0,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.18",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复替代导入的弃用文档字符串中的双反引号问题",
+            "保留生成工具调用模式时的 default_factory 属性",
+            "OpenAI 集成新增工具搜索支持功能",
+            "依赖包更新：跨 3 个目录的 7 个更新",
+            "版本号从 1.2.17 升级至 1.2.18"
+          ],
+          "summary_cn": "这是一个小幅修复版本，主要修复了弃用文档字符串格式问题和工具调用模式生成时的 default_factory 保留问题。同时新增了 OpenAI 工具搜索支持，并进行了多项依赖包更新。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.5.15",
+        "author": "ruvnet",
+        "date": "2026-03-09",
+        "summary": "## Fix: Hooks Path Resolution (v3.5.15)\n\n### Problem\nClaude Code hooks using relative paths (`.claude/helpers/...`) or `$(git rev-parse --show-toplevel)` break when Claude Code changes the working directory to a subdirectory during agent operations.\n\n### Solution\nAll hook commands now use `$CLAUDE_PROJECT_DIR` — the official Claude Code environment variable that always resolves to the project root, regardless of current working directory.\n\n### Changes\n- **`.claude/settings.json`** — 15 hook paths updated from `$(git rev-parse --show-toplevel)` to `$CLAUDE_PROJECT_DIR`\n- **`v3/@claude-flow/cli/.claude/settings.json`** — 9 hook paths updated from bare relative paths\n- **`settings-generator.ts`** — `hookHandlerCmd()`, `autoMemoryCmd()`, and `generateStatusLineConfig()` now emit `$CLAUDE_PROJECT_DIR`-based paths\n- New projects created via `npx claude-flow@latest init` will automatically get correct paths\n\n### Published Packages\n| Package | Version | Install |\n|---------|---------|---------|\n| `@claude-flow/cli` | 3.5.15 | `npx @claude-flow/cli@latest` |\n| `claude-flow` | 3.5.15 | `npx claude-flow@latest` |\n| `ruflo` | 3.5.15 | `npx ruflo@latest` |\n\n### References\n- Upstream issue: https://github.com/anthropics/claude-code/issues/9039\n- Claude Code hooks docs: https://code.claude.com/docs/en/hooks",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.5.15",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Claude Code hooks 路径解析问题，改用官方环境变量 $CLAUDE_PROJECT_DIR",
+            "更新 .claude/settings.json 中 15 个 hook 路径",
+            "更新 v3/@claude-flow/cli/.claude/settings.json 中 9 个 hook 路径",
+            "修改 settings-generator.ts 中的 hookHandlerCmd()、autoMemoryCmd() 和 generateStatusLineConfig() 函数",
+            "新项目通过 npx claude-flow@latest init 将自动获得正确的路径配置"
+          ],
+          "summary_cn": "此版本修复了 Claude Code hooks 在工作目录变更时路径解析失败的问题。所有 hook 命令现在使用官方环境变量 $CLAUDE_PROJECT_DIR 来确保始终指向项目根目录，无论当前工作目录如何变化。新建项目将自动应用此修复。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-cli==0.0.31",
+        "author": "github-actions[bot]",
+        "date": "2026-03-09",
+        "summary": "### Features\n\n* Opt-in `ask_user` tool for interactive agent questions ([#1377](https://github.com/langchain-ai/deepagents/issues/1377)) ([de7068d](https://github.com/langchain-ai/deepagents/commit/de7068d21fd4b932c6e53f500b0ea3b02a04c0aa))\n* Big thread improvements!\n  * Rework `/thread` switcher with search, columns, delete, and sort toggle ([#1723](https://github.com/langchain-ai/deepagents/issues/1723)) ([8b21ddb](https://github.com/langchain-ai/deepagents/commit/8b21ddb2ff7f13d6b3ffcbf2fe605bfbadbc3d38))\n  * Track and display working directory per thread ([#1735](https://github.com/langchain-ai/deepagents/issues/1735)) ([0e4f25d](https://github.com/langchain-ai/deepagents/commit/0e4f25dfbc3e15653bc3f8a6d32a0a61ead4ba82))\n  * Add `-n` short flag for `threads list --limit` ([#1731](https://github.com/langchain-ai/deepagents/issues/1731)) ([8bbace9](https://github.com/langchain-ai/deepagents/commit/8bbace9facd1e33757521e835dcb291accd2fa91))\n  * Add sort, branch filter, and verbose flags to threads list ([#1732](https://github.com/langchain-ai/deepagents/issues/1732)) ([11dc8e3](https://github.com/langchain-ai/deepagents/commit/11dc8e3397ef9e9dbe8b15578e9258544ed6b452))\n* Tailor system prompt for non-interactive mode ([#1727](https://github.com/langchain-ai/deepagents/issues/1727)) ([871e5cf](https://github.com/langchain-ai/deepagents/commit/871e5cf76b1a7e7cf7175b4415bb8e2206da39ec))\n* `/reload` command for in-session config refresh ([#1722](https://github.com/langchain-ai/deepagents/issues/1722)) ([381aee6](https://github.com/langchain-ai/deepagents/commit/381aee6d223fe3d866bedfe3a534916f419a4435))\n* Rearrange HITL option order in approval menu ([#1726](https://github.com/langchain-ai/deepagents/issues/1726)) ([0ca6cb2](https://github.com/langchain-ai/deepagents/commit/0ca6cb237b6da538bad2b4bf292942c8db72ec1f))\n\n### Bug Fixes\n\n* Localize newline shortcut labels by platform ([#1721](https://github.com/langchain-ai/deepagents/issues/1721)) ([f35576b](https://github.com/langchain-ai/deepagents/commit/f35576bafac711d6c04f1f9dd40ec97a90e30060))\n* Prevent `shift+enter` from sending `backslash+enter` ([#1728](https://github.com/langchain-ai/deepagents/issues/1728)) ([81dceb0](https://github.com/langchain-ai/deepagents/commit/81dceb043097a47702bb5a0227a8f12e9055bd05))\n* Write files with langsmith sandbox ([#1714](https://github.com/langchain-ai/deepagents/issues/1714)) ([5933c9e](https://github.com/langchain-ai/deepagents/commit/5933c9e2995c422e43649c61981e086ac1eaf725))\n\n---\n\nThanks to our contributors: @guptagautam01 ([LinkedIn](https://www.linkedin.com/in/gupta-gautam01/)), @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-cli%3D%3D0.0.31",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 opt-in ask_user 工具，支持 Agent 向用户提出交互式问题",
+            "大幅改进 /thread 管理功能：支持搜索、列显示、删除、排序、分支过滤和每个线程工作目录追踪",
+            "新增 /reload 命令，支持会话中刷新配置",
+            "针对非交互模式优化系统提示词",
+            "修复跨平台换行快捷键标签本地化问题"
+          ],
+          "summary_cn": "此版本主要聚焦于交互体验增强，新增 ask_user 工具让 Agent 能主动向用户提问，同时大幅改进了线程管理功能，支持搜索、排序、删除等丰富操作。此外，新增的 /reload 命令让用户无需重启即可刷新配置，提升了使用便捷性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.24",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-09",
+        "summary": "## Core\n- Add initial support for workspaces into the TUI\n- Send context-1m-2025-08-07 beta header to GitLab to enable 1M context window (@Krule)\n- Add Copilot GPT-5.4 xhigh support\n## Desktop\n- Fix scroll jitter and loop issues in app\n- Session title turn spinner now displays correctly\n- Dismiss toast notifications when questions or permissions are resolved (@neriousy)\n\n**Thank you to 3 community contributors:**\n- @Krule:\n  - feat(gitlab): send context-1m-2025-08-07 beta header to enable 1M context window (#16153)\n- @ShriKaranHanda:\n  - fix(storybook): add ci build workflow (#16760)\n- @neriousy:\n  - fix(app): dismiss toast notifications when questions or permissions a… (#16758)",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.24",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "TUI 新增工作区（Workspaces）初始支持",
+            "GitLab 集成支持 100 万 token 上下文窗口",
+            "新增 Copilot GPT-5.4 xhigh 模型支持",
+            "修复桌面端滚动抖动和循环问题",
+            "优化 Toast 通知的自动消失逻辑"
+          ],
+          "summary_cn": "本次更新主要带来多项新功能支持，包括 TUI 工作区、GitLab 百万级上下文窗口以及 Copilot GPT-5.4 xhigh 模型。同时修复了桌面端的滚动抖动问题和 Toast 通知显示异常，共有 3 位社区贡献者参与开发。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.23",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-09",
+        "summary": "## Core\n- Disable fallback to free nano for small model requests\n## TUI\n- Pass missing auth headers in run --attach (@ericclemmons)\n## Desktop\n- Remove oc-1 theme from app\n- Fix sidebar workspace container sizing to prevent content overflow\n- Don't animate review panel in/out\n- Revert \"Stupid Sexy Timeline\" feature\n- Sanitize workspace store filenames on Windows\n- Generate color palettes in app\n\n**Thank you to 3 community contributors:**\n- @ariane-emory:\n  - docs: add session_child_first keybinding to documentation (#16631)\n- @ericclemmons:\n  - fix(opencode): pass missing auth headers in `run --attach` (#16097)\n- @yihuikhuu:\n  - fix(app): fix issue with scroll jumping when pressing escape in comment text area (#15374)",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.23",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "禁用小模型请求回退到免费 nano 模型的逻辑",
+            "修复 run --attach 模式下缺失的认证头传递问题",
+            "修复桌面端侧边栏工作区容器尺寸导致的内客溢出问题",
+            "清理桌面端功能：移除主题、禁用动画、回滚时间线特性",
+            "修复 Windows 平台工作区存储文件名清理问题"
+          ],
+          "summary_cn": "此版本主要包含多项 bug 修复和桌面端优化。核心变更禁用了小模型请求的 nano 回退机制，并修复了 attach 模式下的认证问题。桌面端重点修复了侧边栏溢出、滚动跳跃等问题，同时清理了部分不必要的功能和动画效果。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.112.0",
+        "author": "github-actions[bot]",
+        "date": "2026-03-08",
+        "summary": "## New Features\n- Added `@plugin` mentions so users can reference plugins directly in chat and auto-include their associated MCP/app/skill context. (#13510)\n- Added a new model-selection surface update so the latest model catalog changes are surfaced in the TUI picker flow. (#13617)\n- Merged executable permission profiles into per-turn sandbox policy for zsh-fork skill execution, allowing safer, additive privilege handling for tool runs. (#13496)\n\n## Bug Fixes\n- Fixed JS REPL state handling so previously-initialized bindings persist after a failed cell, reducing brittle restarts during iterative sessions. (#13482)\n- Treated `SIGTERM` like Ctrl-C for graceful app-server websocket shutdown instead of abrupt termination behavior. (#13594)\n- Hardened js_repl image emission to accept only `data:` URLs, preventing external URL forwarding through `emitImage`. (#13507)\n- Ensured Linux bubblewrap sandbox runs always unshare the user namespace to keep isolation consistent even for root-owned invocations. (#13624)\n- Improved macOS sandbox network and unix-socket handling in Seatbelt, improving reliability for constrained subprocess environments. (#12702)\n- Surfaced feedback/diagnostics earlier in the workflow so connectivity and diagnostics are visible before later steps. (#13604)\n\n## Documentation\n- Clarified js_repl image guidance (emission and encoding semantics), including clearer usage around repeated `emitImage` calls. (#13639)\n\n## Chores\n- Fixed a small codespell warning in the TUI theme picker path. (#13605)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.111.0...rust-v0.112.0\n\n- #13594 treat SIGTERM like ctrl-c for graceful shutdown @maxj-oai\n- #13605 Fix codespell warning about pre-selects @fjord-oai\n- #13482 Persist initialized js_repl bindings after failed cells @fjord-oai\n- #13604 [diagnostics] show diagnostics earlier in workflow @rhan-oai\n- #13496 feat: merge skill permission profiles into the turn sandbox for zsh-fork execs @celia-oai\n- #13507 Harden js_repl emitImage to accept only data: URLs @fjord-oai\n- #13602 feat(core): persist trace_id for turns in RolloutItem::TurnContext @owenlin0\n- #13624 fix(linux-sandbox): always unshare bwrap userns @viyatb-oai\n- #12702 Improve macOS Seatbelt network and unix socket handling @viyatb-oai\n- #13639 Clarify js_repl image emission and encoding guidance @fjord-oai\n- #13510 add @plugin mentions @sayan-oai\n- #13499 core/protocol: add structured macOS additional permissions and merge them into sandbox execution @celia-oai\n- #13617 Update models.json @aibrahim-oai\n\n\n",
+        "assets_count": 83,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.112.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 @plugin 提及功能，支持在聊天中直接引用插件并自动关联 MCP/app/skill 上下文",
+            "优化模型选择器界面，实时展示最新的模型目录变更",
+            "合并可执行权限配置到沙箱策略中，提升 zsh-fork 技能执行的安全性",
+            "修复 JS REPL 状态持久化问题，失败单元格后保留已初始化的绑定",
+            "增强多平台沙箱隔离机制（Linux bubblewrap 和 macOS Seatbelt）"
+          ],
+          "summary_cn": "本次版本更新主要聚焦于插件交互体验和系统安全性的提升。新增了 @plugin 提及功能，让用户可以在聊天中直接引用插件并自动加载相关上下文，同时优化了模型选择器以实时反映目录变更。在安全性和稳定性方面，改进了沙箱权限管理机制，修复了 JS REPL 状态持久化问题，并增强了跨平台（Linux/macOS）的沙箱隔离可靠性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.2.22",
+        "author": "opencode-agent[bot]",
+        "date": "2026-03-08",
+        "summary": "## Core\n- Canonicalize current working directory after changing directories in TUI\n- Fix broken MCP toggling in TUI (@natewill)\n- Update database path test to verify correct channel-based filename\n- Allow beta channel to share database with stable channel\n- Add OPENCODE_SKIP_MIGRATIONS flag to bypass database migrations\n## TUI\n- Guard TUI exit to prevent premature termination\n- Avoid TTY corruption from double cleanup (@tobwen)\n## Desktop\n- Fix sidebar background color when collapsed\n- Suppress hover when opening project menu or right-clicking to prevent flickering\n- Trim retained desktop terminal buffers\n- Messages not loading reliably\n- Prune and evict stale app session caches\n- Restore new-session logo on dev so users recognize OpenCode immediately\n- Revert new session logo on dev branch to ship UI change with auto-accept-permissions feature\n- Add OpenCode logo to new session screen for immediate app identification\n- Revert prompt control docking in TUI\n- Dock auto-accept after thinking and move Add file to bottom-left\n- Balance titlebar columns so center content doesn't get squeezed by long side content\n- Center empty states vertically in session view and improve review panel messaging for projects without version control\n- Review panel transition fixed in app\n\n**Thank you to 3 community contributors:**\n- @natewill:\n  - fix(tui): fix broken /mcp toggling (#16431)\n- @tobwen:\n  - fix(opencode): avoid TTY corruption from double cleanup (#16565)\n- @Bezkup:\n  - docs(zen.mdx): correct Italian grammar and punctuation errors (#16590)",
+        "assets_count": 44,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.2.22",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 TUI 中 MCP 切换功能和 TTY 损坏问题，提升终端界面稳定性",
+            "改进桌面端 UI 体验，修复侧边栏折叠背景、消息加载和悬停闪烁等问题",
+            "优化数据库管理，支持 beta 与 stable 通道共享数据库，新增跳过迁移的环境变量",
+            "完善新会话界面设计，添加 OpenCode logo 并优化空状态和审查面板显示",
+            "感谢 3 位社区贡献者参与问题修复和文档改进"
+          ],
+          "summary_cn": "本版本主要聚焦于稳定性和用户体验改进，修复了 TUI 中 MCP 切换和 TTY 损坏等关键问题，同时优化了桌面端的侧边栏、消息加载和界面布局。数据库管理方面增加了 beta 与 stable 通道共享数据库的能力，并新增了跳过迁移的环境变量选项。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed"
+  ],
+  "issue_insights": {
+    "summary_brief": "本轮监控发现3个P0级严重问题：aider在Windows平台glob模式处理崩溃（3个独立用户报告）、Gemini CLI浏览器Agent工具完全不可用、AutoGPT CoPilot认证失败导致10万+错误事件。同时发现跨平台共性问题是静默失败（安全审查、资源控制、认证处理）和SDK序列化/深拷贝缺陷影响多个Anthropic生态仓库。",
+    "global_highlights": [
+      "Agent/AI工具的异常处理缺陷导致静默失败：AutoGPT停止按钮不中止后端、Gemini CLI上下文丢失、Claude安全审查在大型PR上静默跳过，用户在不知情下面临资源浪费或安全风险",
+      "Windows平台兼容性问题持续影响AI开发工具：aider在/read-only命令触发NotImplementedError、Open Interpreter .deb包跨设备安装失败，阻断用户使用核心功能",
+      "Anthropic SDK生态存在序列化与Token追踪缺陷：Python SDK深拷贝导致原地突变、Java SDK Skill创建失败、Token使用追踪缺失导致生产环境成本失控",
+      "Docker/容器化部署问题阻碍多平台安装：AutoGPT RabbitMQ容器权限错误、Open Interpreter .deb包安装失败、smolagents Docker执行器端口泄漏，影响新用户上手"
+    ],
+    "top_pain_points": [
+      {
+        "id": null,
+        "repo": null,
+        "topic": "NotImplementedError: Non-relative patterns are unsupported in glob (pathlib.py)",
+        "summary": "3 independent Windows users report complete crash when using /read-only command - a core workflow feature. All issues show identical stack trace with uncaught NotImplementedError, blocking main functionality. High confidence due to consistent reproduction pattern across multiple users.",
+        "category": null,
+        "count": 3,
+        "affected_repos": [
+          "paul-gauthier/aider"
+        ],
+        "sample_urls": [
+          "https://github.com/Aider-AI/aider/issues/4890",
+          "https://github.com/Aider-AI/aider/issues/4886",
+          "https://github.com/Aider-AI/aider/issues/4885"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "3 independent Windows users report complete crash when using /read-only command - a core workflow feature. All issues show identical stack trace with uncaught NotImplementedError, blocking main functionality. High confidence due to consistent reproduction pattern across multiple users.",
+        "source_issues": [
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4890,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4890",
+            "labels": [],
+            "evidence": "NotImplementedError: Non-relative patterns are unsupported - occurs in commands.py cmd_read_only when using Path.glob()"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4886,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4886",
+            "labels": [],
+            "evidence": "Same crash pattern as 4890 - Windows 11, Python 3.12.10"
+          },
+          {
+            "repo": "paul-gauthier/aider",
+            "issue_number": 4885,
+            "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+            "url": "https://github.com/Aider-AI/aider/issues/4885",
+            "labels": [],
+            "evidence": "Same crash pattern as 4890 - Windows 11, Python 3.12.10"
+          }
+        ],
+        "source_signal_ids": [
+          "paul-gauthier__aider-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Agent/Subagent failures and context loss",
+        "summary": "Browser agent完全不可用（所有MCP工具报Tool not found），用户拒绝命令后丢失全部上下文。这是主流程阻断问题，直接阻止用户使用Agent核心功能，用户无法完成任何浏览器自动化任务或需要交互式确认的多步骤任务。",
+        "category": null,
+        "count": 2,
+        "affected_repos": [
+          "google-gemini/gemini-cli"
+        ],
+        "sample_urls": [
+          "https://github.com/google-gemini/gemini-cli/issues/21765",
+          "https://github.com/google-gemini/gemini-cli/issues/21761"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Browser agent完全不可用（所有MCP工具报Tool not found），用户拒绝命令后丢失全部上下文。这是主流程阻断问题，直接阻止用户使用Agent核心功能，用户无法完成任何浏览器自动化任务或需要交互式确认的多步骤任务。",
+        "source_issues": [
+          {
+            "repo": "google-gemini/gemini-cli",
+            "issue_number": 21765,
+            "title": "bug(core): Browser agent fails with \"Tool not found\" for all MCP tools (new_page, navigate_page, etc.)",
+            "url": "https://github.com/google-gemini/gemini-cli/issues/21765",
+            "labels": [
+              "status/need-triage",
+              "area/agent"
+            ],
+            "evidence": "All MCP tools fail with 'Tool not found' error, browser agent's isolated tool registry is being ignored"
+          },
+          {
+            "repo": "google-gemini/gemini-cli",
+            "issue_number": 21761,
+            "title": "Rejecting a command completely cancels subagent",
+            "url": "https://github.com/google-gemini/gemini-cli/issues/21761",
+            "labels": [
+              "status/need-triage",
+              "area/agent"
+            ],
+            "evidence": "When user rejects a shell command not on allowlist, the entire subagent is stopped and all context is lost"
+          }
+        ],
+        "source_signal_ids": [
+          "google-gemini__gemini-cli-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "CoPilot Server Action 'Not Found' errors causing chat failures",
+        "summary": "Critical blocking issue with quantified user impact: 107K+ Sentry events and 36+ users completely unable to use CoPilot chat. WebSocket authentication fails, breaking core functionality. Issue remains open with detailed root cause and fix plan.",
+        "category": null,
+        "count": 1,
+        "affected_repos": [
+          "Significant-Gravitas/AutoGPT"
+        ],
+        "sample_urls": [
+          "https://github.com/Significant-Gravitas/AutoGPT/issues/12305"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P0",
+        "review_reason": "Critical blocking issue with quantified user impact: 107K+ Sentry events and 36+ users completely unable to use CoPilot chat. WebSocket authentication fails, breaking core functionality. Issue remains open with detailed root cause and fix plan.",
+        "source_issues": [
+          {
+            "repo": "Significant-Gravitas/AutoGPT",
+            "issue_number": 12305,
+            "title": "[CoPilot Critical] Fix Server Action \"Not Found\" Errors — 107K+ Events, 36+ Users Impacted",
+            "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12305",
+            "labels": [],
+            "evidence": "107K+ Sentry events, 36+ users impacted, WebSocket auth fails, CoPilot chat breaks entirely"
+          }
+        ],
+        "source_signal_ids": [
+          "Significant-Gravitas__AutoGPT-1"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "SDK deepcopy_minimal mutates dict in place during file upload",
+        "summary": "Real SDK bug with screenshot proof: deepcopy_minimal fails to recursively copy tuples, causing headers dict mutation during files.beta.upload. Unexpected side effect can introduce bugs in user code relying on passed file parameters.",
+        "category": null,
+        "count": 1,
+        "affected_repos": [
+          "anthropics/anthropic-sdk-python"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/anthropic-sdk-python/issues/1202"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "Real SDK bug with screenshot proof: deepcopy_minimal fails to recursively copy tuples, causing headers dict mutation during files.beta.upload. Unexpected side effect can introduce bugs in user code relying on passed file parameters.",
+        "source_issues": [
+          {
+            "repo": "anthropics/anthropic-sdk-python",
+            "issue_number": 1202,
+            "title": "Use of deepcopy_minimal in files.beta.upload mutates dict in place",
+            "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1202",
+            "labels": [],
+            "evidence": "deepcopy_minimal does not recursively copy tuples, causing headers dict in FileTypes tuple to be mutated in-place during files.beta.upload."
+          }
+        ],
+        "source_signal_ids": [
+          "anthropics__anthropic-sdk-python-4"
+        ]
+      },
+      {
+        "id": null,
+        "repo": null,
+        "topic": "Silent failure on large PRs with no error indication",
+        "summary": "用户在大型PR上获得虚假的安全感——GitHub Actions显示绿色通过标记，但实际上安全审查根本没有执行。这是一个安全工具的核心功能失效，会导致安全漏洞被合并。Issue提供了完整的复现步骤和日志证据，并引用了相关issue(#63,#64)表明这是反复出现的问题模式。虽为单仓单issue，但用户影响明确：工具承诺的安全审查功能在特定条件下静默失败，用户无法察觉。",
+        "category": null,
+        "count": 1,
+        "affected_repos": [
+          "anthropics/claude-code-security-review"
+        ],
+        "sample_urls": [
+          "https://github.com/anthropics/claude-code-security-review/issues/80"
+        ],
+        "aliases": [],
+        "confidence": 0.95,
+        "priority": "P1",
+        "review_reason": "用户在大型PR上获得虚假的安全感——GitHub Actions显示绿色通过标记，但实际上安全审查根本没有执行。这是一个安全工具的核心功能失效，会导致安全漏洞被合并。Issue提供了完整的复现步骤和日志证据，并引用了相关issue(#63,#64)表明这是反复出现的问题模式。虽为单仓单issue，但用户影响明确：工具承诺的安全审查功能在特定条件下静默失败，用户无法察觉。",
+        "source_issues": [
+          {
+            "repo": "anthropics/claude-code-security-review",
+            "issue_number": 80,
+            "title": "Silent failure on large PRs: 406 diff too large swallowed as 0 findings",
+            "url": "https://github.com/anthropics/claude-code-security-review/issues/80",
+            "labels": [],
+            "evidence": "The action logs warning but sets CLAUDECODE_FINDINGS: 0 and completes successfully with no PR comment or indication that the scan failed"
+          }
+        ],
+        "source_signal_ids": [
+          "anthropics__claude-code-security-review-1"
+        ]
+      }
+    ],
+    "repo_reports": [
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "Significant-Gravitas__AutoGPT-1",
+            "repo": "Significant-Gravitas/AutoGPT",
+            "topic": "CoPilot Server Action 'Not Found' errors causing chat failures",
+            "summary": "Critical blocking issue with quantified user impact: 107K+ Sentry events and 36+ users completely unable to use CoPilot chat. WebSocket authentication fails, breaking core functionality. Issue remains open with detailed root cause and fix plan.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "Significant-Gravitas/AutoGPT"
+            ],
+            "sample_urls": [
+              "https://github.com/Significant-Gravitas/AutoGPT/issues/12305"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Critical blocking issue with quantified user impact: 107K+ Sentry events and 36+ users completely unable to use CoPilot chat. WebSocket authentication fails, breaking core functionality. Issue remains open with detailed root cause and fix plan.",
+            "source_issues": [
+              {
+                "repo": "Significant-Gravitas/AutoGPT",
+                "issue_number": 12305,
+                "title": "[CoPilot Critical] Fix Server Action \"Not Found\" Errors — 107K+ Events, 36+ Users Impacted",
+                "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12305",
+                "labels": [],
+                "evidence": "107K+ Sentry events, 36+ users impacted, WebSocket auth fails, CoPilot chat breaks entirely"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "Significant-Gravitas__AutoGPT-2",
+            "repo": "Significant-Gravitas/AutoGPT",
+            "topic": "CoPilot stop button doesn't abort backend processing",
+            "summary": "Users lose control over resource consumption when stop button doesn't actually stop backend processing. Can lead to unexpected costs and wasted resources. Issue is open with 4 comments indicating ongoing concern.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "Significant-Gravitas/AutoGPT"
+            ],
+            "sample_urls": [
+              "https://github.com/Significant-Gravitas/AutoGPT/issues/12111"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Users lose control over resource consumption when stop button doesn't actually stop backend processing. Can lead to unexpected costs and wasted resources. Issue is open with 4 comments indicating ongoing concern.",
+            "source_issues": [
+              {
+                "repo": "Significant-Gravitas/AutoGPT",
+                "issue_number": 12111,
+                "title": "[Bug] CoPilot stop button doesn't abort backend processing",
+                "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12111",
+                "labels": [],
+                "evidence": "User reported on Discord that stop button doesn't actually stop anything on the backend"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "Significant-Gravitas__AutoGPT-3",
+            "repo": "Significant-Gravitas/AutoGPT",
+            "topic": "Password signup infinite spinner on account creation",
+            "summary": "Blocks new users from completing signup flow - critical onboarding failure. Issue was closed (fixed) but represents significant user pain point that existed.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "Significant-Gravitas/AutoGPT"
+            ],
+            "sample_urls": [
+              "https://github.com/Significant-Gravitas/AutoGPT/issues/12286"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Blocks new users from completing signup flow - critical onboarding failure. Issue was closed (fixed) but represents significant user pain point that existed.",
+            "source_issues": [
+              {
+                "repo": "Significant-Gravitas/AutoGPT",
+                "issue_number": 12286,
+                "title": "Password signup missing createUser() call — spinner on account creation",
+                "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12286",
+                "labels": [],
+                "evidence": "Onboarding status check fails/hangs for new users, resulting in infinite spinner"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "Significant-Gravitas__AutoGPT-4",
+            "repo": "Significant-Gravitas/AutoGPT",
+            "topic": "Marketplace search returns no agents",
+            "summary": "Core marketplace discovery feature completely broken - users cannot find any agents regardless of search parameters. Blocks primary use case of the marketplace.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "Significant-Gravitas/AutoGPT"
+            ],
+            "sample_urls": [
+              "https://github.com/Significant-Gravitas/AutoGPT/issues/12253"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Core marketplace discovery feature completely broken - users cannot find any agents regardless of search parameters. Blocks primary use case of the marketplace.",
+            "source_issues": [
+              {
+                "repo": "Significant-Gravitas/AutoGPT",
+                "issue_number": 12253,
+                "title": "Marketplace Search Returns No Agents",
+                "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12253",
+                "labels": [],
+                "evidence": "API endpoint /api/store/agents returns empty agents array regardless of search parameters"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "Significant-Gravitas__AutoGPT-5",
+            "repo": "Significant-Gravitas/AutoGPT",
+            "topic": "RabbitMQ container fails to start on fresh Docker installation",
+            "summary": "Blocks ALL new installations across macOS/Linux/Windows. Users cannot even get the platform running locally or in production.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "Significant-Gravitas/AutoGPT"
+            ],
+            "sample_urls": [
+              "https://github.com/Significant-Gravitas/AutoGPT/issues/12252"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Blocks ALL new installations across macOS/Linux/Windows. Users cannot even get the platform running locally or in production.",
+            "source_issues": [
+              {
+                "repo": "Significant-Gravitas/AutoGPT",
+                "issue_number": 12252,
+                "title": "RabbitMQ container fails to start with `.erlang.cookie: eacces` permission error during fresh `docker compose up -d --build`",
+                "url": "https://github.com/Significant-Gravitas/AutoGPT/issues/12252",
+                "labels": [],
+                "evidence": "RabbitMQ image missing -management tag, affects all fresh installations"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 14,
+        "analyzed_issue_count": 14,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-java-1",
+            "repo": "anthropics/anthropic-sdk-java",
+            "topic": "Skill creation fails with JsonNode ARRAY serialization error",
+            "summary": "Users encounter a blocking AnthropicInvalidDataException when calling SkillService.create(), which completely prevents the Skill creation feature from working. The stack trace provides concrete evidence of the failure in multipart form serialization. While only a single issue report exists, the user impact is definitive: a core SDK feature (Skill creation) fails with an unhandled exception, making it unusable. P1 (not P0) because count < 3 and single repo, per priority rules.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-java"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-java/issues/306"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P1",
+            "review_reason": "Users encounter a blocking AnthropicInvalidDataException when calling SkillService.create(), which completely prevents the Skill creation feature from working. The stack trace provides concrete evidence of the failure in multipart form serialization. While only a single issue report exists, the user impact is definitive: a core SDK feature (Skill creation) fails with an unhandled exception, making it unusable. P1 (not P0) because count < 3 and single repo, per priority rules.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-java",
+                "issue_number": 306,
+                "title": "Unexpected JsonNode type in array: ARRAY when creating Skill",
+                "url": "https://github.com/anthropics/anthropic-sdk-java/issues/306",
+                "labels": [
+                  "bug",
+                  "sdk"
+                ],
+                "evidence": "Stack trace shows AnthropicInvalidDataException: Unexpected JsonNode type in array: ARRAY thrown during multipart form serialization in HttpRequestBodies.kt when calling SkillService.create()"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__anthropic-sdk-python-1",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "web_search_20260209 latency plateau due to context reprocessing",
+            "summary": "User reports measurable 400-700s latency floor that cannot be reduced by tuning max_uses. Clear productivity impact with specific token/ timing data (681s vs 691s). Blocks efficient usage of web_search tool in production scenarios.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1225"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "User reports measurable 400-700s latency floor that cannot be reduced by tuning max_uses. Clear productivity impact with specific token/ timing data (681s vs 691s). Blocks efficient usage of web_search tool in production scenarios.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": 1225,
+                "title": "web_search_20260209: latency plateau independent of max_uses",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1225",
+                "labels": [],
+                "evidence": "Each internal turn appears to reprocess the full accumulated context. Total call duration has a structural floor of ~400–700s that cannot be reduced by tuning max_uses."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-python-2",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "web_search_20260209 pause_turn stuck loop",
+            "summary": "Model returns stop_reason: pause_turn with 40+ code_execution_tool_result blocks, producing no usable output. Task completion blocked but transient with 15-30 min retry workaround. Server-side issue with user-provided detection code.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1224"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Model returns stop_reason: pause_turn with 40+ code_execution_tool_result blocks, producing no usable output. Task completion blocked but transient with 15-30 min retry workaround. Server-side issue with user-provided detection code.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": 1224,
+                "title": "web_search_20260209: pause_turn loop",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1224",
+                "labels": [],
+                "evidence": "Model enters internal loop and returns stop_reason: pause_turn instead of completing task. 40+ code_execution_tool_result blocks observed. Issue is transient and server-side."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-python-3",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "Claude Pro usage limits depleting faster after Claude 4.6",
+            "summary": "Direct billing/usage impact: 80% weekly limit consumed in ~5 days with unchanged usage. Multiple Reddit users corroborate same pattern. Trust/transparency issue for paying Pro subscribers facing mid-week rate limits.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1215"
+            ],
+            "aliases": [],
+            "confidence": 0.75,
+            "priority": "P1",
+            "review_reason": "Direct billing/usage impact: 80% weekly limit consumed in ~5 days with unchanged usage. Multiple Reddit users corroborate same pattern. Trust/transparency issue for paying Pro subscribers facing mid-week rate limits.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": 1215,
+                "title": "Claude Pro weekly usage limits depleting drastically faster since Claude 4.6 release",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1215",
+                "labels": [],
+                "evidence": "80% of weekly limit consumed in ~5 days with unchanged usage. Multiple Reddit users reporting same pattern. No official communication from Anthropic."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-python-4",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "SDK deepcopy_minimal mutates dict in place during file upload",
+            "summary": "Real SDK bug with screenshot proof: deepcopy_minimal fails to recursively copy tuples, causing headers dict mutation during files.beta.upload. Unexpected side effect can introduce bugs in user code relying on passed file parameters.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1202"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Real SDK bug with screenshot proof: deepcopy_minimal fails to recursively copy tuples, causing headers dict mutation during files.beta.upload. Unexpected side effect can introduce bugs in user code relying on passed file parameters.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": 1202,
+                "title": "Use of deepcopy_minimal in files.beta.upload mutates dict in place",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1202",
+                "labels": [],
+                "evidence": "deepcopy_minimal does not recursively copy tuples, causing headers dict in FileTypes tuple to be mutated in-place during files.beta.upload."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__anthropic-sdk-python-5",
+            "repo": "anthropics/anthropic-sdk-python",
+            "topic": "adaptive thinking mode produces redundant empty text block",
+            "summary": "Streaming with adaptive thinking produces text block (empty) -> thinking -> text, making first empty text block indistinguishable from real response. Affects output parsing logic but does not block core functionality.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/anthropic-sdk-python"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/anthropic-sdk-python/issues/1162"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P2",
+            "review_reason": "Streaming with adaptive thinking produces text block (empty) -> thinking -> text, making first empty text block indistinguishable from real response. Affects output parsing logic but does not block core functionality.",
+            "source_issues": [
+              {
+                "repo": "anthropics/anthropic-sdk-python",
+                "issue_number": 1162,
+                "title": "Opus 4.6 with adaptive thinking: Redundant text block (text -> think -> text)",
+                "url": "https://github.com/anthropics/anthropic-sdk-python/issues/1162",
+                "labels": [],
+                "evidence": "Streaming with adaptive thinking produces text block (empty) -> thinking block -> text block instead of just thinking -> text. No way to distinguish the first empty text block."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 5,
+        "analyzed_issue_count": 5,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__claude-code-security-review-1",
+            "repo": "anthropics/claude-code-security-review",
+            "topic": "Silent failure on large PRs with no error indication",
+            "summary": "用户在大型PR上获得虚假的安全感——GitHub Actions显示绿色通过标记，但实际上安全审查根本没有执行。这是一个安全工具的核心功能失效，会导致安全漏洞被合并。Issue提供了完整的复现步骤和日志证据，并引用了相关issue(#63,#64)表明这是反复出现的问题模式。虽为单仓单issue，但用户影响明确：工具承诺的安全审查功能在特定条件下静默失败，用户无法察觉。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-code-security-review"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-code-security-review/issues/80"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "用户在大型PR上获得虚假的安全感——GitHub Actions显示绿色通过标记，但实际上安全审查根本没有执行。这是一个安全工具的核心功能失效，会导致安全漏洞被合并。Issue提供了完整的复现步骤和日志证据，并引用了相关issue(#63,#64)表明这是反复出现的问题模式。虽为单仓单issue，但用户影响明确：工具承诺的安全审查功能在特定条件下静默失败，用户无法察觉。",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-code-security-review",
+                "issue_number": 80,
+                "title": "Silent failure on large PRs: 406 diff too large swallowed as 0 findings",
+                "url": "https://github.com/anthropics/claude-code-security-review/issues/80",
+                "labels": [],
+                "evidence": "The action logs warning but sets CLAUDECODE_FINDINGS: 0 and completes successfully with no PR comment or indication that the scan failed"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 2,
+        "analyzed_issue_count": 2,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__claude-cookbooks-1",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Skills API token consumption causing rate limit errors",
+            "summary": "Users encounter blocking 429 rate limit errors with explicit message 'This request would exceed the rate limit for your organization of 50,000 input tokens per minute' - Skills feature becomes unusable with no documented mitigation strategy",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/324"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Users encounter blocking 429 rate limit errors with explicit message 'This request would exceed the rate limit for your organization of 50,000 input tokens per minute' - Skills feature becomes unusable with no documented mitigation strategy",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": 324,
+                "title": "[Bug/Question] Excessive Input Token Usage When Invoking Skills - Rate Limit Errors",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/324",
+                "labels": [
+                  "bug"
+                ],
+                "evidence": "RateLimitError: Error code: 429 - rate limit of 50,000 input tokens per minute exceeded when invoking skills"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-cookbooks-2",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Skills incompatibility with AnthropicVertex",
+            "summary": "Skills feature is completely unavailable for AnthropicVertex users due to unsupported beta headers - entire platform segment blocked from using key feature",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/311"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Skills feature is completely unavailable for AnthropicVertex users due to unsupported beta headers - entire platform segment blocked from using key feature",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": 311,
+                "title": "[QUESTION] how to use skills with AnthropicVertex?",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/311",
+                "labels": [
+                  "question"
+                ],
+                "evidence": "Error: 'Unexpected value(s) for the anthropic-beta header' - skills beta headers not supported on Vertex AI"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "anthropics__claude-cookbooks-3",
+            "repo": "anthropics/claude-cookbooks",
+            "topic": "Multi-turn PDF chat context management overhead",
+            "summary": "Causes unnecessary token costs and processing overhead when building multi-turn PDF chatbots - users must resend PDF on every turn, impacting cost and latency",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/claude-cookbooks"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/claude-cookbooks/issues/114"
+            ],
+            "aliases": [],
+            "confidence": 0.75,
+            "priority": "P2",
+            "review_reason": "Causes unnecessary token costs and processing overhead when building multi-turn PDF chatbots - users must resend PDF on every turn, impacting cost and latency",
+            "source_issues": [
+              {
+                "repo": "anthropics/claude-cookbooks",
+                "issue_number": null,
+                "title": "",
+                "url": "https://github.com/anthropics/claude-cookbooks/issues/114",
+                "labels": [],
+                "evidence": null
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 18,
+        "analyzed_issue_count": 18,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__courses-1",
+            "repo": "anthropics/courses",
+            "topic": "Voice Mode STT fails for non-English languages (French)",
+            "summary": "Voice Mode STT完全失败 - 对法语输入返回空转录或乱码。这是关键功能(Voice Mode语音输入)的功能性故障，导致非英语用户被阻断，且Claude声称能理解法语但静默失败，造成信任问题。符合'关键功能不可用'标准。因count<3且单仓库，标记P1而非P0。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/courses"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/courses/issues/139"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Voice Mode STT完全失败 - 对法语输入返回空转录或乱码。这是关键功能(Voice Mode语音输入)的功能性故障，导致非英语用户被阻断，且Claude声称能理解法语但静默失败，造成信任问题。符合'关键功能不可用'标准。因count<3且单仓库，标记P1而非P0。",
+            "source_issues": [
+              {
+                "repo": "anthropics/courses",
+                "issue_number": 139,
+                "title": "[BUG] Voice Mode - French STT completely fails (empty/garbled transcription)",
+                "url": "https://github.com/anthropics/courses/issues/139",
+                "labels": [],
+                "evidence": "STT returns either empty transcript or completely incoherent text with no relation to what was said. Claude verbally claims it can understand French, leading the user to keep trying, unaware that transcription has silently failed."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 2,
+        "analyzed_issue_count": 2,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "anthropics__devcontainer-features-1",
+            "repo": "anthropics/devcontainer-features",
+            "topic": "Silent file overwrite by devcontainer feature",
+            "summary": "Users following official documentation to customize init-firewall.sh have their changes silently replaced on every build, causing confusion and wasted debugging time. This is a valid user pain point with documented evidence of unexpected behavior that breaks the documented workflow. However, it's P2 because: (1) count=1 and single repo, (2) not blocking main functionality, (3) devcontainer still works, (4) workaround exists by not using the feature or accepting the overwrite.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "anthropics/devcontainer-features"
+            ],
+            "sample_urls": [
+              "https://github.com/anthropics/devcontainer-features/issues/38"
+            ],
+            "aliases": [
+              "init-firewall.sh overwrite",
+              "devcontainer feature conflict"
+            ],
+            "confidence": 0.75,
+            "priority": "P2",
+            "review_reason": "Users following official documentation to customize init-firewall.sh have their changes silently replaced on every build, causing confusion and wasted debugging time. This is a valid user pain point with documented evidence of unexpected behavior that breaks the documented workflow. However, it's P2 because: (1) count=1 and single repo, (2) not blocking main functionality, (3) devcontainer still works, (4) workaround exists by not using the feature or accepting the overwrite.",
+            "source_issues": [
+              {
+                "repo": "anthropics/devcontainer-features",
+                "issue_number": 38,
+                "title": "Claude Code devcontainer feature silently overwrites custom /usr/local/bin/init-firewall.sh",
+                "url": "https://github.com/anthropics/devcontainer-features/issues/38",
+                "labels": [],
+                "evidence": "Users following documentation guidance will copy and modify the reference init-firewall.sh in their own Dockerfile, only to have it silently replaced by the feature's version every build"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 1,
+        "analyzed_issue_count": 1,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "google-gemini__gemini-cli-1",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Agent/Subagent failures and context loss",
+            "summary": "Browser agent完全不可用（所有MCP工具报Tool not found），用户拒绝命令后丢失全部上下文。这是主流程阻断问题，直接阻止用户使用Agent核心功能，用户无法完成任何浏览器自动化任务或需要交互式确认的多步骤任务。",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21765",
+              "https://github.com/google-gemini/gemini-cli/issues/21761"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "Browser agent完全不可用（所有MCP工具报Tool not found），用户拒绝命令后丢失全部上下文。这是主流程阻断问题，直接阻止用户使用Agent核心功能，用户无法完成任何浏览器自动化任务或需要交互式确认的多步骤任务。",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21765,
+                "title": "bug(core): Browser agent fails with \"Tool not found\" for all MCP tools (new_page, navigate_page, etc.)",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21765",
+                "labels": [
+                  "status/need-triage",
+                  "area/agent"
+                ],
+                "evidence": "All MCP tools fail with 'Tool not found' error, browser agent's isolated tool registry is being ignored"
+              },
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21761,
+                "title": "Rejecting a command completely cancels subagent",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21761",
+                "labels": [
+                  "status/need-triage",
+                  "area/agent"
+                ],
+                "evidence": "When user rejects a shell command not on allowlist, the entire subagent is stopped and all context is lost"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-2",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Authentication credential handling errors",
+            "summary": "注销/切换认证时出现级联错误循环，用户在双登出、无登录切换等场景会遇到'Failed to clear OAuth credentials'错误，影响认证流程的可用性。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21768"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "注销/切换认证时出现级联错误循环，用户在双登出、无登录切换等场景会遇到'Failed to clear OAuth credentials'错误，影响认证流程的可用性。",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21768,
+                "title": "deleteCredentials throws on missing entry, causing re-auth error loops",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21768",
+                "labels": [
+                  "status/need-triage"
+                ],
+                "evidence": "KeychainTokenStorage and FileTokenStorage throw errors when credential doesn't exist, causing 'Failed to clear OAuth credentials' errors"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-3",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "CLI runtime crashes (AbortError)",
+            "summary": "CLI在正常操作过程中崩溃并自动关闭，用户明确反馈'auto close and stop working'，工具完全不可用，阻断主流程。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21752"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "CLI在正常操作过程中崩溃并自动关闭，用户明确反馈'auto close and stop working'，工具完全不可用，阻断主流程。",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21752,
+                "title": "AbortError: The operation was aborted",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21752",
+                "labels": [
+                  "status/need-triage",
+                  "area/core",
+                  "status/possible-duplicate"
+                ],
+                "evidence": "CLI auto closes and stops working with AbortError during GeminiClient.processTurn"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-4",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Resource leaks on macOS (PTY file descriptors)",
+            "summary": "PTY文件描述符泄漏直到耗尽系统限制(511)，最终阻止用户打开新终端标签页，影响macOS用户在Gemini CLI中使用shell命令的能力。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21767"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "PTY文件描述符泄漏直到耗尽系统限制(511)，最终阻止用户打开新终端标签页，影响macOS用户在Gemini CLI中使用shell命令的能力。",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21767,
+                "title": "PTY file descriptors leak on kill() and post-spawn exception",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21767",
+                "labels": [
+                  "status/need-triage"
+                ],
+                "evidence": "PTY file descriptors accumulate until exhausting kern.tty.ptmx_max limit (511), preventing new terminal tabs from opening"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "google-gemini__gemini-cli-5",
+            "repo": "google-gemini/gemini-cli",
+            "topic": "Keyboard input bugs in settings UI",
+            "summary": "用户无法在设置字符串字段中输入j/k字母（被导航键捕获），影响配置灵活性但不阻断核心功能。",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "google-gemini/gemini-cli"
+            ],
+            "sample_urls": [
+              "https://github.com/google-gemini/gemini-cli/issues/21746"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P2",
+            "review_reason": "用户无法在设置字符串字段中输入j/k字母（被导航键捕获），影响配置灵活性但不阻断核心功能。",
+            "source_issues": [
+              {
+                "repo": "google-gemini/gemini-cli",
+                "issue_number": 21746,
+                "title": "Cannot enter 'j' or 'k' into Settings where the value is a string",
+                "url": "https://github.com/google-gemini/gemini-cli/issues/21746",
+                "labels": [
+                  "status/need-triage",
+                  "area/core"
+                ],
+                "evidence": "Letters j and k are captured for navigation instead of being entered into string settings fields"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 20,
+        "analyzed_issue_count": 20,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "huggingface__smolagents-1",
+            "repo": "huggingface/smolagents",
+            "topic": "Token usage tracking and prompt caching for Anthropic/OpenAI models - cache tokens are silently dropped preventing cost tracking and verification of prompt caching",
+            "summary": "Users cannot track actual API costs or verify 90% input token savings from prompt caching - direct financial impact for production users billing Anthropic/OpenAI APIs",
+            "category": null,
+            "count": 2,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2055",
+              "https://github.com/huggingface/smolagents/issues/2054"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Users cannot track actual API costs or verify 90% input token savings from prompt caching - direct financial impact for production users billing Anthropic/OpenAI APIs",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2055,
+                "title": "Surface cache token usage from Anthropic/OpenAI in TokenUsage",
+                "url": "https://github.com/huggingface/smolagents/issues/2055",
+                "labels": [],
+                "evidence": "TokenUsage only has input_tokens and output_tokens. Cache tokens from Anthropic/OpenAI are silently dropped, making it impossible to track actual cost or verify prompt caching is working."
+              },
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2054,
+                "title": "Add prompt caching support for Anthropic models (90% input token savings)",
+                "url": "https://github.com/huggingface/smolagents/issues/2054",
+                "labels": [],
+                "evidence": "System prompt + tool definitions are re-sent on every step, billed at full input price. Without cache_control support, users cannot benefit from 90% input token savings."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-2",
+            "repo": "huggingface/smolagents",
+            "topic": "Docker executor leaves orphaned containers blocking port 8888 when script stops unexpectedly",
+            "summary": "Blocks subsequent agent runs with 'port is already allocated' error, requiring manual Docker cleanup - disrupts development workflow",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2050"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P2",
+            "review_reason": "Blocks subsequent agent runs with 'port is already allocated' error, requiring manual Docker cleanup - disrupts development workflow",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2050,
+                "title": "BUG: Docker executor leaves orphaned containers blocking port 8888 when script stops unexpectedly",
+                "url": "https://github.com/huggingface/smolagents/issues/2050",
+                "labels": [
+                  "bug"
+                ],
+                "evidence": "When using executor_type=docker, if script stops manually or crashes, spawned Docker container is not stopped. Subsequent runs crash with 'port is already allocated' error."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-3",
+            "repo": "huggingface/smolagents",
+            "topic": "LocalPythonExecutor silently suppresses stack traces from code execution errors making debugging extremely difficult",
+            "summary": "Agents receive only exception message without stack trace, forcing wasteful token consumption on trial-and-error debugging or causing task failure",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/2053"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P2",
+            "review_reason": "Agents receive only exception message without stack trace, forcing wasteful token consumption on trial-and-error debugging or causing task failure",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 2053,
+                "title": "LocalPythonExecutor silently suppresses stack traces from code execution errors",
+                "url": "https://github.com/huggingface/smolagents/issues/2053",
+                "labels": [],
+                "evidence": "When LocalPythonExecutor encounters an error, it returns only a summary message without full stack trace. Agents receive only exception message, forcing them to waste tokens re-running with simpler code or give up."
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "huggingface__smolagents-4",
+            "repo": "huggingface/smolagents",
+            "topic": "GLM models via ZAI produce code parsing errors (SyntaxError) while working via other providers",
+            "summary": "Blocks users trying to use GLM models via ZAI API - complete agent failure after first step, though workaround exists via other providers",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "huggingface/smolagents"
+            ],
+            "sample_urls": [
+              "https://github.com/huggingface/smolagents/issues/1934"
+            ],
+            "aliases": [],
+            "confidence": 0.75,
+            "priority": "P2",
+            "review_reason": "Blocks users trying to use GLM models via ZAI API - complete agent failure after first step, though workaround exists via other providers",
+            "source_issues": [
+              {
+                "repo": "huggingface/smolagents",
+                "issue_number": 1934,
+                "title": "GLM models via ZAI",
+                "url": "https://github.com/huggingface/smolagents/issues/1934",
+                "labels": [],
+                "evidence": "Using GLM models (4.7, 4.6, 4.5Air) via ZAI API causes 'Code parsing failed on line 3 due to: SyntaxError: invalid syntax' error after first step. Same models work via Deepinfra without problems."
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 12,
+        "analyzed_issue_count": 12,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "openinterpreter__open-interpreter-1",
+            "repo": "openinterpreter/open-interpreter",
+            "topic": "Linux .deb package installation failure due to cross-device hard link error",
+            "summary": "Installation completely blocked for users with separate /tmp and /usr filesystems - dpkg fails with explicit error message, preventing any use of the software. Clear user-facing failure with reproducible error.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openinterpreter/open-interpreter"
+            ],
+            "sample_urls": [
+              "https://github.com/openinterpreter/open-interpreter/issues/1703"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P1",
+            "review_reason": "Installation completely blocked for users with separate /tmp and /usr filesystems - dpkg fails with explicit error message, preventing any use of the software. Clear user-facing failure with reproducible error.",
+            "source_issues": [
+              {
+                "repo": "openinterpreter/open-interpreter",
+                "issue_number": 1703,
+                "title": ".deb package fails to install: cross-device hard link error for icon file",
+                "url": "https://github.com/openinterpreter/open-interpreter/issues/1703",
+                "labels": [],
+                "evidence": "Installing the .deb fails with 'Invalid cross-device link' error when /tmp and /usr are on different filesystems"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "openinterpreter__open-interpreter-2",
+            "repo": "openinterpreter/open-interpreter",
+            "topic": "Process hangs indefinitely when LLM generates sudo commands",
+            "summary": "Core execution functionality impaired - 120s hang with zero feedback makes application appear completely frozen when sudo password is required. Common use case (system administration tasks) becomes unusable with no indication of root cause.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "openinterpreter/open-interpreter"
+            ],
+            "sample_urls": [
+              "https://github.com/openinterpreter/open-interpreter/issues/1694"
+            ],
+            "aliases": [],
+            "confidence": 0.9,
+            "priority": "P1",
+            "review_reason": "Core execution functionality impaired - 120s hang with zero feedback makes application appear completely frozen when sudo password is required. Common use case (system administration tasks) becomes unusable with no indication of root cause.",
+            "source_issues": [
+              {
+                "repo": "openinterpreter/open-interpreter",
+                "issue_number": 1694,
+                "title": "Bug: sudo commands hang process indefinitely with no feedback",
+                "url": "https://github.com/openinterpreter/open-interpreter/issues/1694",
+                "labels": [],
+                "evidence": "Process blocks until execution timeout fires with no indication of what went wrong when sudo password is required"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 3,
+        "analyzed_issue_count": 3,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "snapshot_date": "2026-03-09",
+        "signals": [
+          {
+            "id": "paul-gauthier__aider-1",
+            "repo": "paul-gauthier/aider",
+            "topic": "NotImplementedError: Non-relative patterns are unsupported in glob (pathlib.py)",
+            "summary": "3 independent Windows users report complete crash when using /read-only command - a core workflow feature. All issues show identical stack trace with uncaught NotImplementedError, blocking main functionality. High confidence due to consistent reproduction pattern across multiple users.",
+            "category": null,
+            "count": 3,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4890",
+              "https://github.com/Aider-AI/aider/issues/4886",
+              "https://github.com/Aider-AI/aider/issues/4885"
+            ],
+            "aliases": [],
+            "confidence": 0.95,
+            "priority": "P0",
+            "review_reason": "3 independent Windows users report complete crash when using /read-only command - a core workflow feature. All issues show identical stack trace with uncaught NotImplementedError, blocking main functionality. High confidence due to consistent reproduction pattern across multiple users.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4890,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4890",
+                "labels": [],
+                "evidence": "NotImplementedError: Non-relative patterns are unsupported - occurs in commands.py cmd_read_only when using Path.glob()"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4886,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4886",
+                "labels": [],
+                "evidence": "Same crash pattern as 4890 - Windows 11, Python 3.12.10"
+              },
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4885,
+                "title": "Uncaught NotImplementedError in pathlib.py line 1090",
+                "url": "https://github.com/Aider-AI/aider/issues/4885",
+                "labels": [],
+                "evidence": "Same crash pattern as 4890 - Windows 11, Python 3.12.10"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-2",
+            "repo": "paul-gauthier/aider",
+            "topic": "LiteLLM exception types not synced with aider's exception list",
+            "summary": "Complete startup failure - ValueError crash during LiteLLMExceptions initialization prevents users from using aider at all. While count < 3, the severity (total tool unusability) justifies keeping. External dependency drift (LiteLLM adding new exception types) makes this a recurring risk.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4897"
+            ],
+            "aliases": [],
+            "confidence": 0.85,
+            "priority": "P1",
+            "review_reason": "Complete startup failure - ValueError crash during LiteLLMExceptions initialization prevents users from using aider at all. While count < 3, the severity (total tool unusability) justifies keeping. External dependency drift (LiteLLM adding new exception types) makes this a recurring risk.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4897,
+                "title": "Uncaught ValueError in exceptions.py line 71",
+                "url": "https://github.com/Aider-AI/aider/issues/4897",
+                "labels": [],
+                "evidence": "ValueError: PermissionDeniedError is in litellm but not in aider's exceptions list - crashes during LiteLLMExceptions() initialization"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-3",
+            "repo": "paul-gauthier/aider",
+            "topic": "Symlink loop causes RuntimeError during path resolution",
+            "summary": "Crash when repo contains symlink loops - unhandled RuntimeError in utils.safe_abs_path(). While edge case, users cannot work with repos that have circular symlinks. Proper error handling would prevent crash and allow graceful degradation.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4892"
+            ],
+            "aliases": [],
+            "confidence": 0.75,
+            "priority": "P2",
+            "review_reason": "Crash when repo contains symlink loops - unhandled RuntimeError in utils.safe_abs_path(). While edge case, users cannot work with repos that have circular symlinks. Proper error handling would prevent crash and allow graceful degradation.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4892,
+                "title": "Uncaught RuntimeError in pathlib.py line 1237",
+                "url": "https://github.com/Aider-AI/aider/issues/4892",
+                "labels": [],
+                "evidence": "RuntimeError: Symlink loop from '/home/Leon/Gizmo_MY_AI-main/│' - unhandled exception in utils.safe_abs_path()"
+              }
+            ],
+            "source_signal_ids": []
+          },
+          {
+            "id": "paul-gauthier__aider-4",
+            "repo": "paul-gauthier/aider",
+            "topic": "tree-sitter QueryError during repo map generation",
+            "summary": "Crash during repo map generation due to unhandled tree_sitter.QueryError. Issue remains OPEN, indicating ongoing user impact. Blocks main coding workflow when parsing certain files. Should gracefully handle parsing errors rather than crash.",
+            "category": null,
+            "count": 1,
+            "affected_repos": [
+              "paul-gauthier/aider"
+            ],
+            "sample_urls": [
+              "https://github.com/Aider-AI/aider/issues/4888"
+            ],
+            "aliases": [],
+            "confidence": 0.8,
+            "priority": "P2",
+            "review_reason": "Crash during repo map generation due to unhandled tree_sitter.QueryError. Issue remains OPEN, indicating ongoing user impact. Blocks main coding workflow when parsing certain files. Should gracefully handle parsing errors rather than crash.",
+            "source_issues": [
+              {
+                "repo": "paul-gauthier/aider",
+                "issue_number": 4888,
+                "title": "Uncaught QueryError in repomap.py line 302",
+                "url": "https://github.com/Aider-AI/aider/issues/4888",
+                "labels": [],
+                "evidence": "tree_sitter.QueryError: Invalid node type at row 2, column 2: module - unhandled exception during get_tags_raw()"
+              }
+            ],
+            "source_signal_ids": []
+          }
+        ],
+        "expected_issue_count": 9,
+        "analyzed_issue_count": 9,
+        "quality_score": 1.0,
+        "quality_status": "good",
+        "errors": []
+      }
+    ],
+    "expected_files": 44,
+    "generated_files": 11,
+    "parsed_files": 11,
+    "failed_files": 33,
+    "failed_samples": [
+      "AndyMik90__Auto-Claude.analysis.json (missing)",
+      "ErikBjare__gptme.analysis.json (missing)",
+      "OpenDevin__OpenDevin.analysis.json (missing)",
+      "TabbyML__tabby.analysis.json (missing)",
+      "agentscope-ai__agentscope.analysis.json (missing)"
+    ],
+    "quality_score": 0.475,
+    "quality_status": "poor"
+  }
+}
