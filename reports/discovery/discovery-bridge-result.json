@@ -1,11 +1,15 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-03-08-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-03-09-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
   "selected_before_cap": 10,
   "selected_count": 10,
   "selected_items": [
+    {
+      "repo": "ItzCrazyKns/Vane",
+      "category": "Agentic AI 核心框架"
+    },
     {
       "repo": "OpenBB-finance/OpenBB",
       "category": "Anthropic 研究与评估"
@@ -40,10 +44,6 @@
     },
     {
       "repo": "khoj-ai/khoj",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "lobehub/lobehub",
       "category": "Agentic AI 核心框架"
     }
   ],
