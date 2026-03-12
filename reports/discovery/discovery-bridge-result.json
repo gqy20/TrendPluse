@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-03-11-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-03-12-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -16,6 +16,10 @@
     },
     {
       "repo": "affaan-m/everything-claude-code",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "dair-ai/Prompt-Engineering-Guide",
       "category": "Agentic AI 核心框架"
     },
     {
@@ -40,10 +44,6 @@
     },
     {
       "repo": "jeecgboot/JeecgBoot",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "khoj-ai/khoj",
       "category": "Agentic AI 核心框架"
     }
   ],
