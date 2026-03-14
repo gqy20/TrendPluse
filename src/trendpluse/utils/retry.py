@@ -7,6 +7,7 @@ from collections.abc import Callable
 
 import anthropic
 from github import GithubException
+from pydantic import ValidationError
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -19,6 +20,7 @@ def create_anthropic_retry_decorator(
     max_attempts: int = 3,
     wait_min: int = 1,
     wait_max: int = 10,
+    retry_validation_error: bool = True,
 ) -> Callable:
     """创建 Anthropic API 重试装饰器
 
@@ -28,6 +30,7 @@ def create_anthropic_retry_decorator(
         max_attempts: 最大重试次数（默认 3）
         wait_min: 最小等待时间（秒，默认 1）
         wait_max: 最大等待时间（秒，默认 10）
+        retry_validation_error: 是否重试 Pydantic 验证错误（默认 True）
 
     Returns:
         重试装饰器
@@ -42,13 +45,21 @@ def create_anthropic_retry_decorator(
     可重试的错误类型:
         - anthropic.APITimeoutError: API 超时
         - anthropic.RateLimitError: 速率限制
+        - ValidationError: Pydantic 验证错误（如 LLM 返回格式不正确）
 
     重试策略:
         - 指数退避：1s → 2s → 4s → ... → wait_max
         - 超过最大次数后重新抛出异常
     """
     # 可重试的临时错误类型
-    _retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
+    _retryable_errors: tuple[type, ...] = (
+        anthropic.APITimeoutError,
+        anthropic.RateLimitError,
+    )
+
+    # 添加 Pydantic 验证错误（LLM 返回格式不正确时的重试）
+    if retry_validation_error:
+        _retryable_errors = _retryable_errors + (ValidationError,)
 
     return retry(
         stop=stop_after_attempt(max_attempts),

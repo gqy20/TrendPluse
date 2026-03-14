@@ -87,8 +87,18 @@ class BaseLLMAnalyzer(ABC):
         return value
 
     async def _run_with_llm_retry_async(self, func):
-        """异步重试封装（与同步重试配置保持一致）"""
-        retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
+        """异步重试封装（与同步重试配置保持一致）
+
+        支持重试的错误类型：
+        - APITimeoutError: API 超时
+        - RateLimitError: 速率限制
+        - ValidationError: Pydantic 验证错误（如 LLM 返回格式不正确）
+        """
+        retryable_errors = (
+            anthropic.APITimeoutError,
+            anthropic.RateLimitError,
+            ValidationError,
+        )
         attempts = self.retry_max_attempts
         wait_min = self.retry_wait_min
         wait_max = self.retry_wait_max
