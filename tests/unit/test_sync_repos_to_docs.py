@@ -43,3 +43,4 @@ def test_index_contains_monitored_repo_markers() -> None:
 
     assert SECTION_START_MARKER in content
     assert SECTION_END_MARKER in content
+    assert "[查看完整监控仓库清单](monitored-repos.md)" in content

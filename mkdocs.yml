@@ -14,26 +14,23 @@ theme:
   name: material
   language: zh
   palette:
-    - scheme: slate
-      primary: black
-      accent: cyan
+    - scheme: default
+      primary: white
+      accent: black
       toggle:
         icon: material/brightness-4
-        name: 切换到浅色模式
-    - scheme: default
-      primary: blue grey
-      accent: cyan
+        name: 切换到深色模式
+    - scheme: slate
+      primary: white
+      accent: black
       toggle:
         icon: material/brightness-7
-        name: 切换到深色模式
+        name: 切换到浅色模式
   features:
     # 导航功能
     - navigation.instant
     - navigation.tracking
     - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - navigation.indexes
     # 搜索功能
     - search.suggest
     - search.highlight
@@ -113,7 +110,6 @@ markdown_extensions:
 
 # 额外 CSS/JS
 extra_javascript:
-  - javascripts/signal-filters.js
   - javascripts/animations.js
   - javascripts/katex.js
   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js
@@ -142,6 +138,7 @@ exclude_docs: |
 
 # 历史归档页保留直链访问，但不出现在主导航
 not_in_nav: |
+  discovery-methodology.md
   discovery-reports/**
   reports/report-*.md
   reports/weekly-*.md
@@ -173,6 +170,7 @@ nav:
   - 首页: index.md
   - 趋势报告: reports/index.md
   - 项目发现: discovery.md
+  - 监控仓库: monitored-repos.md
 
 validation:
   links:

@@ -143,3 +143,11 @@ class TestMarkdownReporter:
         assert '<div class="bento-grid">' in rendered
         assert "<h2>🔧 工程信号</h2>" in rendered
         assert "signal-card" in rendered
+
+    def test_render_signal_grid(self, reporter, sample_signal):
+        """测试渲染统一核心信号区块。"""
+        rendered = reporter.render_signal_grid([sample_signal])
+
+        assert "<h2>核心信号</h2>" in rendered
+        assert '<div class="bento-grid">' in rendered
+        assert "signal-card" in rendered

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from trendpluse.app.repos_doc_generator import (
     generate_homepage_repos_section,
+    generate_repos_markdown,
     parse_repos_from_config,
 )
 from trendpluse.config import Settings
@@ -103,6 +104,24 @@ def update_index_file(index_path: Path, dry_run: bool = False) -> bool:
     return True
 
 
+def write_monitored_repos_file(
+    monitored_repos_path: Path, dry_run: bool = False
+) -> bool:
+    """生成完整监控仓库清单页面。"""
+    categories = parse_repos_from_config(Settings().monitored_repo_configs)
+    content = "# 监控仓库清单\n\n" + generate_repos_markdown(categories)
+
+    if dry_run:
+        print(f"📋 试运行模式，不会修改文件: {monitored_repos_path}")
+        print(content)
+        return True
+
+    monitored_repos_path.parent.mkdir(parents=True, exist_ok=True)
+    monitored_repos_path.write_text(content, encoding="utf-8")
+    print(f"✅ 已更新 {monitored_repos_path}")
+    return True
+
+
 def run_sync_repos_to_docs(
     *,
     dry_run: bool = False,
@@ -117,6 +136,7 @@ def run_sync_repos_to_docs(
 
     project_root = project_root or Path.cwd().resolve()
     index_path = project_root / "docs" / "index.md"
+    monitored_repos_path = project_root / "docs" / "monitored-repos.md"
 
     if not index_path.exists():
         print(f"❌ 文件不存在: {index_path}")
@@ -155,4 +175,5 @@ def run_sync_repos_to_docs(
         return 0
 
     success = update_index_file(index_path, dry_run=dry_run)
+    success = write_monitored_repos_file(monitored_repos_path, dry_run=dry_run) and success
     return 0 if success else 1

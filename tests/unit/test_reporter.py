@@ -77,8 +77,7 @@ class TestMarkdownReporter:
         # Assert
         assert "# TrendPulse 每日报告 - 2026-01-02" in markdown
         assert "今日共分析 5 个 PR，发现 3 个高影响信号" in markdown
-        assert "<h2>🔧 工程信号</h2>" in markdown
-        assert "<h2>🔬 研究信号</h2>" in markdown
+        assert "<h2>核心信号</h2>" in markdown
         assert '<div class="bento-grid">' in markdown
         assert "工程信号 A" in markdown
         assert "研究信号 B" in markdown

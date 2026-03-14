@@ -68,7 +68,7 @@ class TestRenderWeeklyReport:
         assert "## 📊 本周总览" in markdown
         assert "## 🔥 核心趋势" in markdown
         assert "异步架构成为标配" in markdown
-        assert "## 🔧 工程信号" in markdown
+        assert "## 重点信号" in markdown
         assert "## 🏆 活跃度排名" in markdown
 
     def test_render_weekly_report_minimal(self):

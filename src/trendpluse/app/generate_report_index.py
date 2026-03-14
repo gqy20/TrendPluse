@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
 
-from trendpluse.app.sync_repos_to_docs import update_index_file
+from trendpluse.app.sync_repos_to_docs import update_index_file, write_monitored_repos_file
 
 
 class _ProjectInfo(TypedDict):
@@ -151,35 +151,21 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         output_path.write_text(index_content, encoding="utf-8")
         return
 
-    latest_daily = daily_reports[0] if daily_reports else None
-    latest_weekly = weekly_reports[0] if weekly_reports else None
-
-    total_signals = sum(int(r["stats"].get("分析 PR 数", 0)) for r in daily_reports)
-    current_month = datetime.now().strftime("%Y-%m")
-    monthly_count = len([r for r in daily_reports if r["date"][:7] == current_month])
-
     index_lines = [
         "# 趋势报告归档\n",
         "\n",
-        "!!! note\n",
-        "    所有报告按时间倒序排列，最新的报告在最前面。\n",
-        "\n",
-        "## 站点概览\n",
-        "\n",
-        "| 指标 | 数值 | 指标 | 数值 |\n",
-        "|------|------|------|------|\n",
-        f"| 总日报数 | {len(daily_reports)} | 总周报数 | {len(weekly_reports)} |\n",
-        f"| 总分析 PR 数 | {total_signals} | 本月报告数 | {monthly_count} |\n",
+        "这里保留两个入口：最新日报、最新周报。历史内容直接走归档表。\n",
         "\n",
     ]
 
-    if latest_daily:
+    if daily_reports:
+        latest_daily = daily_reports[0]
         latest_stats = latest_daily["stats"]
         index_lines.extend(
             [
-                "## 今日聚焦\n",
+                "## 最新日报\n",
                 "\n",
-                f"### [{latest_daily['date']}](report-{latest_daily['date']}.md)\n",
+                f"### [{latest_daily['date']}](report-{latest_daily['date']}.md){{ .tp-date-badge }}\n",
                 "\n",
                 f"> {latest_daily['summary']}\n",
                 "\n",
@@ -197,13 +183,14 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
             ]
         )
 
-    if latest_weekly:
+    if weekly_reports:
+        latest_weekly = weekly_reports[0]
         index_lines.extend(
             [
                 "## 最新周报\n",
                 "\n",
                 f"### [{latest_weekly['week_id']}]"
-                f"(weekly-{latest_weekly['week_id']}.md)\n",
+                f"(weekly-{latest_weekly['week_id']}.md){{ .tp-date-badge }}\n",
                 "\n",
                 f"**时间范围**: {latest_weekly['start_date']} ~ "
                 f"{latest_weekly['end_date']}\n",
@@ -222,7 +209,8 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         ]
     )
 
-    for report in daily_reports[:10]:
+    recent_daily_reports = daily_reports[1:11] if daily_reports else []
+    for report in recent_daily_reports:
         stats = report["stats"]
         date = report["date"]
         high_impact = _get_stat_value(stats, "高影响信号数")
@@ -243,23 +231,13 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
         ]
     )
 
-    for report in weekly_reports[:8]:
+    recent_weekly_reports = weekly_reports[1:9] if weekly_reports else []
+    for report in recent_weekly_reports:
         week_id = report["week_id"]
         index_lines.append(
             f"| {week_id} | {report['start_date']} ~ {report['end_date']} | "
             f"[查看](weekly-{week_id}.md) |\n"
         )
-
-    index_lines.extend(
-        [
-            "\n",
-            "## 阅读建议\n",
-            "\n",
-            "- 想快速掌握当天变化，先看“今日聚焦”。\n",
-            "- 想追踪连续趋势，优先读最新周报。\n",
-            "- 想按时间回看，使用最近日报和最近周报表格入口。\n",
-        ]
-    )
 
     index_content = "".join(index_lines)
     output_path.write_text(index_content, encoding="utf-8")
@@ -426,17 +404,13 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
     lines = [
         "# 项目发现历史\n",
         "\n",
-        "自动发现 GitHub 热门项目，并按质量、相关性与可跟踪性进行筛选与归档。\n",
+        "只保留结果入口：本期概览、Top 5、历史归档。方法说明单独放在文档页。\n",
         "\n",
-        "## 页面说明\n",
-        "\n",
-        "- 先看“本期概览”，判断本轮发现规模与推荐密度。\n",
-        "- 再看“高优先级推荐 Top 5”，快速锁定值得纳入监控的项目。\n",
-        "- 最后用“历史报告”表格回看不同日期的发现结果。\n",
+        "[查看发现方法说明](discovery-methodology.md)\n",
         "\n",
         "## 本期概览\n",
         "\n",
-        f"### [{date}](discovery-reports/discovery-{date}.md)\n",
+        f"### [{date}](discovery-reports/discovery-{date}.md){{ .tp-date-badge }}\n",
         "\n",
         "| 指标 | 数值 | 指标 | 数值 |\n",
         "|------|------|------|------|\n",
@@ -508,59 +482,6 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
             report_url = f"discovery-reports/discovery-{date}.md"
             lines.append(f"| {date} | {total} | {high} | [查看]({report_url}) |\n")
 
-    lines.extend(
-        [
-            "\n",
-            "## 关于发现功能\n",
-            "\n",
-            "### 发现来源\n",
-            "\n",
-            "项目通过以下方式自动发现：\n",
-            "\n",
-            "1. **GitHub Trending** - 爬取各语言的 Trending 页面\n",
-            "2. **关键词搜索** - 基于 AI 相关关键词搜索\n",
-            "\n",
-            "### 质量评估\n",
-            "\n",
-            "每个发现的项目会经过多维度质量评估：\n",
-            "\n",
-            "- **Stars 指标** (20分): 项目受欢迎程度\n",
-            "- **活跃度指标** (30分): 最近提交时间\n",
-            "- **社区指标** (20分): Forks 和 Watchers 数量\n",
-            "- **代码质量** (20分): License 和 Open Issues 比例\n",
-            "- **相关性** (15分): 与 AI/LLM 主题的相关度\n",
-            "\n",
-            "**总质量分**: 0-100 分，≥60 分为推荐\n",
-            "\n",
-            "### 推荐优先级\n",
-            "\n",
-            "- **高优先级** (high): 质量分数 ≥ 85\n",
-            "- **中优先级** (medium): 70 ≤ 质量分数 < 85\n",
-            "- **低优先级** (low): 60 ≤ 质量分数 < 70\n",
-            "\n",
-            "### 运行方式\n",
-            "\n",
-            "```bash\n",
-            "# 本地运行发现\n",
-            "uv run trendpluse-discover-projects\n",
-            "\n",
-            "# 自定义参数\n",
-            "uv run trendpluse-discover-projects \\\n",
-            "  --days 7 \\\n",
-            "  --min-quality 60.0 \\\n",
-            "  --languages python typescript go \\\n",
-            '  --keywords "AI agent" "LLM" "Claude" "RAG"\n',
-            "```\n",
-            "\n",
-            "### 自动运行\n",
-            "\n",
-            "项目发现通过 GitHub Actions 每周一 UTC 00:10\n",
-            "(北京时间 08:10) 自动运行。\n",
-            "\n",
-            "查看工作流: [discover-projects.yml](https://github.com/gqy20/TrendPluse/actions/workflows/discover-projects.yml)\n",
-        ]
-    )
-
     discovery_index_path = docs_dir / "discovery.md"
     discovery_index_path.write_text("".join(lines), encoding="utf-8")
     print(f"发现索引已生成: {discovery_index_path}")
@@ -580,3 +501,4 @@ def run_generate_report_index(project_root: Path | None = None) -> None:
     generate_discovery_index(reports_dir, docs_dir)
     generate_index(reports_dir, index_path)
     update_index_file(docs_dir / "index.md")
+    write_monitored_repos_file(docs_dir / "monitored-repos.md")

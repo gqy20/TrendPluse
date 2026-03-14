@@ -114,7 +114,7 @@ class TestReportsDirectoryStructure:
         content = output_path.read_text()
         assert "2026-01-31" in content
         assert "2026-W04" in content
-        assert "今日聚焦" in content
+        assert "最新日报" in content
         assert "最近日报" in content
         assert "最近周报" in content
 
@@ -153,6 +153,42 @@ class TestReportsDirectoryStructure:
         assert "| 分析 PR 数 | 12 | 高影响信号 | 4 |" in content
         assert "| 涉及仓库数 | 7 | Release 数 | 2 |" in content
         assert "| Commit 数 | 20 | Breaking Changes | 1 |" in content
+
+    def test_generate_index_skips_latest_items_in_history_tables(self, tmp_path):
+        """测试历史表格不重复展示最新日报和最新周报。"""
+        reports_dir = tmp_path / "reports"
+        daily_dir = reports_dir / "daily"
+        weekly_dir = reports_dir / "weekly"
+        daily_dir.mkdir(parents=True)
+        weekly_dir.mkdir(parents=True)
+
+        (daily_dir / "report-2026-02-02.md").write_text(
+            "# TrendPulse 每日报告 - 2026-02-02\n\n> 第二份日报",
+            encoding="utf-8",
+        )
+        (daily_dir / "report-2026-02-01.md").write_text(
+            "# TrendPulse 每日报告 - 2026-02-01\n\n> 第一份日报",
+            encoding="utf-8",
+        )
+        (weekly_dir / "weekly-2026-W05.md").write_text(
+            "# TrendPulse 周报 (2026-W05: 2026-01-27 ~ 2026-02-02)\n\n> 第二份周报",
+            encoding="utf-8",
+        )
+        (weekly_dir / "weekly-2026-W04.md").write_text(
+            "# TrendPulse 周报 (2026-W04: 2026-01-20 ~ 2026-01-26)\n\n> 第一份周报",
+            encoding="utf-8",
+        )
+
+        output_path = tmp_path / "index.md"
+        generate_index(reports_dir, output_path)
+
+        content = output_path.read_text(encoding="utf-8")
+        assert "### [2026-02-02](report-2026-02-02.md)" in content
+        assert "| 2026-02-01 | 0 | 0 | 0 | [查看](report-2026-02-01.md) |" in content
+        assert "| 2026-02-02 | 0 | 0 | 0 | [查看](report-2026-02-02.md) |" not in content
+        assert "### [2026-W05](weekly-2026-W05.md)" in content
+        assert "| 2026-W04 | 2026-01-20 ~ 2026-01-26 | [查看](weekly-2026-W04.md) |" in content
+        assert "| 2026-W05 | 2026-01-27 ~ 2026-02-02 | [查看](weekly-2026-W05.md) |" not in content
 
     def test_extract_discovery_report_info_parses_top_projects(self, tmp_path):
         """测试发现报告解析能提取高优先级项目与分类分布"""
@@ -254,3 +290,4 @@ class TestReportsDirectoryStructure:
         assert "高优先级推荐 Top 5" in content
         assert "open-webui/open-webui" in content
         assert "分类分布 Top 5" in content
+        assert "关于发现功能" not in content

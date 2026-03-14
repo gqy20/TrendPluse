@@ -129,14 +129,18 @@ def generate_repos_markdown(categories: list[RepoCategory]) -> str:
     for category in categories:
         lines.append(f"#### {category.name}\n")
         lines.append("\n")
+        lines.append('<div class="tp-entry-grid">\n')
 
         for repo in category.repos:
-            escaped_repo = repo.repo.replace("_", "\\_")
-            repo_link = f"[{escaped_repo}]({repo.url})"
-            description = f": {repo.description}" if repo.description else ""
-            lines.append(f"- **{repo_link}**{description}\n")
+            display_name = repo.repo
+            description = repo.description if repo.description else "趋势追踪与动向监控项目中..."
+            # 生成 HTML 卡片
+            lines.append(f'  <a class="tp-entry-card" href="{repo.url}">\n')
+            lines.append(f'    <strong>{display_name}</strong>\n')
+            lines.append(f'    <p>{description}</p>\n')
+            lines.append(f'  </a>\n')
 
-        lines.append("\n")
+        lines.append('</div>\n\n')
 
     return "".join(lines)
 
@@ -150,7 +154,7 @@ def generate_homepage_repos_section(categories: list[RepoCategory]) -> str:
         "## 监控范围概览\n",
         "\n",
         f"当前监控 **{total_repos}** 个 GitHub 仓库，覆盖 "
-        f"**{total_categories}** 个主要方向：\n",
+        f"**{total_categories}** 个主要方向。\n",
         "\n",
         '<div class="tp-coverage-grid">\n',
     ]
@@ -162,23 +166,7 @@ def generate_homepage_repos_section(categories: list[RepoCategory]) -> str:
         [
             "</div>\n",
             "\n",
-            '<details class="tp-details-card" markdown>\n',
-            "<summary markdown><strong>展开查看完整监控仓库清单</strong></summary>\n",
-            "\n",
+            "[查看完整监控仓库清单](monitored-repos.md)\n",
         ]
     )
-
-    for category in categories:
-        lines.append(f"### {category.name}\n")
-        lines.append("\n")
-
-        for repo in category.repos:
-            escaped_repo = repo.repo.replace("_", "\\_")
-            repo_link = f"[{escaped_repo}]({repo.url})"
-            description = f": {repo.description}" if repo.description else ""
-            lines.append(f"- **{repo_link}**{description}\n")
-
-        lines.append("\n")
-
-    lines.append("</details>\n")
     return "".join(lines)

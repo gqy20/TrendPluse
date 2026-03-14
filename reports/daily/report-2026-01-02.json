@@ -32,5 +32,17 @@
   "monitored_repos": [
     "anthropics/skills"
   ],
-  "issue_insights": null
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 0.0,
+    "quality_status": "poor"
+  }
 }

@@ -80,8 +80,14 @@ class MarkdownReporter:
         if not signals:
             return f"## {category}信号\n\n暂无信号。"
 
-        emoji = "🔧" if category == "工程" else "🔬"
-        header = f"## {emoji} {category}信号\n\n"
+        if category == "工程":
+            header = "## 🔧 工程信号\n\n"
+        elif category == "研究":
+            header = "## 🔬 研究信号\n\n"
+        elif category == "重点":
+            header = "## 重点信号\n\n"
+        else:
+            header = f"## {category}信号\n\n"
 
         signals_md = "\n\n".join(self.render_signal(signal) for signal in signals)
 
@@ -102,12 +108,8 @@ class MarkdownReporter:
 
 """
 
-        # 工程信号
-        engineering_section = self.render_bento_grid(report.engineering_signals, "工程")
-
-        # 研究信号
-        research_section = self.render_bento_grid(report.research_signals, "研究")
-
+        engineering_section = self.render_signals(report.engineering_signals, "工程")
+        research_section = '\n\n' + self.render_signals(report.research_signals, '研究')
         # Commit 信号（仅在有内容时渲染）
         commit_section = ""
         if report.commit_signals:
@@ -150,7 +152,6 @@ class MarkdownReporter:
         return (
             header
             + engineering_section
-            + "\n\n"
             + research_section
             + commit_section
             + release_signals_section
@@ -505,110 +506,6 @@ class MarkdownReporter:
         output_file.parent.mkdir(parents=True, exist_ok=True)
         output_file.write_text(markdown, encoding="utf-8")
 
-    def render_signal_card(self, signal: Signal) -> str:
-        """渲染单个信号的 HTML 卡片
-
-        生成符合 Bento Grid 设计系统的 HTML 卡片格式。
-
-        Args:
-            signal: 信号对象
-
-        Returns:
-            HTML 格式的信号卡片
-        """
-        # 确定影响级别样式
-        if signal.impact_score >= 4:
-            impact_class = "signal-high-impact"
-        elif signal.impact_score >= 3:
-            impact_class = "signal-medium-impact"
-        else:
-            impact_class = "signal-low-impact"
-
-        # 获取类型图标
-        type_emoji = self.get_type_emoji(signal.type)
-        impact_stars = "⭐" * signal.impact_score
-
-        # 生成来源链接 HTML
-        sources_html = "\n".join(
-            f'          <li><a href="{url}" target="_blank" '
-            f'rel="noopener">{format_source_url(url)}</a></li>'
-            for url in signal.sources
-        )
-
-        # 生成相关仓库标签
-        repos_html = ", ".join(
-            f'<code class="repo-tag">{repo}</code>' for repo in signal.related_repos
-        )
-
-        # 构建完整的 HTML 卡片
-        return f"""<div class="signal-card {impact_class}">
-  <details class="signal-details">
-    <summary>
-      <div class="signal-header">
-        <div class="signal-icon">{type_emoji}</div>
-        <div class="signal-title-area">
-          <h4 class="signal-title">{signal.title}</h4>
-          <div class="signal-meta">
-            <span class="signal-type-badge {signal.type}">{signal.type}</span>
-            <div class="signal-impact">
-              <span class="signal-stars">{impact_stars}</span>
-              <span class="signal-score">({signal.impact_score}/5)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </summary>
-    <div class="signal-body">
-      <div class="signal-section">
-        <span class="signal-label">为什么重要</span>
-        <p>{signal.why_it_matters}</p>
-      </div>
-      <div class="signal-section">
-        <span class="signal-label">相关仓库</span>
-        <div class="signal-repos">{repos_html}</div>
-      </div>
-    </div>
-    <div class="signal-footer">
-      <span class="signal-footer-label">来源</span>
-      <ul class="signal-sources">
-{sources_html}
-      </ul>
-    </div>
-  </details>
-</div>"""
-
-    def render_bento_grid(self, signals: list[Signal], category: str) -> str:
-        """渲染 Bento Grid 格式的信号列表
-
-        生成包含信号卡片的 Bento Grid 布局。
-
-        Args:
-            signals: 信号列表
-            category: 分类名称（工程/研究）
-
-        Returns:
-            HTML 格式的 Bento Grid
-        """
-        emoji = "🔧" if category == "工程" else "🔬"
-
-        if not signals:
-            return f"""<h2>{emoji} {category}信号</h2>
-<div class="bento-grid">
-  <div class="signal-card signal-empty">
-    <div class="signal-body">
-      <p>暂无信号。</p>
-    </div>
-  </div>
-</div>"""
-
-        # 生成所有信号卡片
-        cards_html = "\n".join(self.render_signal_card(signal) for signal in signals)
-
-        return f"""<h2>{emoji} {category}信号</h2>
-<div class="bento-grid">
-{cards_html}
-</div>"""
-
     def render_weekly_report(self, report: WeeklyReport) -> str:
         """渲染周报
 
@@ -628,19 +525,15 @@ class MarkdownReporter:
         stats_section = self._render_weekly_stats(report)
         core_trends_section = self._render_core_trends(report)
 
-        # 工程信号（限制显示数量）
-        engineering_section = "\n"
-        if report.engineering_signals:
-            engineering_section = self.render_signals(
-                report.engineering_signals[:10], "工程"
-            )
-            engineering_section = "\n\n" + engineering_section
-
-        # 研究信号（限制显示数量）
-        research_section = ""
-        if report.research_signals:
-            research_section = "\n\n" + self.render_signals(
-                report.research_signals[:10], "研究"
+        focus_signals = sorted(
+            report.engineering_signals + report.research_signals,
+            key=lambda item: item.impact_score,
+            reverse=True,
+        )
+        focus_signals_section = ""
+        if focus_signals:
+            focus_signals_section = "\n\n" + self.render_signals(
+                focus_signals[:10], "重点"
             )
 
         # 活跃度
@@ -655,8 +548,7 @@ class MarkdownReporter:
             + stats_section
             + "\n\n"
             + core_trends_section
-            + engineering_section
-            + research_section
+            + focus_signals_section
             + activity_section
         )
 
