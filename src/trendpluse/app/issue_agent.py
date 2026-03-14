@@ -38,8 +38,9 @@ class IssueWorkflowCoordinator:
         issue_agent_retry_max_attempts: int = 3,
         issue_agent_retry_wait_seconds: float = 1.0,
         issue_agent_review_confidence_threshold: float = 0.6,
-        issue_agent_attempt_timeout_seconds: float = 120.0,
-        issue_agent_total_timeout_seconds: float = 600.0,
+        issue_agent_total_timeout_seconds: float = 900.0,
+        issue_agent_max_turns: int = 50,
+        issue_agent_max_budget_usd: float = 10.0,
         runner_factory: Callable[..., Any] | None = None,
         issue_dumper: Callable[[list[Any], str, str], Any] | None = None,
         issue_report_loader: Callable[[str, str], Any] | None = None,
@@ -56,8 +57,9 @@ class IssueWorkflowCoordinator:
         self.issue_agent_review_confidence_threshold = (
             issue_agent_review_confidence_threshold
         )
-        self.issue_agent_attempt_timeout_seconds = issue_agent_attempt_timeout_seconds
         self.issue_agent_total_timeout_seconds = issue_agent_total_timeout_seconds
+        self.issue_agent_max_turns = issue_agent_max_turns
+        self.issue_agent_max_budget_usd = issue_agent_max_budget_usd
         self.runner_factory = runner_factory or _default_issue_runner_factory
         self.issue_dumper = issue_dumper or dump_issues_to_jsonl
         self.issue_report_loader = issue_report_loader or load_issue_agent_report
@@ -124,7 +126,8 @@ class IssueWorkflowCoordinator:
                     self.issue_agent_review_confidence_threshold
                 ),
                 total_timeout_seconds=self.issue_agent_total_timeout_seconds,
-                attempt_timeout_seconds=self.issue_agent_attempt_timeout_seconds,
+                max_turns=self.issue_agent_max_turns,
+                max_budget_usd=self.issue_agent_max_budget_usd,
             )
             result: IssueAgentBatchResult = await runner.analyze_directory(
                 input_dir, output_dir

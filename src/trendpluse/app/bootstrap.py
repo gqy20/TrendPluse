@@ -209,10 +209,9 @@ def build_app_components(
         issue_agent_review_confidence_threshold=(
             settings.issue_agent_review_confidence_threshold
         ),
-        issue_agent_attempt_timeout_seconds=(
-            settings.issue_agent_attempt_timeout_seconds
-        ),
         issue_agent_total_timeout_seconds=settings.issue_agent_total_timeout_seconds,
+        issue_agent_max_turns=settings.issue_agent_max_turns,
+        issue_agent_max_budget_usd=settings.issue_agent_max_budget_usd,
     )
     release_workflow = ReleaseProcessor(
         release_material_builder=collectors.release_material_builder,

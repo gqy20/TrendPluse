@@ -32,7 +32,8 @@ async def _run(input_path: Path, output_path: Path, model: str | None) -> None:
         max_concurrency=settings.max_parallel_workers,
         review_confidence_threshold=settings.issue_agent_review_confidence_threshold,
         total_timeout_seconds=settings.issue_agent_total_timeout_seconds,
-        attempt_timeout_seconds=settings.issue_agent_attempt_timeout_seconds,
+        max_turns=settings.issue_agent_max_turns,
+        max_budget_usd=settings.issue_agent_max_budget_usd,
     )
     files = _iter_input_files(input_path)
     if not files:

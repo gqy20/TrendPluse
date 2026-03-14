@@ -230,6 +230,8 @@ def _parse_repo_issue_signal_report(
 ) -> RepoIssueSignalReport:
     """解析仓库级 Issue Signal 报告。"""
     report = RepoIssueSignalReport.model_validate(raw)
+    if not isinstance(report, RepoIssueSignalReport):
+        raise TypeError("Invalid RepoIssueSignalReport")
     if not report.repo:
         report.repo = path.stem.removesuffix(".analysis").replace("__", "/")
     if not report.snapshot_date:

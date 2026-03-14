@@ -1,8 +1,6 @@
 """Issue Agent 执行器。
 
-借鉴 IssueLab 的设计，实现双层超时机制：
-- 单轮超时（attempt_timeout）：每轮 LLM 分析的独立超时
-- 总超时（total_timeout）：单文件分析的总时间限制
+使用单轮分析替代三轮分析，减少 CLI 子进程启动开销。
 """
 
 from __future__ import annotations
@@ -27,18 +25,15 @@ from trendpluse.models.issue_agent import (
 
 logger = logging.getLogger(__name__)
 
-# 默认超时配置（借鉴 IssueLab）
-DEFAULT_TOTAL_TIMEOUT_SECONDS = 600.0  # 单文件总超时 10 分钟
-DEFAULT_ATTEMPT_TIMEOUT_SECONDS = 120.0  # 单轮分析超时 2 分钟
+# 默认超时配置
+DEFAULT_TOTAL_TIMEOUT_SECONDS = 900.0  # 单文件总超时 15 分钟
 DEFAULT_STDERR_TAIL_LINES = 20
 
 
 class IssueAgentRunner:
     """使用 Claude Agent SDK 分析 Issue 文件。
 
-    超时机制：
-    - 单轮超时：每轮 ROUND1/ROUND2/ROUND3 独立计时，超时后可重试当前轮
-    - 总超时：整个三轮分析的总时间限制，超时后终止
+    使用单轮分析替代三轮，减少 CLI 子进程启动开销。
     """
 
     def __init__(
@@ -48,9 +43,10 @@ class IssueAgentRunner:
         retry_wait_seconds: float = 1.0,
         review_confidence_threshold: float = 0.6,
         total_timeout_seconds: float = DEFAULT_TOTAL_TIMEOUT_SECONDS,
-        attempt_timeout_seconds: float = DEFAULT_ATTEMPT_TIMEOUT_SECONDS,
         stderr_tail_lines: int = DEFAULT_STDERR_TAIL_LINES,
         max_concurrency: int = 4,
+        max_turns: int = 50,
+        max_budget_usd: float = 10.0,
     ) -> None:
         self.model = model
         self.retry_max_attempts = max(1, retry_max_attempts)
@@ -59,17 +55,13 @@ class IssueAgentRunner:
             1.0, max(0.0, review_confidence_threshold)
         )
         self.total_timeout_seconds = max(0.0, total_timeout_seconds)
-        self.attempt_timeout_seconds = max(0.0, attempt_timeout_seconds)
         self.stderr_tail_lines = max(1, stderr_tail_lines)
         self.max_concurrency = max(1, max_concurrency)
+        self.max_turns = max(1, max_turns)
+        self.max_budget_usd = max(0.1, max_budget_usd)
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
-        """分析单个 JSONL 文件并写入 JSON 结果。
-
-        使用双层超时保护：
-        - 总超时：限制整个分析流程的总时间
-        - 单轮超时：每轮 ROUND1/ROUND2/ROUND3 独立计时
-        """
+        """分析单个 JSONL 文件并写入 JSON 结果。"""
         input_path = input_path.resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -77,7 +69,7 @@ class IssueAgentRunner:
         for attempt in range(1, self.retry_max_attempts + 1):
             try:
                 validated = await self._run_with_total_timeout(
-                    self._run_three_round_analysis(input_path)
+                    self._run_single_round_analysis(input_path)
                 )
                 repo_report = self._build_repo_signal_report(
                     input_path=input_path,
@@ -90,6 +82,18 @@ class IssueAgentRunner:
                 )
                 output_path.write_text(normalized_text, encoding="utf-8")
                 return normalized_text
+            except ValidationError as exc:
+                logger.warning(
+                    "Issue Agent 输出校验失败，准备重试: attempt=%d/%d, error=%s",
+                    attempt,
+                    self.retry_max_attempts,
+                    exc,
+                )
+                last_exc = exc
+                if attempt >= self.retry_max_attempts:
+                    break
+                if self.retry_wait_seconds > 0:
+                    await asyncio.sleep(self.retry_wait_seconds)
             except Exception as exc:
                 last_exc = exc
                 if attempt >= self.retry_max_attempts:
@@ -111,126 +115,99 @@ class IssueAgentRunner:
             f"{self._format_exception_message(last_exc)}"
         ) from last_exc
 
-    async def _run_three_round_analysis(self, input_path: Path) -> IssueAgentReport:
-        """执行三轮分析，每轮独立超时。
+    async def _run_single_round_analysis(self, input_path: Path) -> IssueAgentReport:
+        """执行单轮分析，合并三轮逻辑为一步完成。
 
-        流程：
-        1. ROUND1: 候选痛点抽取（高召回）
-        2. ROUND2: 归一化合并（按根因合并）
-        3. ROUND3: 证据驱动审核（保留判定）
+        流程整合：
+        1. 候选抽取（高召回）
+        2. 归一化合并（按根因）
+        3. 证据审核（保留判定）
         """
-        # ROUND1: 候选痛点抽取
-        round1_prompt = self._build_round1_prompt(input_path)
-        round1_text = await self._run_with_attempt_timeout(
-            self._run_agent_query(round1_prompt),
-            round_name="ROUND1",
-        )
-        round1_data = self._parse_round_payload(round1_text, "candidate_pain_points")
+        prompt = self._build_analysis_prompt(input_path)
+        response_text = await self._run_agent_query(prompt)
+        response_data = self._parse_json_like_text(response_text)
+        if not isinstance(response_data, dict):
+            raise ValueError("输出不是合法 JSON 对象")
+
+        pain_points = response_data.get("pain_points")
+        if not isinstance(pain_points, list):
+            raise ValueError("缺少 pain_points 字段")
+
+        report = self._build_report_from_reviewed_points(pain_points)
         logger.info(
-            "Issue Agent ROUND1 完成: file=%s, candidates=%d",
+            "Issue Agent 单轮分析完成: file=%s, total=%d, kept=%d",
             input_path.name,
-            len(round1_data.get("candidate_pain_points", [])),
-        )
-
-        # ROUND2: 归一化合并
-        round2_prompt = self._build_round2_prompt(input_path, round1_data)
-        round2_text = await self._run_with_attempt_timeout(
-            self._run_agent_query(round2_prompt),
-            round_name="ROUND2",
-        )
-        round2_data = self._parse_round_payload(round2_text, "merged_pain_points")
-        logger.info(
-            "Issue Agent ROUND2 完成: file=%s, merged=%d",
-            input_path.name,
-            len(round2_data.get("merged_pain_points", [])),
-        )
-
-        # ROUND3: 证据驱动审核
-        round3_prompt = self._build_round3_prompt(input_path, round2_data)
-        round3_text = await self._run_with_attempt_timeout(
-            self._run_agent_query(round3_prompt),
-            round_name="ROUND3",
-        )
-        round3_data = self._parse_json_like_text(round3_text)
-        if not isinstance(round3_data, dict):
-            raise ValueError("ROUND3 输出不是合法 JSON 对象")
-
-        reviewed = round3_data.get("reviewed_pain_points")
-        if not isinstance(reviewed, list):
-            raise ValueError("ROUND3 缺少 reviewed_pain_points 字段")
-
-        report = self._build_report_from_reviewed_points(reviewed)
-        logger.info(
-            "Issue Agent ROUND3 完成: file=%s, reviewed=%d, kept=%d",
-            input_path.name,
-            len(reviewed),
+            len(pain_points),
             len(report.top_pain_points),
         )
         return report
 
-    def _build_round1_prompt(self, input_path: Path) -> str:
-        return (
-            "[ROUND1] 你是用户痛点候选抽取器。读取 JSONL 并做高召回抽取。\n\n"
-            f"文件路径: {input_path}\n\n"
-            "输出 JSON 字段：candidate_pain_points（数组），每项至少包含\n"
-            "topic/count/affected_repos/sample_urls。\n"
-            "痛点定义：用户在真实使用中反复遇到的问题，通常会导致主流程失败、"
-            "体验显著下降或明显成本损失。\n"
-            "排除项：单条安全公告、纯功能请求、路线图讨论、无用户影响证据的维护事项。\n"
-            "硬约束：count 必须等于该主题去重后的 issue 数量，不允许估算。\n"
-            "仅输出 JSON，不要解释文字。"
-        )
+    def _build_analysis_prompt(self, input_path: Path) -> str:
+        """构建单轮分析提示词，合并三轮逻辑。
 
-    def _build_round2_prompt(
-        self, input_path: Path, round1_data: dict[str, Any]
-    ) -> str:
-        payload = json.dumps(round1_data, ensure_ascii=False)
-        return (
-            "[ROUND2] 你是用户痛点归一化分析器。请按同一根因合并主题。\n\n"
-            f"文件路径: {input_path}\n"
-            f"ROUND1结果: {payload}\n\n"
-            "输出 JSON 字段：merged_pain_points（数组），每项包含\n"
-            "topic/count/affected_repos/sample_urls，可选 aliases。\n"
-            "合并规则：只有在“用户遇到的是同一类问题根因”时才合并；"
-            "不要因关键词相似就合并。\n"
-            "禁止把“Security vulnerabilities”等泛化大类作为最终主题，"
-            "必须落到用户可感知的具体问题场景。\n"
-            "仅输出 JSON，不要解释文字。"
-        )
+        将候选抽取、归一化合并、证据审核整合为一步完成。
+        """
+        return f"""你是用户痛点分析专家。请对以下 JSONL 文件执行完整的痛点分析流程。
 
-    def _build_round3_prompt(
-        self, input_path: Path, round2_data: dict[str, Any]
-    ) -> str:
-        payload = json.dumps(round2_data, ensure_ascii=False)
-        return (
-            "[ROUND3] 你是用户痛点审稿器。请做证据驱动的保留判定。\n\n"
-            f"文件路径: {input_path}\n"
-            f"ROUND2结果: {payload}\n\n"
-            "输出 JSON 字段：reviewed_pain_points（数组），每项包含\n"
-            "topic/count/affected_repos/sample_urls/confidence/priority/keep，"
-            "可选 review_reason。\n"
-            "priority 仅允许 P0/P1/P2。\n"
-            "保留规则：keep=true 必须有明确用户影响证据（如阻断、崩溃、"
-            "反复失败、计费异常、关键功能不可用）。\n"
-            "如果仅因“安全关键词”被识别但缺乏用户影响证据，必须 keep=false。\n"
-            "优先级规则：\n"
-            "- P0: 高频 + 主流程阻断 + 有样例链接支撑；\n"
-            "- P1: 影响明显但非阻断；\n"
-            "- P2: 低频或边缘改进项。\n"
-            "若 count < 3 且仅单仓问题，默认不得标记为 P0（除非 review_reason 明确给出"
-            "强用户影响证据）。\n"
-            "review_reason 必须解释“为什么是用户痛点”，而非只强调技术严重性。\n"
-            "仅输出 JSON，不要解释文字。"
-        )
+文件路径: {input_path}
 
-    def _parse_round_payload(self, text: str, key: str) -> dict[str, Any]:
-        parsed = self._parse_json_like_text(text)
-        if not isinstance(parsed, dict):
-            raise ValueError(f"{key} 输出不是合法 JSON 对象")
-        value = parsed.get(key)
-        if not isinstance(value, list):
-            raise ValueError(f"缺少字段: {key}")
-        return parsed
+## 分析步骤（内部执行，一步完成）
+
+1. **候选抽取**：识别所有用户痛点（高召回）
+2. **归一化合并**：按根因合并相似主题
+3. **证据审核**：判断是否保留并给出优先级
+
+## 痛点定义
+
+用户在真实使用中反复遇到的问题，通常会导致：
+- 主流程失败/阻断
+- 体验显著下降
+- 明显成本损失
+- 关键功能不可用
+
+## 排除项
+
+- 单条安全公告（无用户影响证据）
+- 纯功能请求
+- 路线图讨论
+- 无用户影响证据的维护事项
+
+## 输出格式
+
+输出 JSON，包含 `pain_points` 数组，每项包含：
+- topic: 痛点主题（必须落到用户可感知的具体场景）
+- count: 该主题去重后的 issue 数量（硬约束，不允许估算）
+- affected_repos: 受影响仓库列表
+- sample_urls: 样例链接列表
+- source_issues: 来源 issue 详情（repo, issue_number, title, url, labels, evidence）
+- aliases: 可选，相似主题别名
+- confidence: 置信度 (0.0-1.0)
+- priority: 优先级 (P0/P1/P2)
+- keep: 是否保留 (true/false)
+- review_reason: 审核理由（解释为什么是用户痛点）
+
+## 保留规则
+
+keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、计费异常、关键功能不可用）。
+如果仅因"安全关键词"被识别但缺乏用户影响证据，必须 keep=false。
+
+## 优先级规则
+
+- P0: 高频(count>=3) + 主流程阻断 + 有样例链接支撑
+- P1: 影响明显但非阻断
+- P2: 低频或边缘改进项
+
+若 count < 3 且仅单仓问题，默认不得标记为 P0
+（除非 review_reason 明确给出强用户影响证据）。
+
+## 硬约束
+
+1. 必须从文件中读取 issue 数据进行分析
+2. count 必须等于该主题去重后的 issue 数量，不允许估算
+3. 禁止把"Security vulnerabilities"等泛化大类作为最终主题
+4. review_reason 必须解释"为什么是用户痛点"，而非只强调技术严重性
+
+仅输出 JSON，不要解释文字。"""
 
     def _build_report_from_reviewed_points(
         self, reviewed_points: list[Any]
@@ -382,8 +359,10 @@ class IssueAgentRunner:
         options = ClaudeAgentOptions(
             model=self.model,
             allowed_tools=["Read"],
-            output_format=self._resolve_output_format(prompt),
+            output_format=self._build_output_format(),
             stderr=self._build_stderr_handler(),
+            max_turns=self.max_turns,
+            max_budget_usd=self.max_budget_usd,
         )
 
         text_chunks: list[str] = []
@@ -411,68 +390,20 @@ class IssueAgentRunner:
 
         return "".join(text_chunks).strip()
 
-    def _resolve_output_format(self, prompt: str) -> dict[str, Any] | None:
-        """根据轮次提示选择结构化输出 schema。"""
-        if "[ROUND1]" in prompt:
-            return self._build_round1_output_format()
-        if "[ROUND2]" in prompt:
-            return self._build_round2_output_format()
-        if "[ROUND3]" in prompt:
-            return self._build_round3_output_format()
-        return None
-
-    def _build_round1_output_format(self) -> dict[str, Any]:
-        """ROUND1 结构化输出 schema。"""
+    def _build_output_format(self) -> dict[str, Any]:
+        """构建单轮分析的结构化输出 schema。"""
         return {
             "type": "json_schema",
             "schema": {
                 "type": "object",
-                "properties": {
-                    "candidate_pain_points": self._pain_point_array_schema(
-                        include_review_fields=False
-                    )
-                },
-                "required": ["candidate_pain_points"],
+                "properties": {"pain_points": self._pain_point_array_schema()},
+                "required": ["pain_points"],
                 "additionalProperties": False,
             },
         }
 
-    def _build_round2_output_format(self) -> dict[str, Any]:
-        """ROUND2 结构化输出 schema。"""
-        return {
-            "type": "json_schema",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "merged_pain_points": self._pain_point_array_schema(
-                        include_review_fields=False
-                    )
-                },
-                "required": ["merged_pain_points"],
-                "additionalProperties": False,
-            },
-        }
-
-    def _build_round3_output_format(self) -> dict[str, Any]:
-        """ROUND3 结构化输出 schema。"""
-        return {
-            "type": "json_schema",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "reviewed_pain_points": self._pain_point_array_schema(
-                        include_review_fields=True
-                    )
-                },
-                "required": ["reviewed_pain_points"],
-                "additionalProperties": False,
-            },
-        }
-
-    def _pain_point_array_schema(
-        self, *, include_review_fields: bool
-    ) -> dict[str, Any]:
-        """构建痛点数组 schema。"""
+    def _pain_point_array_schema(self) -> dict[str, Any]:
+        """构建痛点数组 schema，包含所有审核字段。"""
         properties: dict[str, Any] = {
             "id": {"type": "string"},
             "repo": {"type": "string"},
@@ -511,26 +442,27 @@ class IssueAgentRunner:
                     "additionalProperties": False,
                 },
             },
+            "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+            },
+            "priority": {
+                "type": "string",
+                "enum": ["P0", "P1", "P2"],
+            },
+            "keep": {"type": "boolean"},
+            "review_reason": {"type": "string"},
         }
-        required = ["topic", "count", "affected_repos", "sample_urls"]
-
-        if include_review_fields:
-            properties.update(
-                {
-                    "confidence": {
-                        "type": "number",
-                        "minimum": 0,
-                        "maximum": 1,
-                    },
-                    "priority": {
-                        "type": "string",
-                        "enum": ["P0", "P1", "P2"],
-                    },
-                    "keep": {"type": "boolean"},
-                    "review_reason": {"type": "string"},
-                }
-            )
-            required.extend(["confidence", "priority", "keep"])
+        required = [
+            "topic",
+            "count",
+            "affected_repos",
+            "sample_urls",
+            "confidence",
+            "priority",
+            "keep",
+        ]
 
         return {
             "type": "array",
@@ -714,36 +646,6 @@ class IssueAgentRunner:
             raise TimeoutError(
                 f"Issue Agent 单文件分析总超时 ({self.total_timeout_seconds:.0f}s)"
             ) from exc
-
-    async def _run_with_attempt_timeout(
-        self, coroutine: Any, round_name: str = "unknown"
-    ) -> str:
-        """为单轮分析增加超时保护。
-
-        Args:
-            coroutine: 要执行的协程（返回 str）
-            round_name: 轮次名称，用于错误消息
-
-        Returns:
-            LLM 返回的文本结果
-        """
-        if self.attempt_timeout_seconds <= 0:
-            return await coroutine
-        try:
-            async with asyncio.timeout(self.attempt_timeout_seconds):
-                result = await coroutine
-                logger.debug(
-                    "Issue Agent %s 完成: attempt_timeout=%ds",
-                    round_name,
-                    self.attempt_timeout_seconds,
-                )
-                return result
-        except TimeoutError as exc:
-            timeout_msg = (
-                f"Issue Agent {round_name} "
-                f"单轮超时 ({self.attempt_timeout_seconds:.0f}s)"
-            )
-            raise TimeoutError(timeout_msg) from exc
 
     def _build_stderr_handler(self) -> Any:
         """构建 SDK stderr 回调，保存最近几行诊断信息。"""

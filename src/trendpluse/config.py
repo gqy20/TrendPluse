@@ -156,7 +156,7 @@ class Settings(BaseSettings):
     )
 
     # 成本控制
-    daily_token_budget: int = 100_000
+    daily_token_budget: int = 50_000_000  # 50M tokens
     max_retries: int = 3
     llm_retry_max_attempts: int = Field(
         default=3,
@@ -210,17 +210,23 @@ class Settings(BaseSettings):
         le=1.0,
         description="Issue Agent 审核保留阈值（低于该置信度的信号会被过滤）",
     )
-    issue_agent_attempt_timeout_seconds: int = Field(
-        default=120,
-        ge=30,
-        le=300,
-        description="Issue Agent 单轮分析超时时间（秒，默认120）",
-    )
     issue_agent_total_timeout_seconds: int = Field(
-        default=600,
-        ge=60,
-        le=1800,
-        description="Issue Agent 单文件总超时时间（秒，默认600）",
+        default=900,
+        ge=120,
+        le=2400,
+        description="Issue Agent 单文件总超时时间（秒，默认900）",
+    )
+    issue_agent_max_turns: int = Field(
+        default=50,
+        ge=1,
+        le=200,
+        description="Issue Agent 单次分析最大轮数（默认50）",
+    )
+    issue_agent_max_budget_usd: float = Field(
+        default=10.0,
+        ge=0.1,
+        le=100.0,
+        description="Issue Agent 单文件最大预算（美元，默认10）",
     )
 
     # 飞书通知配置

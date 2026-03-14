@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any, cast
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -88,10 +88,10 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
                 ],
                 max_tokens=1200,
             )
-            return cast(IssueGlobalSummaryResponse, response)
+            return response
 
         response = self._run_with_llm_retry(_call)
-        return cast(IssueGlobalSummaryResponse, response)
+        return response
 
     def _build_prompt(self, report: IssueAgentReport) -> str:
         payload: dict[str, Any] = {

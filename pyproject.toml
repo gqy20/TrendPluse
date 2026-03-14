@@ -181,3 +181,8 @@ disable_error_code = ["no-any-return"]  # instructor 返回 Any
 [[tool.mypy.overrides]]
 module = "trendpluse.collectors.base"
 disable_error_code = ["no-any-return"]
+
+# Issue signal aggregator 使用 instructor，返回类型复杂
+[[tool.mypy.overrides]]
+module = "trendpluse.issue_signal_aggregator"
+disable_error_code = ["no-any-return"]
