@@ -185,10 +185,18 @@ class TestReportsDirectoryStructure:
         content = output_path.read_text(encoding="utf-8")
         assert "### [2026-02-02](report-2026-02-02.md)" in content
         assert "| 2026-02-01 | 0 | 0 | 0 | [查看](report-2026-02-01.md) |" in content
-        assert "| 2026-02-02 | 0 | 0 | 0 | [查看](report-2026-02-02.md) |" not in content
+        assert (
+            "| 2026-02-02 | 0 | 0 | 0 | [查看](report-2026-02-02.md) |" not in content
+        )
         assert "### [2026-W05](weekly-2026-W05.md)" in content
-        assert "| 2026-W04 | 2026-01-20 ~ 2026-01-26 | [查看](weekly-2026-W04.md) |" in content
-        assert "| 2026-W05 | 2026-01-27 ~ 2026-02-02 | [查看](weekly-2026-W05.md) |" not in content
+        assert (
+            "| 2026-W04 | 2026-01-20 ~ 2026-01-26 | [查看](weekly-2026-W04.md) |"
+            in content
+        )
+        assert (
+            "| 2026-W05 | 2026-01-27 ~ 2026-02-02 | [查看](weekly-2026-W05.md) |"
+            not in content
+        )
 
     def test_extract_discovery_report_info_parses_top_projects(self, tmp_path):
         """测试发现报告解析能提取高优先级项目与分类分布"""

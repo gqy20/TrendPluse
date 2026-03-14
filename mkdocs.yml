@@ -14,18 +14,9 @@ theme:
   name: material
   language: zh
   palette:
-    - scheme: default
-      primary: white
-      accent: black
-      toggle:
-        icon: material/brightness-4
-        name: 切换到深色模式
-    - scheme: slate
-      primary: white
-      accent: black
-      toggle:
-        icon: material/brightness-7
-        name: 切换到浅色模式
+    scheme: default
+    primary: white
+    accent: black
   features:
     # 导航功能
     - navigation.instant
@@ -130,6 +121,7 @@ exclude_docs: |
   k1_discovery_feature_design.md
   architecture.md
   configuration.md
+  discovery-reports/**
   features.md
   future-feature-development.md
   github-actions-setup.md

@@ -99,6 +99,12 @@ def update_index_file(index_path: Path, dry_run: bool = False) -> bool:
         print(new_section)
         return True
 
+    updated_content = updated_content.rstrip("\n") + "\n"
+
+    if content == updated_content:
+        print(f"ℹ️ 无需更新 {index_path}")
+        return True
+
     index_path.write_text(updated_content, encoding="utf-8")
     print(f"✅ 已更新 {index_path}")
     return True
@@ -109,7 +115,9 @@ def write_monitored_repos_file(
 ) -> bool:
     """生成完整监控仓库清单页面。"""
     categories = parse_repos_from_config(Settings().monitored_repo_configs)
-    content = "# 监控仓库清单\n\n" + generate_repos_markdown(categories)
+    content = ("# 监控仓库清单\n\n" + generate_repos_markdown(categories)).rstrip(
+        "\n"
+    ) + "\n"
 
     if dry_run:
         print(f"📋 试运行模式，不会修改文件: {monitored_repos_path}")
@@ -117,6 +125,16 @@ def write_monitored_repos_file(
         return True
 
     monitored_repos_path.parent.mkdir(parents=True, exist_ok=True)
+
+    existing_content = (
+        monitored_repos_path.read_text(encoding="utf-8")
+        if monitored_repos_path.exists()
+        else None
+    )
+    if existing_content == content:
+        print(f"ℹ️ 无需更新 {monitored_repos_path}")
+        return True
+
     monitored_repos_path.write_text(content, encoding="utf-8")
     print(f"✅ 已更新 {monitored_repos_path}")
     return True
@@ -175,5 +193,7 @@ def run_sync_repos_to_docs(
         return 0
 
     success = update_index_file(index_path, dry_run=dry_run)
-    success = write_monitored_repos_file(monitored_repos_path, dry_run=dry_run) and success
+    success = (
+        write_monitored_repos_file(monitored_repos_path, dry_run=dry_run) and success
+    )
     return 0 if success else 1

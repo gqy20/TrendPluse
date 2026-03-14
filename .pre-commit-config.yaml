@@ -39,7 +39,7 @@ repos:
     hooks:
       - id: sync-repos-to-docs
         name: 同步监控仓库列表到文档
-        entry: bash -c 'uv run trendpluse-sync-repos-to-docs && git add docs/index.md'
+        entry: bash -c 'uv run trendpluse-sync-repos-to-docs && git add docs/index.md docs/monitored-repos.md'
         language: system
         pass_filenames: false
         always_run: true

@@ -133,14 +133,16 @@ def generate_repos_markdown(categories: list[RepoCategory]) -> str:
 
         for repo in category.repos:
             display_name = repo.repo
-            description = repo.description if repo.description else "趋势追踪与动向监控项目中..."
+            description = (
+                repo.description if repo.description else "趋势追踪与动向监控项目中..."
+            )
             # 生成 HTML 卡片
             lines.append(f'  <a class="tp-entry-card" href="{repo.url}">\n')
-            lines.append(f'    <strong>{display_name}</strong>\n')
-            lines.append(f'    <p>{description}</p>\n')
-            lines.append(f'  </a>\n')
+            lines.append(f"    <strong>{display_name}</strong>\n")
+            lines.append(f"    <p>{description}</p>\n")
+            lines.append("  </a>\n")
 
-        lines.append('</div>\n\n')
+        lines.append("</div>\n\n")
 
     return "".join(lines)
 

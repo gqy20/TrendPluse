@@ -109,7 +109,7 @@ class MarkdownReporter:
 """
 
         engineering_section = self.render_signals(report.engineering_signals, "工程")
-        research_section = '\n\n' + self.render_signals(report.research_signals, '研究')
+        research_section = "\n\n" + self.render_signals(report.research_signals, "研究")
         # Commit 信号（仅在有内容时渲染）
         commit_section = ""
         if report.commit_signals:

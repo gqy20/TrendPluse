@@ -8,7 +8,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
 
-from trendpluse.app.sync_repos_to_docs import update_index_file, write_monitored_repos_file
+from trendpluse.app.sync_repos_to_docs import (
+    update_index_file,
+    write_monitored_repos_file,
+)
 
 
 class _ProjectInfo(TypedDict):
@@ -165,7 +168,10 @@ def generate_index(reports_dir: Path, output_path: Path) -> None:
             [
                 "## 最新日报\n",
                 "\n",
-                f"### [{latest_daily['date']}](report-{latest_daily['date']}.md){{ .tp-date-badge }}\n",
+                (
+                    f"### [{latest_daily['date']}]"
+                    f"(report-{latest_daily['date']}.md){{ .tp-date-badge }}\n"
+                ),
                 "\n",
                 f"> {latest_daily['summary']}\n",
                 "\n",
@@ -401,6 +407,11 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
     top_projects = info["top_projects"]
     category_distribution = info.get("category_distribution", [])
 
+    latest_report_url = (
+        f"https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/"
+        f"discovery-{date}.md"
+    )
+
     lines = [
         "# 项目发现历史\n",
         "\n",
@@ -410,7 +421,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         "\n",
         "## 本期概览\n",
         "\n",
-        f"### [{date}](discovery-reports/discovery-{date}.md){{ .tp-date-badge }}\n",
+        f"### [{date}]({latest_report_url}){{ .tp-date-badge }}\n",
         "\n",
         "| 指标 | 数值 | 指标 | 数值 |\n",
         "|------|------|------|------|\n",
@@ -422,7 +433,7 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
         f"| 高优先级 | {stats.get('high_priority', 'N/A')} | "
         f"去重移除 | {stats.get('duplicates_removed', 'N/A')} |\n",
         f"| 已在监控 | {stats.get('already_monitored', 'N/A')} | "
-        f"完整报告 | [查看](discovery-reports/discovery-{date}.md) |\n",
+        f"完整报告 | [查看]({latest_report_url}) |\n",
         "\n",
     ]
 
@@ -479,7 +490,10 @@ def generate_discovery_index(reports_dir: Path, docs_dir: Path) -> None:
             date = info["date"]
             total = info["stats"].get("total_discovered", "N/A")
             high = info["stats"].get("high_priority", "N/A")
-            report_url = f"discovery-reports/discovery-{date}.md"
+            report_url = (
+                "https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/"
+                f"discovery-{date}.md"
+            )
             lines.append(f"| {date} | {total} | {high} | [查看]({report_url}) |\n")
 
     discovery_index_path = docs_dir / "discovery.md"

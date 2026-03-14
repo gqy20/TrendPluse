@@ -11,8 +11,8 @@ hide:
       这里只有两个动作：先看最新变化，再决定是否扩大监控范围。<br>站点不再承担说明书角色。
     </p>
     <div class="tp-hero__actions">
-      <a class="md-button md-button--primary" href="reports/index.md">阅读最新趋势</a>
-      <a class="md-button" href="discovery.md">查看项目发现</a>
+      <a class="md-button md-button--primary" href="reports/">阅读最新趋势</a>
+      <a class="md-button" href="discovery/">查看项目发现</a>
       <a class="md-button" href="https://github.com/gqy20/TrendPluse">查看源码</a>
     </div>
   </div>
@@ -34,13 +34,13 @@ hide:
 ## 核心入口
 
 <div class="tp-entry-grid">
-  <a class="tp-entry-card" href="reports/index.md">
+  <a class="tp-entry-card" href="reports/">
     <span class="tp-entry-card__icon">📈</span>
     <strong>趋势报告</strong>
     <p>先看最新日报和周报，再顺着归档表回看历史变化。</p>
     <span class="tp-entry-card__meta">默认从这里进入</span>
   </a>
-  <a class="tp-entry-card" href="discovery.md">
+  <a class="tp-entry-card" href="discovery/">
     <span class="tp-entry-card__icon">🧭</span>
     <strong>项目发现</strong>
     <p>只看本期概览、Top 5 和历史结果，用于补充监控池。</p>
