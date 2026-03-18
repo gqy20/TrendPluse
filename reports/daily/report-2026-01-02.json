@@ -44,5 +44,12 @@
     "failed_samples": [],
     "quality_score": 0.0,
     "quality_status": "poor"
-  }
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null
 }
