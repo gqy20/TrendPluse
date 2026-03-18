@@ -91,7 +91,7 @@ class DailyPipelineApp:
         if not pr_signals:
             return cast(
                 DailyReport,
-                self.daily_report_finalizer.handle_empty_report(
+                await self.daily_report_finalizer.handle_empty_report_async(
                     date=date,
                     activity_data=daily_inputs.activity_data,
                     commit_signals=daily_inputs.commit_signals,
