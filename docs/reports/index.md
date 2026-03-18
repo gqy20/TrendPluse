@@ -6,13 +6,13 @@
 
 ### [2026-03-18](report-2026-03-18.md){ .tp-date-badge }
 
-> 2026年3月18日，AI编程工具生态迎来三大关键演进：GPT-5系列与Claude Opus 4.6大幅提升模型能力上限，企业级沙箱安全成为Agent工具的标配特性，以及多模型兼容性和插件生态的持续标准化。跨框架的安全漏洞同步修复也凸显了AI供应链安全的重要性。
+> 2026年3月18日的GitHub活动呈现出三大核心趋势：AI Agent安全沙箱化、多模态记忆系统标准化、以及Agent SDK生态竞争加剧。安全方面，Google Gemini CLI和Anthropic Claude Code同时推出gVisor/Seatbelt沙箱机制，标志着AI执行环境安全隔离成为行业共识；能力方面，Anthropic SDK新增filesystem memory tools，结合RuFlo的WASM语义嵌入，正在构建本地化记忆基础设施；生态方面，Anthropic发布OpenAI到Claude的迁移指南，主动争夺Agent SDK开发者生态。
 
 | 指标 | 数值 | 指标 | 数值 |
 |------|------|------|------|
-| 分析 PR 数 | 18 | 高影响信号 | 11 |
-| 涉及仓库数 | 24 | Release 数 | 11 |
-| Commit 数 | 411 | Breaking Changes | 2 |
+| 分析 PR 数 | 20 | 高影响信号 | 10 |
+| 涉及仓库数 | 28 | Release 数 | 24 |
+| Commit 数 | 612 | Breaking Changes | 3 |
 
 ## 最新周报
 
