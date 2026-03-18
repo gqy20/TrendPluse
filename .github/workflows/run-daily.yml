@@ -112,6 +112,48 @@ jobs:
         env:
           REPORT_DATE: ${{ steps.report_date.outputs.date }}
 
+      - name: Validate Daily Summary fields
+        if: steps.check_report.outputs.exists == 'true'
+        env:
+          REPORT_DATE: ${{ steps.report_date.outputs.date }}
+        run: |
+          uv run python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          from trendpluse.utils.daily_summary_validation import (
+              validate_smoke_daily_summary,
+          )
+
+          report_path = Path("reports/daily") / f"report-{os.environ['REPORT_DATE']}.json"
+          data = json.loads(report_path.read_text(encoding="utf-8"))
+
+          summary_path = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          with summary_path.open("a", encoding="utf-8") as fh:
+              fh.write("## Daily Summary 校验\n")
+              try:
+                  validate_smoke_daily_summary(data)
+              except ValueError as exc:
+                  print(f"::warning::Daily summary validation degraded: {exc}")
+                  fh.write(f"- status: `warning`\n")
+                  fh.write(f"- reason: `{exc}`\n")
+                  fh.write(
+                      f"- trend_status: `{data.get('trend_status')}`\n"
+                  )
+                  fh.write(
+                      f"- summary_confidence: `{data.get('summary_confidence')}`\n"
+                  )
+              else:
+                  fh.write("- status: `ok`\n")
+                  fh.write(
+                      f"- trend_status: `{data.get('trend_status')}`\n"
+                  )
+                  fh.write(
+                      f"- summary_confidence: `{data.get('summary_confidence')}`\n"
+                  )
+          PY
+
       - name: Upload report artifacts
         if: steps.check_report.outputs.exists == 'true'
         uses: actions/upload-artifact@v7
