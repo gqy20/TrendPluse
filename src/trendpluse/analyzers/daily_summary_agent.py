@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import tempfile
 import time
+from collections import deque
 from pathlib import Path
 from typing import Any
 
@@ -56,6 +57,7 @@ class DailySummaryAgent:
         self.max_budget_usd = max_budget_usd
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
+        self._recent_cli_stderr: deque[str] = deque(maxlen=20)
 
     def enhance(self, *, report: DailyReport, date) -> None:
         """增强日报总结字段。
@@ -91,6 +93,11 @@ class DailySummaryAgent:
             index_path=self.history_index_path,
         )
         builder.build()
+
+    def _handle_cli_stderr(self, line: str) -> None:
+        """记录 Claude CLI 的 stderr，便于远端排障。"""
+        self._recent_cli_stderr.append(line)
+        logger.warning("DailySummaryAgent CLI stderr: %s", line)
 
     def _run_with_report_context(self, report: DailyReport) -> DailySummaryResult:
         with tempfile.NamedTemporaryFile(
@@ -184,12 +191,14 @@ class DailySummaryAgent:
             ) from exc
 
         prompt = self._build_prompt(current_report_path)
+        self._recent_cli_stderr.clear()
         options = ClaudeAgentOptions(
             model=self.model,
             allowed_tools=["Read", "Glob", "LS", "Grep"],
             output_format=self._build_output_format(),
             max_turns=self.max_turns,
             max_budget_usd=self.max_budget_usd,
+            stderr=self._handle_cli_stderr,
         )
 
         result_text: str | None = None

@@ -74,6 +74,51 @@ async def test_daily_summary_agent_query_uses_broader_tools_and_limits(
     assert parsed["confidence"] == 0.86
 
 
+@pytest.mark.asyncio
+async def test_daily_summary_agent_query_registers_stderr_callback(
+    tmp_path: Path,
+) -> None:
+    """日报总结 Agent 应接收并记录 SDK CLI 的 stderr 输出。"""
+    agent = DailySummaryAgent(
+        reports_dir=str(tmp_path / "reports" / "daily"),
+        history_index_path=str(
+            tmp_path / "data" / "history" / "daily-report-index.json"
+        ),
+    )
+
+    async def fake_query(*, prompt, options=None, transport=None):
+        assert options is not None
+        assert callable(options.stderr)
+        options.stderr("cli boom")
+        yield ResultMessage(
+            subtype="success",
+            duration_ms=1,
+            duration_api_ms=1,
+            is_error=False,
+            num_turns=1,
+            session_id="s2",
+            structured_output={
+                "summary_brief": "有结果",
+                "trend_status": "new",
+                "trend_delta": "新增趋势",
+                "historical_basis_dates": [],
+                "historical_comparison": "首日报，无历史对比。",
+                "top_new_trends": ["模型分层化"],
+                "top_continuing_trends": [],
+                "confidence": None,
+            },
+        )
+
+    with (
+        patch("claude_agent_sdk.query", fake_query),
+        patch("trendpluse.analyzers.daily_summary_agent.logger.warning") as warning,
+    ):
+        await agent._run_agent_query_async(tmp_path / "today.json")
+
+    warning.assert_called_with("DailySummaryAgent CLI stderr: %s", "cli boom")
+    assert list(agent._recent_cli_stderr) == ["cli boom"]
+
+
 def test_daily_summary_agent_prompt_mentions_candidate_history_paths(
     tmp_path: Path,
 ) -> None:
