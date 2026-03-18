@@ -51,6 +51,17 @@ class DailySummaryAgent:
         """
         self.refresh_history_index()
         result = self._run_with_report_context(report)
+        self._apply_result(report=report, result=result)
+
+    async def enhance_async(self, *, report: DailyReport, date) -> None:
+        """异步增强日报总结字段。"""
+        self.refresh_history_index()
+        result = await self._run_with_report_context_async(report)
+        self._apply_result(report=report, result=result)
+
+    @staticmethod
+    def _apply_result(*, report: DailyReport, result: DailySummaryResult) -> None:
+        """将增强结果统一回写到日报对象。"""
         report.summary_brief = result.summary_brief
         report.trend_status = result.trend_status
         report.trend_delta = result.trend_delta
@@ -98,11 +109,53 @@ class DailySummaryAgent:
         finally:
             temp_path.unlink(missing_ok=True)
 
+    async def _run_with_report_context_async(
+        self, report: DailyReport
+    ) -> DailySummaryResult:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", suffix=".json", delete=False
+        ) as handle:
+            handle.write(report.model_dump_json(indent=2, ensure_ascii=False))
+            temp_path = Path(handle.name)
+
+        try:
+            last_exc: Exception | None = None
+            for attempt in range(1, self.retry_max_attempts + 1):
+                try:
+                    response_text = await self._run_agent_query_async(temp_path)
+                    return DailySummaryResult.model_validate_json(response_text)
+                except (ValidationError, RuntimeError, ValueError) as exc:
+                    last_exc = exc
+                    if attempt >= self.retry_max_attempts:
+                        break
+                    logger.warning(
+                        "日报总结增强失败，准备重试: attempt=%d/%d, error=%s",
+                        attempt,
+                        self.retry_max_attempts,
+                        exc,
+                    )
+                    if self.retry_wait_seconds > 0:
+                        time.sleep(self.retry_wait_seconds)
+            assert last_exc is not None
+            raise last_exc
+        finally:
+            temp_path.unlink(missing_ok=True)
+
     def _run_agent_query(
         self,
         current_report_path: Path,
     ) -> str:
         import asyncio
+
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            pass
+        else:
+            raise RuntimeError(
+                "检测到正在运行的事件循环，请改用 enhance_async() 或 "
+                "_run_with_report_context_async()。"
+            )
 
         return asyncio.run(self._run_agent_query_async(current_report_path))
 

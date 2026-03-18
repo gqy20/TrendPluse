@@ -1,0 +1,10 @@
+[
+  {
+    "url": "https://github.com/anthropics/claude-agent-sdk-python",
+    "description": "用于 smoke test 的 SDK 仓库。"
+  },
+  {
+    "url": "https://github.com/openai/openai-python",
+    "description": "用于 smoke test 的活跃 Python SDK 仓库。"
+  }
+]

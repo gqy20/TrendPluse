@@ -36,6 +36,26 @@ class DailyReportFinalizer:
         self._refresh_history_index()
         self.publisher.notify_daily(report)
 
+    async def finalize_daily_report_async(
+        self,
+        *,
+        report: DailyReport,
+        date,
+        daily_inputs: DailyPipelineInputs,
+        pr_signals: list[Any],
+    ) -> None:
+        """异步填充日报对象并保存发送。"""
+        self.builder.finalize_daily_report(
+            report=report,
+            date=date,
+            daily_inputs=daily_inputs,
+            pr_signals=pr_signals,
+        )
+        await self._enhance_summary_async(report=report, date=date)
+        self.publisher.save_daily(report, date)
+        self._refresh_history_index()
+        self.publisher.notify_daily(report)
+
     def generate_empty_report(
         self,
         date,
@@ -74,6 +94,26 @@ class DailyReportFinalizer:
         self.publisher.notify_daily(report)
         return report
 
+    async def handle_empty_report_async(
+        self,
+        date,
+        activity_data: ActivityData | None = None,
+        commit_signals: list | None = None,
+        releases_data: ReleasesData | None = None,
+    ) -> DailyReport:
+        """异步保存并发送空报告。"""
+        report = self.generate_empty_report(
+            date=date,
+            activity_data=activity_data,
+            commit_signals=commit_signals,
+            releases_data=releases_data,
+        )
+        await self._enhance_summary_async(report=report, date=date)
+        self.publisher.save_daily(report, date)
+        self._refresh_history_index()
+        self.publisher.notify_daily(report)
+        return report
+
     def finalize_report_stats(
         self,
         report: DailyReport,
@@ -106,6 +146,22 @@ class DailyReportFinalizer:
             return
         try:
             self.summary_enhancer.enhance(report=report, date=date)
+        except Exception as exc:  # pragma: no cover - 防御性日志
+            from trendpluse.logger import get_logger
+
+            get_logger(__name__).warning("日报总结增强失败，回退原摘要: %s", exc)
+
+    async def _enhance_summary_async(self, *, report, date) -> None:
+        """在异步流程中保存前尝试增强日报总结。"""
+        if self.summary_enhancer is None:
+            return
+
+        enhance_async = getattr(self.summary_enhancer, "enhance_async", None)
+        try:
+            if callable(enhance_async):
+                await enhance_async(report=report, date=date)
+            else:
+                self.summary_enhancer.enhance(report=report, date=date)
         except Exception as exc:  # pragma: no cover - 防御性日志
             from trendpluse.logger import get_logger
 

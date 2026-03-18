@@ -1,0 +1,99 @@
+name: Run Daily Smoke Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_date:
+        description: "报告日期（YYYY-MM-DD），留空则使用当天 UTC 日期"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "run-daily-smoke"
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: Smoke Test Daily Pipeline
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://open.bigmodel.cn/api/anthropic' }}
+      ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'glm-4.7' }}
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REPOS_FILE: .github/test-repos.json
+      ENABLE_ISSUE_AGENT_ANALYSIS: "false"
+      ENABLE_DAILY_SUMMARY_AGENT: "true"
+      MAX_CANDIDATES: "6"
+      MAX_PARALLEL_WORKERS: "2"
+      OUTPUT_DIR: tmp/smoke/reports/daily
+      ISSUE_DUMP_DIR: tmp/smoke/data/issues
+      DAILY_HISTORY_INDEX_PATH: tmp/smoke/data/history/daily-report-index.json
+      LOG_LEVEL: INFO
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.9.28"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Resolve report date
+        run: |
+          if [ -n "${{ inputs.report_date }}" ]; then
+            echo "REPORT_DATE=${{ inputs.report_date }}" >> "$GITHUB_ENV"
+          else
+            echo "REPORT_DATE=$(date +%Y-%m-%d)" >> "$GITHUB_ENV"
+          fi
+
+      - name: Run daily smoke analysis
+        run: uv run trendpluse-run
+
+      - name: Validate smoke outputs
+        run: |
+          REPORT_JSON="tmp/smoke/reports/daily/report-${REPORT_DATE}.json"
+          REPORT_MD="tmp/smoke/reports/daily/report-${REPORT_DATE}.md"
+          test -f "$REPORT_JSON"
+          test -f "$REPORT_MD"
+          echo "Smoke report generated: $REPORT_JSON"
+          uv run python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report_path = Path("tmp/smoke/reports/daily") / f"report-{os.environ['REPORT_DATE']}.json"
+          data = json.loads(report_path.read_text(encoding="utf-8"))
+
+          assert data.get("summary_brief"), "summary_brief 不能为空"
+          assert "summary_confidence" in data, "应包含 summary agent 输出字段"
+          print("summary_brief:", data["summary_brief"])
+          print("summary_confidence:", data.get("summary_confidence"))
+          print("trend_status:", data.get("trend_status"))
+          PY
+
+      - name: Upload smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: daily-smoke-${{ env.REPORT_DATE }}
+          path: |
+            tmp/smoke/reports/daily/*.md
+            tmp/smoke/reports/daily/*.json
+            tmp/smoke/data/history/*.json
+            logs/*.log
+          retention-days: 14

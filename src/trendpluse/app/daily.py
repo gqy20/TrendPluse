@@ -365,7 +365,7 @@ class DailyPipelineApp:
             date=date.strftime("%Y-%m-%d"),
         )
         logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
-        self.daily_report_finalizer.finalize_daily_report(
+        await self.daily_report_finalizer.finalize_daily_report_async(
             report=report,
             date=date,
             daily_inputs=daily_inputs,

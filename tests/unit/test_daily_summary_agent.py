@@ -128,6 +128,43 @@ def test_daily_summary_agent_enhance_updates_report_fields(tmp_path: Path) -> No
     assert report.historical_basis_dates == ["2026-03-16"]
 
 
+@pytest.mark.asyncio
+async def test_daily_summary_agent_enhance_async_updates_report_fields(
+    tmp_path: Path,
+) -> None:
+    """异步增强结果应回写到日报对象，且可在 running loop 中使用。"""
+    agent = DailySummaryAgent(
+        reports_dir=str(tmp_path / "reports" / "daily"),
+        history_index_path=str(
+            tmp_path / "data" / "history" / "daily-report-index.json"
+        ),
+    )
+    report = _build_report()
+
+    with (
+        patch.object(agent, "refresh_history_index"),
+        patch.object(
+            agent,
+            "_run_with_report_context_async",
+            return_value=agent._result_model(
+                summary_brief="异步新的总结",
+                trend_status="continuing",
+                trend_delta="异步新增部署动作",
+                historical_basis_dates=["2026-03-17"],
+                historical_comparison="异步链路也能完成增强",
+                top_new_trends=["部署"],
+                top_continuing_trends=["多 Agent"],
+                confidence=0.95,
+            ),
+        ),
+    ):
+        await agent.enhance_async(report=report, date=None)
+
+    assert report.summary_brief == "异步新的总结"
+    assert report.trend_status == "continuing"
+    assert report.historical_basis_dates == ["2026-03-17"]
+
+
 def test_daily_summary_agent_retries_after_validation_failure(tmp_path: Path) -> None:
     """结构化结果校验失败后应重试，并在后续成功时返回结果。"""
     agent = DailySummaryAgent(

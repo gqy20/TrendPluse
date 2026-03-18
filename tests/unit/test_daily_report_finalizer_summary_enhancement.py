@@ -5,6 +5,8 @@ from __future__ import annotations
 from datetime import datetime
 from types import SimpleNamespace
 
+import pytest
+
 from trendpluse.app.report_finalizer import DailyReportFinalizer
 from trendpluse.models.signal import DailyReport, ReportStats
 
@@ -18,6 +20,17 @@ class _FakeSummaryEnhancer:
         report.summary_brief = "今天的趋势相对历史出现了新的推进。"
         report.trend_status = "continuing"
         report.historical_basis_dates = ["2026-03-10", "2026-03-11"]
+
+
+class _FakeAsyncSummaryEnhancer:
+    def __init__(self) -> None:
+        self.calls: list[tuple[DailyReport, datetime]] = []
+
+    async def enhance_async(self, *, report: DailyReport, date: datetime) -> None:
+        self.calls.append((report, date))
+        report.summary_brief = "异步增强后的总结。"
+        report.trend_status = "continuing"
+        report.historical_basis_dates = ["2026-03-12"]
 
 
 class _FakePublisher:
@@ -79,3 +92,48 @@ def test_daily_report_finalizer_applies_summary_enhancer_before_publish() -> Non
     assert (
         publisher.saved_reports[0].summary_brief == "今天的趋势相对历史出现了新的推进。"
     )
+
+
+@pytest.mark.asyncio
+async def test_daily_report_finalizer_async_applies_enhancer() -> None:
+    """异步 finalizer 应在 running loop 中完成摘要增强并保存结果。"""
+    enhancer = _FakeAsyncSummaryEnhancer()
+    publisher = _FakePublisher()
+    builder = SimpleNamespace(
+        finalize_daily_report=lambda **_: None,
+        generate_empty_report=lambda **_: None,
+        finalize_report_stats=lambda **_: None,
+    )
+    finalizer = DailyReportFinalizer(
+        builder=builder,
+        publisher=publisher,
+        summary_enhancer=enhancer,
+    )
+    report = DailyReport(
+        date="2026-03-12",
+        summary_brief="旧摘要",
+        engineering_signals=[],
+        research_signals=[],
+        commit_signals=[],
+        release_signals=[],
+        stats=ReportStats(),
+    )
+
+    await finalizer.finalize_daily_report_async(
+        report=report,
+        date=datetime(2026, 3, 12),
+        daily_inputs=SimpleNamespace(
+            activity_data=None,
+            releases_data=None,
+            breaking_changes=[],
+            commit_signals=[],
+            release_signals=[],
+            detailed_commits=[],
+            detailed_releases=[],
+        ),
+        pr_signals=[],
+    )
+
+    assert enhancer.calls
+    assert report.summary_brief == "异步增强后的总结。"
+    assert publisher.saved_reports[0].summary_brief == "异步增强后的总结。"
