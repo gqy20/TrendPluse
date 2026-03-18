@@ -1,6 +1,12 @@
 name: Deploy to GitHub Pages
 
 on:
+  workflow_run:
+    workflows: ["Run Daily Analysis"]
+    types:
+      - completed
+    branches:
+      - main
   # 每次报告更新后部署
   push:
     branches: [main]
@@ -25,6 +31,7 @@ concurrency:
 jobs:
   build:
     name: Build documentation
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
