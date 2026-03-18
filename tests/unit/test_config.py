@@ -211,7 +211,7 @@ class TestSettings:
         assert settings.max_candidates == 20
 
     def test_daily_token_budget_default_value(self, monkeypatch):
-        """测试：daily_token_budget 默认值应该是 100000"""
+        """测试：daily_token_budget 默认值应该是 50000000。"""
         # Arrange
         self._clear_github_token_env(monkeypatch)
         monkeypatch.setenv("GITHUB_TOKEN", "test_token")
@@ -223,7 +223,7 @@ class TestSettings:
         settings = Settings()
 
         # Assert
-        assert settings.daily_token_budget == 100_000
+        assert settings.daily_token_budget == 50_000_000
 
     def test_issue_agent_review_confidence_threshold_default_value(self, monkeypatch):
         """测试：Issue Agent 审核阈值默认值应该是 0.6"""

@@ -77,7 +77,8 @@ class RecordingIssueRunner(DummyIssueRunner):
         retry_wait_seconds=1.0,
         review_confidence_threshold=0.6,
         total_timeout_seconds=600.0,
-        attempt_timeout_seconds=120.0,
+        max_turns=50,
+        max_budget_usd=10.0,
         max_concurrency=4,
     ):
         super().__init__(
@@ -88,7 +89,8 @@ class RecordingIssueRunner(DummyIssueRunner):
         )
         self.review_confidence_threshold = review_confidence_threshold
         self.total_timeout_seconds = total_timeout_seconds
-        self.attempt_timeout_seconds = attempt_timeout_seconds
+        self.max_turns = max_turns
+        self.max_budget_usd = max_budget_usd
 
 
 def test_collect_and_analyze_dumps_issue_files(tmp_path, monkeypatch) -> None:
@@ -214,7 +216,6 @@ async def test_collect_and_analyze_async_passes_timeout_settings(tmp_path) -> No
         issue_agent_retry_max_attempts=2,
         issue_agent_retry_wait_seconds=0.5,
         issue_agent_review_confidence_threshold=0.75,
-        issue_agent_attempt_timeout_seconds=45,
         issue_agent_total_timeout_seconds=180,
         runner_factory=fake_runner_factory,
     )
@@ -225,8 +226,9 @@ async def test_collect_and_analyze_async_passes_timeout_settings(tmp_path) -> No
     assert runner.retry_max_attempts == 2
     assert runner.retry_wait_seconds == 0.5
     assert runner.review_confidence_threshold == 0.75
-    assert runner.attempt_timeout_seconds == 45
     assert runner.total_timeout_seconds == 180
+    assert runner.max_turns == 50
+    assert runner.max_budget_usd == 10.0
     assert runner.max_concurrency == 4
 
 

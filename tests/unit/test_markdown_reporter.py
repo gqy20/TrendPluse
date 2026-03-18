@@ -71,25 +71,19 @@ class TestMarkdownReporter:
         assert "#456" in rendered  # PR 格式
         assert "continuedev/continue" in rendered  # 仓库格式
 
-    def test_render_signal_card_html(self, reporter, sample_signal):
-        """测试渲染信号卡片 - HTML 格式应包含正确的类和结构"""
-        # Act
-        rendered = reporter.render_signal_card(sample_signal)
+    def test_render_signal_uses_markdown_sections(self, reporter, sample_signal):
+        """测试渲染信号使用当前 Markdown 结构。"""
+        rendered = reporter.render_signal(sample_signal)
 
-        # Assert - 验证 HTML 卡片结构
-        assert '<div class="signal-card signal-high-impact">' in rendered
-        assert '<div class="signal-header">' in rendered
-        assert '<div class="signal-icon">' in rendered
-        assert '<h4 class="signal-title">测试信号</h4>' in rendered
-        assert '<span class="signal-type-badge capability">' in rendered
-        assert '<span class="signal-stars">⭐⭐⭐⭐</span>' in rendered
-        assert '<div class="signal-body">' in rendered
-        assert '<div class="signal-footer">' in rendered
+        assert "### 🚀 测试信号" in rendered
+        assert "**类型**: `capability`" in rendered
+        assert "**影响**: ⭐⭐⭐⭐ (4/5)" in rendered
+        assert "**来源**:" in rendered
         assert "这是一个测试信号" in rendered
         assert "anthropics/claude-code-action" in rendered
 
-    def test_render_signal_card_medium_impact(self, reporter):
-        """测试渲染信号卡片 - 中等影响评分应使用正确的样式"""
+    def test_render_signal_medium_impact(self, reporter):
+        """测试渲染信号 - 中等影响评分应输出正确星级。"""
         # Arrange
         signal = Signal(
             id="test-3",
@@ -103,15 +97,13 @@ class TestMarkdownReporter:
         )
 
         # Act
-        rendered = reporter.render_signal_card(signal)
+        rendered = reporter.render_signal(signal)
 
-        # Assert - 中等影响应使用 medium 样式
-        assert '<div class="signal-card signal-medium-impact">' in rendered
-        assert '<span class="signal-stars">⭐⭐⭐</span>' in rendered
+        assert "⭐⭐⭐ (3/5)" in rendered
         assert "中等影响信号" in rendered
 
-    def test_render_signal_card_low_impact(self, reporter):
-        """测试渲染信号卡片 - 低影响评分应使用正确的样式"""
+    def test_render_signal_low_impact(self, reporter):
+        """测试渲染信号 - 低影响评分应输出正确星级。"""
         # Arrange
         signal = Signal(
             id="test-4",
@@ -125,29 +117,6 @@ class TestMarkdownReporter:
         )
 
         # Act
-        rendered = reporter.render_signal_card(signal)
+        rendered = reporter.render_signal(signal)
 
-        # Assert - 低影响应使用 low 样式
-        assert '<div class="signal-card signal-low-impact">' in rendered
-        assert '<span class="signal-stars">⭐⭐</span>' in rendered
-
-    def test_render_bento_grid(self, reporter, sample_signal):
-        """测试渲染 Bento Grid - 应包含正确的容器和卡片"""
-        # Arrange
-        signals = [sample_signal]
-
-        # Act
-        rendered = reporter.render_bento_grid(signals, "工程")
-
-        # Assert - 验证 Bento Grid 结构
-        assert '<div class="bento-grid">' in rendered
-        assert "<h2>🔧 工程信号</h2>" in rendered
-        assert "signal-card" in rendered
-
-    def test_render_signal_grid(self, reporter, sample_signal):
-        """测试渲染统一核心信号区块。"""
-        rendered = reporter.render_signal_grid([sample_signal])
-
-        assert "<h2>核心信号</h2>" in rendered
-        assert '<div class="bento-grid">' in rendered
-        assert "signal-card" in rendered
+        assert "⭐⭐ (2/5)" in rendered

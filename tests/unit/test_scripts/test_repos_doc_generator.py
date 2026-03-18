@@ -179,12 +179,15 @@ class TestGenerateReposMarkdown:
 
         # 验证包含分类标题
         assert "#### Anthropic 核心产品" in markdown
-        # 验证包含仓库链接
+        assert '<div class="tp-entry-grid">' in markdown
         assert (
-            "[anthropics/claude-code](https://github.com/anthropics/claude-code)"
+            'class="tp-entry-card" href="https://github.com/anthropics/claude-code"'
             in markdown
         )
-        assert "[anthropics/skills](https://github.com/anthropics/skills)" in markdown
+        assert (
+            'class="tp-entry-card" href="https://github.com/anthropics/skills"'
+            in markdown
+        )
 
     def test_generate_markdown_with_multiple_categories(self) -> None:
         """测试生成多个分类的 Markdown"""
@@ -204,9 +207,8 @@ class TestGenerateReposMarkdown:
         # 验证包含所有分类
         assert "#### 分类 A" in markdown
         assert "#### 分类 B" in markdown
-        # 验证包含所有仓库
-        assert "[user/repo1](https://github.com/user/repo1)" in markdown
-        assert "[user/repo2](https://github.com/user/repo2)" in markdown
+        assert 'href="https://github.com/user/repo1"' in markdown
+        assert 'href="https://github.com/user/repo2"' in markdown
 
     def test_generate_markdown_repo_count(self) -> None:
         """测试生成 Markdown 时统计仓库数量"""
@@ -237,12 +239,8 @@ class TestGenerateReposMarkdown:
 
         markdown = generate_repos_markdown(categories)
 
-        # 验证下划线被正确转义
-        assert "llama\\_index" in markdown
-        assert (
-            "[run-llama/llama\\_index](https://github.com/run-llama/llama_index)"
-            in markdown
-        )
+        assert "run-llama/llama_index" in markdown
+        assert 'href="https://github.com/run-llama/llama_index"' in markdown
 
     def test_generate_markdown_includes_description(self) -> None:
         """测试生成 Markdown 时包含仓库简介。"""
@@ -283,8 +281,5 @@ class TestIntegration:
         # Assert: 验证生成的 Markdown
         assert "### 📋 监控项目" in markdown
         assert "4 个" in markdown
-        assert (
-            "[anthropics/claude-code](https://github.com/anthropics/claude-code)"
-            in markdown
-        )
-        assert "[cline/cline](https://github.com/cline/cline)" in markdown
+        assert 'href="https://github.com/anthropics/claude-code"' in markdown
+        assert 'href="https://github.com/cline/cline"' in markdown
