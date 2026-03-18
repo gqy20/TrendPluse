@@ -29,6 +29,7 @@ jobs:
       issue_agent_status: ${{ steps.issue_agent_status.outputs.status }}
       issue_agent_quality_status: ${{ steps.issue_agent_status.outputs.quality_status }}
       issue_agent_failed_files: ${{ steps.issue_agent_status.outputs.failed_files }}
+      issue_agent_semantic_status: ${{ steps.issue_agent_status.outputs.semantic_status }}
 
     steps:
       - name: Checkout repository
@@ -92,19 +93,42 @@ jobs:
           report_date = os.environ["REPORT_DATE"]
           report = load_issue_agent_report("data/issues", report_date)
           status = summarize_issue_agent_run_status(report)
+          semantic_status = "ok"
+          if report.top_pain_points and (
+              report.category_coverage < 0.8 or report.other_category_count >= 2
+          ):
+              semantic_status = "warning"
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
               fh.write(f"status={status}\n")
               fh.write(f"quality_status={report.quality_status}\n")
               fh.write(f"failed_files={report.failed_files}\n")
+              fh.write(f"semantic_status={semantic_status}\n")
+              fh.write(
+                  f"cross_repo_item_count={report.cross_repo_item_count}\n"
+              )
+              fh.write(
+                  f"other_category_count={report.other_category_count}\n"
+              )
+              fh.write(f"category_coverage={report.category_coverage}\n")
 
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fh:
               fh.write("## Issue Agent 状态\n")
               fh.write(f"- status: `{status}`\n")
               fh.write(f"- quality_status: `{report.quality_status}`\n")
+              fh.write(f"- semantic_status: `{semantic_status}`\n")
               fh.write(f"- expected_files: `{report.expected_files}`\n")
               fh.write(f"- parsed_files: `{report.parsed_files}`\n")
               fh.write(f"- failed_files: `{report.failed_files}`\n")
+              fh.write(
+                  f"- cross_repo_item_count: `{report.cross_repo_item_count}`\n"
+              )
+              fh.write(
+                  f"- other_category_count: `{report.other_category_count}`\n"
+              )
+              fh.write(
+                  f"- category_coverage: `{report.category_coverage:.3f}`\n"
+              )
               if report.failed_samples:
                   samples = ", ".join(report.failed_samples)
                   fh.write(f"- failed_samples: `{samples}`\n")
@@ -187,6 +211,11 @@ jobs:
         if: steps.issue_agent_status.outputs.status == 'partial_failure' || steps.issue_agent_status.outputs.status == 'failed'
         run: |
           echo "::warning::Issue Agent status=${{ steps.issue_agent_status.outputs.status }}, quality=${{ steps.issue_agent_status.outputs.quality_status }}, failed_files=${{ steps.issue_agent_status.outputs.failed_files }}"
+
+      - name: Warn if Issue Agent semantic quality degraded
+        if: steps.issue_agent_status.outputs.semantic_status == 'warning'
+        run: |
+          echo "::warning::Issue Agent semantic quality degraded: semantic_status=${{ steps.issue_agent_status.outputs.semantic_status }}, cross_repo_item_count=${{ steps.issue_agent_status.outputs.cross_repo_item_count }}, other_category_count=${{ steps.issue_agent_status.outputs.other_category_count }}, category_coverage=${{ steps.issue_agent_status.outputs.category_coverage }}"
 
   notify:
     name: Send Feishu Notification

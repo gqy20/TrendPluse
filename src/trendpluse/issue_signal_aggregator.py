@@ -68,6 +68,19 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
                 }
             )
 
+    @staticmethod
+    def _split_pain_points(
+        report: IssueAgentReport,
+    ) -> tuple[list[Any], list[Any]]:
+        """按是否真正跨仓库拆分痛点。"""
+        cross_repo = [
+            item for item in report.top_pain_points if len(item.affected_repos) > 1
+        ]
+        single_repo = [
+            item for item in report.top_pain_points if len(item.affected_repos) <= 1
+        ]
+        return cross_repo, single_repo
+
     def _call_llm_for_summary(
         self,
         report: IssueAgentReport,
@@ -94,7 +107,13 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
         return response
 
     def _build_prompt(self, report: IssueAgentReport) -> str:
+        cross_repo, single_repo = self._split_pain_points(report)
         payload: dict[str, Any] = {
+            "semantic_quality": {
+                "cross_repo_item_count": report.cross_repo_item_count,
+                "other_category_count": report.other_category_count,
+                "category_coverage": report.category_coverage,
+            },
             "repo_reports": [
                 {
                     "repo": repo_report.repo,
@@ -103,6 +122,7 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
                             "id": signal.id,
                             "topic": signal.topic,
                             "summary": signal.summary,
+                            "category": signal.category,
                             "priority": signal.priority,
                             "confidence": signal.confidence,
                             "count": signal.count,
@@ -121,15 +141,27 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
                 }
                 for repo_report in report.repo_reports[:20]
             ],
-            "global_candidates": [
+            "cross_repo_candidates": [
                 {
                     "topic": item.topic,
+                    "category": item.category,
                     "priority": item.priority,
                     "confidence": item.confidence,
                     "count": item.count,
                     "affected_repos": item.affected_repos,
                 }
-                for item in report.top_pain_points[:10]
+                for item in cross_repo[:10]
+            ],
+            "single_repo_candidates": [
+                {
+                    "topic": item.topic,
+                    "category": item.category,
+                    "priority": item.priority,
+                    "confidence": item.confidence,
+                    "count": item.count,
+                    "affected_repos": item.affected_repos,
+                }
+                for item in single_repo[:10]
             ],
         }
         payload_text = json.dumps(payload, ensure_ascii=False, indent=2)
@@ -140,30 +172,49 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
 {payload_text}
 
 输出要求：
-1. `summary_brief`：2 句话以内，总结今天最重要的跨仓库 issue 问题。
+1. `summary_brief`：2 句话以内；
+   若存在跨仓库候选，优先总结跨仓库共性问题；
+   否则明确说明今天以高影响单仓问题为主。
 2. `global_highlights`：返回 2-4 条亮点，每条一句话。
-3. 必须聚焦“跨仓库共性问题”或“高影响单仓问题”，不要泛泛而谈。
-4. 所有输出必须使用中文。
+3. 必须优先参考 `category` 字段组织问题簇，不要只按 topic 表面措辞复述。
+4. 必须聚焦“跨仓库共性问题”或“高影响单仓问题”，不要泛泛而谈。
+5. 所有输出必须使用中文。
 """.strip()
 
     def _build_fallback_summary(self, report: IssueAgentReport) -> str:
         repo_count = len(report.repo_reports)
-        global_count = len(report.top_pain_points)
-        if global_count == 0:
+        cross_repo, single_repo = self._split_pain_points(report)
+        if not cross_repo and not single_repo:
             return f"Issue Agent 已分析 {repo_count} 个仓库，未识别出跨仓库共性问题。"
-        top_topic = report.top_pain_points[0].topic
+        if cross_repo:
+            top_topic = cross_repo[0].topic
+            return (
+                f"Issue Agent 汇总了 {repo_count} 个仓库，"
+                f"识别出 {len(cross_repo)} 个跨仓库共性问题，"
+                f"其中最高优先级问题为“{top_topic}”。"
+            )
+        top_topic = single_repo[0].topic
         return (
             f"Issue Agent 汇总了 {repo_count} 个仓库，"
-            f"识别出 {global_count} 个跨仓库问题，"
-            f"其中最高优先级问题为“{top_topic}”。"
+            "今日未形成明显跨仓库共性问题，"
+            f"当前最高影响的高影响单仓问题为“{top_topic}”。"
         )
 
     def _build_fallback_highlights(self, report: IssueAgentReport) -> list[str]:
         highlights: list[str] = []
-        for item in report.top_pain_points[:3]:
+        cross_repo, single_repo = self._split_pain_points(report)
+        items = cross_repo[:3] if cross_repo else single_repo[:3]
+        for item in items:
             repo_span = len(item.affected_repos)
             issue_count = item.count
-            highlights.append(
-                f"{item.topic}：影响 {repo_span} 个仓库，累计 {issue_count} 个 issue"
-            )
+            if repo_span > 1:
+                highlights.append(
+                    f"{item.topic}：影响 {repo_span} 个仓库，"
+                    f"累计 {issue_count} 个 issue"
+                )
+            else:
+                repo = item.affected_repos[0] if item.affected_repos else "未知仓库"
+                highlights.append(
+                    f"{item.topic}：`{repo}` 内累计 {issue_count} 个 issue"
+                )
         return highlights

@@ -11,12 +11,14 @@ import logging
 import re
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from pydantic import ValidationError
 
 from trendpluse.models.issue_agent import (
+    ISSUE_AGENT_CATEGORY_VALUES,
     IssueAgentBatchResult,
+    IssueAgentCategory,
     IssueAgentPainPoint,
     IssueAgentReport,
     IssueAgentSourceIssue,
@@ -232,6 +234,27 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
             if not topic:
                 continue
 
+            summary = (
+                str(raw.get("summary"))
+                if isinstance(raw.get("summary"), str)
+                and str(raw.get("summary")).strip()
+                else None
+            )
+            if summary is None:
+                raise ValueError("缺少 summary 字段")
+
+            category = (
+                str(raw.get("category"))
+                if isinstance(raw.get("category"), str)
+                and str(raw.get("category")).strip()
+                else None
+            )
+            if category is None:
+                raise ValueError("缺少 category 字段")
+            if category not in ISSUE_AGENT_CATEGORY_VALUES:
+                raise ValueError(f"非法 category 字段: {category}")
+            normalized_category = cast(IssueAgentCategory, category)
+
             count_raw = raw.get("count", 1)
             count = count_raw if isinstance(count_raw, int) and count_raw > 0 else 1
 
@@ -277,6 +300,8 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
             points.append(
                 IssueAgentPainPoint(
                     topic=topic,
+                    summary=summary,
+                    category=normalized_category,
                     count=count,
                     affected_repos=repos,
                     sample_urls=urls,
@@ -409,7 +434,10 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
             "repo": {"type": "string"},
             "topic": {"type": "string"},
             "summary": {"type": "string"},
-            "category": {"type": "string"},
+            "category": {
+                "type": "string",
+                "enum": list(ISSUE_AGENT_CATEGORY_VALUES),
+            },
             "count": {"type": "integer", "minimum": 1},
             "affected_repos": {
                 "type": "array",
@@ -456,6 +484,8 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
         }
         required = [
             "topic",
+            "summary",
+            "category",
             "count",
             "affected_repos",
             "sample_urls",

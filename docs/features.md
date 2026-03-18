@@ -27,8 +27,13 @@ TrendPulse 是一个围绕 GitHub 活动、LLM 分析和文档发布构建的自
 
 ### Issue Agent 洞察
 
-- 对 issue JSONL 执行三轮分析
+- 对 issue JSONL 执行结构化单轮分析，并按 `category` 聚合痛点
 - 提取 `top_pain_points`、`quality_score`、`quality_status`
+- 额外输出语义验收指标：
+  - `cross_repo_item_count`
+  - `other_category_count`
+  - `category_coverage`
+- 在 daily 报告中区分“跨仓库共性问题”和“高影响单仓问题”
 - 融入 daily 报告与后续排查流程
 
 ### 日报总结 Agent
@@ -88,7 +93,7 @@ docs/discovery-reports/
 ## 自动化工作流
 
 - `ci.yml`: Ruff、mypy、pytest、打包验证
-- `run-daily.yml`: 每日分析与可选日报通知
+- `run-daily.yml`: 每日分析、Issue Agent 验收告警与可选日报通知
 - `run-weekly.yml`: 周报聚合
 - `discover-projects.yml`: 项目发现
 - `issue-analyzer.yml`: Issue / Comment 触发分析

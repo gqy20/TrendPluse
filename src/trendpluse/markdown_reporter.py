@@ -163,6 +163,12 @@ class MarkdownReporter:
         )
 
     def _render_issue_insights(self, report: IssueAgentReport) -> str:
+        cross_repo_points = [
+            item for item in report.top_pain_points if len(item.affected_repos) > 1
+        ]
+        single_repo_points = [
+            item for item in report.top_pain_points if len(item.affected_repos) <= 1
+        ]
         lines = ["---\n", "## 🧠 Issue 洞察（Agent）\n\n"]
         lines.append(
             "预期文件: "
@@ -172,6 +178,12 @@ class MarkdownReporter:
         lines.append(
             "质量等级: "
             f"`{report.quality_status}`，质量分: `{report.quality_score:.3f}`\n\n"
+        )
+        lines.append(
+            "语义指标: "
+            f"跨仓库项: `{report.cross_repo_item_count}`，"
+            f"other 分类: `{report.other_category_count}`，"
+            f"分类覆盖率: `{report.category_coverage * 100:.1f}%`\n\n"
         )
 
         if report.summary_brief:
@@ -192,19 +204,41 @@ class MarkdownReporter:
                 )
             return "".join(lines)
 
-        lines.append("### 跨仓库问题\n\n")
-        lines.append("| 排名 | 痛点 | 提及次数 | 受影响仓库 |\n")
-        lines.append("|------|------|----------|------------|\n")
+        if cross_repo_points:
+            lines.append("### 跨仓库共性问题\n\n")
+            lines.append("| 排名 | 痛点 | 提及次数 | 受影响仓库 |\n")
+            lines.append("|------|------|----------|------------|\n")
+            for idx, pain_point in enumerate(cross_repo_points[:5], 1):
+                repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
+                if len(pain_point.affected_repos) > 2:
+                    repos_str += f" (+{len(pain_point.affected_repos) - 2})"
+                lines.append(
+                    f"| {idx} | {pain_point.topic} | "
+                    f"{pain_point.count} | {repos_str} |\n"
+                )
+        else:
+            lines.append("### 跨仓库共性问题\n\n")
+            lines.append("暂无跨仓库共性问题。\n\n")
 
-        for idx, pain_point in enumerate(report.top_pain_points[:5], 1):
-            repos_str = ", ".join(f"`{r}`" for r in pain_point.affected_repos[:2])
-            if len(pain_point.affected_repos) > 2:
-                repos_str += f" (+{len(pain_point.affected_repos) - 2})"
-            lines.append(
-                f"| {idx} | {pain_point.topic} | {pain_point.count} | {repos_str} |\n"
-            )
+        if single_repo_points:
+            lines.append("### 高影响单仓问题\n\n")
+            lines.append("| 排名 | 痛点 | 提及次数 | 仓库 |\n")
+            lines.append("|------|------|----------|------|\n")
+            for idx, pain_point in enumerate(single_repo_points[:5], 1):
+                repo_name = (
+                    f"`{pain_point.affected_repos[0]}`"
+                    if pain_point.affected_repos
+                    else "`未知仓库`"
+                )
+                lines.append(
+                    f"| {idx} | {pain_point.topic} | "
+                    f"{pain_point.count} | {repo_name} |\n"
+                )
 
-        top_sources = report.top_pain_points[0].source_issues
+        representative_points = cross_repo_points or single_repo_points
+        top_sources = (
+            representative_points[0].source_issues if representative_points else []
+        )
         if top_sources:
             lines.append("\n**代表 Issue**:\n\n")
             for source in top_sources[:3]:

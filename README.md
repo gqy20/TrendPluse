@@ -17,7 +17,7 @@
 - 🔍 **智能采集**: 使用 GitHub API 实时获取 PR、Issue、Release
 - 🤖 **AI 分析**: 使用 glm-4.7 提取趋势信号和关键洞察
 - 📊 **每日报告**: 自动生成结构化的 Markdown 和 JSON 趋势分析报告
-- 🧠 **Issue 洞察**: 基于 Issue Agent 的三轮分析提取用户痛点，并输出质量分
+- 🧠 **Issue 洞察**: 基于 Issue Agent 的结构化分析提取用户痛点，输出质量分与语义验收指标
 - 🧭 **历史感知摘要**: 默认启用日报总结 Agent，结合全量历史日报重写当天摘要
 - 🧭 **项目发现**: 自动发现候选项目并按质量分层推荐（discovery 报告）
 - 📆 **周报聚合**: 聚合近 7 天日报生成 weekly 报告
@@ -80,6 +80,11 @@ DAILY_SUMMARY_AGENT_MAX_TURNS=20
 DAILY_SUMMARY_AGENT_MAX_BUDGET_USD=5.0
 DAILY_SUMMARY_AGENT_RETRY_MAX_ATTEMPTS=2
 DAILY_SUMMARY_AGENT_RETRY_WAIT_SECONDS=0.0
+
+# Issue Agent（默认随 daily workflow 运行）
+ENABLE_ISSUE_AGENT_ANALYSIS=true
+ISSUE_AGENT_RETRY_MAX_ATTEMPTS=3
+ISSUE_AGENT_RETRY_WAIT_SECONDS=1.0
 ```
 
 ### 获取 API Key

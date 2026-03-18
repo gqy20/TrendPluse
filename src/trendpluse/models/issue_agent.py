@@ -1,8 +1,32 @@
 """Issue Agent 结果模型"""
 
 from dataclasses import dataclass
+from typing import Literal
 
 from pydantic import BaseModel, Field
+
+ISSUE_AGENT_CATEGORY_VALUES = (
+    "startup_crash",
+    "workflow_runtime",
+    "auth_permission",
+    "session_state",
+    "tool_call_protocol",
+    "packaging_release",
+    "quota_rate_limit",
+    "ui_interaction",
+    "other",
+)
+IssueAgentCategory = Literal[
+    "startup_crash",
+    "workflow_runtime",
+    "auth_permission",
+    "session_state",
+    "tool_call_protocol",
+    "packaging_release",
+    "quota_rate_limit",
+    "ui_interaction",
+    "other",
+]
 
 
 @dataclass(slots=True)
@@ -22,7 +46,7 @@ class IssueAgentPainPoint(BaseModel):
     repo: str | None = Field(default=None, description="来源仓库（仓库级信号时使用）")
     topic: str = Field(description="痛点主题")
     summary: str | None = Field(default=None, description="痛点摘要")
-    category: str | None = Field(default=None, description="痛点分类")
+    category: IssueAgentCategory | None = Field(default=None, description="痛点分类")
     count: int = Field(description="提及次数", ge=1)
     affected_repos: list[str] = Field(description="受影响仓库")
     sample_urls: list[str] = Field(description="示例 Issue 链接")
@@ -95,6 +119,22 @@ class IssueAgentReport(BaseModel):
     quality_status: str = Field(
         default="poor",
         description="质量等级：good/warning/poor/no_data",
+    )
+    cross_repo_item_count: int = Field(
+        default=0,
+        ge=0,
+        description="跨仓库问题数量",
+    )
+    other_category_count: int = Field(
+        default=0,
+        ge=0,
+        description="other 分类数量",
+    )
+    category_coverage: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="痛点分类覆盖率",
     )
 
 

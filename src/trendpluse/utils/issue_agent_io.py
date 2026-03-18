@@ -7,10 +7,13 @@ import logging
 from collections import defaultdict
 from os import PathLike
 from pathlib import Path
+from typing import cast
 
 from pydantic import ValidationError
 
 from trendpluse.models.issue_agent import (
+    ISSUE_AGENT_CATEGORY_VALUES,
+    IssueAgentCategory,
     IssueAgentPainPoint,
     IssueAgentReport,
     IssueAgentSourceIssue,
@@ -18,6 +21,13 @@ from trendpluse.models.issue_agent import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _merge_key(pain_point: IssueAgentPainPoint) -> str:
+    """生成全局聚合键，优先使用 category，兼容旧 topic 聚合。"""
+    if pain_point.category and pain_point.category.strip():
+        return f"category:{pain_point.category.strip()}"
+    return f"topic:{pain_point.topic.strip()}"
 
 
 def _sort_key(pain_point: IssueAgentPainPoint) -> tuple[int, float, int]:
@@ -46,6 +56,32 @@ def _compute_quality_metrics(
     if coverage >= 0.8 and parse_rate >= 0.8:
         return score, "warning"
     return score, "poor"
+
+
+def _compute_semantic_quality_metrics(
+    pain_points: list[IssueAgentPainPoint],
+) -> tuple[int, int, float]:
+    """计算语义层质量指标。"""
+    if not pain_points:
+        return 0, 0, 1.0
+
+    cross_repo_item_count = sum(
+        1 for item in pain_points if len(set(item.affected_repos)) > 1
+    )
+    other_category_count = sum(1 for item in pain_points if item.category == "other")
+    categorized_count = sum(1 for item in pain_points if item.category is not None)
+    category_coverage = round(categorized_count / len(pain_points), 3)
+    return cross_repo_item_count, other_category_count, category_coverage
+
+
+def _normalize_category(values: set[str]) -> IssueAgentCategory | None:
+    """从聚合值中提取合法 category。"""
+    if not values:
+        return None
+    for value in sorted(values):
+        if value in ISSUE_AGENT_CATEGORY_VALUES:
+            return cast(IssueAgentCategory, value)
+    return None
 
 
 def summarize_issue_agent_run_status(report: IssueAgentReport) -> str:
@@ -104,6 +140,7 @@ def load_issue_agent_report(
         for path in input_files
         if f"{path.stem}.analysis.json" not in existing_analysis_names
     ]
+    merged_topics: dict[str, list[str]] = defaultdict(list)
     merged_counts: dict[str, int] = defaultdict(int)
     merged_repos: dict[str, set[str]] = defaultdict(set)
     merged_urls: dict[str, list[str]] = defaultdict(list)
@@ -142,54 +179,53 @@ def load_issue_agent_report(
             topic = item.topic.strip()
             if not topic:
                 continue
+            key = _merge_key(item)
+            merged_topics[key].append(topic)
             count = item.count
-            merged_counts[topic] += max(1, count)
+            merged_counts[key] += max(1, count)
             for repo in item.affected_repos:
-                merged_repos[topic].add(str(repo))
+                merged_repos[key].add(str(repo))
             for url in item.sample_urls:
-                merged_urls[topic].append(str(url))
+                merged_urls[key].append(str(url))
             for alias in item.aliases:
-                merged_aliases[topic].add(str(alias))
+                merged_aliases[key].add(str(alias))
             if item.confidence is not None:
-                merged_confidences[topic].append(float(item.confidence))
+                merged_confidences[key].append(float(item.confidence))
             if item.priority in {"P0", "P1", "P2"}:
-                merged_priorities[topic].add(item.priority)
+                merged_priorities[key].add(item.priority)
             if item.review_reason:
-                merged_reasons[topic].append(item.review_reason)
+                merged_reasons[key].append(item.review_reason)
             if item.summary:
-                merged_summaries[topic].append(item.summary)
+                merged_summaries[key].append(item.summary)
             if item.category:
-                merged_categories[topic].add(item.category)
+                merged_categories[key].add(item.category)
             if item.id:
-                merged_source_signal_ids[topic].add(item.id)
+                merged_source_signal_ids[key].add(item.id)
             for source_issue in item.source_issues:
-                merged_source_issues[topic][source_issue.url] = source_issue
+                merged_source_issues[key][source_issue.url] = source_issue
 
     merged: list[IssueAgentPainPoint] = []
-    for topic, count in merged_counts.items():
+    for key, count in merged_counts.items():
         priority = None
-        if merged_priorities[topic]:
-            priority = sorted(merged_priorities[topic], key=lambda p: int(p[1]))[0]
+        if merged_priorities[key]:
+            priority = sorted(merged_priorities[key], key=lambda p: int(p[1]))[0]
+        topic = merged_topics[key][0] if merged_topics[key] else key
         merged.append(
             IssueAgentPainPoint(
                 topic=topic,
                 count=count,
-                affected_repos=sorted(merged_repos[topic]),
-                sample_urls=merged_urls[topic][:5],
-                aliases=sorted(merged_aliases[topic]),
-                confidence=max(merged_confidences[topic])
-                if merged_confidences[topic]
+                affected_repos=sorted(merged_repos[key]),
+                sample_urls=merged_urls[key][:5],
+                aliases=sorted(merged_aliases[key]),
+                confidence=max(merged_confidences[key])
+                if merged_confidences[key]
                 else None,
                 priority=priority,
-                summary=merged_summaries[topic][0] if merged_summaries[topic] else None,
-                category=sorted(merged_categories[topic])[0]
-                if merged_categories[topic]
-                else None,
-                review_reason=merged_reasons[topic][0]
-                if merged_reasons[topic]
-                else None,
-                source_issues=list(merged_source_issues[topic].values())[:10],
-                source_signal_ids=sorted(merged_source_signal_ids[topic]),
+                summary=merged_summaries[key][0] if merged_summaries[key] else None,
+                category=_normalize_category(merged_categories[key]),
+                review_reason=merged_reasons[key][0] if merged_reasons[key] else None,
+                source_issues=list(merged_source_issues[key].values())[:10],
+                source_signal_ids=sorted(merged_source_signal_ids[key]),
             )
         )
 
@@ -209,8 +245,15 @@ def load_issue_agent_report(
         parsed_files=parsed_files,
         failed_files=total_failed_files,
     )
+    top_pain_points = merged[:5]
+    (
+        cross_repo_item_count,
+        other_category_count,
+        category_coverage,
+    ) = _compute_semantic_quality_metrics(top_pain_points)
+
     return IssueAgentReport(
-        top_pain_points=merged[:5],
+        top_pain_points=top_pain_points,
         repo_reports=repo_reports,
         expected_files=expected_files,
         generated_files=generated_files,
@@ -219,6 +262,9 @@ def load_issue_agent_report(
         failed_samples=all_failed_samples,
         quality_score=quality_score,
         quality_status=quality_status,
+        cross_repo_item_count=cross_repo_item_count,
+        other_category_count=other_category_count,
+        category_coverage=category_coverage,
     )
 
 

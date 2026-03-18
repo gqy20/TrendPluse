@@ -10,7 +10,7 @@
 ### 2. 每日分析 (`.github/workflows/run-daily.yml`)
 
 - 触发：`schedule` + `workflow_dispatch`
-- 功能：生成日报、同步索引、提交产物，并按配置发送日报飞书通知
+- 功能：生成日报、执行 Daily Summary 校验、执行 Issue Agent 运行/语义验收、同步索引、提交产物，并按配置发送日报飞书通知
 
 ### 3. 周报生成 (`.github/workflows/run-weekly.yml`)
 
@@ -89,6 +89,24 @@ gh workflow run run-daily.yml -f send_notification=true
 # 发送指定日期的飞书通知
 gh workflow run send-feishu.yml -f report_date=2026-01-12
 ```
+
+### 每日分析的验收信息
+
+`Run Daily Analysis` 会在 GitHub Actions 的 `Step summary` 中追加两类验收结果：
+
+- `Daily Summary 校验`
+  - 校验增强摘要的关键字段是否完整
+  - 失败时发出 `warning`，但不会中断主流程
+- `Issue Agent 状态`
+  - 运行状态：`status`、`quality_status`、`failed_files`
+  - 语义验收：`semantic_status`、`cross_repo_item_count`、`other_category_count`、`category_coverage`
+
+当前 `Issue Agent` 语义降级规则：
+
+- `category_coverage < 0.8`
+- 或 `other_category_count >= 2`
+
+满足任一条件时，workflow 会发出 `Issue Agent semantic quality degraded` 告警，但仍继续提交日报与后续发布流程。
 
 ---
 

@@ -67,6 +67,175 @@ def test_load_issue_agent_report_merges_topics(tmp_path: Path) -> None:
     assert report.failed_samples == []
 
 
+def test_load_issue_agent_report_merges_by_category_when_topics_differ(
+    tmp_path: Path,
+) -> None:
+    """新产物存在 category 时，应优先按 category 聚合，而非 topic 文本。"""
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-09" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "repo1.analysis.json").write_text(
+        """{
+  "repo": "a/b",
+  "snapshot_date": "2026-02-09",
+  "signals": [
+    {
+      "topic": "应用启动崩溃",
+      "summary": "升级后启动即崩溃",
+      "category": "startup_crash",
+      "count": 2,
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"],
+      "confidence": 0.8,
+      "priority": "P1"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+    (snapshot / "repo2.analysis.json").write_text(
+        """{
+  "repo": "c/d",
+  "snapshot_date": "2026-02-09",
+  "signals": [
+    {
+      "topic": "初始化失败导致无法进入主流程",
+      "summary": "安装后初始化直接失败",
+      "category": "startup_crash",
+      "count": 3,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u2"],
+      "confidence": 0.92,
+      "priority": "P0"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-09")
+    assert len(report.top_pain_points) == 1
+    assert report.top_pain_points[0].category == "startup_crash"
+    assert report.top_pain_points[0].count == 5
+    assert set(report.top_pain_points[0].affected_repos) == {"a/b", "c/d"}
+    assert report.top_pain_points[0].priority == "P0"
+    assert report.top_pain_points[0].confidence == 0.92
+
+
+def test_load_issue_agent_report_falls_back_to_topic_when_category_missing(
+    tmp_path: Path,
+) -> None:
+    """旧产物没有 category 时，应保持按 topic 聚合。"""
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-10" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "repo1.analysis.json").write_text(
+        """{
+  "repo": "a/b",
+  "snapshot_date": "2026-02-10",
+  "signals": [
+    {
+      "topic": "安装失败",
+      "count": 2,
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"],
+      "confidence": 0.8,
+      "priority": "P1"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+    (snapshot / "repo2.analysis.json").write_text(
+        """{
+  "repo": "c/d",
+  "snapshot_date": "2026-02-10",
+  "signals": [
+    {
+      "topic": "安装失败",
+      "count": 1,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u2"],
+      "confidence": 0.92,
+      "priority": "P0"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-10")
+    assert len(report.top_pain_points) == 1
+    assert report.top_pain_points[0].topic == "安装失败"
+    assert report.top_pain_points[0].category is None
+    assert report.top_pain_points[0].count == 3
+
+
+def test_load_issue_agent_report_computes_semantic_quality_metrics(
+    tmp_path: Path,
+) -> None:
+    """应产出跨仓库数量、other 数量和分类覆盖率指标。"""
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-11" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "repo1.analysis.json").write_text(
+        """{
+  "repo": "a/b",
+  "snapshot_date": "2026-02-11",
+  "signals": [
+    {
+      "topic": "应用启动崩溃",
+      "summary": "升级后启动即崩溃",
+      "category": "startup_crash",
+      "count": 2,
+      "affected_repos": ["a/b"],
+      "sample_urls": ["u1"],
+      "confidence": 0.8,
+      "priority": "P1"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+    (snapshot / "repo2.analysis.json").write_text(
+        """{
+  "repo": "c/d",
+  "snapshot_date": "2026-02-11",
+  "signals": [
+    {
+      "topic": "初始化失败导致无法进入主流程",
+      "summary": "安装后初始化直接失败",
+      "category": "startup_crash",
+      "count": 3,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u2"],
+      "confidence": 0.92,
+      "priority": "P0"
+    },
+    {
+      "topic": "奇特的环境兼容问题",
+      "summary": "特殊环境下主流程异常",
+      "category": "other",
+      "count": 1,
+      "affected_repos": ["c/d"],
+      "sample_urls": ["u3"],
+      "confidence": 0.7,
+      "priority": "P1"
+    }
+  ]
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-11")
+    assert report.cross_repo_item_count == 1
+    assert report.other_category_count == 1
+    assert report.category_coverage == 1.0
+
+
 def test_load_issue_agent_report_tracks_failed_files(tmp_path: Path) -> None:
     base_dir = tmp_path / "issues"
     snapshot = base_dir / "2026-02-05" / "analysis"

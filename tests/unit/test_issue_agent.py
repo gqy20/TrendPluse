@@ -134,7 +134,7 @@ async def test_analyze_file_retries_on_invalid_then_success(tmp_path) -> None:
             if self.calls == 1:
                 return "not json"
             return (
-                '{"pain_points":[{"topic":"崩溃","count":1,'
+                '{"pain_points":[{"topic":"崩溃","summary":"启动即崩溃","category":"startup_crash","count":1,'
                 '"affected_repos":["a/b"],"sample_urls":["u"],'
                 '"source_issues":[],"confidence":0.9,'
                 '"priority":"P1","keep":true,"review_reason":"阻断主流程"}]}'
@@ -180,14 +180,37 @@ async def test_analyze_file_three_round_review_filters_low_confidence(tmp_path) 
 
         async def _run_agent_query(self, prompt: str) -> str:
             self.prompts.append(prompt)
-            return """
-{
-  "pain_points": [
-    {"topic":"CLI稳定性问题","count":6,"affected_repos":["a/b"],"sample_urls":["u1"],"source_issues":[],"confidence":0.92,"priority":"P0","keep":true,"review_reason":"崩溃影响主流程"},
-    {"topic":"文档改进建议","count":2,"affected_repos":["c/d"],"sample_urls":["u2"],"source_issues":[],"confidence":0.45,"priority":"P2","keep":true,"review_reason":"低影响"}
-  ]
-}
-"""
+            return (
+                "{"
+                '"pain_points":['
+                "{"
+                '"topic":"CLI稳定性问题",'
+                '"summary":"CLI 在执行过程中崩溃",'
+                '"category":"workflow_runtime",'
+                '"count":6,'
+                '"affected_repos":["a/b"],'
+                '"sample_urls":["u1"],'
+                '"source_issues":[],'
+                '"confidence":0.92,'
+                '"priority":"P0",'
+                '"keep":true,'
+                '"review_reason":"崩溃影响主流程"'
+                "},"
+                "{"
+                '"topic":"文档改进建议",'
+                '"summary":"需要补充安装文档",'
+                '"category":"documentation",'
+                '"count":2,'
+                '"affected_repos":["c/d"],'
+                '"sample_urls":["u2"],'
+                '"source_issues":[],'
+                '"confidence":0.45,'
+                '"priority":"P2",'
+                '"keep":true,'
+                '"review_reason":"低影响"'
+                "}"
+                "]}"
+            )
 
     runner = _ThreeRoundRunner()
     output_path = tmp_path / "x.analysis.json"
@@ -200,6 +223,106 @@ async def test_analyze_file_three_round_review_filters_low_confidence(tmp_path) 
     assert "pain_points" in runner.prompts[0]
     assert "CLI稳定性问题" in text
     assert "文档改进建议" not in text
+
+
+def test_build_report_from_reviewed_points_preserves_category() -> None:
+    """单仓分析结果应保留 category，供后续全局归并使用。"""
+    runner = IssueAgentRunner(model=None)
+
+    report = runner._build_report_from_reviewed_points(
+        [
+            {
+                "topic": "应用启动崩溃",
+                "summary": "升级后启动即崩溃",
+                "category": "startup_crash",
+                "count": 5,
+                "affected_repos": ["a/b"],
+                "sample_urls": ["u1"],
+                "source_issues": [],
+                "confidence": 0.95,
+                "priority": "P0",
+                "keep": True,
+                "review_reason": "主流程阻断",
+            }
+        ]
+    )
+
+    assert report.top_pain_points[0].category == "startup_crash"
+
+
+def test_build_report_from_reviewed_points_accepts_other_category() -> None:
+    """other 应作为合法兜底分类保留。"""
+    runner = IssueAgentRunner(model=None)
+
+    report = runner._build_report_from_reviewed_points(
+        [
+            {
+                "topic": "奇特的环境兼容问题",
+                "summary": "特殊环境下主流程异常",
+                "category": "other",
+                "count": 2,
+                "affected_repos": ["a/b"],
+                "sample_urls": ["u1"],
+                "source_issues": [],
+                "confidence": 0.7,
+                "priority": "P1",
+                "keep": True,
+                "review_reason": "暂不适合归入现有主类",
+            }
+        ]
+    )
+
+    assert report.top_pain_points[0].category == "other"
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_requires_category_in_output(tmp_path) -> None:
+    """缺少 category 的输出应触发校验失败。"""
+
+    class _MissingCategoryRunner(IssueAgentRunner):
+        def __init__(self) -> None:
+            super().__init__(model=None, retry_max_attempts=1, retry_wait_seconds=0)
+
+        async def _run_agent_query(self, prompt: str) -> str:
+            return (
+                '{"pain_points":[{"topic":"崩溃","summary":"启动即崩溃","count":1,'
+                '"affected_repos":["a/b"],"sample_urls":["u"],'
+                '"source_issues":[],"confidence":0.9,'
+                '"priority":"P1","keep":true,"review_reason":"阻断主流程"}]}'
+            )
+
+    runner = _MissingCategoryRunner()
+    output_path = tmp_path / "x.analysis.json"
+    input_path = tmp_path / "x.jsonl"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="kind=validation_error"):
+        await runner.analyze_file(input_path, output_path)
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_rejects_unknown_category(tmp_path) -> None:
+    """超出白名单的 category 应触发校验失败。"""
+
+    class _UnknownCategoryRunner(IssueAgentRunner):
+        def __init__(self) -> None:
+            super().__init__(model=None, retry_max_attempts=1, retry_wait_seconds=0)
+
+        async def _run_agent_query(self, prompt: str) -> str:
+            return (
+                '{"pain_points":[{"topic":"崩溃","summary":"启动即崩溃","category":"startup_failure",'
+                '"count":1,"affected_repos":["a/b"],"sample_urls":["u"],'
+                '"source_issues":[],"confidence":0.9,'
+                '"priority":"P1","keep":true,"review_reason":"阻断主流程"}]}'
+            )
+
+    runner = _UnknownCategoryRunner()
+    output_path = tmp_path / "x.analysis.json"
+    input_path = tmp_path / "x.jsonl"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="kind=validation_error"):
+        await runner.analyze_file(input_path, output_path)
 
 
 @pytest.mark.asyncio
