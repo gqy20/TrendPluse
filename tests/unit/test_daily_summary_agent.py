@@ -220,3 +220,46 @@ def test_daily_summary_agent_raises_after_retry_exhausted(tmp_path: Path) -> Non
         pytest.raises(ValidationError),
     ):
         agent._run_with_report_context(report)
+
+
+@pytest.mark.asyncio
+async def test_daily_summary_agent_async_retries_after_sdk_process_error(
+    tmp_path: Path,
+) -> None:
+    """SDK 进程错误应进入重试，并在后续成功时返回结果。"""
+    agent = DailySummaryAgent(
+        reports_dir=str(tmp_path / "reports" / "daily"),
+        history_index_path=str(
+            tmp_path / "data" / "history" / "daily-report-index.json"
+        ),
+        retry_max_attempts=2,
+        retry_wait_seconds=0.0,
+    )
+    report = _build_report()
+    call_count = {"value": 0}
+
+    from claude_agent_sdk import ProcessError
+
+    async def fake_run(current_report_path: Path) -> str:
+        call_count["value"] += 1
+        if call_count["value"] == 1:
+            raise ProcessError("cli failed", exit_code=1, stderr="boom")
+        return json.dumps(
+            {
+                "summary_brief": "新的总结",
+                "trend_status": "continuing",
+                "trend_delta": "新增推进",
+                "historical_basis_dates": ["2026-03-17"],
+                "historical_comparison": "相对历史有新动作",
+                "top_new_trends": ["部署"],
+                "top_continuing_trends": ["多 Agent"],
+                "confidence": 0.8,
+            },
+            ensure_ascii=False,
+        )
+
+    with patch.object(agent, "_run_agent_query_async", side_effect=fake_run):
+        result = await agent._run_with_report_context_async(report)
+
+    assert call_count["value"] == 2
+    assert result.summary_brief == "新的总结"

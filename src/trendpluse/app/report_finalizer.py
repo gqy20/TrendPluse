@@ -149,7 +149,11 @@ class DailyReportFinalizer:
         except Exception as exc:  # pragma: no cover - 防御性日志
             from trendpluse.logger import get_logger
 
-            get_logger(__name__).warning("日报总结增强失败，回退原摘要: %s", exc)
+            get_logger(__name__).warning(
+                "日报总结增强失败，回退原摘要: %s: %s",
+                type(exc).__name__,
+                exc,
+            )
 
     async def _enhance_summary_async(self, *, report, date) -> None:
         """在异步流程中保存前尝试增强日报总结。"""
@@ -165,7 +169,11 @@ class DailyReportFinalizer:
         except Exception as exc:  # pragma: no cover - 防御性日志
             from trendpluse.logger import get_logger
 
-            get_logger(__name__).warning("日报总结增强失败，回退原摘要: %s", exc)
+            get_logger(__name__).warning(
+                "日报总结增强失败，回退原摘要: %s: %s",
+                type(exc).__name__,
+                exc,
+            )
 
     def _refresh_history_index(self) -> None:
         """在日报保存后更新历史索引。"""

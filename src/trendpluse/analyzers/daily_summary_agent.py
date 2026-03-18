@@ -20,10 +20,23 @@ from trendpluse.models.signal import DailyReport
 logger = get_logger(__name__)
 
 
+def _get_retryable_exceptions() -> tuple[type[Exception], ...]:
+    """返回日报总结增强的可重试异常类型。"""
+    exceptions: list[type[Exception]] = [ValidationError, RuntimeError, ValueError]
+    try:
+        from claude_agent_sdk import ClaudeSDKError
+    except Exception:  # pragma: no cover - 依赖缺失时保持基础重试集合
+        pass
+    else:
+        exceptions.append(ClaudeSDKError)
+    return tuple(exceptions)
+
+
 class DailySummaryAgent:
     """让 Agent 在全量历史语境下增强日报总结。"""
 
     _result_model = DailySummaryResult
+    _retryable_exceptions = _get_retryable_exceptions()
 
     def __init__(
         self,
@@ -92,7 +105,7 @@ class DailySummaryAgent:
                 try:
                     response_text = self._run_agent_query(temp_path)
                     return DailySummaryResult.model_validate_json(response_text)
-                except (ValidationError, RuntimeError, ValueError) as exc:
+                except self._retryable_exceptions as exc:
                     last_exc = exc
                     if attempt >= self.retry_max_attempts:
                         break
@@ -124,7 +137,7 @@ class DailySummaryAgent:
                 try:
                     response_text = await self._run_agent_query_async(temp_path)
                     return DailySummaryResult.model_validate_json(response_text)
-                except (ValidationError, RuntimeError, ValueError) as exc:
+                except self._retryable_exceptions as exc:
                     last_exc = exc
                     if attempt >= self.retry_max_attempts:
                         break
