@@ -18,6 +18,7 @@
 - 🤖 **AI 分析**: 使用 glm-4.7 提取趋势信号和关键洞察
 - 📊 **每日报告**: 自动生成结构化的 Markdown 和 JSON 趋势分析报告
 - 🧠 **Issue 洞察**: 基于 Issue Agent 的三轮分析提取用户痛点，并输出质量分
+- 🧭 **历史感知摘要**: 默认启用日报总结 Agent，结合全量历史日报重写当天摘要
 - 🧭 **项目发现**: 自动发现候选项目并按质量分层推荐（discovery 报告）
 - 📆 **周报聚合**: 聚合近 7 天日报生成 weekly 报告
 - 🎯 **多维分类**: 工程实践、研究成果、生态动向等分类
@@ -72,6 +73,13 @@ GITHUB_TOKEN=your_github_token_here
 FEISHU_WEBHOOK_URL=your_feishu_webhook_url
 FEISHU_SECRET=your_feishu_secret
 FEISHU_AT_MOBILES=13800138000,13900139000
+
+# 日报总结 Agent（默认启用）
+ENABLE_DAILY_SUMMARY_AGENT=true
+DAILY_SUMMARY_AGENT_MAX_TURNS=20
+DAILY_SUMMARY_AGENT_MAX_BUDGET_USD=5.0
+DAILY_SUMMARY_AGENT_RETRY_MAX_ATTEMPTS=2
+DAILY_SUMMARY_AGENT_RETRY_WAIT_SECONDS=0.0
 ```
 
 ### 获取 API Key
@@ -210,6 +218,7 @@ make docs-serve
 
 报告包含：
 - 📊 当日趋势总览
+- 🧭 基于全量历史日报的当日趋势位置判断
 - 🔧 工程信号详情（折叠面板）
 - 🔬 研究信号详情（折叠面板）
 - 🚀 Release AI 总结
@@ -217,6 +226,14 @@ make docs-serve
 - 🔗 完整 JSON 数据（机器可读）
 
 ## 开发指南
+
+### 日报总结 Agent
+
+- 默认启用，前提是配置了 `ANTHROPIC_API_KEY`
+- 使用 Claude Agent SDK 的 `query()` 单次任务模式
+- 先读取历史日报索引，再由智能体自主决定需要回读哪些历史日报原文
+- 输出采用 JSON Schema + Pydantic 双重校验
+- 校验失败会按配置自动重试，多次失败后回退原摘要，不阻塞日报主流程
 
 ### 代码规范
 

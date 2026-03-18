@@ -11,9 +11,10 @@ from trendpluse.models.signal import ActivityData, DailyReport, ReleasesData
 class DailyReportFinalizer:
     """负责日报对象补全、保存与通知。"""
 
-    def __init__(self, *, builder, publisher) -> None:
+    def __init__(self, *, builder, publisher, summary_enhancer=None) -> None:
         self.builder = builder
         self.publisher = publisher
+        self.summary_enhancer = summary_enhancer
 
     def finalize_daily_report(
         self,
@@ -30,7 +31,9 @@ class DailyReportFinalizer:
             daily_inputs=daily_inputs,
             pr_signals=pr_signals,
         )
+        self._enhance_summary(report=report, date=date)
         self.publisher.save_daily(report, date)
+        self._refresh_history_index()
         self.publisher.notify_daily(report)
 
     def generate_empty_report(
@@ -65,7 +68,9 @@ class DailyReportFinalizer:
             commit_signals=commit_signals,
             releases_data=releases_data,
         )
+        self._enhance_summary(report=report, date=date)
         self.publisher.save_daily(report, date)
+        self._refresh_history_index()
         self.publisher.notify_daily(report)
         return report
 
@@ -94,3 +99,26 @@ class DailyReportFinalizer:
             total_breaking_changes=total_breaking_changes,
             override_high_impact=override_high_impact,
         )
+
+    def _enhance_summary(self, *, report, date) -> None:
+        """在保存前尝试增强日报总结。"""
+        if self.summary_enhancer is None:
+            return
+        try:
+            self.summary_enhancer.enhance(report=report, date=date)
+        except Exception as exc:  # pragma: no cover - 防御性日志
+            from trendpluse.logger import get_logger
+
+            get_logger(__name__).warning("日报总结增强失败，回退原摘要: %s", exc)
+
+    def _refresh_history_index(self) -> None:
+        """在日报保存后更新历史索引。"""
+        if self.summary_enhancer is None:
+            return
+        refresh = getattr(self.summary_enhancer, "refresh_history_index", None)
+        if refresh is None:
+            return
+        try:
+            refresh()
+        except Exception:  # pragma: no cover - 防御性日志
+            pass

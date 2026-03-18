@@ -100,9 +100,11 @@ def test_load_issue_agent_report_supports_repo_signals_and_global_aggregation(
 @patch("trendpluse.app.pipeline.build_reporting_components")
 @patch("trendpluse.app.pipeline.build_analyzer_components")
 @patch("trendpluse.app.pipeline.build_collector_components")
+@patch("trendpluse.app.bootstrap.DailySummaryAgent")
 @patch("trendpluse.app.pipeline.IssueGlobalSummarizer")
 def test_trend_pipeline_wires_issue_insight_loader(
     mock_summarizer_cls: Mock,
+    mock_daily_summary_agent_cls: Mock,
     mock_build_collectors: Mock,
     mock_build_analyzers: Mock,
     mock_build_reporting: Mock,
@@ -134,3 +136,73 @@ def test_trend_pipeline_wires_issue_insight_loader(
 
     assert reporting.builder.issue_insights_loader("2026-03-07") is summarized
     mock_summarizer.summarize.assert_called_once_with(loaded)
+
+
+@patch("trendpluse.app.bootstrap.DailySummaryAgent")
+def test_build_app_components_wires_daily_summary_agent_retry_settings(
+    mock_daily_summary_agent_cls: Mock,
+) -> None:
+    """日报总结 Agent 应接收 retry 配置。"""
+    from trendpluse.app.bootstrap import build_app_components
+
+    settings = SimpleNamespace(
+        issue_dump_dir="data/issues",
+        enable_issue_agent_analysis=False,
+        anthropic_api_key="test-key",
+        max_parallel_workers=4,
+        max_issues_per_repo=20,
+        issue_agent_model=None,
+        issue_agent_retry_max_attempts=3,
+        issue_agent_retry_wait_seconds=1.0,
+        issue_agent_review_confidence_threshold=0.6,
+        issue_agent_total_timeout_seconds=900,
+        issue_agent_max_turns=50,
+        issue_agent_max_budget_usd=10.0,
+        output_dir="reports/daily",
+        enable_daily_summary_agent=True,
+        daily_history_index_path="data/history/daily-report-index.json",
+        daily_summary_agent_model="sonnet",
+        daily_summary_agent_max_turns=21,
+        daily_summary_agent_max_budget_usd=6.5,
+        daily_summary_agent_retry_max_attempts=4,
+        daily_summary_agent_retry_wait_seconds=2.5,
+    )
+    collectors = SimpleNamespace(
+        issue_collector=SimpleNamespace(),
+        release_material_builder=SimpleNamespace(),
+        commit_material_builder=SimpleNamespace(),
+        activity_collector=SimpleNamespace(),
+        release_collector=SimpleNamespace(),
+        collector=SimpleNamespace(),
+        event_filter=SimpleNamespace(),
+        pr_reader=SimpleNamespace(),
+    )
+    analyzers = SimpleNamespace(
+        release_summarizer=SimpleNamespace(),
+        release_analyzer=SimpleNamespace(),
+        breaking_changes_detector=SimpleNamespace(),
+        commit_analyzer=SimpleNamespace(),
+        analyzer=SimpleNamespace(),
+        deduplicator=SimpleNamespace(),
+    )
+    reporting = SimpleNamespace(
+        builder=SimpleNamespace(),
+        publisher=SimpleNamespace(),
+    )
+
+    build_app_components(
+        settings=settings,
+        collectors=collectors,
+        analyzers=analyzers,
+        reporting=reporting,
+    )
+
+    mock_daily_summary_agent_cls.assert_called_once_with(
+        reports_dir="reports/daily",
+        history_index_path="data/history/daily-report-index.json",
+        model="sonnet",
+        max_turns=21,
+        max_budget_usd=6.5,
+        retry_max_attempts=4,
+        retry_wait_seconds=2.5,
+    )

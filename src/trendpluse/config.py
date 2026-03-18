@@ -228,6 +228,42 @@ class Settings(BaseSettings):
         le=100.0,
         description="Issue Agent 单文件最大预算（美元，默认10）",
     )
+    enable_daily_summary_agent: bool = Field(
+        default=True,
+        description="是否启用基于全量历史日报的日报总结 Agent",
+    )
+    daily_summary_agent_model: str | None = Field(
+        default=None,
+        description="日报总结 Agent 使用的模型名称（为空则使用默认）",
+    )
+    daily_summary_agent_max_turns: int = Field(
+        default=20,
+        ge=1,
+        le=100,
+        description="日报总结 Agent 最大轮数",
+    )
+    daily_summary_agent_max_budget_usd: float = Field(
+        default=5.0,
+        ge=0.1,
+        le=100.0,
+        description="日报总结 Agent 最大预算（美元）",
+    )
+    daily_summary_agent_retry_max_attempts: int = Field(
+        default=2,
+        ge=1,
+        le=10,
+        description="日报总结 Agent 结构化输出失败时的最大重试次数",
+    )
+    daily_summary_agent_retry_wait_seconds: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=30.0,
+        description="日报总结 Agent 重试等待时间（秒）",
+    )
+    daily_history_index_path: str = Field(
+        default="data/history/daily-report-index.json",
+        description="日报历史索引文件路径",
+    )
 
     # 飞书通知配置
     feishu_webhook_url: str = Field(

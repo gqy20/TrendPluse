@@ -9,6 +9,7 @@ TrendPulse 是一个围绕 GitHub 活动、LLM 分析和文档发布构建的自
 - 采集 GitHub PR、Release、Commit、Issue
 - 将原始数据统一转换为 `AnalysisMaterial`
 - 用 LLM 提取趋势信号、Release 总结和 Issue 洞察
+- 默认启用日报总结 Agent，结合全量历史日报增强 `summary_brief`
 - 生成 Markdown / JSON 日报
 - 可选发送飞书通知
 
@@ -29,6 +30,14 @@ TrendPulse 是一个围绕 GitHub 活动、LLM 分析和文档发布构建的自
 - 对 issue JSONL 执行三轮分析
 - 提取 `top_pain_points`、`quality_score`、`quality_status`
 - 融入 daily 报告与后续排查流程
+
+### 日报总结 Agent
+
+- 使用 Claude Agent SDK `query()` 执行单次结构化任务
+- 读取全量历史日报索引和今日草稿
+- 允许智能体自主决定回读哪些历史日报原文
+- 通过 JSON Schema 和 Pydantic 验证输出
+- 校验失败时按配置重试，最终失败则回退原摘要
 
 ## 当前架构分层
 

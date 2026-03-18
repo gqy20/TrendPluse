@@ -207,6 +207,25 @@ class DailyReport(BaseModel):
         default=None,
         description="Issue Agent 分析结果（可选）",
     )
+    trend_status: str | None = Field(default=None, description="趋势状态（可选）")
+    trend_delta: str | None = Field(default=None, description="趋势变化说明（可选）")
+    historical_basis_dates: list[str] = Field(
+        default_factory=list,
+        description="生成总结时参考的历史日期（可选）",
+    )
+    historical_comparison: str | None = Field(
+        default=None,
+        description="历史对比结论（可选）",
+    )
+    top_new_trends: list[str] = Field(default_factory=list, description="新增趋势")
+    top_continuing_trends: list[str] = Field(
+        default_factory=list,
+        description="延续趋势",
+    )
+    summary_confidence: float | None = Field(
+        default=None,
+        description="日报总结置信度（可选）",
+    )
 
 
 class WeeklyActivity(BaseModel):

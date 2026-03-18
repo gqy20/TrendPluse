@@ -9,6 +9,7 @@ from anthropic import Anthropic
 
 from trendpluse.analyzers.breaking_changes_detector import BreakingChangesDetector
 from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
+from trendpluse.analyzers.daily_summary_agent import DailySummaryAgent
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
@@ -222,6 +223,36 @@ def build_app_components(
     daily_report_finalizer = DailyReportFinalizer(
         builder=reporting.builder,
         publisher=reporting.publisher,
+        summary_enhancer=(
+            DailySummaryAgent(
+                reports_dir=getattr(settings, "output_dir", "reports/daily"),
+                history_index_path=getattr(
+                    settings,
+                    "daily_history_index_path",
+                    "data/history/daily-report-index.json",
+                ),
+                model=getattr(settings, "daily_summary_agent_model", None),
+                max_turns=getattr(settings, "daily_summary_agent_max_turns", 20),
+                max_budget_usd=getattr(
+                    settings,
+                    "daily_summary_agent_max_budget_usd",
+                    5.0,
+                ),
+                retry_max_attempts=getattr(
+                    settings,
+                    "daily_summary_agent_retry_max_attempts",
+                    2,
+                ),
+                retry_wait_seconds=getattr(
+                    settings,
+                    "daily_summary_agent_retry_wait_seconds",
+                    0.0,
+                ),
+            )
+            if getattr(settings, "enable_daily_summary_agent", False) is True
+            and bool(settings.anthropic_api_key)
+            else None
+        ),
     )
     return AppComponents(
         issue_workflow=issue_workflow,
