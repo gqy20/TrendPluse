@@ -75,13 +75,15 @@ jobs:
           import json
           import os
           from pathlib import Path
+          from trendpluse.utils.daily_summary_validation import validate_smoke_daily_summary
 
           report_path = Path("tmp/smoke/reports/daily") / f"report-{os.environ['REPORT_DATE']}.json"
           data = json.loads(report_path.read_text(encoding="utf-8"))
 
-          assert data.get("summary_brief"), "summary_brief 不能为空"
-          assert "summary_confidence" in data, "应包含 summary agent 输出字段"
+          validate_smoke_daily_summary(data)
           print("summary_brief:", data["summary_brief"])
+          print("trend_delta:", data.get("trend_delta"))
+          print("historical_comparison:", data.get("historical_comparison"))
           print("summary_confidence:", data.get("summary_confidence"))
           print("trend_status:", data.get("trend_status"))
           PY
