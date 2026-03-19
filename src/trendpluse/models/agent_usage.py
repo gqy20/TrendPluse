@@ -134,7 +134,7 @@ class AgentMetricsSummary(BaseModel):
         cls, runs: Iterable[AgentRunMetrics | None]
     ) -> AgentMetricsSummary | None:
         """从多次调用结果聚合 usage 统计。"""
-        valid_runs = [run for run in runs if run is not None]
+        valid_runs = [run for run in runs if isinstance(run, AgentRunMetrics)]
         if not valid_runs:
             return None
 
@@ -166,7 +166,9 @@ class AgentMetricsSummary(BaseModel):
         summaries: Iterable[AgentMetricsSummary | None] = (),
     ) -> AgentMetricsSummary | None:
         """合并单次运行与已聚合摘要。"""
-        parts = [summary for summary in summaries if summary is not None]
+        parts = [
+            summary for summary in summaries if isinstance(summary, AgentMetricsSummary)
+        ]
         run_summary = cls.from_runs(runs)
         if run_summary is not None:
             parts.append(run_summary)
