@@ -51,7 +51,7 @@ hide:
 <!-- monitored-repos-section:start -->
 ## 监控范围概览
 
-当前监控 **51** 个 GitHub 仓库，覆盖 **9** 个主要方向。
+当前监控 **52** 个 GitHub 仓库，覆盖 **9** 个主要方向。
 
 <div class="tp-coverage-grid">
   <div class="tp-coverage-pill">Anthropic 核心产品</div>

@@ -206,5 +206,89 @@
   {
     "url": "https://github.com/zed-industries/zed",
     "description": "面向协作与 AI 的现代编辑器。"
+  },
+  {
+    "url": "https://github.com/openclaw/openclaw",
+    "description": "OpenClaw 主仓库，个人 AI assistant 与代理生态核心项目。"
+  },
+  {
+    "url": "https://github.com/openclaw/skills",
+    "description": "OpenClaw Skills 生态与技能归档仓库。"
+  },
+  {
+    "url": "https://github.com/openai/openai-agents-python",
+    "description": "OpenAI 官方多代理工作流 Python 框架。"
+  },
+  {
+    "url": "https://github.com/microsoft/agent-framework",
+    "description": "微软的 AI Agent 与多代理工作流框架。"
+  },
+  {
+    "url": "https://github.com/block/goose",
+    "description": "可安装、执行、编辑和测试的开源 AI 代理。"
+  },
+  {
+    "url": "https://github.com/browserbase/stagehand",
+    "description": "面向浏览器自动化的 AI Agent 框架。"
+  },
+  {
+    "url": "https://github.com/Arize-ai/phoenix",
+    "description": "AI Observability 与评估平台。"
+  },
+  {
+    "url": "https://github.com/promptfoo/promptfoo",
+    "description": "面向 Prompt、Agent 与 RAG 的测试和评估工具。"
+  },
+  {
+    "url": "https://github.com/vercel/ai",
+    "description": "Vercel AI SDK，聚焦 AI 应用与代理构建。"
+  },
+  {
+    "url": "https://github.com/vercel/ai-chatbot",
+    "description": "Vercel 官方 AI Chatbot 模板项目。"
+  },
+  {
+    "url": "https://github.com/vercel/next.js",
+    "description": "Vercel 主导的 React 全栈框架。"
+  },
+  {
+    "url": "https://github.com/vercel/vercel",
+    "description": "Vercel 平台核心仓库。"
+  },
+  {
+    "url": "https://github.com/vercel/sdk",
+    "description": "Vercel 官方 TypeScript SDK。"
+  },
+  {
+    "url": "https://github.com/vercel/turborepo",
+    "description": "面向 monorepo 的高性能构建系统。"
+  },
+  {
+    "url": "https://github.com/vercel-labs/agent-browser",
+    "description": "Vercel Labs 的浏览器自动化 Agent CLI。"
+  },
+  {
+    "url": "https://github.com/vercel-labs/coding-agent-template",
+    "description": "Vercel Labs 的多代理编码平台模板。"
+  },
+  {
+    "url": "https://github.com/vercel-labs/agent-skills",
+    "description": "Vercel Labs 的 Agent Skills 示例仓库。"
+  },
+  {
+    "url": "https://github.com/vercel-labs/oss-data-analyst",
+    "description": "Vercel Labs 的开源数据分析 Agent 应用。"
+  },
+  {
+    "url": "https://github.com/vercel-labs/workflow-builder-template",
+    "description": "Vercel Labs 的 AI Workflow Builder 模板。"
+  },
+  {
+    "url": "https://github.com/microsoft/playwright",
+    "description": "微软的浏览器自动化与端到端测试框架。"
+  },
+  {
+    "url": "https://github.com/karpathy/autoresearch",
+    "description": "Karpathy 的自动化研究代理项目。"
   }
 ]

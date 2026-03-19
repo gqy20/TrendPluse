@@ -2,7 +2,7 @@
 
 ### 📋 监控项目
 
-我们监控以下 **51 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
+我们监控以下 **52 个** GitHub 仓库，涵盖 Anthropic 生态系统的核心项目：
 
 #### Anthropic 核心产品
 
@@ -30,6 +30,10 @@
   <a class="tp-entry-card" href="https://github.com/anthropics/prompt-eng-interactive-tutorial">
     <strong>anthropics/prompt-eng-interactive-tutorial</strong>
     <p>Prompt Engineering 交互式教程。</p>
+  </a>
+  <a class="tp-entry-card" href="https://github.com/openclaw/skills">
+    <strong>openclaw/skills</strong>
+    <p>OpenClaw Skills 生态与技能归档仓库。</p>
   </a>
 </div>
 
