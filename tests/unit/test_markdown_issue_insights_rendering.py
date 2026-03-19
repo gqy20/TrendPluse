@@ -1,6 +1,7 @@
 """Issue 洞察 Markdown 渲染测试。"""
 
 from trendpluse.markdown_reporter import MarkdownReporter
+from trendpluse.models.agent_usage import AgentMetricsSummary
 from trendpluse.models.issue_agent import (
     IssueAgentPainPoint,
     IssueAgentReport,
@@ -54,6 +55,15 @@ def test_render_issue_insights_includes_global_summary_and_repo_signals() -> Non
         cross_repo_item_count=1,
         other_category_count=0,
         category_coverage=1.0,
+        agent_metrics_summary=AgentMetricsSummary(
+            run_count=2,
+            models=["sonnet"],
+            total_turns=5,
+            total_duration_ms=2500,
+            total_api_duration_ms=1900,
+            total_cost_usd=0.46,
+            usage={"total_tokens": 300, "tool_uses": 3, "duration_ms": 2500},
+        ),
     )
 
     content = MarkdownReporter()._render_issue_insights(report)
@@ -62,6 +72,9 @@ def test_render_issue_insights_includes_global_summary_and_repo_signals() -> Non
     assert "跨仓库项: `1`" in content
     assert "other 分类: `0`" in content
     assert "分类覆盖率: `100.0%`" in content
+    assert "调用统计:" in content
+    assert "Tokens `300`" in content
+    assert "Cost `$0.460000`" in content
     assert "### 跨仓库共性问题" in content
     assert "### 仓库级信号" in content
     assert "owner/repo1" in content

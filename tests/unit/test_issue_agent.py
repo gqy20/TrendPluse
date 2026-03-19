@@ -62,6 +62,8 @@ async def test_run_agent_query_prefers_structured_output() -> None:
             is_error=False,
             num_turns=1,
             session_id="s1",
+            total_cost_usd=0.25,
+            usage={"total_tokens": 123, "tool_uses": 1, "duration_ms": 1},
             structured_output={
                 "candidate_pain_points": [
                     {
@@ -80,6 +82,54 @@ async def test_run_agent_query_prefers_structured_output() -> None:
 
     assert "candidate_pain_points" in text
     assert "安装失败" in text
+
+
+@pytest.mark.asyncio
+async def test_analyze_file_persists_agent_run_metrics(tmp_path) -> None:
+    runner = IssueAgentRunner(
+        model="sonnet", retry_max_attempts=1, retry_wait_seconds=0
+    )
+
+    async def fake_query(*, prompt, options=None, transport=None):
+        yield ResultMessage(
+            subtype="success",
+            duration_ms=1200,
+            duration_api_ms=900,
+            is_error=False,
+            num_turns=2,
+            session_id="sess-1",
+            total_cost_usd=0.42,
+            usage={"total_tokens": 321, "tool_uses": 2, "duration_ms": 1200},
+            structured_output={
+                "pain_points": [
+                    {
+                        "topic": "安装失败",
+                        "summary": "安装阶段报错导致无法启动",
+                        "category": "startup_crash",
+                        "count": 2,
+                        "affected_repos": ["a/b"],
+                        "sample_urls": ["u1"],
+                        "source_issues": [],
+                        "confidence": 0.91,
+                        "priority": "P1",
+                        "keep": True,
+                        "review_reason": "阻断主流程",
+                    }
+                ]
+            },
+        )
+
+    input_path = tmp_path / "a__b.jsonl"
+    output_path = tmp_path / "a__b.analysis.json"
+    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+
+    with patch("claude_agent_sdk.query", fake_query):
+        await runner.analyze_file(input_path, output_path)
+
+    payload = output_path.read_text(encoding="utf-8")
+    assert '"agent_run_metrics"' in payload
+    assert '"total_cost_usd": 0.42' in payload
+    assert '"total_tokens": 321' in payload
 
 
 @pytest.mark.asyncio

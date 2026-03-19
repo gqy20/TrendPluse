@@ -11,6 +11,7 @@ from typing import cast
 
 from pydantic import ValidationError
 
+from trendpluse.models.agent_usage import AgentMetricsSummary
 from trendpluse.models.issue_agent import (
     ISSUE_AGENT_CATEGORY_VALUES,
     IssueAgentCategory,
@@ -265,6 +266,9 @@ def load_issue_agent_report(
         cross_repo_item_count=cross_repo_item_count,
         other_category_count=other_category_count,
         category_coverage=category_coverage,
+        agent_metrics_summary=AgentMetricsSummary.from_runs(
+            [repo.agent_run_metrics for repo in repo_reports]
+        ),
     )
 
 

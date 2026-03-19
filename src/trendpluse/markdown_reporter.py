@@ -5,6 +5,7 @@
 
 from pathlib import Path
 
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
 from trendpluse.models.issue_agent import IssueAgentReport
 from trendpluse.models.signal import (
     ActivityData,
@@ -146,6 +147,10 @@ class MarkdownReporter:
                 report.issue_insights
             )
 
+        agent_metrics_section = ""
+        if report.agent_metrics_summary or report.daily_summary_agent_run_metrics:
+            agent_metrics_section = "\n\n" + self._render_agent_metrics(report)
+
         # 统计信息
         stats_section = self._render_stats(report.stats)
 
@@ -159,6 +164,7 @@ class MarkdownReporter:
             + breaking_changes_section
             + activity_section
             + issue_insights_section
+            + agent_metrics_section
             + stats_section
         )
 
@@ -185,6 +191,12 @@ class MarkdownReporter:
             f"other 分类: `{report.other_category_count}`，"
             f"分类覆盖率: `{report.category_coverage * 100:.1f}%`\n\n"
         )
+        if report.agent_metrics_summary:
+            lines.append("调用统计: ")
+            lines.append(
+                self._format_agent_metrics_summary(report.agent_metrics_summary)
+            )
+            lines.append("\n\n")
 
         if report.summary_brief:
             lines.append("### 全局摘要\n\n")
@@ -267,6 +279,61 @@ class MarkdownReporter:
                 lines.append("\n")
 
         return "".join(lines)
+
+    def _render_agent_metrics(self, report: DailyReport) -> str:
+        """渲染日报级 Agent usage 统计。"""
+        lines = ["---\n", "## 🤖 Agent 用量统计\n\n"]
+        if report.agent_metrics_summary:
+            lines.append("- **日报总计**: ")
+            lines.append(
+                self._format_agent_metrics_summary(report.agent_metrics_summary)
+            )
+            lines.append("\n")
+
+        if report.daily_summary_agent_run_metrics:
+            lines.append("- **日报总结 Agent**: ")
+            lines.append(
+                self._format_agent_run_metrics(report.daily_summary_agent_run_metrics)
+            )
+            lines.append("\n")
+
+        issue_summary = (
+            report.issue_insights.agent_metrics_summary
+            if report.issue_insights is not None
+            else None
+        )
+        if issue_summary:
+            lines.append("- **Issue Agent**: ")
+            lines.append(self._format_agent_metrics_summary(issue_summary))
+            lines.append("\n")
+
+        return "".join(lines)
+
+    def _format_agent_metrics_summary(self, summary: AgentMetricsSummary) -> str:
+        """格式化聚合的 Agent 用量摘要。"""
+        models = (
+            ", ".join(f"`{item}`" for item in summary.models) if summary.models else "-"
+        )
+        return (
+            f"调用 `{summary.run_count}` 次，"
+            f"Tokens `{summary.usage.total_tokens}`，"
+            f"Turns `{summary.total_turns}`，"
+            f"Tool Uses `{summary.usage.tool_uses}`，"
+            f"Cost `${summary.total_cost_usd:.6f}`，"
+            f"Models {models}"
+        )
+
+    def _format_agent_run_metrics(self, metrics: AgentRunMetrics) -> str:
+        """格式化单次 Agent 用量摘要。"""
+        model = f"`{metrics.model}`" if metrics.model else "`-`"
+        return (
+            f"Model {model}，"
+            f"Session `{metrics.session_id or '-'}`，"
+            f"Tokens `{metrics.usage.total_tokens}`，"
+            f"Turns `{metrics.num_turns}`，"
+            f"Tool Uses `{metrics.usage.tool_uses}`，"
+            f"Cost `${metrics.total_cost_usd:.6f}`"
+        )
 
     def _render_commit_signals(self, signals: list[Signal]) -> str:
         """渲染 commit 信号

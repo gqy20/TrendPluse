@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextvars
 import json
 import logging
 import re
@@ -15,6 +16,7 @@ from typing import Any, cast
 
 from pydantic import ValidationError
 
+from trendpluse.models.agent_usage import AgentRunMetrics
 from trendpluse.models.issue_agent import (
     ISSUE_AGENT_CATEGORY_VALUES,
     IssueAgentBatchResult,
@@ -26,6 +28,9 @@ from trendpluse.models.issue_agent import (
 )
 
 logger = logging.getLogger(__name__)
+_agent_run_metrics_var: contextvars.ContextVar[AgentRunMetrics | None] = (
+    contextvars.ContextVar("issue_agent_run_metrics", default=None)
+)
 
 # 默认超时配置
 DEFAULT_TOTAL_TIMEOUT_SECONDS = 900.0  # 单文件总超时 15 分钟
@@ -73,9 +78,11 @@ class IssueAgentRunner:
                 validated = await self._run_with_total_timeout(
                     self._run_single_round_analysis(input_path)
                 )
+                run_metrics = _agent_run_metrics_var.get()
                 repo_report = self._build_repo_signal_report(
                     input_path=input_path,
                     report=validated,
+                    agent_run_metrics=run_metrics,
                 )
                 normalized_text = json.dumps(
                     self._serialize_repo_signal_report(repo_report),
@@ -126,6 +133,7 @@ class IssueAgentRunner:
         3. 证据审核（保留判定）
         """
         prompt = self._build_analysis_prompt(input_path)
+        _agent_run_metrics_var.set(None)
         response_text = await self._run_agent_query(prompt)
         response_data = self._parse_json_like_text(response_text)
         if not isinstance(response_data, dict):
@@ -398,6 +406,17 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
                 if isinstance(message, AssistantMessage):
                     text_chunks.append(self._extract_text_blocks(message.content))
                 elif isinstance(message, ResultMessage):
+                    _agent_run_metrics_var.set(
+                        AgentRunMetrics.from_sdk_result(
+                            model=self.model,
+                            session_id=message.session_id,
+                            num_turns=message.num_turns,
+                            duration_ms=message.duration_ms,
+                            duration_api_ms=message.duration_api_ms,
+                            total_cost_usd=message.total_cost_usd,
+                            usage=message.usage,
+                        )
+                    )
                     if message.structured_output is not None:
                         structured_output = message.structured_output
                     if isinstance(message.result, str) and message.result.strip():
@@ -556,6 +575,7 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
         *,
         input_path: Path,
         report: IssueAgentReport,
+        agent_run_metrics: AgentRunMetrics | None = None,
     ) -> RepoIssueSignalReport:
         """构建单仓库 Issue 信号报告。"""
         repo = self._infer_repo_from_jsonl(input_path)
@@ -585,6 +605,11 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
             quality_score=1.0,
             quality_status="good",
             errors=[],
+            agent_run_metrics=(
+                agent_run_metrics.model_copy(deep=True)
+                if agent_run_metrics is not None
+                else None
+            ),
         )
 
     def _serialize_repo_signal_report(

@@ -6,7 +6,9 @@
 import pytest
 
 from trendpluse.markdown_reporter import MarkdownReporter
-from trendpluse.models.signal import Signal
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
+from trendpluse.models.issue_agent import IssueAgentReport
+from trendpluse.models.signal import DailyReport, ReportStats, Signal
 
 
 class TestMarkdownReporter:
@@ -120,3 +122,55 @@ class TestMarkdownReporter:
         rendered = reporter.render_signal(signal)
 
         assert "⭐⭐ (2/5)" in rendered
+
+    def test_render_report_includes_agent_metrics_section(self, reporter):
+        """测试日报应渲染 Agent token/cost 统计区块。"""
+        report = DailyReport(
+            date="2026-03-19",
+            summary_brief="测试摘要",
+            engineering_signals=[],
+            research_signals=[],
+            commit_signals=[],
+            release_signals=[],
+            stats=ReportStats(),
+            issue_insights=IssueAgentReport(
+                agent_metrics_summary=AgentMetricsSummary(
+                    run_count=2,
+                    models=["sonnet"],
+                    total_turns=4,
+                    total_duration_ms=1800,
+                    total_api_duration_ms=1400,
+                    total_cost_usd=0.33,
+                    usage={"total_tokens": 220, "tool_uses": 2, "duration_ms": 1800},
+                )
+            ),
+            daily_summary_agent_run_metrics=AgentRunMetrics(
+                model="sonnet",
+                session_id="summary-s1",
+                num_turns=2,
+                duration_ms=800,
+                duration_api_ms=600,
+                total_cost_usd=0.11,
+                usage={"total_tokens": 80, "tool_uses": 0, "duration_ms": 800},
+                raw_usage={"total_tokens": 80, "tool_uses": 0, "duration_ms": 800},
+            ),
+            agent_metrics_summary=AgentMetricsSummary(
+                run_count=3,
+                models=["sonnet"],
+                total_turns=6,
+                total_duration_ms=2600,
+                total_api_duration_ms=2000,
+                total_cost_usd=0.44,
+                usage={"total_tokens": 300, "tool_uses": 2, "duration_ms": 2600},
+            ),
+        )
+
+        rendered = reporter.render_report(report)
+
+        assert "## 🤖 Agent 用量统计" in rendered
+        assert "**日报总计**" in rendered
+        assert "Tokens `300`" in rendered
+        assert "Cost `$0.440000`" in rendered
+        assert "**日报总结 Agent**" in rendered
+        assert "Session `summary-s1`" in rendered
+        assert "**Issue Agent**" in rendered

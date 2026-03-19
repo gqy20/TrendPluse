@@ -5,6 +5,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
+
 ISSUE_AGENT_CATEGORY_VALUES = (
     "startup_crash",
     "workflow_runtime",
@@ -98,6 +100,10 @@ class RepoIssueSignalReport(BaseModel):
     quality_score: float = Field(default=0.0, ge=0.0, le=1.0)
     quality_status: str = Field(default="poor")
     errors: list[str] = Field(default_factory=list)
+    agent_run_metrics: AgentRunMetrics | None = Field(
+        default=None,
+        description="单仓 Issue Agent 调用 usage 与成本统计",
+    )
 
 
 class IssueAgentReport(BaseModel):
@@ -135,6 +141,10 @@ class IssueAgentReport(BaseModel):
         ge=0.0,
         le=1.0,
         description="痛点分类覆盖率",
+    )
+    agent_metrics_summary: AgentMetricsSummary | None = Field(
+        default=None,
+        description="Issue Agent 全量运行 usage 与成本聚合",
     )
 
 

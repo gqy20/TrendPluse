@@ -417,3 +417,71 @@ def test_summarize_issue_agent_run_status_variants() -> None:
         failed_files=3,
     )
     assert summarize_issue_agent_run_status(failed) == "failed"
+
+
+def test_load_issue_agent_report_aggregates_agent_run_metrics(tmp_path: Path) -> None:
+    base_dir = tmp_path / "issues"
+    snapshot = base_dir / "2026-02-12" / "analysis"
+    snapshot.mkdir(parents=True, exist_ok=True)
+
+    (snapshot / "repo1.analysis.json").write_text(
+        """{
+  "repo": "a/b",
+  "snapshot_date": "2026-02-12",
+  "signals": [],
+  "agent_run_metrics": {
+    "model": "sonnet",
+    "session_id": "s1",
+    "num_turns": 2,
+    "duration_ms": 1000,
+    "duration_api_ms": 800,
+    "total_cost_usd": 0.12,
+    "usage": {
+      "total_tokens": 100,
+      "tool_uses": 1,
+      "duration_ms": 1000
+    },
+    "raw_usage": {
+      "total_tokens": 100,
+      "tool_uses": 1,
+      "duration_ms": 1000
+    }
+  }
+}""",
+        encoding="utf-8",
+    )
+    (snapshot / "repo2.analysis.json").write_text(
+        """{
+  "repo": "c/d",
+  "snapshot_date": "2026-02-12",
+  "signals": [],
+  "agent_run_metrics": {
+    "model": "sonnet",
+    "session_id": "s2",
+    "num_turns": 3,
+    "duration_ms": 1500,
+    "duration_api_ms": 1200,
+    "total_cost_usd": 0.34,
+    "usage": {
+      "total_tokens": 200,
+      "tool_uses": 2,
+      "duration_ms": 1500
+    },
+    "raw_usage": {
+      "total_tokens": 200,
+      "tool_uses": 2,
+      "duration_ms": 1500
+    }
+  }
+}""",
+        encoding="utf-8",
+    )
+
+    report = load_issue_agent_report(str(base_dir), "2026-02-12")
+
+    assert report.agent_metrics_summary is not None
+    assert report.agent_metrics_summary.run_count == 2
+    assert report.agent_metrics_summary.total_cost_usd == 0.46
+    assert report.agent_metrics_summary.total_turns == 5
+    assert report.agent_metrics_summary.usage.total_tokens == 300
+    assert report.agent_metrics_summary.usage.tool_uses == 3

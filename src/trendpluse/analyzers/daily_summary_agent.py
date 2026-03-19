@@ -15,6 +15,7 @@ from trendpluse.history.daily_report_history import (
     DailyHistoryIndexBuilder,
 )
 from trendpluse.logger import get_logger
+from trendpluse.models.agent_usage import AgentRunMetrics
 from trendpluse.models.daily_summary import DailySummaryResult
 from trendpluse.models.signal import DailyReport
 
@@ -58,6 +59,7 @@ class DailySummaryAgent:
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
         self._recent_cli_stderr: deque[str] = deque(maxlen=20)
+        self._last_run_metrics: AgentRunMetrics | None = None
 
     def enhance(self, *, report: DailyReport, date) -> None:
         """增强日报总结字段。
@@ -85,6 +87,14 @@ class DailySummaryAgent:
         report.top_new_trends = result.top_new_trends
         report.top_continuing_trends = result.top_continuing_trends
         report.summary_confidence = result.confidence
+
+    def get_last_run_metrics(self) -> AgentRunMetrics | None:
+        """获取最近一次日报总结 Agent 的 usage 统计。"""
+        return (
+            self._last_run_metrics.model_copy(deep=True)
+            if self._last_run_metrics
+            else None
+        )
 
     def refresh_history_index(self) -> None:
         """重建历史日报索引。"""
@@ -203,8 +213,18 @@ class DailySummaryAgent:
 
         result_text: str | None = None
         structured_output: Any = None
+        self._last_run_metrics = None
         async for message in query(prompt=prompt, options=options):
             if isinstance(message, ResultMessage):
+                self._last_run_metrics = AgentRunMetrics.from_sdk_result(
+                    model=self.model,
+                    session_id=message.session_id,
+                    num_turns=message.num_turns,
+                    duration_ms=message.duration_ms,
+                    duration_api_ms=message.duration_api_ms,
+                    total_cost_usd=message.total_cost_usd,
+                    usage=message.usage,
+                )
                 if message.structured_output is not None:
                     structured_output = message.structured_output
                 if isinstance(message.result, str) and message.result.strip():

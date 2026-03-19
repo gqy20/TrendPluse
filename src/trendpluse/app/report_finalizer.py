@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any, cast
 
+from trendpluse.models.agent_usage import AgentMetricsSummary
 from trendpluse.models.report_inputs import DailyPipelineInputs
 from trendpluse.models.signal import ActivityData, DailyReport, ReleasesData
 
@@ -32,6 +33,7 @@ class DailyReportFinalizer:
             pr_signals=pr_signals,
         )
         self._enhance_summary(report=report, date=date)
+        self._refresh_agent_metrics(report)
         self.publisher.save_daily(report, date)
         self._refresh_history_index()
         self.publisher.notify_daily(report)
@@ -52,6 +54,7 @@ class DailyReportFinalizer:
             pr_signals=pr_signals,
         )
         await self._enhance_summary_async(report=report, date=date)
+        self._refresh_agent_metrics(report)
         self.publisher.save_daily(report, date)
         self._refresh_history_index()
         self.publisher.notify_daily(report)
@@ -89,6 +92,7 @@ class DailyReportFinalizer:
             releases_data=releases_data,
         )
         self._enhance_summary(report=report, date=date)
+        self._refresh_agent_metrics(report)
         self.publisher.save_daily(report, date)
         self._refresh_history_index()
         self.publisher.notify_daily(report)
@@ -109,6 +113,7 @@ class DailyReportFinalizer:
             releases_data=releases_data,
         )
         await self._enhance_summary_async(report=report, date=date)
+        self._refresh_agent_metrics(report)
         self.publisher.save_daily(report, date)
         self._refresh_history_index()
         self.publisher.notify_daily(report)
@@ -146,6 +151,9 @@ class DailyReportFinalizer:
             return
         try:
             self.summary_enhancer.enhance(report=report, date=date)
+            getter = getattr(self.summary_enhancer, "get_last_run_metrics", None)
+            if callable(getter):
+                report.daily_summary_agent_run_metrics = getter()
         except Exception as exc:  # pragma: no cover - 防御性日志
             from trendpluse.logger import get_logger
 
@@ -166,6 +174,9 @@ class DailyReportFinalizer:
                 await enhance_async(report=report, date=date)
             else:
                 self.summary_enhancer.enhance(report=report, date=date)
+            getter = getattr(self.summary_enhancer, "get_last_run_metrics", None)
+            if callable(getter):
+                report.daily_summary_agent_run_metrics = getter()
         except Exception as exc:  # pragma: no cover - 防御性日志
             from trendpluse.logger import get_logger
 
@@ -174,6 +185,19 @@ class DailyReportFinalizer:
                 type(exc).__name__,
                 exc,
             )
+
+    @staticmethod
+    def _refresh_agent_metrics(report: DailyReport) -> None:
+        """刷新日报级 Agent usage 聚合统计。"""
+        issue_summary = (
+            report.issue_insights.agent_metrics_summary
+            if report.issue_insights is not None
+            else None
+        )
+        report.agent_metrics_summary = AgentMetricsSummary.combine(
+            runs=[report.daily_summary_agent_run_metrics],
+            summaries=[issue_summary],
+        )
 
     def _refresh_history_index(self) -> None:
         """在日报保存后更新历史索引。"""

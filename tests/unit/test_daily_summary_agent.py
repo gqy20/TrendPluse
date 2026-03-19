@@ -54,6 +54,8 @@ async def test_daily_summary_agent_query_uses_broader_tools_and_limits(
             is_error=False,
             num_turns=3,
             session_id="s1",
+            total_cost_usd=0.123,
+            usage={"input_tokens": 11, "output_tokens": 7},
             structured_output={
                 "summary_brief": "今天的趋势在历史上属于延续中的新推进。",
                 "trend_status": "continuing",
@@ -72,6 +74,12 @@ async def test_daily_summary_agent_query_uses_broader_tools_and_limits(
     parsed = json.loads(result)
     assert parsed["trend_status"] == "continuing"
     assert parsed["confidence"] == 0.86
+    metrics = agent.get_last_run_metrics()
+    assert metrics is not None
+    assert metrics.total_cost_usd == 0.123
+    assert metrics.usage.input_tokens == 11
+    assert metrics.usage.output_tokens == 7
+    assert metrics.usage.total_tokens == 18
 
 
 @pytest.mark.asyncio

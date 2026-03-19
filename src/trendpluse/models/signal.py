@@ -8,6 +8,8 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, Field
 
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
+
 
 class CoreTrend(BaseModel):
     """核心趋势
@@ -225,6 +227,14 @@ class DailyReport(BaseModel):
     summary_confidence: float | None = Field(
         default=None,
         description="日报总结置信度（可选）",
+    )
+    daily_summary_agent_run_metrics: AgentRunMetrics | None = Field(
+        default=None,
+        description="日报总结 Agent 单次调用 usage 与成本统计",
+    )
+    agent_metrics_summary: AgentMetricsSummary | None = Field(
+        default=None,
+        description="日报内所有 Agent 调用 usage 与成本聚合",
     )
 
 
