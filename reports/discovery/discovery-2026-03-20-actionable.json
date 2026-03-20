@@ -1,0 +1,141 @@
+{
+  "date": "2026-03-20",
+  "generated_at": "2026-03-20T19:37:21.280478",
+  "total_candidates": 146,
+  "selected_count": 10,
+  "candidates": [
+    {
+      "repo": "OpenBB-finance/OpenBB",
+      "name": "OpenBB",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 研究与评估"
+    },
+    {
+      "repo": "affaan-m/everything-claude-code",
+      "name": "everything-claude-code",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "danny-avila/LibreChat",
+      "name": "LibreChat",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: Claude",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "f/prompts.chat",
+      "name": "prompts.chat",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: LLM",
+      "classified_categories": [
+        "LLM 界面",
+        "学习资源",
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "firecrawl/firecrawl",
+      "name": "firecrawl",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in TypeScript",
+      "classified_categories": [
+        "AI Agents"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "hiyouga/LlamaFactory",
+      "name": "LlamaFactory",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "机器学习框架"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "infiniflow/ragflow",
+      "name": "ragflow",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "jeecgboot/JeecgBoot",
+      "name": "JeecgBoot",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "khoj-ai/khoj",
+      "name": "khoj",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: Claude",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "lobehub/lobehub",
+      "name": "lobehub",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    }
+  ]
+}
