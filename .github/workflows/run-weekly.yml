@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       week_id: ${{ steps.week_id.outputs.value }}
+      commit_sha: ${{ steps.publish_report.outputs.commit_sha }}
 
     steps:
       - name: Checkout repository
@@ -49,11 +50,7 @@ jobs:
         env:
           INPUT_WEEK_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.week_id || '' }}
         run: |
-          if [ -n "$INPUT_WEEK_ID" ]; then
-            WEEK_ID="$INPUT_WEEK_ID"
-          else
-            WEEK_ID=$(python -c "from datetime import datetime, timedelta; from trendpluse.models.signal import WeeklyReport; current = datetime.now(); weekday = current.weekday(); this_monday = current - timedelta(days=weekday); last_sunday = this_monday - timedelta(days=1); print(WeeklyReport.get_week_id(last_sunday))")
-          fi
+          WEEK_ID=$(uv run python -c "from datetime import datetime; import os; from trendpluse.cli.report_json_common import resolve_week_id; print(resolve_week_id(os.environ.get('INPUT_WEEK_ID', ''), datetime.now()))")
           echo "value=$WEEK_ID" >> "$GITHUB_OUTPUT"
 
       - name: Generate weekly report
@@ -69,12 +66,14 @@ jobs:
         run: uv run trendpluse-generate-report-index
 
       - name: Commit weekly report
+        id: publish_report
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add reports/weekly/*.md reports/weekly/*.json docs/reports/*.md
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update weekly trend report [skip ci]"
           git push
+          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
   notify:
     name: Send Weekly Feishu Notification
@@ -85,6 +84,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.weekly.outputs.commit_sha }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
