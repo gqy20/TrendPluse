@@ -4,6 +4,7 @@
 """
 
 import asyncio
+from collections.abc import Sequence
 
 import anthropic
 from anthropic import Anthropic
@@ -62,6 +63,26 @@ class WeeklyAggregator:
             max_attempts=retry_max_attempts,
             wait_min=retry_wait_min,
             wait_max=retry_wait_max,
+        )
+
+    @staticmethod
+    def _extract_text_from_response(response) -> str:
+        """从 Anthropic 响应中提取首个文本块内容。"""
+        content: Sequence[object] = getattr(response, "content", [])
+
+        for block in content:
+            if isinstance(block, TextBlock):
+                return block.text
+
+            text = getattr(block, "text", None)
+            if isinstance(text, str) and text.strip():
+                return text
+
+        block_types = [
+            str(getattr(block, "type", type(block).__name__)) for block in content
+        ]
+        raise ValueError(
+            f"LLM 响应未包含文本块，实际内容块类型: {block_types or ['<empty>']}"
         )
 
     async def _run_with_llm_retry_async(self, func):
@@ -166,9 +187,7 @@ class WeeklyAggregator:
 
         response = self._llm_retry(_call)()
 
-        # 提取响应 - 获取第一个文本块
-        text_block: TextBlock = response.content[0]  # type: ignore[assignment]
-        result_text = text_block.text
+        result_text = self._extract_text_from_response(response)
 
         # 清理可能的 markdown 代码块标记
         result_text = self._extract_json_from_markdown(result_text)
@@ -270,8 +289,7 @@ class WeeklyAggregator:
 
         response = await self._run_with_llm_retry_async(_call)
 
-        text_block: TextBlock = response.content[0]  # type: ignore[assignment]
-        result_text = text_block.text
+        result_text = self._extract_text_from_response(response)
 
         result_text = self._extract_json_from_markdown(result_text)
 

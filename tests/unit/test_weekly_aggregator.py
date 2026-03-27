@@ -3,9 +3,12 @@
 测试 WeeklyAggregator 的 AI 整合分析功能。
 """
 
+from types import SimpleNamespace
+from typing import Any, cast
 from unittest.mock import patch
 
 import pytest
+from anthropic.types import TextBlock, ThinkingBlock
 
 from trendpluse.analyzers.weekly_aggregator import (
     WeeklyAggregationResult,
@@ -219,3 +222,61 @@ class TestWeeklyAggregator:
         )
         assert architecture_trend is not None
         assert len(architecture_trend.signal_ids) == 3
+
+    def test_aggregate_skips_thinking_block_and_reads_text_block(self, sample_signals):
+        """同步聚合应跳过 thinking block 并读取后续文本块。"""
+        aggregator = WeeklyAggregator(api_key="test-key")
+        response = SimpleNamespace(
+            content=[
+                ThinkingBlock(signature="sig", thinking="先思考", type="thinking"),
+                TextBlock(
+                    text=(
+                        '{"core_trends":[{"title":"异步架构成为本周主流",'
+                        '"theme":"architecture","description":"多个项目拥抱异步",'
+                        '"signal_ids":["sig-1","sig-2"],"impact_level":5}],'
+                        '"summary_brief":"本周聚焦异步架构演进"}'
+                    ),
+                    type="text",
+                ),
+            ]
+        )
+        aggregator._client.messages.create = lambda *args, **kwargs: response
+        aggregator._llm_retry = lambda func: func
+
+        result = aggregator.aggregate(sample_signals)
+
+        assert result.summary_brief == "本周聚焦异步架构演进"
+        assert result.core_trends[0].title == "异步架构成为本周主流"
+        assert result.total_signals == len(sample_signals)
+
+    @pytest.mark.asyncio
+    async def test_aggregate_async_skips_thinking_block_and_reads_text_block(
+        self, sample_signals
+    ):
+        """异步聚合应跳过 thinking block 并读取后续文本块。"""
+        aggregator = WeeklyAggregator(api_key="test-key")
+        response = SimpleNamespace(
+            content=[
+                ThinkingBlock(signature="sig", thinking="先思考", type="thinking"),
+                TextBlock(
+                    text=(
+                        '{"core_trends":[{"title":"模型架构创新",'
+                        '"theme":"research","description":"研究信号形成主趋势",'
+                        '"signal_ids":["sig-4"],"impact_level":5}],'
+                        '"summary_brief":"本周研究创新活跃"}'
+                    ),
+                    type="text",
+                ),
+            ]
+        )
+
+        async def _fake_retry(_func):
+            return response
+
+        cast(Any, aggregator)._run_with_llm_retry_async = _fake_retry
+
+        result = await aggregator.aggregate_async(sample_signals)
+
+        assert result.summary_brief == "本周研究创新活跃"
+        assert result.core_trends[0].title == "模型架构创新"
+        assert result.total_signals == len(sample_signals)
