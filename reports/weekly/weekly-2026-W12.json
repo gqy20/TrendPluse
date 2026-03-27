@@ -1,0 +1,901 @@
+{
+  "week_id": "2026-W12",
+  "start_date": "2026-03-16",
+  "end_date": "2026-03-22",
+  "summary_brief": "本周多智能体架构与安全沙箱成为行业标准配置的核心驱动力，Anthropic 在推理透明化和 SDK 生态扩张上全面发力，Claude 百万级上下文窗口重新定义长文档处理边界，同时性能优化与评估框架标准化推动 AI Agent 从实验性项目向生产级基础设施演进。",
+  "core_trends": [
+    {
+      "title": "多智能体架构与 SDK 生态进入正面竞争时代",
+      "theme": "architecture",
+      "description": "OpenAI Codex、Anthropic Claude Agent SDK、Google Gemini CLI 三大平台同步推出子智能体架构，标志着 AI Agent 从单任务执行向协作式多智能体系统演进。Anthropic 主动发布 OpenAI Agents SDK 到 Claude SDK 的迁移指南，降低开发者迁移成本，Agent SDK 市场进入生态竞争阶段。同时客户端-服务器架构解耦（Cline、DeepAgents）使 Agent 工具向模块化、可扩展的架构演进。",
+      "signal_ids": [
+        "eng-1",
+        "signal-1",
+        "eng-7",
+        "signal-4",
+        "signal-8",
+        "eng-003"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "AI 安全沙箱从可选功能演进为必配基础设施",
+      "theme": "safety",
+      "description": "Google Gemini CLI 推出 gVisor 沙箱、Anthropic Claude Code 推出 Seatbelt 机制，CrewAI 修复沙箱逃逸漏洞，Dify 完善企业级 API 安全（SQL 注入修复）。AI Agent 执行环境的安全隔离从实验性功能演进为行业必配标准，对生产环境部署具有重大意义。",
+      "signal_ids": [
+        "eng-4",
+        "eng-001"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "推理过程透明化成为平台级标配",
+      "theme": "capability",
+      "description": "Anthropic 全平台 SDK 同步 GA 发布 thinking-display-setting，GPT-5.4 引入 thinking 标签，Claude SDK 新增每轮对话精细 token 追踪能力。AI 推理过程透明化已成为行业共识，开发者可以更好地理解和调试 AI 决策过程。",
+      "signal_ids": [
+        "eng-3",
+        "signal-0",
+        "eng-6"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "百万级上下文窗口重新定义长文档处理标准",
+      "theme": "capability",
+      "description": "Claude Opus 4.6 和 Sonnet 4.6 正式支持 1M token 上下文窗口，输出上限提升至 128k，这对长文档处理、大规模代码库分析、多轮复杂对话场景具有革命性意义，LiteLLM 等工具同步修复了长上下文配置被默认值覆盖的 bug。",
+      "signal_ids": [
+        "eng-0",
+        "eng-2"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "AI Agent 性能优化与评估框架标准化并行推进",
+      "theme": "performance",
+      "description": "Cline 添加文件读取去重缓存、Deer-Flow 实现 MCP 工具延迟加载、LangChain 添加 Anthropic 提示缓存中间件、LangGraph 连接复用优化，性能优化成为生产环境标配。同时 DeepAgents Harbor 引入失败分类、环境指纹和统计置信区间，评估方法学向标准化和隔离化演进。",
+      "signal_ids": [
+        "eng-005",
+        "signal-9",
+        "signal-12",
+        "eng-008",
+        "res-0",
+        "eng-006"
+      ],
+      "impact_level": 4
+    }
+  ],
+  "engineering_signals": [
+    {
+      "id": "eng-1",
+      "title": "多智能体架构成为主流：子智能体系统集体涌现",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "OpenAI Codex、Google Gemini CLI、LangChain DeepAgents 三大平台在同一周期内同步推出子智能体架构，标志着 AI Agent 从单任务执行向协作式多智能体系统演进，将深刻影响 AI 应用的架构设计模式。",
+      "sources": [
+        "https://github.com/openai/codex/commit/db89b73a9cd553ac2a2afda93c9f9bdcc223540c",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/684",
+        "https://github.com/google-gemini/gemini-cli/commit/cd2096ca80c078380e8869570850f91f0c974e04",
+        "https://github.com/langchain-ai/deepagents/commit/0c5d501066e7e9cb74737740d9b3c1dfc74751a6",
+        "https://github.com/crewAIInc/crewAI/commit/32d7b4a8d4b4c70b920105be187433b445f07914"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langchain-ai/deepagents",
+        "anthropics/claude-agent-sdk-python",
+        "langchain-ai/langgraph",
+        "crewAIInc/crewAI",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "commit-3",
+        "commit-4",
+        "commit-8",
+        "pr-2"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "Claude 4.6 发布 1M token 上下文窗口，大模型进入百万级时代",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Opus 4.6 和 Sonnet 4.6 正式支持 1M token 上下文窗口，这是 AI 模型能力的重大突破，将极大提升长文档处理、代码库分析和复杂任务能力，推动 AI 应用场景的边界扩展。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/commit/2bfece86dbe3a0f9328f767fa4591929466a7b53",
+        "https://github.com/ruvnet/claude-flow/pull/1352"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-python",
+        "anthropics/anthropic-sdk-go",
+        "ErikBjare/gptme",
+        "zed-industries/zed",
+        "claude-flow"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "pr-19"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "AI 工具安全性升级：沙箱逃逸修复与企业级合规",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "CrewAI 修复关键沙箱逃逸漏洞，Dify 完善企业级 API 错误处理并修复 SQL 注入，gptme 用显式检查替代断言，表明 AI 工具正在从实验性项目向生产级安全标准演进。",
+      "sources": [
+        "https://github.com/crewAIInc/crewAI/commit/fb2323b3deb3ec62b3965526857e77a2264e4cd0",
+        "https://github.com/ErikBjare/gptme/pull/1681",
+        "https://github.com/langgenius/dify/commit/977ed79ea099c4754084231134c28322339e5cc3"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "OpenDevin/OpenDevin",
+        "ErikBjare/gptme",
+        "crewAIInc/crewAI",
+        "langgenius/dify"
+      ],
+      "source_signal_ids": [
+        "commit-10",
+        "commit-9",
+        "pr-5"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "OpenAI Codex 增强多智能体与实时能力",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "引入智能审批守护子代理、实时 WebSocket 转录模式、v2 交接支持以及 Python SDK，显著提升了多智能体协作能力和实时交互体验。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.79.0"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/anthropic-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "eng-0",
+      "title": "Claude 4.6 发布 1M 上下文窗口与 128k 输出上限，重新定义长上下文标准",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Opus 4.6 和 Sonnet 4.6 将上下文窗口扩展至100万token，输出上限提升至128k（默认64k），这对长文档处理、大规模代码生成和多轮对话场景具有革命性意义。同时LiteLLM等工具修复了长上下文配置被默认值覆盖的bug，确保1M上下文能够正确生效。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.77",
+        "https://github.com/cline/cline/pull/9834",
+        "https://github.com/ErikBjare/gptme/commit/2bfece86dbe3a0f9328f767fa4591929466a7b53"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "cline/cline",
+        "anthropics/anthropic-sdk-go",
+        "ErikBjare/gptme",
+        "anthropics/anthropic-sdk-python",
+        "anthropics/anthropic-sdk-typescript"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "release-0",
+        "pr-6"
+      ]
+    },
+    {
+      "id": "eng-001",
+      "title": "AI Agent 安全沙箱成为行业标准配置",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Google Gemini CLI 和 Anthropic Claude Code 同日分别推出 gVisor/Seatbelt 沙箱机制，标志着 AI Agent 执行环境的安全隔离从可选功能演进为必配基础设施，对生产环境部署具有重大意义。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/f6e21f50fd245c34a2eb4b2dd233d71c1a9035c2",
+        "https://github.com/anthropics/claude-code-action/pull/1066",
+        "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.18.0",
+        "https://github.com/zed-industries/zed/commit/f3fb4e04aa85dbbde6e83d28f231fc452cd8863f",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.78"
+      ],
+      "related_repos": [
+        "google-gemini/gemini-cli",
+        "anthropics/anthropic-sdk-java",
+        "anthropics/claude-code",
+        "anthropics/claude-code-action",
+        "zed-industries/zed"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "release-0",
+        "release-6",
+        "commit-14",
+        "pr-12"
+      ]
+    },
+    {
+      "id": "eng-003",
+      "title": "Agent SDK 生态竞争白热化：Anthropic 主动争夺 OpenAI 开发者",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic 官方发布 OpenAI Agents SDK 到 Claude Agent SDK 的详细迁移指南，提供完整的 primitives 映射和示例代码，这是厂商主动降低迁移成本、加速生态扩张的战略举措，Agent SDK 市场进入正面竞争阶段。",
+      "sources": [
+        "https://github.com/anthropics/claude-cookbooks/pull/449",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.77",
+        "https://github.com/anthropics/anthropic-sdk-python/commit/5ccd6b4122c83f5f1ca5bfefe496a6a257a1da21"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-python",
+        "anthropics/claude-cookbooks",
+        "openai/openai-agents-sdk",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "commit-1",
+        "release-2"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "AI 推理过程可视化成为平台级标配功能",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic 在 Python、Go、Java、TypeScript 全平台 SDK 同步 GA 发布 thinking-display-setting，GPT-5.4 也引入 thinking 标签，表明 AI 推理过程透明化已成为行业共识，开发者可以更好地理解和调试 AI 决策。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-python/commit/fc9f47e8e4feaaefaef125f80de9e6177d2c3283",
+        "https://github.com/ErikBjare/gptme/pull/1685",
+        "https://github.com/ErikBjare/gptme/pull/1689",
+        "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.85.0"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-python",
+        "anthropics/anthropic-sdk-go",
+        "ErikBjare/gptme",
+        "anthropics/anthropic-sdk-typescript",
+        "anthropics/anthropic-sdk-java"
+      ],
+      "source_signal_ids": [
+        "commit-1",
+        "release-0",
+        "pr-7",
+        "pr-6"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "IDE 深度集成 AI Agent，编辑器演变为 AI 协作环境",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Zed 编辑器深度集成 AI 智能体面板和 Worktree，Cline 全面修复 Windows 平台兼容性，表明 IDE 正在从代码编辑器演变为 AI 协作开发环境，跨平台支持成为基础要求。",
+      "sources": [
+        "https://github.com/cline/cline/commit/57ed14d1b1c2866070886401a67d650187c8a741",
+        "https://github.com/zed-industries/zed/commit/c17bc26b3a8fddca20b595805cfa558334787fcc"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "anomalyco/opencode",
+        "cline/cline",
+        "zed-industries/zed"
+      ],
+      "source_signal_ids": [
+        "commit-13",
+        "commit-6"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "客户端-服务器架构解耦成为 Agent 工具新范式",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "DeepAgents 实现 CLI 与远程 LangGraph 服务器的解耦，OpenDevin 引入可配置沙箱复用策略，OpenCode 进行 Effect 模式服务重构，表明 Agent 工具正在向模块化、可扩展的架构演进。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/0c5d501066e7e9cb74737740d9b3c1dfc74751a6",
+        "https://github.com/anomalyco/opencode/commit/69381f6aea7cec16b469e6242137f0262aac24c5",
+        "https://github.com/OpenDevin/OpenDevin/commit/d591b140c8039ceecb589e4d3e9cf67881d16bc1"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "OpenDevin/OpenDevin",
+        "anomalyco/opencode",
+        "cline/cline",
+        "langchain-ai/deepagents",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-4",
+        "commit-5",
+        "commit-16"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-0",
+      "title": "AI 代理评估方法学升级：失败分类、环境指纹与统计置信区间",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "DeepAgents Harbor为AI代理评估添加失败分类、环境指纹和统计置信区间，使评估结果更具科学性和可重复性。这对于研究AI代理的行为模式、比较不同方法的性能差异、以及生产环境中的质量保证都有重要价值。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/377d16b6e2ac4c8f8352c6e1230184728136e1ca"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "commit-19"
+      ]
+    }
+  ],
+  "daily_reports_count": 7,
+  "total_prs_analyzed": 140,
+  "high_impact_signals": 19,
+  "total_commits": 4693,
+  "total_releases": 395,
+  "weekly_activity": {
+    "total_commits": 4693,
+    "active_repos_count": 73,
+    "top_repos": [
+      {
+        "repo": "zed-industries/zed",
+        "commits": 449,
+        "top_contributors": [
+          "kaikozlov",
+          "cameron1024",
+          "bennetbo"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 400,
+        "top_contributors": [
+          "obviyus",
+          "huntharo",
+          "scoootscooob"
+        ]
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 400,
+        "top_contributors": [
+          "clawdhub[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 311,
+        "top_contributors": [
+          "vtrivedy",
+          "dependabot[bot]",
+          "hwchase17"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 307,
+        "top_contributors": [
+          "ghost91-",
+          "rekram1-node",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 288,
+        "top_contributors": [
+          "CodingOnStar",
+          "BeautyyuYanli",
+          "tmimmanuel"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 288,
+        "top_contributors": [
+          "pakrym-oai",
+          "eternal-openai",
+          "iceweasel-oai"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 222,
+        "top_contributors": [
+          "cynthialong0-0",
+          "gemini-cli-robot",
+          "alisa-alisa"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 149,
+        "top_contributors": [
+          "ErikBjare",
+          "dependabot[bot]",
+          "TimeToLearnAlice"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 128,
+        "top_contributors": [
+          "chuckbutkus",
+          "tofarr",
+          "cbagwell"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 112,
+        "top_contributors": [
+          "unstubbable",
+          "timneutkens",
+          "sokra"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 110,
+        "top_contributors": [
+          "Paulie-Aditya",
+          "Himanshu-Sangshetti",
+          "mintlify[bot]"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 97,
+        "top_contributors": [
+          "ehutt",
+          "cephalization",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 92,
+        "top_contributors": [
+          "santiagxf",
+          "dependabot[bot]",
+          "jackjin1997"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 82,
+        "top_contributors": [
+          "upchunk",
+          "howardpen9",
+          "ag-mout"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 79,
+        "top_contributors": [
+          "lgrammel",
+          "t-mdo",
+          "GidianB"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 66,
+        "top_contributors": [
+          "ergunsh",
+          "ricardo-agz",
+          "gscho"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 63,
+        "top_contributors": [
+          "Gujiassh",
+          "dancinglightning",
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 62,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "dtmeadows",
+          "nikblanchet"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 62,
+        "top_contributors": [
+          "noahzweben",
+          "tobinsouth",
+          "k6l3"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 60,
+        "top_contributors": [
+          "jl-codes",
+          "dependabot[bot]",
+          "robinnewhouse"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 60,
+        "top_contributors": [
+          "MagicCube",
+          "Gujiassh",
+          "hetaoBackend"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 59,
+        "top_contributors": [
+          "mldangelo-oai",
+          "dependabot[bot]",
+          "faizan-oai"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 53,
+        "top_contributors": [
+          "giles17",
+          "alliscode",
+          "eavanvalkenburg"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 52,
+        "top_contributors": [
+          "longquanzheng",
+          "dependabot[bot]",
+          "hinthornw"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 51,
+        "top_contributors": [
+          "github-actions[bot]",
+          "octo-patch",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 51,
+        "top_contributors": [
+          "rabi",
+          "fresh3nough",
+          "lifeizhou-ap"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 50,
+        "top_contributors": [
+          "10ishq",
+          "lorenzejay",
+          "mattatcha"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 49,
+        "top_contributors": [
+          "FelmonFekadu",
+          "elainegan-openai",
+          "adityasingh2400"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 48,
+        "top_contributors": [
+          "karpetrosyan",
+          "dtmeadows",
+          "stephen"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 48,
+        "top_contributors": [
+          "anthonyshew",
+          "EmojiPati",
+          "styfle"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 47,
+        "top_contributors": [
+          "dgozman",
+          "yury-s",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 39,
+        "top_contributors": [
+          "daidi",
+          "mykmelez",
+          "jin-2-kakaoent"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 30,
+        "top_contributors": [
+          "kausmeows",
+          "sannya-singal",
+          "ArivunidhiA"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 30,
+        "top_contributors": [
+          "weiguangli-io",
+          "dependabot[bot]",
+          "roji"
+        ]
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 26,
+        "top_contributors": [
+          "paul-gauthier",
+          "claui"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 23,
+        "top_contributors": [
+          "miguelg719",
+          "seanmcguire12",
+          "tkattkat"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 22,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 20,
+        "top_contributors": [
+          "qing-ant",
+          "omid-ant",
+          "Bortlesboat"
+        ]
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 20,
+        "top_contributors": [
+          "shanemort1982",
+          "dependabot[bot]",
+          "mvanhorn"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 17,
+        "top_contributors": [
+          "Otto-AGPT",
+          "0ubbe",
+          "Pwuts"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 16,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 10,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 9,
+        "top_contributors": [
+          "ddworken",
+          "km-anthropic",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 6,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 6,
+        "top_contributors": [
+          "shuding",
+          "bhrigu123"
+        ]
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 5,
+        "top_contributors": [
+          "AndyMik90"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 5,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 5,
+        "top_contributors": [
+          "jeremyphilemon",
+          "haydenbleasel",
+          "dancer"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 4,
+        "top_contributors": [
+          "garyzhang99",
+          "DavdGao"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 2,
+        "top_contributors": [
+          "PedramNavid"
+        ]
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 2,
+        "top_contributors": [
+          "karpathy"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 1,
+        "top_contributors": [
+          "cc-skill-sync[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  }
+}
