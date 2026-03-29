@@ -4,15 +4,20 @@
 """
 
 import asyncio
+import json
 from collections.abc import Sequence
+from json import JSONDecodeError
 
 import anthropic
 from anthropic import Anthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, Field
 
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import CoreTrend
 from trendpluse.utils.retry import create_anthropic_retry_decorator
+
+logger = get_logger(__name__)
 
 
 class WeeklyAggregationResult(BaseModel):
@@ -84,6 +89,28 @@ class WeeklyAggregator:
         raise ValueError(
             f"LLM 响应未包含文本块，实际内容块类型: {block_types or ['<empty>']}"
         )
+
+    def _parse_result_text(self, result_text: str) -> WeeklyAggregationResult:
+        """解析 LLM 返回的聚合 JSON。"""
+        cleaned_text = self._extract_json_from_markdown(result_text)
+
+        try:
+            return WeeklyAggregationResult.model_validate_json(cleaned_text)
+        except Exception:
+            try:
+                data = json.loads(cleaned_text)
+            except JSONDecodeError:
+                normalized = cleaned_text.strip()
+                if normalized.startswith("{") and normalized.endswith("}"):
+                    normalized = normalized.replace("True", "true").replace(
+                        "False", "false"
+                    )
+                    normalized = normalized.replace("'", '"')
+                    data = json.loads(normalized)
+                else:
+                    raise
+
+            return WeeklyAggregationResult.model_validate(data)
 
     async def _run_with_llm_retry_async(self, func):
         retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
@@ -185,39 +212,32 @@ class WeeklyAggregator:
                 ],
             )
 
-        response = self._llm_retry(_call)()
+        last_error: Exception | None = None
 
-        result_text = self._extract_text_from_response(response)
+        for attempt in range(1, self._retry_max_attempts + 1):
+            response = self._llm_retry(_call)()
+            result_text = self._extract_text_from_response(response)
 
-        # 清理可能的 markdown 代码块标记
-        result_text = self._extract_json_from_markdown(result_text)
-
-        # 尝试验证 JSON，如果失败则尝试使用 Python 模式解析
-        try:
-            result = WeeklyAggregationResult.model_validate_json(result_text)
-        except Exception:
-            # 尝试使用 Python eval 模式解析（LLM 可能返回 Python 字典格式）
-            import json
-
-            # 尝试直接解析
             try:
-                data = json.loads(result_text)
-            except json.JSONDecodeError:
-                # 如果失败，尝试移除可能的 Python 格式问题
-                cleaned = result_text.strip()
-                if cleaned.startswith("{") and cleaned.endswith("}"):
-                    # 尝试替换 Python 特有的格式
-                    cleaned = cleaned.replace("True", "true").replace("False", "false")
-                    cleaned = cleaned.replace("'", '"')
-                    data = json.loads(cleaned)
-                else:
+                result = self._parse_result_text(result_text)
+            except Exception as exc:
+                last_error = exc
+                logger.warning(
+                    "周报聚合结果解析失败，第 %s/%s 次重试: %s",
+                    attempt,
+                    self._retry_max_attempts,
+                    exc,
+                )
+                if attempt >= self._retry_max_attempts:
                     raise
+                continue
 
-            # 验证并创建结果
-            result = WeeklyAggregationResult.model_validate(data)
+            result.total_signals = len(signals)
+            return result
 
-        result.total_signals = len(signals)
-        return result
+        if last_error is not None:
+            raise last_error
+        raise RuntimeError("周报聚合未返回结果")
 
     async def aggregate_async(self, signals: list) -> WeeklyAggregationResult:
         if not signals:
@@ -287,32 +307,32 @@ class WeeklyAggregator:
                 messages=[{"role": "user", "content": prompt}],
             )
 
-        response = await self._run_with_llm_retry_async(_call)
+        last_error: Exception | None = None
 
-        result_text = self._extract_text_from_response(response)
-
-        result_text = self._extract_json_from_markdown(result_text)
-
-        try:
-            result = WeeklyAggregationResult.model_validate_json(result_text)
-        except Exception:
-            import json
+        for attempt in range(1, self._retry_max_attempts + 1):
+            response = await self._run_with_llm_retry_async(_call)
+            result_text = self._extract_text_from_response(response)
 
             try:
-                data = json.loads(result_text)
-            except json.JSONDecodeError:
-                cleaned = result_text.strip()
-                if cleaned.startswith("{") and cleaned.endswith("}"):
-                    cleaned = cleaned.replace("True", "true").replace("False", "false")
-                    cleaned = cleaned.replace("'", '"')
-                    data = json.loads(cleaned)
-                else:
+                result = self._parse_result_text(result_text)
+            except Exception as exc:
+                last_error = exc
+                logger.warning(
+                    "异步周报聚合结果解析失败，第 %s/%s 次重试: %s",
+                    attempt,
+                    self._retry_max_attempts,
+                    exc,
+                )
+                if attempt >= self._retry_max_attempts:
                     raise
+                continue
 
-            result = WeeklyAggregationResult.model_validate(data)
+            result.total_signals = len(signals)
+            return result
 
-        result.total_signals = len(signals)
-        return result
+        if last_error is not None:
+            raise last_error
+        raise RuntimeError("异步周报聚合未返回结果")
 
     def _extract_json_from_markdown(self, response: str) -> str:
         """从 markdown 代码块中提取 JSON
