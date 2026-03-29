@@ -216,6 +216,38 @@
     "description": "OpenClaw Skills 生态与技能归档仓库。"
   },
   {
+    "url": "https://github.com/openclaw/clawhub",
+    "description": "OpenClaw 官方技能目录与发现入口。"
+  },
+  {
+    "url": "https://github.com/openclaw/acpx",
+    "description": "OpenClaw 官方 ACP 无头 CLI 客户端。"
+  },
+  {
+    "url": "https://github.com/openclaw/lobster",
+    "description": "OpenClaw 官方工作流 shell 与自动化编排工具。"
+  },
+  {
+    "url": "https://github.com/openclaw/openclaw-windows-node",
+    "description": "OpenClaw 官方 Windows 配套节点与系统托盘套件。"
+  },
+  {
+    "url": "https://github.com/cloudflare/moltworker",
+    "description": "Cloudflare Workers 上运行 OpenClaw 的重要部署方案。"
+  },
+  {
+    "url": "https://github.com/ValueCell-ai/ClawX",
+    "description": "OpenClaw 生态中较活跃的桌面图形界面项目。"
+  },
+  {
+    "url": "https://github.com/TianyiDataScience/openclaw-control-center",
+    "description": "面向 OpenClaw 的本地控制中心与可观测性面板。"
+  },
+  {
+    "url": "https://github.com/BytePioneer-AI/openclaw-china",
+    "description": "OpenClaw 的中文插件与国内 IM 平台集成项目。"
+  },
+  {
     "url": "https://github.com/openai/openai-agents-python",
     "description": "OpenAI 官方多代理工作流 Python 框架。"
   },
