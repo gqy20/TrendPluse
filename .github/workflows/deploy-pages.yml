@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Run Daily Analysis"]
+    workflows: ["Run Daily Analysis", "Weekly Report"]
     types:
       - completed
     branches:
