@@ -4,15 +4,15 @@
 
 ## 最新日报
 
-### [2026-03-31](report-2026-03-31.md){ .tp-date-badge }
+### [2026-04-02](report-2026-04-02.md){ .tp-date-badge }
 
-> 2026年3月31日是AI Agent生态系统历史上规模最大、密度最高的单日：Anthropic首次实现Python/TypeScript/Go/Java四语言SDK同日同步大版本发布，标志着跨语言SDK标准化进入新阶段。多个主流Agent框架（OpenDevin、Agno、Microsoft Agent Framework、OpenAI agents-python、block/goose、LangGraph）同日密集发布新版本，Vercel AI SDK同步更新30+个包，60+个Release铺天盖地。历史上此前最高单日为2026年3月17日（signal_count=51），今日Issue Agent更捕获5个P0级跨仓库问题——其中thinking_blocks字段导致54个仓库在Claude→非Claude provider切换时报错，规模空前。今日最大新增演进是Context Engineering正式成为专业领域（Claude Cookbook发布memory/compaction/tool-clearing策略库），供应链安全则延续3月中旬以来的高频议题（axios事件触发依赖锁定潮）。整体而言，今日代表AI Agent生态从"框架竞争期"全面迈入"生态成熟期"。
+> Agent 开发框架生态持续成熟，微软将 Semantic Kernel 重命名为 Agent Framework 并发布 1.0.0 正式版，标志着行业对 AI Agent 开发范式的标准化趋势。gptme 项目系统性扩展评估体系至 21 个 practical suites，Claude Code 版本回退至 2.1.87 表明版本质量监控机制在加强。同时安全修复跨多个仓库传播，Mem0 路径遍历漏洞和 Claude Code PowerShell 安全问题得到修复。
 
 | 指标 | 数值 | 指标 | 数值 |
 |------|------|------|------|
-| 分析 PR 数 | 16 | 高影响信号 | 20 |
-| 涉及仓库数 | 25 | Release 数 | 61 |
-| Commit 数 | 1028 | Breaking Changes | 3 |
+| 分析 PR 数 | 16 | 高影响信号 | 11 |
+| 涉及仓库数 | 27 | Release 数 | 238 |
+| Commit 数 | 1120 | Breaking Changes | 6 |
 
 ## 最新周报
 
@@ -26,6 +26,7 @@
 
 | 日期 | 高影响 | 分析 PR | Release | 报告 |
 |------|----------|---------|---------|------|
+| 2026-03-31 | 20 | 16 | 61 | [查看](report-2026-03-31.md) |
 | 2026-03-30 | 10 | 18 | 27 | [查看](report-2026-03-30.md) |
 | 2026-03-29 | 6 | 14 | 13 | [查看](report-2026-03-29.md) |
 | 2026-03-27 | 7 | 14 | 95 | [查看](report-2026-03-27.md) |
@@ -35,7 +36,6 @@
 | 2026-03-21 | 10 | 20 | 92 | [查看](report-2026-03-21.md) |
 | 2026-03-20 | 9 | 20 | 132 | [查看](report-2026-03-20.md) |
 | 2026-03-19 | 12 | 20 | 104 | [查看](report-2026-03-19.md) |
-| 2026-03-18 | 10 | 20 | 24 | [查看](report-2026-03-18.md) |
 
 ## 最近周报
 
