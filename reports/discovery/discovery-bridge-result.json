@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-04-06-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-04-07-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -16,10 +16,6 @@
     },
     {
       "repo": "danny-avila/LibreChat",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "datawhalechina/hello-agents",
       "category": "Agentic AI 核心框架"
     },
     {
@@ -44,6 +40,10 @@
     },
     {
       "repo": "jeecgboot/JeecgBoot",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "lobehub/lobehub",
       "category": "Agentic AI 核心框架"
     }
   ],
