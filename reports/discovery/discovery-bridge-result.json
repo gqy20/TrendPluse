@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-04-07-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-04-08-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -7,15 +7,15 @@
   "selected_count": 10,
   "selected_items": [
     {
+      "repo": "NousResearch/hermes-agent",
+      "category": "Agentic AI 核心框架"
+    },
+    {
       "repo": "OpenBB-finance/OpenBB",
       "category": "Anthropic 研究与评估"
     },
     {
       "repo": "affaan-m/everything-claude-code",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "danny-avila/LibreChat",
       "category": "Agentic AI 核心框架"
     },
     {
