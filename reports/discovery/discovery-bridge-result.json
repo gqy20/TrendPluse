@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-04-12-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-04-13-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -39,11 +39,11 @@
       "category": "Agentic AI 核心框架"
     },
     {
-      "repo": "hesreallyhim/awesome-claude-code",
-      "category": "Anthropic 工具与集成"
+      "repo": "hiyouga/LlamaFactory",
+      "category": "Agentic AI 核心框架"
     },
     {
-      "repo": "hiyouga/LlamaFactory",
+      "repo": "infiniflow/ragflow",
       "category": "Agentic AI 核心框架"
     }
   ],
