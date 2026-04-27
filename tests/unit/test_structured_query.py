@@ -327,6 +327,136 @@ class TestQuerySync:
         assert result.output.value == 50
 
 
+# ============ 重试机制测试 ============
+
+
+class TestRetryMechanism:
+    """SDK 调用重试机制测试。"""
+
+    def test_default_retry_params(self):
+        """默认重试参数。"""
+        agent = StructuredQuery[SampleOutput](output_model=SampleOutput)
+        assert agent.retry_max_attempts == 3
+        assert agent.retry_wait_seconds == 1.0
+
+    def test_custom_retry_params(self):
+        """自定义重试参数。"""
+        agent = StructuredQuery[SampleOutput](
+            output_model=SampleOutput,
+            retry_max_attempts=5,
+            retry_wait_seconds=2.0,
+        )
+        assert agent.retry_max_attempts == 5
+        assert agent.retry_wait_seconds == 2.0
+
+    @pytest.mark.asyncio
+    async def test_retry_on_validation_error(self):
+        """验证错误时重试并最终成功。"""
+        call_count = 0
+        retry_output = '{"name": "retry_ok", "value": 42, "status": "active"}'
+
+        async def mock_query_with_retry(prompt, options):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                # 第一次返回无效 JSON，触发验证错误
+                yield create_mock_result_message(
+                    structured_output='{"name": "test", "value": "not_an_int"}'
+                )
+            else:
+                # 第二次返回有效数据
+                yield create_mock_result_message(structured_output=retry_output)
+
+        with patch(
+            "trendpluse.analyzers.structured_query.query", mock_query_with_retry
+        ):
+            agent = StructuredQuery[SampleOutput](
+                output_model=SampleOutput,
+                retry_max_attempts=3,
+                retry_wait_seconds=0.01,
+            )
+            result = await agent.query_async("测试")
+
+        assert result.output.name == "retry_ok"
+        assert result.output.value == 42
+        assert call_count == 2
+
+    @pytest.mark.asyncio
+    async def test_retry_exhausted_raises(self):
+        """重试次数用尽后抛出异常。"""
+        call_count = 0
+
+        async def mock_query_always_fail(prompt, options):
+            nonlocal call_count
+            call_count += 1
+            yield create_mock_result_message(
+                structured_output='{"name": "test", "value": "always_fail"}'
+            )
+
+        with patch(
+            "trendpluse.analyzers.structured_query.query", mock_query_always_fail
+        ):
+            agent = StructuredQuery[SampleOutput](
+                output_model=SampleOutput,
+                retry_max_attempts=3,
+                retry_wait_seconds=0.01,
+            )
+            with pytest.raises(Exception):
+                await agent.query_async("测试")
+
+        assert call_count == 3
+
+    @pytest.mark.asyncio
+    async def test_no_retry_on_success_first_attempt(self):
+        """第一次就成功时不重试。"""
+        call_count = 0
+
+        async def mock_query_success(prompt, options):
+            nonlocal call_count
+            call_count += 1
+            yield create_mock_result_message(
+                structured_output='{"name": "first", "value": 100, "status": "active"}'
+            )
+
+        with patch("trendpluse.analyzers.structured_query.query", mock_query_success):
+            agent = StructuredQuery[SampleOutput](
+                output_model=SampleOutput,
+                retry_max_attempts=3,
+                retry_wait_seconds=0.01,
+            )
+            result = await agent.query_async("测试")
+
+        assert result.output.name == "first"
+        assert call_count == 1
+
+    @pytest.mark.asyncio
+    async def test_retry_on_empty_structured_output(self):
+        """空 structured_output 时重试。"""
+        call_count = 0
+        after_output = '{"name": "after", "value": 50, "status": "inactive"}'
+
+        async def mock_query_with_empty(prompt, options):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                yield create_mock_result_message(structured_output=None, result=None)
+            else:
+                yield create_mock_result_message(structured_output=after_output)
+
+        with patch(
+            "trendpluse.analyzers.structured_query.query", mock_query_with_empty
+        ):
+            agent = StructuredQuery[SampleOutput](
+                output_model=SampleOutput,
+                retry_max_attempts=3,
+                retry_wait_seconds=0.01,
+            )
+            result = await agent.query_async("测试")
+
+        assert result.output.name == "after"
+        assert call_count == 2
+
+
 # ============ 错误处理测试 ============
 
 

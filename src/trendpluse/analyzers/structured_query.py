@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from typing import Any, TypeVar
 
 from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -21,8 +21,23 @@ class QueryResult[T: BaseModel]:
     session_id: str
 
 
+def _get_retryable_exceptions() -> tuple[type[Exception], ...]:
+    """返回可重试的异常类型。"""
+    exceptions: list[type[Exception]] = [ValidationError, RuntimeError]
+    try:
+        from claude_agent_sdk import ClaudeSDKError
+    except Exception:
+        pass
+    else:
+        exceptions.append(ClaudeSDKError)
+    return tuple(exceptions)
+
+
+RETRYABLE_EXCEPTIONS = _get_retryable_exceptions()
+
+
 class StructuredQuery[T: BaseModel]:
-    """结构化输出封装，依赖 SDK 内置 ReAsk 重试。"""
+    """结构化输出封装，支持 SDK 调用重试。"""
 
     def __init__(
         self,
@@ -33,6 +48,8 @@ class StructuredQuery[T: BaseModel]:
         max_turns: int = 50,
         max_budget_usd: float = 10.0,
         stderr_callback: Callable[[str], None] | None = None,
+        retry_max_attempts: int = 3,
+        retry_wait_seconds: float = 1.0,
     ) -> None:
         self.output_model = output_model
         self.model = model
@@ -40,9 +57,31 @@ class StructuredQuery[T: BaseModel]:
         self.max_turns = max_turns
         self.max_budget_usd = max_budget_usd
         self.stderr_callback = stderr_callback
+        self.retry_max_attempts = retry_max_attempts
+        self.retry_wait_seconds = retry_wait_seconds
 
     async def query_async(self, prompt: str) -> QueryResult[T]:
-        """单次查询，依赖 SDK 内置 ReAsk 重试。"""
+        """单次查询，支持验证错误重试。"""
+        last_exc: Exception | None = None
+
+        for attempt in range(1, self.retry_max_attempts + 1):
+            try:
+                return await self._execute_query(prompt)
+            except RETRYABLE_EXCEPTIONS as exc:
+                last_exc = exc
+                if attempt >= self.retry_max_attempts:
+                    break
+                await asyncio.sleep(self.retry_wait_seconds)
+            except Exception:
+                # 非重试异常直接抛出
+                raise
+
+        # 所有重试都失败
+        assert last_exc is not None
+        raise last_exc
+
+    async def _execute_query(self, prompt: str) -> QueryResult[T]:
+        """执行单次查询。"""
         options = ClaudeAgentOptions(
             model=self.model,
             allowed_tools=self.allowed_tools,
