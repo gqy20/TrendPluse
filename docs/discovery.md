@@ -6,13 +6,13 @@
 
 ## 本期概览
 
-### [2026-04-26](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-26.md){ .tp-date-badge }
+### [2026-04-27](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-27.md){ .tp-date-badge }
 
 | 指标 | 数值 | 指标 | 数值 |
 |------|------|------|------|
 | 总发现数 | 200 | 通过质量评估 | 200 |
-| 高优先级 | 129 | 去重移除 | 33 |
-| 已在监控 | 24 | 完整报告 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-26.md) |
+| 高优先级 | 128 | 去重移除 | 33 |
+| 已在监控 | 24 | 完整报告 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-27.md) |
 
 ### 分类分布 Top 5
 
@@ -35,6 +35,7 @@
 
 | 日期 | 总发现 | 高优先级 | 报告 |
 |------|--------|----------|------|
+| 2026-04-27 | 200 | 128 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-27.md) |
 | 2026-04-26 | 200 | 129 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-26.md) |
 | 2026-04-25 | 200 | 131 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-25.md) |
 | 2026-04-24 | 200 | 132 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-24.md) |
@@ -44,4 +45,3 @@
 | 2026-04-20 | 200 | 134 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-20.md) |
 | 2026-04-19 | 200 | 135 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-19.md) |
 | 2026-04-18 | 200 | 137 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-18.md) |
-| 2026-04-17 | 200 | 133 | [查看](https://github.com/gqy20/TrendPluse/blob/master/reports/discovery/discovery-2026-04-17.md) |
