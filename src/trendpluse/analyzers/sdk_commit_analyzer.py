@@ -121,7 +121,7 @@ class SDKCommitAnalyzer:
         *,
         model: str | None = None,
         max_turns: int = 30,
-        max_budget_usd: float = 3.0,
+        max_budget_usd: float = 10.0,
         batch_size: int = 200,
     ) -> None:
         """初始化分析器。
