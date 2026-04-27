@@ -12,6 +12,7 @@ from datetime import UTC, datetime
 from functools import wraps
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
+from typing import Any
 from unittest.mock import Mock
 
 import pytest
@@ -406,3 +407,124 @@ def _build_freezegun_stub() -> ModuleType:
 
 
 _maybe_stub("freezegun", _build_freezegun_stub)
+
+
+# claude_agent_sdk
+
+
+def _build_claude_agent_sdk_stub() -> ModuleType:
+    stub = ModuleType("claude_agent_sdk")
+
+    # ResultMessage mock
+    class ResultMessage:
+        def __init__(
+            self,
+            session_id: str = "test-session",
+            structured_output: Any = None,
+            result: str | None = None,
+            num_turns: int = 1,
+            duration_ms: int = 1000,
+            duration_api_ms: int = 500,
+            total_cost_usd: float = 0.01,
+            usage: dict | None = None,
+        ):
+            self.session_id = session_id
+            self.structured_output = structured_output
+            self.result = result
+            self.num_turns = num_turns
+            self.duration_ms = duration_ms
+            self.duration_api_ms = duration_api_ms
+            self.total_cost_usd = total_cost_usd
+            self.usage = usage or {"input_tokens": 100, "output_tokens": 50}
+
+    # AssistantMessage mock
+    class AssistantMessage:
+        def __init__(self, content: Any = None):
+            self.content = content or []
+
+    # TextBlock mock
+    class TextBlock:
+        def __init__(self, text: str = ""):
+            self.text = text
+
+    # ClaudeAgentOptions mock
+    class ClaudeAgentOptions:
+        def __init__(
+            self,
+            model: str | None = None,
+            allowed_tools: list | None = None,
+            output_format: dict | None = None,
+            max_turns: int = 50,
+            max_budget_usd: float = 10.0,
+            stderr: Any = None,
+        ):
+            self.model = model
+            self.allowed_tools = allowed_tools
+            self.output_format = output_format
+            self.max_turns = max_turns
+            self.max_budget_usd = max_budget_usd
+            self.stderr = stderr
+
+    # ClaudeSDKError
+    class ClaudeSDKError(Exception):
+        pass
+
+    # query async generator
+    async def _query_generator(prompt: str, options: ClaudeAgentOptions):
+        yield ResultMessage(
+            session_id="test-session",
+            structured_output=None,
+            result='{"summary_brief": "测试摘要"}',
+        )
+
+    # 存储最后一次调用参数
+    _last_query_call: dict = {}
+
+    class _QueryStub:
+        def __init__(self):
+            self._structured_output = None
+            self._result = None
+
+        def set_response(
+            self,
+            structured_output: Any = None,
+            result: str | None = None,
+        ):
+            self._structured_output = structured_output
+            self._result = result
+
+        async def __call__(self, prompt: str, options: ClaudeAgentOptions):
+            _last_query_call["prompt"] = prompt
+            _last_query_call["options"] = options
+            if self._structured_output is not None:
+                yield ResultMessage(
+                    session_id="test-session",
+                    structured_output=self._structured_output,
+                    result=self._result,
+                )
+            elif self._result is not None:
+                yield ResultMessage(
+                    session_id="test-session",
+                    structured_output=None,
+                    result=self._result,
+                )
+            else:
+                yield ResultMessage(
+                    session_id="test-session",
+                    structured_output=None,
+                    result=None,
+                )
+
+    query = _QueryStub()
+    stub.query = query  # type: ignore[attr-defined]
+    stub.ResultMessage = ResultMessage  # type: ignore[attr-defined]
+    stub.AssistantMessage = AssistantMessage  # type: ignore[attr-defined]
+    stub.TextBlock = TextBlock  # type: ignore[attr-defined]
+    stub.ClaudeAgentOptions = ClaudeAgentOptions  # type: ignore[attr-defined]
+    stub.ClaudeSDKError = ClaudeSDKError  # type: ignore[attr-defined]
+    stub.ClaudeSDKClient = Mock  # type: ignore[attr-defined]
+
+    return stub
+
+
+_maybe_stub("claude_agent_sdk", _build_claude_agent_sdk_stub)
