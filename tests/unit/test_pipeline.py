@@ -116,7 +116,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.CommitMaterialBuilder")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -155,12 +155,10 @@ class TestTrendPulsePipeline:
         mock_commit_material_builder.assert_called_once()
         mock_release_material_builder.assert_called_once()
         mock_commit_analyzer.assert_called_once_with(
-            api_key="test_api_key",
             model="glm-4.7",
-            base_url="https://open.bigmodel.cn/api/anthropic",
-            retry_max_attempts=3,
-            retry_wait_min=1,
-            retry_wait_max=10,
+            max_turns=30,
+            max_budget_usd=3.0,
+            batch_size=200,
         )
         mock_release_analyzer.assert_called_once_with(
             api_key="test_api_key",
@@ -186,7 +184,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.ReleaseSummarizer")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -314,7 +312,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.ReleaseSummarizer")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -386,7 +384,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.MarkdownReporter")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -480,7 +478,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.MarkdownReporter")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -545,7 +543,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.MarkdownReporter")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)
@@ -606,7 +604,7 @@ class TestTrendPulsePipeline:
     @patch("trendpluse.app.pipeline.MarkdownReporter")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)

@@ -8,10 +8,10 @@ from typing import Any
 from anthropic import Anthropic
 
 from trendpluse.analyzers.breaking_changes_detector import BreakingChangesDetector
-from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.daily_summary_agent import DailySummaryAgent
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
+from trendpluse.analyzers.sdk_commit_analyzer import SDKCommitAnalyzer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.app.daily import DailyPipelineApp
@@ -113,7 +113,7 @@ def build_analyzer_components(
     *,
     settings: Any,
     llm_client: Anthropic,
-    commit_analyzer_factory=CommitAnalyzer,
+    commit_analyzer_factory=SDKCommitAnalyzer,
     release_analyzer_factory=ReleaseAnalyzer,
     release_summarizer_factory=ReleaseSummarizer,
     breaking_changes_detector_factory=BreakingChangesDetector,
@@ -130,7 +130,12 @@ def build_analyzer_components(
         "retry_wait_max": settings.llm_retry_wait_max,
     }
     return AnalyzerComponents(
-        commit_analyzer=commit_analyzer_factory(**llm_kwargs),
+        commit_analyzer=commit_analyzer_factory(
+            model=settings.anthropic_model,
+            max_turns=30,
+            max_budget_usd=3.0,
+            batch_size=200,
+        ),
         release_analyzer=release_analyzer_factory(**llm_kwargs),
         release_summarizer=release_summarizer_factory(**llm_kwargs),
         breaking_changes_detector=breaking_changes_detector_factory(**llm_kwargs),

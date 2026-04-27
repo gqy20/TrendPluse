@@ -30,7 +30,7 @@ class TestSignalCategorization:
     @patch("trendpluse.app.pipeline.MarkdownReporter")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
-    @patch("trendpluse.app.pipeline.CommitAnalyzer")
+    @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
     @patch("trendpluse.app.pipeline.ReleaseAnalyzer")
     @patch("trendpluse.app.pipeline.TrendAnalyzer")
     @patch("trendpluse.app.pipeline.SignalDeduplicator", MockSignalDeduplicator)

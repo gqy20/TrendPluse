@@ -7,9 +7,9 @@ from datetime import datetime
 from anthropic import Anthropic
 
 from trendpluse.analyzers.breaking_changes_detector import BreakingChangesDetector
-from trendpluse.analyzers.commit_analyzer import CommitAnalyzer
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
+from trendpluse.analyzers.sdk_commit_analyzer import SDKCommitAnalyzer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.app.bootstrap import (
@@ -55,7 +55,7 @@ class TrendPulsePipeline:
         analyzers = build_analyzer_components(
             settings=self.settings,
             llm_client=llm_client,
-            commit_analyzer_factory=CommitAnalyzer,
+            commit_analyzer_factory=SDKCommitAnalyzer,
             release_analyzer_factory=ReleaseAnalyzer,
             release_summarizer_factory=ReleaseSummarizer,
             breaking_changes_detector_factory=BreakingChangesDetector,
