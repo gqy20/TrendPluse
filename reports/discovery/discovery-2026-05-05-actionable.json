@@ -1,0 +1,142 @@
+{
+  "date": "2026-05-05",
+  "generated_at": "2026-05-05T20:08:22.260934",
+  "total_candidates": 144,
+  "selected_count": 10,
+  "candidates": [
+    {
+      "repo": "JuliusBrussee/caveman",
+      "name": "caveman",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: Claude",
+      "classified_categories": [
+        "LLM 界面",
+        "学习资源"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "name": "hermes-agent",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "OpenBB-finance/OpenBB",
+      "name": "OpenBB",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 研究与评估"
+    },
+    {
+      "repo": "affaan-m/everything-claude-code",
+      "name": "everything-claude-code",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "datawhalechina/hello-agents",
+      "name": "hello-agents",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "f/prompts.chat",
+      "name": "prompts.chat",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: LLM",
+      "classified_categories": [
+        "LLM 界面",
+        "学习资源",
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "hiyouga/LlamaFactory",
+      "name": "LlamaFactory",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "机器学习框架"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "jeecgboot/JeecgBoot",
+      "name": "JeecgBoot",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "lobehub/lobehub",
+      "name": "lobehub",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "mindsdb/mindsdb",
+      "name": "mindsdb",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    }
+  ]
+}
