@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-05-06-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-05-07-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -17,6 +17,10 @@
     {
       "repo": "OpenBB-finance/OpenBB",
       "category": "Anthropic 研究与评估"
+    },
+    {
+      "repo": "TauricResearch/TradingAgents",
+      "category": "Agentic AI 核心框架"
     },
     {
       "repo": "affaan-m/everything-claude-code",
@@ -40,10 +44,6 @@
     },
     {
       "repo": "jeecgboot/JeecgBoot",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "lobehub/lobehub",
       "category": "Agentic AI 核心框架"
     }
   ],
