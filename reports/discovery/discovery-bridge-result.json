@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-05-08-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-05-09-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -7,20 +7,12 @@
   "selected_count": 10,
   "selected_items": [
     {
-      "repo": "JuliusBrussee/caveman",
-      "category": "Anthropic 工具与集成"
-    },
-    {
       "repo": "NousResearch/hermes-agent",
       "category": "Agentic AI 核心框架"
     },
     {
       "repo": "OpenBB-finance/OpenBB",
       "category": "Anthropic 研究与评估"
-    },
-    {
-      "repo": "TauricResearch/TradingAgents",
-      "category": "Agentic AI 核心框架"
     },
     {
       "repo": "affaan-m/everything-claude-code",
@@ -44,6 +36,14 @@
     },
     {
       "repo": "jeecgboot/JeecgBoot",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "lobehub/lobehub",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "mindsdb/mindsdb",
       "category": "Agentic AI 核心框架"
     }
   ],
