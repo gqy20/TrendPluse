@@ -1,0 +1,965 @@
+{
+  "week_id": "2026-W19",
+  "start_date": "2026-05-04",
+  "end_date": "2026-05-10",
+  "summary_brief": "本周技术生态呈现多维度突破：企业级身份认证与安全标准化全面加速（Anthropic四语言SDK统一WIF、RFClo实现AES-256-GCM加密、多项CVE密集披露），MCP协议获SAP等企业巨头采纳并推动多智能体协作成为平台竞争焦点，多语言SDK统一演进与API对齐双轨并进，Token成本可见性升级为AI Agent开发标配，CLI工具企业级成熟度与评测基础设施科学化持续推进。",
+  "core_trends": [
+    {
+      "title": "企业级身份认证与安全标准化全面加速",
+      "theme": "safety",
+      "description": "本周安全领域呈现爆发态势：Anthropic多语言SDK统一添加Workload Identity Federation支持，OAuth PKCE实现无API Key开箱即用，Ruflo实现AES-256-GCM静态加密和联邦预算熔断，Vercel新增防火墙命令。同时LangChain CVE-2026-34070路径遍历漏洞、Next.js 13个安全漏洞（含7个高危）、Mem0 SQL注入同日披露，表明开源生态正在系统性修复历史安全债务。安全已从可选特性升级为核心工程需求，企业级认证标准化进入实质性落地阶段。",
+      "signal_ids": [
+        "eng-0",
+        "eng-1",
+        "signal-0",
+        "signal-1",
+        "signal-7",
+        "signal-12",
+        "eng-oauth-pkce-001",
+        "eng-sandbox-security-001",
+        "trend-safety-1"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "MCP协议企业采纳与多智能体协作编排成为平台竞争焦点",
+      "theme": "ecosystem",
+      "description": "SAP作为企业软件巨头正式采纳MCP协议，标志着该协议进入企业主流开发工作流。微软Magentic Orchestration、OpenAI Codex远程控制、Scout研究代理密集推出，表明多智能体协作正成为AI Agent平台差异化核心。AWS插件接入Anthropic生态，Microsoft Agent Framework发布ClassSkill技能定义，主流厂商正加速标准化Agent基础设施。MCP协议在边缘场景（toolArguments空值处理、云+sandbox竞态）治理成为维护重点。",
+      "signal_ids": [
+        "eng-3",
+        "signal-9",
+        "eng-mcp-enterprise-001",
+        "eng-multiagent-001",
+        "trend-agent-1",
+        "trend-plugin-1",
+        "trend-6"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "多语言SDK统一演进与API对齐双轨并进",
+      "theme": "tooling",
+      "description": "Anthropic Python/Go/TypeScript/Java四语言SDK系统性推进统一认证体系，同时Python SDK持续与TypeScript SDK对齐API（strict_mcp_config、ToolPermissionContext、Hook事件、updatedToolOutput类型等）。LangGraph公开get_writes_history Saver API重构增量机制，OpenAI SDK完善Admin API端点控制，状态持久化和权限控制抽象层趋向成熟。Hook事件和流式进度机制推动跨语言可观测性标准化。",
+      "signal_ids": [
+        "signal-0",
+        "signal-5",
+        "signal-8",
+        "signal-11",
+        "trend-0",
+        "trend-1",
+        "trend-3",
+        "trend-4"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "Token成本可见性与模型感知路由优化成为标配",
+      "theme": "performance",
+      "description": "gptme同日发布Per-Step Token Breakdown、Token Budget保护、Biggest Turn Highlight三项功能，Claude Code修复MCP OAuth并发问题，OpenAI Agents SDK将默认模型从gpt-4.1升级至gpt-5.4-mini并引入gpt-realtime-2。模型感知工具路由基于edit-format偏好实现低成本代码质量提升，结合12+月Aider实证数据验证。Token成本可见性从可选特性升级为AI Agent开发核心需求。",
+      "signal_ids": [
+        "eng-architect-editor-001",
+        "eng-model-routing-001",
+        "trend-cost-1",
+        "trend-model-1",
+        "signal-3",
+        "signal-14"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "企业级CLI工具成熟度显著提升与评测基础设施科学化",
+      "theme": "workflow",
+      "description": "Claude Code v2.1新增.zip插件归档、workspace保留命名保护、OTEL隔离等企业级功能，Gemini CLI新增实时语音和Gemma 4支持，CLI工具正从开发者工具向多功能AI交互终端演进。同时gptme评测框架通过--no-lessons基线运行能力和Pass-rate门控实现科学A/B测试，研究发现structured_process任务受益于lessons但creative_restructuring任务受损，揭示lesson injection机制的条件依赖性，实现基于自然Pass-rate的条件式自适应注入。",
+      "signal_ids": [
+        "eng-4",
+        "signal-2",
+        "trend-2",
+        "eng-eval-infra-001",
+        "eng-test-isolation-001",
+        "res-lesson-crossover-001",
+        "res-passrate-gate-001",
+        "trend-browser-1"
+      ],
+      "impact_level": 4
+    }
+  ],
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "多语言SDK统一添加企业级Workload Identity Federation认证",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic多语言SDK（Python/TypeScript/Go/Java）同步发布新版本，统一添加Workload Identity Federation、OAuth和认证配置文件支持，标志着云原生企业认证标准化进入实质性落地阶段。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.98.1"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java",
+        "anthropics/anthropic-sdk-python",
+        "anthropics/anthropic-sdk-typescript",
+        "anthropics/anthropic-sdk-go"
+      ],
+      "source_signal_ids": [
+        "release-0"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "AI Agent安全加固成为行业共识",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "本日多个项目同步推进安全改进：OpenDevin将Tavily API密钥迁移至服务端FastMCP代理、Ruflo实现AES-256-GCM静态加密和联邦预算熔断、Vercel AI SDK新增prompt注入防护。这表明安全已从可选特性升级为核心工程需求。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.98.0",
+        "https://github.com/OpenDevin/OpenDevin/pull/14278",
+        "https://github.com/bytedance/deer-flow/pull/2698",
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-classic==1.0.5"
+      ],
+      "related_repos": [
+        "vercel/ai",
+        "langchain-ai/langchain",
+        "bytedance/deer-flow",
+        "anthropics/anthropic-sdk-python",
+        "OpenDevin/OpenDevin",
+        "ruvnet/claude-flow"
+      ],
+      "source_signal_ids": [
+        "pr-6",
+        "release-1",
+        "release-7",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "signal-0",
+      "title": "Anthropic SDK统一支持Workload Identity Federation",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic多语言SDK（Python、TypeScript、Go、Java）同步发布v0.98.0/v1.39.0/v2.28.0/sdk-v0.93.0版本，统一添加Workload Identity Federation、交互式OAuth和认证配置文件支持，使企业级云环境认证更标准化",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.98.1"
+      ],
+      "related_repos": [
+        "anthropics/anthropic-sdk-java",
+        "anthropics/anthropic-sdk-python",
+        "anthropics/anthropic-sdk-typescript",
+        "anthropics/anthropic-sdk-go"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Ruflo实现加密存储和联邦预算控制",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Ruflo连续发布v3.6.25/26/27，实现AES-256-GCM静态加密（ADR-096）、联邦预算熔断机制（ADR-097）和安全加固，解决了shell注入、loader劫持等安全问题",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.98.0"
+      ],
+      "related_repos": [
+        "ruvnet/claude-flow",
+        "anthropics/anthropic-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "trend-0",
+      "title": "Anthropic 多语言 SDK 统一演进：认证体系 + API 对齐双轨并进",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Anthropic 正系统性地推进 Python/Go/TypeScript/Java 四语言 SDK 的统一认证体系，同时 Python SDK 持续与 TypeScript SDK 对齐 API（strict_mcp_config、ToolPermissionContext、Hook 事件、updatedToolOutput 类型等），为跨语言开发提供一致的体验。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/917",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/915",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/911",
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/909",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.128"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-python",
+        "anthropic/anthropic-sdk-typescript",
+        "anthropics/claude-code",
+        "anthropic/anthropic-sdk-java",
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropic/anthropic-sdk-go",
+        "anthropic/anthropic-sdk-python"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "pr-0",
+        "pr-2",
+        "pr-4",
+        "pr-6"
+      ]
+    },
+    {
+      "id": "trend-safety-1",
+      "title": "安全漏洞修复密集发布",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "LangChain CVE-2026-34070 路径遍历漏洞、Next.js 13 个安全漏洞（含7个高危）以及 Mem0 SQL 注入同日披露，表明开源生态正在系统性修复历史积累的安全债务，开发者需紧急响应",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.117",
+        "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.95.1",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.136"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "anthropics/claude-code",
+        "anthropics/claude-code-action",
+        "mem0ai/mem0",
+        "anthropics/anthropic-sdk-typescript",
+        "vercel/next.js"
+      ],
+      "source_signal_ids": [
+        "release-0",
+        "release-6",
+        "release-7"
+      ]
+    },
+    {
+      "id": "eng-mcp-enterprise-001",
+      "title": "MCP 协议企业级采纳加速",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "SAP 作为企业软件巨头采纳 MCP 协议，标志着该协议正在进入企业主流应用开发工作流，将推动更广泛的 MCP 生态繁荣。",
+      "sources": [
+        "https://github.com/anthropics/claude-plugins-official/pull/1777"
+      ],
+      "related_repos": [
+        "anthropics/claude-plugins-official",
+        "SAP/open-ux-tools"
+      ],
+      "source_signal_ids": [
+        "pr-0"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "Python生态现代化：版本兼容升级与构建优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Open-interpreter解除Python版本硬性上限支持3.13/3.14，Vercel默认启用Python构建缓存，deer-flow添加容器推送工作流。这些变更表明Python在AI/Agent应用中的地位持续提升，部署和开发体验优化成为竞争焦点。",
+      "sources": [
+        "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.28.0",
+        "https://github.com/openinterpreter/open-interpreter/pull/1748",
+        "https://github.com/bytedance/deer-flow/pull/2709"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "anthropics/anthropic-sdk-java",
+        "vercel/vercel",
+        "openinterpreter/open-interpreter"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "release-4",
+        "pr-12"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "Agent框架互操作性和深度集成能力扩展",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "gptme支持同窗口postMessage实现直接组件嵌入、Stagehand默认启用混合Agent模式、Ruflo将Ollama升级为一级提供商、LangGraph公开writes_history Saver API。这些变化表明Agent框架正从封闭生态向开放互操作演进，MCP协议和混合架构成为主流。",
+      "sources": [
+        "https://github.com/langchain-ai/langgraph/releases/tag/checkpointpostgres==3.1.0a4",
+        "https://github.com/openai/openai-python/releases/tag/v2.34.0",
+        "https://github.com/ErikBjare/gptme/pull/2325",
+        "https://github.com/langchain-ai/langchain/releases/tag/langchain-anthropic==1.4.3"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "browserbase/stagehand",
+        "openai/openai-python",
+        "ErikBjare/gptme",
+        "gptme/gptme-cloud",
+        "ruvnet/claude-flow",
+        "langchain-ai/langgraph"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "release-6",
+        "release-9",
+        "release-5"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "会话状态管理与实时追踪能力增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Anthropic Claude SDK新增session_store_flush选项支持即时镜像，修复ephemeral消息修剪后合并问题。这些改进为实时监控、跨进程恢复和崩溃恢复等高级场景奠定基础，标志着Agent SDK从基础调用向生产级能力演进。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/pull/905",
+        "https://github.com/ErikBjare/gptme/pull/2331"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "pr-5",
+        "pr-3"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-lesson-crossover-001",
+      "title": "Lesson Injection 交叉效应研究",
+      "type": "capability",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "研究发现 structured_process 任务受益于 lessons 但 creative_restructuring 任务反而受损，揭示了 lesson injection 机制的条件依赖性，为条件化注入机制提供科学依据。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/pull/2352",
+        "https://github.com/ErikBjare/gptme/pull/2365"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-10",
+        "pr-2"
+      ]
+    },
+    {
+      "id": "res-passrate-gate-001",
+      "title": "基于自然 Pass-rate 的条件式 Lesson 注入",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "通过模型和评测任务级别的经验 pass-rate 数据动态决定是否注入 lessons，基于学术研究实现自适应上下文管理，有望提升 AI Agent 在不同任务类型上的整体表现。",
+      "sources": [
+        "https://github.com/ErikBjare/gptme/pull/2365"
+      ],
+      "related_repos": [
+        "ErikBjare/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-2"
+      ]
+    }
+  ],
+  "daily_reports_count": 7,
+  "total_prs_analyzed": 110,
+  "high_impact_signals": 24,
+  "total_commits": 6044,
+  "total_releases": 621,
+  "weekly_activity": {
+    "total_commits": 6044,
+    "active_repos_count": 81,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 700,
+        "top_contributors": [
+          "scoootscooob",
+          "mcaxtr",
+          "steipete"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 573,
+        "top_contributors": [
+          "thdxr",
+          "nexxeln",
+          "Hona"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 460,
+        "top_contributors": [
+          "abhinav-oai",
+          "fcoury-oai",
+          "iceweasel-oai"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 422,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 372,
+        "top_contributors": [
+          "SomeoneToIgnore",
+          "Veykril",
+          "rtfeldman"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 232,
+        "top_contributors": [
+          "fuller-stack-dev",
+          "dependabot[bot]",
+          "steipete"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 223,
+        "top_contributors": [
+          "ccurme",
+          "miguel-mongiardim",
+          "vishnu-ssuresh"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 213,
+        "top_contributors": [
+          "yaron2",
+          "felmonon",
+          "Quratulain-bilal"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 209,
+        "top_contributors": [
+          "microsoft-playwright-automation[bot]",
+          "dgozman",
+          "mxschmitt"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 182,
+        "top_contributors": [
+          "nicoalbanese",
+          "Mmartinrusso",
+          "gr2m"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 180,
+        "top_contributors": [
+          "octo-patch",
+          "mldangelo",
+          "renovate[bot]"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 177,
+        "top_contributors": [
+          "lyzno1",
+          "hyoban",
+          "fatelei"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 159,
+        "top_contributors": [
+          "SandyTao520",
+          "devr0306",
+          "gundermanc"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 134,
+        "top_contributors": [
+          "rishishanbhag",
+          "armando-andre",
+          "acdlite"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 129,
+        "top_contributors": [
+          "github-actions[bot]",
+          "anthonyshew",
+          "mattjoll"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 125,
+        "top_contributors": [
+          "mikeldking",
+          "yfrigui2",
+          "pandego"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 109,
+        "top_contributors": [
+          "kalvinnchau",
+          "lifeizhou-ap",
+          "jh-block"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 107,
+        "top_contributors": [
+          "apcha-oai",
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 106,
+        "top_contributors": [
+          "AlexAlves87",
+          "ranjeshj",
+          "christineyan4"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 104,
+        "top_contributors": [
+          "npentrel",
+          "mdrxy",
+          "langchain-model-profile-bot[bot]"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 98,
+        "top_contributors": [
+          "SergeyMenshykh",
+          "lokitoth",
+          "rogerbarreto"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 93,
+        "top_contributors": [
+          "mknichel",
+          "Strernd",
+          "bryan-hunter"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 83,
+        "top_contributors": [
+          "ShenAC-SAC",
+          "fancyboi999",
+          "whhe"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 69,
+        "top_contributors": [
+          "lorenzojb",
+          "sarahdeaton",
+          "qing-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 69,
+        "top_contributors": [
+          "abibbs-ant",
+          "arnewouters",
+          "dhollman"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 60,
+        "top_contributors": [
+          "dependabot[bot]",
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 55,
+        "top_contributors": [
+          "greysonlalonde",
+          "mislavivanda",
+          "NIK-TIGER-BILL"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 54,
+        "top_contributors": [
+          "Cao-R",
+          "all-hands-bot",
+          "simonrosenberg"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 53,
+        "top_contributors": [
+          "ysolanky",
+          "Mustafa-Esoofally",
+          "irfaan101"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 52,
+        "top_contributors": [
+          "sydney-runkle",
+          "open-swe[bot]",
+          "longquanzheng"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 50,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "cameron-mcateer"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 46,
+        "top_contributors": [
+          "dtmeadows",
+          "stainless-app[bot]",
+          "cameron-mcateer"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 42,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "cameron-mcateer"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 40,
+        "top_contributors": [
+          "JoshuaLelon",
+          "steipete",
+          "solomonneas"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 38,
+        "top_contributors": [
+          "typhigh",
+          "hazeone",
+          "vcfgv"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 31,
+        "top_contributors": [
+          "pirate",
+          "shrey150",
+          "miguelg719"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 20,
+        "top_contributors": [
+          "Torantulino",
+          "kcze",
+          "Abhi1992002"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 20,
+        "top_contributors": [
+          "gabrielstein-mem0",
+          "youneshima",
+          "chaithanyak42"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 18,
+        "top_contributors": [
+          "SergeyMenshykh",
+          "Copilot",
+          "Cozmopolit"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 17,
+        "top_contributors": [
+          "actions-user",
+          "jportner-ant",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 16,
+        "top_contributors": [
+          "inamdarmihir",
+          "bschloss",
+          "anoopshrma"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 16,
+        "top_contributors": [
+          "PedramNavid",
+          "markn-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 15,
+        "top_contributors": [
+          "actions-user",
+          "jportner-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 15,
+        "top_contributors": [
+          "actions-user",
+          "OctavianGuzu"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 12,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 10,
+        "top_contributors": [
+          "arafatkatze",
+          "water-in-stone",
+          "mkondratek"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 10,
+        "top_contributors": [
+          "github-actions[bot]",
+          "ismaelrumzan"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 10,
+        "top_contributors": [
+          "quuu",
+          "ctate",
+          "ThomasK33"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 5,
+        "top_contributors": [
+          "quuu",
+          "rlancemartin"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 4,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 3,
+        "top_contributors": [
+          "endolith",
+          "Notnaton"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 2,
+        "top_contributors": [
+          "steipete"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 2,
+        "top_contributors": [
+          "quuu"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  }
+}
