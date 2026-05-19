@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-05-18-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-05-19-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -23,7 +23,7 @@
       "category": "Agentic AI 核心框架"
     },
     {
-      "repo": "affaan-m/everything-claude-code",
+      "repo": "affaan-m/ECC",
       "category": "Agentic AI 核心框架"
     },
     {
