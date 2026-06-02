@@ -1,11 +1,15 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-05-31-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-06-02-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
   "selected_before_cap": 10,
   "selected_count": 10,
   "selected_items": [
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "category": "Agentic AI 核心框架"
+    },
     {
       "repo": "NousResearch/hermes-agent",
       "category": "Agentic AI 核心框架"
@@ -40,10 +44,6 @@
     },
     {
       "repo": "lobehub/lobehub",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "mudler/LocalAI",
       "category": "Agentic AI 核心框架"
     }
   ],
