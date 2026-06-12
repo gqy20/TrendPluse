@@ -1,11 +1,15 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-06-11-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-06-12-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
   "selected_before_cap": 10,
   "selected_count": 10,
   "selected_items": [
+    {
+      "repo": "JuliusBrussee/caveman",
+      "category": "Anthropic 工具与集成"
+    },
     {
       "repo": "Mintplex-Labs/anything-llm",
       "category": "Agentic AI 核心框架"
@@ -40,10 +44,6 @@
     },
     {
       "repo": "jeecgboot/JeecgBoot",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "lobehub/lobehub",
       "category": "Agentic AI 核心框架"
     }
   ],
