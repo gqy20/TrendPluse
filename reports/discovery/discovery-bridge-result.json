@@ -1,15 +1,11 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-06-19-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-06-20-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
   "selected_before_cap": 10,
   "selected_count": 10,
   "selected_items": [
-    {
-      "repo": "JuliusBrussee/caveman",
-      "category": "Anthropic 工具与集成"
-    },
     {
       "repo": "Mintplex-Labs/anything-llm",
       "category": "Agentic AI 核心框架"
@@ -28,6 +24,10 @@
     },
     {
       "repo": "affaan-m/ECC",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "chopratejas/headroom",
       "category": "Agentic AI 核心框架"
     },
     {
