@@ -43,7 +43,11 @@
     "failed_files": 0,
     "failed_samples": [],
     "quality_score": 0.0,
-    "quality_status": "poor"
+    "quality_status": "poor",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
   },
   "trend_status": null,
   "trend_delta": null,
@@ -51,5 +55,7 @@
   "historical_comparison": null,
   "top_new_trends": [],
   "top_continuing_trends": [],
-  "summary_confidence": null
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
 }

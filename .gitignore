@@ -147,6 +147,7 @@ logs/
 
 # Issue 快照数据
 data/issue_snapshots/
+data/issues/
 
 # 现代工具
 .ruff_cache/
