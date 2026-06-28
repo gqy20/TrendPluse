@@ -83,10 +83,12 @@ class DailyPipelineApp:
             date = datetime.now()
 
         day_ago = date - timedelta(days=1)
+        logger.info("→ [1/3] 采集日报输入（activity / release / commit / issue）")
         daily_inputs = await self._collect_daily_inputs_async(
             day_ago, date.strftime("%Y-%m-%d")
         )
 
+        logger.info("→ [2/3] 采集并分析 PR 信号（大头：81 仓库 PR + LLM 分析）")
         pr_signals = await self._collect_pr_signals_async(day_ago)
         if not pr_signals:
             return cast(
@@ -99,6 +101,7 @@ class DailyPipelineApp:
                 ),
             )
 
+        logger.info("→ [3/3] 构建日报（趋势聚合 + daily_summary agent）")
         report = await self._build_daily_report_async(
             date=date,
             daily_inputs=daily_inputs,
