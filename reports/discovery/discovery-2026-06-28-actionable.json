@@ -1,0 +1,144 @@
+{
+  "date": "2026-06-28",
+  "generated_at": "2026-06-28T20:11:12.392347",
+  "total_candidates": 136,
+  "selected_count": 10,
+  "candidates": [
+    {
+      "repo": "DietrichGebert/ponytail",
+      "name": "ponytail",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "name": "anything-llm",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "数据/基础设施"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "name": "hermes-agent",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "OpenBB-finance/OpenBB",
+      "name": "OpenBB",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 研究与评估"
+    },
+    {
+      "repo": "TauricResearch/TradingAgents",
+      "name": "TradingAgents",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "name": "ECC",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "datawhalechina/hello-agents",
+      "name": "hello-agents",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "f/prompts.chat",
+      "name": "prompts.chat",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: LLM",
+      "classified_categories": [
+        "LLM 界面",
+        "学习资源",
+        "机器学习框架"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "headroomlabs-ai/headroom",
+      "name": "headroom",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "LLM 界面",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "hiyouga/LlamaFactory",
+      "name": "LlamaFactory",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: AI agent",
+      "classified_categories": [
+        "AI Agents",
+        "机器学习框架"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    }
+  ]
+}
