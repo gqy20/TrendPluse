@@ -99,7 +99,7 @@ class TestSDKCommitAnalyzerInit:
         analyzer = SDKCommitAnalyzer()
 
         assert analyzer.max_turns == 30
-        assert analyzer.max_budget_usd == 3.0
+        assert analyzer.max_budget_usd == 10.0  # d91689d 提高 SDK 预算上限
         assert analyzer.batch_size == 200
         assert analyzer.allowed_tools == ["Read", "Grep"]
 

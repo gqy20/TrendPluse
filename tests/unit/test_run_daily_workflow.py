@@ -3,10 +3,10 @@
 from pathlib import Path
 
 
-def test_run_daily_enables_issue_agent_analysis():
-    """daily workflow 应开启 Issue Agent 分析环境变量。"""
+def test_run_daily_disables_issue_agent_analysis():
+    """daily workflow 临时关闭 Issue Agent（SDK 卡死，待排查）。"""
     content = Path(".github/workflows/run-daily.yml").read_text(encoding="utf-8")
-    assert 'ENABLE_ISSUE_AGENT_ANALYSIS: "true"' in content
+    assert 'ENABLE_ISSUE_AGENT_ANALYSIS: "false"' in content
 
 
 def test_run_daily_warns_on_summary_validation_degradation():
