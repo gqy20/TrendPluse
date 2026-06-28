@@ -54,6 +54,7 @@ class DailySummaryAgent:
         self.reports_dir = Path(reports_dir)
         self.history_index_path = Path(history_index_path)
         self.model = model
+        logger.info("DailySummaryAgent 初始化 model=%s", self.model)
         self.max_turns = max_turns
         self.max_budget_usd = max_budget_usd
         self.retry_max_attempts = retry_max_attempts

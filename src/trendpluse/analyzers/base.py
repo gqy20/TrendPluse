@@ -14,8 +14,11 @@ from anthropic import Anthropic, AsyncAnthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, ValidationError
 
+from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
 from trendpluse.utils.retry import create_anthropic_retry_decorator
+
+logger = get_logger(__name__)
 
 # Instructor 和 Anthropic 客户端的联合类型
 LLMClient = instructor.Instructor | Anthropic
@@ -70,6 +73,8 @@ class BaseLLMAnalyzer(ABC):
         self.async_instructor_client = None
         if use_instructor:
             self.async_instructor_client = instructor.from_anthropic(self.async_client)  # type: ignore[assignment]
+
+        logger.info("LLM 初始化: %s model=%s", self.__class__.__name__, self.model)
 
     def _run_with_llm_retry(self, func):
         """统一封装 LLM 调用重试逻辑（可配置）"""

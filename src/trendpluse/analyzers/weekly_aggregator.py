@@ -69,6 +69,7 @@ class WeeklyAggregator:
             wait_min=retry_wait_min,
             wait_max=retry_wait_max,
         )
+        logger.info("WeeklyAggregator 初始化 model=glm-4.7（硬编码）")
 
     @staticmethod
     def _extract_text_from_response(response) -> str:

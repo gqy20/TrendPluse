@@ -133,6 +133,7 @@ class SDKCommitAnalyzer:
             batch_size: 每批处理的 commit 数量（默认 200）
         """
         self.model = model
+        logger.info("SDKCommitAnalyzer 初始化 model=%s", self.model)
         self.max_turns = max_turns
         self.max_budget_usd = max_budget_usd
         self.batch_size = batch_size
