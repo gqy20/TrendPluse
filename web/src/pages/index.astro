@@ -21,7 +21,7 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
 
 <BaseLayout title="首页">
   <!-- Hero -->
-  <section class="rounded-2xl border border-[var(--tp-border)] bg-gradient-to-br from-brand-50 via-[var(--tp-surface)] to-transparent dark:from-brand-900/20 p-6 sm:p-8 mb-8">
+  <section class="rounded-2xl border border-[var(--tp-border)] bg-gradient-to-br from-brand-50 via-[var(--tp-surface)] to-transparent dark:from-brand-900/20 p-5 sm:p-7 mb-5">
     <div class="max-w-2xl">
       <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium mb-2">
         Signal Console · 2026
@@ -51,7 +51,7 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
   </section>
 
   <!-- 数据概览 -->
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
     <a href={routes.reports()} class="block p-4 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
       <div class="text-2xl font-bold text-[var(--tp-fg)]">{daily.length}</div>
       <div class="text-xs text-[var(--tp-muted)] mt-1">日报归档</div>
