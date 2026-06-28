@@ -62,7 +62,7 @@ jobs:
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'glm-4.7' }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_ISSUE_AGENT_ANALYSIS: "true"
+          ENABLE_ISSUE_AGENT_ANALYSIS: "false"
           ISSUE_AGENT_MODEL: ${{ secrets.ISSUE_AGENT_MODEL || '' }}
           REPORT_DATE: ${{ steps.report_date.outputs.date }}
           LOG_LEVEL: INFO
