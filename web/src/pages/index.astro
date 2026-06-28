@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../lib/path';
 import { loadRepos } from '../lib/repos';
+import ImpactDistribution from '../components/report/ImpactDistribution.astro';
 
 const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
 const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
@@ -96,4 +97,6 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
       </a>
     )}
   </div>
+
+  {latestData && <ImpactDistribution report={latestData} />}
 </BaseLayout>
