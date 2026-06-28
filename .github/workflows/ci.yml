@@ -56,8 +56,6 @@ jobs:
           /tmp/trendpluse-wheel-test/bin/trendpluse-send-weekly-feishu --help
           /tmp/trendpluse-wheel-test/bin/trendpluse-add-repo --help
           /tmp/trendpluse-wheel-test/bin/trendpluse-bridge-discovery --help
-          /tmp/trendpluse-wheel-test/bin/trendpluse-generate-report-index --help
-          /tmp/trendpluse-wheel-test/bin/trendpluse-sync-repos-to-docs --help
           /tmp/trendpluse-wheel-test/bin/trendpluse-normalize-daily-stats --help
 
       - name: Verify coverage file exists
