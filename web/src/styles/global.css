@@ -9,7 +9,7 @@
   --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
 
   /* ───────────────────────────────────────────────
-   * BRAND · 电光蓝（Sui SOTD 同款 #298DFF，手工调阶，非 Tailwind 标准色）
+   * BRAND · 电光蓝（Sui SOTD 同款 #298dff，手工调阶，非 Tailwind 标准色）
    * 沉稳高级，跳出青色工具感；冷峻未来气质，最贴"信号情报屏"
    * ──────────────────────────────────────────── */
   --color-brand-50:  #eaf3ff;
@@ -52,6 +52,7 @@
 /* 主题表面变量（带色温，告别纯白/冷灰黑的数字工具感） */
 :root {
   --tp-bg: #fafbfc;        /* 冷调白，非纯白 */
+  --tp-bg-end: #eef1f6;    /* 纵向渐变末端，略沉，制造纵深 */
   --tp-fg: #0e1116;
   --tp-muted: #5c6573;
   --tp-surface: #ffffff;
@@ -61,6 +62,7 @@
 
 .dark {
   --tp-bg: #0a0b0e;        /* 微冷蓝黑，非 zinc 冷灰 */
+  --tp-bg-end: #06070a;    /* 末端更深，暗色纵深 */
   --tp-fg: #f5f7fa;
   --tp-muted: #8a92a0;
   --tp-surface: #12141a;
@@ -73,7 +75,14 @@ html {
 }
 
 body {
-  background: var(--tp-bg);
+  /* 纵向渐变（顶亮底沉）+ 极淡灰度噪点，破"平涂塑料感"，制造高级纵深 */
+  background-color: var(--tp-bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"),
+    linear-gradient(to bottom, var(--tp-bg) 0%, var(--tp-bg-end) 100%);
+  background-attachment: fixed;
+  background-size: 140px 140px, 100% 100%;
+  background-repeat: repeat, no-repeat;
   color: var(--tp-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

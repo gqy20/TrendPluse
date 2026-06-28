@@ -27,7 +27,7 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
       </div>
       <h1 class="text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
         给 AI 编程生态做一块<br class="hidden sm:block" />
-        <span class="bg-gradient-to-r from-brand-600 to-brand-300 bg-clip-text text-transparent">干净的情报屏</span>
+        <span class="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">干净的情报屏</span>
       </h1>
       <p class="mt-3 text-base sm:text-lg text-[var(--tp-muted)] leading-relaxed">
         每日追踪 GitHub 趋势信号——先看最新变化，再决定是否扩大监控范围。
@@ -35,7 +35,7 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
       <div class="mt-5 flex flex-wrap gap-3">
         <a
           href={routes.reports()}
-          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-brand-500 text-white font-medium shadow-lg shadow-brand-500/25 hover:bg-brand-400 hover:shadow-brand-400/30 transition-all"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-gradient-to-b from-brand-400 to-brand-600 text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_8px_24px_-8px_rgba(41,141,255,0.55)] hover:from-brand-300 hover:to-brand-500 transition-all"
         >
           阅读最新趋势 →
         </a>
