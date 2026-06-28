@@ -59,14 +59,6 @@ dev = [
     "freezegun>=1.5.0",  # 时间 mocking
 ]
 
-docs = [
-    "mkdocs>=1.6.0",
-    "mkdocs-material>=9.5.0",
-    "mkdocs-awesome-pages-plugin>=2.10.0",
-    "mkdocs-git-revision-date-localized-plugin>=1.5.0",
-    "mkdocstrings[python]>=0.26.0",
-]
-
 [project.urls]
 Homepage = "https://github.com/gqy20/trendpluse"
 Repository = "https://github.com/gqy20/trendpluse.git"
@@ -81,8 +73,6 @@ trendpluse-send-feishu = "trendpluse.cli.send_feishu_notification:main"
 trendpluse-send-weekly-feishu = "trendpluse.cli.send_weekly_feishu:main"
 trendpluse-add-repo = "trendpluse.cli.add_repo:main"
 trendpluse-bridge-discovery = "trendpluse.cli.bridge_discovery_to_monitoring:main"
-trendpluse-generate-report-index = "trendpluse.cli.generate_report_index:main"
-trendpluse-sync-repos-to-docs = "trendpluse.cli.sync_repos_to_docs:main"
 trendpluse-normalize-daily-stats = "trendpluse.cli.normalize_daily_report_stats:main"
 
 [tool.hatch.build.targets.wheel]
