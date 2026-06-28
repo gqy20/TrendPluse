@@ -20,19 +20,19 @@ const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1]
 
 <BaseLayout title="首页">
   <!-- Hero -->
-  <section class="rounded-2xl border border-[var(--tp-border)] bg-gradient-to-br from-brand-50 via-[var(--tp-surface)] to-transparent dark:from-brand-900/20 p-8 sm:p-12 mb-10">
+  <section class="rounded-2xl border border-[var(--tp-border)] bg-gradient-to-br from-brand-50 via-[var(--tp-surface)] to-transparent dark:from-brand-900/20 p-6 sm:p-8 mb-8">
     <div class="max-w-2xl">
-      <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium mb-3">
+      <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium mb-2">
         Signal Console · 2026
       </div>
-      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
+      <h1 class="text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
         给 AI 编程生态做一块<br class="hidden sm:block" />
         <span class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">干净的情报屏</span>
       </h1>
-      <p class="mt-4 text-base sm:text-lg text-[var(--tp-muted)] leading-relaxed">
+      <p class="mt-3 text-base sm:text-lg text-[var(--tp-muted)] leading-relaxed">
         每日追踪 GitHub 趋势信号——先看最新变化，再决定是否扩大监控范围。
       </p>
-      <div class="mt-6 flex flex-wrap gap-3">
+      <div class="mt-5 flex flex-wrap gap-3">
         <a
           href={routes.reports()}
           class="inline-flex items-center px-5 py-2.5 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-700 transition-colors"
