@@ -29,7 +29,7 @@ jobs:
       ENABLE_ISSUE_AGENT_ANALYSIS: "false"
       ENABLE_DAILY_SUMMARY_AGENT: "true"
       MAX_CANDIDATES: "6"
-      MAX_PARALLEL_WORKERS: "2"
+      MAX_PARALLEL_WORKERS: "8"
       OUTPUT_DIR: tmp/smoke/reports/daily
       ISSUE_DUMP_DIR: tmp/smoke/data/issues
       DAILY_HISTORY_INDEX_PATH: tmp/smoke/data/history/daily-report-index.json
