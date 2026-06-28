@@ -1,0 +1,73 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ReportHeader from '../../../components/report/ReportHeader.astro';
+import StatsBar from '../../../components/report/StatsBar.astro';
+import SignalSection from '../../../components/report/SignalSection.astro';
+import ReleaseList from '../../../components/report/ReleaseList.astro';
+import ActivityTable from '../../../components/report/ActivityTable.astro';
+import IssueInsights from '../../../components/report/IssueInsights.astro';
+
+export async function getStaticPaths() {
+  const daily = await getCollection('daily');
+  return daily.map((entry) => ({
+    params: { date: entry.id.replace(/^report-/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'daily'>;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+
+const meta: { label: string; value: string | number }[] = [];
+if (d.stats?.high_impact_signals != null) meta.push({ label: '高影响', value: d.stats.high_impact_signals as number });
+if (d.stats?.pr_count != null) meta.push({ label: 'PR', value: d.stats.pr_count as number });
+if (d.stats?.commit_count != null) meta.push({ label: 'Commit', value: d.stats.commit_count as number });
+if (d.stats?.release_count != null) meta.push({ label: 'Release', value: d.stats.release_count as number });
+if (d.summary_confidence != null) meta.push({ label: '置信度', value: `${Math.round(d.summary_confidence * 100)}%` });
+---
+
+<BaseLayout title={`每日报告 · ${d.date}`} description={d.summary_brief?.slice(0, 150)}>
+  <article class="space-y-8">
+    <ReportHeader
+      title={`每日趋势报告 · ${d.date}`}
+      subtitle="DAILY REPORT"
+      summary={d.summary_brief}
+      meta={meta}
+    />
+
+    {(d.top_new_trends.length > 0 || d.top_continuing_trends.length > 0) && (
+      <section class="space-y-2">
+        <h2 class="text-xl font-bold">🎯 趋势</h2>
+        {d.top_new_trends.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {d.top_new_trends.map((t) => (
+              <span class="text-xs px-2 py-1 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-200">▲ 新 · {t}</span>
+            ))}
+          </div>
+        )}
+        {d.top_continuing_trends.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {d.top_continuing_trends.map((t) => (
+              <span class="text-xs px-2 py-1 rounded-full bg-[var(--tp-surface-2)] text-[var(--tp-muted)]">→ 续 · {t}</span>
+            ))}
+          </div>
+        )}
+      </section>
+    )}
+
+    <StatsBar stats={d.stats} />
+
+    <SignalSection title="工程信号" icon="🔧" signals={d.engineering_signals} />
+    <SignalSection title="研究信号" icon="🔬" signals={d.research_signals} />
+    {d.commit_signals.length > 0 && <SignalSection title="Commit 信号" icon="💾" signals={d.commit_signals} />}
+    {d.release_signals.length > 0 && <SignalSection title="Release 信号" icon="🎯" signals={d.release_signals} />}
+
+    <ReleaseList releases={d.releases as never} />
+    <ActivityTable repos={d.activity?.top_repos || []} />
+    <IssueInsights insights={d.issue_insights} />
+  </article>
+</BaseLayout>

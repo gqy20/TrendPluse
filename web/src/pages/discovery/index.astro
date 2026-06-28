@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { routes } from '../../lib/path';
+
+const discovery = (await getCollection('discovery')).sort((a, b) => b.id.localeCompare(a.id));
+const discDate = (id: string) => id.replace(/^discovery-/, '');
+const totalCandidates = discovery.reduce((sum, e) => sum + e.data.candidates.length, 0);
+---
+
+<BaseLayout title="项目发现" description="从 GitHub Trending 发现值得监控的新项目">
+  <div class="space-y-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">项目发现</h1>
+      <p class="mt-1 text-[var(--tp-muted)]">
+        从 GitHub Trending 发现值得监控的新项目 · 共 {discovery.length} 期 · 累计 {totalCandidates} 个候选
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {discovery.map((entry) => {
+        const r = entry.data;
+        const date = discDate(entry.id);
+        return (
+          <a
+            href={routes.discoveryReport(date)}
+            class="block p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
+          >
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-sm font-semibold">{date}</span>
+              {r.candidates.length > 0 && (
+                <span class="text-xs px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-200">
+                  {r.candidates.length}
+                </span>
+              )}
+            </div>
+            {r.high_priority != null && r.high_priority > 0 && (
+              <div class="mt-2 text-xs text-[var(--tp-muted)]">高优先 {r.high_priority}</div>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

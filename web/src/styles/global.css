@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* 暗色模式：基于 .dark 类（后续 toggle 切换；prefers-color-scheme 自动跟随） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* 字体（与旧站一致） */
+  --font-sans: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
+
+  /* Pulse 品牌色（靛蓝系，呼应"脉搏/脉冲"） */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+
+  /* 信号类型语义色（阶段 1 基础版） */
+  --color-signal-capability: #6366f1;
+  --color-signal-abstraction: #8b5cf6;
+  --color-signal-workflow: #0ea5e9;
+  --color-signal-eval: #14b8a6;
+  --color-signal-safety: #10b981;
+  --color-signal-performance: #f59e0b;
+  --color-signal-commit: #64748b;
+  --color-signal-release: #ec4899;
+}
+
+/* 主题表面变量（明/暗） */
+:root {
+  --tp-bg: #ffffff;
+  --tp-fg: #18181b;
+  --tp-muted: #71717a;
+  --tp-surface: #ffffff;
+  --tp-surface-2: #fafafa;
+  --tp-border: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --tp-bg: #09090b;
+  --tp-fg: #fafafa;
+  --tp-muted: #a1a1aa;
+  --tp-surface: #18181b;
+  --tp-surface-2: #27272a;
+  --tp-border: rgba(255, 255, 255, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--tp-bg);
+  color: var(--tp-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 链接基础 */
+a {
+  color: var(--color-brand-600);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.dark a {
+  color: var(--color-brand-400);
+}
+
+/* 代码字体 */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* 隐藏滚动条美化（可选） */
+::selection {
+  background: color-mix(in oklab, var(--color-brand-500) 25%, transparent);
+}

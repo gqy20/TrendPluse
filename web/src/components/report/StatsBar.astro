@@ -1,0 +1,41 @@
+---
+interface Props {
+  stats: Record<string, unknown>;
+  columns?: 2 | 3 | 4;
+}
+const { stats, columns = 4 } = Astro.props;
+
+const labels: Record<string, string> = {
+  total_signals: '信号总数',
+  high_impact_signals: '高影响',
+  pr_count: '分析 PR',
+  commit_count: 'Commit',
+  release_count: 'Release',
+  unique_repos: '涉及仓库',
+  total_prs_analyzed: 'PR 分析',
+  total_commits_analyzed: 'Commit 分析',
+  total_releases_analyzed: 'Release 分析',
+  total_releases: '发布数',
+  total_breaking_changes: 'Breaking',
+};
+
+const entries = Object.entries(stats || {}).filter(([, v]) => typeof v === 'number');
+const gridCols = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-3',
+  4: 'sm:grid-cols-3 lg:grid-cols-4',
+}[columns];
+---
+
+{entries.length > 0 && (
+  <div class:list={['grid grid-cols-2 gap-3', gridCols]}>
+    {entries.map(([k, v]) => (
+      <div class="p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
+        <div class="text-2xl font-bold text-brand-600 dark:text-brand-400 tabular-nums">
+          {(v as number).toLocaleString()}
+        </div>
+        <div class="text-xs text-[var(--tp-muted)] mt-0.5">{labels[k] || k}</div>
+      </div>
+    ))}
+  </div>
+)}

@@ -111,8 +111,13 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
+# mkdocs documentation（迁移 Astro 后将废弃）
 /site
+
+# Astro 前端（web/）
+web/node_modules/
+web/.astro/
+web/dist/
 
 # mypy
 .mypy_cache/

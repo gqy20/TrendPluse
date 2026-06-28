@@ -1,0 +1,44 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReportHeader from '../../components/report/ReportHeader.astro';
+import DiscoveredProjectCard from '../../components/report/DiscoveredProjectCard.astro';
+
+export async function getStaticPaths() {
+  const discovery = await getCollection('discovery');
+  return discovery.map((entry) => ({
+    params: { date: entry.id.replace(/^discovery-/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'discovery'>;
+}
+const { entry } = Astro.props;
+const r = entry.data;
+const candidates = [...r.candidates].sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0));
+
+const meta: { label: string; value: string | number }[] = [];
+if (r.total_discovered != null) meta.push({ label: '发现', value: r.total_discovered });
+if (r.passed_quality != null) meta.push({ label: '通过质量', value: r.passed_quality });
+if (r.high_priority != null) meta.push({ label: '高优先', value: r.high_priority });
+meta.push({ label: '候选', value: r.candidates.length });
+---
+
+<BaseLayout title={`项目发现 · ${r.date}`} description={`TrendPulse 项目发现 · ${r.candidates.length} 个候选`}>
+  <article class="space-y-8">
+    <ReportHeader title={`项目发现 · ${r.date}`} subtitle="DISCOVERY" meta={meta} />
+
+    {candidates.length > 0 ? (
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold">候选项目 · {candidates.length}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {candidates.map((p) => <DiscoveredProjectCard project={p} />)}
+        </div>
+      </section>
+    ) : (
+      <p class="text-sm text-[var(--tp-muted)] italic py-8">本期无候选项目。</p>
+    )}
+  </article>
+</BaseLayout>

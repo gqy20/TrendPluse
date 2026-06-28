@@ -62,15 +62,12 @@ jobs:
           WEEK_ID: ${{ steps.week_id.outputs.value }}
         run: uv run trendpluse-run-weekly
 
-      - name: Sync reports to docs
-        run: uv run trendpluse-generate-report-index
-
       - name: Commit weekly report
         id: publish_report
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/weekly/*.md reports/weekly/*.json docs/reports/*.md
+          git add reports/weekly/*.md reports/weekly/*.json
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update weekly trend report [skip ci]"
           git push
           echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
