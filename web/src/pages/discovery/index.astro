@@ -23,6 +23,7 @@ const totalCandidates = discovery.reduce((sum, e) => sum + e.data.candidates.len
         const date = discDate(entry.id);
         return (
           <a
+            data-reveal data-hover
             href={routes.discoveryReport(date)}
             class="block p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
           >

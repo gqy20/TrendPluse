@@ -22,6 +22,7 @@ const latest = daily[0]?.data;
 
     {latest && (
       <a
+        data-reveal data-hover
         href={routes.daily(dailyDate(daily[0]!.id))}
         class="block p-5 rounded-xl border border-brand-200 dark:border-brand-800 bg-gradient-to-br from-brand-50 to-transparent dark:from-brand-900/20 hover:border-brand-400 transition-colors"
       >
@@ -41,6 +42,7 @@ const latest = daily[0]?.data;
             const id = weeklyId(entry.id);
             return (
               <a
+                data-reveal data-hover
                 href={routes.weekly(id)}
                 class="block p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
               >
@@ -66,6 +68,7 @@ const latest = daily[0]?.data;
           const date = dailyDate(entry.id);
           return (
             <a
+              data-reveal
               href={routes.daily(date)}
               class:list={[
                 'flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--tp-surface-2)] transition-colors',

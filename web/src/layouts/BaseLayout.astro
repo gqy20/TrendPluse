@@ -33,6 +33,10 @@ const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
         } catch (e) {}
       })();
     </script>
+    <!-- 标记 JS 启用：配合 global.css 的 .js 预隐藏做动效渐进增强 -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />
@@ -40,5 +44,8 @@ const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
       <slot />
     </main>
     <Footer />
+    <script>
+      import '../scripts/motion';
+    </script>
   </body>
 </html>

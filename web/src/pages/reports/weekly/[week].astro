@@ -44,7 +44,7 @@ if (w.total_commits != null) meta.push({ label: 'Commit', value: w.total_commits
 
     {w.core_trends.length > 0 && (
       <section class="space-y-3">
-        <h2 class="text-xl font-bold">🔥 核心趋势</h2>
+        <h2 data-reveal class="text-xl font-bold">🔥 核心趋势</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {w.core_trends.map((t, i) => <CoreTrendCard trend={t} index={i + 1} />)}
         </div>

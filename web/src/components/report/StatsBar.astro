@@ -30,8 +30,8 @@ const gridCols = {
 {entries.length > 0 && (
   <div class:list={['grid grid-cols-2 gap-3', gridCols]}>
     {entries.map(([k, v]) => (
-      <div class="p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
-        <div class="text-2xl font-bold text-[var(--tp-fg)] tabular-nums">
+      <div data-reveal class="p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
+        <div data-count-up={v as number} class="text-2xl font-bold text-[var(--tp-fg)] tabular-nums">
           {(v as number).toLocaleString()}
         </div>
         <div class="text-xs text-[var(--tp-muted)] mt-0.5">{labels[k] || k}</div>

@@ -8,7 +8,7 @@ const groups = groupReposByOwner(repos);
 
 <BaseLayout title="监控仓库" description={`TrendPulse 监控 ${repos.length} 个 GitHub 仓库`}>
   <div class="space-y-8">
-    <div>
+    <div data-reveal>
       <h1 class="text-3xl font-bold tracking-tight">监控仓库</h1>
       <p class="mt-1 text-[var(--tp-muted)]">
         共监控 <span class="font-semibold text-[var(--tp-fg)]">{repos.length}</span> 个仓库 ·
@@ -27,6 +27,7 @@ const groups = groupReposByOwner(repos);
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {items.map((r) => (
             <a
+              data-reveal data-hover
               href={r.url}
               target="_blank"
               rel="noopener"

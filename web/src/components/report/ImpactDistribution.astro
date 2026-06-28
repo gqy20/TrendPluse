@@ -32,13 +32,13 @@ const tier = (lvl: number): 'high' | 'medium' | 'low' =>
 {total > 0 && (
   <section class="space-y-3">
     <h2 class="text-xl font-bold">📊 影响分布</h2>
-    <div class="p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
+    <div data-reveal class="p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
       <div class="flex items-end justify-between gap-3 h-32">
         {dist.map((d) => (
           <div class="flex-1 h-full flex flex-col items-center justify-end gap-1.5">
-            <span class="text-xs font-bold tabular-nums text-[var(--tp-fg)]">{d.count}</span>
+            <span data-count-up={d.count} class="text-xs font-bold tabular-nums text-[var(--tp-fg)]">{d.count}</span>
             <div
-              class="w-full max-w-[3rem] rounded-t-md transition-all"
+              class="impact-bar w-full max-w-[3rem] rounded-t-md"
               style={`height:${Math.max(4, (d.count / max) * 100)}%;background:var(--color-status-${tier(d.level)})`}
               title={`${d.level}★: ${d.count} 条`}
             ></div>

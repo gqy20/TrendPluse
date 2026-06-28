@@ -16,20 +16,23 @@ const { title, summary, subtitle, meta = [] } = Astro.props;
 <header class="space-y-4 pb-6 border-b border-[var(--tp-border)]">
   <div>
     {subtitle && (
-      <div class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1">{subtitle}</div>
+      <div data-reveal class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1">{subtitle}</div>
     )}
-    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{title}</h1>
+    <h1 data-reveal class="text-3xl sm:text-4xl font-bold tracking-tight">{title}</h1>
   </div>
   {summary && (
-    <p class="text-base leading-relaxed text-[var(--tp-fg)] opacity-85">{summary}</p>
+    <p data-reveal class="text-base leading-relaxed text-[var(--tp-fg)] opacity-85">{summary}</p>
   )}
   {meta.length > 0 && (
-    <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm pt-4 border-t border-[var(--tp-border)]">
+    <div data-reveal class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm pt-4 border-t border-[var(--tp-border)]">
       {meta.map((m, i) => (
         <span class="inline-flex items-center gap-1">
           {i > 0 && <span class="text-[var(--tp-border)]">·</span>}
           <span class="text-[var(--tp-muted)]">{m.label}</span>
-          <span class="font-semibold tabular-nums text-brand-600 dark:text-brand-400">{m.value}</span>
+          <span
+            class="font-semibold tabular-nums text-brand-600 dark:text-brand-400"
+            data-count-up={typeof m.value === 'number' ? m.value : undefined}
+          >{m.value}</span>
         </span>
       ))}
     </div>

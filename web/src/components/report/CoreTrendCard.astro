@@ -26,7 +26,7 @@ const tColor = themeColor(trend.theme);
 const tLabel = (trend.theme && themeLabel[trend.theme]) || trend.theme || '';
 ---
 
-<article class="relative p-5 rounded-xl border border-[var(--tp-border)] bg-gradient-to-br from-[var(--tp-surface)] to-[var(--tp-surface-2)] hover:border-brand-300 transition-colors h-full flex flex-col">
+<article data-reveal data-hover class="relative p-5 rounded-xl border border-[var(--tp-border)] bg-gradient-to-br from-[var(--tp-surface)] to-[var(--tp-surface-2)] hover:border-brand-300 transition-colors h-full flex flex-col">
   <div class="flex items-start gap-3">
     {index != null && (
       <span class="text-3xl font-bold tabular-nums leading-none text-[var(--tp-border)] flex-shrink-0">

@@ -149,3 +149,32 @@ code, pre {
   color: var(--tp-fg);
   border-color: var(--color-brand-400);
 }
+
+/* ========================================
+   动效渐进增强（配合 scripts/motion.ts）
+   - 仅在「JS 启用 + 用户未偏好减少动效」时预隐藏入场目标，防 FOUC
+   - reduce 用户 / 无 JS：内容天然可见，不隐藏
+   - JS 初始化失败时 motion.ts 移除 .js 类，本规则失效，内容恢复可见
+   ======================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal],
+  .js .hero-eyebrow,
+  .js .hero-title,
+  .js .hero-sub,
+  .js .hero-cta {
+    opacity: 0;
+  }
+}
+
+/* 主题切换过渡：toggle 前给 <html> 临时加 .theme-transitioning，
+   限定 background/border/color 的过渡，避免 transform 等被误过渡 */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning::before,
+.theme-transitioning::after {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    fill 0.3s ease !important;
+}
