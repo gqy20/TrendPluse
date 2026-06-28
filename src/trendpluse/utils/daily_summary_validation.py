@@ -23,6 +23,12 @@ def validate_smoke_daily_summary(data: Mapping[str, Any]) -> None:
     if not summary_brief:
         raise ValueError("summary_brief 不能为空")
 
+    # 零信号（如 smoke 用低活动 test-repos）：agent 无趋势可填，
+    # 只确认 summary_brief 已回填即可证明 agent 跑通
+    stats = data.get("stats") or {}
+    if not (stats.get("total_signals") or 0):
+        return
+
     trend_status = data.get("trend_status")
     if trend_status not in VALID_TREND_STATUS:
         raise ValueError(f"trend_status 非法: {trend_status!r}")
