@@ -66,6 +66,8 @@ class IssueWorkflowCoordinator:
 
     def collect_and_analyze(self, repos: list[str], snapshot_date: str) -> None:
         """同步抓取 issue 并执行后续分析。"""
+        if self.enable_issue_agent_analysis is not True:
+            return  # enable=false：跳过整个 issue 流程（含抓取），避免慢采集
         detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
             repos=repos,
             snapshot_date=snapshot_date,
@@ -80,6 +82,8 @@ class IssueWorkflowCoordinator:
         self, repos: list[str], snapshot_date: str
     ) -> None:
         """异步抓取 issue 并执行后续分析。"""
+        if self.enable_issue_agent_analysis is not True:
+            return  # 未启用 agent 分析时整个 issue 流程跳过（含抓取）
         detailed_issues, _issues_stats = self.issue_collector.fetch_issues(
             repos=repos,
             snapshot_date=snapshot_date,
