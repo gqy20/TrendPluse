@@ -7,6 +7,7 @@ import SignalSection from '../../../components/report/SignalSection.astro';
 import ReleaseList from '../../../components/report/ReleaseList.astro';
 import ActivityTable from '../../../components/report/ActivityTable.astro';
 import IssueInsights from '../../../components/report/IssueInsights.astro';
+import ImpactDistribution from '../../../components/report/ImpactDistribution.astro';
 
 export async function getStaticPaths() {
   const daily = await getCollection('daily');
@@ -60,6 +61,8 @@ if (d.summary_confidence != null) meta.push({ label: '置信度', value: `${Math
     )}
 
     <StatsBar stats={d.stats} />
+
+    <ImpactDistribution report={d} />
 
     <SignalSection title="工程信号" icon="🔧" signals={d.engineering_signals} />
     <SignalSection title="研究信号" icon="🔬" signals={d.research_signals} />
