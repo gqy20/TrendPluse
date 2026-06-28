@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadRepos, groupReposByOwner } from '../../lib/repos';
+
+const repos = loadRepos();
+const groups = groupReposByOwner(repos);
+---
+
+<BaseLayout title="监控仓库" description={`TrendPulse 监控 ${repos.length} 个 GitHub 仓库`}>
+  <div class="space-y-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">监控仓库</h1>
+      <p class="mt-1 text-[var(--tp-muted)]">
+        共监控 <span class="font-semibold text-[var(--tp-fg)]">{repos.length}</span> 个仓库 ·
+        覆盖 <span class="font-semibold text-[var(--tp-fg)]">{groups.length}</span> 个组织
+      </p>
+    </div>
+
+    {groups.map(([owner, items]) => (
+      <section class="space-y-3">
+        <h2 class="text-lg font-bold flex items-center gap-2">
+          <span class="font-mono">{owner}</span>
+          <span class="text-xs font-normal text-[var(--tp-muted)] bg-[var(--tp-surface-2)] px-2 py-0.5 rounded-full">
+            {items.length}
+          </span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          {items.map((r) => (
+            <a
+              href={r.url}
+              target="_blank"
+              rel="noopener"
+              class="block p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
+            >
+              <div class="font-mono text-sm font-semibold text-brand-600 dark:text-brand-400">{r.repo}</div>
+              {r.description && (
+                <p class="mt-1 text-xs text-[var(--tp-muted)] line-clamp-2">{r.description}</p>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

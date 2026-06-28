@@ -1,0 +1,31 @@
+---
+import type { Signal } from '../../content.config';
+import SignalCard from './SignalCard.astro';
+
+interface Props {
+  title: string;
+  signals: Signal[];
+  icon?: string;
+  emptyText?: string;
+}
+const { title, signals, icon, emptyText = '暂无信号' } = Astro.props;
+---
+
+<section class="space-y-4">
+  <h2 class="text-xl font-bold flex items-center gap-2 scroll-mt-20">
+    {icon && <span class="text-2xl">{icon}</span>}
+    <span>{title}</span>
+    {signals.length > 0 && (
+      <span class="text-sm font-normal text-[var(--tp-muted)] bg-[var(--tp-surface-2)] px-2 py-0.5 rounded-full">
+        {signals.length}
+      </span>
+    )}
+  </h2>
+  {signals.length > 0 ? (
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {signals.map((s) => <SignalCard signal={s} />)}
+    </div>
+  ) : (
+    <p class="text-sm text-[var(--tp-muted)] italic py-4">{emptyText}</p>
+  )}
+</section>

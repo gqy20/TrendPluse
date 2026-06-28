@@ -1,0 +1,84 @@
+---
+import type { DiscoveredProject } from '../../content.config';
+import { repoUrl, formatNumber } from '../../lib/format';
+
+interface Props {
+  project: DiscoveredProject;
+}
+const { project } = Astro.props;
+
+const quality = project.quality_score;
+const qualityColor =
+  quality == null ? '#71717a' : quality >= 70 ? '#10b981' : quality >= 40 ? '#f59e0b' : '#ef4444';
+const starsGrowth = project.stars_growth_7d;
+const highlight: string | undefined =
+  typeof project.highlight?.summary === 'string'
+    ? project.highlight.summary
+    : project.highlight?.one_liner && typeof project.highlight.one_liner === 'string'
+      ? project.highlight.one_liner
+      : undefined;
+---
+
+<article class="p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors flex flex-col gap-2">
+  <div class="flex items-start justify-between gap-2">
+    <div class="min-w-0">
+      <a
+        href={repoUrl(project.repo)}
+        target="_blank"
+        rel="noopener"
+        class="font-mono text-sm font-semibold hover:underline truncate block"
+      >
+        {project.repo}
+      </a>
+      {project.name && project.name !== project.repo && (
+        <div class="text-sm font-medium truncate text-[var(--tp-muted)]">{project.name}</div>
+      )}
+    </div>
+    {quality != null && (
+      <span
+        class="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full text-xs font-bold text-white"
+        style={`background:${qualityColor}`}
+        title={`质量分 ${quality}`}
+      >
+        {Math.round(quality)}
+      </span>
+    )}
+  </div>
+
+  {project.description && (
+    <p class="text-xs leading-relaxed text-[var(--tp-muted)] line-clamp-3">{project.description}</p>
+  )}
+
+  {highlight && (
+    <p class="text-xs leading-relaxed text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-brand-900/20 rounded px-2 py-1.5">
+      {highlight}
+    </p>
+  )}
+
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--tp-muted)]">
+    {project.language && (
+      <span class="inline-flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+        {project.language}
+      </span>
+    )}
+    {project.stars != null && <span>★ {formatNumber(project.stars)}</span>}
+    {starsGrowth != null && <span class="text-emerald-500">+{formatNumber(starsGrowth)}/7d</span>}
+    {project.forks != null && <span>⑂ {formatNumber(project.forks)}</span>}
+    {project.open_issues != null && <span>◯ {formatNumber(project.open_issues)}</span>}
+  </div>
+
+  {project.topics.length > 0 && (
+    <div class="flex flex-wrap gap-1">
+      {project.topics.slice(0, 6).map((t) => (
+        <span class="text-[10px] px-1.5 py-0.5 rounded bg-[var(--tp-surface-2)]">{t}</span>
+      ))}
+    </div>
+  )}
+
+  {project.discovery_reason && (
+    <p class="text-xs italic text-[var(--tp-muted)] border-l-2 border-brand-300 pl-2">
+      {project.discovery_reason}
+    </p>
+  )}
+</article>

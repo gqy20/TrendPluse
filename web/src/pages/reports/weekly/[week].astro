@@ -1,0 +1,60 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ReportHeader from '../../../components/report/ReportHeader.astro';
+import CoreTrendCard from '../../../components/report/CoreTrendCard.astro';
+import SignalSection from '../../../components/report/SignalSection.astro';
+import ActivityTable from '../../../components/report/ActivityTable.astro';
+import { weekRange } from '../../../lib/format';
+
+export async function getStaticPaths() {
+  const weekly = await getCollection('weekly');
+  return weekly.map((entry) => ({
+    params: { week: entry.id.replace(/^weekly-/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'weekly'>;
+}
+const { entry } = Astro.props;
+const w = entry.data;
+
+// 降级：core_trends 为空时，重点信号按影响降序作为主体
+const allSignals = [...w.engineering_signals, ...w.research_signals].sort(
+  (a, b) => (b.impact_score || 0) - (a.impact_score || 0)
+);
+
+const meta: { label: string; value: string | number }[] = [];
+if (w.start_date && w.end_date) meta.push({ label: '周期', value: weekRange(w.week_id, w.start_date, w.end_date) });
+if (w.high_impact_signals != null) meta.push({ label: '高影响', value: w.high_impact_signals });
+if (w.total_prs_analyzed != null) meta.push({ label: 'PR 分析', value: w.total_prs_analyzed });
+if (w.total_commits != null) meta.push({ label: 'Commit', value: w.total_commits });
+---
+
+<BaseLayout title={`周报 · ${w.week_id}`} description={w.summary_brief?.slice(0, 150)}>
+  <article class="space-y-8">
+    <ReportHeader
+      title={`周报 · ${w.week_id}`}
+      subtitle="WEEKLY REPORT"
+      summary={w.summary_brief}
+      meta={meta}
+    />
+
+    {w.core_trends.length > 0 && (
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold">🔥 核心趋势</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {w.core_trends.map((t, i) => <CoreTrendCard trend={t} index={i + 1} />)}
+        </div>
+      </section>
+    )}
+
+    <SignalSection title="重点信号" icon="⭐" signals={allSignals} />
+
+    {w.weekly_activity?.top_repos && w.weekly_activity.top_repos.length > 0 && (
+      <ActivityTable repos={w.weekly_activity.top_repos} title="本周活跃度" limit={10} />
+    )}
+  </article>
+</BaseLayout>

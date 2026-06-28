@@ -1,0 +1,41 @@
+---
+import { repoUrl } from '../../lib/format';
+import type { RepoActivity } from '../../content.config';
+
+interface Props {
+  repos?: RepoActivity[];
+  title?: string;
+  limit?: number;
+}
+const { repos = [], title = '仓库活跃度', limit = 10 } = Astro.props;
+const top = repos.slice(0, limit);
+const maxCommits = Math.max(1, ...top.map((r) => r.commits || 0));
+---
+
+{top.length > 0 && (
+  <section>
+    <h2 class="text-xl font-bold mb-3">📈 {title}</h2>
+    <div class="rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] overflow-hidden">
+      {top.map((r, i) => {
+        const pct = Math.round(((r.commits || 0) / maxCommits) * 100);
+        return (
+          <div class:list={['flex items-center gap-3 px-3 py-2', i > 0 && 'border-t border-[var(--tp-border)]']}>
+            <span class="text-xs text-[var(--tp-muted)] tabular-nums w-6 flex-shrink-0">{i + 1}.</span>
+            <a
+              href={repoUrl(r.repo)}
+              target="_blank"
+              rel="noopener"
+              class="font-mono text-sm hover:underline truncate flex-1 min-w-0"
+            >
+              {r.repo}
+            </a>
+            <div class="hidden sm:block w-32 h-1.5 rounded-full bg-[var(--tp-surface-2)] overflow-hidden flex-shrink-0">
+              <div class="h-full bg-brand-500 rounded-full" style={`width:${pct}%`}></div>
+            </div>
+            <span class="text-sm font-semibold tabular-nums text-right w-16 flex-shrink-0">{r.commits ?? '—'}</span>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+)}

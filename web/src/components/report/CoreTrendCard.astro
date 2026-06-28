@@ -1,0 +1,63 @@
+---
+import type { CoreTrend } from '../../content.config';
+import { impactStars, withAlpha } from '../../lib/format';
+
+interface Props {
+  trend: CoreTrend;
+  index?: number;
+}
+const { trend, index } = Astro.props;
+
+const themeLabel: Record<string, string> = {
+  architecture: '架构',
+  tooling: '工具链',
+  performance: '性能',
+  safety: '安全',
+  research: '研究',
+  workflow: '工作流',
+  ecosystem: '生态',
+};
+const themeColor: Record<string, string> = {
+  architecture: '#8b5cf6',
+  tooling: '#0ea5e9',
+  performance: '#f59e0b',
+  safety: '#10b981',
+  research: '#ec4899',
+  workflow: '#6366f1',
+  ecosystem: '#14b8a6',
+};
+const tColor = (trend.theme && themeColor[trend.theme]) || '#6366f1';
+const tLabel = (trend.theme && themeLabel[trend.theme]) || trend.theme || '';
+---
+
+<article class="relative p-5 rounded-xl border border-[var(--tp-border)] bg-gradient-to-br from-[var(--tp-surface)] to-[var(--tp-surface-2)] hover:border-brand-300 transition-colors">
+  <div class="flex items-start gap-3">
+    {index != null && (
+      <span class="text-3xl font-bold tabular-nums leading-none text-[var(--tp-border)] flex-shrink-0">
+        {String(index).padStart(2, '0')}
+      </span>
+    )}
+    <div class="flex-1 min-w-0">
+      <h3 class="font-bold text-lg leading-snug">{trend.title}</h3>
+      <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+        {tLabel && (
+          <span class="px-2 py-0.5 rounded-full font-medium" style={`background:${withAlpha(tColor, 0.15)};color:${tColor}`}>
+            {tLabel}
+          </span>
+        )}
+        {trend.impact_level != null && (
+          <span class="inline-flex items-center gap-1">
+            <span class="text-amber-500 tracking-tight">{impactStars(trend.impact_level)}</span>
+            <span class="text-[var(--tp-muted)]">({trend.impact_level}/5)</span>
+          </span>
+        )}
+        {trend.signal_ids.length > 0 && (
+          <span class="text-[var(--tp-muted)]">· 聚合 {trend.signal_ids.length} 条信号</span>
+        )}
+      </div>
+    </div>
+  </div>
+  {trend.description && (
+    <p class="mt-3 text-sm leading-relaxed text-[var(--tp-fg)] opacity-90">{trend.description}</p>
+  )}
+</article>

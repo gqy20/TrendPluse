@@ -1,0 +1,48 @@
+---
+import { repoUrl } from '../../lib/format';
+
+interface ReleaseInfo {
+  repo?: string;
+  version?: string;
+  date?: string;
+  summary?: string;
+  url?: string;
+  ai_summary?: string;
+  assets_count?: number;
+}
+
+interface Props {
+  releases: { releases?: ReleaseInfo[] } | ReleaseInfo[] | null | undefined;
+}
+
+const { releases } = Astro.props;
+const list: ReleaseInfo[] = Array.isArray(releases) ? releases : releases?.releases || [];
+---
+
+{list.length > 0 && (
+  <section>
+    <h2 class="text-xl font-bold mb-3">🎯 发布动态</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {list.map((r) => (
+        <div class="p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
+          <div class="flex items-center gap-2 flex-wrap">
+            {r.repo && (
+              <a href={repoUrl(r.repo)} target="_blank" rel="noopener" class="font-mono text-sm font-medium hover:underline">
+                {r.repo}
+              </a>
+            )}
+            {r.version && (
+              <span class="text-xs px-1.5 py-0.5 rounded bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200 font-mono">
+                {r.version}
+              </span>
+            )}
+            {r.date && <span class="text-xs text-[var(--tp-muted)]">{r.date}</span>}
+          </div>
+          {(r.ai_summary || r.summary) && (
+            <p class="mt-1.5 text-sm text-[var(--tp-muted)] leading-relaxed">{r.ai_summary || r.summary}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+)}

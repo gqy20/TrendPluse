@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+import Header from '../components/nav/Header.astro';
+import Footer from '../components/nav/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'TrendPulse',
+  description = '给 AI 编程生态做一块干净的情报屏 · 追踪 GitHub 每日趋势信号',
+} = Astro.props;
+const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
+---
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <!-- 防 FOUC：构建时即确定主题（跟随系统偏好 + localStorage 记忆） -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('tp-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { routes } from '../../lib/path';
+
+const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
+const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
+const dailyDate = (id: string) => id.replace(/^report-/, '');
+const weeklyId = (id: string) => id.replace(/^weekly-/, '');
+const latest = daily[0]?.data;
+---
+
+<BaseLayout title="趋势报告" description="TrendPulse 每日 GitHub 趋势信号归档">
+  <div class="space-y-10">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">趋势报告</h1>
+      <p class="mt-1 text-[var(--tp-muted)]">
+        共 {daily.length} 份日报 · {weekly.length} 份周报
+      </p>
+    </div>
+
+    {latest && (
+      <a
+        href={routes.daily(dailyDate(daily[0]!.id))}
+        class="block p-5 rounded-xl border border-brand-200 dark:border-brand-800 bg-gradient-to-br from-brand-50 to-transparent dark:from-brand-900/20 hover:border-brand-400 transition-colors"
+      >
+        <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 mb-1">最新日报 · {latest.date}</div>
+        <p class="text-sm leading-relaxed line-clamp-3">{latest.summary_brief}</p>
+      </a>
+    )}
+
+    {weekly.length > 0 && (
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold">📅 周报</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          {weekly.map((entry) => {
+            const w = entry.data;
+            const id = weeklyId(entry.id);
+            return (
+              <a
+                href={routes.weekly(id)}
+                class="block p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-sm font-semibold">{id}</span>
+                  {w.high_impact_signals != null && (
+                    <span class="text-xs text-[var(--tp-muted)]">★ {w.high_impact_signals}</span>
+                  )}
+                </div>
+                {w.summary_brief && <p class="text-xs text-[var(--tp-muted)] mt-1 line-clamp-2">{w.summary_brief}</p>}
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold">📋 日报归档</h2>
+      <div class="rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] overflow-hidden">
+        {daily.map((entry, i) => {
+          const d = entry.data;
+          const date = dailyDate(entry.id);
+          return (
+            <a
+              href={routes.daily(date)}
+              class:list={[
+                'flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--tp-surface-2)] transition-colors',
+                i > 0 && 'border-t border-[var(--tp-border)]',
+              ]}
+            >
+              <span class="font-mono text-sm w-28 flex-shrink-0">{date}</span>
+              {d.summary_brief ? (
+                <span class="text-xs text-[var(--tp-muted)] truncate flex-1">{d.summary_brief}</span>
+              ) : (
+                <span class="text-xs text-[var(--tp-border)] italic flex-1">无摘要</span>
+              )}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { routes } from '../lib/path';
+import { loadRepos } from '../lib/repos';
+
+const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
+const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
+const discovery = await getCollection('discovery');
+
+const latest = daily[0];
+const latestData = latest?.data;
+const latestWeekly = weekly[0]?.data;
+const dailyDate = (id: string) => id.replace(/^report-/, '');
+const weeklyId = (id: string) => id.replace(/^weekly-/, '');
+
+const repos = loadRepos();
+const owners = new Set(repos.map((r) => r.url.match(/github\.com\/([^/]+)/)?.[1] || '')).size;
+---
+
+<BaseLayout title="首页">
+  <!-- Hero -->
+  <section class="rounded-2xl border border-[var(--tp-border)] bg-gradient-to-br from-brand-50 via-[var(--tp-surface)] to-transparent dark:from-brand-900/20 p-8 sm:p-12 mb-10">
+    <div class="max-w-2xl">
+      <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium mb-3">
+        Signal Console · 2026
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
+        给 AI 编程生态做一块<br class="hidden sm:block" />
+        <span class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">干净的情报屏</span>
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-[var(--tp-muted)] leading-relaxed">
+        每日追踪 GitHub 趋势信号——先看最新变化，再决定是否扩大监控范围。
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href={routes.reports()}
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-700 transition-colors"
+        >
+          阅读最新趋势 →
+        </a>
+        <a
+          href={routes.discovery()}
+          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-[var(--tp-border)] hover:border-brand-300 font-medium transition-colors"
+        >
+          项目发现
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据概览 -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+    <a href={routes.reports()} class="block p-4 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
+      <div class="text-2xl font-bold text-brand-600 dark:text-brand-400">{daily.length}</div>
+      <div class="text-xs text-[var(--tp-muted)] mt-1">日报归档</div>
+    </a>
+    <a href={routes.reports()} class="block p-4 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
+      <div class="text-2xl font-bold text-brand-600 dark:text-brand-400">{weekly.length}</div>
+      <div class="text-xs text-[var(--tp-muted)] mt-1">周报归档</div>
+    </a>
+    <a href={routes.discovery()} class="block p-4 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
+      <div class="text-2xl font-bold text-brand-600 dark:text-brand-400">{discovery.length}</div>
+      <div class="text-xs text-[var(--tp-muted)] mt-1">项目发现</div>
+    </a>
+    <a href={routes.repos()} class="block p-4 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
+      <div class="text-2xl font-bold text-brand-600 dark:text-brand-400">{repos.length}</div>
+      <div class="text-xs text-[var(--tp-muted)] mt-1">监控仓库 · {owners} 组织</div>
+    </a>
+  </div>
+
+  <!-- 最新日报 + 周报 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-10">
+    {latestData && latest && (
+      <a
+        href={routes.daily(dailyDate(latest.id))}
+        class="block p-5 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
+      >
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium">最新日报</span>
+          <span class="font-mono text-xs text-[var(--tp-muted)]">{latestData.date}</span>
+        </div>
+        <p class="text-sm leading-relaxed line-clamp-4 text-[var(--tp-fg)] opacity-90">{latestData.summary_brief}</p>
+      </a>
+    )}
+    {latestWeekly && weekly[0] && (
+      <a
+        href={routes.weekly(weeklyId(weekly[0].id))}
+        class="block p-5 rounded-xl border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
+      >
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 font-medium">最新周报</span>
+          <span class="font-mono text-xs text-[var(--tp-muted)]">{latestWeekly.week_id}</span>
+        </div>
+        <p class="text-sm leading-relaxed line-clamp-4 text-[var(--tp-fg)] opacity-90">{latestWeekly.summary_brief}</p>
+      </a>
+    )}
+  </div>
+</BaseLayout>

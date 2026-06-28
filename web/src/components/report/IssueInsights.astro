@@ -1,0 +1,48 @@
+---
+interface Props {
+  insights: Record<string, unknown> | null | undefined;
+}
+const { insights } = Astro.props;
+
+const summary: string | undefined =
+  typeof insights?.summary_brief === 'string' ? insights.summary_brief : undefined;
+const highlights: string[] = Array.isArray(insights?.global_highlights)
+  ? (insights!.global_highlights as string[])
+  : [];
+const painPoints: string[] = Array.isArray(insights?.top_pain_points)
+  ? (insights!.top_pain_points as string[])
+  : [];
+
+const visible = Boolean(summary || highlights.length || painPoints.length);
+---
+
+{visible && (
+  <section>
+    <h2 class="text-xl font-bold mb-3">🧠 Issue 洞察</h2>
+    <div class="space-y-3 p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)]">
+      {summary && <p class="text-sm leading-relaxed text-[var(--tp-fg)] opacity-90">{summary}</p>}
+
+      {highlights.length > 0 && (
+        <div>
+          <div class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1.5">全局亮点</div>
+          <ul class="space-y-1 text-sm">
+            {highlights.map((h) => (
+              <li class="flex gap-2"><span class="text-brand-500 flex-shrink-0">▲</span><span>{h}</span></li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {painPoints.length > 0 && (
+        <div>
+          <div class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1.5">共性问题</div>
+          <ul class="space-y-1 text-sm">
+            {painPoints.map((p) => (
+              <li class="flex gap-2"><span class="text-amber-500 flex-shrink-0">!</span><span>{p}</span></li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+)}
