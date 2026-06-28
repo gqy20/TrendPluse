@@ -6,7 +6,7 @@
 from collections.abc import Callable
 
 import anthropic
-from github import GithubException, UnknownObjectException
+from github import GithubException
 from pydantic import ValidationError
 from tenacity import (
     retry,
@@ -106,12 +106,10 @@ def create_github_retry_decorator(
     """
 
     def _retryable(exc: BaseException) -> bool:
-        """只重试可恢复错误（速率限制/5xx）。404 等永久错误不重试。"""
-        if isinstance(exc, UnknownObjectException):
-            return False
+        """只重试可恢复错误（速率限制 429 + 5xx）。4xx 永久错误不重试。"""
         if isinstance(exc, GithubException):
             status = getattr(exc, "status", 0) or 0
-            return status in (429, 403) or status >= 500
+            return status == 429 or status >= 500
         return False
 
     return retry(
