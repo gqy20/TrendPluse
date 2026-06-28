@@ -118,6 +118,8 @@ venv.bak/
 web/node_modules/
 web/.astro/
 web/dist/
+# 全局 lib/ 规则会误忽略 web/src/lib/（Astro 源码），需显式放行
+!web/src/lib/
 
 # mypy
 .mypy_cache/
