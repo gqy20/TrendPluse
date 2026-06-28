@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../../lib/path';
+import TrendsOverview from '../../components/report/TrendsOverview.astro';
 
 const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
 const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
@@ -28,6 +29,8 @@ const latest = daily[0]?.data;
         <p class="text-sm leading-relaxed line-clamp-3">{latest.summary_brief}</p>
       </a>
     )}
+
+    <TrendsOverview />
 
     {weekly.length > 0 && (
       <section class="space-y-3">

@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+
+/**
+ * 最近趋势概览：读最近 N 期 daily，聚合 top_new / top_continuing 趋势文本，
+ * 按出现次数排序，标注新/续与最近出现日期。
+ *
+ * 说明：daily 的 trends 是 LLM 生成的自由文本（无稳定 id），
+ * 精确的"跨日时间线"不可靠（同趋势不同日表述会分散），故做词频概览而非时间线。
+ */
+const WINDOW = 14;
+const daily = (await getCollection('daily')).sort((a, b) => a.id.localeCompare(b.id));
+const recent = daily.slice(-WINDOW);
+
+interface TrendStat {
+  text: string;
+  count: number;
+  lastDate: string;
+  isNew: boolean;
+  isContinuing: boolean;
+}
+
+const map = new Map<string, TrendStat>();
+for (const entry of recent) {
+  const date = entry.data.date;
+  const news = entry.data.top_new_trends;
+  const conts = entry.data.top_continuing_trends;
+  for (const t of [...news, ...conts]) {
+    const key = t.trim();
+    if (!key) continue;
+    if (!map.has(key)) {
+      map.set(key, { text: key, count: 0, lastDate: date, isNew: false, isContinuing: false });
+    }
+    const s = map.get(key)!;
+    s.count += 1;
+    if (date > s.lastDate) s.lastDate = date;
+    if (news.includes(t)) s.isNew = true;
+    if (conts.includes(t)) s.isContinuing = true;
+  }
+}
+
+const trends = [...map.values()]
+  .sort((a, b) => b.count - a.count || b.lastDate.localeCompare(a.lastDate))
+  .slice(0, 12);
+---
+
+{trends.length > 0 && (
+  <section class="space-y-3">
+    <div class="flex items-baseline justify-between">
+      <h2 class="text-xl font-bold">🔥 最近趋势</h2>
+      <span class="text-xs text-[var(--tp-muted)]">基于最近 {recent.length} 期日报</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      {trends.map((t) => (
+        <div class="p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors">
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-sm leading-snug">{t.text}</span>
+            <span class="text-sm font-bold text-brand-600 dark:text-brand-400 flex-shrink-0 tabular-nums">{t.count}×</span>
+          </div>
+          <div class="mt-2 flex items-center gap-1.5 text-[11px]">
+            {t.isNew && (
+              <span
+                class="px-1.5 py-0.5 rounded font-medium"
+                style="background:color-mix(in oklab,var(--color-status-success) 15%,transparent);color:var(--color-status-success)"
+              >新</span
+              >
+            )}
+            {t.isContinuing && (
+              <span
+                class="px-1.5 py-0.5 rounded font-medium"
+                style="background:color-mix(in oklab,var(--color-status-warning) 15%,transparent);color:var(--color-status-warning)"
+              >续</span
+              >
+            )}
+            <span class="text-[var(--tp-muted)] ml-auto">最近 {t.lastDate}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
