@@ -111,10 +111,11 @@ def test_collect_and_analyze_dumps_issue_files(tmp_path, monkeypatch) -> None:
     service = IssueWorkflowCoordinator(
         issue_collector=DummyIssueCollector([{"repo": "owner/repo"}]),
         issue_dump_dir=str(tmp_path),
-        enable_issue_agent_analysis=False,
-        anthropic_api_key="",
+        enable_issue_agent_analysis=True,
+        anthropic_api_key="test-key",
         max_parallel_workers=4,
         max_issues_per_repo=20,
+        runner_factory=lambda **kwargs: DummyIssueRunner(),
     )
 
     service.collect_and_analyze(["owner/repo"], "2026-03-06")
