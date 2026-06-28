@@ -22,16 +22,22 @@ const themeLabel: Record<string, string> = {
   commit: '提交',
   release: '发布',
 };
+/* 趋势主题 → 色（与 global.css / format.ts 的 signal 色板对齐，改色请同步） */
 const themeColor: Record<string, string> = {
-  architecture: '#8b5cf6',
-  tooling: '#0ea5e9',
-  performance: '#f59e0b',
-  safety: '#10b981',
-  research: '#ec4899',
-  workflow: '#6366f1',
-  ecosystem: '#14b8a6',
+  architecture: '#a684d6',
+  tooling: '#5b9bd5',
+  performance: '#e8895a',
+  safety: '#5bab6e',
+  research: '#d97aa6',
+  workflow: '#4fb3aa',
+  ecosystem: '#4fb3aa',
+  capability: '#5b9bd5',
+  abstraction: '#a684d6',
+  eval: '#e0b341',
+  commit: '#8e96a3',
+  release: '#d97aa6',
 };
-const tColor = (trend.theme && themeColor[trend.theme]) || '#6366f1';
+const tColor = (trend.theme && themeColor[trend.theme]) || '#298dff';
 const tLabel = (trend.theme && themeLabel[trend.theme]) || trend.theme || '';
 ---
 
@@ -52,7 +58,7 @@ const tLabel = (trend.theme && themeLabel[trend.theme]) || trend.theme || '';
         )}
         {trend.impact_level != null && (
           <span class="inline-flex items-center gap-1">
-            <span class="text-amber-500 tracking-tight">{impactStars(trend.impact_level)}</span>
+            <span class="text-status-warning tracking-tight">{impactStars(trend.impact_level)}</span>
             <span class="text-[var(--tp-muted)]">({trend.impact_level}/5)</span>
           </span>
         )}

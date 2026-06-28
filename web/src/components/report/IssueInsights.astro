@@ -38,7 +38,7 @@ const visible = Boolean(summary || highlights.length || painPoints.length);
           <div class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1.5">共性问题</div>
           <ul class="space-y-1 text-sm">
             {painPoints.map((p) => (
-              <li class="flex gap-2"><span class="text-amber-500 flex-shrink-0">!</span><span>{p}</span></li>
+              <li class="flex gap-2"><span class="text-status-warning flex-shrink-0">!</span><span>{p}</span></li>
             ))}
           </ul>
         </div>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 暗色模式：基于 .dark 类（后续 toggle 切换；prefers-color-scheme 自动跟随） */
+/* 暗色模式：基于 .dark 类（toggle 切换；prefers-color-scheme 自动跟随） */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -8,46 +8,64 @@
   --font-sans: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
 
-  /* Pulse 品牌色（靛蓝系，呼应"脉搏/脉冲"） */
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  /* ───────────────────────────────────────────────
+   * BRAND · 电光蓝（Sui SOTD 同款 #298DFF，手工调阶，非 Tailwind 标准色）
+   * 沉稳高级，跳出青色工具感；冷峻未来气质，最贴"信号情报屏"
+   * ──────────────────────────────────────────── */
+  --color-brand-50:  #eaf3ff;
+  --color-brand-100: #d4e7ff;
+  --color-brand-200: #a8cdff;
+  --color-brand-300: #7db4ff;
+  --color-brand-400: #5aa8ff;
+  --color-brand-500: #298dff;
+  --color-brand-600: #1e6fcc;
+  --color-brand-700: #1856a3;
+  --color-brand-800: #133e7a;
+  --color-brand-900: #0d2a52;
 
-  /* 信号类型语义色（阶段 1 基础版） */
-  --color-signal-capability: #6366f1;
-  --color-signal-abstraction: #8b5cf6;
-  --color-signal-workflow: #0ea5e9;
-  --color-signal-eval: #14b8a6;
-  --color-signal-safety: #10b981;
-  --color-signal-performance: #f59e0b;
-  --color-signal-commit: #64748b;
-  --color-signal-release: #ec4899;
+  /* ───────────────────────────────────────────────
+   * SIGNAL · 8 类信号色（低饱和 + 蒙灰统一，告别 Tailwind 拾色器感）
+   * 色盲安全、暗底可读；冷色为主 + 暖色点缀（performance/eval/release）
+   * ⚠ 真正生效的运行时色值在 lib/format.ts SIGNAL_TYPE_COLOR，改色请两处同改
+   * ──────────────────────────────────────────── */
+  --color-signal-capability:  #5b9bd5;  /* 🚀 新能力 · 钢蓝 */
+  --color-signal-abstraction: #a684d6;  /* 🎨 抽象层 · 淡紫 */
+  --color-signal-workflow:    #4fb3aa;  /* ⚙️ 工作流 · 青绿 */
+  --color-signal-eval:        #e0b341;  /* 📊 评估 · 暗金 */
+  --color-signal-safety:      #5bab6e;  /* 🛡️ 安全 · 草绿 */
+  --color-signal-performance: #e8895a;  /* ⚡ 性能 · 暖橙 */
+  --color-signal-commit:      #8e96a3;  /* 💾 提交 · 中性灰蓝 */
+  --color-signal-release:     #d97aa6;  /* 🎯 发布 · 粉 */
+
+  /* ───────────────────────────────────────────────
+   * STATUS · 状态语义色（与品牌色解耦，低饱和协调）
+   * 运行时色值见 lib/format.ts STATUS_COLORS
+   * ──────────────────────────────────────────── */
+  --color-status-high:    #e8895a;  /* 高影响 · 暖突出 */
+  --color-status-medium:  #6e7682;  /* 中性 */
+  --color-status-low:     #4a515f;  /* 次要 */
+  --color-status-success: #5bab6e;  /* 正向 · 增长 · 高质量 */
+  --color-status-warning: #e0b341;  /* 注意 · 评分星标 */
+  --color-status-danger:  #e0655a;  /* 危险 · 痛点 · 低质量 */
 }
 
-/* 主题表面变量（明/暗） */
+/* 主题表面变量（带色温，告别纯白/冷灰黑的数字工具感） */
 :root {
-  --tp-bg: #ffffff;
-  --tp-fg: #18181b;
-  --tp-muted: #71717a;
+  --tp-bg: #fafbfc;        /* 冷调白，非纯白 */
+  --tp-fg: #0e1116;
+  --tp-muted: #5c6573;
   --tp-surface: #ffffff;
-  --tp-surface-2: #fafafa;
-  --tp-border: rgba(0, 0, 0, 0.08);
+  --tp-surface-2: #f1f4f8;
+  --tp-border: rgba(15, 30, 60, 0.08);
 }
 
 .dark {
-  --tp-bg: #09090b;
-  --tp-fg: #fafafa;
-  --tp-muted: #a1a1aa;
-  --tp-surface: #18181b;
-  --tp-surface-2: #27272a;
-  --tp-border: rgba(255, 255, 255, 0.1);
+  --tp-bg: #0a0b0e;        /* 微冷蓝黑，非 zinc 冷灰 */
+  --tp-fg: #f5f7fa;
+  --tp-muted: #8a92a0;
+  --tp-surface: #12141a;
+  --tp-surface-2: #1a1d24;
+  --tp-border: rgba(255, 255, 255, 0.08);
 }
 
 html {
@@ -79,7 +97,7 @@ code, pre {
   font-family: var(--font-mono);
 }
 
-/* 隐藏滚动条美化（可选） */
+/* 选区高亮 */
 ::selection {
-  background: color-mix(in oklab, var(--color-brand-500) 25%, transparent);
+  background: color-mix(in oklab, var(--color-brand-500) 28%, transparent);
 }

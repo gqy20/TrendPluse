@@ -72,21 +72,41 @@ export function weekRange(weekId?: string, start?: string, end?: string): string
   return weekId || '';
 }
 
-/** 信号类型 → 语义色（hex），用于 badge/图标着色 */
+/**
+ * 信号类型 → 语义色（hex），用于 badge/图标着色
+ * ⚠ Source of truth：与 styles/global.css 的 --color-signal-* 保持一致
+ *    （CSS 端定义工具类 token，TS 端用于 withAlpha 拼接 inline 底色），改色请两处同改
+ * 高级感色板：低饱和 + 蒙灰统一（告别 Tailwind 拾色器感），冷色为主 + 暖色点缀
+ */
 const SIGNAL_TYPE_COLOR: Record<string, string> = {
-  capability: '#6366f1',
-  abstraction: '#8b5cf6',
-  workflow: '#0ea5e9',
-  eval: '#14b8a6',
-  safety: '#10b981',
-  performance: '#f59e0b',
-  commit: '#64748b',
-  release: '#ec4899',
+  capability: '#5b9bd5',
+  abstraction: '#a684d6',
+  workflow: '#4fb3aa',
+  eval: '#e0b341',
+  safety: '#5bab6e',
+  performance: '#e8895a',
+  commit: '#8e96a3',
+  release: '#d97aa6',
 };
 
 export function signalColor(type?: string): string {
-  return (type && SIGNAL_TYPE_COLOR[type]) || '#71717a';
+  return (type && SIGNAL_TYPE_COLOR[type]) || '#8a92a0';
 }
+
+/**
+ * 状态语义色（hex）—— 与品牌色解耦，低饱和协调
+ * ⚠ 与 styles/global.css 的 --color-status-* 保持一致
+ * 影响级别 high/medium/low + 通用 success/warning/danger，
+ * 供组件运行时选色（质量分等档、增长、痛点等）
+ */
+export const STATUS_COLORS = {
+  high: '#e8895a',
+  medium: '#6e7682',
+  low: '#4a515f',
+  success: '#5bab6e',
+  warning: '#e0b341',
+  danger: '#e0655a',
+} as const;
 
 /** 8 位 hex + alpha（如 #6366f1 + 0.1 → rgba），用于浅底色 */
 export function withAlpha(hex: string, alpha: number): string {

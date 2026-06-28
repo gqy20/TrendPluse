@@ -17,9 +17,9 @@ const { signal } = Astro.props;
 const level = impactLevel(signal.impact_score);
 const color = signalColor(signal.type);
 const levelBar = {
-  high: 'bg-brand-600',
-  medium: 'bg-slate-400',
-  low: 'bg-slate-300',
+  high: 'bg-status-high',
+  medium: 'bg-status-medium',
+  low: 'bg-status-low',
 }[level];
 const score = signal.impact_score;
 ---
@@ -43,7 +43,7 @@ const score = signal.impact_score;
           )}
           {score != null && (
             <span class="inline-flex items-center gap-1">
-              <span class="text-amber-500 tracking-tight">{impactStars(score)}</span>
+              <span class="text-status-warning tracking-tight">{impactStars(score)}</span>
               <span class="text-[var(--tp-muted)]">({score}/5)</span>
             </span>
           )}

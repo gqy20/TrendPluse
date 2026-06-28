@@ -1,6 +1,6 @@
 ---
 import type { DiscoveredProject } from '../../content.config';
-import { repoUrl, formatNumber } from '../../lib/format';
+import { repoUrl, formatNumber, STATUS_COLORS } from '../../lib/format';
 
 interface Props {
   project: DiscoveredProject;
@@ -8,8 +8,15 @@ interface Props {
 const { project } = Astro.props;
 
 const quality = project.quality_score;
+/* 质量分等档色（与品牌色解耦，复用 status 语义） */
 const qualityColor =
-  quality == null ? '#71717a' : quality >= 70 ? '#10b981' : quality >= 40 ? '#f59e0b' : '#ef4444';
+  quality == null
+    ? STATUS_COLORS.medium
+    : quality >= 70
+      ? STATUS_COLORS.success
+      : quality >= 40
+        ? STATUS_COLORS.warning
+        : STATUS_COLORS.danger;
 const starsGrowth = project.stars_growth_7d;
 const highlight: string | undefined =
   typeof project.highlight?.summary === 'string'
@@ -63,7 +70,7 @@ const highlight: string | undefined =
       </span>
     )}
     {project.stars != null && <span>★ {formatNumber(project.stars)}</span>}
-    {starsGrowth != null && <span class="text-emerald-500">+{formatNumber(starsGrowth)}/7d</span>}
+    {starsGrowth != null && <span class="text-status-success">+{formatNumber(starsGrowth)}/7d</span>}
     {project.forks != null && <span>⑂ {formatNumber(project.forks)}</span>}
     {project.open_issues != null && <span>◯ {formatNumber(project.open_issues)}</span>}
   </div>
