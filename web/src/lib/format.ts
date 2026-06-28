@@ -94,6 +94,29 @@ export function signalColor(type?: string): string {
 }
 
 /**
+ * 趋势主题 → 色（复用 signal 色板；theme 与 signal type 的映射关系固化在此）
+ * ⚠ CoreTrendCard 用它，改色请同步 SIGNAL_TYPE_COLOR
+ */
+const THEME_COLOR: Record<string, string> = {
+  architecture: SIGNAL_TYPE_COLOR.abstraction,
+  tooling: SIGNAL_TYPE_COLOR.capability,
+  performance: SIGNAL_TYPE_COLOR.performance,
+  safety: SIGNAL_TYPE_COLOR.safety,
+  research: SIGNAL_TYPE_COLOR.release,
+  workflow: SIGNAL_TYPE_COLOR.workflow,
+  ecosystem: SIGNAL_TYPE_COLOR.workflow,
+  capability: SIGNAL_TYPE_COLOR.capability,
+  abstraction: SIGNAL_TYPE_COLOR.abstraction,
+  eval: SIGNAL_TYPE_COLOR.eval,
+  commit: SIGNAL_TYPE_COLOR.commit,
+  release: SIGNAL_TYPE_COLOR.release,
+};
+
+export function themeColor(theme?: string): string {
+  return (theme && THEME_COLOR[theme]) || '#298dff';
+}
+
+/**
  * 状态语义色（hex）—— 与品牌色解耦，低饱和协调
  * ⚠ 与 styles/global.css 的 --color-status-* 保持一致
  * 影响级别 high/medium/low + 通用 success/warning/danger，

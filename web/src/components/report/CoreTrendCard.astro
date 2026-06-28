@@ -1,6 +1,6 @@
 ---
 import type { CoreTrend } from '../../content.config';
-import { impactStars, withAlpha } from '../../lib/format';
+import { impactStars, withAlpha, themeColor } from '../../lib/format';
 
 interface Props {
   trend: CoreTrend;
@@ -22,22 +22,7 @@ const themeLabel: Record<string, string> = {
   commit: '提交',
   release: '发布',
 };
-/* 趋势主题 → 色（与 global.css / format.ts 的 signal 色板对齐，改色请同步） */
-const themeColor: Record<string, string> = {
-  architecture: '#a684d6',
-  tooling: '#5b9bd5',
-  performance: '#e8895a',
-  safety: '#5bab6e',
-  research: '#d97aa6',
-  workflow: '#4fb3aa',
-  ecosystem: '#4fb3aa',
-  capability: '#5b9bd5',
-  abstraction: '#a684d6',
-  eval: '#e0b341',
-  commit: '#8e96a3',
-  release: '#d97aa6',
-};
-const tColor = (trend.theme && themeColor[trend.theme]) || '#298dff';
+const tColor = themeColor(trend.theme);
 const tLabel = (trend.theme && themeLabel[trend.theme]) || trend.theme || '';
 ---
 
