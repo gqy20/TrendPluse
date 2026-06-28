@@ -396,6 +396,8 @@ keep=true 必须有明确用户影响证据（阻断、崩溃、反复失败、�
             stderr=self._build_stderr_handler(),
             max_turns=self.max_turns,
             max_budget_usd=self.max_budget_usd,
+            mcp_servers={},
+            strict_mcp_config=True,
         )
 
         text_chunks: list[str] = []

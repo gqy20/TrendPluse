@@ -209,6 +209,8 @@ class DailySummaryAgent:
             output_format=self._build_output_format(),
             max_turns=self.max_turns,
             max_budget_usd=self.max_budget_usd,
+            mcp_servers={},
+            strict_mcp_config=True,
             stderr=self._handle_cli_stderr,
         )
 
