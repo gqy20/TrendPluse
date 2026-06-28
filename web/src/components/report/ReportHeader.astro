@@ -24,13 +24,14 @@ const { title, summary, subtitle, meta = [] } = Astro.props;
     <p class="text-base leading-relaxed text-[var(--tp-fg)] opacity-85">{summary}</p>
   )}
   {meta.length > 0 && (
-    <dl class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-      {meta.map((m) => (
-        <div class="flex items-center gap-1.5">
-          <dt class="text-[var(--tp-muted)]">{m.label}:</dt>
-          <dd class="font-semibold tabular-nums">{m.value}</dd>
-        </div>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm pt-4 border-t border-[var(--tp-border)]">
+      {meta.map((m, i) => (
+        <span class="inline-flex items-center gap-1">
+          {i > 0 && <span class="text-[var(--tp-border)]">·</span>}
+          <span class="text-[var(--tp-muted)]">{m.label}</span>
+          <span class="font-semibold tabular-nums text-brand-600 dark:text-brand-400">{m.value}</span>
+        </span>
       ))}
-    </dl>
+    </div>
   )}
 </header>

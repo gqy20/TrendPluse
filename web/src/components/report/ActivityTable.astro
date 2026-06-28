@@ -29,7 +29,7 @@ const maxCommits = Math.max(1, ...top.map((r) => r.commits || 0));
             >
               {r.repo}
             </a>
-            <div class="hidden sm:block w-32 h-1.5 rounded-full bg-[var(--tp-surface-2)] overflow-hidden flex-shrink-0">
+            <div class="hidden sm:block w-32 h-1.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden flex-shrink-0">
               <div class="h-full bg-brand-500 rounded-full" style={`width:${pct}%`}></div>
             </div>
             <span class="text-sm font-semibold tabular-nums text-right w-16 flex-shrink-0">{r.commits ?? '—'}</span>
