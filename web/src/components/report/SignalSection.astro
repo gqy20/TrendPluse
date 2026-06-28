@@ -1,6 +1,7 @@
 ---
 import type { Signal } from '../../content.config';
 import SignalCard from './SignalCard.astro';
+import { impactLevel, signalLabel } from '../../lib/format';
 
 interface Props {
   title: string;
@@ -9,23 +10,139 @@ interface Props {
   emptyText?: string;
 }
 const { title, signals, icon, emptyText = '暂无信号' } = Astro.props;
+// 信号量够多时才显示筛选栏，避免短列表噪音
+const showFilters = signals.length >= 6;
+const types = [...new Set(signals.map((s) => s.type).filter(Boolean))];
 ---
 
-<section class="space-y-4">
+<section class="space-y-4" data-signal-section>
   <h2 class="text-xl font-bold flex items-center gap-2 scroll-mt-20">
     {icon && <span class="text-2xl">{icon}</span>}
     <span>{title}</span>
     {signals.length > 0 && (
       <span class="text-sm font-normal text-[var(--tp-muted)] bg-[var(--tp-surface-2)] px-2 py-0.5 rounded-full">
-        {signals.length}
+        <span data-count>{signals.length}</span>
       </span>
     )}
   </h2>
+
   {signals.length > 0 ? (
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      {signals.map((s) => <SignalCard signal={s} />)}
-    </div>
+    <>
+      {showFilters && (
+        <div class="filter-bar flex flex-wrap items-center gap-x-3 gap-y-2 p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] sticky top-14 z-30 backdrop-blur-md">
+          <div class="flex items-center gap-1" data-filter-type="impact">
+            <span class="text-xs text-[var(--tp-muted)] mr-1">影响</span>
+            <button type="button" class="filter-btn active" data-value="all">全部</button>
+            <button type="button" class="filter-btn" data-value="high">高</button>
+            <button type="button" class="filter-btn" data-value="medium">中</button>
+            <button type="button" class="filter-btn" data-value="low">低</button>
+          </div>
+          {types.length > 1 && (
+            <div class="flex items-center gap-1 flex-wrap" data-filter-type="type">
+              <span class="text-xs text-[var(--tp-muted)] mr-1">类型</span>
+              <button type="button" class="filter-btn active" data-value="all">全部</button>
+              {types.map((t) => (
+                <button type="button" class="filter-btn" data-value={t}>{signalLabel(t)}</button>
+              ))}
+            </div>
+          )}
+          <input
+            type="text"
+            class="search-input flex-1 min-w-[140px] px-2.5 py-1 rounded-md border border-[var(--tp-border)] bg-[var(--tp-bg)] text-sm placeholder:text-[var(--tp-muted)] focus:outline-none focus:border-brand-400"
+            placeholder="搜索标题 / 仓库..."
+          />
+          <div class="flex items-center gap-1 ml-auto">
+            <button type="button" class="action-btn" data-action="expand">展开全部</button>
+            <button type="button" class="action-btn" data-action="collapse">折叠全部</button>
+            <button type="button" class="action-btn" data-action="sort">按评分 ↓</button>
+          </div>
+        </div>
+      )}
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" data-signal-grid>
+        {signals.map((s) => (
+          <div
+            class="signal-item"
+            data-impact={impactLevel(s.impact_score)}
+            data-type={s.type}
+            data-score={s.impact_score ?? 0}
+            data-search={`${s.title} ${s.related_repos.join(' ')}`.toLowerCase()}
+          >
+            <SignalCard signal={s} />
+          </div>
+        ))}
+      </div>
+    </>
   ) : (
     <p class="text-sm text-[var(--tp-muted)] italic py-4">{emptyText}</p>
   )}
 </section>
+
+<script>
+  // 信号筛选/排序岛屿：每个 [data-signal-section] 独立处理
+  document.querySelectorAll('[data-signal-section]').forEach((section) => {
+    const el = section as HTMLElement;
+    const grid = el.querySelector('[data-signal-grid]');
+    const bar = el.querySelector('.filter-bar');
+    if (!grid || !bar) return;
+    const items = Array.from(grid.querySelectorAll<HTMLElement>('.signal-item'));
+    if (items.length === 0) return;
+
+    const state = { impact: 'all', type: 'all', search: '' };
+    const countEl = el.querySelector('[data-count]');
+
+    const apply = () => {
+      let visible = 0;
+      for (const item of items) {
+        const ok =
+          (state.impact === 'all' || item.dataset.impact === state.impact) &&
+          (state.type === 'all' || item.dataset.type === state.type) &&
+          (!state.search || (item.dataset.search || '').includes(state.search));
+        item.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      }
+      if (countEl) countEl.textContent = String(visible);
+    };
+
+    bar.querySelectorAll('[data-filter-type]').forEach((group) => {
+      const g = group as HTMLElement;
+      const kind = g.dataset.filterType as 'impact' | 'type';
+      g.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          g.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          state[kind] = btn.dataset.value || 'all';
+          apply();
+        });
+      });
+    });
+
+    const search = bar.querySelector<HTMLInputElement>('.search-input');
+    if (search) {
+      search.addEventListener('input', () => {
+        state.search = search.value.toLowerCase().trim();
+        apply();
+      });
+    }
+
+    bar.querySelector('[data-action="expand"]')?.addEventListener('click', () => {
+      items.forEach((i) => i.querySelectorAll('details').forEach((d) => (d.open = true)));
+    });
+    bar.querySelector('[data-action="collapse"]')?.addEventListener('click', () => {
+      items.forEach((i) => i.querySelectorAll('details').forEach((d) => (d.open = false)));
+    });
+
+    let sortDesc = true;
+    const sortBtn = bar.querySelector('[data-action="sort"]');
+    sortBtn?.addEventListener('click', () => {
+      sortDesc = !sortDesc;
+      items.sort((a, b) => {
+        const sa = Number(a.dataset.score) || 0;
+        const sb = Number(b.dataset.score) || 0;
+        return sortDesc ? sb - sa : sa - sb;
+      });
+      items.forEach((i) => grid.appendChild(i));
+      sortBtn.textContent = sortDesc ? '按评分 ↓' : '按评分 ↑';
+    });
+  });
+</script>
