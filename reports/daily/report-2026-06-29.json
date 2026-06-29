@@ -1,0 +1,3072 @@
+{
+  "date": "2026-06-29",
+  "summary_brief": "今日 (2026-06-29) 发现 0 个 Commit 信号，158 个 Release 信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 158,
+    "pr_count": 0,
+    "commit_count": 0,
+    "release_count": 158,
+    "unique_repos": 13,
+    "total_prs_analyzed": 0,
+    "total_releases": 158,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 482,
+    "total_releases_analyzed": 158,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 482,
+    "active_repos_count": 35,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "RomneyDa",
+          "Alix-007",
+          "wangmiao0668000666",
+          "yetval",
+          "cxbAsDev"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 65,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "jlongster",
+          "nexxeln",
+          "arvsrn",
+          "fwang"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 37,
+        "top_contributors": [
+          "SomeoneToIgnore",
+          "maxdeviant",
+          "benbrandt",
+          "Anthony-Eid",
+          "bennetbo"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 29,
+        "top_contributors": [
+          "saoudrizwan",
+          "BarreiroT",
+          "johnwschoi",
+          "reneehuang1",
+          "abeatrix"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 26,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 21,
+        "top_contributors": [
+          "mdrxy",
+          "jkennedyvz",
+          "github-actions[bot]",
+          "harisaiharish",
+          "hntrl"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 18,
+        "top_contributors": [
+          "hjlarry",
+          "lyzno1",
+          "fatelei",
+          "hyoban",
+          "linw1995"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 17,
+        "top_contributors": [
+          "github-actions[bot]",
+          "jeffsee55",
+          "davidjoshlee",
+          "ricardo-agz",
+          "shinapatel"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 16,
+        "top_contributors": [
+          "gr2m",
+          "github-actions[bot]",
+          "felixarntz",
+          "Mmartinrusso",
+          "Thimows"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 13,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 13,
+        "top_contributors": [
+          "westey-m",
+          "SergeyMenshykh",
+          "giles17",
+          "farzad528",
+          "anneheartrecord"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 13,
+        "top_contributors": [
+          "eps1lon",
+          "mischnic",
+          "SukkaW",
+          "wbinnssmith",
+          "acdlite"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 12,
+        "top_contributors": [
+          "kartik-mem0",
+          "HrushiYadav",
+          "abhay-codes07",
+          "barry166",
+          "ly-wang19"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 10,
+        "top_contributors": [
+          "anthonyshew",
+          "github-actions[bot]",
+          "lachieh",
+          "vercel[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 8,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "dtmeadows-ant",
+          "tomer-ant"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 8,
+        "top_contributors": [
+          "etraut-openai",
+          "shijie-oai",
+          "dylan-hurd-oai",
+          "aibrahim-oai",
+          "ani-oai"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 8,
+        "top_contributors": [
+          "mikeldking",
+          "yfrigui2",
+          "vaidy632",
+          "RogerHYang",
+          "cephalization"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 7,
+        "top_contributors": [
+          "tofarr",
+          "wgu9",
+          "ak684",
+          "mamoodi",
+          "simonrosenberg"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 7,
+        "top_contributors": [
+          "vvaswani",
+          "alexhancock",
+          "lunchboxfortwo",
+          "ken-jo",
+          "maxamillion"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 6,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "dtmeadows-ant"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 6,
+        "top_contributors": [
+          "mdrxy",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 6,
+        "top_contributors": [
+          "dgozman",
+          "Skn0tt",
+          "microsoft-playwright-automation[bot]",
+          "gateway"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 5,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 5,
+        "top_contributors": [
+          "Huixin615",
+          "heart-scalpel",
+          "hetaoBackend",
+          "fancyboi999",
+          "yong326"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 4,
+        "top_contributors": [
+          "dev-ishant",
+          "Copilot",
+          "Fahmid-Arman",
+          "onyx679"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 3,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "dtmeadows-ant"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 3,
+        "top_contributors": [
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 3,
+        "top_contributors": [
+          "lucasgomide"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 3,
+        "top_contributors": [
+          "bkudiess",
+          "christineyan4",
+          "shanselman"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 2,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 2,
+        "top_contributors": [
+          "Patrick-Erichsen",
+          "vincentkoc"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 2,
+        "top_contributors": [
+          "anxkhn",
+          "seratch"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 2,
+        "top_contributors": [
+          "seanmcguire12",
+          "shrey150"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 1,
+        "top_contributors": [
+          "renovate[bot]"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 1,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 158,
+    "unique_repos_count": 13,
+    "releases": [
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "version": "v0.113.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-06-29",
+        "summary": "## 0.113.0 (2026-06-29)\n\nFull Changelog: [v0.112.0...v0.113.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.112.0...v0.113.0)\n\n### Features\n\n* **api:** add support for 20260318 web fetch and support tools ([88dbfb1](https://github.com/anthropics/anthropic-sdk-python/commit/88dbfb14a2a838eda889469ad7fe07a47618e85f))\n\n\n### Bug Fixes\n\n* async count_tokens missing output_format/output_config merge block ([#162](https://github.com/anthropics/anthropic-sdk-python/issues/162)) ([122c958](https://github.com/anthropics/anthropic-sdk-python/commit/122c95811566bf6f5cbc682ae0a74972ae75a223))\n\n\n### Chores\n\n* **api:** accept user profile ID's when counting tokens ([0b4d17a](https://github.com/anthropics/anthropic-sdk-python/commit/0b4d17a49d39e8224adbee6a97be0e8b1b7ebff5))\n* **docs:** updates to descriptions and example values ([f3ab694](https://github.com/anthropics/anthropic-sdk-python/commit/f3ab694453326a2765623b9aafeb7588ea296325))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.113.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-python v0.113.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "version": "sdk-v0.107.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-06-29",
+        "summary": "## 0.107.0 (2026-06-29)\n\nFull Changelog: [sdk-v0.106.0...sdk-v0.107.0](https://github.com/anthropics/anthropic-sdk-typescript/compare/sdk-v0.106.0...sdk-v0.107.0)\n\n### Features\n\n* **api:** add support for 20260318 web fetch and support tools ([d7057ea](https://github.com/anthropics/anthropic-sdk-typescript/commit/d7057ea73ba564d1e89cff40c58a85d9375ccbbf))\n\n\n### Bug Fixes\n\n* **agent-toolset:** bound canonicalize symlink hops; resolve glob matches before confinement check ([#142](https://github.com/anthropics/anthropic-sdk-typescript/issues/142)) ([277be80](https://github.com/anthropics/anthropic-sdk-typescript/commit/277be80af68eb088e954c0008dc1aa932375afe2))\n* **types:** restore BatchCreateParams.Request.params dropped by codegen merge ([#165](https://github.com/anthropics/anthropic-sdk-typescript/issues/165)) ([c6b68d2](https://github.com/anthropics/anthropic-sdk-typescript/commit/c6b68d248e037617017fc00f928dbeb9091f917d))\n\n\n### Chores\n\n* **api:** accept user profile ID's when counting tokens ([6cda67e](https://github.com/anthropics/anthropic-sdk-typescript/commit/6cda67e3b9d97505aa24e318cd22e28837760025))\n* **docs:** updates to descriptions and example values ([51a5f81](https://github.com/anthropics/anthropic-sdk-typescript/commit/51a5f8138f8e771a84456628ec9d31b6257d2f3f))\n\n\n### Documentation\n\n* update readme requirements to match anthropic docs ([#146](https://github.com/anthropics/anthropic-sdk-typescript/issues/146)) ([3818412](https://github.com/anthropics/anthropic-sdk-typescript/commit/3818412d371372fa1054b34a7293853fb3bfbef3))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.107.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-typescript sdk-v0.107.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "version": "v1.53.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-06-29",
+        "summary": "## 1.53.0 (2026-06-29)\n\nFull Changelog: [v1.52.0...v1.53.0](https://github.com/anthropics/anthropic-sdk-go/compare/v1.52.0...v1.53.0)\n\n### Features\n\n* **api:** add support for 20260318 web fetch and support tools ([6396455](https://github.com/anthropics/anthropic-sdk-go/commit/6396455a220b3e37cc87ce44b6d1e615d6386c74))\n\n\n### Chores\n\n* **api:** accept user profile ID's when counting tokens ([d31ba27](https://github.com/anthropics/anthropic-sdk-go/commit/d31ba27f74d9a39dcaaabe8dc0d37b5b811c150c))\n* **docs:** updates to descriptions and example values ([cb00f34](https://github.com/anthropics/anthropic-sdk-go/commit/cb00f34a3c75e9f183d569321ff2de6da8efc29c))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-go/releases/tag/v1.53.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-go v1.53.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "version": "v2.45.0",
+        "author": "stainless-app[bot]",
+        "date": "2026-06-29",
+        "summary": "## 2.45.0 (2026-06-29)\n\nFull Changelog: [v2.44.1...v2.45.0](https://github.com/anthropics/anthropic-sdk-java/compare/v2.44.1...v2.45.0)\n\n### Features\n\n* **api:** add support for 20260318 web fetch and support tools ([f38d0e6](https://github.com/anthropics/anthropic-sdk-java/commit/f38d0e64a16157f7e1b0be5f2c8229c2b54bf206))\n\n\n### Bug Fixes\n\n* add web tools 20260318 delegate overloads to StructuredMessageCreateParams ([#120](https://github.com/anthropics/anthropic-sdk-java/issues/120)) ([a66f7a3](https://github.com/anthropics/anthropic-sdk-java/commit/a66f7a38e1c486489bca87d0d61ecb2ee3f925b2))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-java/releases/tag/v2.45.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-java v2.45.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.0.4",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n### Changed\n\n- Fully remove the ClinePass feature flag so ClinePass is available everywhere in the UI — onboarding, settings, the welcome promo banner, and the credit-limit \"Switch to ClinePass\" action.\n\n**Full Changelog**: https://github.com/cline/cline/compare/v4.0.3...v4.0.4\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.0.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v4.0.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n### Changed\n\n- Enable the ClinePass provider for all users by removing the feature-flag gate that previously fell back to the standard Cline provider.\n\n**Full Changelog**: https://github.com/cline/cline/compare/v4.0.2...v4.0.3\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v4.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.34",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n- Fixed the ClinePass upgrade notice appearing immediately after completing onboarding.\n- Improved the wording of the ClinePass onboarding step.\n- Streamlined the Cline provider picker by merging the subscription and usage/billing options into one and removing the credits link.\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.33...cli-v3.0.34\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.34",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.34 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.33",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n- Show a ClinePass subscription URL as a fallback during onboarding so you can still subscribe if the subscription screen can't open automatically\n- Hide the ClinePass promo for users who already have a ClinePass subscription\n- Use an adaptive plan accent color for ClinePass prompts so they fit the active theme\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.32...cli-v3.0.33\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.33",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.33 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.32",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n- Improved the ClinePass onboarding experience\n- Added an intermediate step before going to ClinePass model selection\n- Made the ClinePass subscription screen selectable\n- Promoted ClinePass in the startup notice\n- Used \"ClinePass\" as one word consistently and refined the provider UI copy\n- More accurate context compaction and clearer error messages (from SDK v0.0.54)\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.31...cli-v3.0.32\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.32",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.32 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "\n### Added\n\n- Add reasoning effort support (including `xhigh`) for DeepSeek thinking models.\n- Improve the ClinePass provider experience with clearer reasoning controls and model selection.\n\n### Fixed\n\n- Show reasoning effort controls for ClinePass models and align ClinePass model resolution with the rest of the provider.\n- Prefer canonical Cline Z.ai model ids and polish ClinePass and Z.ai model metadata.\n- Fix environment variable replacement in the webview.\n- Default focus chain settings in webview state so the toggle reflects the correct value on load.\n\n**Full Changelog**: https://github.com/cline/cline/compare/v4.0.1...v4.0.2\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.0.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v4.0.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-openrouter==0.2.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "Changes since langchain-openrouter==0.2.4\n\nrelease(openrouter): 0.2.5 (#38553)\nfix(openrouter): deduplicate repeated finish metadata (#38552)\nfix(openrouter): strip Responses reasoning IDs (#38383)",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-openrouter%3D%3D0.2.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/langchain langchain-openrouter==0.2.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.142.4",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "## Chores\n\n- No user-facing changes were identified for this release.\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.142.3...rust-v0.142.4\n\n\n\n",
+        "assets_count": 149,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.142.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/codex rust-v0.142.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.15.0",
+        "author": "ruvnet",
+        "date": "2026-06-29",
+        "summary": "## What's new in 3.15.0\n\nThis is a **MINOR** release adding [`agenticow@~0.2.3`](https://www.npmjs.com/package/agenticow) — Copy-On-Write memory branching — as 4 new MCP tools. No breaking changes; the new dep is in `optionalDependencies` with graceful-degraded fallbacks.\n\n### New MCP tools (4)\n\n| Tool | Purpose |\n|------|---------|\n| `agenticow_branch` | COW-fork a base `.rvf` memory at ~162 bytes regardless of base size |\n| `agenticow_checkpoint` | Freeze a labelled restore point that survives close+reopen |\n| `agenticow_rollback` | Discard edits since the most recent checkpoint, O(edits) not O(N) |\n| `agenticow_promote` | Atomically merge a branch's edits (with tombstones) into a base or target |\n\nRead-through semantics on every branch: **parent ∪ edits, child wins**. Persisted via `<file>.agenticow.json` lineage manifest.\n\n### Motivation\n\nv3.14.4 uncovered a **3.3 GB tarball-bloat regression** where Darwin loops' git-worktree-per-agent pattern accumulated full-copy snapshots. agenticow is the structural fix — 162-byte branches instead of full copies.\n\n### Measured perf vs. published claims\n\nFull bench harness: [`scripts/bench-agenticow.mjs`](https://github.com/ruvnet/ruflo/blob/main/scripts/bench-agenticow.mjs)\nFindings doc: [`docs/agenticow/findings.md`](https://github.com/ruvnet/ruflo/blob/main/docs/agenticow/findings.md) ([gist mirror](https://gist.github.com/ruvnet/2d6c1c9944f8da5b3f9e69ef1c5a0b3a))\n\n| Claim | Result | Detail |\n|-------|--------|--------|\n| 162-byte branches | ✅ Confirmed exact | Constant at N=1k, 10k, 50k |\n| ≥3,000× smaller than full-copy | ✅ Confirmed and exceeded | 3,214× at N=1k → 181,930× at N=50k |\n| \"0.5ms branch\" | ❌ Not reproduced | Measured ~10 ms (fixed cost, not size-proportional) |\n| \"83× faster\" | ❌ Crossover N≈30k | Below crossover, full-copy wins |\n\nWe measured, not parroted — per CLAUDE.md's source-of-truth rule.\n\n### Architectural constraint (zero hard runtime dep)\n\n`agenticow` is in `optionalDependencies`. When missing, every tool returns `{success: true, degraded: true, reason: 'agenticow-not-found'}` and exits 0. Same posture as the metaharness integration (ADR-150). Verified by the `no-metaharness-smoke` CI gate on every PR.\n\n### What this enables in ruflo\n\n- **Darwin loops without worktree bloat** — branch-per-iteration at 162 B instead of full git-worktree clones\n- **Speculative agent edits with O(1) rollback** — checkpoint → try → rollback if the JUDGE step rejects\n- **Per-user / per-session memory personalization** — federation primitive for fork-and-merge\n- **A/B routing experiments on real memory** — branch candidate routers, bench each, promote the winner\n\n### Tests\n\n- 7/7 vitest unit tests pass (`v3/@claude-flow/cli/__tests__/agenticow-tools.test.ts`)\n- 8/8 bash smoke contract pass (`scripts/smoke-agenticow.sh`)\n- 108/108 CI checks green on PR #2500 before merge\n\n### Install / upgrade\n\n```bash\nnpx ruflo@latest             # 3.15.0\nnpx @claude-flow/cli@latest  # 3.15.0\nnpx claude-flow@latest       # 3.15.0\n```\n\nOr via `package.json`:\n\n```json\n{\n  \"dependencies\": {\n    \"@claude-flow/cli\": \"^3.15.0\"\n  }\n}\n```\n\n### Verified npm dist-tags\n\n```\n@claude-flow/cli   latest=3.15.0  alpha=3.15.0  v3alpha=3.15.0\nclaude-flow        latest=3.15.0  alpha=3.15.0  v3alpha=3.15.0\nruflo              latest=3.15.0  alpha=3.15.0  v3alpha=3.15.0\n```\n\n### Related\n\n- PR #2500 — feat(mcp): integrate agenticow@~0.2.3 — COW memory branching (4 MCP tools)\n- PR #2501 — chore(release): 3.14.4 → 3.15.0\n",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.15.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.15.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-code==0.1.28",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Features\n\n* Add Fireworks session settings ([#4360](https://github.com/langchain-ai/deepagents/issues/4360)) ([90ebb1d](https://github.com/langchain-ai/deepagents/commit/90ebb1d68cb5942f07847f6dce48c14c7caef992))\n* `RubricMiddleware` implementation (`/goal`/`--goal` and `/rubric`/`--rubric`)\n  * Add rubric-backed goal workflow ([#4365](https://github.com/langchain-ai/deepagents/issues/4365)) ([8fca61d](https://github.com/langchain-ai/deepagents/commit/8fca61dc036888a4414ff5a4536b957c63dab4a5))\n  * Non-interactive rubric grading flags ([#4305](https://github.com/langchain-ai/deepagents/issues/4305)) ([1bcb112](https://github.com/langchain-ai/deepagents/commit/1bcb112ee78138eca9cb400c206ce198322aae32))\n* Adopt coding-agent-v1 trace metadata ([#4367](https://github.com/langchain-ai/deepagents/issues/4367)) ([cb39747](https://github.com/langchain-ai/deepagents/commit/cb3974748024fcec2e2ee0ccc0a9b23c880733a2))\n* Quit shortcut on completed update modal ([#4312](https://github.com/langchain-ai/deepagents/issues/4312)) ([5e6eae9](https://github.com/langchain-ai/deepagents/commit/5e6eae9f094a5167b6bf01f2d84cf06ca5cd80c3))\n\n### Bug Fixes\n\n* Redact LangSmith trace secrets by default ([#4356](https://github.com/langchain-ai/deepagents/issues/4356)) ([5e01fec](https://github.com/langchain-ai/deepagents/commit/5e01fec72d8b179a3b075b07268162d2eaebfe84))\n* Honor Baseten base URL env precedence ([#4328](https://github.com/langchain-ai/deepagents/issues/4328)) ([8f20d74](https://github.com/langchain-ai/deepagents/commit/8f20d74892112c3b88aaca63d8c04a355fd6726f))\n* Highlight just-installed provider on `/auth` reopen ([#4311](https://github.com/langchain-ai/deepagents/issues/4311)) ([85e47b5](https://github.com/langchain-ai/deepagents/commit/85e47b532b5caf92a52f1a070a95bdb39bee6d3d))\n* Clear transient update launch status ([#4355](https://github.com/langchain-ai/deepagents/issues/4355)) ([b870b18](https://github.com/langchain-ai/deepagents/commit/b870b18750f65442009028a85a2ac18f1b06640c))\n* Clearer MCP config JSON parse errors ([#4327](https://github.com/langchain-ai/deepagents/issues/4327)) ([9cee602](https://github.com/langchain-ai/deepagents/commit/9cee60274d38d4ad8a2d7a7e9d3ae59aebce5261))\n* Record shell output as user context ([#4353](https://github.com/langchain-ai/deepagents/issues/4353)) ([0d504a5](https://github.com/langchain-ai/deepagents/commit/0d504a5df8454e871597932ce1cd3e95b10ab00e))\n* Suppress expected MCP reauth logs ([#4359](https://github.com/langchain-ai/deepagents/issues/4359)) ([15ee384](https://github.com/langchain-ai/deepagents/commit/15ee384117ccd955f7481346dd92b7f4b007a60d))\n\n### Performance Improvements\n\n* Background refresh for `@` file completion cache ([#3911](https://github.com/langchain-ai/deepagents/issues/3911)) ([aa22d6b](https://github.com/langchain-ai/deepagents/commit/aa22d6b6d5a49e4d6c3aa2d4932df75d14d65f78))\n* Speed up shutdown after `Ctrl+C`/`Ctrl+D` ([#4351](https://github.com/langchain-ai/deepagents/issues/4351)) ([db441ed](https://github.com/langchain-ai/deepagents/commit/db441ed306a8e03fb68f2ae6a2c08523e248976d))\n\n---\n\nInternal maintainers: @harisaiharish, @jkennedyvz, @mdrxy\n\nReleased by: @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code%3D%3D0.1.28",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents deepagents-code==0.1.28 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@5.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [4a3b4c0]\n    -   @ai-sdk/gateway@2.0.107\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%405.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@5.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@2.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%402.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@2.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@3.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%403.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@3.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@1.0.210",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%401.0.210",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@1.0.210 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@2.0.210",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%402.0.210",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@2.0.210 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@1.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%401.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@1.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@1.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%401.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@1.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@2.0.107",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   4a3b4c0: Backport: chore(provider/gateway): update gateway model settings files\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%402.0.107",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gateway@2.0.107 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@1.0.208",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.208\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%401.0.208",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@1.0.208 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@7.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   989402d: Add ToolLoopAgent types for deprecated tool call callback aliases.\n-   Updated dependencies [7e3c99e]\n    -   @ai-sdk/gateway@4.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%407.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@7.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow@1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   4a9f4d5: `WorkflowChatTransport` now repairs UI message stream part framing, so duplicated or interleaved durable stream writes no longer crash the AI SDK consumer with `Received text-delta for missing text part`.\n-   4016539: Forward `reasoning` generation settings from `WorkflowAgent` to model calls.\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%401.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow@1.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow-harness@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow-harness@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@4.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%404.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@4.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/tui@1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tui%401.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/tui@1.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@5.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%405.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@5.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-vercel@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-vercel%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-vercel@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-just-bash@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-just-bash%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-just-bash@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@3.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%403.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@3.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@4.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%404.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@4.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/policy-opa@1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/policy-opa%401.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/policy-opa@1.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/otel@1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/otel%401.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/otel@1.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@3.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%403.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@3.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@3.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%403.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@3.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-pi@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-pi%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-pi@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-opencode@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-opencode%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-opencode@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-deepagents@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-deepagents%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-deepagents@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-codex@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   c0e991c: fix(harness-codex): fix Codex sometimes stopping after a single text response when using `workflow-harness`\n    -   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-codex%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-codex@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-claude-code@1.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-claude-code%401.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-claude-code@1.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@4.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   7e3c99e: chore(provider/gateway): update gateway model settings files\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%404.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gateway@4.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@3.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [989402d]\n    -   ai@7.0.6\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%403.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@3.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@6.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f6689df]\n-   Updated dependencies [13b6a72]\n    -   @ai-sdk/gateway@3.0.140\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%406.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@6.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@3.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%403.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@3.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@4.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%404.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@4.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@2.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%402.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@2.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@3.0.218",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%403.0.218",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@3.0.218 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/moonshotai@2.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   f605175: feat(moonshotai): support structured outputs for kimi-k2.5\n-   d2e3358: feat(moonshotai): support structured outputs for kimi-2.6 and 2.7-code\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/moonshotai%402.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/moonshotai@2.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@2.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%402.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@2.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@2.0.224",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%402.0.224",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@2.0.224 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@3.0.140",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   f6689df: feat(gateway): add `caching` provider option to `GatewayProviderOptions`\n-   13b6a72: Backport: chore(provider/gateway): update gateway model settings files\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%403.0.140",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gateway@3.0.140 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@2.0.217",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@6.0.216\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%402.0.217",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@2.0.217 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@5.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/gateway@2.0.106\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%405.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@5.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/xai@2.0.76",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/xai%402.0.76",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/xai@2.0.76 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@2.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%402.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@2.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vercel@1.0.43",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vercel%401.0.43",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vercel@1.0.43 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/valibot@1.0.28",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/valibot%401.0.28",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/valibot@1.0.28 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/togetherai@1.0.45",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/togetherai%401.0.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/togetherai@1.0.45 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@3.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%403.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@3.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@1.0.209",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%401.0.209",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@1.0.209 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/revai@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/revai%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/revai@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/replicate@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/replicate%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/replicate@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@2.0.209",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%402.0.209",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@2.0.209 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/provider-utils@3.0.28",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   b85c4fb: Limit JSON response body reads in response handlers to prevent unbounded memory use.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/provider-utils%403.0.28",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/provider-utils@3.0.28 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/prodia@0.0.12",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/prodia%400.0.12",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/prodia@0.0.12 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/perplexity@2.0.33",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/perplexity%402.0.33",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/perplexity@2.0.33 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/openai@2.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/openai%402.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/openai@2.0.110 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/openai-compatible@1.0.42",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/openai-compatible%401.0.42",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/openai-compatible@1.0.42 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/moonshotai@0.0.13",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/moonshotai%400.0.13",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/moonshotai@0.0.13 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/mistral@2.0.36",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/mistral%402.0.36",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/mistral@2.0.36 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/mcp@0.0.22",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/mcp%400.0.22",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/mcp@0.0.22 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/luma@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/luma%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/luma@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/lmnt@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/lmnt%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/lmnt@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@1.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%401.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@1.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@1.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%401.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@1.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/hume@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/hume%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/hume@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/huggingface@0.0.25",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/huggingface%400.0.25",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/huggingface@0.0.25 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/groq@2.0.43",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/groq%402.0.43",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/groq@2.0.43 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google@2.0.77",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google%402.0.77",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/google@2.0.77 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google-vertex@3.0.144",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/anthropic@2.0.84\n    -   @ai-sdk/google@2.0.77\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google-vertex%403.0.144",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/google-vertex@3.0.144 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gladia@1.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gladia%401.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gladia@1.0.30 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@2.0.106",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%402.0.106",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gateway@2.0.106 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/fireworks@1.0.44",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/fireworks%401.0.44",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/fireworks@1.0.44 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/fal@1.0.35",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/fal%401.0.35",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/fal@1.0.35 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/elevenlabs@1.0.31",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/elevenlabs%401.0.31",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/elevenlabs@1.0.31 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/deepseek@1.0.45",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/deepseek%401.0.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/deepseek@1.0.45 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/deepinfra@1.0.45",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/deepinfra%401.0.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/deepinfra@1.0.45 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/deepgram@1.0.31",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/deepgram%401.0.31",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/deepgram@1.0.31 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/cohere@2.0.32",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/cohere%402.0.32",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/cohere@2.0.32 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/cerebras@1.0.47",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/cerebras%401.0.47",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/cerebras@1.0.47 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/black-forest-labs@0.0.17",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/black-forest-labs%400.0.17",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/black-forest-labs@0.0.17 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/baseten@0.0.25",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/baseten%400.0.25",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/baseten@0.0.25 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/azure@2.0.114",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/deepseek@1.0.45\n    -   @ai-sdk/openai@2.0.110\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/azure%402.0.114",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/azure@2.0.114 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/assemblyai@1.0.32",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/assemblyai%401.0.32",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/assemblyai@1.0.32 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/anthropic@2.0.84",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/anthropic%402.0.84",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/anthropic@2.0.84 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@1.0.207",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   ai@5.0.207\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%401.0.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@1.0.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/amazon-bedrock@3.0.104",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/anthropic@2.0.84\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/amazon-bedrock%403.0.104",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/amazon-bedrock@3.0.104 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/alibaba@0.0.14",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [b85c4fb]\n    -   @ai-sdk/provider-utils@3.0.28\n    -   @ai-sdk/openai-compatible@1.0.42\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/alibaba%400.0.14",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/alibaba@0.0.14 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@7.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   a2750db: fix(ai): prune orphaned tool-approval responses in `pruneMessages`\n\n    When pruning a specific tool by name (`toolCalls: [{ type, tools: [...] }]`), `pruneMessages` left the tool's `tool-approval-response` in place while removing its `tool-approval-request` and `tool-call`. The tool name of an approval response was resolved per-message, but approval responses live in a separate `tool` message from their approval request, so the name could never be resolved and the response was always kept. Tool name resolution is now done across all messages, so approval requests and responses are pruned together.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%407.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@7.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow@1.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%401.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow@1.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow-harness@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow-harness@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@4.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%404.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@4.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/tui@1.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tui%401.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/tui@1.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@5.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%405.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@5.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-vercel@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-vercel%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-vercel@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-just-bash@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-just-bash%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-just-bash@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@3.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%403.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@3.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@4.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%404.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@4.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/policy-opa@1.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/policy-opa%401.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/policy-opa@1.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/otel@1.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/otel%401.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/otel@1.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/openai@4.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   1ead90c: Return a helpful error when the Responses stream parser receives Chat Completions chunks.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/openai%404.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/openai@4.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/moonshotai@3.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   5cb600b: feat(moonshotai): support structured outputs for kimi-k2.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/moonshotai%403.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/moonshotai@3.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@3.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%403.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@3.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@3.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%403.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@3.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-pi@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-pi%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-pi@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-opencode@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-opencode%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-opencode@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-deepagents@1.0.6",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-deepagents%401.0.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-deepagents@1.0.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-codex@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-codex%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-codex@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-claude-code@1.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.7\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-claude-code%401.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-claude-code@1.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google-vertex@5.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [dfffb27]\n    -   @ai-sdk/anthropic@4.0.2\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google-vertex%405.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/google-vertex@5.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/azure@4.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [1ead90c]\n    -   @ai-sdk/openai@4.0.3\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/azure%404.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/azure@4.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/anthropic@4.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   dfffb27: fix(anthropic): correctly map delta type when code execution tools are used\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/anthropic%404.0.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/anthropic@4.0.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@3.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [a2750db]\n    -   ai@7.0.5\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%403.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@3.0.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/amazon-bedrock@5.0.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [dfffb27]\n-   Updated dependencies [1ead90c]\n    -   @ai-sdk/anthropic@4.0.2\n    -   @ai-sdk/openai@4.0.3\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/amazon-bedrock%405.0.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/amazon-bedrock@5.0.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@6.0.215",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   f66ac32: fix(ai): prune orphaned tool-approval responses in `pruneMessages`\n\n    When pruning a specific tool by name (`toolCalls: [{ type, tools: [...] }]`), `pruneMessages` left the tool's `tool-approval-response` in place while removing its `tool-approval-request` and `tool-call`. The tool name of an approval response was resolved per-message, but approval responses live in a separate `tool` message from their approval request, so the name could never be resolved and the response was always kept. Tool name resolution is now done across all messages, so approval requests and responses are pruned together.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%406.0.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@6.0.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@3.0.215",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%403.0.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@3.0.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@4.0.215",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%404.0.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@4.0.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@2.0.215",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%402.0.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@2.0.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@3.0.217",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%403.0.217",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@3.0.217 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/openai@3.0.78",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   64a701d: Return a helpful error when the Responses stream parser receives Chat Completions chunks.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/openai%403.0.78",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/openai@3.0.78 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@2.0.215",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%402.0.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@2.0.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@2.0.223",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%402.0.223",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@2.0.223 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google-vertex@4.0.153",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [28ff5a7]\n    -   @ai-sdk/anthropic@3.0.90\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google-vertex%404.0.153",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/google-vertex@4.0.153 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/azure@3.0.81",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [64a701d]\n    -   @ai-sdk/openai@3.0.78\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/azure%403.0.81",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/azure@3.0.81 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/anthropic@3.0.90",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   28ff5a7: fix(anthropic): correctly map delta type when code execution tools are used\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/anthropic%403.0.90",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/anthropic@3.0.90 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/anthropic-aws@1.0.12",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [28ff5a7]\n    -   @ai-sdk/anthropic@3.0.90\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/anthropic-aws%401.0.12",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/anthropic-aws@1.0.12 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@2.0.216",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [f66ac32]\n    -   ai@6.0.215\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%402.0.216",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@2.0.216 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/amazon-bedrock@4.0.125",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [28ff5a7]\n-   Updated dependencies [64a701d]\n    -   @ai-sdk/anthropic@3.0.90\n    -   @ai-sdk/openai@3.0.78\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/amazon-bedrock%404.0.125",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/amazon-bedrock@4.0.125 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@54.18.4",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- 16cf8f6: Surface the builds rate-limit upgrade hint on `vercel deploy`. The hint previously never printed (the error was dropped before conversion) and pointed at the CLI self-updater; it now renders the backend's plan-appropriate call to action (`ctaLabel`/`ctaUrl`, or legacy `action`/`link`) from the error, falling back to a plan-agnostic nudge.\n- 56875d2: Remove the non-functional `vercel buy v0` subcommand; use `vercel buy credits v0` to purchase v0 credits.\n- 6c5aa14: Support lazily generated Build Output `services` configs during `vc build`.",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4054.18.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@54.18.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/passport@0.1.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- fadffb5: Read the Passport cookie from Vercel request context headers.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/passport%400.1.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/passport@0.1.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/fs-detectors@6.11.4",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- Updated dependencies [02d8bab]\n  - @vercel/frameworks@3.30.3",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/fs-detectors%406.11.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/fs-detectors@6.11.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/frameworks@3.30.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- 02d8bab: Add services logo",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/frameworks%403.30.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/frameworks@3.30.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@54.18.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- 262e935: Fixed `vercel dev` for the `container` framework when used as a top-level build (outside of `services`).\n\n  - The dev server now maps the container preset's `<detect>` sentinel to a discovered Dockerfile (`Dockerfile.vercel`, `Containerfile.vercel`, `Dockerfile`, or `Containerfile`), so the build is recognized instead of warning that it \"did not match any source files\".\n  - The `@vercel/container` `build()` path no longer throws `` `vercel dev` cannot build container images from a Dockerfile `` during dev. Containers are always built from a Dockerfile/Containerfile (there is no prebuilt-image input); in dev the image is built and run locally by `startDevServer`, so `build()` returns a stable local tag without pushing to a registry.\n  - The dev server no longer treats a container build output (an OCI image reference, `runtime: \"container\"`) as a zip-based function. It previously failed with `output.createZip is not a function` while trying to spin the image up under `fun`; container outputs are now skipped there and served by the builder's `startDevServer` instead.\n  - The dev path (`startDevServer`) now discovers the `Dockerfile.vercel` / `Containerfile.vercel` opt-in markers when the container entrypoint is the `<detect>` sentinel, matching the build path. Previously it only looked for a bare `Dockerfile`, so a project using a `.vercel` marker failed with \"Container service must specify an entrypoint…\" even though deploys worked. The discovery helper is now shared between the build and dev paths.\n  - `vercel dev` now fails fast with a clear message when the Docker daemon isn't running (\"Could not connect to the Docker daemon. Start Docker…\") instead of a cryptic `Container \"undefined\" exited (code 125) before becoming ready.`. Container start failures also now name the actual container and include the underlying Docker error output.\n  - The container dev server is now reused across requests. Previously the image was rebuilt and a fresh container started on every HTTP request (the result was missing the `persistent` flag); now a live container is kept and reused for the same service, matching how other persistent builders behave.\n\n- 9e3f9cd: [services] service name validation\n- 9e3f9cd: Align `services` and `experimentalServicesV2` service-name validation with the platform schema.\n- Updated dependencies [262e935]\n- Updated dependencies [e05ed3c]\n  - @vercel/container@0.0.4\n  - @vercel/next@4.20.2\n  - @vercel/static-build@2.11.4",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4054.18.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@54.18.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/next@4.20.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- e05ed3c: Add support for stable Cache Components without experimental PPR",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/next%404.20.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/next@4.20.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/fs-detectors@6.11.3",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- 9e3f9cd: [services] service name validation\n- 9e3f9cd: Align `services` and `experimentalServicesV2` service-name validation with the platform schema.\n- Updated dependencies [acddddf]\n  - @vercel/frameworks@3.30.2",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/fs-detectors%406.11.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/fs-detectors@6.11.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/frameworks@3.30.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- acddddf: Update the Container framework logo to use the Box icon.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/frameworks%403.30.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/frameworks@3.30.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/container@0.0.4",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Patch Changes\n\n- 262e935: Fixed `vercel dev` for the `container` framework when used as a top-level build (outside of `services`).\n\n  - The dev server now maps the container preset's `<detect>` sentinel to a discovered Dockerfile (`Dockerfile.vercel`, `Containerfile.vercel`, `Dockerfile`, or `Containerfile`), so the build is recognized instead of warning that it \"did not match any source files\".\n  - The `@vercel/container` `build()` path no longer throws `` `vercel dev` cannot build container images from a Dockerfile `` during dev. Containers are always built from a Dockerfile/Containerfile (there is no prebuilt-image input); in dev the image is built and run locally by `startDevServer`, so `build()` returns a stable local tag without pushing to a registry.\n  - The dev server no longer treats a container build output (an OCI image reference, `runtime: \"container\"`) as a zip-based function. It previously failed with `output.createZip is not a function` while trying to spin the image up under `fun`; container outputs are now skipped there and served by the builder's `startDevServer` instead.\n  - The dev path (`startDevServer`) now discovers the `Dockerfile.vercel` / `Containerfile.vercel` opt-in markers when the container entrypoint is the `<detect>` sentinel, matching the build path. Previously it only looked for a bare `Dockerfile`, so a project using a `.vercel` marker failed with \"Container service must specify an entrypoint…\" even though deploys worked. The discovery helper is now shared between the build and dev paths.\n  - `vercel dev` now fails fast with a clear message when the Docker daemon isn't running (\"Could not connect to the Docker daemon. Start Docker…\") instead of a cryptic `Container \"undefined\" exited (code 125) before becoming ready.`. Container start failures also now name the actual container and include the underlying Docker error output.\n  - The container dev server is now reused across requests. Previously the image was rebuilt and a fresh container started on every HTTP request (the result was missing the `persistent` flag); now a live container is kept and reused for the same service, matching how other persistent builders behave.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/container%400.0.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/container@0.0.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/connect@0.3.0",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "### Minor Changes\n\n- aa64ac7: Add the `@vercel/connect/chat` subpath with adapter helpers for the Chat SDK (`chat`). `connectSlackAdapter`, `connectGitHubAdapter`, and `connectLinearAdapter` each return a config fragment you spread into the matching `create*Adapter` factory, wiring a Connect connector for both outbound app-scoped tokens (`getToken` with `subject: { type: 'app' }`) and inbound trigger-forwarded webhooks (Vercel OIDC verification via the exported `createConnectWebhookVerifier`). The subpath has no runtime dependency on `@chat-adapter/*` — it returns structural config types.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/connect%400.3.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/connect@0.3.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/sdk",
+        "version": "v1.28.5",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "# Generated by Speakeasy CLI\n[@vercel/sdk 1.28.5](https://www.npmjs.com/package/@vercel/sdk/v/1.28.5)\n## Typescript SDK Changes:\n* `vercel.teams.getTeamMembers()`:  `response.emailInviteCodes[].teamPermissions[]` **Changed** (Breaking ⚠️)\n* `vercel.teams.getTeams()`:  `response.teams[]` **Changed** (Breaking ⚠️)\n* `vercel.teams.patchTeam()`:  `response` **Changed** (Breaking ⚠️)\n* `vercel.teams.getTeam()`:  `response` **Changed** (Breaking ⚠️)\n* `vercel.accessGroups.readAccessGroup()`:  `response.teamPermissions[]` **Changed** (Breaking ⚠️)\n* `vercel.user.listUserEvents()`:  `response.events[]` **Changed** (Breaking ⚠️)\n* `vercel.user.listEventTypes()`:  `response.types[]` **Changed** (Breaking ⚠️)\n* `vercel.teams.inviteUserToTeam()`:  `response.teamPermissions[]` **Changed** (Breaking ⚠️)\n* `vercel.projects.getProjects()`:  `response.union(3).projects[].permissions` **Changed**\n* `vercel.projects.createProject()`:  `response.permissions` **Changed**\n* `vercel.projects.updateProject()`:  `response.permissions` **Changed**\n* `vercel.projects.uploadProjectAvatar()`:  `response.permissions` **Changed**\n* `vercel.projects.updateMicrofrontends()`:  `response.permissions` **Changed**\n* `vercel.webAnalytics.aggregatePageviews()`: **Added**\n* `vercel.microfrontends.getMicrofrontendsInGroup()`:  `response.projects[].permissions` **Changed**\n* `vercel.teams.updateTeamMember()`: \n  *  `request.requestBody.teamPermissions[]` **Changed**\n* `vercel.webAnalytics.countEvents()`: **Added**\n* `vercel.webAnalytics.countPageviews()`: **Added**\n* `vercel.webAnalytics.aggregateEvents()`: **Added**\n\nGenerated with [Speakeasy CLI 1.786.1](https://github.com/speakeasy-api/speakeasy/releases)\n\n\nPublishing Completed",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/sdk/releases/tag/v1.28.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/sdk v1.28.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/turborepo",
+        "version": "v2.10.1",
+        "author": "github-actions[bot]",
+        "date": "2026-06-29",
+        "summary": "<!-- Release notes generated using configuration in .github/release.yml at v2.10.1 -->\n\n## What's Changed\n### Changelog\n* release(turborepo): 2.10.0 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13131\n* docs: Add Turborepo 2.10 release post and update docs by @anthonyshew in https://github.com/vercel/turborepo/pull/13096\n* perf: Avoid normalizing git index path joins by @anthonyshew in https://github.com/vercel/turborepo/pull/12944\n* chore: Remove tbx package by @anthonyshew in https://github.com/vercel/turborepo/pull/13133\n* feat: Migrate TUI virtual terminals from vt100 to Ghostty by @anthonyshew in https://github.com/vercel/turborepo/pull/13135\n* chore: Add examples maintenance agent by @anthonyshew in https://github.com/vercel/turborepo/pull/13136\n* chore: Remove a few pre-push hooks by @anthonyshew in https://github.com/vercel/turborepo/pull/13137\n* ci: Making sure Zig works in releases by @anthonyshew in https://github.com/vercel/turborepo/pull/13138\n* release(turborepo): 2.10.1-canary.1 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13139\n* fix: Support Corepack packageManager integrity hashes by @gwagjiug in https://github.com/vercel/turborepo/pull/13123\n* fix(env): Add XDG_DATA_* to pass-through by @vercel[bot] in https://github.com/vercel/turborepo/pull/13145\n* release(turborepo): 2.10.1-canary.2 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13147\n* feat: Support `devEngines.packageManager` by @lachieh in https://github.com/vercel/turborepo/pull/12388\n* feat: Support devEngines packageManager in workspaces by @anthonyshew in https://github.com/vercel/turborepo/pull/13150\n* release(turborepo): 2.10.1-canary.3 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13149\n* feat: Update add package manager codemod by @anthonyshew in https://github.com/vercel/turborepo/pull/13151\n* feat: Update workspace package manager declarations by @anthonyshew in https://github.com/vercel/turborepo/pull/13154\n\n## New Contributors\n* @lachieh made their first contribution in https://github.com/vercel/turborepo/pull/12388\n\n**Full Changelog**: https://github.com/vercel/turborepo/compare/v2.10.0...v2.10.1",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/turborepo/releases/tag/v2.10.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/turborepo v2.10.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.0.1",
+        "author": "github-actions[bot]",
+        "date": "2026-06-28",
+        "summary": "\n### Changed\n\n- Roll the stable VS Code extension back to the pre-SDK-migration codebase to resolve regressions reported in 4.0.0. This release ships the 3.89.2 extension code under a higher version number so existing 4.0.0 users receive the update. SDK-migration work continues separately on `main`.\n\n**Full Changelog**: https://github.com/cline/cline/compare/nightly-main-20260622175622-ee59f8170698...v4.0.1\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.0.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v4.0.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/fireworks@2.0.62",
+        "author": "github-actions[bot]",
+        "date": "2026-06-28",
+        "summary": "### Patch Changes\n\n-   df00b88: Add `serviceTier` provider option for Fireworks chat models.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/fireworks%402.0.62",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/fireworks@2.0.62 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@54.18.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-28",
+        "summary": "### Patch Changes\n\n- 1a1c745: [services] fix bare static service builds, allow services with only 'root' to resolve at @vercel/static\n  - @vercel/static-build@2.11.4",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4054.18.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@54.18.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/fs-detectors@6.11.2",
+        "author": "github-actions[bot]",
+        "date": "2026-06-28",
+        "summary": "### Patch Changes\n\n- 1a1c745: [services] fix bare static service builds, allow services with only 'root' to resolve at @vercel/static",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/fs-detectors%406.11.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/fs-detectors@6.11.2 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/skills",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "block/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/ai-chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
+}
