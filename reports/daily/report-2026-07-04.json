@@ -1,0 +1,1539 @@
+{
+  "date": "2026-07-04",
+  "summary_brief": "今日 (2026-07-04) 发现 0 个 Commit 信号，57 个 Release 信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 57,
+    "pr_count": 0,
+    "commit_count": 0,
+    "release_count": 57,
+    "unique_repos": 14,
+    "total_prs_analyzed": 0,
+    "total_releases": 57,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 561,
+    "total_releases_analyzed": 57,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 561,
+    "active_repos_count": 34,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "vincentkoc",
+          "RomneyDa",
+          "github-actions[bot]",
+          "zhangguiping-xydt"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 54,
+        "top_contributors": [
+          "github-actions[bot]",
+          "noahzweben",
+          "dhollman"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 49,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "rekram1-node",
+          "Hona",
+          "fwang",
+          "jlongster"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 37,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "AmirF194",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 37,
+        "top_contributors": [
+          "fancyboi999",
+          "hata33",
+          "18062706139fcz",
+          "zhfeng",
+          "AnoobFeng"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 32,
+        "top_contributors": [
+          "benbrandt",
+          "SomeoneToIgnore",
+          "miguelraz",
+          "zaknesler",
+          "aviddiviner"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 29,
+        "top_contributors": [
+          "anthonyshew",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 28,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 25,
+        "top_contributors": [
+          "mikeldking",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 22,
+        "top_contributors": [
+          "hjlarry",
+          "lyzno1",
+          "41tair",
+          "linw1995",
+          "JzoNgKVO"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 14,
+        "top_contributors": [
+          "saoudrizwan",
+          "robinnewhouse"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 14,
+        "top_contributors": [
+          "renovate[bot]",
+          "mldangelo",
+          "orangeCatDeveloper",
+          "mldangelo-oai",
+          "JustasMonkev"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 13,
+        "top_contributors": [
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 12,
+        "top_contributors": [
+          "mdrxy",
+          "github-actions[bot]",
+          "johannes117",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 10,
+        "top_contributors": [
+          "harshsinha03",
+          "kausmeows",
+          "mohit-twelvelabs",
+          "axelray-dev",
+          "yusufgurdogan"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 10,
+        "top_contributors": [
+          "unstubbable",
+          "lubieowoce",
+          "eps1lon",
+          "next-js-bot[bot]",
+          "M4cM4rco"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 8,
+        "top_contributors": [
+          "actions-user",
+          "ashwin-ant",
+          "akhilesharora",
+          "Jerry2003826",
+          "syf2211"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 8,
+        "top_contributors": [
+          "steipete",
+          "TheAngryPit",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 8,
+        "top_contributors": [
+          "seratch"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 8,
+        "top_contributors": [
+          "dgozman",
+          "pavelfeldman"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 5,
+        "top_contributors": [
+          "bolinfest",
+          "ericning-o",
+          "btraut-openai",
+          "shijie-oai"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 5,
+        "top_contributors": [
+          "github-actions[bot]",
+          "gr2m",
+          "lgrammel",
+          "joshualipman123"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 4,
+        "top_contributors": [
+          "jesse-merhi",
+          "nancymx-dev"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 4,
+        "top_contributors": [
+          "rogerbarreto",
+          "westey-m",
+          "SergeyMenshykh"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 4,
+        "top_contributors": [
+          "github-actions[bot]",
+          "Melkeydev",
+          "allenzhou101"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user",
+          "qing-ant"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 3,
+        "top_contributors": [
+          "rakshith1928",
+          "shanemort1982",
+          "aivong-openhands"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 3,
+        "top_contributors": [
+          "ployts",
+          "orangeCatDeveloper",
+          "DavdGao"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 3,
+        "top_contributors": [
+          "Osraka",
+          "kyledef",
+          "nuthalapativarun"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 3,
+        "top_contributors": [
+          "shrey150",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 1,
+        "top_contributors": [
+          "vcfgv"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 1,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 57,
+    "unique_repos_count": 14,
+    "releases": [
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.37",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "\n- Weaker models (e.g. DeepSeek) that emit malformed tool calls — wrong argument types or truncated JSON — are now handled gracefully and run instead of erroring out\n- Plan/act mode switches are now visible to the model, so it knows when you change modes mid-session\n- Fixed plan/act mode notices being dropped from prompts sent to the model\n- Fixed a race where switching modes in an empty session could trigger an unexpected restart\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.36...cli-v3.0.37\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.37",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.37 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.23.0",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "## Nightly vector-memory DB backup\n- **WAL-safe snapshots** of `.swarm/memory.db` via better-sqlite3's online `.backup()` — a naive copy of a WAL-mode DB can corrupt; this is consistent + non-destructive (read-only source).\n- **Rotation** (keep last N, default 7) + **optional GCS offsite** (`--gcs gs://…` / `RUFLO_BACKUP_GCS`).\n- **`memory backup`** CLI (`--db/--dir/--keep/--gcs`) + a **daemon `backup` worker** (24h, enabled by default, opt-out via `-w`).\n\nAll backward-compatible. 3-package train at 3.23.0.\n\n🤖 Generated with [RuFlo](https://github.com/ruvnet/ruflo)",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.23.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.23.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.22.0",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "## Highlights\n- **ADR-174 — Memory distillation self-learning loop.** The daemon's `consolidate` worker was a stub writing zeros; it now really mines `memory_entries` → episodes → reasoning_patterns (+embeddings) → weak relational edges. $0 default, incremental, non-destructive, provenance-gated (ADR-171). `memory distill run|status|config` CLI + self-optimization (`distill-tuning`). Trains the local SONA/MoE model on your own memory.\n- **Failure-signal capture.** Hooks recorded a hardcoded `success:true` (898/898, 0 failures) — now they read Claude Code's PostToolUse outcome and record real failures, so the oracle tier finally has negative examples.\n- **ADR-175 — page-agent browser intent.** New `browser_act` MCP tool: natural-language intents on top of the selector tools. Strips page-agent's demo auto-connect to Alibaba's sandbox (fail-closed firewall) and proxies the LLM key so it never enters page context.\n- **Version-stamped helper auto-refresh (secured).** Hook fixes now propagate to every project on the next `ruflo` command — no re-init — gated by an **Ed25519 signed manifest** (key in GCP Secret Manager); a tampered helper is refused, not propagated.\n\nAlso: statusline vector-count + corruption auto-recovery (#2569), memory-search recall (#2558), agenticow/memory perf.\n\nAll backward-compatible additions. 3-package train (`@claude-flow/cli`, `claude-flow`, `ruflo`) at 3.22.0.\n\n🤖 Generated with [RuFlo](https://github.com/ruvnet/ruflo)",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.22.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.22.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.21.1",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "Two external-reported regression fixes.\n\n## Fixed\n- **#2558 — `memory search` broken** (keyword recall random, HNSW index 0 vectors). Two defects: the Phase-2 BM25 fusion silently dropped the keyword-coverage floor (IDF collapses on small corpora → docs containing the query word scored below threshold), and WAL-mode writes were never checkpointed so WAL-blind readers saw 0 vectors. Fix: coverage floor + recall-friendly fusion + `wal_checkpoint` on store + accurate `total_vectors`. Search now recalls confirmed-stored entries (targeted, not a dump). 169/169 memory suite.\n- **#2545 — `npx ruflo init` left self-learning a silent no-op.** `@claude-flow/memory` (optionalDependency) lands in the npx cache, off the project's node_modules walk-up, so the auto-memory hook never resolved it. Fix: init records the resolved path in a `.claude-flow/memory-package.json` sidecar; hook reads it first and now fails LOUD when memory is genuinely absent; `doctor --fix` repairs it.\n\nPRs: #2567, #2564",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.21.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.21.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.21.0",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "Turns agent execution into a **governed** learning loop with provenance on every decision.\n\n## New\n- **agenticow COW memory substrate** (ADR-170) — 9 MCP verbs (branch/checkpoint/rollback/promote + ingest/query/diff/lineage/status), 162-byte branches, nativeAnn Rust fast-path, one shared loader\n- **Per-agent COW branches** (opt-in), **speculative branch-and-promote** (`agenticow_speculate`), **checkpoint/rollback gate** for autopilot loops\n- **Provenance-tiered evaluation oracle** (ADR-171) — execution-oracle → Fable judge → structural proxy, each label tagged `resolvedBy`; **promote-gate** (proxy can NEVER clear); **causal failure receipts**\n- **Fable advisor harness** (ADR-172) — cost-disciplined `claude -p` (clean-cwd + batching = $1.56→~$0.02/item); judge + GEPA reflector\n- **weight-eft $0 distill slice + remote-GPU train** (ADR-173) — export/plan/eval + `neural distill train --remote` (OFFLINE dry-run default, `--execute --yes` gated, `--preflight` opt-in)\n\n## Safety (adversarial RC pass — all fail-closed)\nPromote unresolved branch → ineligible · proxy-as-gold → can't clear · SSH without --execute --yes → offline/refused · Fable without opt-in → no call · rollback after partial write → restores.\n\nBundles: agenticow 0.2.4, @ruvector/ruvllm 2.6.0. ADR-150 optional-deps + graceful degradation throughout. Startup 0.12s. New CI lockfile-drift guard (#2563).\n\nPRs: #2562 · ADRs 170-173",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.21.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.21.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.20.0",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "Native training pipeline gains real epochs-across-runs and closes the train→checkpoint→better-routing loop.\n\n- `neural train --val-split <frac>` — validation + early stopping (surfaces bestValLoss/earlyStopped)\n- `neural train --resume <checkpoint>` — continues from the restored epoch via ruvllm 2.6.0 resumeFrom() (degrades to 2.5.7 weight-restore)\n- **Checkpoint auto-load** — routing's lazy LoRA adapter loads the newest checkpoint on first adaptation use (off the startup hot path, kill-switch, non-fatal)\n- `neural status` shows latest checkpoint + age\n- **@ruvector/ruvllm 2.6.0** (RuVector#638): checkpoint v2 metadata + geometry validation, true resumeFrom(), best-checkpoint retention; floors bumped >=2.6.0\n\nTests 12/12 · startup 0.08s (no regression) · PR #2557",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.20.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.20.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.19.0",
+        "author": "ruvnet",
+        "date": "2026-07-04",
+        "summary": "The final piece of the #2549 saga (reported by @pacphi): `neural train` now trains through @ruvector/ruvllm's native `TrainingPipeline`, not only the WASM path.\n\n## New\n- **`neural train --backend auto|native|wasm`** — `auto` (default) routes the LoRA training leg through the native pipeline when @ruvector/ruvllm resolves: real epochs, loss history, early stopping, EWC registration\n- **Checkpoints carry trained weights** — the previous best-effort block saved a freshly-constructed adapter's untrained weights; the native path checkpoints the pipeline that actually trained (`ruvllm-checkpoint` v1 envelope on disk)\n- `--backend native` fails loudly when the pipeline can't run; `--backend wasm` preserves prior behavior exactly; SONA/ReasoningBank persistence unchanged in all modes; graceful WASM fallback when the module is absent\n\n## The complete #2549 arc\n1. **3.18.1** — `neural status` no longer misreports the native path (dead variable + cross-process global)\n2. **@ruvector/ruvllm 2.5.7** — `saveCheckpoint(path)` actually persists (upstream, RuVector#637)\n3. **3.18.2** — version floors + mkdir fix + version-gated capability reporting\n4. **3.19.0** — training itself routes through the native pipeline (this release)\n\nE2E: `auto` → native backend, finalLoss 4.25e-3, trained checkpoint on disk. Tests 6/6.\n\nPR: #2556",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.19.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.19.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openclaw/acpx",
+        "version": "v0.12.0",
+        "author": "steipete",
+        "date": "2026-07-04",
+        "summary": "## v0.12.0\n\n### Changes\n\n- Agents/built-ins: add Grok Build via `grok agent stdio`, including cached-login and `XAI_API_KEY` authentication selection. Thanks @TheAngryPit. ([#426](https://github.com/openclaw/acpx/pull/426))\n\n### Fixes\n\n- CLI/queue: drain active turns before releasing queue-owner leases and preserve typed retryable shutdown responses while terminating agent bridges. Thanks @superWorldSavior. ([#430](https://github.com/openclaw/acpx/pull/430))\n- CLI/quiet output: emit exactly one structured stderr diagnostic for direct and queued prompt failures without adding diagnostics to stdout. Thanks @superWorldSavior. ([#431](https://github.com/openclaw/acpx/pull/431))\n\n### Verification\n\n- npm: https://www.npmjs.com/package/acpx/v/0.12.0\n- Registry tarball: https://registry.npmjs.org/acpx/-/acpx-0.12.0.tgz\n- Integrity: `sha512-APYpN04XFWrCGuSBvM4HTKWWFH8uSIuzc+qI7aCGeVdP9o4euZeBosFEkmNUHvBOop0XBemg6d8RsNvzXN3Mgw==`\n- Candidate CI: https://github.com/openclaw/acpx/actions/runs/28718352566\n- Trusted publish: https://github.com/openclaw/acpx/actions/runs/28718550655\n- Full local tests, coverage, docs, conformance, mutation, security audits, packed-install CLI smoke, runtime export smoke, lifecycle proof, and fresh autoreview passed before tagging.\n",
+        "assets_count": 0,
+        "url": "https://github.com/openclaw/acpx/releases/tag/v0.12.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openclaw/acpx v0.12.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.18.0",
+        "author": "mikeldking",
+        "date": "2026-07-04",
+        "summary": "## [17.18.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.17.0...arize-phoenix-v17.18.0) (2026-07-04)\n\n\n### Features\n\n* **app:** consistent disclosure arrows ([#14066](https://github.com/Arize-ai/phoenix/issues/14066)) ([89d9a98](https://github.com/Arize-ai/phoenix/commit/89d9a98e50e561c059eee1a56e584adb7cd7087e))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.18.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.18.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.17.0",
+        "author": "mikeldking",
+        "date": "2026-07-04",
+        "summary": "## [17.17.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.16.0...arize-phoenix-v17.17.0) (2026-07-04)\n\n\n### Features\n\n* **app:** add shift-click range selection to tables ([#14060](https://github.com/Arize-ai/phoenix/issues/14060)) ([1327bfa](https://github.com/Arize-ai/phoenix/commit/1327bfa0042516f96ec43415b7059d0c917ace0c))\n* **ui:** recent searches in the span filter typeahead ([#14062](https://github.com/Arize-ai/phoenix/issues/14062)) ([9024db5](https://github.com/Arize-ai/phoenix/commit/9024db5d40903b65504bd4641a988e66418c6e26))\n\n\n### Bug Fixes\n\n* **app:** restrict shift-click range selection to same-depth rows ([#14063](https://github.com/Arize-ai/phoenix/issues/14063)) ([12d3eac](https://github.com/Arize-ai/phoenix/commit/12d3eacdff9db8dfd5d5f2c5fd12fb1a3ccb889c))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.17.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.17.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.16.0",
+        "author": "mikeldking",
+        "date": "2026-07-04",
+        "summary": "## [17.16.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.15.0...arize-phoenix-v17.16.0) (2026-07-04)\n\n\n### Features\n\n* add auth.md support for agent authentication discovery ([#13864](https://github.com/Arize-ai/phoenix/issues/13864)) ([495d879](https://github.com/Arize-ai/phoenix/commit/495d87933ae2ba00dbe8918eac5c2dbcbce4b2c0))\n* add baseline tagging for experiments ([#13991](https://github.com/Arize-ai/phoenix/issues/13991)) ([67f6166](https://github.com/Arize-ai/phoenix/commit/67f61660e6bb86da942918b54aae303bd639037f))\n* **api:** assign annotation configs to projects over REST ([#14028](https://github.com/Arize-ai/phoenix/issues/14028)) ([83d3cef](https://github.com/Arize-ai/phoenix/commit/83d3cef5e5f4bfef2399ca6cb52f208673b9036b))\n* **app:** add error column to spans and traces tables ([#14052](https://github.com/Arize-ai/phoenix/issues/14052)) ([4f82d5a](https://github.com/Arize-ai/phoenix/commit/4f82d5a9142bbf02abd459ae267287e6804e9c05))\n* **app:** add version count, latest version, and version tags columns to prompts table ([#14051](https://github.com/Arize-ai/phoenix/issues/14051)) ([2f7ea73](https://github.com/Arize-ai/phoenix/commit/2f7ea73a68416921633225a4cff8c00198ff6b5a))\n* **cli:** add annotation-config get, create, and update ([#13968](https://github.com/Arize-ai/phoenix/issues/13968)) ([94cd8f6](https://github.com/Arize-ai/phoenix/commit/94cd8f633880ead789a3f9affee708e0f546cfaa))\n* empty state ([#13823](https://github.com/Arize-ai/phoenix/issues/13823)) ([cf16827](https://github.com/Arize-ai/phoenix/commit/cf16827f6d02da86544d9d438faef5b2130a33f5))\n* **js:** add precision/recall/F-score code evaluators to phoenix-evals ([#14004](https://github.com/Arize-ai/phoenix/issues/14004)) ([1f7d5f0](https://github.com/Arize-ai/phoenix/commit/1f7d5f034d00bd15d4d50669578fb180d348811a))\n* **server:** add dataset label REST endpoints ([#14024](https://github.com/Arize-ai/phoenix/issues/14024)) ([67f84ba](https://github.com/Arize-ai/phoenix/commit/67f84ba8e2b65aaa74684a9633167eb4343acbb6))\n* **server:** add name_contains filter to GET /v1/projects ([#14029](https://github.com/Arize-ai/phoenix/issues/14029)) ([9debbd5](https://github.com/Arize-ai/phoenix/commit/9debbd50ca42efd9b0563688970345c379b8ea12)), closes [#14025](https://github.com/Arize-ai/phoenix/issues/14025)\n* **ui:** add dismissable version update notice to side nav ([#14056](https://github.com/Arize-ai/phoenix/issues/14056)) ([e78dc18](https://github.com/Arize-ai/phoenix/commit/e78dc189d8d543c8544a5042b1239e55c7afe7a3))\n\n\n### Bug Fixes\n\n* **agent:** undo PXI annotation by clicking active thumbs button ([#14048](https://github.com/Arize-ai/phoenix/issues/14048)) ([9bba6e0](https://github.com/Arize-ai/phoenix/commit/9bba6e0b00683ec9c7206627de29a4615d6600c9))\n* **app:** improve span filter completions ([#14057](https://github.com/Arize-ai/phoenix/issues/14057)) ([082fe43](https://github.com/Arize-ai/phoenix/commit/082fe432e10eedf4f4749ed44ee78fa4d495a957))\n* **storybook:** disable Rolldown's lazyBarrel experiment to fix the Chromatic build ([#13993](https://github.com/Arize-ai/phoenix/issues/13993)) ([15137e6](https://github.com/Arize-ai/phoenix/commit/15137e6d08bd62fb45e375e7dcbd28f7f7793cd5))\n* sync dashboards project selector with the project in the URL ([#14030](https://github.com/Arize-ai/phoenix/issues/14030)) ([8e6a169](https://github.com/Arize-ai/phoenix/commit/8e6a169bef789ec501cd14aece0f82773631b5c7))\n* **ui:** admin-gate settings version status, stop caching failed fetches ([#14058](https://github.com/Arize-ai/phoenix/issues/14058)) ([ef6c294](https://github.com/Arize-ai/phoenix/commit/ef6c2940b60abc135790bbccfc81ae8b66bfc0e3))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.16.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.16.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@7.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [0c3c7e4]\n-   Updated dependencies [c8d2726]\n    -   @ai-sdk/gateway@4.0.12\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%407.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai ai@7.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow@1.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%401.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow@1.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow-harness@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/workflow-harness@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@4.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%404.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/vue@4.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/tui@1.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tui%401.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/tui@1.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@5.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%405.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/svelte@5.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-vercel@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-vercel%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-vercel@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-just-bash@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-just-bash%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/sandbox-just-bash@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@3.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%403.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/rsc@3.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@4.0.16",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%404.0.16",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/react@4.0.16 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/policy-opa@1.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/policy-opa%401.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/policy-opa@1.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/otel@1.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/otel%401.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/otel@1.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@3.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%403.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/llamaindex@3.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@3.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%403.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/langchain@3.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-pi@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-pi%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-pi@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-opencode@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-opencode%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-opencode@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-deepagents@1.0.17",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-deepagents%401.0.17",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-deepagents@1.0.17 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-codex@1.0.19",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-codex%401.0.19",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-codex@1.0.19 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-claude-code@1.0.18",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   @ai-sdk/harness@1.0.18\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-claude-code%401.0.18",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/harness-claude-code@1.0.18 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google-vertex@5.0.11",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [0aa0ff3]\n    -   @ai-sdk/anthropic@4.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google-vertex%405.0.11",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/google-vertex@5.0.11 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@4.0.12",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   0c3c7e4: feat(alibaba): support wan2.7 text-to-video and reference-to-video models with the new protocol (`input.media`, `resolution` + `ratio`)\n-   c8d2726: chore(provider/gateway): update gateway model settings files\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%404.0.12",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/gateway@4.0.12 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/anthropic@4.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   0aa0ff3: fix(anthropic): forward `thinking: { type: 'disabled' }` to the API instead of stripping it\n\n    Previously, setting `providerOptions.anthropic.thinking = { type: 'disabled' }` (or top-level `reasoning: 'none'`) was accepted by the schema but silently dropped from the outgoing request. For models that default thinking on (e.g. Sonnet 5), this left thinking enabled and could consume a small `max_tokens` budget entirely. The `disabled` value is now sent to the Anthropic Messages API.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/anthropic%404.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/anthropic@4.0.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@3.0.15",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   ai@7.0.15\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%403.0.15",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/angular@3.0.15 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/amazon-bedrock@5.0.11",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   Updated dependencies [0aa0ff3]\n    -   @ai-sdk/anthropic@4.0.8\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/amazon-bedrock%405.0.11",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/amazon-bedrock@5.0.11 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/alibaba@2.0.7",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "summary": "### Patch Changes\n\n-   0c3c7e4: feat(alibaba): support wan2.7 text-to-video and reference-to-video models with the new protocol (`input.media`, `resolution` + `ratio`)\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/alibaba%402.0.7",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/alibaba@2.0.7 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.201",
+        "author": "ashwin-ant",
+        "date": "2026-07-03",
+        "summary": "## What's changed\n\n- Claude Sonnet 5 sessions no longer use the mid-conversation system role for harness reminders\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.201",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.201 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.200",
+        "author": "ashwin-ant",
+        "date": "2026-07-03",
+        "summary": "## What's changed\n\n- Changed `AskUserQuestion` dialogs to no longer auto-continue by default; opt into an idle timeout via `/config`\n- Changed the \"default\" permission mode to \"Manual\" across the CLI, `--help`, VS Code, and JetBrains; `--permission-mode manual` and `\"defaultMode\": \"manual\"` are accepted alongside `default`\n- Fixed a crash at startup when `disabledMcpServers` or `enabledMcpServers` in `.claude.json` is set to a non-array value\n- Fixed background sessions silently stopping mid-turn after sleep/wake or when reopening a stalled session\n- Fixed background sessions re-running a turn cancelled with Esc after a stall respawn\n- Fixed background agents never starting again after a crash left a stale `daemon.lock` whose PID the OS reused\n- Fixed background-agent daemon handover so a reinstalled older build can no longer take over the daemon; build recency is now judged by the version's embedded build timestamp\n- Fixed background-agent roster issues: transient corruption permanently disabling orphan cleanup, older binaries not preserving fields written by newer versions, and socket auth tokens being stripped during daemon restarts\n- Fixed subagents cut off by a rate limit before producing any text output returning an empty result instead of failing cleanly\n- Fixed control bytes from background-agent output reaching the terminal in the agent view\n- Fixed `claude agents --plugin-dir <dir>` not showing the plugin's agents and skills in the agent view when the flag is placed after `agents`\n- Fixed project-scoped plugins not loading correctly from git worktrees of the same repository\n- Fixed `/mcp` server list not tracking focus for screen readers and magnifiers\n- Fixed voice dictation showing a misleading \"Voice connection failed\" message when a recording captures no audio\n- Fixed rendering flicker under tmux 3.4+ by enabling synchronized terminal output\n- Improved screen-reader output: decorative glyphs are now hidden, transcript symbols read as short labels, and nested tables read as `Header: value.` lines\n- Improved the install script to explain when installation is killed by the system running out of memory\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.200",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.200 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.201",
+        "author": "ashwin-ant",
+        "date": "2026-07-03",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.201\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.201\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.201\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.201\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.201\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.201",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.201 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.200",
+        "author": "ashwin-ant",
+        "date": "2026-07-03",
+        "summary": "## What's changed\n\n- Added `'manual'` as an accepted alias for the `'default'` permission mode in SDK inputs\n- Fixed `onSetPermissionMode` callback not firing for SDK-hosted Remote Control sessions\n- Fixed `set_model` control request accepting unrecognized model strings; invalid models are now rejected before latching\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.200\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.200\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.200\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.200\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.200",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.200 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.165",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.165",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.165",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.165 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.164",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.164",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.164",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.164 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.36",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "\n- Fixed plan mode's `switch_to_act_mode` tool not taking effect until the end of the turn: the model would keep running with plan-mode tools (no file editor) and fall back to editing files through shell commands. Switching to act mode now ends the plan-mode run and automatically continues with the approved plan using the full act-mode toolset. A Tab mode toggle racing a completing turn can no longer auto-start plan execution you didn't approve.\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.35...cli-v3.0.36\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.36",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.36 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.35",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "\n- ClinePass is now enabled for all CLI users\n- Recover missing interactive sessions when reading messages\n- Format structured commands in history export\n- Add the subscription promo code when linking to the dashboard subscription page\n- Add Tencent TokenHub as a provider (from SDK v0.0.55)\n- Fix first-prompt truncation on high-output models (e.g. MiniMax M3) that could immediately auto-compact and cut the initial task down to just the input wrapper (from SDK v0.0.55)\n- Use a curated default when migrating legacy provider settings (from SDK v0.0.55)\n- Advertise run commands as shell strings (from SDK v0.0.55)\n- Refresh the bundled model catalog with the latest provider models (from SDK v0.0.55)\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.34...cli-v3.0.35\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.35",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.35 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.6.22",
+        "author": "harshsinha03",
+        "date": "2026-07-03",
+        "summary": "# Changelog\r\n\r\n## **New Features**\r\n\r\n- **TwelveLabs Tools:** Added `TwelveLabsTools` to analyze videos and generate multimodal text embeddings. See [docs](https://docs.agno.com/tools/toolkits/others/twelvelabs).\r\n- **Sofya Tools**: Added `SofyaTools` for search, extract, and research.\r\n- **SearchAPI Tool**: Added `SearchApiTools` with Google, News, Images, and YouTube search.\r\n\r\n## **Improvements**\r\n\r\n- **Toolkit Timeouts**: Added `timeout` to the base `Toolkit` and wired HTTP timeouts across tools; extended timeout support to more toolkits.\r\n\r\n## **Bug Fixes**\r\n\r\n- **ModelResponse**: Stamp `ModelResponse.created_at` per instance instead of at import time.\r\n- **AirflowTools**: Prevent path traversal in `save_dag_file` and `read_dag_file`.\r\n- **Fallback:** Persist the fallback model's response in session history.\r\n- **DuckDbTools**: Sanitize derived table names and fix full-text search.\r\n\r\n## What's Changed\r\n* fix: stamp ModelResponse.created_at per instance instead of at import time by @kausmeows in https://github.com/agno-agi/agno/pull/8728\r\n* feat: add SearchAPI tool with Google, News, Images, and YouTube search by @fedegonc in https://github.com/agno-agi/agno/pull/8553\r\n* [feat] Add Sofya search, extract, and research tools by @yusufgurdogan in https://github.com/agno-agi/agno/pull/8593\r\n* feat: add timeout to base Toolkit; wire HTTP timeouts across tools by @kausmeows in https://github.com/agno-agi/agno/pull/8736\r\n* feat: add timeout to more toolkits by @kausmeows in https://github.com/agno-agi/agno/pull/8737\r\n* fix: persist fallback model response in session history by @harshsinha03 in https://github.com/agno-agi/agno/pull/8732\r\n* fix: prevent path traversal in AirflowTools save_dag_file and read_dag_file by @axelray-dev in https://github.com/agno-agi/agno/pull/8638\r\n* fix: sanitize DuckDbTools table names and fix FTS helpers by @harshsinha03 in https://github.com/agno-agi/agno/pull/8735\r\n* [feat] Add TwelveLabs video tools by @mohit-twelvelabs in https://github.com/agno-agi/agno/pull/8562\r\n* chore: Release v2.6.22 by @harshsinha03 in https://github.com/agno-agi/agno/pull/8734\r\n\r\n## New Contributors\r\n* @fedegonc made their first contribution in https://github.com/agno-agi/agno/pull/8553\r\n* @yusufgurdogan made their first contribution in https://github.com/agno-agi/agno/pull/8593\r\n* @axelray-dev made their first contribution in https://github.com/agno-agi/agno/pull/8638\r\n* @mohit-twelvelabs made their first contribution in https://github.com/agno-agi/agno/pull/8562\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.6.21...v2.6.22",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.6.22",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "agno-agi/agno v2.6.22 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.18.2",
+        "author": "ruvnet",
+        "date": "2026-07-03",
+        "summary": "Completes the #2549 arc: ruflo now actively uses the checkpoint persistence shipped in @ruvector/ruvllm@2.5.7 (RuVector#637).\n\n## Changed\n- **Version floors** `@ruvector/ruvllm >=2.5.7` in the ruflo wrapper overrides, root npm overrides, and v3 pnpm overrides — every install path is guaranteed the fixed version\n- **`neural train` checkpoints actually land**: `LoRAAdapter.saveCheckpoint` now creates parent directories before writing — the JS fallback threw ENOENT on missing dirs and silently returned false, so the best-effort checkpoint never materialized even after the upstream fix\n- **Version-gated capability reporting**: `neural status` shows 'native @ruvector/ruvllm pipeline + disk checkpoints' only when the resolved ruvllm is >=2.5.7 — never advertises persistence a stale install can't deliver\n- Dev-tree hygiene: removed a stale npm-installed `@ruvector/ruvllm@0.2.4` directory that had shadowed pnpm resolution since April\n\n## Proof\n```\nneural train -p coordination -e 2\n→ .claude-flow/neural/lora-checkpoint-<ts>.json  (format: ruvllm-checkpoint v1, 48KB)\n```\n\n#2549 status: neural-status reporting fixed (3.18.1) → upstream persistence fixed (@ruvector/ruvllm 2.5.7) → ruflo wired end-to-end (this release). Remaining follow-up: routing `neural train` fully through the native TrainingPipeline.\n\nPR: #2555 · Upstream: ruvnet/RuVector#637",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.18.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.18.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.18.1",
+        "author": "ruvnet",
+        "date": "2026-07-03",
+        "summary": "Patch release fixing #2549 (reported by @pacphi — exemplary report with dist-verified line numbers and a capability-vs-environment proof).\n\n## Fixed\n- `neural status` reported the bundled @ruvector/ruvllm training path as **Unavailable — Install @ruvector/ruvllm** even though the module was installed and functional. Two defects: a dead `_trainingBackend` variable (declared, returned, never assigned) and contrastive availability read only from an in-process global a fresh status process never populates.\n- Backend now comes from a capability probe (`resolveTrainingBackend()` — module resolution, pipeline stays lazy); Contrastive Trainer has three honest states (Active with session counts / Available — ready on demand / genuinely Unavailable); the Install hint only shows on true resolution failure.\n- Dropped the 'ruvllm checkpoints enabled' claim — upstream `saveCheckpoint()` (@ruvector/ruvllm 2.5.6) verifiably writes no file; tracked separately.\n\n## Not in this release (follow-ups from #2549 triage)\n- Routing `neural train` through the native TrainingPipeline\n- Upstream checkpoint persistence fix\n\nPR: #2554 · Regression test pins the capability contract in both resolve/no-resolve environments.",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.18.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.18.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.18.0",
+        "author": "ruvnet",
+        "date": "2026-07-03",
+        "summary": "Two merged feature trains, driven by a 4-review audit (SOTA research + performance + architecture + security) implemented by six concurrent agents.\n\n## Performance\n- **CLI startup 5–10x faster** — lazy ONNX embedder init removed a 450–2,800ms tax from every command (`--help` 0.50s → 0.09s, whole CLI back under the <500ms target)\n- Batch embeddings in memory import (200-entry import: 1220ms → 115ms), local-first ruvector resolution, metaharness skills now resolve from a pinned versioned cache (`score` 0.35s, zero registry traffic)\n\n## Security\n- Killed third-party `npx metaharness@latest` (supply-chain HIGH) — pinned versioned-cache resolution with graceful degradation intact\n- OTel floor-became-ceiling overrides lifted (root `npm audit --omit=dev`: 30 → **0**); grpc-js / hono / brace-expansion GHSAs cleared\n- CodeQL high fixed: polynomial ReDoS in A2A card slugify (remote input) → linear scan\n\n## GAIA integrity family (ADR-167 / 168 / 169)\n- **ADR-167**: pre-submission exploit audit (AUD-1..10) + signed earning-integrity attestation — signing proves bytes; the audit proves the score was earned. Honest `harness_gap` skips where the harness can't yet supply evidence\n- **ADR-168**: harness evidence recording (trajectories, tool names+args, split provenance, signed judge cache) — the forward contract that turns those skips enforceable (#2548)\n- **ADR-169**: benchmark reporting integrity standard — strict-EM headlines, view-labeled scaling arms, disclosed no-work/empty rates, mandatory reproducibility blocks\n\n## New capabilities\n- `hooks_model-verify` — confidence-gated tier escalation ($0 structural verifier; route → generate → verify → escalate; feeds the routing bandit)\n- Temporal validity on hierarchical memory (validFrom/validUntil + supersede-on-conflict, Zep/Graphiti-style)\n- A2A Agent Cards (spec 1.0.0) — federation discovery interop at `/.well-known/agent-card.json`, ADR-166 bind posture preserved\n- Execution-state-tree trajectory retrieval prototype (MAGE-style) behind `strategy: \"state-tree\"`\n- `metaharness evolve --diagnose` — GEPA failure-class diagnosis\n- Browser session recording fixed end-to-end (trajectory flags were invalid on every prior ruvector version)\n\n## Validation\ntsc clean · MCP contract 171/171 (15 metaharness tools) · plugin smoke 122/122 · memory 442/442 · federation 600/600 · root audit 0 vulnerabilities · CI fully green on merged main (incl. the #2552 lockfile hotfix that had 25 main jobs red)\n\nPRs: #2543, #2547, #2552 · Issues: #2542, #2548 · Previous: v3.17.0 (metaharness learn + gepa)",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.18.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.18.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.17.0",
+        "author": "ruvnet",
+        "date": "2026-07-03",
+        "summary": "# v3.17.0 — MetaHarness learn + GEPA: harness policies become measured, evolved artifacts\n\nThis release closes the harness-policy lifecycle loop: **learn** a policy from a scored task corpus → **audit** what it compiles to → **evolve** it against fixed benchmarks → **analyze** why runs fail. Two new MCP tools (13 → 15), two new CLI subcommands (11 → 13), two new skills, and version-pin upgrades across the `@metaharness/*` family.\n\n## New: `metaharness learn` — learned policies instead of hand-tuned prompts\n\nWraps upstream `metaharness@0.3.0`'s ADR-235 GEPA learning harness. Instead of a human editing a system prompt and eyeballing the result, `learn` mutates the harness genome, scores candidates against held-out SWE-bench-style slices, and only promotes measured winners.\n\n```bash\n# $0 dry-run — resolves the slice and prices the run, no model calls\nnpx ruflo metaharness learn --host claude-code --model haiku --slice slices/lite.json\n\n# real run — explicit spend opt-in at every layer\nnpx ruflo metaharness learn --repo ~/src/metaharness --host claude-code \\\n  --model haiku --slice slices/lite.json --run --timeout-ms 1800000\n```\n\n- **$0 by default** — spending requires `--run` (CLI) / `run: true` (MCP tool `metaharness_learn`)\n- Needs a metaharness repo checkout (`--repo` or `$METAHARNESS_REPO`); without one you get a structured `{status: \"checkout-required\"}` payload with clone instructions — a precondition report, not an error\n\n## New: `metaharness gepa` — genome inspection and auditing\n\nSurfaces the `@metaharness/darwin@0.8.0` GEPA **library** entry (`@metaharness/darwin/gepa`) — the first plugin surface with no CLI binary behind it.\n\n```bash\nnpx ruflo metaharness gepa --op genome      # load + validate the shipped cand-6 genome\nnpx ruflo metaharness gepa --op render      # genome → the system prompt it compiles to\nnpx ruflo metaharness gepa --op validate --path my-genome.json --alert-on-invalid   # CI gate\nnpx ruflo metaharness gepa --op analyze --transcript run.json   # failure-class breakdown\n```\n\nWhy it matters: evolved policies ship as genome JSON, but the *behavior* lives in the system prompt the genome compiles to. `--op render` is the \"what does this policy actually say?\" view you want before adopting one. The shipped **cand-6** genome is the first holdout-confirmed promotion (holdout gold 2/12 → 3/12, zero regressions, empty-patch rate 0.583 → 0.333).\n\nDeliberately not surfaced: `gepaOptimize` — it takes an in-process bring-your-own-evaluator callback that can't cross a subprocess boundary. Import `@metaharness/darwin/gepa` directly, or use `metaharness_evolve` for sandbox-scored evolution.\n\n## Version pins refreshed\n\n| Package | Before | After |\n|---|---|---|\n| `@metaharness/darwin` | ~0.3.1 | **~0.8.0** (GEPA engine, new evolve selection modes: `pareto`, `clade`, `niche-steering`, `quality-diversity`, `behavioral-diversity`, plus `--crossover` / `--epistasis` / `--curriculum` / `--mutator ruvllm`) |\n| `metaharness` | ~0.2.6 | ~0.2.8 (learn arrives via `@latest` → 0.3.0) |\n| `@metaharness/redblue` | ~0.1.1 | ~0.1.4 |\n| `@metaharness/kernel` | ~0.1.0 | ~0.1.2 |\n\n## Fixes\n\n- **redblue stale-cache trap**: the install cache dir is now versioned by the pin (`~/.ruflo/redblue-cache-0.1.4`), so pin bumps invalidate stale installs — previously a machine that cached 0.1.1 would serve it forever\n- **gepa stale-install fallback**: a pre-0.8.0 darwin in an ancestor `node_modules` throws `ERR_PACKAGE_PATH_NOT_EXPORTED` (no `./gepa` subpath); gepa.mjs treats that as recoverable and falls back to its versioned cache\n\n## Validation\n\n- `tsc` clean build\n- MCP runtime contract: **171/171 assertions across all 15 tools**\n- Plugin smoke suite: 120/120 steps\n- darwin 0.8.0 `evolve` / `bench create|verify` / `security bench` proven through the wrappers; redblue 0.1.4 attack preview proven via the new cache path\n\nAll ADR-150 constraints hold: `@metaharness/*` stays in `optionalDependencies`, every path degrades gracefully, ruflo remains fully operational with MetaHarness absent.\n\n---\n\n**Deep-dive**: full capabilities walkthrough (usage + rationale) → https://gist.github.com/ruvnet/cdc1bc2259cde127a418f861c3907e1e\n**PR**: #2540\n",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.17.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.17.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-code==0.1.31",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "### Features\n\n* Collapse large pastes into compact placeholders ([#4447](https://github.com/langchain-ai/deepagents/issues/4447)) ([9ae927d](https://github.com/langchain-ai/deepagents/commit/9ae927d73ebf30ba50bbb7ec0c1076a0937e5cb7))\n* Show model name instead of spec in switcher ([#4460](https://github.com/langchain-ai/deepagents/issues/4460)) ([0059620](https://github.com/langchain-ai/deepagents/commit/005962088ad31b16745c399e4ab2e725e97f7858))\n* Offer abort during resume ([#4188](https://github.com/langchain-ai/deepagents/issues/4188)) ([a4c25cd](https://github.com/langchain-ai/deepagents/commit/a4c25cd74de9902fd0ea9440b5dda2d4248bb3d2))\n* Persistent banner when installation is stale ([#4459](https://github.com/langchain-ai/deepagents/issues/4459)) ([b74c185](https://github.com/langchain-ai/deepagents/commit/b74c18591a8ce9a49a5fee43b07e602ca9fbf68a))\n* Show `\"Took <duration>\"` after `execute` finishes ([#4301](https://github.com/langchain-ai/deepagents/issues/4301)) ([a5240eb](https://github.com/langchain-ai/deepagents/commit/a5240ebe3654e72fa5beb4070224f52f944768c8))\n* Unify `config show`/`list` around effective values ([#4174](https://github.com/langchain-ai/deepagents/issues/4174)) ([ccd9d21](https://github.com/langchain-ai/deepagents/commit/ccd9d216e77855a28b88850beb525f47ce8b686a))\n\n### Bug Fixes\n\n* Make execute command expandable in code TUI transcript ([#4428](https://github.com/langchain-ai/deepagents/issues/4428)) ([d999181](https://github.com/langchain-ai/deepagents/commit/d999181e8424498681f1e442c71380bf6b82b0aa))\n* Allow suppressing LangSmith key override warning ([#4436](https://github.com/langchain-ai/deepagents/issues/4436)) ([ddcae5e](https://github.com/langchain-ai/deepagents/commit/ddcae5e0bd9aebc946be1d9fb3f5e35eeb690fa6))\n* Ensure unique message widget IDs on history load ([#4454](https://github.com/langchain-ai/deepagents/issues/4454)) ([de2f7d2](https://github.com/langchain-ai/deepagents/commit/de2f7d2835485df905772e1c96e33d2c239d8e22))\n* Resolve `/threads` header link on mount, not after load ([#4453](https://github.com/langchain-ai/deepagents/issues/4453)) ([4cba728](https://github.com/langchain-ai/deepagents/commit/4cba72893fc4aae5b429d8c573c1a513d97ddf8a))\n* Restore caller's LangSmith API key in shell subprocess env ([#4458](https://github.com/langchain-ai/deepagents/issues/4458)) ([9293b19](https://github.com/langchain-ai/deepagents/commit/9293b190170a872b73d0d94e66479bcc5f7962c7))\n* Route Anthropic effort through output config ([#4446](https://github.com/langchain-ai/deepagents/issues/4446)) ([1e8ed81](https://github.com/langchain-ai/deepagents/commit/1e8ed81940a862dde44f704826b61650336367e0))\n* Show loading state during model switch ([#4209](https://github.com/langchain-ai/deepagents/issues/4209)) ([7cc4e9f](https://github.com/langchain-ai/deepagents/commit/7cc4e9f9bda5a8ae42bb072b82b634ad8c39ade1))\n\n---\n\nInternal maintainers: @johannes117, @jkennedyvz, @ccurme, @mdrxy\n\nReleased by: @mdrxy",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code%3D%3D0.1.31",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents deepagents-code==0.1.31 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "version": "dotnet-1.13.0",
+        "author": "SergeyMenshykh",
+        "date": "2026-07-03",
+        "summary": "## What's Changed\r\n* .NET: Harden dotnet-format workflow shell handling by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6796\r\n* .NET: Add AgentSkillsSourceContext to AgentSkillsSource.GetSkillsAsync by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6797\r\n* .NET: Foundry Hosting per-user session isolation and Responses v2 protocol fast-fail by @rogerbarreto in https://github.com/microsoft/agent-framework/pull/6832\r\n* .NET: Pin patched OpenAPI dependencies to unblock NU1903 in sample restores by @rogerbarreto with @Copilot in https://github.com/microsoft/agent-framework/pull/6853\r\n* Make skills source classes public with Experimental attribute by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6838\r\n* .NET: Consolidate skill-source caching and make skill sources disposable by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6827\r\n* .NET: Add skill approval options by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6843\r\n* .NET: [BREAKING] Add file editing tools and align FileAccess/FileMemory store API by @westey-m in https://github.com/microsoft/agent-framework/pull/6807\r\n* .NET: [BREAKING] Refactor OpenAI Hosting OptionsMapping to disallow passing options by default by @westey-m in https://github.com/microsoft/agent-framework/pull/6855\r\n* .NET: Remove Experimental attribute from Skills API in Microsoft.Agents.AI by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6861\r\n* .NET: Foundry Hosting gracefully tolerates lacking user identity when run locally by @rogerbarreto in https://github.com/microsoft/agent-framework/pull/6870\r\n* .NET: Bump Azure.AI.Projects to 2.1.0-beta.4 by @rogerbarreto in https://github.com/microsoft/agent-framework/pull/6795\r\n* .NET: Make default-approval harness features configurable + customizable shell tool by @westey-m in https://github.com/microsoft/agent-framework/pull/6880\r\n* .NET: Improving DotNet samples by @alliscode in https://github.com/microsoft/agent-framework/pull/6869\r\n* .NET: fix: Require explicit TokenCredential in AddFoundryToolboxes by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6877\r\n* .NET: Update .NET version to 1.13.0 by @SergeyMenshykh in https://github.com/microsoft/agent-framework/pull/6900\r\n\r\n## New Contributors\r\n* @VectorPeak made their first contribution in https://github.com/microsoft/agent-framework/pull/6818\r\n\r\n**Full Changelog**: https://github.com/microsoft/agent-framework/compare/dotnet-1.12.0...dotnet-1.13.0",
+        "assets_count": 0,
+        "url": "https://github.com/microsoft/agent-framework/releases/tag/dotnet-1.13.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "microsoft/agent-framework dotnet-1.13.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-client-v2.12.0",
+        "author": "mikeldking",
+        "date": "2026-07-03",
+        "summary": "## [2.12.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-client-v2.11.0...arize-phoenix-client-v2.12.0) (2026-07-03)\n\n\n### Features\n\n* **api:** assign annotation configs to projects over REST ([#14028](https://github.com/Arize-ai/phoenix/issues/14028)) ([83d3cef](https://github.com/Arize-ai/phoenix/commit/83d3cef5e5f4bfef2399ca6cb52f208673b9036b))\n* **server:** add dataset label REST endpoints ([#14024](https://github.com/Arize-ai/phoenix/issues/14024)) ([67f84ba](https://github.com/Arize-ai/phoenix/commit/67f84ba8e2b65aaa74684a9633167eb4343acbb6))\n\n\n### Bug Fixes\n\n* Use same timeout policy for async client ([#13796](https://github.com/Arize-ai/phoenix/issues/13796)) ([fc0e5f8](https://github.com/Arize-ai/phoenix/commit/fc0e5f8f7f7999c1211d5d7fe012bd5270ad9e92))\n\n\n### Documentation\n\n* fill documentation gaps from 2026-06-24→07-01 audit ([#14015](https://github.com/Arize-ai/phoenix/issues/14015)) ([337a622](https://github.com/Arize-ai/phoenix/commit/337a622496ed43aae186b09ce488954c3fb27ad4))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-client-v2.12.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-client-v2.12.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@54.20.1",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "### Patch Changes\n\n- 4b1306c: List `vercel agent-runs` in the root CLI help output.\n- 0b64f51: Add missing commands to the root `vercel --help` list: `ai-gateway`, `edge-config`, `oauth-apps`, `sandbox`, and `tokens`",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4054.20.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@54.20.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@54.20.0",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "### Minor Changes\n\n- b9e4f06: Add a `vercel agent-runs` command for Agent Runs observability: `list` lists Agent Runs for a project, `inspect <runId>` shows run metadata, events, usage, and subagents, `trace <runId>` shows the full trace (turns, messages, reasoning, and tool calls), and `projects` lists projects in the team with Agent Runs activity. All subcommands support `--json` for machine-readable output.",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4054.20.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@54.20.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/sdk",
+        "version": "v1.28.8",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "# Generated by Speakeasy CLI\n[@vercel/sdk 1.28.8](https://www.npmjs.com/package/@vercel/sdk/v/1.28.8)\n## Typescript SDK Changes:\n* `vercel.user.listUserEvents()`:  `response.events[].payload` **Changed** (Breaking ⚠️)\n* `vercel.user.getAuthUser()`:  `response.user.union(AuthUser).softBlock.reason.enum(domainOwnerDeletionRequest)` **Added** (Breaking ⚠️)\n* `vercel.security.putFirewallConfig()`: \n  *  `request.requestBody.rules[].conditionGroup[].conditions[].op.enum(list)` **Added**\n  *  `response.active.rules[]` **Changed** (Breaking ⚠️)\n* `vercel.security.getFirewallConfig()`:  `response.rules[]` **Changed** (Breaking ⚠️)\n* `vercel.vcr.getRepositoryTag()`: **Added**\n* `vercel.projects.getProjects()`:  `response` **Changed**\n* `vercel.security.updateFirewallConfig()`: \n  *  `request.requestBody` **Changed**\n* `vercel.webAnalytics.aggregatePageviews()`:  `response.data` **Changed**\n* `vercel.webAnalytics.aggregateEvents()`:  `response.data` **Changed**\n* `vercel.webAnalytics.countPageviews()`:  `response.data` **Changed**\n* `vercel.webAnalytics.countEvents()`:  `response.data` **Changed**\n\nGenerated with [Speakeasy CLI 1.788.0](https://github.com/speakeasy-api/speakeasy/releases)\n\n\nPublishing Completed",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/sdk/releases/tag/v1.28.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/sdk v1.28.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/turborepo",
+        "version": "v2.10.3",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "summary": "<!-- Release notes generated using configuration in .github/release.yml at v2.10.3 -->\n\n## What's Changed\n### Changelog\n* feat: Add nub to create-turbo options by @anthonyshew in https://github.com/vercel/turborepo/pull/13173\n* release(turborepo): 2.10.2 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13174\n* release(turborepo): 2.10.3-canary.1 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13176\n* fix: Normalize package manager versions by @anthonyshew in https://github.com/vercel/turborepo/pull/13177\n* fix: Use singular workspace in package resolution error by @anthonyshew in https://github.com/vercel/turborepo/pull/13178\n* fix: Support nub native lockfiles by @anthonyshew in https://github.com/vercel/turborepo/pull/13179\n* perf(build): Enable thin LTO + codegen-units=1 for release builds by @lukesandberg in https://github.com/vercel/turborepo/pull/13160\n* release(turborepo): 2.10.3-canary.2 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13181\n* feat: Add aube package manager support by @anthonyshew in https://github.com/vercel/turborepo/pull/13183\n* release(turborepo): 2.10.3-canary.3 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13184\n* fix: Normalize package manager version output by @anthonyshew in https://github.com/vercel/turborepo/pull/13185\n* release(turborepo): 2.10.3-canary.4 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13186\n* refactor: Richer internal dependency data by @anthonyshew in https://github.com/vercel/turborepo/pull/13188\n* fix(repository): honor semver ranges in devEngines.packageManager.version by @colinhacks in https://github.com/vercel/turborepo/pull/13189\n* fix: Skip node_modules in boundaries checks by @anthonyshew in https://github.com/vercel/turborepo/pull/13191\n* fix: Add token exchange recovery guidance by @anthonyshew in https://github.com/vercel/turborepo/pull/13192\n* feat: Add --production flag to turbo prune by @anthonyshew in https://github.com/vercel/turborepo/pull/13190\n* release(turborepo): 2.10.3-canary.5 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13193\n* feat: Accept Bun lockfile version 2 by @tsushanth in https://github.com/vercel/turborepo/pull/13119\n* fix: Handle task executor join errors as internal errors by @gwagjiug in https://github.com/vercel/turborepo/pull/13148\n* fix: Tweaks for nub support by @colinhacks in https://github.com/vercel/turborepo/pull/13187\n* release(turborepo): 2.10.3-canary.6 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13194\n* release(turborepo): 2.10.3-canary.7 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13195\n* chore: Upgrade TypeScript to 7.0.1-rc by @anthonyshew in https://github.com/vercel/turborepo/pull/13144\n* docs: Add filtered installs to Vercel guide by @anthonyshew in https://github.com/vercel/turborepo/pull/13196\n* examples: add with-mcp-servers by @Nishant-Chaudhary5338 in https://github.com/vercel/turborepo/pull/12997\n* fix: Report malformed JSON parse errors instead of panicking by @anthonyshew in https://github.com/vercel/turborepo/pull/13198\n* fix: Improve error messaging when platform binary is missing by @anthonyshew in https://github.com/vercel/turborepo/pull/13199\n* release(turborepo): 2.10.3-canary.8 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13200\n* fix(watch): Recover from slow initial hash instead of timing out by @lukesandberg in https://github.com/vercel/turborepo/pull/13159\n* chore: Update vitest example to vitest 4 and use native test merging by @abhiaagarwal in https://github.com/vercel/turborepo/pull/13202\n* feat: Toggle between the TUI and streamed logs by @anthonyshew in https://github.com/vercel/turborepo/pull/13203\n* fix: Resolve Bun scoped package deps that share a name with a dependency by @anthonyshew in https://github.com/vercel/turborepo/pull/13207\n* feat: Select tasks by clicking rows in the TUI task list by @anthonyshew in https://github.com/vercel/turborepo/pull/13206\n* perf: Avoid deep-cloning dependency maps in lockfile closure cache by @anthonyshew in https://github.com/vercel/turborepo/pull/13209\n* perf: Cache root internal dependencies in package graph by @anthonyshew in https://github.com/vercel/turborepo/pull/13211\n* feat: Automatically copy TUI selection to clipboard on mouse release by @anthonyshew in https://github.com/vercel/turborepo/pull/13208\n* perf: Cache env wildcard matches across tasks during hashing by @anthonyshew in https://github.com/vercel/turborepo/pull/13210\n* perf: Replace per-package graph traversals in scope filtering by @anthonyshew in https://github.com/vercel/turborepo/pull/13212\n* perf: Derive dirty hash from repo index by @anthonyshew in https://github.com/vercel/turborepo/pull/13213\n* fix: Include untracked symlinks in repo-index dirty hash by @anthonyshew in https://github.com/vercel/turborepo/pull/13218\n* refactor: Use upstream libghostty-vt crates instead of vendored bindings by @anthonyshew in https://github.com/vercel/turborepo/pull/13205\n* fix: Remove devtools feature flag by @anthonyshew in https://github.com/vercel/turborepo/pull/13219\n* fix: Harden TUI terminal restore during shutdown by @anthonyshew in https://github.com/vercel/turborepo/pull/13220\n* fix: Correct gitignore precedence in untracked walk and memoize matcher chains by @anthonyshew in https://github.com/vercel/turborepo/pull/13221\n\n## New Contributors\n* @lukesandberg made their first contribution in https://github.com/vercel/turborepo/pull/13160\n* @tsushanth made their first contribution in https://github.com/vercel/turborepo/pull/13119\n* @Nishant-Chaudhary5338 made their first contribution in https://github.com/vercel/turborepo/pull/12997\n* @abhiaagarwal made their first contribution in https://github.com/vercel/turborepo/pull/13202\n\n**Full Changelog**: https://github.com/vercel/turborepo/compare/v2.10.2...v2.10.3",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/turborepo/releases/tag/v2.10.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/turborepo v2.10.3 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/skills",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "block/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/ai-chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
+}
