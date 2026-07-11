@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-07-10-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-07-11-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -9,10 +9,6 @@
     {
       "repo": "DietrichGebert/ponytail",
       "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "JuliusBrussee/caveman",
-      "category": "Anthropic 工具与集成"
     },
     {
       "repo": "Leonxlnx/taste-skill",
@@ -44,6 +40,10 @@
     },
     {
       "repo": "headroomlabs-ai/headroom",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "hiyouga/LlamaFactory",
       "category": "Agentic AI 核心框架"
     }
   ],
