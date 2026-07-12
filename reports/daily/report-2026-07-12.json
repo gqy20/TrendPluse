@@ -1,0 +1,855 @@
+{
+  "date": "2026-07-12",
+  "summary_brief": "今日 (2026-07-12) 发现 0 个 Commit 信号，13 个 Release 信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 13,
+    "pr_count": 0,
+    "commit_count": 0,
+    "release_count": 13,
+    "unique_repos": 9,
+    "total_prs_analyzed": 0,
+    "total_releases": 13,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 383,
+    "total_releases_analyzed": 13,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 383,
+    "active_repos_count": 34,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "vincentkoc",
+          "shakkernerd",
+          "Alix-007",
+          "vyctorbrzezowski"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 53,
+        "top_contributors": [
+          "nankingjing",
+          "DaoyuanLi2816",
+          "AnnaSuSu",
+          "orbisai0security",
+          "Huixin615"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 40,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare",
+          "dependabot[bot]",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 33,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 31,
+        "top_contributors": [
+          "mikeldking",
+          "rickarize",
+          "github-actions[bot]",
+          "yfrigui2"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 15,
+        "top_contributors": [
+          "vyctorbrzezowski",
+          "vincentkoc",
+          "TurboTheTurtle"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 12,
+        "top_contributors": [
+          "etraut-openai",
+          "fcoury-oai",
+          "charliemarsh-oai",
+          "jif-oai",
+          "owenlin0"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 11,
+        "top_contributors": [
+          "mikayla-maki",
+          "chirivelli",
+          "nolight132",
+          "Eagl61",
+          "peakxy"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 11,
+        "top_contributors": [
+          "mldangelo-oai",
+          "renovate[bot]",
+          "he-yufeng",
+          "mldangelo",
+          "morgan-coded"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 9,
+        "top_contributors": [
+          "lyzno1",
+          "hyoban",
+          "he-yufeng"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 8,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "rekram1-node",
+          "nabilfreeman"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 8,
+        "top_contributors": [
+          "seratch",
+          "Dhruva-Das",
+          "github-actions[bot]",
+          "seanturner83"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 7,
+        "top_contributors": [
+          "http-samc",
+          "jpsingaraju",
+          "ricardo-agz"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 6,
+        "top_contributors": [
+          "anthonyshew",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 5,
+        "top_contributors": [
+          "mdrxy"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 4,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 3,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 3,
+        "top_contributors": [
+          "The-Best-Codes",
+          "kojiromike",
+          "mvanhorn"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 3,
+        "top_contributors": [
+          "timneutkens"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 2,
+        "top_contributors": [
+          "ntindle"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 2,
+        "top_contributors": [
+          "joaomdmoura"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 2,
+        "top_contributors": [
+          "vincentkoc"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 2,
+        "top_contributors": [
+          "vincentkoc",
+          "steipete"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 2,
+        "top_contributors": [
+          "github-actions[bot]",
+          "shaper"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 2,
+        "top_contributors": [
+          "dgozman"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 1,
+        "top_contributors": [
+          "BarreiroT"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "top_contributors": [
+          "Sujit-1509"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 1,
+        "top_contributors": [
+          "langchain-oss-model-profiles[bot]"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "rodboev"
+        ]
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 1,
+        "top_contributors": [
+          "albertvillanova"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 1,
+        "top_contributors": [
+          "vincentkoc"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 13,
+    "unique_repos_count": 9,
+    "releases": [
+      {
+        "repo": "danielmiessler/fabric",
+        "version": "v1.4.458",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "summary": "## Changes\n\n### PR [#2161](https://github.com/danielmiessler/Fabric/pull/2161) by [ksylvan](https://github.com/ksylvan): fix: respect Anthropic chat option max token overrides\n\n- Fix: respect Anthropic chat option max token overrides\n\n- Use configured Anthropic max tokens as default\n- Apply chat option max tokens when provided\n\n- Preserve existing behavior for missing token overrides\n- Add tests for default max token selection\n\n- Add tests for explicit max token overrides\n\n### Direct commits\n\n- Chore: clean up ChangeLog\n",
+        "assets_count": 9,
+        "url": "https://github.com/danielmiessler/Fabric/releases/tag/v1.4.458",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "danielmiessler/fabric v1.4.458 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.27.0",
+        "author": "mikeldking",
+        "date": "2026-07-12",
+        "summary": "## [17.27.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.26.0...arize-phoenix-v17.27.0) (2026-07-12)\n\n\n### Features\n\n* **ui:** add dataset/prompt authorship columns, rename to updatedBy ([fb08fe6](https://github.com/Arize-ai/phoenix/commit/fb08fe62d843685c64ed80c6966439a22a56d34c))\n* **ui:** column reordering on the traces, sessions, and experiments tables ([#14299](https://github.com/Arize-ai/phoenix/issues/14299)) ([2f2c4c1](https://github.com/Arize-ai/phoenix/commit/2f2c4c13547669905f9baa861e60c8a107fabd0b))\n* **ui:** customize prompts table columns ([a3c6b92](https://github.com/Arize-ai/phoenix/commit/a3c6b921484c3aae60549283afae720ad1e6fa06))\n* **ui:** design audit of alerts, counters, and session selection ([#14315](https://github.com/Arize-ai/phoenix/issues/14315)) ([c9770a2](https://github.com/Arize-ai/phoenix/commit/c9770a27dcd410ebf726d36b114d1c877d013e72))\n* **ui:** drag-and-drop column reordering with redesigned column selector ([#14298](https://github.com/Arize-ai/phoenix/issues/14298)) ([4da943b](https://github.com/Arize-ai/phoenix/commit/4da943b5d5c0dff0969832d9cfeda6a8ee303f6f))\n* **ui:** preview full span IO in table tooltips ([#14305](https://github.com/Arize-ai/phoenix/issues/14305)) ([02eb5dc](https://github.com/Arize-ai/phoenix/commit/02eb5dc1b4c341bf33197c7dcc032ec0f0c7f12c))\n\n\n### Bug Fixes\n\n* **api:** resolve dataset creator from the users loader, skip unused join ([9121920](https://github.com/Arize-ai/phoenix/commit/912192049ce9f7ac20aceba2e2bcdbb2261413b7))\n* preserve combobox tab navigation ([#14294](https://github.com/Arize-ai/phoenix/issues/14294)) ([8758636](https://github.com/Arize-ai/phoenix/commit/8758636690963ca1f0741f2a9385d547d0d194cd))\n* **tests:** format test_Dataset, scope Description locators to dialog ([2d8f536](https://github.com/Arize-ai/phoenix/commit/2d8f5369ce6e18d9496be52c042c67932e3a1b52))\n\n\n### Documentation\n\n* close weekly docs gap audit (dataset-label REST, CLI annotation-config, auth.md, experiment baseline, session cleanup) ([#14308](https://github.com/Arize-ai/phoenix/issues/14308)) ([52f05c4](https://github.com/Arize-ai/phoenix/commit/52f05c4703c8869b174e888fb5da05e344e77f24))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.27.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.27.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-client-v2.13.0",
+        "author": "mikeldking",
+        "date": "2026-07-12",
+        "summary": "## [2.13.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-client-v2.12.0...arize-phoenix-client-v2.13.0) (2026-07-12)\n\n\n### Features\n\n* **client:** add name_contains filter to Python client projects.list() ([#14132](https://github.com/Arize-ai/phoenix/issues/14132)) ([fa79dc0](https://github.com/Arize-ai/phoenix/commit/fa79dc0f249a5a8a205521af79b7c7946d814d9c)), closes [#14034](https://github.com/Arize-ai/phoenix/issues/14034)\n* phoenix env file ([#14188](https://github.com/Arize-ai/phoenix/issues/14188)) ([c0ab6a9](https://github.com/Arize-ai/phoenix/commit/c0ab6a9715bd8050094f8ac4135c7fa5d556c453))\n* **sdk:** accept both PHOENIX_PROJECT_NAME and PHOENIX_PROJECT everywhere ([#14167](https://github.com/Arize-ai/phoenix/issues/14167)) ([1e7d9fc](https://github.com/Arize-ai/phoenix/commit/1e7d9fc3cd21aca4f221884b963ab20404c70eaf))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-client-v2.13.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-client-v2.13.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.207",
+        "author": "ashwin-ant",
+        "date": "2026-07-11",
+        "summary": "## What's changed\n\n- Auto mode is now available without `CLAUDE_CODE_ENABLE_AUTO_MODE` opt-in on Bedrock, Vertex AI, and Foundry; disable via `disableAutoMode` in settings\n- Fixed the terminal freezing and keystrokes lagging while streaming responses containing very long lists, tables, paragraphs, or code blocks\n- Fixed remote managed settings from a non-interactive run (`claude -p`, the SDK) being permanently recorded as consented without ever showing the security consent dialog\n- Fixed spurious prompt-injection warnings triggered by benign system-generated conversation updates\n- Fixed the auto-updater overwriting a custom launcher script or symlink at `~/.local/bin/claude` on every release; `/doctor` now reports an externally managed launcher\n- Fixed compound commands with `cd` prompting for permission when the only output redirect was to `/dev/null`\n- Fixed the transcript jumping above the start of the answer when a response finishes streaming\n- Fixed `extensions.worktreeConfig` being left in the repo's `.git/config` (breaking go-git tools like `tea`) after the last `worktree.sparsePaths` worktree was removed\n- Fixed malformed bracket patterns in rules globs, skill paths, `.ignore`, and `.worktreeinclude` breaking file reads, file suggestions, and worktree creation\n- Fixed a crash loop in agent teams where a malformed teammate mailbox message caused repeated errors every second until the mailbox file was manually deleted\n- Fixed background sessions auto-named by accepting a plan not showing that name on their agent-view row\n- Fixed background sessions that entered a git worktree resuming blank after a cold reopen from the agent list\n- Fixed Remote Control task status updates being lost when the connection recovered from a network interruption or credential refresh\n- Fixed Remote Control sessions hosted by the desktop app not showing background agent and workflow progress on mobile and web\n- Fixed Deep research runs labeling every Fetch-phase agent \"unknown\" — chips now show the source hostname\n- Fixed Bedrock repeatedly requesting fresh AWS SSO credentials from IAM Identity Center on every API request\n- Improved agent view: pasting the same text again now expands the collapsed `[Pasted text #N]` placeholder instead of adding a second one\n- Improved agent view: blocked session peeks now lead with the question and show a worded staleness clock (`waiting 3m`) instead of the same timestamp twice\n- Changed Bedrock, Vertex, and Claude Platform on AWS to default to Claude Opus 4.8\n- Changed auto mode to no longer read `autoMode` from `.claude/settings.local.json` (repo-resident); use `~/.claude/settings.json` instead\n- Fixed an indefinite hang on Windows when AWS credential resolution stalls (e.g. a stuck `credential_process`): the 60-second stall guard now fires instead of waiting forever.\n- Plugin hooks/monitors/MCP headersHelper: `${user_config.*}` in shell-form commands is now rejected (shell-injection fix). Hooks: use exec form (`args` array) or `$CLAUDE_PLUGIN_OPTION_<KEY>`; monitors and headersHelper: read the value inside the script (config file or the server's `env` block).\n- Plugin option values (`pluginConfigs`) are no longer read from project-level `.claude/settings.json`; only user, `--settings`, and managed settings are honored\n- Fixed `/usage-credits` amount inputs silently stripping malformed values (e.g. a pasted timestamp) to digits; malformed amounts are now rejected with an error, and amounts over $1,000 require a typed confirmation\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.116",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.207\n- Fixed CI workspace trust so Claude Code honors project-scoped permission grants in checkout directories (#1085)\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.116/\n\n```bash\npip install claude-agent-sdk==0.2.116\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.116",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-python v0.2.116 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.207",
+        "author": "ashwin-ant",
+        "date": "2026-07-11",
+        "summary": "## What's changed\n\n- Fixed `canUseTool` returning `{behavior: 'allow'}` without `updatedInput` being rejected as a deny with a raw ZodError message; the tool now runs with the original input per the documented contract\n- The Agent tool's structured result now has a published SDK type (`AgentToolCompletedOutput`) that matches the emitted object exactly\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.207\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.207\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.207\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.207\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.207",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.207 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.171",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.171",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.171",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.171 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "version": "v0.32.0",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "summary": "These are the release notes for gptme version v0.32.0.\n\n## Contributors\n\nThanks to everyone who contributed to this release:\n\n@0xbrayo, @dvirarad, @erikbjare, @Fsmount, @meichuanyi, @Miyou, @patriklaurell, @sebastiondev, @the-eater, @Thibaultjaigu, @TimeToBuildBob\n\n## Changelog\n\nChanges since v0.31.0:\n\n\n## 📦 gptme\n\n### ✨ Features (695)\n\n - feat(eval): add SWE-bench two-stage file retrieval ([#3179](https://github.com/gptme/gptme/issues/3179)) ([`593bdb760`](https://github.com/gptme/gptme/commit/593bdb760))\n - feat(cli): add opt-in tool-output pruning ([#3181](https://github.com/gptme/gptme/issues/3181)) ([`ffee326cc`](https://github.com/gptme/gptme/commit/ffee326cc))\n - feat(tts): better error guidance and docs when OPENROUTER_API_KEY is absent ([#3175](https://github.com/gptme/gptme/issues/3175)) ([`3d8505cdd`](https://github.com/gptme/gptme/commit/3d8505cdd))\n - feat(mcp): add 'gptme-util mcp serve' subcommand and docs ([#3170](https://github.com/gptme/gptme/issues/3170)) ([`80b8a76e5`](https://github.com/gptme/gptme/commit/80b8a76e5))\n - feat(eval): wire tokens_per_task through SWE-bench and model summary ([#3176](https://github.com/gptme/gptme/issues/3176)) ([`1b71d9cd0`](https://github.com/gptme/gptme/commit/1b71d9cd0))\n - feat(models): add GPT-5.6 Luna/Terra/Sol to OpenAI model registry ([#3166](https://github.com/gptme/gptme/issues/3166)) ([`8221940df`](https://github.com/gptme/gptme/commit/8221940df))\n - feat(subagent): accept plain dict as output_schema, generate proper JSON Schema hints ([#554](https://github.com/gptme/gptme/issues/554)) ([#3174](https://github.com/gptme/gptme/issues/3174)) ([`3b9fb6c6c`](https://github.com/gptme/gptme/commit/3b9fb6c6c))\n - feat(eval): add tokens_consumed_per_task metric to eval harness output ([#3165](https://github.com/gptme/gptme/issues/3165)) ([`e867f7ac2`](https://github.com/gptme/gptme/commit/e867f7ac2))\n - feat(mcp): expose gptme tools as MCP server (gptme-mcp-server) ([#3157](https://github.com/gptme/gptme/issues/3157)) ([`4de53ec1b`](https://github.com/gptme/gptme/commit/4de53ec1b))\n - feat(acp): add gptme-acp shim package for ACP agent registry ([#3160](https://github.com/gptme/gptme/issues/3160)) ([`10adb1181`](https://github.com/gptme/gptme/commit/10adb1181))\n - feat(cli): add GPTME_EXIT_STATS for machine-readable session cost summary ([#3159](https://github.com/gptme/gptme/issues/3159)) ([`2c62b349f`](https://github.com/gptme/gptme/commit/2c62b349f))\n - feat(computer): add --milestone and --all flags to demo command ([#216](https://github.com/gptme/gptme/issues/216)) ([#3152](https://github.com/gptme/gptme/issues/3152)) ([`99621c13a`](https://github.com/gptme/gptme/commit/99621c13a))\n - feat(subagent): subprocess-mode progress notifications via file channel ([#3153](https://github.com/gptme/gptme/issues/3153)) ([`3703b2813`](https://github.com/gptme/gptme/commit/3703b2813))\n - feat(util/replay): compound query from last N user turns for better context recovery ([#3148](https://github.com/gptme/gptme/issues/3148)) ([`3eed3fe21`](https://github.com/gptme/gptme/commit/3eed3fe21))\n - feat(rag): add project-scoped indexes ([#3150](https://github.com/gptme/gptme/issues/3150)) ([`08dbb2ea7`](https://github.com/gptme/gptme/commit/08dbb2ea7))\n - feat(subagent): add context_window to subagent_batch, subagent_parallel, subagent_pipeline ([#554](https://github.com/gptme/gptme/issues/554)) ([#3147](https://github.com/gptme/gptme/issues/3147)) ([`3014f7b0b`](https://github.com/gptme/gptme/commit/3014f7b0b))\n - feat(computer): add ComputerPreview panel using screenshot polling API ([#216](https://github.com/gptme/gptme/issues/216)) ([#3143](https://github.com/gptme/gptme/issues/3143)) ([`ef5fe719a`](https://github.com/gptme/gptme/commit/ef5fe719a))\n - feat(util): BM25 evidence replay for long-session context recovery ([#3146](https://github.com/gptme/gptme/issues/3146)) ([`0fa14d354`](https://github.com/gptme/gptme/commit/0fa14d354))\n - feat(server): add /api/v2/computer/screenshot polling API ([#216](https://github.com/gptme/gptme/issues/216)) ([#3140](https://github.com/gptme/gptme/issues/3140)) ([`201fcab38`](https://github.com/gptme/gptme/commit/201fcab38))\n - feat(llm): enable strict tool schema for openai and azure providers ([#3136](https://github.com/gptme/gptme/issues/3136)) ([`375008e97`](https://github.com/gptme/gptme/commit/375008e97))\n - feat(computer): add gptme-util computer demo command ([#216](https://github.com/gptme/gptme/issues/216)) ([#3137](https://github.com/gptme/gptme/issues/3137)) ([`b4472da86`](https://github.com/gptme/gptme/commit/b4472da86))\n - feat(subagent): add subagent_wait_any() for race/hedging patterns ([`7f160ba08`](https://github.com/gptme/gptme/commit/7f160ba08))\n - feat(computer): surface terminal startup delay fix in doctor ([#216](https://github.com/gptme/gptme/issues/216)) ([#3134](https://github.com/gptme/gptme/issues/3134)) ([`31bd7b7f8`](https://github.com/gptme/gptme/commit/31bd7b7f8))\n - feat(computer): add terminal startup latency diagnostic ([#216](https://github.com/gptme/gptme/issues/216)) ([#3130](https://github.com/gptme/gptme/issues/3130)) ([`338170adc`](https://github.com/gptme/gptme/commit/338170adc))\n - feat(eval): add 'Can it play Factorio?' local milestone validation ([#216](https://github.com/gptme/gptme/issues/216)) ([#3127](https://github.com/gptme/gptme/issues/3127)) ([`2ea863160`](https://github.com/gptme/gptme/commit/2ea863160))\n - feat(computer): add `gptme-util computer doctor` health-check command ([#216](https://github.com/gptme/gptme/issues/216)) ([#3120](https://github.com/gptme/gptme/issues/3120)) ([`b63c9b904`](https://github.com/gptme/gptme/commit/b63c9b904))\n - feat(eval): add 'Can it play Doom?' local milestone validation ([#216](https://github.com/gptme/gptme/issues/216)) ([#3115](https://github.com/gptme/gptme/issues/3115)) ([`006c3ef4f`](https://github.com/gptme/gptme/commit/006c3ef4f))\n - feat(eval): add 'Can it Tweet?' local milestone validation ([#216](https://github.com/gptme/gptme/issues/216)) ([#3112](https://github.com/gptme/gptme/issues/3112)) ([`e2f9f87bd`](https://github.com/gptme/gptme/commit/e2f9f87bd))\n - feat(subagent): add subagent_pipeline() for staged fan-out with no barrier ([#554](https://github.com/gptme/gptme/issues/554)) ([#3110](https://github.com/gptme/gptme/issues/3110)) ([`41bb73e21`](https://github.com/gptme/gptme/commit/41bb73e21))\n - feat(browser): add load_browser_state() for in-session auth state restoration ([#3108](https://github.com/gptme/gptme/issues/3108)) ([`d673fb256`](https://github.com/gptme/gptme/commit/d673fb256))\n - feat(browser): add hover_element(), snapshot_page(), get_current_url() ([#216](https://github.com/gptme/gptme/issues/216)) ([#3104](https://github.com/gptme/gptme/issues/3104)) ([`9efc6b080`](https://github.com/gptme/gptme/commit/9efc6b080))\n - feat(eval): add eval tests for press_key/select_option/wait_for_element ([#216](https://github.com/gptme/gptme/issues/216)) ([#3097](https://github.com/gptme/gptme/issues/3097)) ([`5f2398c9e`](https://github.com/gptme/gptme/commit/5f2398c9e))\n - feat(subagent): token budget tracking — input/output tokens in ReturnType and BatchJob ([#554](https://github.com/gptme/gptme/issues/554)) ([#3099](https://github.com/gptme/gptme/issues/3099)) ([`9de8a92cf`](https://github.com/gptme/gptme/commit/9de8a92cf))\n - feat(subagent): add output_schema, workdir, context_turns to subagent_parallel() and batch ([#554](https://github.com/gptme/gptme/issues/554)) ([#3096](https://github.com/gptme/gptme/issues/3096)) ([`08692fa3c`](https://github.com/gptme/gptme/commit/08692fa3c))\n - feat(subagent): suppress thread-mode subagent terminal output (closes [#554](https://github.com/gptme/gptme/issues/554)) ([#3094](https://github.com/gptme/gptme/issues/3094)) ([`b03935ed5`](https://github.com/gptme/gptme/commit/b03935ed5))\n - feat(browser): add press_key, select_option, wait_for_element for computer-use ([#216](https://github.com/gptme/gptme/issues/216)) ([#3095](https://github.com/gptme/gptme/issues/3095)) ([`09d5c5e35`](https://github.com/gptme/gptme/commit/09d5c5e35))\n - feat(computer): add latency diagnostic command for diagnosing delays ([#216](https://github.com/gptme/gptme/issues/216)) ([#3093](https://github.com/gptme/gptme/issues/3093)) ([`007fe94b2`](https://github.com/gptme/gptme/commit/007fe94b2))\n - feat(subagent): enforce output_schema at the complete-block layer ([#3090](https://github.com/gptme/gptme/issues/3090)) ([`7e81ba052`](https://github.com/gptme/gptme/commit/7e81ba052))\n - feat(doctor): add ffmpeg check for screen recording ([#216](https://github.com/gptme/gptme/issues/216)) ([#3089](https://github.com/gptme/gptme/issues/3089)) ([`03bb8ac4d`](https://github.com/gptme/gptme/commit/03bb8ac4d))\n - feat(computer): add screen recording — start_recording / record_screen / gptme-util computer record ([#216](https://github.com/gptme/gptme/issues/216)) ([#3088](https://github.com/gptme/gptme/issues/3088)) ([`5771653e8`](https://github.com/gptme/gptme/commit/5771653e8))\n - feat(subagent): add subagent_parallel() fan-out + fix BatchJob.wait_all() sequential wait bug ([#3085](https://github.com/gptme/gptme/issues/3085)) ([`7ca25ee31`](https://github.com/gptme/gptme/commit/7ca25ee31))\n - feat(computer): add run-task CLI + fix include_paths directory test ([#216](https://github.com/gptme/gptme/issues/216)) ([#3086](https://github.com/gptme/gptme/issues/3086)) ([`6816c0408`](https://github.com/gptme/gptme/commit/6816c0408))\n - feat(computer): expose audit trail in computer_task() result + --agent-id CLI option ([#216](https://github.com/gptme/gptme/issues/216)) ([#3084](https://github.com/gptme/gptme/issues/3084)) ([`d76c3531a`](https://github.com/gptme/gptme/commit/d76c3531a))\n - feat(computer): add --jsonl output format to audit-log ([#3083](https://github.com/gptme/gptme/issues/3083)) ([`6f6a2b150`](https://github.com/gptme/gptme/commit/6f6a2b150))\n - feat(computer): add real-time risk-label streaming to parent agent ([#216](https://github.com/gptme/gptme/issues/216)) ([#3082](https://github.com/gptme/gptme/issues/3082)) ([`3cd6ebff3`](https://github.com/gptme/gptme/commit/3cd6ebff3))\n - feat(computer): add pre-action confirmation gate for sensitive actions ([#216](https://github.com/gptme/gptme/issues/216)) ([#3081](https://github.com/gptme/gptme/issues/3081)) ([`5dde6e21d`](https://github.com/gptme/gptme/commit/5dde6e21d))\n - feat(computer): add risk-level classification to audit-log ([#216](https://github.com/gptme/gptme/issues/216)) ([#3071](https://github.com/gptme/gptme/issues/3071)) ([`826494cc3`](https://github.com/gptme/gptme/commit/826494cc3))\n - feat(chats): add --all-agents flag to search Cursor and Codex sessions ([#3068](https://github.com/gptme/gptme/issues/3068)) ([`94c303989`](https://github.com/gptme/gptme/commit/94c303989))\n - feat(browser): add session persistence via GPTME_BROWSER_STORAGE_STATE ([#216](https://github.com/gptme/gptme/issues/216)) ([#3069](https://github.com/gptme/gptme/issues/3069)) ([`819f1b778`](https://github.com/gptme/gptme/commit/819f1b778))\n - feat(server): add --default-profile option for specialized deployments ([#3063](https://github.com/gptme/gptme/issues/3063)) ([`a935a2471`](https://github.com/gptme/gptme/commit/a935a2471))\n - feat(computer): add `gptme-util computer video-frames` CLI command ([#3062](https://github.com/gptme/gptme/issues/3062)) ([`112060a75`](https://github.com/gptme/gptme/commit/112060a75))\n - feat(computer): add computer-use service to docker-compose.yml ([#216](https://github.com/gptme/gptme/issues/216)) ([#3061](https://github.com/gptme/gptme/issues/3061)) ([`ff3d32542`](https://github.com/gptme/gptme/commit/ff3d32542))\n - feat(computer): add `gptme-util computer screenshot` CLI command ([#216](https://github.com/gptme/gptme/issues/216)) ([#3060](https://github.com/gptme/gptme/issues/3060)) ([`0ab94ca91`](https://github.com/gptme/gptme/commit/0ab94ca91))\n - feat(cli): show discovered gptme-* plugins in `gptme --help` (Part 3 of [#3051](https://github.com/gptme/gptme/issues/3051)) ([#3057](https://github.com/gptme/gptme/issues/3057)) ([`b43b2081a`](https://github.com/gptme/gptme/commit/b43b2081a))\n - feat(setup): add custom OpenAI-compatible provider to interactive setup ([#3056](https://github.com/gptme/gptme/issues/3056)) ([`6e86ec9ac`](https://github.com/gptme/gptme/commit/6e86ec9ac))\n - feat(cli): gptme-util subcommand mirroring (gptme chats → gptme-util chats) ([#3052](https://github.com/gptme/gptme/issues/3052)) ([`a2b6e0fea`](https://github.com/gptme/gptme/commit/a2b6e0fea))\n - feat(computer): add computer_task() for context-efficient subagent delegation ([#216](https://github.com/gptme/gptme/issues/216)) ([`b894c41a4`](https://github.com/gptme/gptme/commit/b894c41a4))\n - feat(cli): add `gptme search` alias for `gptme-util chats search` ([#3050](https://github.com/gptme/gptme/issues/3050)) ([`65610d791`](https://github.com/gptme/gptme/commit/65610d791))\n - feat(computer): track act_and_observe() calls in audit-log ([#216](https://github.com/gptme/gptme/issues/216)) ([#3043](https://github.com/gptme/gptme/issues/3043)) ([`efc5c9d25`](https://github.com/gptme/gptme/commit/efc5c9d25))\n - feat(config): allow setting system prompt type in gptme.toml via [prompt] system ([#3044](https://github.com/gptme/gptme/issues/3044)) ([`9d0ab3a27`](https://github.com/gptme/gptme/commit/9d0ab3a27))\n - feat(computer): add act_and_observe() for the 'act then look' loop ([#216](https://github.com/gptme/gptme/issues/216)) ([#3042](https://github.com/gptme/gptme/issues/3042)) ([`346600202`](https://github.com/gptme/gptme/commit/346600202))\n - feat(computer): extend audit-log to track browser interactions ([#216](https://github.com/gptme/gptme/issues/216)) ([#3041](https://github.com/gptme/gptme/issues/3041)) ([`b95e29af4`](https://github.com/gptme/gptme/commit/b95e29af4))\n - feat(reduce): emit visible feedback when log is truncated ([#3038](https://github.com/gptme/gptme/issues/3038)) ([`658a3a404`](https://github.com/gptme/gptme/commit/658a3a404))\n - feat(computer): add macOS accessibility tree + click via osascript ([#216](https://github.com/gptme/gptme/issues/216)) ([#3040](https://github.com/gptme/gptme/issues/3040)) ([`d12f3fb26`](https://github.com/gptme/gptme/commit/d12f3fb26))\n - feat(computer): add audit-log CLI + interactive web action evals ([#216](https://github.com/gptme/gptme/issues/216)) ([#3030](https://github.com/gptme/gptme/issues/3030)) ([`6b5a5183d`](https://github.com/gptme/gptme/commit/6b5a5183d))\n - feat(webui): windowed open (limit=50) + 'Load older' button ([#3034](https://github.com/gptme/gptme/issues/3034)) ([`8d15d61af`](https://github.com/gptme/gptme/commit/8d15d61af))\n - feat(server): add ?status= filter to GET /api/v2/tasks list endpoint ([#3033](https://github.com/gptme/gptme/issues/3033)) ([`ae46a7bdf`](https://github.com/gptme/gptme/commit/ae46a7bdf))\n - feat(safety): add local heuristic safety check to chats export ([#3023](https://github.com/gptme/gptme/issues/3023)) ([`d675df2a5`](https://github.com/gptme/gptme/commit/d675df2a5))\n - feat(webui): render normalized transcript messages in session replay detail ([#3028](https://github.com/gptme/gptme/issues/3028)) ([`b10cde34f`](https://github.com/gptme/gptme/commit/b10cde34f))\n - feat(subagent): add context_turns parameter for parent conversation forwarding ([#3008](https://github.com/gptme/gptme/issues/3008)) ([`b673ad792`](https://github.com/gptme/gptme/commit/b673ad792))\n - feat(commands): add /rag slash command for mid-session RAG queries ([#3022](https://github.com/gptme/gptme/issues/3022)) ([`260d7a466`](https://github.com/gptme/gptme/commit/260d7a466))\n - feat(eval): add computer-use eval suite + observe_web/observe_desktop in profile ([#216](https://github.com/gptme/gptme/issues/216)) ([#3020](https://github.com/gptme/gptme/issues/3020)) ([`0245a3b89`](https://github.com/gptme/gptme/commit/0245a3b89))\n - feat(subagent): add max_time parameter for auto-cancel watchdog ([#3019](https://github.com/gptme/gptme/issues/3019)) ([`3d220cc73`](https://github.com/gptme/gptme/commit/3d220cc73))\n - feat(computer): add AT-SPI2 accessibility tree actions for Linux native apps ([#3018](https://github.com/gptme/gptme/issues/3018)) ([`4d1bd24ee`](https://github.com/gptme/gptme/commit/4d1bd24ee))\n - feat(computer): add observe_web/observe_desktop helpers + unit tests for window_focus and wait_for_change ([#216](https://github.com/gptme/gptme/issues/216)) ([#3011](https://github.com/gptme/gptme/issues/3011)) ([`86a14c6d6`](https://github.com/gptme/gptme/commit/86a14c6d6))\n - feat(server): add HTTP QUERY method to /api/v2/tools for filtered introspection ([#3010](https://github.com/gptme/gptme/issues/3010)) ([`259eedbe3`](https://github.com/gptme/gptme/commit/259eedbe3))\n - feat(tools): annotate core built-in tools with hints metadata ([#3009](https://github.com/gptme/gptme/issues/3009)) ([`4912d2281`](https://github.com/gptme/gptme/commit/4912d2281))\n - feat(subagent): compact result summary in subagent_wait ([#554](https://github.com/gptme/gptme/issues/554)) ([#3007](https://github.com/gptme/gptme/issues/3007)) ([`8d974ca1f`](https://github.com/gptme/gptme/commit/8d974ca1f))\n - feat(subagent): add workdir parameter for explicit workspace control ([#2989](https://github.com/gptme/gptme/issues/2989)) ([`5d7dacdbb`](https://github.com/gptme/gptme/commit/5d7dacdbb))\n - feat(cli): add gptme attest sign and verify commands ([#2978](https://github.com/gptme/gptme/issues/2978)) ([`be689fa04`](https://github.com/gptme/gptme/commit/be689fa04))\n - feat(browser): make Playwright engine configurable via GPTME_BROWSER_ENGINE ([#2996](https://github.com/gptme/gptme/issues/2996)) ([`0dd93066f`](https://github.com/gptme/gptme/commit/0dd93066f))\n - feat: add Requesty as an OpenAI-compatible provider ([#2993](https://github.com/gptme/gptme/issues/2993)) ([`cf91ac1e4`](https://github.com/gptme/gptme/commit/cf91ac1e4))\n - feat(lessons): randomized lesson-dropout injection for causal LOO ([#2988](https://github.com/gptme/gptme/issues/2988)) ([`7dbb0f36a`](https://github.com/gptme/gptme/commit/7dbb0f36a))\n - feat(subagent): expose context_window in tool instructions; validate negative values ([#2976](https://github.com/gptme/gptme/issues/2976)) ([`0192f2328`](https://github.com/gptme/gptme/commit/0192f2328))\n - feat(subagent): context_window parameter for workspace context isolation ([#2975](https://github.com/gptme/gptme/issues/2975)) ([`31acfcba6`](https://github.com/gptme/gptme/commit/31acfcba6))\n - feat(cli): add context search-conversations subcommand for RAG conversation search ([#2971](https://github.com/gptme/gptme/issues/2971)) ([`07f3c1b3f`](https://github.com/gptme/gptme/commit/07f3c1b3f))\n - feat(subagent): add subagent_list() tool for observability ([`67235e921`](https://github.com/gptme/gptme/commit/67235e921))\n - feat(subagent): add redact_secrets option for context isolation ([#2950](https://github.com/gptme/gptme/issues/2950)) ([`27e6942fe`](https://github.com/gptme/gptme/commit/27e6942fe))\n - feat(logmanager): append-only event log for session durability (Phase 1) ([#2956](https://github.com/gptme/gptme/issues/2956)) ([`94f0c6e79`](https://github.com/gptme/gptme/commit/94f0c6e79))\n - feat(server): add /api/v2/version endpoint (Slice 2) ([#2954](https://github.com/gptme/gptme/issues/2954)) ([`b865baecb`](https://github.com/gptme/gptme/commit/b865baecb))\n - feat(server): add API version constants, contract_revision, and X-API-Version header ([#2952](https://github.com/gptme/gptme/issues/2952)) ([`9d005b0fb`](https://github.com/gptme/gptme/commit/9d005b0fb))\n - feat(webui): chat UI polish — role-aligned message footer + Chat-button sidebar toggle ([#2947](https://github.com/gptme/gptme/issues/2947)) ([`7b44dbee2`](https://github.com/gptme/gptme/commit/7b44dbee2))\n - feat(cli): add gptme-resume subcommand for lossy session rehydration ([#2933](https://github.com/gptme/gptme/issues/2933)) ([`59728c6ae`](https://github.com/gptme/gptme/commit/59728c6ae))\n - feat(cli): add `gptme-util snapshot list` subcommand ([#2932](https://github.com/gptme/gptme/issues/2932)) ([`002c94806`](https://github.com/gptme/gptme/commit/002c94806))\n - feat(webui): fork conversations from any message ([#2923](https://github.com/gptme/gptme/issues/2923)) ([`a36df3ef2`](https://github.com/gptme/gptme/commit/a36df3ef2))\n - feat(llm): add built-in offline mock provider ([`c92bc5a2a`](https://github.com/gptme/gptme/commit/c92bc5a2a))\n - feat(subagent): progress tool — intermediate parent notifications during long tasks ([#554](https://github.com/gptme/gptme/issues/554)) ([#2921](https://github.com/gptme/gptme/issues/2921)) ([`5de530f34`](https://github.com/gptme/gptme/commit/5de530f34))\n - feat(ci): run webui e2e tests against both stable and dev gptme ([`5b3f8364b`](https://github.com/gptme/gptme/commit/5b3f8364b))\n - feat(shell): suggest subagent when cd enters workspace with gptme.toml ([#554](https://github.com/gptme/gptme/issues/554)) ([#2920](https://github.com/gptme/gptme/issues/2920)) ([`15aee6267`](https://github.com/gptme/gptme/commit/15aee6267))\n - feat(subagent): clarification mechanism — subagents can pause and ask parent for more info ([#2906](https://github.com/gptme/gptme/issues/2906)) ([`c723802e7`](https://github.com/gptme/gptme/commit/c723802e7))\n - feat(doctor): add computer use prerequisite checks + run-docker-computer target ([#2908](https://github.com/gptme/gptme/issues/2908)) ([`3763dcca7`](https://github.com/gptme/gptme/commit/3763dcca7))\n - feat(webui/stt): add sttAuthToken setting for cloud-authenticated STT ([#2903](https://github.com/gptme/gptme/issues/2903)) ([`7b21c1a1b`](https://github.com/gptme/gptme/commit/7b21c1a1b))\n - feat(profiles): add structured-first backend selection to computer-use profile ([#2907](https://github.com/gptme/gptme/issues/2907)) ([`70546a9ed`](https://github.com/gptme/gptme/commit/70546a9ed))\n - feat(computer): add window_focus action for reliable new-window targeting ([`33d59fd4a`](https://github.com/gptme/gptme/commit/33d59fd4a))\n - feat(computer): add wait_for_change action for context-efficient UI loops ([#2898](https://github.com/gptme/gptme/issues/2898)) ([`28bef9c84`](https://github.com/gptme/gptme/commit/28bef9c84))\n - feat(subagent): configurable max_concurrent cap with semaphore gating ([#2892](https://github.com/gptme/gptme/issues/2892)) ([`e3c553c95`](https://github.com/gptme/gptme/commit/e3c553c95))\n - feat(tools): as_function_subtoolspecs() — invoke tool functions without IPython ([#2899](https://github.com/gptme/gptme/issues/2899)) ([`a02099cc9`](https://github.com/gptme/gptme/commit/a02099cc9))\n - feat(snapshot): add --dry-run / -n flag to /snapshot prune ([#2897](https://github.com/gptme/gptme/issues/2897)) ([`264d7a7cf`](https://github.com/gptme/gptme/commit/264d7a7cf))\n - feat(scripts): add treeofthoughts.py — eval-guided tree search for agents ([#495](https://github.com/gptme/gptme/issues/495)) ([#2900](https://github.com/gptme/gptme/issues/2900)) ([`d1100e782`](https://github.com/gptme/gptme/commit/d1100e782))\n - feat(webui): add 'Try the offline demo' CTA to disconnected state ([#2902](https://github.com/gptme/gptme/issues/2902)) ([`bf78ad3cf`](https://github.com/gptme/gptme/commit/bf78ad3cf))\n - feat(webui/tts): add ttsAuthToken setting for cloud-authenticated TTS ([`00e6c3892`](https://github.com/gptme/gptme/commit/00e6c3892))\n - feat(util): add --output-format json to gptme-util llm generate ([#2896](https://github.com/gptme/gptme/issues/2896)) ([`062ab2c89`](https://github.com/gptme/gptme/commit/062ab2c89))\n - feat(tools): add root-cause classification to stuck_detect_hook ([#2895](https://github.com/gptme/gptme/issues/2895)) ([`7137fc796`](https://github.com/gptme/gptme/commit/7137fc796))\n - feat(util): add --max-tokens and --temperature to llm generate ([#2894](https://github.com/gptme/gptme/issues/2894)) ([`e3d73858d`](https://github.com/gptme/gptme/commit/e3d73858d))\n - feat(tools): ToolSpec.from_function() + parameter extraction in from_callable ([#2893](https://github.com/gptme/gptme/issues/2893)) ([`9a098fbfd`](https://github.com/gptme/gptme/commit/9a098fbfd))\n - feat(rag): add rag_index_conversations for indexing past conversations ([#2883](https://github.com/gptme/gptme/issues/2883)) ([`882019e31`](https://github.com/gptme/gptme/commit/882019e31))\n - feat(snapshot): add /snapshot prune subcommand ([#2887](https://github.com/gptme/gptme/issues/2887)) ([`a2b069329`](https://github.com/gptme/gptme/commit/a2b069329))\n - feat(subagent): add subagent_cancel() + tests for resolve_role_defaults ([#2889](https://github.com/gptme/gptme/issues/2889)) ([`1319c19ef`](https://github.com/gptme/gptme/commit/1319c19ef))\n - feat(tools): hint-based allowlist and MCP annotation hints ([#2890](https://github.com/gptme/gptme/issues/2890)) ([`7d818cf80`](https://github.com/gptme/gptme/commit/7d818cf80))\n - feat(llm): route gptme cloud models through their real backend SDK ([#2876](https://github.com/gptme/gptme/issues/2876)) ([`b61f2560c`](https://github.com/gptme/gptme/commit/b61f2560c))\n - feat(tools): introduce ToolFunction abstraction for structured callable metadata ([#2880](https://github.com/gptme/gptme/issues/2880)) ([`00a45bdaa`](https://github.com/gptme/gptme/commit/00a45bdaa))\n - feat(snapshot): embed conversation message count for diff summary ([#2886](https://github.com/gptme/gptme/issues/2886)) ([`d0baa64a4`](https://github.com/gptme/gptme/commit/d0baa64a4))\n - feat(computer): add scroll action for mouse wheel support ([#2884](https://github.com/gptme/gptme/issues/2884)) ([`7e0de973a`](https://github.com/gptme/gptme/commit/7e0de973a))\n - feat(subagent): forward subprocess/isolated defaults from planner subtask roles ([#2881](https://github.com/gptme/gptme/issues/2881)) ([`9eb57759f`](https://github.com/gptme/gptme/commit/9eb57759f))\n - feat(commands): add /snapshot command for agent tree search ([#495](https://github.com/gptme/gptme/issues/495)) ([#2885](https://github.com/gptme/gptme/issues/2885)) ([`83f78db49`](https://github.com/gptme/gptme/commit/83f78db49))\n - feat(tools): add view_anchored and patch_anchored tools (Gate G2) ([#2882](https://github.com/gptme/gptme/issues/2882)) ([`74713885e`](https://github.com/gptme/gptme/commit/74713885e))\n - feat(commands): add /backtrack for in-session conversation recovery ([#2878](https://github.com/gptme/gptme/issues/2878)) ([`ca29f94f3`](https://github.com/gptme/gptme/commit/ca29f94f3))\n - feat(webui): thread log_offset through conversation state for windowed pagination (Slice 1) ([#2872](https://github.com/gptme/gptme/issues/2872)) ([`c4d7e42bf`](https://github.com/gptme/gptme/commit/c4d7e42bf))\n - feat(openai): enable Responses API by default for gpt-5/o-series models ([#2869](https://github.com/gptme/gptme/issues/2869)) ([`9e3a72e85`](https://github.com/gptme/gptme/commit/9e3a72e85))\n - feat(server): add /api/v0/metrics Prometheus endpoint ([#2870](https://github.com/gptme/gptme/issues/2870)) ([`4a7e7f36e`](https://github.com/gptme/gptme/commit/4a7e7f36e))\n - feat(server): add limit/before message pagination to conversation GET ([#2861](https://github.com/gptme/gptme/issues/2861)) ([`dd968bcdf`](https://github.com/gptme/gptme/commit/dd968bcdf))\n - feat(server): add ?q= filter param to conversations API with server-side webui search ([#2864](https://github.com/gptme/gptme/issues/2864)) ([`6a8eaf55c`](https://github.com/gptme/gptme/commit/6a8eaf55c))\n - feat(webui): add sort control to conversation list (Recent/Longest/A-Z) ([#2865](https://github.com/gptme/gptme/issues/2865)) ([`50e36b977`](https://github.com/gptme/gptme/commit/50e36b977))\n - feat(server): cursor-based pagination for conversations list ([#2860](https://github.com/gptme/gptme/issues/2860)) ([`4a909d2fd`](https://github.com/gptme/gptme/commit/4a909d2fd))\n - feat(webui): server-backed star/unstar for conversations via metadata sidecar ([#2848](https://github.com/gptme/gptme/issues/2848)) ([`962d86065`](https://github.com/gptme/gptme/commit/962d86065))\n - feat(cli): add --no-workspace flag to skip all workspace context ([#2853](https://github.com/gptme/gptme/issues/2853)) ([`41628ff9e`](https://github.com/gptme/gptme/commit/41628ff9e))\n - feat(extension): add conversation history ([#2760](https://github.com/gptme/gptme/issues/2760)) ([`58e9f7e43`](https://github.com/gptme/gptme/commit/58e9f7e43))\n - feat(cli): add startup prompt stats report ([#2843](https://github.com/gptme/gptme/issues/2843)) ([`3eee34a41`](https://github.com/gptme/gptme/commit/3eee34a41))\n - feat(eval): surface per-task tool-call count (tool-efficiency metric) ([#2844](https://github.com/gptme/gptme/issues/2844)) ([`0ec74c311`](https://github.com/gptme/gptme/commit/0ec74c311))\n - feat(webui): show conversation stats in list using list-response data ([#2841](https://github.com/gptme/gptme/issues/2841)) ([`f328d7d10`](https://github.com/gptme/gptme/commit/f328d7d10))\n - feat(webui): add settings-level STT provider choice (browser vs server) ([#2840](https://github.com/gptme/gptme/issues/2840)) ([`b8832e46b`](https://github.com/gptme/gptme/commit/b8832e46b))\n - feat(eval): add narrow swebench install extra ([#2837](https://github.com/gptme/gptme/issues/2837)) ([`5bd8ccd8f`](https://github.com/gptme/gptme/commit/5bd8ccd8f))\n - feat(webui): add / keyboard shortcut to focus conversation search ([#2838](https://github.com/gptme/gptme/issues/2838)) ([`7adc7ba1c`](https://github.com/gptme/gptme/commit/7adc7ba1c))\n - feat(webui): show relative timestamps on messages with auto-refresh ([#2828](https://github.com/gptme/gptme/issues/2828)) ([`b7f7dda26`](https://github.com/gptme/gptme/commit/b7f7dda26))\n - feat(config): add context_exclude glob patterns to [prompt] in gptme.toml ([#2831](https://github.com/gptme/gptme/issues/2831)) ([`6c81eae71`](https://github.com/gptme/gptme/commit/6c81eae71))\n - feat(server): expose message_count and last_updated in conversation list ([#2833](https://github.com/gptme/gptme/issues/2833)) ([`0f791e8cc`](https://github.com/gptme/gptme/commit/0f791e8cc))\n - feat(webui): persist conversation search query in URL ?search= param ([#2834](https://github.com/gptme/gptme/issues/2834)) ([`cd0a87bd8`](https://github.com/gptme/gptme/commit/cd0a87bd8))\n - feat(webui): highlight matched search terms in conversation list titles ([#2832](https://github.com/gptme/gptme/issues/2832)) ([`783d5bab8`](https://github.com/gptme/gptme/commit/783d5bab8))\n - feat(webui): add conversation list search/filter ([#2827](https://github.com/gptme/gptme/issues/2827)) ([`9fb50d57c`](https://github.com/gptme/gptme/commit/9fb50d57c))\n - feat(webui): add persistent no-confirm (YOLO) mode setting ([#2825](https://github.com/gptme/gptme/issues/2825)) ([`c5cc33586`](https://github.com/gptme/gptme/commit/c5cc33586))\n - feat(webui): show message count as badge on conversation title line ([#2823](https://github.com/gptme/gptme/issues/2823)) ([`116defea7`](https://github.com/gptme/gptme/commit/116defea7))\n - feat(webui): add keyboard shortcut (Ctrl+Shift+\\) to toggle split view ([#2816](https://github.com/gptme/gptme/issues/2816)) ([`5560bd7b6`](https://github.com/gptme/gptme/commit/5560bd7b6))\n - feat(webui): add URL subroutes for settings category deep-linking ([#2824](https://github.com/gptme/gptme/issues/2824)) ([`a7a93db98`](https://github.com/gptme/gptme/commit/a7a93db98))\n - feat(server): add A2A JSON-RPC MVP ([#2763](https://github.com/gptme/gptme/issues/2763)) ([`cb601a600`](https://github.com/gptme/gptme/commit/cb601a600))\n - feat(webui): add per-pane conversation selector in split view (Slice 2) ([#2817](https://github.com/gptme/gptme/issues/2817)) ([`a7c852816`](https://github.com/gptme/gptme/commit/a7c852816))\n - feat(artifacts): format-independent file-write parsing + diffs ([#2818](https://github.com/gptme/gptme/issues/2818)) ([`7d496f481`](https://github.com/gptme/gptme/commit/7d496f481))\n - feat(webui): add TTS engine selector (browser / gptme-server / gptme-tts) ([#2815](https://github.com/gptme/gptme/issues/2815)) ([`ab655640b`](https://github.com/gptme/gptme/commit/ab655640b))\n - feat(artifacts): include workspace files created/modified by the conversation ([#2814](https://github.com/gptme/gptme/issues/2814)) ([`85b8b8d2b`](https://github.com/gptme/gptme/commit/85b8b8d2b))\n - feat(webui): show active model in conversation header ([#2812](https://github.com/gptme/gptme/issues/2812)) ([`75cbfc6b0`](https://github.com/gptme/gptme/commit/75cbfc6b0))\n - feat(ci): self-heal Phase 2 — auto-open draft fix PR on structured gate pass ([#2813](https://github.com/gptme/gptme/issues/2813)) ([`44f9f2939`](https://github.com/gptme/gptme/commit/44f9f2939))\n - feat(webui): add split-pane conversation view (Slice 1 — layout skeleton) ([#2776](https://github.com/gptme/gptme/issues/2776)) ([`5713eb7d5`](https://github.com/gptme/gptme/commit/5713eb7d5))\n - feat(webui): add /settings route with full-page settings view ([#2806](https://github.com/gptme/gptme/issues/2806)) ([`ba34a85f3`](https://github.com/gptme/gptme/commit/ba34a85f3))\n - feat(webui): model favorites, set-as-default, and picker scroll fix ([#2801](https://github.com/gptme/gptme/issues/2801)) ([`7eabaeebf`](https://github.com/gptme/gptme/commit/7eabaeebf))\n - feat(webui): toggle/stop TTS playback from the message button ([#2803](https://github.com/gptme/gptme/issues/2803)) ([`1595ad8e2`](https://github.com/gptme/gptme/commit/1595ad8e2))\n - feat(cli): add --format table option to gptme-util status ([#2797](https://github.com/gptme/gptme/issues/2797)) ([`8db1b3805`](https://github.com/gptme/gptme/commit/8db1b3805))\n - feat(webui): auto-poll provider health every 60s; add degraded badge on settings icon ([#2792](https://github.com/gptme/gptme/issues/2792)) ([`c8f33ee17`](https://github.com/gptme/gptme/commit/c8f33ee17))\n - feat(webui): add Alt+N global shortcut for new conversation ([#2779](https://github.com/gptme/gptme/issues/2779)) ([`b7722965b`](https://github.com/gptme/gptme/commit/b7722965b))\n - feat(server): add provider health endpoint and webui panel ([#2775](https://github.com/gptme/gptme/issues/2775)) ([`ba1cf5992`](https://github.com/gptme/gptme/commit/ba1cf5992))\n - feat(webui): add server-side TTS endpoint via OpenRouter ([#2795](https://github.com/gptme/gptme/issues/2795)) ([`7fb8051a2`](https://github.com/gptme/gptme/commit/7fb8051a2))\n - feat(webui): add OpenRouter STT fallback for unsupported browsers ([`88b87ecfc`](https://github.com/gptme/gptme/commit/88b87ecfc))\n - feat(server): add `detail` query param to conversation list endpoint ([#2791](https://github.com/gptme/gptme/issues/2791)) ([`332fc2dfb`](https://github.com/gptme/gptme/commit/332fc2dfb))\n - feat(plugins): discover src-layout plugins, layer user [plugins], lenient +tool ([#2781](https://github.com/gptme/gptme/issues/2781)) ([`6b6985124`](https://github.com/gptme/gptme/commit/6b6985124))\n - feat(webui): add browser TTS for assistant messages (Slice 1 — Web Speech API) ([#2778](https://github.com/gptme/gptme/issues/2778)) ([`f7dcbb8bd`](https://github.com/gptme/gptme/commit/f7dcbb8bd))\n - feat(chats): add per-conversation session stats ([#2774](https://github.com/gptme/gptme/issues/2774)) ([`68459b62d`](https://github.com/gptme/gptme/commit/68459b62d))\n - feat(webui): add staging deploy trigger ([#2771](https://github.com/gptme/gptme/issues/2771)) ([`7b9ea0cab`](https://github.com/gptme/gptme/commit/7b9ea0cab))\n - feat(webui): add conversation system prompt override ([#2672](https://github.com/gptme/gptme/issues/2672)) ([`17b91546a`](https://github.com/gptme/gptme/commit/17b91546a))\n - feat(util): add batch mode command ([#2759](https://github.com/gptme/gptme/issues/2759)) ([`5dd3ea6e4`](https://github.com/gptme/gptme/commit/5dd3ea6e4))\n - feat(util): add gptme-util status subcommand for operator handoff ([#2752](https://github.com/gptme/gptme/issues/2752)) ([`7355b1820`](https://github.com/gptme/gptme/commit/7355b1820))\n - feat(complete): stuck/loop detection hook for repeating tool calls ([#2743](https://github.com/gptme/gptme/issues/2743)) ([`7e2f394c0`](https://github.com/gptme/gptme/commit/7e2f394c0))\n - feat(webui): add live_app panel kind distinct from iframe panels ([#2754](https://github.com/gptme/gptme/issues/2754)) ([`2c19195f6`](https://github.com/gptme/gptme/commit/2c19195f6))\n - feat(patch): add _anchored core module — hash-anchored line editing ([#2733](https://github.com/gptme/gptme/issues/2733)) ([`be43ca2e0`](https://github.com/gptme/gptme/commit/be43ca2e0))\n - feat(webui): add open conversation directory action ([#2673](https://github.com/gptme/gptme/issues/2673)) ([`6a29d3f93`](https://github.com/gptme/gptme/commit/6a29d3f93))\n - feat(cost_tracker): add extras dict and record_extra() to SessionCosts ([#2735](https://github.com/gptme/gptme/issues/2735)) ([`641dbdeba`](https://github.com/gptme/gptme/commit/641dbdeba))\n - feat(webui): suppress live fetches in demo mode ([#2721](https://github.com/gptme/gptme/issues/2721)) ([`8f15739c6`](https://github.com/gptme/gptme/commit/8f15739c6))\n - feat(self-heal): add structured autofix gate ([#2697](https://github.com/gptme/gptme/issues/2697)) ([`b3c609a45`](https://github.com/gptme/gptme/commit/b3c609a45))\n - feat(webui): replay demo tool-call flow ([`e95a2aa48`](https://github.com/gptme/gptme/commit/e95a2aa48))\n - feat(ci): self-heal workflow — analyze test failures and propose fixes (Phase 1) ([`919836d17`](https://github.com/gptme/gptme/commit/919836d17))\n - feat(webui): add config file editor ([#2677](https://github.com/gptme/gptme/issues/2677)) ([`5cca4905b`](https://github.com/gptme/gptme/commit/5cca4905b))\n - feat(webui): demo mode slice 2 — fixture-backed read paths ([#2687](https://github.com/gptme/gptme/issues/2687)) ([`9ffb02611`](https://github.com/gptme/gptme/commit/9ffb02611))\n - feat(webui): offline demo ApiClient seam (IApiClient + createDemoApiClient) ([#2664](https://github.com/gptme/gptme/issues/2664)) ([`58c46e795`](https://github.com/gptme/gptme/commit/58c46e795))\n - feat(webui): import exported conversation JSON ([#2671](https://github.com/gptme/gptme/issues/2671)) ([`fbbaac911`](https://github.com/gptme/gptme/commit/fbbaac911))\n - feat(webui): add Ctrl+F message search with match navigation ([#2668](https://github.com/gptme/gptme/issues/2668)) ([`d598b5e7f`](https://github.com/gptme/gptme/commit/d598b5e7f))\n - feat(server): add docker-compose self-host setup ([#2681](https://github.com/gptme/gptme/issues/2681)) ([`7a8bf8cd6`](https://github.com/gptme/gptme/commit/7a8bf8cd6))\n - feat(webui): speech-to-text dictation button ([#2666](https://github.com/gptme/gptme/issues/2666)) ([`bac384dde`](https://github.com/gptme/gptme/commit/bac384dde))\n - feat(webui): add compact user avatar treatment ([#2678](https://github.com/gptme/gptme/issues/2678)) ([`6995242c3`](https://github.com/gptme/gptme/commit/6995242c3))\n - feat(tools/python): emit artifact descriptors for plot files ([#830](https://github.com/gptme/gptme/issues/830) Phase 2) ([#2680](https://github.com/gptme/gptme/issues/2680)) ([`d92f6fe25`](https://github.com/gptme/gptme/commit/d92f6fe25))\n - feat(webui): recover dropped event streams ([`7886a9d8f`](https://github.com/gptme/gptme/commit/7886a9d8f))\n - feat(webui): structured tool call visualization with RichToolCall component ([#2676](https://github.com/gptme/gptme/issues/2676)) ([`029b93efb`](https://github.com/gptme/gptme/commit/029b93efb))\n - feat(webui): server connection health panel with /api/v2/server/health endpoint ([#2675](https://github.com/gptme/gptme/issues/2675)) ([`aadc57ce8`](https://github.com/gptme/gptme/commit/aadc57ce8))\n - feat(webui): stream tool outputs live via SSE tool_output events ([#2674](https://github.com/gptme/gptme/issues/2674)) ([`c0d622402`](https://github.com/gptme/gptme/commit/c0d622402))\n - feat(webui): per-tool call latency badges with live elapsed timer ([#2655](https://github.com/gptme/gptme/issues/2655)) ([`6d0347e46`](https://github.com/gptme/gptme/commit/6d0347e46))\n - feat(webui): temperature and top_p controls in ChatOptionsPanel ([`aebc9c57c`](https://github.com/gptme/gptme/commit/aebc9c57c))\n - feat(webui): add FunctionBrowser panel with /api/v2/tools endpoint ([#2663](https://github.com/gptme/gptme/issues/2663)) ([`9643f8f08`](https://github.com/gptme/gptme/commit/9643f8f08))\n - feat(webui): persist temperature/top_p/max_tokens in ConversationSettings sidebar ([#2662](https://github.com/gptme/gptme/issues/2662)) ([`887e9b0c7`](https://github.com/gptme/gptme/commit/887e9b0c7))\n - feat(webui): add ErrorBoundary to catch render crashes and chunk-load failures ([#2661](https://github.com/gptme/gptme/issues/2661)) ([`16d290d09`](https://github.com/gptme/gptme/commit/16d290d09))\n - feat(webui): add temperature and top_p controls to ChatOptionsPanel ([#2660](https://github.com/gptme/gptme/issues/2660)) ([`417a4205a`](https://github.com/gptme/gptme/commit/417a4205a))\n - feat(llm): make temperature and top_p request-driven via ChatConfig ([#2659](https://github.com/gptme/gptme/issues/2659)) ([`9f164493c`](https://github.com/gptme/gptme/commit/9f164493c))\n - feat(resilience): add CircuitBreaker for flaky MCP/tool calls ([#2658](https://github.com/gptme/gptme/issues/2658)) ([`4be41e539`](https://github.com/gptme/gptme/commit/4be41e539))\n - feat(webui): add /admin session management panel ([#2657](https://github.com/gptme/gptme/issues/2657)) ([`6715363a9`](https://github.com/gptme/gptme/commit/6715363a9))\n - feat(webui): add max_tokens input with full operation coverage ([#2652](https://github.com/gptme/gptme/issues/2652)) ([`2aa807e5d`](https://github.com/gptme/gptme/commit/2aa807e5d))\n - feat(webui): responsive nav sidebar with icon-only collapse and label expand ([#2653](https://github.com/gptme/gptme/issues/2653)) ([`4a0990a6b`](https://github.com/gptme/gptme/commit/4a0990a6b))\n - feat(hooks): add injection_screening hook to flag untrusted tool output ([#2650](https://github.com/gptme/gptme/issues/2650)) ([`b7b3e7a03`](https://github.com/gptme/gptme/commit/b7b3e7a03))\n - feat(webui): add keyboard shortcuts reference dialog ([`ca42d7ff6`](https://github.com/gptme/gptme/commit/ca42d7ff6))\n - feat(server): plumb max_tokens from chat config through generation ([#2649](https://github.com/gptme/gptme/issues/2649)) ([`82b64f3a2`](https://github.com/gptme/gptme/commit/82b64f3a2))\n - feat(webui): add per-conversation cost badge to ConversationList ([`d8cefc4ba`](https://github.com/gptme/gptme/commit/d8cefc4ba))\n - feat(llm): add Anthropic fast-mode (speed=fast) support ([#2647](https://github.com/gptme/gptme/issues/2647)) ([`08e154032`](https://github.com/gptme/gptme/commit/08e154032))\n - feat(webui): conversation-level session cost summary ([`1f15de92f`](https://github.com/gptme/gptme/commit/1f15de92f))\n - feat(webui): wire panel_hints into sidebar as iframe panels ([#830](https://github.com/gptme/gptme/issues/830) Phase 3b) ([`22164215c`](https://github.com/gptme/gptme/commit/22164215c))\n - feat(webui): sandboxed iframe panel primitive ([#830](https://github.com/gptme/gptme/issues/830) Phase 3) ([#2640](https://github.com/gptme/gptme/issues/2640)) ([`9671295e4`](https://github.com/gptme/gptme/commit/9671295e4))\n - feat(tools/computer): emit artifact descriptors on screenshot ([#830](https://github.com/gptme/gptme/issues/830) Phase 2 producers) ([#2639](https://github.com/gptme/gptme/issues/2639)) ([`9ff16c4c6`](https://github.com/gptme/gptme/commit/9ff16c4c6))\n - feat(server): consume tool-declared artifact descriptors from message metadata ([#830](https://github.com/gptme/gptme/issues/830) Phase 2) ([`969e9accf`](https://github.com/gptme/gptme/commit/969e9accf))\n - feat(webui): add artifacts sidebar panel and registry ([#2637](https://github.com/gptme/gptme/issues/2637)) ([`f46eb9ac7`](https://github.com/gptme/gptme/commit/f46eb9ac7))\n - feat(server): add conversation artifact registry API ([#830](https://github.com/gptme/gptme/issues/830) Phase 1) ([#2636](https://github.com/gptme/gptme/issues/2636)) ([`f9e242748`](https://github.com/gptme/gptme/commit/f9e242748))\n - feat(tools): add atomic patch_many tool ([#2634](https://github.com/gptme/gptme/issues/2634)) ([`1a7a6591e`](https://github.com/gptme/gptme/commit/1a7a6591e))\n - feat(server): bundle modern webui into package (gptme[#2612](https://github.com/gptme/gptme/issues/2612) Part 2) ([#2633](https://github.com/gptme/gptme/issues/2633)) ([`05b7916fc`](https://github.com/gptme/gptme/commit/05b7916fc))\n - feat: add gptme init command for project scaffolding ([#2632](https://github.com/gptme/gptme/issues/2632)) ([`d9c6e1082`](https://github.com/gptme/gptme/commit/d9c6e1082))\n - feat(models): add DeepSeek V4 Pro/Flash/Flash:free via OpenRouter ([#2629](https://github.com/gptme/gptme/issues/2629)) ([`9cbe3f236`](https://github.com/gptme/gptme/commit/9cbe3f236))\n - feat(hooks): emit aw-watcher tool activity heartbeats ([#2622](https://github.com/gptme/gptme/issues/2622)) ([`a82cd5436`](https://github.com/gptme/gptme/commit/a82cd5436))\n - feat(llm): add Claude Opus 4.8 model support ([`a85cc233a`](https://github.com/gptme/gptme/commit/a85cc233a))\n - feat(server): add --webui-dir flag to serve a custom web UI build ([#2614](https://github.com/gptme/gptme/issues/2614)) ([`62db7c762`](https://github.com/gptme/gptme/commit/62db7c762))\n - feat(lessons): load manifest-backed skills lazily from index.json ([#2604](https://github.com/gptme/gptme/issues/2604)) ([`3dc0f94b4`](https://github.com/gptme/gptme/commit/3dc0f94b4))\n - feat(llm): add gptme.ai as provider alias for gptme ([#2603](https://github.com/gptme/gptme/issues/2603)) ([`152149edd`](https://github.com/gptme/gptme/commit/152149edd))\n - feat(cli): list dynamic models for gptme provider ([`408df0b90`](https://github.com/gptme/gptme/commit/408df0b90))\n - feat(cli): prompt inline gptme auth on first use ([#2599](https://github.com/gptme/gptme/issues/2599)) ([`c72b7362a`](https://github.com/gptme/gptme/commit/c72b7362a))\n - feat(util): added `gptme-util prompts workspace/git/journal` helper commands ([#271](https://github.com/gptme/gptme/issues/271)) ([`3138251b5`](https://github.com/gptme/gptme/commit/3138251b5))\n - feat(eval-ci): expand quality gate from 3 to 5 tests ([#2598](https://github.com/gptme/gptme/issues/2598)) ([`4b5aa3ed2`](https://github.com/gptme/gptme/commit/4b5aa3ed2))\n - feat(eval): check subagent waited for completion before stating result ([#2593](https://github.com/gptme/gptme/issues/2593)) ([`60908932b`](https://github.com/gptme/gptme/commit/60908932b))\n - feat(install): add gptme.ai/install.sh one-liner installer ([#2592](https://github.com/gptme/gptme/issues/2592)) ([`c78976f00`](https://github.com/gptme/gptme/commit/c78976f00))\n - feat(eval): add subagent trajectory checks ([`8b0e098aa`](https://github.com/gptme/gptme/commit/8b0e098aa))\n - feat(browser): support connecting over CDP ([#2570](https://github.com/gptme/gptme/issues/2570)) ([`fa922d8a0`](https://github.com/gptme/gptme/commit/fa922d8a0))\n - feat(hooks): add turn.pre and aw watcher consumer ([#2572](https://github.com/gptme/gptme/issues/2572)) ([`930e2d063`](https://github.com/gptme/gptme/commit/930e2d063))\n - feat(auth): retarget device flow from fleet-operator to Supabase edge fn ([`349972006`](https://github.com/gptme/gptme/commit/349972006))\n - feat(webui): launch SetupWizard from disconnected banner on first visit ([#2494](https://github.com/gptme/gptme/issues/2494)) ([`511bdbd3e`](https://github.com/gptme/gptme/commit/511bdbd3e))\n - feat(webui): surface gptme.ai as cloud alternative in disconnected banner ([#2490](https://github.com/gptme/gptme/issues/2490)) ([`5b4f29696`](https://github.com/gptme/gptme/commit/5b4f29696))\n - feat(webui): opt into Chrome LNA for local-server fetches (targetAddressSpace) ([#2488](https://github.com/gptme/gptme/issues/2488)) ([`55b9cacc1`](https://github.com/gptme/gptme/commit/55b9cacc1))\n - feat(webui): add install step + setup-guide link to disconnected banner ([#2481](https://github.com/gptme/gptme/issues/2481)) ([`0f18cf1af`](https://github.com/gptme/gptme/commit/0f18cf1af))\n - feat(llm): surface diagnostic for generic out-of-credits 402 errors ([#2467](https://github.com/gptme/gptme/issues/2467)) ([`a085d2b18`](https://github.com/gptme/gptme/commit/a085d2b18))\n - feat(bot): add /gptme-resolve comment macro trigger to resolve workflow ([#2453](https://github.com/gptme/gptme/issues/2453)) ([`ed054e4a8`](https://github.com/gptme/gptme/commit/ed054e4a8))\n - feat(tools): add vent tool for real-time friction signals ([#2452](https://github.com/gptme/gptme/issues/2452)) ([`32bf967a3`](https://github.com/gptme/gptme/commit/32bf967a3))\n - feat(bot): add label-triggered issue resolver mode ([#2445](https://github.com/gptme/gptme/issues/2445)) ([`930acf352`](https://github.com/gptme/gptme/commit/930acf352))\n - feat(tools): add when-to-use trigger language for choice, complete, and restart ([#2442](https://github.com/gptme/gptme/issues/2442)) ([`94f2feced`](https://github.com/gptme/gptme/commit/94f2feced))\n - feat(tools): add when-to-use trigger language for mcp and lessons ([#2440](https://github.com/gptme/gptme/issues/2440)) ([`fe6d73250`](https://github.com/gptme/gptme/commit/fe6d73250))\n - feat(tools): add when-to-use trigger language for gh ([`992489cc2`](https://github.com/gptme/gptme/commit/992489cc2))\n - feat(tools): add when-to-use trigger language for screenshot, rag, vision, and todo ([`6861f00a9`](https://github.com/gptme/gptme/commit/6861f00a9))\n - feat(eval): add minimal-feature-preserve-default-with-decoys scenario ([`0d935883f`](https://github.com/gptme/gptme/commit/0d935883f))\n - feat(tools): add when-to-use trigger language for elicit and form ([#2437](https://github.com/gptme/gptme/issues/2437)) ([`8a7cc6c44`](https://github.com/gptme/gptme/commit/8a7cc6c44))\n - feat(tools): add when-to-use trigger language for vision and screenshot ([#2435](https://github.com/gptme/gptme/issues/2435)) ([`842efa85b`](https://github.com/gptme/gptme/commit/842efa85b))\n - feat(tools): add when-to-use trigger language for computer and morph ([#2434](https://github.com/gptme/gptme/issues/2434)) ([`1301dfa15`](https://github.com/gptme/gptme/commit/1301dfa15))\n - feat(eval): add root-cause-pipeline-debug behavioral scenario ([`ef2cac82d`](https://github.com/gptme/gptme/commit/ef2cac82d))\n - feat(eval): add bounded-bugfix-with-decoys behavioral scenario ([#2429](https://github.com/gptme/gptme/issues/2429)) ([`299b9af02`](https://github.com/gptme/gptme/commit/299b9af02))\n - feat(hooks): trace sync hook execution spans ([#2421](https://github.com/gptme/gptme/issues/2421)) ([`efb96866e`](https://github.com/gptme/gptme/commit/efb96866e))\n - feat(hooks): add Windows agent scanning ([`6d12c6529`](https://github.com/gptme/gptme/commit/6d12c6529))\n - feat(tools): add when-to-use trigger language for tmux and browser ([`b8c8e26b5`](https://github.com/gptme/gptme/commit/b8c8e26b5))\n - feat(tools): add when-to-use trigger language for python, save, patch tools ([#2412](https://github.com/gptme/gptme/issues/2412)) ([`1b31bd8a5`](https://github.com/gptme/gptme/commit/1b31bd8a5))\n - feat(setup): add confirmation prompt for fish completions ([#2410](https://github.com/gptme/gptme/issues/2410)) ([`b5ceb04ba`](https://github.com/gptme/gptme/commit/b5ceb04ba))\n - feat(tools): add trigger language for shell, read, and gh ([#2406](https://github.com/gptme/gptme/issues/2406)) ([`7e1bb2ce7`](https://github.com/gptme/gptme/commit/7e1bb2ce7))\n - feat(openai): add feature-gated Responses API chat path ([#2397](https://github.com/gptme/gptme/issues/2397)) ([`076599ac4`](https://github.com/gptme/gptme/commit/076599ac4))\n - feat(cli): add --output-format json for headless gptme runs ([#2392](https://github.com/gptme/gptme/issues/2392)) ([`50422d121`](https://github.com/gptme/gptme/commit/50422d121))\n - feat(eval): add partial-credit 'Score' column to eval_results.csv ([#2389](https://github.com/gptme/gptme/issues/2389)) ([`8d05e0a4b`](https://github.com/gptme/gptme/commit/8d05e0a4b))\n - feat(llm): surface actionable diagnostic for OpenRouter 402 insufficient-credits errors ([#2388](https://github.com/gptme/gptme/issues/2388)) ([`bee2165b2`](https://github.com/gptme/gptme/commit/bee2165b2))\n - feat(hooks): refactor and extend tool_target_instructions (Phase 1+) ([#2386](https://github.com/gptme/gptme/issues/2386)) ([`ebc3a8802`](https://github.com/gptme/gptme/commit/ebc3a8802))\n - feat(hooks): tool-target agent-instruction loading (Phase 1) ([#2385](https://github.com/gptme/gptme/issues/2385)) ([`acb5e3f3d`](https://github.com/gptme/gptme/commit/acb5e3f3d))\n - feat(subagent): add role= parameter for typed work posture ([#2382](https://github.com/gptme/gptme/issues/2382)) ([`78603c5a4`](https://github.com/gptme/gptme/commit/78603c5a4))\n - feat(profiles): add built-in verifier profile for subagent review/validation ([`84d3a1aa9`](https://github.com/gptme/gptme/commit/84d3a1aa9))\n - feat(cli): queue prompts for running chats ([`988f087bd`](https://github.com/gptme/gptme/commit/988f087bd))\n - feat(hooks): add TTL-based cache coldness heuristic to cache_awareness ([#2378](https://github.com/gptme/gptme/issues/2378)) ([`e896ed4ff`](https://github.com/gptme/gptme/commit/e896ed4ff))\n - feat: opt-in auto-snapshots for workspace rollback (Phase 2a) ([#2377](https://github.com/gptme/gptme/issues/2377)) ([`a5fbc0421`](https://github.com/gptme/gptme/commit/a5fbc0421))\n - feat(computer): add pluggable transport abstraction layer ([#2368](https://github.com/gptme/gptme/issues/2368)) ([`2e625199e`](https://github.com/gptme/gptme/commit/2e625199e))\n - feat(commands): add checkpoint slash command ([`1a9969e31`](https://github.com/gptme/gptme/commit/1a9969e31))\n - feat(models): add preferred_edit_format to OpenRouter models ([`c92fdb1a8`](https://github.com/gptme/gptme/commit/c92fdb1a8))\n - feat(serve): inject webui HTML rendering hint into system prompt ([`cf85d7d8b`](https://github.com/gptme/gptme/commit/cf85d7d8b))\n - feat(eval): natural pass-rate gate for lesson injection (Phase 3, idea [#228](https://github.com/gptme/gptme/issues/228)) ([#2365](https://github.com/gptme/gptme/issues/2365)) ([`cdf4be27e`](https://github.com/gptme/gptme/commit/cdf4be27e))\n - feat: architect/editor coder split — plan with strong model, execute with cheap model ([#2364](https://github.com/gptme/gptme/issues/2364)) ([`eafdb5aef`](https://github.com/gptme/gptme/commit/eafdb5aef))\n - feat(models): add preferred_edit_format field to model registry ([#2363](https://github.com/gptme/gptme/issues/2363)) ([`2d46a8f54`](https://github.com/gptme/gptme/commit/2d46a8f54))\n - feat(hooks): add mcp_namespace_hint hook for @server_name references ([#2358](https://github.com/gptme/gptme/issues/2358)) ([`2eca386d8`](https://github.com/gptme/gptme/commit/2eca386d8))\n - feat(commands): add /account provider onboarding with OAuth ([#2356](https://github.com/gptme/gptme/issues/2356)) ([`727aa6030`](https://github.com/gptme/gptme/commit/727aa6030))\n - feat(oauth): add OpenRouter PKCE OAuth flow ([#2355](https://github.com/gptme/gptme/issues/2355)) ([`c55a0fd2c`](https://github.com/gptme/gptme/commit/c55a0fd2c))\n - feat(eval): add task_type to EvalSpec and conditional lesson gating ([#2352](https://github.com/gptme/gptme/issues/2352)) ([`243d5f9ad`](https://github.com/gptme/gptme/commit/243d5f9ad))\n - feat(tokens): add per-step token breakdown to /tokens command ([#2350](https://github.com/gptme/gptme/issues/2350)) ([`9d96649e6`](https://github.com/gptme/gptme/commit/9d96649e6))\n - feat(eval): add --no-lessons flag for no-context baseline runs ([`34890e849`](https://github.com/gptme/gptme/commit/34890e849))\n - feat(tokens): surface biggest-turn input in /tokens output ([#2348](https://github.com/gptme/gptme/issues/2348)) ([`72501779a`](https://github.com/gptme/gptme/commit/72501779a))\n - feat(lessons): cap lesson injection at 50K tokens to prevent sys_prompt bloat ([#2346](https://github.com/gptme/gptme/issues/2346)) ([`b5fc04cd6`](https://github.com/gptme/gptme/commit/b5fc04cd6))\n - feat(tools): add gh issue/pr list preview to shell output ([#2341](https://github.com/gptme/gptme/issues/2341)) ([`eb7b11e96`](https://github.com/gptme/gptme/commit/eb7b11e96))\n - feat(tools): add shell_compact git log preview ([#2337](https://github.com/gptme/gptme/issues/2337)) ([`528a3f8d7`](https://github.com/gptme/gptme/commit/528a3f8d7))\n - feat: add GPTME_DISABLE_PATH_INCLUDE env var to skip path expansion ([#2336](https://github.com/gptme/gptme/issues/2336)) ([`fb4f6a7e1`](https://github.com/gptme/gptme/commit/fb4f6a7e1))\n - feat(messages): ephemeral_ttl — context-aware pruning with cache boundary optimization ([#2330](https://github.com/gptme/gptme/issues/2330)) ([`56080e094`](https://github.com/gptme/gptme/commit/56080e094))\n - feat(tauri): add Android project files and CI build (closes [#2328](https://github.com/gptme/gptme/issues/2328)) ([#2329](https://github.com/gptme/gptme/issues/2329)) ([`973e48a61`](https://github.com/gptme/gptme/commit/973e48a61))\n - feat(webui): add embedded MenuBar context slot ([#2319](https://github.com/gptme/gptme/issues/2319)) ([`582746247`](https://github.com/gptme/gptme/commit/582746247))\n - feat(cost-awareness): warn on cold Anthropic prompt cache ([#2322](https://github.com/gptme/gptme/issues/2322)) ([`4c674a7a9`](https://github.com/gptme/gptme/commit/4c674a7a9))\n - feat(server): voice Phase 3 — transcript to conversation history ([#2315](https://github.com/gptme/gptme/issues/2315)) ([`96067fa2f`](https://github.com/gptme/gptme/commit/96067fa2f))\n - feat(server): expose session last_error in conversation GET response ([#2305](https://github.com/gptme/gptme/issues/2305)) ([`a88401a90`](https://github.com/gptme/gptme/commit/a88401a90))\n - feat(settings): add Re-run Setup button to re-open setup wizard ([#2303](https://github.com/gptme/gptme/issues/2303)) ([`2bd1f2464`](https://github.com/gptme/gptme/commit/2bd1f2464))\n - feat(models): add gpt-5.5 to openai-subscription provider models ([#2299](https://github.com/gptme/gptme/issues/2299)) ([`8fdc1df16`](https://github.com/gptme/gptme/commit/8fdc1df16))\n - feat(eval): add --adversarial flag for behavioral eval prompt injection ([#190](https://github.com/gptme/gptme/issues/190)) ([#2291](https://github.com/gptme/gptme/issues/2291)) ([`ebfaf5733`](https://github.com/gptme/gptme/commit/ebfaf5733))\n - feat(shell): make output truncation thresholds configurable via env vars ([`5f843641d`](https://github.com/gptme/gptme/commit/5f843641d))\n - feat(tauri): sync version to 0.31.0 and show server version in About panel ([`6fce363c3`](https://github.com/gptme/gptme/commit/6fce363c3))\n - feat(webui): add real-time voice session support ([#2265](https://github.com/gptme/gptme/issues/2265)) ([`d13f97758`](https://github.com/gptme/gptme/commit/d13f97758))\n - feat(webui): add _headers for CF Pages cache policies ([#2282](https://github.com/gptme/gptme/issues/2282)) ([`5e5a6967b`](https://github.com/gptme/gptme/commit/5e5a6967b))\n - feat(tools/read): support batch reads via newline-separated paths ([`b799b3933`](https://github.com/gptme/gptme/commit/b799b3933))\n - feat(site): add downloads page at gptme.org/downloads/ ([#2243](https://github.com/gptme/gptme/issues/2243)) ([`45e904ac1`](https://github.com/gptme/gptme/commit/45e904ac1))\n - feat(webui): submit SetupWizard inputs on Enter key ([#2230](https://github.com/gptme/gptme/issues/2230)) ([`c14bd0c8c`](https://github.com/gptme/gptme/commit/c14bd0c8c))\n - feat(cli): add gptme-checkpoint for Git-backed workspace recovery ([#2224](https://github.com/gptme/gptme/issues/2224)) ([`15d3c2256`](https://github.com/gptme/gptme/commit/15d3c2256))\n - feat(openai): support OPENAI_VERBOSITY env var for GPT-5+ models ([#2223](https://github.com/gptme/gptme/issues/2223)) ([`a12a9c065`](https://github.com/gptme/gptme/commit/a12a9c065))\n - feat(openai): add gpt-5.5 and gpt-5.5-pro models ([#2220](https://github.com/gptme/gptme/issues/2220)) ([`5f546f377`](https://github.com/gptme/gptme/commit/5f546f377))\n - feat(context): show truncation savings in /context ([#2213](https://github.com/gptme/gptme/issues/2213)) ([`2df6ce3d5`](https://github.com/gptme/gptme/commit/2df6ce3d5))\n - feat(webui): expose provider API key settings ([`5fcd34dcd`](https://github.com/gptme/gptme/commit/5fcd34dcd))\n - feat(agent): add live agent scan alias ([#2205](https://github.com/gptme/gptme/issues/2205)) ([`18be555cd`](https://github.com/gptme/gptme/commit/18be555cd))\n - feat(webui): wire ServerDefaultModelSettings to GET /api/v2/user/settings ([#2204](https://github.com/gptme/gptme/issues/2204)) ([`9cb296e19`](https://github.com/gptme/gptme/commit/9cb296e19))\n - feat(server): add GET /api/v2/user/settings for provider+model introspection ([#2203](https://github.com/gptme/gptme/issues/2203)) ([`7633bc1d8`](https://github.com/gptme/gptme/commit/7633bc1d8))\n - feat(onboarding): add shared default-model selection flow ([#2201](https://github.com/gptme/gptme/issues/2201)) ([`91a580f05`](https://github.com/gptme/gptme/commit/91a580f05))\n - feat(tauri): in-app API key entry (save_api_key + wizard UI) ([#2195](https://github.com/gptme/gptme/issues/2195)) ([`02fb26b23`](https://github.com/gptme/gptme/commit/02fb26b23))\n - feat(hooks): track memory_mb for detected agents in workspace_agents ([#2200](https://github.com/gptme/gptme/issues/2200)) ([`b0b8fd097`](https://github.com/gptme/gptme/commit/b0b8fd097))\n - feat(cli): add gptme-util agents scan command ([#2198](https://github.com/gptme/gptme/issues/2198)) ([`19422518c`](https://github.com/gptme/gptme/commit/19422518c))\n - feat(tauri): desktop/mobile split — gate sidecar behind cfg(desktop) ([#2191](https://github.com/gptme/gptme/issues/2191)) ([`64a84c77e`](https://github.com/gptme/gptme/commit/64a84c77e))\n - feat(tauri): surface provider_configured in /api/v2 + SetupWizard onboarding step ([#2194](https://github.com/gptme/gptme/issues/2194)) ([`0ace79689`](https://github.com/gptme/gptme/commit/0ace79689))\n - feat(anthropic): wire output_config.effort for true xhigh/max thinking semantics ([#2186](https://github.com/gptme/gptme/issues/2186)) ([`a9f224631`](https://github.com/gptme/gptme/commit/a9f224631))\n - feat(prompts): add cache boundary marker and stable file order ([#2185](https://github.com/gptme/gptme/issues/2185)) ([`e33fec132`](https://github.com/gptme/gptme/commit/e33fec132))\n - feat(anthropic): add GPTME_THINKING_EFFORT env var with named levels ([#2184](https://github.com/gptme/gptme/issues/2184)) ([`6f7e30846`](https://github.com/gptme/gptme/commit/6f7e30846))\n - feat(prompts): propagate model to prompt_short for tool-use enforcement ([#2181](https://github.com/gptme/gptme/issues/2181)) ([`ff626be51`](https://github.com/gptme/gptme/commit/ff626be51))\n - feat(prompts): inject tool-use enforcement for GPT/Gemini/Grok families ([#2180](https://github.com/gptme/gptme/issues/2180)) ([`2cd8ee8b5`](https://github.com/gptme/gptme/commit/2cd8ee8b5))\n - feat(util): add models test command for verifying model connectivity ([#2159](https://github.com/gptme/gptme/issues/2159)) ([`bf64c6799`](https://github.com/gptme/gptme/commit/bf64c6799))\n - feat(chats): expose context/matches options in search and read commands ([#2155](https://github.com/gptme/gptme/issues/2155)) ([`53a00009d`](https://github.com/gptme/gptme/commit/53a00009d))\n - feat(models): add claude-opus-4-7 and anthropic/claude-opus-4.7 (OpenRouter) ([#2153](https://github.com/gptme/gptme/issues/2153)) ([`bc4f2aa86`](https://github.com/gptme/gptme/commit/bc4f2aa86))\n - feat(server): add include_archived parameter to list_tasks API ([#2127](https://github.com/gptme/gptme/issues/2127)) ([`182724167`](https://github.com/gptme/gptme/commit/182724167))\n - feat(eval): add implement-memoization behavioral scenario (31st) ([#2114](https://github.com/gptme/gptme/issues/2114)) ([`e23bd9687`](https://github.com/gptme/gptme/commit/e23bd9687))\n - feat(eval): add implement-priority-queue behavioral scenario (33rd) ([#2113](https://github.com/gptme/gptme/issues/2113)) ([`5fedad714`](https://github.com/gptme/gptme/commit/5fedad714))\n - feat(eval): add implement-event-emitter behavioral scenario (30th) ([#2105](https://github.com/gptme/gptme/issues/2105)) ([`48a437229`](https://github.com/gptme/gptme/commit/48a437229))\n - feat(eval): add implement-lru-cache behavioral scenario (29th) ([#2103](https://github.com/gptme/gptme/issues/2103)) ([`b504ddbc3`](https://github.com/gptme/gptme/commit/b504ddbc3))\n - feat(eval): add circuit-breaker behavioral scenario (28th) ([#2100](https://github.com/gptme/gptme/issues/2100)) ([`5806f3458`](https://github.com/gptme/gptme/commit/5806f3458))\n - feat(eval): add circuit-breaker behavioral scenario (26th) ([#2099](https://github.com/gptme/gptme/issues/2099)) ([`8bb769ea2`](https://github.com/gptme/gptme/commit/8bb769ea2))\n - feat(eval): add rate-limiting behavioral scenario (28th) ([`6fa5d440f`](https://github.com/gptme/gptme/commit/6fa5d440f))\n - feat(eval): add add-docstrings behavioral scenario (24th scenario) ([#2093](https://github.com/gptme/gptme/issues/2093)) ([`833a00c32`](https://github.com/gptme/gptme/commit/833a00c32))\n - feat(eval): add validate-user-input behavioral scenario (27th scenario) ([#2096](https://github.com/gptme/gptme/issues/2096)) ([`dc5cea427`](https://github.com/gptme/gptme/commit/dc5cea427))\n - feat(eval): add retry-with-backoff behavioral scenario (26th scenario) ([#2095](https://github.com/gptme/gptme/issues/2095)) ([`fe0bcd6ea`](https://github.com/gptme/gptme/commit/fe0bcd6ea))\n - feat(eval): add add-deprecation-warning behavioral scenario (25th scenario) ([#2094](https://github.com/gptme/gptme/issues/2094)) ([`b521a3db4`](https://github.com/gptme/gptme/commit/b521a3db4))\n - feat(eval): add fix-mutable-default behavioral scenario (22nd scenario) ([#2091](https://github.com/gptme/gptme/issues/2091)) ([`1da36d5c2`](https://github.com/gptme/gptme/commit/1da36d5c2))\n - feat(eval): add remove-dead-code behavioral scenario (21st scenario) ([#2090](https://github.com/gptme/gptme/issues/2090)) ([`df563ea44`](https://github.com/gptme/gptme/commit/df563ea44))\n - feat(eval): add optimize-n-squared behavioral scenario (20th scenario) ([#2088](https://github.com/gptme/gptme/issues/2088)) ([`83b2f542f`](https://github.com/gptme/gptme/commit/83b2f542f))\n - feat(eval): add fix-data-mutation behavioral scenario (19th scenario) ([#2083](https://github.com/gptme/gptme/issues/2083)) ([`f4288d80c`](https://github.com/gptme/gptme/commit/f4288d80c))\n - feat(eval): add noisy-worktree-fix behavioral scenario (18th scenario) ([#2080](https://github.com/gptme/gptme/issues/2080)) ([`f51c7a9cd`](https://github.com/gptme/gptme/commit/f51c7a9cd))\n - feat(eval): add add-type-hints behavioral scenario (17th scenario) ([#2079](https://github.com/gptme/gptme/issues/2079)) ([`404511815`](https://github.com/gptme/gptme/commit/404511815))\n - feat(eval): add refactor-for-testability behavioral scenario (16th scenario) ([#2078](https://github.com/gptme/gptme/issues/2078)) ([`3db6116c2`](https://github.com/gptme/gptme/commit/3db6116c2))\n - feat(eval): add fix-security-path-traversal behavioral scenario (15th scenario) ([#2077](https://github.com/gptme/gptme/issues/2077)) ([`82e1d2fe5`](https://github.com/gptme/gptme/commit/82e1d2fe5))\n - feat(eval): add handle-specific-exception behavioral scenario (14th scenario) ([#2076](https://github.com/gptme/gptme/issues/2076)) ([`2c4bc5a22`](https://github.com/gptme/gptme/commit/2c4bc5a22))\n - feat(eval): add add-feature-preserve-default behavioral scenario (13th scenario) ([#2074](https://github.com/gptme/gptme/issues/2074)) ([`5ad697291`](https://github.com/gptme/gptme/commit/5ad697291))\n - feat(eval): add use-existing-helper behavioral scenario (12th scenario) ([#2073](https://github.com/gptme/gptme/issues/2073)) ([`049cd9c0e`](https://github.com/gptme/gptme/commit/049cd9c0e))\n - feat(eval): add add-logging behavioral scenario (11th scenario) ([#2072](https://github.com/gptme/gptme/issues/2072)) ([`e389c0ce5`](https://github.com/gptme/gptme/commit/e389c0ce5))\n - feat(webui): polish message styling and fix avatar chaining ([#1996](https://github.com/gptme/gptme/issues/1996)) ([`bab294021`](https://github.com/gptme/gptme/commit/bab294021))\n - feat(eval): add scope-discipline-bugfix behavioral scenario (10th scenario) ([#2069](https://github.com/gptme/gptme/issues/2069)) ([`24272facd`](https://github.com/gptme/gptme/commit/24272facd))\n - feat(server): add CLI-based fallback for external session provider ([#2067](https://github.com/gptme/gptme/issues/2067)) ([`89db2d056`](https://github.com/gptme/gptme/commit/89db2d056))\n - feat(lessons): add GPTME_LESSONS_EXTRA_DIRS env var ([#2066](https://github.com/gptme/gptme/issues/2066)) ([`587acf934`](https://github.com/gptme/gptme/commit/587acf934))\n - feat(eval): add debug-data-pipeline behavioral scenario (9th scenario) ([#2064](https://github.com/gptme/gptme/issues/2064)) ([`60828f867`](https://github.com/gptme/gptme/commit/60828f867))\n - feat(webui): add external sessions catalog view ([#2062](https://github.com/gptme/gptme/issues/2062)) ([`29c517293`](https://github.com/gptme/gptme/commit/29c517293))\n - feat(server): add read-only external session catalog ([#2059](https://github.com/gptme/gptme/issues/2059)) ([`dbf83cd65`](https://github.com/gptme/gptme/commit/dbf83cd65))\n - feat(cli): prototype live terminal status line ([#2058](https://github.com/gptme/gptme/issues/2058)) ([`8f12aa2ca`](https://github.com/gptme/gptme/commit/8f12aa2ca))\n - feat(eval): add write-test-suite and test-driven-error-handling behavioral scenarios ([#2053](https://github.com/gptme/gptme/issues/2053)) ([`19f0f01ed`](https://github.com/gptme/gptme/commit/19f0f01ed))\n - feat(eval): add merge-conflict and extract-function behavioral scenarios ([#2052](https://github.com/gptme/gptme/issues/2052)) ([`1a9607621`](https://github.com/gptme/gptme/commit/1a9607621))\n - feat(eval): add stage-new-files behavioral scenario ([#2049](https://github.com/gptme/gptme/issues/2049)) ([`a4904c6b8`](https://github.com/gptme/gptme/commit/a4904c6b8))\n - feat(eval): add behavioral eval suite — 3 multi-step workflow scenarios ([#2046](https://github.com/gptme/gptme/issues/2046)) ([`3552864cb`](https://github.com/gptme/gptme/commit/3552864cb))\n - feat(eval): add --resume and incremental writing to SWE-bench eval ([`d3f76a95c`](https://github.com/gptme/gptme/commit/d3f76a95c))\n - feat(eval): add --info flag to gptme-eval-swebench for dataset inspection ([#2043](https://github.com/gptme/gptme/issues/2043)) ([`23ed17f66`](https://github.com/gptme/gptme/commit/23ed17f66))\n - feat(eval): add practical31-33 suites — 9 new algorithm tests ([#2036](https://github.com/gptme/gptme/issues/2036)) ([`c13443317`](https://github.com/gptme/gptme/commit/c13443317))\n - feat(eval): add pass-rate trend analysis with sparklines ([#2035](https://github.com/gptme/gptme/issues/2035)) ([`8d5ce76ab`](https://github.com/gptme/gptme/commit/8d5ce76ab))\n - feat(eval): add practical30 suite — decode string, top-k frequent, partition equal subset ([`1647a19c0`](https://github.com/gptme/gptme/commit/1647a19c0))\n - feat(eval): add practical29 suite — word break II, unique paths, rotate array ([#2031](https://github.com/gptme/gptme/issues/2031)) ([`aa0268904`](https://github.com/gptme/gptme/commit/aa0268904))\n - feat(eval): add practical28 suite — minimum path sum, gas station, next permutation ([#2028](https://github.com/gptme/gptme/issues/2028)) ([`7b7f658cc`](https://github.com/gptme/gptme/commit/7b7f658cc))\n - feat(eval): add practical27 suite — house robber, max product subarray, find all anagrams ([#2024](https://github.com/gptme/gptme/issues/2024)) ([`69ddd5dee`](https://github.com/gptme/gptme/commit/69ddd5dee))\n - feat(eval): add practical26 suite — longest palindromic substring, jump game, task scheduler ([#2023](https://github.com/gptme/gptme/issues/2023)) ([`700463af9`](https://github.com/gptme/gptme/commit/700463af9))\n - feat(eval): add practical25 suite — sliding window max, decode ways, meeting rooms ([#2022](https://github.com/gptme/gptme/issues/2022)) ([`1d607a83d`](https://github.com/gptme/gptme/commit/1d607a83d))\n - feat(eval): add practical24 suite — N-Queens, LIS, cycle detection ([#2021](https://github.com/gptme/gptme/issues/2021)) ([`c65e256fc`](https://github.com/gptme/gptme/commit/c65e256fc))\n - feat(eval): add interactive sorting and filtering to HTML leaderboard ([#2018](https://github.com/gptme/gptme/issues/2018)) ([`4a60955c4`](https://github.com/gptme/gptme/commit/4a60955c4))\n - feat(eval): add practical23 suite — LCS, stock cooldown, rotate image ([#2015](https://github.com/gptme/gptme/issues/2015)) ([`eb7f836d6`](https://github.com/gptme/gptme/commit/eb7f836d6))\n - feat(eval): add practical22 suite — trapping rain water, word break, permutations ([#2003](https://github.com/gptme/gptme/issues/2003)) ([`75d788618`](https://github.com/gptme/gptme/commit/75d788618))\n - feat(lessons): support holdout exclusions in auto-include hook ([#1997](https://github.com/gptme/gptme/issues/1997)) ([`bd73c6211`](https://github.com/gptme/gptme/commit/bd73c6211))\n - feat(util): add gptme-util hooks for Claude Code lesson injection ([#1995](https://github.com/gptme/gptme/issues/1995)) ([`9129169cb`](https://github.com/gptme/gptme/commit/9129169cb))\n - feat(eval/swebench): generate predictions JSONL and add official harness integration ([`f18715fe4`](https://github.com/gptme/gptme/commit/f18715fe4))\n - feat(eval): add practical21 suite — Kadane, 0/1 knapsack, flood fill ([#1993](https://github.com/gptme/gptme/issues/1993)) ([`5dfaee0e1`](https://github.com/gptme/gptme/commit/5dfaee0e1))\n - feat(eval): add practical20 suite — Dijkstra, spiral matrix, num islands ([#1988](https://github.com/gptme/gptme/issues/1988)) ([`73075c0bf`](https://github.com/gptme/gptme/commit/73075c0bf))\n - feat(eval): add practical19 suite — edit distance, BST, coin change ([#1987](https://github.com/gptme/gptme/issues/1987)) ([`d6453b629`](https://github.com/gptme/gptme/commit/d6453b629))\n - feat(eval): add practical18 suite — min-stack, knight-moves, histogram-area ([#1986](https://github.com/gptme/gptme/issues/1986)) ([`0177f79ab`](https://github.com/gptme/gptme/commit/0177f79ab))\n - feat(eval): add practical17 suite — LRU cache, interval merge, base converter ([#1982](https://github.com/gptme/gptme/issues/1982)) ([`485f08552`](https://github.com/gptme/gptme/commit/485f08552))\n - feat(webui): custom welcome background with frosted glass effect ([`9d787f357`](https://github.com/gptme/gptme/commit/9d787f357))\n - feat(webui): render short code blocks inline instead of collapsible ([#1977](https://github.com/gptme/gptme/issues/1977)) ([`f7d436d61`](https://github.com/gptme/gptme/commit/f7d436d61))\n - feat(eval): add per-test breakdown and fix OpenRouter model names ([#1961](https://github.com/gptme/gptme/issues/1961)) ([`6362ac6cf`](https://github.com/gptme/gptme/commit/6362ac6cf))\n - feat(eval): add practical16 suite — harder tasks (queue workers, JSON schema, Trie) ([#1960](https://github.com/gptme/gptme/issues/1960)) ([`81a505e7d`](https://github.com/gptme/gptme/commit/81a505e7d))\n - feat(webui): add Attachments tab and 'open in workspace' to workspace explorer ([#1930](https://github.com/gptme/gptme/issues/1930)) ([`2639f8342`](https://github.com/gptme/gptme/commit/2639f8342))\n - feat(eval): add practical15 suite — async, SQL analytics, SQL injection ([#1931](https://github.com/gptme/gptme/issues/1931)) ([`f5b89e336`](https://github.com/gptme/gptme/commit/f5b89e336))\n - feat(webui): collapse intermediate tool steps into expandable summaries ([#1929](https://github.com/gptme/gptme/issues/1929)) ([`077cb24cd`](https://github.com/gptme/gptme/commit/077cb24cd))\n - feat(webui): cleaner assistant surface — borderless, page-native messages ([`d02dc8127`](https://github.com/gptme/gptme/commit/d02dc8127))\n - feat(webui): refresh new chat view ([#1925](https://github.com/gptme/gptme/issues/1925)) ([`ae4df94eb`](https://github.com/gptme/gptme/commit/ae4df94eb))\n - feat(webui): reuse ChatInput for message editing with attachment support ([#1919](https://github.com/gptme/gptme/issues/1919)) ([`c7fa714b1`](https://github.com/gptme/gptme/commit/c7fa714b1))\n - feat(webui): improve file attachment UX with tooltips and lightbox ([#1917](https://github.com/gptme/gptme/issues/1917)) ([`c8054e786`](https://github.com/gptme/gptme/commit/c8054e786))\n - feat(webui): add search to navigation and improve search scope ([#1915](https://github.com/gptme/gptme/issues/1915)) ([`e9ba091b2`](https://github.com/gptme/gptme/commit/e9ba091b2))\n - feat(webui): delete individual messages from conversation ([#1910](https://github.com/gptme/gptme/issues/1910)) ([`8eb231f07`](https://github.com/gptme/gptme/commit/8eb231f07))\n - feat(webui): add dedicated history page with activity calendar ([#1903](https://github.com/gptme/gptme/issues/1903)) ([`66f90c0f5`](https://github.com/gptme/gptme/commit/66f90c0f5))\n - feat(webui): message editing, branch navigation, and tool state restoration ([#1900](https://github.com/gptme/gptme/issues/1900)) ([`d90b7e727`](https://github.com/gptme/gptme/commit/d90b7e727))\n - feat(webui): fix chat UX, add routes, file attachments, and search ([#1894](https://github.com/gptme/gptme/issues/1894)) ([`a9729d562`](https://github.com/gptme/gptme/commit/a9729d562))\n - feat(webui): group conversations by date in sidebar ([#1893](https://github.com/gptme/gptme/issues/1893)) ([`1381dc90d`](https://github.com/gptme/gptme/commit/1381dc90d))\n - feat(webui): add right-click context menu for conversations ([#1891](https://github.com/gptme/gptme/issues/1891)) ([`e393c6b51`](https://github.com/gptme/gptme/commit/e393c6b51))\n - feat(webui): show last message preview in conversation list ([#1890](https://github.com/gptme/gptme/issues/1890)) ([`b4ae4c496`](https://github.com/gptme/gptme/commit/b4ae4c496))\n - feat(webui): show message timestamps on hover ([#1886](https://github.com/gptme/gptme/issues/1886)) ([`884de90d6`](https://github.com/gptme/gptme/commit/884de90d6))\n - feat(webui): add scroll-to-bottom floating button in conversations ([#1884](https://github.com/gptme/gptme/issues/1884)) ([`863da6d0b`](https://github.com/gptme/gptme/commit/863da6d0b))\n - feat(webui): add copy-to-clipboard button on chat messages ([#1883](https://github.com/gptme/gptme/issues/1883)) ([`9b4191068`](https://github.com/gptme/gptme/commit/9b4191068))\n - feat(webui): add conversation export as Markdown and JSON ([#1882](https://github.com/gptme/gptme/issues/1882)) ([`12a3cc497`](https://github.com/gptme/gptme/commit/12a3cc497))\n - feat(webui): add conversation search to command palette ([#1877](https://github.com/gptme/gptme/issues/1877)) ([`f2be6b4c8`](https://github.com/gptme/gptme/commit/f2be6b4c8))\n - feat(webui): add file download button to workspace file preview ([#1876](https://github.com/gptme/gptme/issues/1876)) ([`59c077a99`](https://github.com/gptme/gptme/commit/59c077a99))\n - feat(webui): add file upload support with drag-and-drop ([#1873](https://github.com/gptme/gptme/issues/1873)) ([`744cc1cf0`](https://github.com/gptme/gptme/commit/744cc1cf0))\n - feat(server): add workspace file download endpoint ([#1875](https://github.com/gptme/gptme/issues/1875)) ([`6f753de89`](https://github.com/gptme/gptme/commit/6f753de89))\n - feat(webui): add autocomplete for slash commands and file paths ([#1872](https://github.com/gptme/gptme/issues/1872)) ([`e218432a6`](https://github.com/gptme/gptme/commit/e218432a6))\n - feat(gh): add native issue view handler with linked PRs ([`0a53c166d`](https://github.com/gptme/gptme/commit/0a53c166d))\n - feat(openrouter): add quantization routing preference ([#1864](https://github.com/gptme/gptme/issues/1864)) ([`f0eddbedc`](https://github.com/gptme/gptme/commit/f0eddbedc))\n - feat(openrouter): add user override for data_collection preference ([#1861](https://github.com/gptme/gptme/issues/1861)) ([`50d322370`](https://github.com/gptme/gptme/commit/50d322370))\n - feat(openrouter): add provider routing preferences (require_parameters, data_collection) ([#1859](https://github.com/gptme/gptme/issues/1859)) ([`8596b2f24`](https://github.com/gptme/gptme/commit/8596b2f24))\n - feat(gh): add native issue create and comment commands ([#1852](https://github.com/gptme/gptme/issues/1852)) ([`6b8f475a8`](https://github.com/gptme/gptme/commit/6b8f475a8))\n - feat(plugins): unified plugin registration via entry points ([#1851](https://github.com/gptme/gptme/issues/1851)) ([`461040759`](https://github.com/gptme/gptme/commit/461040759))\n - feat(llm): add plugin-based provider support via entry points ([#1846](https://github.com/gptme/gptme/issues/1846)) ([`152710ec2`](https://github.com/gptme/gptme/commit/152710ec2))\n - feat(gh): add native gh pr merge command ([#1844](https://github.com/gptme/gptme/issues/1844)) ([`0837d40fb`](https://github.com/gptme/gptme/commit/0837d40fb))\n - feat(gh): add gh search issues and gh search prs commands ([#1841](https://github.com/gptme/gptme/issues/1841)) ([`1db97464d`](https://github.com/gptme/gptme/commit/1db97464d))\n - feat(gh): add native `gh issue list` and `gh pr list` commands ([#1839](https://github.com/gptme/gptme/issues/1839)) ([`61147b976`](https://github.com/gptme/gptme/commit/61147b976))\n - feat(gh): add `gh run view` for structured CI failure log extraction ([#1837](https://github.com/gptme/gptme/issues/1837)) ([`7d01905e8`](https://github.com/gptme/gptme/commit/7d01905e8))\n - feat(gh): add gh pr diff command for viewing PR code changes ([#1836](https://github.com/gptme/gptme/issues/1836)) ([`77ea7212f`](https://github.com/gptme/gptme/commit/77ea7212f))\n - feat(gh): support short GitHub references (owner/repo#N, #N, bare N) ([#1835](https://github.com/gptme/gptme/issues/1835)) ([`8b11d7735`](https://github.com/gptme/gptme/commit/8b11d7735))\n - feat(browser): smarter GitHub URL routing + HTML content extraction ([#1825](https://github.com/gptme/gptme/issues/1825)) ([`bbf952b4a`](https://github.com/gptme/gptme/commit/bbf952b4a))\n - feat(llm): add max_tokens parameter to reply() and chat() ([#1828](https://github.com/gptme/gptme/issues/1828)) ([`d57fd0ca4`](https://github.com/gptme/gptme/commit/d57fd0ca4))\n - feat(gh): add `gh issue view` command for structured issue reading ([#1827](https://github.com/gptme/gptme/issues/1827)) ([`704165542`](https://github.com/gptme/gptme/commit/704165542))\n - feat(docs): wire eval leaderboard into docs build ([#1814](https://github.com/gptme/gptme/issues/1814)) ([`d3be51138`](https://github.com/gptme/gptme/commit/d3be51138))\n - feat(context): support @-prefix for file/directory references ([#1813](https://github.com/gptme/gptme/issues/1813)) ([`628453d12`](https://github.com/gptme/gptme/commit/628453d12))\n - feat(eval): add HTML output format for leaderboard ([#1812](https://github.com/gptme/gptme/issues/1812)) ([`c0b6139f8`](https://github.com/gptme/gptme/commit/c0b6139f8))\n - feat(eval): add trend tracking for regression/improvement detection ([#1807](https://github.com/gptme/gptme/issues/1807)) ([`4e9a71cc5`](https://github.com/gptme/gptme/commit/4e9a71cc5))\n - feat(eval): add --json flag for machine-readable eval output ([#1787](https://github.com/gptme/gptme/issues/1787)) ([`2cad452af`](https://github.com/gptme/gptme/commit/2cad452af))\n - feat(cli): add --json flag to tools list and tools info commands ([#1800](https://github.com/gptme/gptme/issues/1800)) ([`64ce57a4d`](https://github.com/gptme/gptme/commit/64ce57a4d))\n - feat(cli): add --json flag to models list and models info ([#1799](https://github.com/gptme/gptme/issues/1799)) ([`06e39131e`](https://github.com/gptme/gptme/commit/06e39131e))\n - feat(cli): add providers test command for connectivity validation ([#1798](https://github.com/gptme/gptme/issues/1798)) ([`40712a4b0`](https://github.com/gptme/gptme/commit/40712a4b0))\n - feat(cli): add --json flag to chats list and chats search commands ([#1797](https://github.com/gptme/gptme/issues/1797)) ([`9e252e829`](https://github.com/gptme/gptme/commit/9e252e829))\n - feat(eval): add practical14 suite — matrix transpose, IPv4 classification, bracket balance ([#1793](https://github.com/gptme/gptme/issues/1793)) ([`497c8a769`](https://github.com/gptme/gptme/commit/497c8a769))\n - feat(eval): add practical13 suite — summary stats, Pascal's triangle, Caesar cipher ([#1788](https://github.com/gptme/gptme/issues/1788)) ([`317a154ac`](https://github.com/gptme/gptme/commit/317a154ac))\n - feat(eval): add practical10 suite — semver sorting, date histogram, TSV-to-CSV ([#1784](https://github.com/gptme/gptme/issues/1784)) ([`8f8eaf6e9`](https://github.com/gptme/gptme/commit/8f8eaf6e9))\n - feat(eval): add practical12 suite — word frequency, Collatz sequences, log-level stats ([`dd1613e95`](https://github.com/gptme/gptme/commit/dd1613e95))\n - feat(eval): add practical11 suite — Roman numerals, run-length encoding, anagram groups ([#1785](https://github.com/gptme/gptme/issues/1785)) ([`b568f4b1d`](https://github.com/gptme/gptme/commit/b568f4b1d))\n - feat(eval): add practical9 suite — env parsing, YAML merge, git log stats ([#1782](https://github.com/gptme/gptme/issues/1782)) ([`c0f6b1f20`](https://github.com/gptme/gptme/commit/c0f6b1f20))\n - feat(prompts): auto-load cross-tool AI instruction files ([#1780](https://github.com/gptme/gptme/issues/1780)) ([`4e719752e`](https://github.com/gptme/gptme/commit/4e719752e))\n - feat(browser): add read_page_text() for interactive page content ([#1772](https://github.com/gptme/gptme/issues/1772)) ([`ddd327389`](https://github.com/gptme/gptme/commit/ddd327389))\n - feat(browser): add page metadata to ARIA snapshot output ([#1771](https://github.com/gptme/gptme/issues/1771)) ([`efff411c0`](https://github.com/gptme/gptme/commit/efff411c0))\n - feat(browser): add interactive browsing — click, fill, scroll ([#1764](https://github.com/gptme/gptme/issues/1764)) ([`4f21623d7`](https://github.com/gptme/gptme/commit/4f21623d7))\n - feat(context): add directory support to include_paths ([#1767](https://github.com/gptme/gptme/issues/1767)) ([`83e3ebf30`](https://github.com/gptme/gptme/commit/83e3ebf30))\n - feat(prompts): include git status in workspace prompt ([#1766](https://github.com/gptme/gptme/issues/1766)) ([`57132d49c`](https://github.com/gptme/gptme/commit/57132d49c))\n - feat(browser): add ARIA accessibility snapshot via snapshot_url() ([#1762](https://github.com/gptme/gptme/issues/1762)) ([`17c2c12c5`](https://github.com/gptme/gptme/commit/17c2c12c5))\n - feat(eval): add --list flag to show available suites and tests ([#1761](https://github.com/gptme/gptme/issues/1761)) ([`7d34bd689`](https://github.com/gptme/gptme/commit/7d34bd689))\n - feat(evals): add model comparison leaderboard ([#1758](https://github.com/gptme/gptme/issues/1758)) ([`e4a5d4833`](https://github.com/gptme/gptme/commit/e4a5d4833))\n - feat(chat): add GPTME_MAX_STEPS and GPTME_CONTEXT_LENGTH env vars ([#1683](https://github.com/gptme/gptme/issues/1683)) ([`02cc7c16a`](https://github.com/gptme/gptme/commit/02cc7c16a))\n - feat(eval): add --eval-module flag for loading external eval specs ([#1727](https://github.com/gptme/gptme/issues/1727)) ([`da477f9a3`](https://github.com/gptme/gptme/commit/da477f9a3))\n - feat(skills): add dependency declarations to SKILL.md frontmatter ([#1722](https://github.com/gptme/gptme/issues/1722)) ([`d8f3bbb2c`](https://github.com/gptme/gptme/commit/d8f3bbb2c))\n - feat(llm): model-dependent break_on_tooluse default ([#1724](https://github.com/gptme/gptme/issues/1724)) ([`955002b39`](https://github.com/gptme/gptme/commit/955002b39))\n - feat(eval): add Claude Code agent for cross-harness evaluation ([#1713](https://github.com/gptme/gptme/issues/1713)) ([`a819c6a70`](https://github.com/gptme/gptme/commit/a819c6a70))\n - feat(eval): add practical8 suite — url-stats, markdown-toc, json-flatten ([#1708](https://github.com/gptme/gptme/issues/1708)) ([`ce5ea8866`](https://github.com/gptme/gptme/commit/ce5ea8866))\n - feat(eval): add practical7 suite — ini-to-json, json-diff, changelog-gen ([#1706](https://github.com/gptme/gptme/issues/1706)) ([`85db2dc17`](https://github.com/gptme/gptme/commit/85db2dc17))\n - feat(prompts): XML-sectioned system prompt when tool_format=xml ([`6939aeba7`](https://github.com/gptme/gptme/commit/6939aeba7))\n - feat(eval): add practical7 suite — ini-to-json, json-diff, changelog-gen ([#1679](https://github.com/gptme/gptme/issues/1679)) ([`31d07dd42`](https://github.com/gptme/gptme/commit/31d07dd42))\n - feat(models): use closest-match heuristic for unknown model metadata ([#1682](https://github.com/gptme/gptme/issues/1682)) ([`35e4aa9de`](https://github.com/gptme/gptme/commit/35e4aa9de))\n - feat(eval): add practical6 suite — csv-analysis, word-frequency, merge-configs ([#1676](https://github.com/gptme/gptme/issues/1676)) ([`c1bb0252a`](https://github.com/gptme/gptme/commit/c1bb0252a))\n - feat(eval): add practical5 suite — rename-function, data-pipeline, regex-scrub ([#1662](https://github.com/gptme/gptme/issues/1662)) ([`76ad24d7e`](https://github.com/gptme/gptme/commit/76ad24d7e))\n - feat(eval): add implement-class and optimize-performance eval tests ([#1644](https://github.com/gptme/gptme/issues/1644)) ([`bad1be942`](https://github.com/gptme/gptme/commit/bad1be942))\n - feat(eval): add practical4 suite — group-by, schedule-overlaps, topo-sort ([#1654](https://github.com/gptme/gptme/issues/1654)) ([`0ac1a46df`](https://github.com/gptme/gptme/commit/0ac1a46df))\n - feat(eval): add practical3 suite — write-tests and sqlite-store tasks ([#1653](https://github.com/gptme/gptme/issues/1653)) ([`80cbf8cff`](https://github.com/gptme/gptme/commit/80cbf8cff))\n - feat(eval): add practical2 suite — sort-and-filter, template-fill, validate-csv ([#1652](https://github.com/gptme/gptme/issues/1652)) ([`47d83e95b`](https://github.com/gptme/gptme/commit/47d83e95b))\n - feat(eval): add practical eval suite with 3 real-world tests ([#1647](https://github.com/gptme/gptme/issues/1647)) ([`120edd060`](https://github.com/gptme/gptme/commit/120edd060))\n - feat(eval): add count-words and json-filter tests to basic suite ([#1661](https://github.com/gptme/gptme/issues/1661)) ([`76277badc`](https://github.com/gptme/gptme/commit/76277badc))\n - feat(util): add context deduplication helper for plugins ([#1656](https://github.com/gptme/gptme/issues/1656)) ([`bfcb30739`](https://github.com/gptme/gptme/commit/bfcb30739))\n - feat(acp): stream tokens from ACP subprocess to server SSE ([#1586](https://github.com/gptme/gptme/issues/1586)) ([`822879134`](https://github.com/gptme/gptme/commit/822879134))\n - feat(server): add /api/config endpoint exposing agent URLs from gptme.toml ([#1657](https://github.com/gptme/gptme/issues/1657)) ([`86510ccec`](https://github.com/gptme/gptme/commit/86510ccec))\n - feat(prompts): distinguish agent instruction files from context files ([#1556](https://github.com/gptme/gptme/issues/1556)) ([`6f44f7742`](https://github.com/gptme/gptme/commit/6f44f7742))\n - feat(release): centralize release pipeline in release.yml ([#1640](https://github.com/gptme/gptme/issues/1640)) ([`0b35e0c1e`](https://github.com/gptme/gptme/commit/0b35e0c1e))\n - feat(lessons): support LLM-judge effectiveness state ([#1636](https://github.com/gptme/gptme/issues/1636)) ([`6f544dfd0`](https://github.com/gptme/gptme/commit/6f544dfd0))\n - feat(cli): add `gptme-util chats rename` command ([#1622](https://github.com/gptme/gptme/issues/1622)) ([`2d77ef1ae`](https://github.com/gptme/gptme/commit/2d77ef1ae))\n - feat(skills): skill marketplace — install, uninstall, validate, init, publish ([#1566](https://github.com/gptme/gptme/issues/1566)) ([`fa6680ee2`](https://github.com/gptme/gptme/commit/fa6680ee2))\n - feat(eval): add debug-type-error and find-and-fix eval tests ([#1614](https://github.com/gptme/gptme/issues/1614)) ([`4347c53ae`](https://github.com/gptme/gptme/commit/4347c53ae))\n - feat(doctor): add MCP server health checks ([#1617](https://github.com/gptme/gptme/issues/1617)) ([`8ba02b92e`](https://github.com/gptme/gptme/commit/8ba02b92e))\n - feat(eval): add generate-cli and extract-function eval tests ([#1615](https://github.com/gptme/gptme/issues/1615)) ([`a21287b06`](https://github.com/gptme/gptme/commit/a21287b06))\n - feat(cli): add `gptme-util chats stats` command ([#1618](https://github.com/gptme/gptme/issues/1618)) ([`53c415e9a`](https://github.com/gptme/gptme/commit/53c415e9a))\n - feat(cli): add tool exclusion with '-' prefix syntax ([#1616](https://github.com/gptme/gptme/issues/1616)) ([`b1907cac0`](https://github.com/gptme/gptme/commit/b1907cac0))\n - feat(cli): add `gptme-util chats clean` command ([#1620](https://github.com/gptme/gptme/issues/1620)) ([`84145d061`](https://github.com/gptme/gptme/commit/84145d061))\n - feat(cli): add `gptme-util chats export` command ([#1619](https://github.com/gptme/gptme/issues/1619)) ([`3abc90f08`](https://github.com/gptme/gptme/commit/3abc90f08))\n - feat(config): add [agent.urls] to AgentConfig for named agent links ([#1621](https://github.com/gptme/gptme/issues/1621)) ([`524208ff5`](https://github.com/gptme/gptme/commit/524208ff5))\n - feat(doctor): add lesson health checks to agent doctor ([#1613](https://github.com/gptme/gptme/issues/1613)) ([`c9a691681`](https://github.com/gptme/gptme/commit/c9a691681))\n - feat(server): add ACP subprocess health monitoring and orphan cleanup ([#1583](https://github.com/gptme/gptme/issues/1583)) ([`6b423fd0f`](https://github.com/gptme/gptme/commit/6b423fd0f))\n - feat(lessons): canonicalize TS lesson lookup keys ([#1610](https://github.com/gptme/gptme/issues/1610)) ([`6f73516ba`](https://github.com/gptme/gptme/commit/6f73516ba))\n - feat(doctor): add version check and Playwright browser check ([#1612](https://github.com/gptme/gptme/issues/1612)) ([`b5310b091`](https://github.com/gptme/gptme/commit/b5310b091))\n - feat(context): show context window utilization in /context command ([#1611](https://github.com/gptme/gptme/issues/1611)) ([`b817e8101`](https://github.com/gptme/gptme/commit/b817e8101))\n - feat(lessons): Thompson sampling effectiveness scoring for hybrid matcher ([#1573](https://github.com/gptme/gptme/issues/1573)) ([`0ee822c76`](https://github.com/gptme/gptme/commit/0ee822c76))\n - feat(models): add GPT-5.4 subscription models ([#1604](https://github.com/gptme/gptme/issues/1604)) ([`aac5582a7`](https://github.com/gptme/gptme/commit/aac5582a7))\n - feat(models): add --available flag and provider status markers to models list ([#1606](https://github.com/gptme/gptme/issues/1606)) ([`b181b450d`](https://github.com/gptme/gptme/commit/b181b450d))\n - feat(subagent): add ACP execution mode for multi-harness subagents ([#1563](https://github.com/gptme/gptme/issues/1563)) ([`809ff65a0`](https://github.com/gptme/gptme/commit/809ff65a0))\n - feat(context): show metadata for binary files instead of silently ignoring ([#1601](https://github.com/gptme/gptme/issues/1601)) ([`6ebae8dbb`](https://github.com/gptme/gptme/commit/6ebae8dbb))\n - feat(read): list directory contents instead of erroring ([#1602](https://github.com/gptme/gptme/issues/1602)) ([`0d789bf6a`](https://github.com/gptme/gptme/commit/0d789bf6a))\n - feat(setup): add bash and zsh shell completions ([#1603](https://github.com/gptme/gptme/issues/1603)) ([`b51575517`](https://github.com/gptme/gptme/commit/b51575517))\n - feat(tauri): first-run setup wizard for new users ([#1596](https://github.com/gptme/gptme/issues/1596)) ([`afa31888d`](https://github.com/gptme/gptme/commit/afa31888d))\n - feat(server): add GPTME_USE_ACP_DEFAULT config for server-side ACP opt-in ([#1580](https://github.com/gptme/gptme/issues/1580)) ([`6752790f4`](https://github.com/gptme/gptme/commit/6752790f4))\n - feat(tauri): add Windows build support ([#1597](https://github.com/gptme/gptme/issues/1597)) ([`799d97770`](https://github.com/gptme/gptme/commit/799d97770))\n - feat(tauri): add monorepo integration — CI, Makefile, and path fixes ([`33cb1c58b`](https://github.com/gptme/gptme/commit/33cb1c58b))\n - feat(eval): add Terminal-Bench (tbench) evaluation module ([#1582](https://github.com/gptme/gptme/issues/1582)) ([`10bcbf6f1`](https://github.com/gptme/gptme/commit/10bcbf6f1))\n - feat(server): add ACP session runtime wrapper for per-session subprocesses ([#1546](https://github.com/gptme/gptme/issues/1546)) ([`7abe6078d`](https://github.com/gptme/gptme/commit/7abe6078d))\n - feat: automated demo capture pipeline (asciinema + screenshots + recordings) ([#1558](https://github.com/gptme/gptme/issues/1558)) ([`0862961cd`](https://github.com/gptme/gptme/commit/0862961cd))\n - feat(eval): new test cases and robustness fixes ([#1559](https://github.com/gptme/gptme/issues/1559)) ([`2016223e0`](https://github.com/gptme/gptme/commit/2016223e0))\n - feat(release): generate structured changelogs for all release types ([#1550](https://github.com/gptme/gptme/issues/1550)) ([`50539e79b`](https://github.com/gptme/gptme/commit/50539e79b))\n - feat(hooks): add CWD_CHANGED hook type for directory change events ([#1539](https://github.com/gptme/gptme/issues/1539)) ([`16e5cd818`](https://github.com/gptme/gptme/commit/16e5cd818))\n - feat(acp): add GptmeAcpClient — gptme as ACP client ([#1536](https://github.com/gptme/gptme/issues/1536)) ([`c1a083281`](https://github.com/gptme/gptme/commit/c1a083281))\n - feat(agent): add `gptme-agent doctor` command for workspace health checks ([#1545](https://github.com/gptme/gptme/issues/1545)) ([`11295882a`](https://github.com/gptme/gptme/commit/11295882a))\n - feat(tools): support loading custom tools from .py files via --tools ([#1540](https://github.com/gptme/gptme/issues/1540)) ([`d66a011e5`](https://github.com/gptme/gptme/commit/d66a011e5))\n - feat(llm): add gptme provider for managed service ([#1529](https://github.com/gptme/gptme/issues/1529)) ([`f6abb75dd`](https://github.com/gptme/gptme/commit/f6abb75dd))\n - feat(hooks): add goose, opencode, amp agent runtime detection ([#1530](https://github.com/gptme/gptme/issues/1530)) ([`5e5f0df10`](https://github.com/gptme/gptme/commit/5e5f0df10))\n - feat(tools): add /tools load command to enable tools mid-conversation ([#1518](https://github.com/gptme/gptme/issues/1518)) ([`02d38a7bd`](https://github.com/gptme/gptme/commit/02d38a7bd))\n - feat(hooks): inject AGENTS.md on working directory change ([#1519](https://github.com/gptme/gptme/issues/1519)) ([`233346545`](https://github.com/gptme/gptme/commit/233346545))\n - feat(hooks): parallel agent awareness via process scanning ([#1505](https://github.com/gptme/gptme/issues/1505)) ([#1509](https://github.com/gptme/gptme/issues/1509)) ([`1b7f817ba`](https://github.com/gptme/gptme/commit/1b7f817ba))\n - feat: enhance --version with extras, providers, health summary ([#1503](https://github.com/gptme/gptme/issues/1503)) ([`67eafafc4`](https://github.com/gptme/gptme/commit/67eafafc4))\n - feat: always load AGENTS.md files (layered: user + project) ([#1511](https://github.com/gptme/gptme/issues/1511)) ([`26da34a77`](https://github.com/gptme/gptme/commit/26da34a77))\n - feat: improve gptme-util discoverability and tool formatting ([#1506](https://github.com/gptme/gptme/issues/1506)) ([`05b07cef4`](https://github.com/gptme/gptme/commit/05b07cef4))\n - feat: cleaner KeyboardInterrupt handling and CI startup benchmarks ([#1502](https://github.com/gptme/gptme/issues/1502)) ([`80c185d46`](https://github.com/gptme/gptme/commit/80c185d46))\n - feat(prompts): skip tool examples for reasoning models ([#1500](https://github.com/gptme/gptme/issues/1500)) ([`50ca19755`](https://github.com/gptme/gptme/commit/50ca19755))\n - feat(eval): add SWE-bench evaluation modules (recovered from [#142](https://github.com/gptme/gptme/issues/142) and [#424](https://github.com/gptme/gptme/issues/424)) ([#1489](https://github.com/gptme/gptme/issues/1489)) ([`7b29e8db0`](https://github.com/gptme/gptme/commit/7b29e8db0))\n - feat: add deep-link OAuth flow for gptme.ai pairing ([#12](https://github.com/gptme/gptme/issues/12)) ([`4e2aadaf3`](https://github.com/gptme/gptme/commit/4e2aadaf3))\n - feat(profiles): add computer-use profile and document --tools +computer ([#1492](https://github.com/gptme/gptme/issues/1492)) ([`60ed23f87`](https://github.com/gptme/gptme/commit/60ed23f87))\n - feat: add Ctrl+V image paste support ([#1379](https://github.com/gptme/gptme/issues/1379)) ([`5de35ffe5`](https://github.com/gptme/gptme/commit/5de35ffe5))\n - feat: add server lifecycle IPC commands ([#11](https://github.com/gptme/gptme/issues/11)) ([`aa38b5e20`](https://github.com/gptme/gptme/commit/aa38b5e20))\n - feat(subagent): add persistent memory per agent profile ([#1466](https://github.com/gptme/gptme/issues/1466)) ([`2fb82ac6f`](https://github.com/gptme/gptme/commit/2fb82ac6f))\n - feat(subagent): add worktree isolation for filesystem-safe subagents ([#1465](https://github.com/gptme/gptme/issues/1465)) ([`15b837654`](https://github.com/gptme/gptme/commit/15b837654))\n - feat(profiles): support markdown files with YAML frontmatter ([#1464](https://github.com/gptme/gptme/issues/1464)) ([`3184df121`](https://github.com/gptme/gptme/commit/3184df121))\n - feat(profiles): add tool name validation ([#1463](https://github.com/gptme/gptme/issues/1463)) ([`210db47db`](https://github.com/gptme/gptme/commit/210db47db))\n - feat(cli): add agent profiles for pre-configured system prompts + tool access ([#1455](https://github.com/gptme/gptme/issues/1455)) ([`64b2015db`](https://github.com/gptme/gptme/commit/64b2015db))\n - feat(acp): consolidate ACP improvements ([`88fd565f2`](https://github.com/gptme/gptme/commit/88fd565f2))\n - feat(acp): enrich listSessions with title, timestamps, cwd filtering ([#1430](https://github.com/gptme/gptme/issues/1430)) ([`4faa85a26`](https://github.com/gptme/gptme/commit/4faa85a26))\n - feat(models): add per-model default tool_format to ModelMeta ([#1417](https://github.com/gptme/gptme/issues/1417)) ([`aa61e3517`](https://github.com/gptme/gptme/commit/aa61e3517))\n - feat(acp): return modes and models in NewSessionResponse ([#1425](https://github.com/gptme/gptme/issues/1425)) ([`eaba19834`](https://github.com/gptme/gptme/commit/eaba19834))\n - feat(cli): add auto_envvar_prefix for GPTME_* env vars ([#1418](https://github.com/gptme/gptme/issues/1418)) ([`d43caf018`](https://github.com/gptme/gptme/commit/d43caf018))\n - feat(acp): persistent sessions with load/list from disk ([#1424](https://github.com/gptme/gptme/issues/1424)) ([`52b855c73`](https://github.com/gptme/gptme/commit/52b855c73))\n - feat(acp): add JSON-RPC protocol logging for debugging ([#1423](https://github.com/gptme/gptme/issues/1423)) ([`e1ac729f0`](https://github.com/gptme/gptme/commit/e1ac729f0))\n - feat: add Windows compatibility ([#528](https://github.com/gptme/gptme/issues/528)) ([`7603eb49e`](https://github.com/gptme/gptme/commit/7603eb49e))\n - feat(acp): send AvailableCommandsUpdate on session start ([#1396](https://github.com/gptme/gptme/issues/1396)) ([`636b9b085`](https://github.com/gptme/gptme/commit/636b9b085))\n - feat(acp): send model and workspace info on session open ([#1392](https://github.com/gptme/gptme/issues/1392)) ([`82b9873f6`](https://github.com/gptme/gptme/commit/82b9873f6))\n - feat(llm): add deprecated field to model metadata ([#1316](https://github.com/gptme/gptme/issues/1316)) ([`1481d059c`](https://github.com/gptme/gptme/commit/1481d059c))\n - feat(llm): add missing OpenAI model metadata (GPT-4.1, o3, o4-mini) ([#1311](https://github.com/gptme/gptme/issues/1311)) ([`dcbbc0a81`](https://github.com/gptme/gptme/commit/dcbbc0a81))\n - feat(reduce): truncate long `<details>` blocks in messages ([#1304](https://github.com/gptme/gptme/issues/1304)) ([`8ff9d9bc0`](https://github.com/gptme/gptme/commit/8ff9d9bc0))\n - feat(server): support slash commands in V2 API ([#1282](https://github.com/gptme/gptme/issues/1282)) ([`60881e487`](https://github.com/gptme/gptme/commit/60881e487))\n - feat(webui): display image attachments and file links in built-in UI ([#1289](https://github.com/gptme/gptme/issues/1289)) ([`5d86aa7d2`](https://github.com/gptme/gptme/commit/5d86aa7d2))\n - feat(server): add server-side elicitation hook for WebUI ([#1295](https://github.com/gptme/gptme/issues/1295)) ([`879a3ad63`](https://github.com/gptme/gptme/commit/879a3ad63))\n - feat(mcp): add elicitation support for user input requests ([#1227](https://github.com/gptme/gptme/issues/1227)) ([`ebf4acbeb`](https://github.com/gptme/gptme/commit/ebf4acbeb))\n - feat(cli): add skills subcommands to gptme-util ([#1287](https://github.com/gptme/gptme/issues/1287)) ([`08c9f0661`](https://github.com/gptme/gptme/commit/08c9f0661))\n - feat(hooks): generalize elicitation with hook-based system ([#1283](https://github.com/gptme/gptme/issues/1283)) ([`b95078dfd`](https://github.com/gptme/gptme/commit/b95078dfd))\n - feat(tools): make read tool useful standalone, disable by default ([#1266](https://github.com/gptme/gptme/issues/1266)) ([`1c05d1f7c`](https://github.com/gptme/gptme/commit/1c05d1f7c))\n - feat(llm): add OpenAI subscription provider support ([#1225](https://github.com/gptme/gptme/issues/1225)) ([`02396e775`](https://github.com/gptme/gptme/commit/02396e775))\n - feat: auto-trigger LLM resume when rule-based compaction stalls ([#1262](https://github.com/gptme/gptme/issues/1262)) ([`3bd7d4ec3`](https://github.com/gptme/gptme/commit/3bd7d4ec3))\n - feat(dirs): add get_workspace() for agent workspace detection ([#1265](https://github.com/gptme/gptme/issues/1265)) ([`a81083c05`](https://github.com/gptme/gptme/commit/a81083c05))\n - feat(cli): add --context flag, --tools validation, and CLI help cleanup ([#1258](https://github.com/gptme/gptme/issues/1258)) ([`b74076d4a`](https://github.com/gptme/gptme/commit/b74076d4a))\n - feat(webui): complete avatar support — cache fix, tooltips, user avatars ([#1252](https://github.com/gptme/gptme/issues/1252)) ([`5ca031a7d`](https://github.com/gptme/gptme/commit/5ca031a7d))\n - feat(webui): display agent avatar in chat messages ([#1215](https://github.com/gptme/gptme/issues/1215)) ([`842c6972f`](https://github.com/gptme/gptme/commit/842c6972f))\n - feat(webui): add show hidden messages setting, move initial system to settings ([#1248](https://github.com/gptme/gptme/issues/1248)) ([`9c68f2567`](https://github.com/gptme/gptme/commit/9c68f2567))\n - feat(webui): multi-backend support with unified view ([#1241](https://github.com/gptme/gptme/issues/1241)) ([`df8df2766`](https://github.com/gptme/gptme/commit/df8df2766))\n - feat(patch): improve multi-hunk support and error messages ([#1245](https://github.com/gptme/gptme/issues/1245)) ([`f110a53eb`](https://github.com/gptme/gptme/commit/f110a53eb))\n - feat(commands): separate /model and /models commands ([#1243](https://github.com/gptme/gptme/issues/1243)) ([`db9f6c572`](https://github.com/gptme/gptme/commit/db9f6c572))\n - feat(config): support config.local.toml for user config ([#1239](https://github.com/gptme/gptme/issues/1239)) ([`edf7aabc9`](https://github.com/gptme/gptme/commit/edf7aabc9))\n - feat(config): add [user] section to user config ([#1238](https://github.com/gptme/gptme/issues/1238)) ([`60b36436f`](https://github.com/gptme/gptme/commit/60b36436f))\n - feat(context): add URL confirmation and content size safeguards ([#1211](https://github.com/gptme/gptme/issues/1211)) ([`717bb20d5`](https://github.com/gptme/gptme/commit/717bb20d5))\n - feat(vision): add PIL.Image support to view_image function ([#1232](https://github.com/gptme/gptme/issues/1232)) ([`328eda834`](https://github.com/gptme/gptme/commit/328eda834))\n - feat(lessons): add default lookup directories for skills ([#1217](https://github.com/gptme/gptme/issues/1217)) ([`f76a80bdd`](https://github.com/gptme/gptme/commit/f76a80bdd))\n - feat(anthropic): enable thinking mode with native tool calling ([#1193](https://github.com/gptme/gptme/issues/1193)) ([`503077803`](https://github.com/gptme/gptme/commit/503077803))\n - feat(telemetry): add GPTME_RUN_TYPE env var support ([#1200](https://github.com/gptme/gptme/issues/1200)) ([`fb3810f6a`](https://github.com/gptme/gptme/commit/fb3810f6a))\n - feat(config): add avatar field to AgentConfig ([#1198](https://github.com/gptme/gptme/issues/1198)) ([`69e6e24ae`](https://github.com/gptme/gptme/commit/69e6e24ae))\n - feat(config): add [plugin.*] namespace for plugin-specific configuration ([#1197](https://github.com/gptme/gptme/issues/1197)) ([`6b5c248e8`](https://github.com/gptme/gptme/commit/6b5c248e8))\n - feat: switch to hook-based tool confirmations ([#1105](https://github.com/gptme/gptme/issues/1105)) ([`a23d89333`](https://github.com/gptme/gptme/commit/a23d89333))\n - feat(agent): detect existing agent workspaces and enhance status command ([#1183](https://github.com/gptme/gptme/issues/1183)) ([`e3bdd2476`](https://github.com/gptme/gptme/commit/e3bdd2476))\n - feat(prompts): add safeguard truncation for context_cmd output ([#1178](https://github.com/gptme/gptme/issues/1178)) ([`ba7cd8776`](https://github.com/gptme/gptme/commit/ba7cd8776))\n - feat: hide messages with hide=true (e.g., auto-included lessons) ([#118](https://github.com/gptme/gptme/issues/118)) ([`6c0df0cad`](https://github.com/gptme/gptme/commit/6c0df0cad))\n - feat(cli): add gptme-onboard wizard for first-run setup ([#1167](https://github.com/gptme/gptme/issues/1167)) ([`d1f45db94`](https://github.com/gptme/gptme/commit/d1f45db94))\n - feat(cli): add gptme-doctor command for system diagnostics ([#1166](https://github.com/gptme/gptme/issues/1166)) ([`5140d8699`](https://github.com/gptme/gptme/commit/5140d8699))\n - feat(cli): add gptme-agent command for unified agent management ([#1159](https://github.com/gptme/gptme/issues/1159)) ([`104f05d78`](https://github.com/gptme/gptme/commit/104f05d78))\n - feat(hooks): add async_mode support for non-blocking hook execution ([#1154](https://github.com/gptme/gptme/issues/1154)) ([`a2b4b70eb`](https://github.com/gptme/gptme/commit/a2b4b70eb))\n - feat(compact): add context file extraction for /compact resume ([#1151](https://github.com/gptme/gptme/issues/1151)) ([`5b7b55993`](https://github.com/gptme/gptme/commit/5b7b55993))\n - feat(browser): improve PDF reading with page limits and vision hints ([#1126](https://github.com/gptme/gptme/issues/1126)) ([`d18b9aa76`](https://github.com/gptme/gptme/commit/d18b9aa76))\n - feat(lessons): session-wide limit and end-of-session statistics ([#1146](https://github.com/gptme/gptme/issues/1146)) ([`4ac795519`](https://github.com/gptme/gptme/commit/4ac795519))\n - feat(mcp): add roots support for defining operational boundaries ([#1144](https://github.com/gptme/gptme/issues/1144)) ([`dd3108cba`](https://github.com/gptme/gptme/commit/dd3108cba))\n - feat(mcp): add MCP prompts support ([#1141](https://github.com/gptme/gptme/issues/1141)) ([`1e585bbf8`](https://github.com/gptme/gptme/commit/1e585bbf8))\n - feat(input): add message queueing support ([#115](https://github.com/gptme/gptme/issues/115)) ([`6f4f3fa68`](https://github.com/gptme/gptme/commit/6f4f3fa68))\n - feat(ui): add auto-accept all option using existing onAuto mechanism ([#103](https://github.com/gptme/gptme/issues/103)) ([`c9b789e95`](https://github.com/gptme/gptme/commit/c9b789e95))\n - feat(auth): derive exchange URL from configuration (Option B) ([#111](https://github.com/gptme/gptme/issues/111)) ([`42d7b3db7`](https://github.com/gptme/gptme/commit/42d7b3db7))\n - feat(mcp): add MCP resources support ([#1109](https://github.com/gptme/gptme/issues/1109)) ([`6d3bd2be5`](https://github.com/gptme/gptme/commit/6d3bd2be5))\n - feat: add URI support in Message.files for URLs and MCP resources ([#1118](https://github.com/gptme/gptme/issues/1118)) ([`34c6afef7`](https://github.com/gptme/gptme/commit/34c6afef7))\n - feat: add file autocomplete for @ mentions ([#110](https://github.com/gptme/gptme/issues/110)) ([`8465902d8`](https://github.com/gptme/gptme/commit/8465902d8))\n - feat: enable auto-reconnect for web environments ([#109](https://github.com/gptme/gptme/issues/109)) ([`1fa2ca113`](https://github.com/gptme/gptme/commit/1fa2ca113))\n - feat(auth): implement auth code exchange flow ([#108](https://github.com/gptme/gptme/issues/108)) ([`8caf1d3ec`](https://github.com/gptme/gptme/commit/8caf1d3ec))\n - feat(browser): add PDF support using pypdf ([#1120](https://github.com/gptme/gptme/issues/1120)) ([`2c5086dcf`](https://github.com/gptme/gptme/commit/2c5086dcf))\n - feat(anthropic): add web search block handling ([#1122](https://github.com/gptme/gptme/issues/1122)) ([`8c403ab32`](https://github.com/gptme/gptme/commit/8c403ab32))\n - feat(anthropic): add native web search support ([#723](https://github.com/gptme/gptme/issues/723)) ([`dda13a54d`](https://github.com/gptme/gptme/commit/dda13a54d))\n - feat(prompts): add skills summary to system prompt ([#1107](https://github.com/gptme/gptme/issues/1107)) ([`f65b0b5ba`](https://github.com/gptme/gptme/commit/f65b0b5ba))\n - feat(gh): truncate verbose comment bodies to reduce token usage ([#1103](https://github.com/gptme/gptme/issues/1103)) ([`fcfe48aad`](https://github.com/gptme/gptme/commit/fcfe48aad))\n - feat(gh): include comment IDs in PR review output ([#1101](https://github.com/gptme/gptme/issues/1101)) ([`5a1850b3d`](https://github.com/gptme/gptme/commit/5a1850b3d))\n - feat(lessons): add wildcard and regex pattern support for keyword matching ([#1093](https://github.com/gptme/gptme/issues/1093)) ([`12dae0b8d`](https://github.com/gptme/gptme/commit/12dae0b8d))\n - feat(server): add GPTME_DEBUG_ERRORS for verbose error messages in dev mode ([#1096](https://github.com/gptme/gptme/issues/1096)) ([`e9bba532f`](https://github.com/gptme/gptme/commit/e9bba532f))\n - feat(hooks): add cache_awareness hook for centralized cache state tracking ([#1074](https://github.com/gptme/gptme/issues/1074)) ([`88c38de31`](https://github.com/gptme/gptme/commit/88c38de31))\n - feat(llm): add retry logic for OpenAI API transient errors ([#1067](https://github.com/gptme/gptme/issues/1067)) ([`91811070f`](https://github.com/gptme/gptme/commit/91811070f))\n - feat(hooks): add CACHE_INVALIDATED hook type for cache-aware plugins ([#1070](https://github.com/gptme/gptme/issues/1070)) ([`04b9f6940`](https://github.com/gptme/gptme/commit/04b9f6940))\n - feat(autocompact): add semantic patterns for value-aware retention ([#1061](https://github.com/gptme/gptme/issues/1061)) ([`34369e203`](https://github.com/gptme/gptme/commit/34369e203))\n - feat: add session cost summary on exit ([#1037](https://github.com/gptme/gptme/issues/1037)) ([`856617adc`](https://github.com/gptme/gptme/commit/856617adc))\n - feat(lessons): deduplicate lessons by resolved path to handle symlinks ([#1026](https://github.com/gptme/gptme/issues/1026)) ([`1a5701125`](https://github.com/gptme/gptme/commit/1a5701125))\n - feat(autocompact): add Master Context Architecture for byte-range recovery ([#1020](https://github.com/gptme/gptme/issues/1020)) ([`c82701c77`](https://github.com/gptme/gptme/commit/c82701c77))\n - feat(commands): add /skills command for browsing skills and lessons ([#1014](https://github.com/gptme/gptme/issues/1014)) ([`ddec87163`](https://github.com/gptme/gptme/commit/ddec87163))\n - feat(codeblock): support quad+ backticks for nested markdown (Issue [#1005](https://github.com/gptme/gptme/issues/1005)) ([#1009](https://github.com/gptme/gptme/issues/1009)) ([`fe24f45cb`](https://github.com/gptme/gptme/commit/fe24f45cb))\n - feat: add extensible command argument completion system ([#1010](https://github.com/gptme/gptme/issues/1010)) ([`ce912dae1`](https://github.com/gptme/gptme/commit/ce912dae1))\n - feat(subagent): add structured delegation template for clear task handoff ([#997](https://github.com/gptme/gptme/issues/997)) ([`aea670e9b`](https://github.com/gptme/gptme/commit/aea670e9b))\n - feat(skills): add codebase classification skill ([`56a9d442e`](https://github.com/gptme/gptme/commit/56a9d442e))\n - feat(lessons): support Anthropic SKILL.md format matching ([#1001](https://github.com/gptme/gptme/issues/1001)) ([`e63c98068`](https://github.com/gptme/gptme/commit/e63c98068))\n - feat(complete): add todo-based continuation enforcer ([#996](https://github.com/gptme/gptme/issues/996)) ([`739691bf8`](https://github.com/gptme/gptme/commit/739691bf8))\n - feat: improve cost awareness UX and add prompt caching for OpenRouter ([#990](https://github.com/gptme/gptme/issues/990)) ([`1ff94d260`](https://github.com/gptme/gptme/commit/1ff94d260))\n - feat(eval): implement DockerGPTMeEnv for Docker-isolated gptme execution ([#988](https://github.com/gptme/gptme/issues/988)) ([`1c61f0ed4`](https://github.com/gptme/gptme/commit/1c61f0ed4))\n - feat(context): implement AdaptiveCompressor for Phase 3.1 Week 3-4 ([#937](https://github.com/gptme/gptme/issues/937)) ([`d8bc11979`](https://github.com/gptme/gptme/commit/d8bc11979))\n - feat(cli): add context-mode, context-include, output-schema flags for subprocess mode ([#987](https://github.com/gptme/gptme/issues/987)) ([`1aac45965`](https://github.com/gptme/gptme/commit/1aac45965))\n - feat: add shared executor module for ACP/server code reuse ([#984](https://github.com/gptme/gptme/issues/984)) ([`6a4756a29`](https://github.com/gptme/gptme/commit/6a4756a29))\n - feat: add parallel tool execution support ([#985](https://github.com/gptme/gptme/issues/985)) ([`7d61dc9db`](https://github.com/gptme/gptme/commit/7d61dc9db))\n - feat(acp): add Phase 2 tool call reporting and permissions ([#979](https://github.com/gptme/gptme/issues/979)) ([`8f5cc107c`](https://github.com/gptme/gptme/commit/8f5cc107c))\n - feat(subagent): add Phase 1 async enhancements (subprocess mode, hook notifications, batch) ([#962](https://github.com/gptme/gptme/issues/962)) ([`431c7c171`](https://github.com/gptme/gptme/commit/431c7c171))\n - feat(acp): add Agent Client Protocol support (Phase 1) ([#978](https://github.com/gptme/gptme/issues/978)) ([`75d94dd34`](https://github.com/gptme/gptme/commit/75d94dd34))\n - feat(cli): add /clear command to clear terminal screen ([#968](https://github.com/gptme/gptme/issues/968)) ([`e0168dbfe`](https://github.com/gptme/gptme/commit/e0168dbfe))\n - feat(models): add ollama/local model discovery to /model command ([#960](https://github.com/gptme/gptme/issues/960)) ([`4512d3237`](https://github.com/gptme/gptme/commit/4512d3237))\n - feat(cli): add /delete command to remove conversations (Issue [#956](https://github.com/gptme/gptme/issues/956)) ([#959](https://github.com/gptme/gptme/issues/959)) ([`0563366bd`](https://github.com/gptme/gptme/commit/0563366bd))\n - feat(tasks): add target type filters to task list ([#101](https://github.com/gptme/gptme/issues/101)) ([`066769c34`](https://github.com/gptme/gptme/commit/066769c34))\n - feat(ui): improve error handling for conversation creation ([#95](https://github.com/gptme/gptme/issues/95)) ([`cc3f9c89d`](https://github.com/gptme/gptme/commit/cc3f9c89d))\n - feat(ui): add CommandPalette component with comprehensive tests ([#98](https://github.com/gptme/gptme/issues/98)) ([`48ca8b2f2`](https://github.com/gptme/gptme/commit/48ca8b2f2))\n - feat: add markdown preview to file explorer with accessibility improvements ([#94](https://github.com/gptme/gptme/issues/94)) ([`e47a7e152`](https://github.com/gptme/gptme/commit/e47a7e152))\n - feat: redesign navigation with unified collapsible sidebar ([#89](https://github.com/gptme/gptme/issues/89)) ([`b7e267897`](https://github.com/gptme/gptme/commit/b7e267897))\n - feat: add ExamplesSection component with more examples modal ([`3717e2e4b`](https://github.com/gptme/gptme/commit/3717e2e4b))\n - feat: redesign settings modal ([`a82549a55`](https://github.com/gptme/gptme/commit/a82549a55))\n - feat: add setting to configure default code block open state ([`ca90c78de`](https://github.com/gptme/gptme/commit/ca90c78de))\n - feat: implement auto-naming for conversations ([#84](https://github.com/gptme/gptme/issues/84)) ([`00aa50695`](h\n\n*(Changelog truncated — see the [full release notes in the docs](https://gptme.org/docs/changelog.html) or the [full diff](https://github.com/gptme/gptme/compare/v0.31.0...v0.32.0))*\n",
+        "assets_count": 14,
+        "url": "https://github.com/gptme/gptme/releases/tag/v0.32.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ErikBjare/gptme v0.32.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "version": "v0.18.2",
+        "author": "seratch",
+        "date": "2026-07-11",
+        "summary": "## What's Changed\r\n\r\n* feat: support GPT-5.6 request controls by @seratch in https://github.com/openai/openai-agents-python/pull/3794\r\n* feat: add hosted multi-agent beta support by @seratch in https://github.com/openai/openai-agents-python/pull/3788\r\n* fix(sandbox): own Daytona PTY worker tasks by @seratch in https://github.com/openai/openai-agents-python/pull/3778\r\n* fix(realtime): enqueue callback errors synchronously by @seratch in https://github.com/openai/openai-agents-python/pull/3777\r\n* fix(realtime): use monotonic playback timing by @seratch in https://github.com/openai/openai-agents-python/pull/3776\r\n* fix(sandbox): own Docker deferred cleanup tasks by @seratch in https://github.com/openai/openai-agents-python/pull/3779\r\n* fix(sandbox): own Unix PTY fd close tasks by @seratch in https://github.com/openai/openai-agents-python/pull/3780\r\n* fix(litellm): surface content-filter refusals instead of an empty turn by @seanturner83 in https://github.com/openai/openai-agents-python/pull/3769\r\n* refactor(sandbox): share core PTY output collection by @seratch in https://github.com/openai/openai-agents-python/pull/3796\r\n* refactor(sandbox): share extension PTY output collection by @seratch in https://github.com/openai/openai-agents-python/pull/3797\r\n* refactor(sandbox): share E2B rclone setup by @seratch in https://github.com/openai/openai-agents-python/pull/3798\r\n* refactor(sandbox): share Runloop rclone setup by @seratch in https://github.com/openai/openai-agents-python/pull/3799\r\n* refactor: share retry error metadata extraction by @seratch in https://github.com/openai/openai-agents-python/pull/3800\r\n* refactor: share retry-after parsing by @seratch in https://github.com/openai/openai-agents-python/pull/3801\r\n\r\n### Documentation & Other Changes\r\n\r\n* fix: serialize model-backed rollout interruptions as dicts by @Otis0408 in https://github.com/openai/openai-agents-python/pull/3790\r\n* chore: enable G004 logging lint rule by @seratch in https://github.com/openai/openai-agents-python/pull/3802\r\n* chore: enable RUF012 for runtime source by @seratch in https://github.com/openai/openai-agents-python/pull/3803\r\n* chore: remove unused noqa directives by @seratch in https://github.com/openai/openai-agents-python/pull/3804\r\n* chore: exempt OpenAI package from dependency cooldown by @seratch in https://github.com/openai/openai-agents-python/pull/3792\r\n* Release 0.18.2 by @github-actions[bot] in https://github.com/openai/openai-agents-python/pull/3805\r\n\r\n## New Contributors\r\n* @Otis0408 made their first contribution in https://github.com/openai/openai-agents-python/pull/3790\r\n* @seanturner83 made their first contribution in https://github.com/openai/openai-agents-python/pull/3769\r\n\r\n**Full Changelog**: https://github.com/openai/openai-agents-python/compare/v0.18.1...v0.18.2",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-agents-python/releases/tag/v0.18.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/openai-agents-python v0.18.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.26.0",
+        "author": "mikeldking",
+        "date": "2026-07-11",
+        "summary": "## [17.26.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.25.0...arize-phoenix-v17.26.0) (2026-07-11)\n\n\n### Features\n\n* clarify forced tool choice menus ([#14279](https://github.com/Arize-ai/phoenix/issues/14279)) ([ef40f5e](https://github.com/Arize-ai/phoenix/commit/ef40f5e489f20f367ff11817098143c7f15be2bd))\n\n\n### Bug Fixes\n\n* make span status code filters case insensitive ([#14287](https://github.com/Arize-ai/phoenix/issues/14287)) ([d6b3740](https://github.com/Arize-ai/phoenix/commit/d6b3740c3fe753862562da5aa216155fcb7f9ce0))\n* **ui:** add selected spans to newly created dataset ([#14276](https://github.com/Arize-ai/phoenix/issues/14276)) ([5da578b](https://github.com/Arize-ai/phoenix/commit/5da578bbc5dba55fecb9ae07752ea99a21636d2e))\n* **ui:** constrain action-bar dataset picker height ([#14280](https://github.com/Arize-ai/phoenix/issues/14280)) ([b0e718b](https://github.com/Arize-ai/phoenix/commit/b0e718bbb6ce55554b1bddde7e31f35cff7188a8))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.26.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.26.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v17.25.0",
+        "author": "mikeldking",
+        "date": "2026-07-11",
+        "summary": "## [17.25.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v17.24.0...arize-phoenix-v17.25.0) (2026-07-11)\n\n\n### Features\n\n* **agents:** approval-gated annotation config tools + span-coding for PXI ([#13866](https://github.com/Arize-ai/phoenix/issues/13866)) ([189271b](https://github.com/Arize-ai/phoenix/commit/189271b38ff6dc7be6d90acd92089ea07ccafa0d))\n* phoenix env file ([#14188](https://github.com/Arize-ai/phoenix/issues/14188)) ([c0ab6a9](https://github.com/Arize-ai/phoenix/commit/c0ab6a9715bd8050094f8ac4135c7fa5d556c453))\n* **ui:** add Metrics tab to the dataset page with experiment charts ([#14106](https://github.com/Arize-ai/phoenix/issues/14106)) ([2c00ee5](https://github.com/Arize-ai/phoenix/commit/2c00ee52cd23521005e726103fdbd249f8d6ada1))\n* **ui:** refine experiment metric charts ([#14208](https://github.com/Arize-ai/phoenix/issues/14208)) ([f1eb3b8](https://github.com/Arize-ai/phoenix/commit/f1eb3b8fa6452582a556fb4102c13ffa68292a47))\n\n\n### Bug Fixes\n\n* **ui:** keep filters applied on project tables during live streaming refresh ([#14217](https://github.com/Arize-ai/phoenix/issues/14217)) ([fd6ce19](https://github.com/Arize-ai/phoenix/commit/fd6ce19eb33c123cf99e2269d709db032660500d))\n* **ui:** make traces kind column resizable ([#14201](https://github.com/Arize-ai/phoenix/issues/14201)) ([b691946](https://github.com/Arize-ai/phoenix/commit/b6919469c8e6fbdb71e380fb5576a948319ea8e2))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v17.25.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v17.25.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/groq@3.0.51",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "summary": "### Patch Changes\n\n- cee7e45: fix (provider/groq): surface prompt cache reads in usage\n\n  `convertGroqUsage` accepted `prompt_tokens_details.cached_tokens` but never read it, so cache hits were reported as `cacheRead: undefined` and the entire prompt was counted as `noCache`. Groq's implicit prompt caching now surfaces as `usage.cachedInputTokens` (mapped to `cacheRead`, subtracted from `noCache`). Groq has no cache-creation charge, so `cacheWrite` remains undefined.",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/groq%403.0.51",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/groq@3.0.51 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/groq@4.0.8",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "summary": "### Patch Changes\n\n-   23ca4c9: fix (provider/groq): surface prompt cache reads in usage\n\n    `convertGroqUsage` accepted `prompt_tokens_details.cached_tokens` but never read it, so cache hits were reported as `cacheRead: undefined` and the entire prompt was counted as `noCache`. Groq's implicit prompt caching now surfaces as `usage.cachedInputTokens` (mapped to `cacheRead`, subtracted from `noCache`). Groq has no cache-creation charge, so `cacheWrite` remains undefined.\n",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/groq%404.0.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/ai @ai-sdk/groq@4.0.8 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/skills",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "block/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/ai-chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
+}
