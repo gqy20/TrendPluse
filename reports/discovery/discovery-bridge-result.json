@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-07-12-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-07-13-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -11,19 +11,11 @@
       "category": "Agentic AI 核心框架"
     },
     {
-      "repo": "Leonxlnx/taste-skill",
-      "category": "Agentic AI 核心框架"
-    },
-    {
       "repo": "Mintplex-Labs/anything-llm",
       "category": "Agentic AI 核心框架"
     },
     {
       "repo": "NousResearch/hermes-agent",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "TauricResearch/TradingAgents",
       "category": "Agentic AI 核心框架"
     },
     {
@@ -44,6 +36,14 @@
     },
     {
       "repo": "hiyouga/LlamaFactory",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "infiniflow/ragflow",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "jeecgboot/JeecgBoot",
       "category": "Agentic AI 核心框架"
     }
   ],
