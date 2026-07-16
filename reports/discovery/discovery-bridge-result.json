@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-07-15-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-07-16-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -8,6 +8,10 @@
   "selected_items": [
     {
       "repo": "DietrichGebert/ponytail",
+      "category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "Leonxlnx/taste-skill",
       "category": "Agentic AI 核心框架"
     },
     {
@@ -40,10 +44,6 @@
     },
     {
       "repo": "hiyouga/LlamaFactory",
-      "category": "Agentic AI 核心框架"
-    },
-    {
-      "repo": "infiniflow/ragflow",
       "category": "Agentic AI 核心框架"
     }
   ],
