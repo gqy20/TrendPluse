@@ -1,0 +1,948 @@
+{
+  "date": "2026-07-19",
+  "summary_brief": "今日 (2026-07-19) 发现 0 个 Commit 信号，20 个 Release 信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 20,
+    "pr_count": 0,
+    "commit_count": 0,
+    "release_count": 20,
+    "unique_repos": 11,
+    "total_prs_analyzed": 0,
+    "total_releases": 20,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 349,
+    "total_releases_analyzed": 20,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 349,
+    "active_repos_count": 31,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "shakkernerd",
+          "zhangguiping-xydt",
+          "IWhatsskill",
+          "mushuiyu886"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 45,
+        "top_contributors": [
+          "mikeldking",
+          "yfrigui2",
+          "RogerHYang"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 31,
+        "top_contributors": [
+          "charliemarsh-oai",
+          "nhamidi-oai",
+          "owenlin0",
+          "pakrym-oai",
+          "btraut-openai"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 24,
+        "top_contributors": [
+          "DaoyuanLi2816",
+          "18062706139fcz",
+          "AnnaSuSu",
+          "luojiyin1987",
+          "chuenchen309"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 18,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "fwang",
+          "usrnk1",
+          "jerome-benoit",
+          "simonklee"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 16,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 12,
+        "top_contributors": [
+          "saoudrizwan",
+          "dominiccooney"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 12,
+        "top_contributors": [
+          "Veykril",
+          "cppcoffee",
+          "reflectronic",
+          "miguelraz",
+          "peakxy"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 11,
+        "top_contributors": [
+          "ashpreetbedi",
+          "alexander-schneider",
+          "chuck-duplocloud",
+          "Mustafa-Esoofally",
+          "psinojiya"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 11,
+        "top_contributors": [
+          "shanselman",
+          "anagnorisis2peripeteia",
+          "calebeden",
+          "andyeskridge",
+          "bkudiess"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 11,
+        "top_contributors": [
+          "anthonyshew"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 10,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 8,
+        "top_contributors": [
+          "KillianLucas"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 6,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 5,
+        "top_contributors": [
+          "Patrick-Erichsen",
+          "nancymx-dev"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 5,
+        "top_contributors": [
+          "seratch",
+          "AAliKKhan"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 3,
+        "top_contributors": [
+          "he-yufeng",
+          "eavanvalkenburg"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 2,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 2,
+        "top_contributors": [
+          "sergioperezcheco",
+          "lyzno1"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 2,
+        "top_contributors": [
+          "filipkujawa",
+          "zelinewang"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 2,
+        "top_contributors": [
+          "github-actions[bot]",
+          "allenzhou101"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 2,
+        "top_contributors": [
+          "ctate"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 1,
+        "top_contributors": [
+          "malhotra5"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 1,
+        "top_contributors": [
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "JainamShah-22"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 1,
+        "top_contributors": [
+          "nick-hollon-lc"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 1,
+        "top_contributors": [
+          "SebTardif"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 1,
+        "top_contributors": [
+          "renovate[bot]"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 1,
+        "top_contributors": [
+          "microsoft-playwright-automation[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 20,
+    "unique_repos_count": 11,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.215",
+        "author": "ashwin-ant",
+        "date": "2026-07-19",
+        "summary": "## What's changed\n\n- Claude no longer runs the `/verify` and `/code-review` skills on its own; invoke them with `/verify` or `/code-review` when you want them\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.123",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.215\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.123/\n\n```bash\npip install claude-agent-sdk==0.2.123\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.123",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-python v0.2.123 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.215",
+        "author": "ashwin-ant",
+        "date": "2026-07-19",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.215\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.215\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.215\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.215\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.215\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.178",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.178",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.178",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.178 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.46",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Fixed out-of-credits detection so the CLI reliably recognizes the Cline API's real `insufficient_credits` (402) error and shows the \"add credits\" card instead of a generic error\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.45...cli-v3.0.46\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.46",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.46 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.45",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Smaller install: the Claude Code and Codex providers are now optional and loaded on demand, cutting `npm i -g cline` from ~640MB to ~285MB (from SDK v0.0.65)\n- Kimi K3 is now available as a ClinePass model (from SDK v0.0.65)\n- Runs now retry once after refreshing expired OAuth credentials (from SDK v0.0.65)\n- Team runs: the spawn tool is no longer exposed to teammates, and errored teammate runs now report as failed instead of completed (from SDK v0.0.65)\n- Hub status output now includes version numbers\n- Updated the bundled model catalog (from SDK v0.0.65)\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.44...cli-v3.0.45\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.45 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "sdk/sdk/v0.0.65",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Claude Code and Codex provider SDKs are now optional peer dependencies loaded on demand, dramatically cutting install size\n- Added Kimi K3 to the bundled ClinePass model fallback\n- Runs now retry once after refreshing expired OAuth credentials\n- Team runs: the spawn tool is no longer exposed to teammate agents\n- Team runs: errored teammate runs now report as failed instead of completed\n- Improved shell-command parsing to fix a Windows shell mismatch\n- New `@cline/ui` agent chat components with Storybook and npm packaging\n- Updated the bundled model catalog\n\n**Full Changelog**: https://github.com/cline/cline/compare/sdk/sdk/v0.0.64...sdk/sdk/v0.0.65\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/sdk/sdk/v0.0.65",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline sdk/sdk/v0.0.65 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v19.2.0",
+        "author": "mikeldking",
+        "date": "2026-07-19",
+        "summary": "## [19.2.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v19.1.0...arize-phoenix-v19.2.0) (2026-07-19)\n\n\n### Features\n\n* **cli:** improve server startup banner ([3904c49](https://github.com/Arize-ai/phoenix/commit/3904c49d04422faf7ca37858790ad8c6073b6f11))\n* **server:** show dev tooling info in boot banner ([7e36376](https://github.com/Arize-ai/phoenix/commit/7e36376fefd318b89c91fe97151cd9f82cc6176f))\n* **settings:** add Antigravity and OpenCode MCP client instructions ([8180357](https://github.com/Arize-ai/phoenix/commit/8180357d838667f01e9deb5bb7d4ba5bb3b30a27))\n\n\n### Bug Fixes\n\n* **app:** inline codemirror-json-schema in vitest to fix ESM resolution ([dc0d641](https://github.com/Arize-ai/phoenix/commit/dc0d64127bcee9970f60db149bc5ec13b6f37c78))\n* **cli:** sanitize startup banner on windows ([1474c9b](https://github.com/Arize-ai/phoenix/commit/1474c9b4615d99c18cf3a3f439301e2e9e756fac))\n* **playground:** assume Responses API when unspecified ([3476db9](https://github.com/Arize-ai/phoenix/commit/3476db9aa7d9132224ce9cf32fe5476bd2d7eabf))\n* **playground:** default OpenAI models to Responses API ([3a8f361](https://github.com/Arize-ai/phoenix/commit/3a8f36145df032ae4895b5d776ae4b2b726291e1))\n* **playground:** default to gpt-5.6-sol ([dc1258f](https://github.com/Arize-ai/phoenix/commit/dc1258f950e4a42c2a8c3316a1db06fb143458b2))\n* **settings:** adapt MCP auth wording when authentication is disabled ([1e9132a](https://github.com/Arize-ai/phoenix/commit/1e9132a654d7a8c44a746887ce9ad45a36a27fb0))\n* **settings:** adapt MCP client instructions when authentication is disabled ([93ac955](https://github.com/Arize-ai/phoenix/commit/93ac955b9e80d19207dfb23a457514dafd41e06d))\n* **settings:** gate admin tabs behind authentication ([518e909](https://github.com/Arize-ai/phoenix/commit/518e909d88745bd0ff67540ea9fa628632463c5a))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v19.2.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v19.2.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "version": "v0.32.3",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "### New Features\n\n- Added **HAR response body capture** with text bodies embedded by default and configurable `all`, `text`, and `none` content modes across the CLI and MCP surfaces (#1578)\n- Added a **derive-client skill** for recording browser traffic and generating reusable API clients from HAR request and response data (#1578)\n\n### Contributors\n\n- @ctate\n",
+        "assets_count": 7,
+        "url": "https://github.com/vercel-labs/agent-browser/releases/tag/v0.32.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel-labs/agent-browser v0.32.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.214",
+        "author": "ashwin-ant",
+        "date": "2026-07-18",
+        "summary": "## What's changed\n\n- Fixed single-segment `dir/**` allow rules like `Edit(src/**)` auto-approving writes to nested `dir/` directories anywhere in the tree instead of only `<cwd>/dir`\n- Fixed a permission-check bypass affecting commands run in Windows PowerShell 5.1 sessions\n- Fixed Bash permission checks to fail closed on file-descriptor redirect forms that bash parses differently than the permission analyzer\n- Fixed Bash permission checks misjudging very long commands — commands over 10,000 characters now always prompt instead of running automatically\n- Fixed Bash permission checks treating zsh variable subscripts and modifiers in `[[ ]]` comparisons as inert text — these commands now prompt for approval\n- Fixed Bash permission checks to no longer auto-approve certain `help` and `man` commands that could run unsafe options, command substitutions, or backslash paths\n- Fixed permission prompts on remote sessions that could proceed before the local confirmation dialog\n- Added the EndConversation tool: Claude can end sessions with highly abusive users or jailbreak attempts, as on claude.ai since 2025 — see https://www.anthropic.com/research/end-subset-conversations\n- Added a periodic progress heartbeat for long-running tool calls that previously went silent\n- Added an ISO `modified` timestamp to memory file frontmatter\n- Added `message.uuid`, `client_request_id`, and `tool_source` attributes to OpenTelemetry log events for message-level correlation and tool provenance\n- Added `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` to configure the 60 KB truncation limit on OpenTelemetry content attributes\n- Added reasoning effort to the `subagentStatusLine` payload, so custom agent rows can render model and effort\n- Added permission prompts for `docker` commands (including the Podman `docker` shim) carrying daemon-redirect flags (`--url`, `--connection`, `--identity`, and Podman's remote mode) that previously ran without one\n- Fixed a crash when a GrowthBook feature evaluates to null, and a bug where a malformed flag payload could wipe the cached feature flags\n- Fixed Bash tool killing the Claude session when a `pkill -f` pattern accidentally matched the CLI's own process (Linux)\n- Fixed unbounded memory growth when `--settings` points at a device file or multi-GB file; oversized (>2 MiB) settings files now fail at startup with a clear error\n- Fixed streaming turns failing with \"Socket is closed\" behind corporate proxies on Windows\n- Fixed stream-json output truncation at exit for slow-reading SDK/pipeline consumers; the exit drain now scales with queued bytes instead of a flat 2s cap\n- Fixed scheduled tasks refusing their own configured prompt as untrusted input — the fired prompt is now delivered as the session's assigned task\n- Fixed PowerShell tool commands hanging until timeout when a child process waited on standard input (Windows)\n- Fixed Python scripts under the PowerShell tool crashing with UnicodeDecodeError when reading non-UTF-8 data from standard input (Windows)\n- Fixed Python scripts run via the PowerShell tool crashing with UnicodeEncodeError on non-ASCII output, and PowerShell 7 error messages containing raw ANSI escape sequences (Windows)\n- Fixed the PowerShell tool reporting `where.exe`, `fc.exe`, and `diff.exe` as errors when they return a valid negative answer (Windows)\n- Fixed `>` and `>>` under the PowerShell tool on Windows PowerShell 5.1 writing UTF-16LE files that other tools couldn't read as UTF-8\n- Fixed a displaced background daemon deleting its successor's control socket on shutdown, which made the next client kill the healthy replacement daemon\n- Fixed background sessions parked with `←` or `/background` and left idle keeping the background daemon and a worker process alive indefinitely\n- Fixed completed background sessions being impossible to remove via `claude rm` or the agent view once the background service had gone idle\n- Fixed background sessions dispatched from a non-git folder being impossible to delete from the agents view\n- Fixed reopening a stopped background session failing to restore its saved conversation when an unreadable folder exists in the session store\n- Fixed the Remote Control \"session ready\" push notification firing for sessions where Remote Control was not explicitly enabled\n- Fixed `/install-github-app` and the `/mcp` settings menu being blocked in agent-view sessions — they're now refused only in background sessions with no terminal attached\n- Fixed plugins enabled via the `--settings` CLI flag not loading (regression since v2.1.181)\n- Fixed feature flags going stale in long-running sessions after the OAuth token rotates\n- Fixed `/ultrareview` refusing to run in repos with no merge base — it now offers to review all tracked files\n- Fixed `claude update` and `claude doctor` hanging silently, and the `/status` System diagnostics section going blank, when a shell-config path is a directory\n- Fixed memory frontmatter values being silently truncated at an inline `#` when memory files are saved\n- Fixed session cost and token telemetry double-counting on streams that emit multiple cumulative `message_delta` frames\n- Fixed a spurious \"check your network\" warning that appeared while the advisor was thinking\n- Fixed hooks with exit code 2 not blocking as documented when the hook's stdout JSON fails schema validation\n- Fixed OTel log events emitted outside the turn's async context missing the interaction span's trace context\n- Fixed MCP transient errors during prompts/resources refresh clearing the server's slash commands and resources\n- Improved the `claude rc` workspace-trust error in the home directory to say trust there is never saved and to suggest running from a project directory\n- Changed single-segment `dir/**` hook `if:` conditions to match only `<cwd>/dir`; write `**/dir/**` for any-depth matching. `deny`/`ask` permission rules keep their any-depth match.\n- Changed `file` commands using `-m`/`--magic-file` or `-f`/`--files-from` to require permission instead of being auto-allowed as read-only\n- Changed keep-alive connection pooling to disable after a stale-connection error, so retries open a fresh socket\n- Changed SessionStart hooks to report source `\"fork\"` when a session begins as a fork instead of `\"resume\"`\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.214",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.214 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.122",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.214\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.122/\n\n```bash\npip install claude-agent-sdk==0.2.122\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.122",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-python v0.2.122 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.214",
+        "author": "ashwin-ant",
+        "date": "2026-07-18",
+        "summary": "## What's changed\n\n- `set_permission_mode` now rejects unrecognized permission modes with an error instead of silently adopting them; the `'manual'` alias is accepted at every ingress\n- Added optional `subkind: 'scheduled-trigger'` to the `task-notification` member of `SDKMessageOrigin`, marking deliveries that are the fired prompt of a user-configured scheduled task\n- `applyFlagSettings({effortLevel})` now accepts `'max'` in its TypeScript type (runtime already supported it)\n- Assistant messages truncated by `interrupt()` now carry `aborted: true`, so consumers can distinguish a mid-stream partial from a completed message\n- Added optional `subagent_type` and `subagent_retry` fields to `tool_progress` messages so clients can show a subagent waiting out an API rate-limit retry\n- The `system/init` message's `plugins` entries and the `reload_plugins` response now include each plugin's manifest `version`\n- SessionStart hooks now report source `\"fork\"` instead of `\"resume\"` when the session begins as a fork\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.214\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.214\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.214\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.214\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.214",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.214 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.177",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.177",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.177",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.177 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.144.6",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "## Bug Fixes\n\n- Refreshed bundled instructions for GPT-5.6 Sol, Terra, and Luna, and corrected their context windows to 272,000 tokens. (#33972, #34009)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.144.5...rust-v0.144.6\n\n- #33972 Backport refreshed bundled model metadata to 0.144 @sayan-oai\n- #34009 Narrow 0.144 hotfix to GPT-5.6 prompts and context @sayan-oai\n\n\n",
+        "assets_count": 162,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.144.6",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/codex rust-v0.144.6 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "version": "v3.32.8",
+        "author": "ruvnet",
+        "date": "2026-07-18",
+        "summary": "## v3.32.8 — CI unblock, memory_search fix, version lockstep\n\n### Fixed\n\n- **CI-breaking lockfile drift** (#2719, #2717): `v3/pnpm-lock.yaml` was pinned to `@claude-flow/security@^3.0.0-alpha.10` while `package.json` had moved to `^3.0.0-alpha.12`, failing every `--frozen-lockfile` CI job (`Type Check V3` and others) on every PR since the drift landed. Regenerated via `pnpm install --lockfile-only`.\n- **MCP `memory_search` namespace regression** (#2646, third occurrence of #1123/#1131): omitting the optional `namespace` parameter returned 0 results even when data existed across multiple namespaces, because the tool handler coerced an omitted namespace to the literal string `'default'` instead of leaving it `undefined` so the search layer's own `namespace || 'all'` fallback could fire. Fixed with a regression test that asserts what the tool handler forwards to the search layer directly, so this class of regression is caught at the tool boundary going forward.\n- **Package version lockstep** (surfaced by #2703): `claude-flow` had drifted to 3.32.2 while `@claude-flow/cli`/`ruflo` were at 3.32.7, failing the `Plugin package install-safety` CI check. All three packages are now back in lockstep at `3.32.8`.\n\n### Verified as already fixed (no code change this release)\n\n- **[P0] Worktree daemon fanout quota exhaustion** (#2661): confirmed already fixed same-day via #2662/#2663 (shipped v3.27.4/v3.28.0) — repository-scoped supervisor election, workspace leases, and a global AI-launch budget with a circuit breaker replaced the old per-worktree dedup that let every Git worktree spin up its own set of scheduled Claude-powered workers. The tracking issue had stayed open because the fix commits didn't use GitHub's auto-close keyword; closed now with verification (40/43 tests passing; the 3 failures are a Windows symlink-privilege sandbox limitation, not real bugs).\n\n### Registry\n\n- `latest`, `alpha`, and `v3alpha` dist-tags are synced to `3.32.8` across `@claude-flow/cli`, `claude-flow`, and `ruflo` (#2703).\n\n**Full Changelog**: https://github.com/ruvnet/ruflo/compare/v3.32.7...v3.32.8\n",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.32.8",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/claude-flow v3.32.8 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "version": "rust-v0.0.34",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "",
+        "assets_count": 15,
+        "url": "https://github.com/openinterpreter/openinterpreter/releases/tag/rust-v0.0.34",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openinterpreter/open-interpreter rust-v0.0.34 发布，暂无详细说明。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v19.1.0",
+        "author": "mikeldking",
+        "date": "2026-07-18",
+        "summary": "## [19.1.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v19.0.0...arize-phoenix-v19.1.0) (2026-07-18)\n\n\n### Features\n\n* **cli:** px setup mcp — register the Phoenix remote MCP server with a coding agent ([#14507](https://github.com/Arize-ai/phoenix/issues/14507)) ([f9cd97a](https://github.com/Arize-ai/phoenix/commit/f9cd97ae360f760045a5563e5fc37fa57c68d19d))\n* **ui:** add icon prefixes to settings tabs ([#14512](https://github.com/Arize-ai/phoenix/issues/14512)) ([7868a58](https://github.com/Arize-ai/phoenix/commit/7868a584b784c634e7ebdf5bfa45e2bca480663e))\n* **ui:** add MCP settings tab with setup guide ([#14515](https://github.com/Arize-ai/phoenix/issues/14515)) ([0587fca](https://github.com/Arize-ai/phoenix/commit/0587fca06ddd0ecacd2861b7a6c9b52cbda52d16))\n\n\n### Documentation\n\n* rewrite agent-assisted setup around px setup; MCP docs updates ([#14505](https://github.com/Arize-ai/phoenix/issues/14505)) ([f3d7af3](https://github.com/Arize-ai/phoenix/commit/f3d7af30c303bf828c67ae0a9fbc4c26e4b3ebec))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v19.1.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v19.1.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@56.3.2",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "### Patch Changes\n\n- 145eb34: Improve `vercel ai-gateway coding-agents setup` prompts: use the searchable team picker, keep the multiselect key legend visible after the first selection, and narrow the prompt lines by moving context off the question line.\n\n  The apply step now offers a coding-agent handoff: when the key is stored in the macOS Keychain it asks whether to write the files or \"Copy a prompt for my agent\" (which creates the key, stores it in the Keychain, and copies agent-ready setup instructions — with no plaintext key — to the clipboard); without the Keychain it stays a plain yes/no confirm. A new `--apply <edit|prompt>` flag drives this non-interactively — `--apply prompt` writes the prompt to stdout so it can be piped into an agent (`… --apply prompt --yes | claude -p`), and in machine mode it rides along as a `prompt` JSON field.",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4056.3.2",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@56.3.2 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/passport@0.1.3",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "### Patch Changes\n\n- 86d88dd: Add a `verifyIdentity` helper for verifying forwarded Passport identity tokens.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/passport%400.1.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/passport@0.1.3 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "@vercel/connect@0.4.1",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "summary": "### Patch Changes\n\n- dad41da: Test Connect against a recent stable Eve and AI SDK 7 release.",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/vercel/releases/tag/%40vercel/connect%400.4.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel @vercel/connect@0.4.1 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/skills",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "block/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/ai-chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
+}
