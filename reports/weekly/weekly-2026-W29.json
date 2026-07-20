@@ -1,0 +1,611 @@
+{
+  "week_id": "2026-W29",
+  "start_date": "2026-07-13",
+  "end_date": "2026-07-19",
+  "summary_brief": "本周暂无信号",
+  "core_trends": [],
+  "engineering_signals": [],
+  "research_signals": [],
+  "daily_reports_count": 6,
+  "total_prs_analyzed": 0,
+  "high_impact_signals": 0,
+  "total_commits": 4813,
+  "total_releases": 1436,
+  "weekly_activity": {
+    "total_commits": 4813,
+    "active_repos_count": 81,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 600,
+        "top_contributors": [
+          "ZengWen-DT",
+          "hugenshen",
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 355,
+        "top_contributors": [
+          "bryan-anthropic",
+          "abibbs-ant",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 318,
+        "top_contributors": [
+          "btraut-openai",
+          "owenlin0",
+          "nhamidi-oai"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 281,
+        "top_contributors": [
+          "wylswz",
+          "hjlarry",
+          "asukaminato0721"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 276,
+        "top_contributors": [
+          "simonklee",
+          "usrnk1",
+          "arvsrn"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 254,
+        "top_contributors": [
+          "github-actions[bot]",
+          "wbbradley",
+          "agola11"
+        ]
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 240,
+        "top_contributors": [
+          "owenlin0",
+          "shijie-oai",
+          "anp-oai"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 227,
+        "top_contributors": [
+          "ehutt",
+          "mikeldking",
+          "anticorrelator"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 223,
+        "top_contributors": [
+          "cppcoffee",
+          "reflectronic",
+          "miguelraz"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 184,
+        "top_contributors": [
+          "luojiyin1987",
+          "18062706139fcz",
+          "hetaoBackend"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 135,
+        "top_contributors": [
+          "promptfoobot[bot]",
+          "Gujiassh",
+          "anxkhn"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 127,
+        "top_contributors": [
+          "jbg",
+          "zelinewang",
+          "michaelneale"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 127,
+        "top_contributors": [
+          "shaper",
+          "n1ckoates",
+          "aayush-kapoor"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 127,
+        "top_contributors": [
+          "michaelaperez-byte",
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 123,
+        "top_contributors": [
+          "jesse-merhi",
+          "nancymx-dev",
+          "Patrick-Erichsen"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 105,
+        "top_contributors": [
+          "dominiccooney",
+          "abeatrix",
+          "BarreiroT"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 100,
+        "top_contributors": [
+          "marcoshernanz",
+          "mischnic",
+          "icyJoseph"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 95,
+        "top_contributors": [
+          "VectorPeak",
+          "TaoChenOSU",
+          "rinceyuan"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 93,
+        "top_contributors": [
+          "Ghraven",
+          "chuck-duplocloud",
+          "ly-wang19"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 91,
+        "top_contributors": [
+          "dependabot[bot]",
+          "github-actions[bot]",
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 85,
+        "top_contributors": [
+          "dgozman",
+          "yury-s",
+          "Zelys-DFKH"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 81,
+        "top_contributors": [
+          "tobiaslins",
+          "fantix",
+          "chriswdmr"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 67,
+        "top_contributors": [
+          "ognevny",
+          "anthonyshew",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 54,
+        "top_contributors": [
+          "karkarl",
+          "RomneyDa",
+          "calebeden"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 45,
+        "top_contributors": [
+          "langchain-oss-model-profiles[bot]",
+          "jkennedyvz",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 41,
+        "top_contributors": [
+          "russeell",
+          "seratch",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 33,
+        "top_contributors": [
+          "actions-user",
+          "github-actions[bot]",
+          "qing-ant"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 32,
+        "top_contributors": [
+          "joaomdmoura",
+          "vinibrsl",
+          "lucasgomide"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 29,
+        "top_contributors": [
+          "Jupiter363",
+          "VectorPeak",
+          "qbc2016"
+        ]
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 26,
+        "top_contributors": [
+          "Pwuts",
+          "Bentlybro",
+          "kcze"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 24,
+        "top_contributors": [
+          "malhotra5",
+          "all-hands-bot",
+          "lilagrc"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 24,
+        "top_contributors": [
+          "z0gSh1u",
+          "hazeone",
+          "vcfgv"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 23,
+        "top_contributors": [
+          "actions-user",
+          "riley-mete-db",
+          "pa-arth"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 19,
+        "top_contributors": [
+          "packyg",
+          "stainless-app[bot]",
+          "dtmeadows-ant"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 17,
+        "top_contributors": [
+          "seanmcguire12",
+          "github-actions[bot]",
+          "shrey150"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 17,
+        "top_contributors": [
+          "Jupiter363",
+          "JainamShah-22",
+          "youneshima"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 16,
+        "top_contributors": [
+          "amelidev",
+          "gemini-cli-robot",
+          "ompatel-aiml"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 15,
+        "top_contributors": [
+          "AndrewBarba",
+          "ctate"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 14,
+        "top_contributors": [
+          "actions-user",
+          "qing-ant"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 12,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 12,
+        "top_contributors": [
+          "dtmeadows-ant",
+          "craigie-ant",
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 11,
+        "top_contributors": [
+          "jacobzim-ant",
+          "stainless-app[bot]",
+          "dtmeadows-ant"
+        ]
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 8,
+        "top_contributors": [
+          "ksylvan",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 6,
+        "top_contributors": [
+          "stainless-app[bot]",
+          "jbeckwith-oai"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 5,
+        "top_contributors": [
+          "dependabot[bot]",
+          "HugoDurand"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 4,
+        "top_contributors": [
+          "cj-ant"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 4,
+        "top_contributors": [
+          "vincentkoc",
+          "hannesrudolph",
+          "SebTardif"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 3,
+        "top_contributors": [
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 2,
+        "top_contributors": [
+          "hannesrudolph"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 2,
+        "top_contributors": [
+          "peterlai-ant"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 1,
+        "top_contributors": [
+          "Shriniwas410"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  }
+}
