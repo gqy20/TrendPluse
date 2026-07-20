@@ -1,0 +1,972 @@
+{
+  "date": "2026-07-20",
+  "summary_brief": "今日 (2026-07-20) 发现 0 个 Commit 信号，17 个 Release 信号。",
+  "engineering_signals": [],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [],
+  "stats": {
+    "total_signals": 17,
+    "pr_count": 0,
+    "commit_count": 0,
+    "release_count": 17,
+    "unique_repos": 13,
+    "total_prs_analyzed": 0,
+    "total_releases": 17,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 550,
+    "total_releases_analyzed": 17,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 550,
+    "active_repos_count": 41,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "fuller-stack-dev",
+          "pgondhi987",
+          "hugenshen",
+          "Solvely-Colin"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 55,
+        "top_contributors": [
+          "charliemarsh-oai",
+          "owenlin0",
+          "jif-oai",
+          "dylan-hurd-oai",
+          "eternal-openai"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 42,
+        "top_contributors": [
+          "danilo-leal",
+          "amtoaer",
+          "lingyaochu",
+          "chirivelli",
+          "tidely"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 40,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "fwang",
+          "Hona",
+          "rekram1-node",
+          "arvsrn"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 35,
+        "top_contributors": [
+          "github-actions[bot]",
+          "bryan-anthropic"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 35,
+        "top_contributors": [
+          "mikeldking",
+          "tpansino",
+          "ehutt",
+          "MoraVigoMalusardi",
+          "yfrigui2"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 31,
+        "top_contributors": [
+          "lyzno1",
+          "iamjoel",
+          "asukaminato0721",
+          "sergioperezcheco",
+          "hjlarry"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 28,
+        "top_contributors": [
+          "AnnaSuSu",
+          "DaoyuanLi2816",
+          "18062706139fcz",
+          "chuenchen309",
+          "luojiyin1987"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 15,
+        "top_contributors": [
+          "saoudrizwan",
+          "abeatrix",
+          "arafatkatze",
+          "EtishaGarg"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 15,
+        "top_contributors": [
+          "mdrxy",
+          "nick-hollon-lc",
+          "johannes117",
+          "davibinboi",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 14,
+        "top_contributors": [
+          "ashpreetbedi",
+          "alexander-schneider",
+          "ysolanky",
+          "kausmeows",
+          "anuragts"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 11,
+        "top_contributors": [
+          "Patrick-Erichsen",
+          "dependabot[bot]",
+          "jesse-merhi",
+          "Yigtwxx",
+          "openclaw-barnacle[bot]"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 11,
+        "top_contributors": [
+          "doneumark",
+          "shaper",
+          "lgrammel",
+          "Albert-Gao",
+          "jdanielnd"
+        ]
+      },
+      {
+        "repo": "ErikBjare/gptme",
+        "commits": 10,
+        "top_contributors": [
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 10,
+        "top_contributors": [
+          "Melkeydev",
+          "chriswdmr",
+          "visyat",
+          "vercel[bot]",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 9,
+        "top_contributors": [
+          "mischnic",
+          "bgw",
+          "marcoshernanz",
+          "aurorascharff",
+          "manoraj"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 8,
+        "top_contributors": [
+          "dependabot[bot]",
+          "AlexAlves87",
+          "anagnorisis2peripeteia",
+          "shanselman"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 8,
+        "top_contributors": [
+          "moonbox3",
+          "he-yufeng",
+          "anneheartrecord",
+          "giles17",
+          "westey-m"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 7,
+        "top_contributors": [
+          "DavdGao",
+          "Mrart",
+          "RerankerGuo",
+          "March-77",
+          "JOJOCrazy123"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 7,
+        "top_contributors": [
+          "dgozman",
+          "soreavis",
+          "cipheraxat",
+          "yury-s",
+          "Skn0tt"
+        ]
+      },
+      {
+        "repo": "ruvnet/claude-flow",
+        "commits": 6,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 6,
+        "top_contributors": [
+          "seratch",
+          "AAliKKhan"
+        ]
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 5,
+        "top_contributors": [
+          "sophie-ant",
+          "stainless-app[bot]"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 5,
+        "top_contributors": [
+          "kartik-mem0",
+          "rodboev",
+          "OfficialAbhinavSingh",
+          "JainamShah-22"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 4,
+        "top_contributors": [
+          "github-actions[bot]",
+          "qing-ant",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "OpenDevin/OpenDevin",
+        "commits": 4,
+        "top_contributors": [
+          "dylan-openhands",
+          "neubig",
+          "tofarr",
+          "malhotra5"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 4,
+        "top_contributors": [
+          "mdrxy",
+          "imnishitha",
+          "langchain-oss-model-profiles[bot]"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 3,
+        "top_contributors": [
+          "vinibrsl"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 3,
+        "top_contributors": [
+          "su8su"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 3,
+        "top_contributors": [
+          "anthonyshew",
+          "github-actions[bot]",
+          "molebox"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 2,
+        "top_contributors": [
+          "Om-Borse26",
+          "ameyypawar"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 2,
+        "top_contributors": [
+          "jstar0",
+          "rogerbarreto"
+        ]
+      },
+      {
+        "repo": "block/goose",
+        "commits": 2,
+        "top_contributors": [
+          "filipkujawa"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 2,
+        "top_contributors": [
+          "renovate[bot]"
+        ]
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 2,
+        "top_contributors": [
+          "ctate"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "saad-supports-langchain"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 1,
+        "top_contributors": [
+          "SebTardif"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 1,
+        "top_contributors": [
+          "Kylejeong2"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "paul-gauthier/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Auto-Claude",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/open-interpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai-chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 17,
+    "unique_repos_count": 13,
+    "releases": [
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "version": "sdk-v0.112.4",
+        "author": "stainless-app[bot]",
+        "date": "2026-07-20",
+        "summary": "## 0.112.4 (2026-07-20)\n\nFull Changelog: [sdk-v0.112.3...sdk-v0.112.4](https://github.com/anthropics/anthropic-sdk-typescript/compare/sdk-v0.112.3...sdk-v0.112.4)\n\n### Bug Fixes\n\n* **aws:** preserve AWS options and auth mode across withOptions() ([#214](https://github.com/anthropics/anthropic-sdk-typescript/issues/214)) ([3f7665c](https://github.com/anthropics/anthropic-sdk-typescript/commit/3f7665c5419eb80c489546a70da799648e7d5ff2))\n\n\n### Chores\n\n* **docs:** small updates ([97f68a8](https://github.com/anthropics/anthropic-sdk-typescript/commit/97f68a88e13ba11b1e903d2d7181da3e4edd5c10))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.112.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-typescript sdk-v0.112.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "version": "aws-sdk-v0.6.1",
+        "author": "stainless-app[bot]",
+        "date": "2026-07-20",
+        "summary": "## 0.6.1 (2026-07-20)\n\nFull Changelog: [aws-sdk-v0.6.0...aws-sdk-v0.6.1](https://github.com/anthropics/anthropic-sdk-typescript/compare/aws-sdk-v0.6.0...aws-sdk-v0.6.1)\n\n### Bug Fixes\n\n* **aws:** preserve AWS options and auth mode across withOptions() ([#214](https://github.com/anthropics/anthropic-sdk-typescript/issues/214)) ([3f7665c](https://github.com/anthropics/anthropic-sdk-typescript/commit/3f7665c5419eb80c489546a70da799648e7d5ff2))\n* **aws:** remove duplicate loggerFor import breaking the build ([#235](https://github.com/anthropics/anthropic-sdk-typescript/issues/235)) ([764004e](https://github.com/anthropics/anthropic-sdk-typescript/commit/764004ed5cabbe254470fc420e374fc4d54a8dba))",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/aws-sdk-v0.6.1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/anthropic-sdk-typescript aws-sdk-v0.6.1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.0.10",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "summary": "\n### Added\n\n- Add telemetry to track when Cline reaches the consecutive mistake limit.\n\n**Full Changelog**: https://github.com/cline/cline/compare/v4.0.9...v4.0.10\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.0.10",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline v4.0.10 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "agno-agi/agno",
+        "version": "v2.8.0",
+        "author": "kausmeows",
+        "date": "2026-07-20",
+        "summary": "# Changelog\r\n\r\n## **New Features**\r\n\r\n- **`agno.scorer`** — Turn a run into a number:\r\n    - **`CodeScorer`**: wraps any callable (`bool | float | Score`; typed-field comparison under `output_schema` recommended)\r\n    - **`JudgeScorer`**: LLM judge with the model always an explicit choice and numeric verdicts normalized to exact endpoints (`(score - 1) / 9`)\r\n    - **`ToolCallScorer`**: checks tool **executions** deterministically (refused, errored, or HITL-rejected calls never satisfy an expectation)\r\n    - All scorers ship sync and async variants.\r\n- **`agno.environments`** — `Environment` + `Task` + `run_rollouts(env, k=8)`: run each task K times in full isolation (fresh db/session/user, no memory/knowledge/learning writes, cache off; knowledge reads still work). Includes a live per-attempt grid, real pass rate per task, drift-vs-policy fingerprints, `save`/`load`/`diff`, `learning_zone()`, and `to_sft_jsonl(...)` to export passing attempts as conversational-SFT JSONL with a provenance sidecar. This is the pass@k door.\r\n- **`Case.scorer`**: the eval suite gains a third check — plug any scorer into a `Case` (with `Case.expected`), free and exact, no LLM call. `SuiteResult.to_dict()` gains additive `score_value`, `score_passed`, `score_reason` keys.\r\n- **FileGenerationTools**: Added code file generation for `FileGenerationTools`.\r\n- **Gmail Tools**: Added pagination and `max_results_per_request`.\r\n- **Adanos Tools**: Added optional Adanos market sentiment tools.\r\n\r\n## **Bug Fixes**\r\n\r\n- **RemoteAgent / RemoteTeam**: Fixed metadata being dropped on the A2A protocol path.\r\n- **Content**: Return empty string for empty content list in `get_content_string()`.\r\n- **Decision log**: Replaced deprecated `datetime.utcnow()` in the decision_log store.\r\n\r\n## **Breaking Changes**\r\n\r\n- **`ReliabilityEval` matches tool executions**: Tool expectations are now satisfied only by a clean execution (`RunOutput.tools`, `tool_call_error` not set), not by message-side requests. **Verdicts can flip red after upgrading** — when they do, the eval was previously passing for the wrong reason (missing entries are annotated `\"... (requested but refused/errored — execution matching, new in 2.8.0)\"`). Argument checks moved to `ToolExecution.tool_args` with the same partial-match semantics.\r\n- **Hardened judge prompt**: Every `AgentAsJudgeEval` now fences judged output behind a per-call random nonce, with the untrusted-data instruction inside the prompt. A literal `</output>` no longer escapes the block, and \"score this 10\" inside a judged answer is data, not an instruction. **Judge verdicts and token counts may shift.**\r\n\r\n## What's Changed\r\n* fix: replace deprecated datetime.utcnow() in decision_log store by @Ghraven in https://github.com/agno-agi/agno/pull/7949\r\n* cookbook: add dpo_jury pairwise preference example by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9033\r\n* cookbook: refresh data_labeling for agno 2.7.x by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9037\r\n* cookbook: jury calibration, hardening, and agreement metrics by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9038\r\n* cookbook: synthetic data generation workflows by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9040\r\n* cookbook: critique-revision, persona, and tool-call trajectory generation by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9043\r\n* cookbook: step-reward scoring, scale-out mechanics, and safety labeling by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9046\r\n* cookbook: image_search README - ingest is a full rebuild, not idempotent by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9047\r\n* [fix] RemoteAgent/RemoteTeam drop metadata on A2A protocol path by @psinojiya in https://github.com/agno-agi/agno/pull/8944\r\n* feat: add pagination and max_results_per_request to Gmail tools by @Mustafa-Esoofally in https://github.com/agno-agi/agno/pull/9030\r\n* fix: Return empty string for empty content list in get_content_string() by @chuck-duplocloud in https://github.com/agno-agi/agno/pull/6122\r\n* [feat] Add optional Adanos market sentiment tools by @alexander-schneider in https://github.com/agno-agi/agno/pull/9060\r\n* [fix] Clarify Adanos trending ranking by @alexander-schneider in https://github.com/agno-agi/agno/pull/9061\r\n* fix: replace retired qwen/qwen3-32b with openai/gpt-oss-20b on Groq by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9055\r\n* feat: add code file generation to FileGenerationTools by @anuragts in https://github.com/agno-agi/agno/pull/8420\r\n* feat: agno.scorer and the judge prompt fence by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9049\r\n* feat: rollout engine and Case.scorer seam by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9050\r\n* release: v2.8.0 by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9063\r\n* cookbook: expand environments into progressive verification suite by @ashpreetbedi in https://github.com/agno-agi/agno/pull/9070\r\n* feat: Release v2.8.0 by @kausmeows in https://github.com/agno-agi/agno/pull/9073\r\n\r\n## New Contributors\r\n* @psinojiya made their first contribution in https://github.com/agno-agi/agno/pull/8944\r\n* @chuck-duplocloud made their first contribution in https://github.com/agno-agi/agno/pull/6122\r\n* @alexander-schneider made their first contribution in https://github.com/agno-agi/agno/pull/9060\r\n\r\n**Full Changelog**: https://github.com/agno-agi/agno/compare/v2.7.4...v2.8.0",
+        "assets_count": 0,
+        "url": "https://github.com/agno-agi/agno/releases/tag/v2.8.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "agno-agi/agno v2.8.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "version": "1.15.5",
+        "author": "vinibrsl",
+        "date": "2026-07-20",
+        "summary": "## What's Changed\n\n### Features\n- Authenticate skill registry downloads \n\n### Documentation\n- Update snapshot and changelog for v1.15.4\n\n## Contributors\n\n@vinibrsl",
+        "assets_count": 0,
+        "url": "https://github.com/crewAIInc/crewAI/releases/tag/1.15.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "crewAIInc/crewAI 1.15.5 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-code==0.1.44",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "summary": "### Bug Fixes\n\n- Improved approval handling by hiding the `Auto` option when it isn't eligible and moving Auto mode path checks off the event loop. ([#4839](https://github.com/langchain-ai/deepagents/issues/4839), [#4856](https://github.com/langchain-ai/deepagents/issues/4856))\n- Warmed MCP auth imports off the event loop to avoid blocking runtime work. ([#4855](https://github.com/langchain-ai/deepagents/issues/4855))\n\n---\n\nInternal maintainers: @mdrxy\n\nReleased by: @mdrxy\n\n<details>\n<summary>Git log since deepagents-code==0.1.43</summary>\n\nThis commit history includes changes to this package. Commits are listed newest first.\n\n- [`2b9cd08`](https://github.com/langchain-ai/deepagents/commit/2b9cd08f0492e3e4ad4763f17deea2d80a145f42) release(deepagents-code): 0.1.44 (#4857)\n- [`75d37c3`](https://github.com/langchain-ai/deepagents/commit/75d37c347556d962ff14850bdde489657c86feb4) fix(code): warm MCP auth imports off event loop (#4855)\n- [`752af30`](https://github.com/langchain-ai/deepagents/commit/752af303d50829f6e0c99026bb33e2ed27c725d9) style(code): pad between marketplace entries in plugin manager (#4850)\n- [`acb1a0e`](https://github.com/langchain-ai/deepagents/commit/acb1a0eeec60deca267282a085970445a582a5e1) style(code): align `Auto` activation warnings (#4858)\n- [`1a1f06f`](https://github.com/langchain-ai/deepagents/commit/1a1f06f506d5a167609de336cced740151b6615a) fix(code): hide `Auto` option in approval widget when ineligible (#4839)\n- [`511203a`](https://github.com/langchain-ai/deepagents/commit/511203a2c247f6756af3f06581ab9af761a4c4ef) fix(code): move Auto mode path checks off the event loop (#4856)\n\n</details>",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code%3D%3D0.1.44",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/deepagents deepagents-code==0.1.44 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.18.4",
+        "author": "opencode-agent[bot]",
+        "date": "2026-07-20",
+        "summary": "## Core\n\n### Improvements\n\n- Use adaptive thinking controls for Kimi models on Anthropic-compatible providers, with summarized reasoning output by default. (@chouqin)\n\n### Bugfixes\n\n- Reduce OpenAI provider header timeouts during slow connection setup.\n- Respect provider-defined reasoning options instead of falling back to the wrong reasoning controls.\n- Restore Azure Cognitive Services endpoint support for Azure-hosted models.\n\n## Desktop\n\n### Improvements\n\n- Sync the embedded terminal theme with the app theme.\n- Improve the review panel so open file tabs can stay aligned with the current diff view.\n- Rewrite the v2 prompt input for more reliable command, context, shell, attachment, and history interactions.\n- Improve review panel resizing and sticky controls.\n\n### Bugfixes\n\n- Preserve command drafts in the command menu.\n- Avoid session view failures when message parent links are missing.\n- Prevent sending empty prompt text parts.\n- Restore model variant selection accessibility.\n- Show keybind tooltips on prompt input controls. (@ProdigyRahul)\n- Deduplicate repeated file entries in diff summaries.\n- Prevent recovery window handling from touching destroyed windows.\n\n**Thank you to 3 community contributors:**\n- @jerome-benoit:\n  - fix(nix): relax Bun version check for desktop build (#36767)\n  - fix(nix): restore desktop integration (#37197)\n- @ProdigyRahul:\n  - fix(app): show keybind tooltips on prompt input controls (#37824)\n- @chouqin:\n  - feat(opencode): use adaptive thinking effort for kimi family on anthr… (#37696)\n",
+        "assets_count": 37,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anomalyco/opencode v1.18.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/vercel",
+        "version": "vercel@56.4.0",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "summary": "### Minor Changes\n\n- ed28e18: Add `vercel flags evaluations` for viewing compact, per-variant evaluation charts and bucket-level JSON data with truncation metadata.\n\n  Examples:\n\n  ```bash\n  vercel flags evaluations my-feature\n  vercel flags evaluations my-feature --since 24h --granularity 1h\n  vercel flags evaluations my-feature --since 24h --json\n  ```\n\n### Patch Changes\n\n- 37a95cd: Include cron jobs emitted by services in the project build output so deployments register them.",
+        "assets_count": 10,
+        "url": "https://github.com/vercel/vercel/releases/tag/vercel%4056.4.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel/vercel vercel@56.4.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.215",
+        "author": "ashwin-ant",
+        "date": "2026-07-19",
+        "summary": "## What's changed\n\n- Claude no longer runs the `/verify` and `/code-review` skills on its own; invoke them with `/verify` or `/code-review` when you want them\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code v2.1.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.123",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.215\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.123/\n\n```bash\npip install claude-agent-sdk==0.2.123\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.123",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-python v0.2.123 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.215",
+        "author": "ashwin-ant",
+        "date": "2026-07-19",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.215\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.215\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.215\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.215\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.215\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.215",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-agent-sdk-typescript v0.3.215 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.178",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1...v1.0.178",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.178",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "anthropics/claude-code-action v1.0.178 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.46",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Fixed out-of-credits detection so the CLI reliably recognizes the Cline API's real `insufficient_credits` (402) error and shows the \"add credits\" card instead of a generic error\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.45...cli-v3.0.46\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.46",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.46 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "cli-v3.0.45",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Smaller install: the Claude Code and Codex providers are now optional and loaded on demand, cutting `npm i -g cline` from ~640MB to ~285MB (from SDK v0.0.65)\n- Kimi K3 is now available as a ClinePass model (from SDK v0.0.65)\n- Runs now retry once after refreshing expired OAuth credentials (from SDK v0.0.65)\n- Team runs: the spawn tool is no longer exposed to teammates, and errored teammate runs now report as failed instead of completed (from SDK v0.0.65)\n- Hub status output now includes version numbers\n- Updated the bundled model catalog (from SDK v0.0.65)\n\n**Full Changelog**: https://github.com/cline/cline/compare/cli-v3.0.44...cli-v3.0.45\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.45",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline cli-v3.0.45 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "sdk/sdk/v0.0.65",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "\n- Claude Code and Codex provider SDKs are now optional peer dependencies loaded on demand, dramatically cutting install size\n- Added Kimi K3 to the bundled ClinePass model fallback\n- Runs now retry once after refreshing expired OAuth credentials\n- Team runs: the spawn tool is no longer exposed to teammate agents\n- Team runs: errored teammate runs now report as failed instead of completed\n- Improved shell-command parsing to fix a Windows shell mismatch\n- New `@cline/ui` agent chat components with Storybook and npm packaging\n- Updated the bundled model catalog\n\n**Full Changelog**: https://github.com/cline/cline/compare/sdk/sdk/v0.0.64...sdk/sdk/v0.0.65\n",
+        "assets_count": 0,
+        "url": "https://github.com/cline/cline/releases/tag/sdk/sdk/v0.0.65",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline sdk/sdk/v0.0.65 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v19.2.0",
+        "author": "mikeldking",
+        "date": "2026-07-19",
+        "summary": "## [19.2.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v19.1.0...arize-phoenix-v19.2.0) (2026-07-19)\n\n\n### Features\n\n* **cli:** improve server startup banner ([3904c49](https://github.com/Arize-ai/phoenix/commit/3904c49d04422faf7ca37858790ad8c6073b6f11))\n* **server:** show dev tooling info in boot banner ([7e36376](https://github.com/Arize-ai/phoenix/commit/7e36376fefd318b89c91fe97151cd9f82cc6176f))\n* **settings:** add Antigravity and OpenCode MCP client instructions ([8180357](https://github.com/Arize-ai/phoenix/commit/8180357d838667f01e9deb5bb7d4ba5bb3b30a27))\n\n\n### Bug Fixes\n\n* **app:** inline codemirror-json-schema in vitest to fix ESM resolution ([dc0d641](https://github.com/Arize-ai/phoenix/commit/dc0d64127bcee9970f60db149bc5ec13b6f37c78))\n* **cli:** sanitize startup banner on windows ([1474c9b](https://github.com/Arize-ai/phoenix/commit/1474c9b4615d99c18cf3a3f439301e2e9e756fac))\n* **playground:** assume Responses API when unspecified ([3476db9](https://github.com/Arize-ai/phoenix/commit/3476db9aa7d9132224ce9cf32fe5476bd2d7eabf))\n* **playground:** default OpenAI models to Responses API ([3a8f361](https://github.com/Arize-ai/phoenix/commit/3a8f36145df032ae4895b5d776ae4b2b726291e1))\n* **playground:** default to gpt-5.6-sol ([dc1258f](https://github.com/Arize-ai/phoenix/commit/dc1258f950e4a42c2a8c3316a1db06fb143458b2))\n* **settings:** adapt MCP auth wording when authentication is disabled ([1e9132a](https://github.com/Arize-ai/phoenix/commit/1e9132a654d7a8c44a746887ce9ad45a36a27fb0))\n* **settings:** adapt MCP client instructions when authentication is disabled ([93ac955](https://github.com/Arize-ai/phoenix/commit/93ac955b9e80d19207dfb23a457514dafd41e06d))\n* **settings:** gate admin tabs behind authentication ([518e909](https://github.com/Arize-ai/phoenix/commit/518e909d88745bd0ff67540ea9fa628632463c5a))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v19.2.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "Arize-ai/phoenix arize-phoenix-v19.2.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "version": "v0.32.3",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "summary": "### New Features\n\n- Added **HAR response body capture** with text bodies embedded by default and configurable `all`, `text`, and `none` content modes across the CLI and MCP surfaces (#1578)\n- Added a **derive-client skill** for recording browser traffic and generating reusable API clients from HAR request and response data (#1578)\n\n### Contributors\n\n- @ctate\n",
+        "assets_count": 7,
+        "url": "https://github.com/vercel-labs/agent-browser/releases/tag/v0.32.3",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "vercel-labs/agent-browser v0.32.3 发布",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "paul-gauthier/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "ErikBjare/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenDevin/OpenDevin",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/claude-flow",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Auto-Claude",
+    "anomalyco/opencode",
+    "openinterpreter/open-interpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/skills",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "block/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/ai-chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": null,
+  "trend_delta": null,
+  "historical_basis_dates": [],
+  "historical_comparison": null,
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": null,
+  "daily_summary_agent_run_metrics": null,
+  "agent_metrics_summary": null
+}
