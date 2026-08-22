@@ -1,5 +1,5 @@
 {
-  "actionable_file": "reports/discovery/discovery-2026-08-21-actionable.json",
+  "actionable_file": "reports/discovery/discovery-2026-08-22-actionable.json",
   "min_priority": "medium",
   "max_add_per_run": 10,
   "total_candidates": 10,
@@ -35,16 +35,16 @@
       "category": "Agentic AI 核心框架"
     },
     {
+      "repo": "bojieli/ai-agent-book",
+      "category": "Agentic AI 核心框架"
+    },
+    {
       "repo": "datawhalechina/hello-agents",
       "category": "Agentic AI 核心框架"
     },
     {
       "repo": "f/prompts.chat",
       "category": "Anthropic 工具与集成"
-    },
-    {
-      "repo": "headroomlabs-ai/headroom",
-      "category": "Agentic AI 核心框架"
     }
   ],
   "batch_result": null
