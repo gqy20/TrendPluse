@@ -63,19 +63,19 @@
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 237,770 |
+| Stars | 238,096 |
 | 语言 | Python |
-| Forks | 48,301 |
-| Issues | 37,141 |
+| Forks | 48,421 |
+| Issues | 37,453 |
 | Topics | ai, ai-agent, ai-agents, anthropic, chatgpt, claude, claude-code, codex, hermes, hermes-agent, llm, nous-research, openai |
 | 许可证 | MIT License |
 
 ---
 
-NousResearch/hermes-agent 是一个Python项目，拥有 237,770 Stars。The agent that grows with you...
+NousResearch/hermes-agent 是一个Python项目，拥有 238,096 Stars。The agent that grows with you...
 
 **技术亮点**:
-- 活跃的开源社区 (237,770 Stars)
+- 活跃的开源社区 (238,096 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -97,19 +97,19 @@ NousResearch/hermes-agent 是一个Python项目，拥有 237,770 Stars。The age
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,255 |
+| Stars | 150,347 |
 | 语言 | Python |
-| Forks | 21,940 |
-| Issues | 224 |
+| Forks | 21,950 |
+| Issues | 226 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
+open-webui/open-webui 是一个Python项目，拥有 150,347 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
 
 **技术亮点**:
-- 活跃的开源社区 (150,255 Stars)
+- 活跃的开源社区 (150,347 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -131,19 +131,19 @@ open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friend
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,025 |
+| Stars | 112,274 |
 | 语言 | Python |
-| Forks | 10,886 |
-| Issues | 1,158 |
+| Forks | 10,927 |
+| Issues | 1,152 |
 | Topics | ai-agents, antigravity, ast, claude-code, code-analysis, code-search, codex, cursor, developer-tools, gemini, graphrag, knowledge-graph, leiden, llm, mcp, openclaw, rag, skills, tree-sitter |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
+Graphify-Labs/graphify 是一个Python项目，拥有 112,274 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
 
 **技术亮点**:
-- 活跃的开源社区 (112,025 Stars)
+- 活跃的开源社区 (112,274 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -165,19 +165,19 @@ Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any c
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 243,977 |
+| Stars | 244,187 |
 | 语言 | JavaScript |
-| Forks | 36,904 |
-| Issues | 154 |
+| Forks | 36,925 |
+| Issues | 120 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
+affaan-m/ECC 是一个JavaScript项目，拥有 244,187 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
 
 **技术亮点**:
-- 活跃的开源社区 (243,977 Stars)
+- 活跃的开源社区 (244,187 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -199,19 +199,19 @@ affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harnes
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 92,517 |
+| Stars | 92,579 |
 | 语言 | JavaScript |
-| Forks | 8,130 |
-| Issues | 263 |
+| Forks | 8,142 |
+| Issues | 266 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
+thedotmack/claude-mem 是一个JavaScript项目，拥有 92,579 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
 
 **技术亮点**:
-- 活跃的开源社区 (92,517 Stars)
+- 活跃的开源社区 (92,579 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -233,19 +233,19 @@ thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persiste
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 81,904 |
+| Stars | 82,162 |
 | 语言 | JavaScript |
-| Forks | 5,608 |
+| Forks | 5,624 |
 | Issues | 58 |
 | Topics | agent, ai, claude, claude-code, codex, coding, design, frontend, lowcode, nocode, skill, skills, vibecoding |
 | 许可证 | MIT License |
 
 ---
 
-Leonxlnx/taste-skill 是一个JavaScript项目，拥有 81,904 Stars。Taste-Skill - gives your AI good taste. stops the AI from generating boring, generic slop ...
+Leonxlnx/taste-skill 是一个JavaScript项目，拥有 82,162 Stars。Taste-Skill - gives your AI good taste. stops the AI from generating boring, generic slop ...
 
 **技术亮点**:
-- 活跃的开源社区 (81,904 Stars)
+- 活跃的开源社区 (82,162 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -267,19 +267,19 @@ Leonxlnx/taste-skill 是一个JavaScript项目，拥有 81,904 Stars。Taste-Ski
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 65,346 |
+| Stars | 65,369 |
 | 语言 | JavaScript |
-| Forks | 7,212 |
-| Issues | 334 |
+| Forks | 7,210 |
+| Issues | 328 |
 | Topics | agent-computer, agent-harness, agent-orchestration, agentic-ai, ai-agents, computer-use, hermes-agent, llm, local-ai, localai, multimodal, no-code, open-claw, rag, self-hosted-ai, vector-database |
 | 许可证 | MIT License |
 
 ---
 
-Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
+Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,369 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
 
 **技术亮点**:
-- 活跃的开源社区 (65,346 Stars)
+- 活跃的开源社区 (65,369 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -301,19 +301,19 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,767 |
+| Stars | 63,797 |
 | 语言 | JavaScript |
-| Forks | 10,458 |
+| Forks | 10,464 |
 | Issues | 49 |
 | Topics | ai, ai-agents, ai-prompts, anthropic, chatbot, chatgpt, claude, claude-code, codex, cursor, gemini, generative-ai, google, grok, llm, openai, prompt, prompt-engineering, system-prompt, system-prompts |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 ---
 
-asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
+asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,797 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
 
 **技术亮点**:
-- 活跃的开源社区 (63,767 Stars)
+- 活跃的开源社区 (63,797 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -335,10 +335,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,539 |
+| Stars | 89,593 |
 | 语言 | Go |
-| Forks | 10,547 |
-| Issues | 1,723 |
+| Forks | 10,561 |
+| Issues | 1,722 |
 | Topics | agent-harness, agentic-ai, agentic-retrieval, agentic-search, ai, ai-agents, context-engine, context-engineering, context-management, harness-engineering, knowledge-compilation, llm-apps, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
@@ -357,10 +357,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,340 |
+| Stars | 80,350 |
 | 语言 | Go |
-| Forks | 6,604 |
-| Issues | 385 |
+| Forks | 6,609 |
+| Issues | 387 |
 | Topics | ai, alerting, cncf, data-visualization, database, devops, docker, grafana, influxdb, kubernetes, linux, machine-learning, mcp, mongodb, monitoring, mysql, netdata, observability, postgresql, prometheus |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -379,10 +379,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,727 |
+| Stars | 48,749 |
 | 语言 | Go |
-| Forks | 4,397 |
-| Issues | 222 |
+| Forks | 4,399 |
+| Issues | 218 |
 | Topics | agents, ai, api, audio-generation, decentralized, distributed, image-generation, libp2p, llama, llm, mamba, mcp, musicgen, object-detection, rerank, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
@@ -401,10 +401,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,077 |
+| Stars | 82,094 |
 | 语言 | TypeScript |
-| Forks | 15,842 |
-| Issues | 833 |
+| Forks | 15,838 |
+| Issues | 859 |
 | Topics | agent, agent-collaboration, agent-harness, ai, cao, chatgpt, chief-agent-operator, claude, deepseek, fable, gemini, glm, gpt, knowledge-base, loop-engineering, mcp, openai, skills |
 | 许可证 | Other |
 
@@ -423,10 +423,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,932 |
+| Stars | 68,004 |
 | 语言 | Python |
-| Forks | 5,255 |
-| Issues | 573 |
+| Forks | 5,264 |
+| Issues | 577 |
 | Topics | agent, ai, anthropic, claude-code, compression, context-engineering, context-window, cursor, fastapi, langchain, llm, mcp, openai, prompt-engineering, proxy, python, rag, token-optimization, tokens, typescript |
 | 许可证 | Apache License 2.0 |
 
@@ -445,7 +445,7 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,525 |
+| Stars | 47,541 |
 | 语言 | Java |
 | Forks | 16,172 |
 | Issues | 38 |
@@ -467,10 +467,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,020 |
+| Stars | 43,347 |
 | 语言 | Python |
-| Forks | 4,757 |
-| Issues | 14 |
+| Forks | 4,778 |
+| Issues | 15 |
 | Topics | agent, agent-memory, ai-agent, book, coding-agent, context-engineering, large-language-models, llm, mcp, multi-agent, multimodal, rag, reinforcement-learning |
 | 许可证 | Apache License 2.0 |
 
@@ -489,10 +489,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,655 |
+| Stars | 69,720 |
 | 语言 | TypeScript |
-| Forks | 8,328 |
-| Issues | 859 |
+| Forks | 8,341 |
+| Issues | 866 |
 | Topics | agentic-ai, agentic-framework, agentic-workflow, agents, ai-agents, ai-assistant, ai-skills, autonomous-agents, claude-code, codex, dsh-plugin, harness, mcp-server, multi-agent, multi-agent-systems, npm, skills, swarm, swarm-intelligence, typescript |
 | 许可证 | MIT License |
 
@@ -511,10 +511,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,477 |
+| Stars | 85,568 |
 | 语言 | TypeScript |
-| Forks | 11,180 |
-| Issues | 604 |
+| Forks | 11,202 |
+| Issues | 606 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | MIT License |
 
@@ -533,9 +533,9 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 158,103 |
+| Stars | 158,122 |
 | 语言 | JavaScript |
-| Forks | 46,167 |
+| Forks | 46,165 |
 | Issues | 17 |
 | Topics | agent, ai, context-engineering, deepseek, interview, java, mcp, mysql, redis, redisson, skills, springai, system-design |
 | 许可证 | Apache License 2.0 |
@@ -555,10 +555,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 84,696 |
+| Stars | 84,890 |
 | 语言 | TypeScript |
-| Forks | 12,717 |
-| Issues | 334 |
+| Forks | 12,754 |
+| Issues | 362 |
 | Topics | agent, ai, dashboard, geopolitics, mcp, mcp-server, monitoring, news, opensource, osint, palantir, situation |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -577,10 +577,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 134,995 |
+| Stars | 135,152 |
 | 语言 | Python |
-| Forks | 19,831 |
-| Issues | 21 |
+| Forks | 19,863 |
+| Issues | 19 |
 | Topics | agents, llms, python, rag |
 | 许可证 | Apache License 2.0 |
 
@@ -599,10 +599,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 111,584 |
+| Stars | 111,660 |
 | 语言 | Python |
-| Forks | 12,244 |
-| Issues | 384 |
+| Forks | 12,250 |
+| Issues | 392 |
 | Topics | ai-agents, ai-tools, browser-automation, browser-use, llm, playwright, python |
 | 许可证 | MIT License |
 
@@ -621,10 +621,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 173,668 |
+| Stars | 174,029 |
 | 语言 | TypeScript |
-| Forks | 9,561 |
-| Issues | 559 |
+| Forks | 9,573 |
+| Issues | 568 |
 | Topics | ai, ai-agents, ai-crawler, ai-scraping, ai-search, crawler, data-extraction, html-to-markdown, llm, markdown, scraper, scraping, web-crawler, web-data, web-data-extraction, web-scraper, web-scraping, web-search, webscraping |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -643,10 +643,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 202,724 |
+| Stars | 202,804 |
 | 语言 | TypeScript |
-| Forks | 60,444 |
-| Issues | 1,117 |
+| Forks | 60,457 |
+| Issues | 1,122 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
@@ -665,9 +665,9 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 153,824 |
+| Stars | 153,866 |
 | 语言 | Python |
-| Forks | 9,955 |
+| Forks | 9,960 |
 | Issues | 992 |
 | Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
 | 许可证 | MIT License |
@@ -687,10 +687,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 129,935 |
+| Stars | 130,085 |
 | 语言 | Rust |
-| Forks | 8,913 |
-| Issues | 2,523 |
+| Forks | 8,921 |
+| Issues | 2,537 |
 | Topics | ai-tools, claude-code, codex, desktop-app, grok, grokbuild, hermes, hermes-agent, mcp, open-source, openclaw, openclaw-ui, opencode, pi, provider-management, rust, skills, skills-management, tauri, wsl-support |
 | 许可证 | MIT License |
 
@@ -709,10 +709,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,403 |
+| Stars | 116,339 |
 | 语言 | JavaScript |
-| Forks | 6,311 |
-| Issues | 179 |
+| Forks | 6,350 |
+| Issues | 182 |
 | Topics | agent-skills, ai-agents, claude, claude-code, claude-code-plugin, cursor-rules, developer-tools, llm, prompt-engineering, yagni |
 | 许可证 | MIT License |
 
@@ -731,10 +731,10 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,405 |
+| Stars | 75,476 |
 | 语言 | Python |
-| Forks | 9,379 |
-| Issues | 182 |
+| Forks | 9,388 |
+| Issues | 183 |
 | Topics | agent, llm, rag, tutorial |
 | 许可证 | Other |
 
@@ -753,7 +753,7 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,401 |
+| Stars | 55,399 |
 | 语言 | TypeScript |
 | Forks | 24,963 |
 | Issues | 1,046 |
@@ -775,9 +775,9 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 202,106 |
+| Stars | 203,329 |
 | 语言 | TypeScript |
-| Forks | 23,246 |
+| Forks | 23,455 |
 | Issues | 0 |
 | Topics | ai-agents, cordis, dsh, dsh-plugin |
 | 许可证 | MIT License |
@@ -803,19 +803,19 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,255 |
+| Stars | 150,347 |
 | 语言 | Python |
-| Forks | 21,940 |
-| Issues | 224 |
+| Forks | 21,950 |
+| Issues | 226 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
+open-webui/open-webui 是一个Python项目，拥有 150,347 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
 
 **技术亮点**:
-- 活跃的开源社区 (150,255 Stars)
+- 活跃的开源社区 (150,347 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -837,19 +837,19 @@ open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friend
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,025 |
+| Stars | 112,274 |
 | 语言 | Python |
-| Forks | 10,886 |
-| Issues | 1,158 |
+| Forks | 10,927 |
+| Issues | 1,152 |
 | Topics | ai-agents, antigravity, ast, claude-code, code-analysis, code-search, codex, cursor, developer-tools, gemini, graphrag, knowledge-graph, leiden, llm, mcp, openclaw, rag, skills, tree-sitter |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
+Graphify-Labs/graphify 是一个Python项目，拥有 112,274 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
 
 **技术亮点**:
-- 活跃的开源社区 (112,025 Stars)
+- 活跃的开源社区 (112,274 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -871,19 +871,19 @@ Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any c
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 92,517 |
+| Stars | 92,579 |
 | 语言 | JavaScript |
-| Forks | 8,130 |
-| Issues | 263 |
+| Forks | 8,142 |
+| Issues | 266 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
+thedotmack/claude-mem 是一个JavaScript项目，拥有 92,579 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
 
 **技术亮点**:
-- 活跃的开源社区 (92,517 Stars)
+- 活跃的开源社区 (92,579 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -905,19 +905,19 @@ thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persiste
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 65,346 |
+| Stars | 65,369 |
 | 语言 | JavaScript |
-| Forks | 7,212 |
-| Issues | 334 |
+| Forks | 7,210 |
+| Issues | 328 |
 | Topics | agent-computer, agent-harness, agent-orchestration, agentic-ai, ai-agents, computer-use, hermes-agent, llm, local-ai, localai, multimodal, no-code, open-claw, rag, self-hosted-ai, vector-database |
 | 许可证 | MIT License |
 
 ---
 
-Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
+Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,369 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
 
 **技术亮点**:
-- 活跃的开源社区 (65,346 Stars)
+- 活跃的开源社区 (65,369 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -939,10 +939,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,539 |
+| Stars | 89,593 |
 | 语言 | Go |
-| Forks | 10,547 |
-| Issues | 1,723 |
+| Forks | 10,561 |
+| Issues | 1,722 |
 | Topics | agent-harness, agentic-ai, agentic-retrieval, agentic-search, ai, ai-agents, context-engine, context-engineering, context-management, harness-engineering, knowledge-compilation, llm-apps, rag, retrieval-augmented-generation |
 | 许可证 | Apache License 2.0 |
 
@@ -961,10 +961,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,077 |
+| Stars | 82,094 |
 | 语言 | TypeScript |
-| Forks | 15,842 |
-| Issues | 833 |
+| Forks | 15,838 |
+| Issues | 859 |
 | Topics | agent, agent-collaboration, agent-harness, ai, cao, chatgpt, chief-agent-operator, claude, deepseek, fable, gemini, glm, gpt, knowledge-base, loop-engineering, mcp, openai, skills |
 | 许可证 | Other |
 
@@ -983,10 +983,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,932 |
+| Stars | 68,004 |
 | 语言 | Python |
-| Forks | 5,255 |
-| Issues | 573 |
+| Forks | 5,264 |
+| Issues | 577 |
 | Topics | agent, ai, anthropic, claude-code, compression, context-engineering, context-window, cursor, fastapi, langchain, llm, mcp, openai, prompt-engineering, proxy, python, rag, token-optimization, tokens, typescript |
 | 许可证 | Apache License 2.0 |
 
@@ -1005,7 +1005,7 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,525 |
+| Stars | 47,541 |
 | 语言 | Java |
 | Forks | 16,172 |
 | Issues | 38 |
@@ -1027,10 +1027,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 43,020 |
+| Stars | 43,347 |
 | 语言 | Python |
-| Forks | 4,757 |
-| Issues | 14 |
+| Forks | 4,778 |
+| Issues | 15 |
 | Topics | agent, agent-memory, ai-agent, book, coding-agent, context-engineering, large-language-models, llm, mcp, multi-agent, multimodal, rag, reinforcement-learning |
 | 许可证 | Apache License 2.0 |
 
@@ -1049,10 +1049,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 108,542 |
+| Stars | 108,575 |
 | 语言 | TypeScript |
-| Forks | 13,659 |
-| Issues | 1,058 |
+| Forks | 13,667 |
+| Issues | 1,072 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
@@ -1071,10 +1071,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 134,995 |
+| Stars | 135,152 |
 | 语言 | Python |
-| Forks | 19,831 |
-| Issues | 21 |
+| Forks | 19,863 |
+| Issues | 19 |
 | Topics | agents, llms, python, rag |
 | 许可证 | Apache License 2.0 |
 
@@ -1093,10 +1093,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,853 |
+| Stars | 45,874 |
 | 语言 | Go |
-| Forks | 4,206 |
-| Issues | 1,327 |
+| Forks | 4,210 |
+| Issues | 1,332 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
@@ -1115,10 +1115,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,405 |
+| Stars | 75,476 |
 | 语言 | Python |
-| Forks | 9,379 |
-| Issues | 182 |
+| Forks | 9,388 |
+| Issues | 183 |
 | Topics | agent, llm, rag, tutorial |
 | 许可证 | Other |
 
@@ -1137,9 +1137,9 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,887 |
+| Stars | 80,989 |
 | 语言 | TypeScript |
-| Forks | 6,801 |
+| Forks | 6,813 |
 | Issues | 292 |
 | Topics | antigravity-skills, business-knowledge, claude-code, claude-skills, codebase-analysis, codex, codex-skills, developer-tools-ai-agent, gemini-cli-skills, karpathy-llm-wiki, knowledge-base, knowledge-graph, memory, opencode-skills, pi-agent, understandcode, vibe-coding |
 | 许可证 | MIT License |
@@ -1159,7 +1159,7 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,401 |
+| Stars | 55,399 |
 | 语言 | TypeScript |
 | Forks | 24,963 |
 | Issues | 1,046 |
@@ -1187,19 +1187,19 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 237,770 |
+| Stars | 238,096 |
 | 语言 | Python |
-| Forks | 48,301 |
-| Issues | 37,141 |
+| Forks | 48,421 |
+| Issues | 37,453 |
 | Topics | ai, ai-agent, ai-agents, anthropic, chatgpt, claude, claude-code, codex, hermes, hermes-agent, llm, nous-research, openai |
 | 许可证 | MIT License |
 
 ---
 
-NousResearch/hermes-agent 是一个Python项目，拥有 237,770 Stars。The agent that grows with you...
+NousResearch/hermes-agent 是一个Python项目，拥有 238,096 Stars。The agent that grows with you...
 
 **技术亮点**:
-- 活跃的开源社区 (237,770 Stars)
+- 活跃的开源社区 (238,096 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -1221,19 +1221,19 @@ NousResearch/hermes-agent 是一个Python项目，拥有 237,770 Stars。The age
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 150,255 |
+| Stars | 150,347 |
 | 语言 | Python |
-| Forks | 21,940 |
-| Issues | 224 |
+| Forks | 21,950 |
+| Issues | 226 |
 | Topics | ai, llm, llm-ui, llm-webui, llms, mcp, ollama, ollama-webui, open-webui, openai, openapi, rag, self-hosted, ui, webui |
 | 许可证 | Other |
 
 ---
 
-open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
+open-webui/open-webui 是一个Python项目，拥有 150,347 Stars。User-friendly AI Interface (Supports Ollama, OpenAI API, ...)...
 
 **技术亮点**:
-- 活跃的开源社区 (150,255 Stars)
+- 活跃的开源社区 (150,347 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -1255,19 +1255,19 @@ open-webui/open-webui 是一个Python项目，拥有 150,255 Stars。User-friend
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 243,977 |
+| Stars | 244,187 |
 | 语言 | JavaScript |
-| Forks | 36,904 |
-| Issues | 154 |
+| Forks | 36,925 |
+| Issues | 120 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
+affaan-m/ECC 是一个JavaScript项目，拥有 244,187 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
 
 **技术亮点**:
-- 活跃的开源社区 (243,977 Stars)
+- 活跃的开源社区 (244,187 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -1289,19 +1289,19 @@ affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harnes
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 92,517 |
+| Stars | 92,579 |
 | 语言 | JavaScript |
-| Forks | 8,130 |
-| Issues | 263 |
+| Forks | 8,142 |
+| Issues | 266 |
 | Topics | ai, ai-agents, ai-memory, anthropic, artificial-intelligence, chromadb, claude, claude-agent-sdk, claude-agents, claude-code, claude-code-plugin, claude-skills, embeddings, long-term-memory, mem0, memory-engine, openmemory, rag, sqlite, supermemory |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
+thedotmack/claude-mem 是一个JavaScript项目，拥有 92,579 Stars。Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during ses...
 
 **技术亮点**:
-- 活跃的开源社区 (92,517 Stars)
+- 活跃的开源社区 (92,579 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -1323,19 +1323,19 @@ thedotmack/claude-mem 是一个JavaScript项目，拥有 92,517 Stars。Persiste
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 81,904 |
+| Stars | 82,162 |
 | 语言 | JavaScript |
-| Forks | 5,608 |
+| Forks | 5,624 |
 | Issues | 58 |
 | Topics | agent, ai, claude, claude-code, codex, coding, design, frontend, lowcode, nocode, skill, skills, vibecoding |
 | 许可证 | MIT License |
 
 ---
 
-Leonxlnx/taste-skill 是一个JavaScript项目，拥有 81,904 Stars。Taste-Skill - gives your AI good taste. stops the AI from generating boring, generic slop ...
+Leonxlnx/taste-skill 是一个JavaScript项目，拥有 82,162 Stars。Taste-Skill - gives your AI good taste. stops the AI from generating boring, generic slop ...
 
 **技术亮点**:
-- 活跃的开源社区 (81,904 Stars)
+- 活跃的开源社区 (82,162 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -1357,19 +1357,19 @@ Leonxlnx/taste-skill 是一个JavaScript项目，拥有 81,904 Stars。Taste-Ski
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,100 |
+| Stars | 69,249 |
 | 语言 | JavaScript |
-| Forks | 13,055 |
-| Issues | 310 |
+| Forks | 13,091 |
+| Issues | 330 |
 | Topics | ai, ai-agent, anthropic, ats, automation, beginner-friendly, career, careerops, claude, claude-code, cli, first-timers-only, golang, good-first-issue, interview-prep, job-application, job-hunting, job-search, open-source, resume |
 | 许可证 | MIT License |
 
 ---
 
-santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
+santifer/career-ops 是一个JavaScript项目，拥有 69,249 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
 
 **技术亮点**:
-- 活跃的开源社区 (69,100 Stars)
+- 活跃的开源社区 (69,249 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -1391,19 +1391,19 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,767 |
+| Stars | 63,797 |
 | 语言 | JavaScript |
-| Forks | 10,458 |
+| Forks | 10,464 |
 | Issues | 49 |
 | Topics | ai, ai-agents, ai-prompts, anthropic, chatbot, chatgpt, claude, claude-code, codex, cursor, gemini, generative-ai, google, grok, llm, openai, prompt, prompt-engineering, system-prompt, system-prompts |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 ---
 
-asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
+asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,797 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
 
 **技术亮点**:
-- 活跃的开源社区 (63,767 Stars)
+- 活跃的开源社区 (63,797 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -1425,19 +1425,19 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 101,635 |
+| Stars | 101,747 |
 | 语言 | Go |
-| Forks | 5,905 |
-| Issues | 379 |
+| Forks | 5,917 |
+| Issues | 335 |
 | Topics | ai, anthropic, caveman, claude, claude-code, llm, meme, prompt-engineering, skill, tokens |
 | 许可证 | Other |
 
 ---
 
-JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking ...
+JuliusBrussee/caveman 是一个Go项目，拥有 101,747 Stars。🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking ...
 
 **技术亮点**:
-- 活跃的开源社区 (101,635 Stars)
+- 活跃的开源社区 (101,747 Stars)
 - 使用 Go 开发
 
 **适用场景**:
@@ -1459,10 +1459,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,077 |
+| Stars | 82,094 |
 | 语言 | TypeScript |
-| Forks | 15,842 |
-| Issues | 833 |
+| Forks | 15,838 |
+| Issues | 859 |
 | Topics | agent, agent-collaboration, agent-harness, ai, cao, chatgpt, chief-agent-operator, claude, deepseek, fable, gemini, glm, gpt, knowledge-base, loop-engineering, mcp, openai, skills |
 | 许可证 | Other |
 
@@ -1481,10 +1481,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 168,124 |
+| Stars | 168,174 |
 | 语言 | HTML |
-| Forks | 21,687 |
-| Issues | 69 |
+| Forks | 21,683 |
+| Issues | 70 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Other |
 
@@ -1503,10 +1503,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,932 |
+| Stars | 68,004 |
 | 语言 | Python |
-| Forks | 5,255 |
-| Issues | 573 |
+| Forks | 5,264 |
+| Issues | 577 |
 | Topics | agent, ai, anthropic, claude-code, compression, context-engineering, context-window, cursor, fastapi, langchain, llm, mcp, openai, prompt-engineering, proxy, python, rag, token-optimization, tokens, typescript |
 | 许可证 | Apache License 2.0 |
 
@@ -1525,10 +1525,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,477 |
+| Stars | 85,568 |
 | 语言 | TypeScript |
-| Forks | 11,180 |
-| Issues | 604 |
+| Forks | 11,202 |
+| Issues | 606 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | MIT License |
 
@@ -1547,10 +1547,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,584 |
+| Stars | 122,910 |
 | 语言 | Python |
-| Forks | 13,124 |
-| Issues | 90 |
+| Forks | 13,168 |
+| Issues | 91 |
 | Topics | ai-skills, antigravity, claude, claude-code, codex, command-line, copilot, cursor-ai, html5, kiro, landing-page, mobile-ui, qoder, react, tailwindcss, trae, ui-design, uikit, windsurf-ai |
 | 许可证 | MIT License |
 
@@ -1569,10 +1569,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,344 |
+| Stars | 90,411 |
 | 语言 | Python |
-| Forks | 21,359 |
-| Issues | 7,159 |
+| Forks | 21,400 |
+| Issues | 7,192 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
 
@@ -1591,9 +1591,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 153,824 |
+| Stars | 153,866 |
 | 语言 | Python |
-| Forks | 9,955 |
+| Forks | 9,960 |
 | Issues | 992 |
 | Topics | agents, chatgpt, generative-ai, large-language-models, multiagent, react-flow |
 | 许可证 | MIT License |
@@ -1613,10 +1613,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,078 |
+| Stars | 49,229 |
 | 语言 | Go |
-| Forks | 7,550 |
-| Issues | 480 |
+| Forks | 7,554 |
+| Issues | 488 |
 | Topics | antigravity, claude-code, cluade, codex, gemini, openai |
 | 许可证 | MIT License |
 
@@ -1635,10 +1635,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,403 |
+| Stars | 116,339 |
 | 语言 | JavaScript |
-| Forks | 6,311 |
-| Issues | 179 |
+| Forks | 6,350 |
+| Issues | 182 |
 | Topics | agent-skills, ai-agents, claude, claude-code, claude-code-plugin, cursor-rules, developer-tools, llm, prompt-engineering, yagni |
 | 许可证 | MIT License |
 
@@ -1657,10 +1657,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 179,668 |
+| Stars | 179,738 |
 | 语言 | Go |
-| Forks | 17,598 |
-| Issues | 3,827 |
+| Forks | 17,605 |
+| Issues | 3,844 |
 | Topics | deepseek, gemma, gemma3, glm, go, golang, gpt-oss, llama, llama3, llm, llms, minimax, mistral, ollama, qwen |
 | 许可证 | MIT License |
 
@@ -1679,10 +1679,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,944 |
+| Stars | 92,022 |
 | 语言 | Rust |
-| Forks | 12,203 |
-| Issues | 568 |
+| Forks | 12,217 |
+| Issues | 571 |
 | Topics | awesome, claude, densepose, esp32, firmware, home-assistant, home-automation, iot, monitoring, networking, npm, pose-estimation, react, rf, self-learning, skills, spatial-intelligence, typescript, wifi, wifi-security |
 | 许可证 | MIT License |
 
@@ -1701,7 +1701,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 55,401 |
+| Stars | 55,399 |
 | 语言 | TypeScript |
 | Forks | 24,963 |
 | Issues | 1,046 |
@@ -1723,9 +1723,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 88,660 |
+| Stars | 88,667 |
 | 语言 | TypeScript |
-| Forks | 59,178 |
+| Forks | 59,171 |
 | Issues | 853 |
 | Topics | calclaude, chatgpt, claude, cross-platform, desktop, fe, gemini, gemini-pro, gemini-server, gemini-ultra, gpt-4o, groq, nextjs, ollama, react, tauri, tauri-app, vercel, webui |
 | 许可证 | MIT License |
@@ -1748,10 +1748,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 176,856 |
+| Stars | 177,017 |
 | 语言 | Python |
-| Forks | 13,003 |
-| Issues | 903 |
+| Forks | 13,011 |
+| Issues | 905 |
 | Topics | autogen, autogen-extension, langchain, markdown, microsoft-office, openai, pdf |
 | 许可证 | MIT License |
 
@@ -1776,10 +1776,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,340 |
+| Stars | 80,350 |
 | 语言 | Go |
-| Forks | 6,604 |
-| Issues | 385 |
+| Forks | 6,609 |
+| Issues | 387 |
 | Topics | ai, alerting, cncf, data-visualization, database, devops, docker, grafana, influxdb, kubernetes, linux, machine-learning, mcp, mongodb, monitoring, mysql, netdata, observability, postgresql, prometheus |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -1798,10 +1798,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 168,124 |
+| Stars | 168,174 |
 | 语言 | HTML |
-| Forks | 21,687 |
-| Issues | 69 |
+| Forks | 21,683 |
+| Issues | 70 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Other |
 
@@ -1820,9 +1820,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 103,960 |
+| Stars | 104,009 |
 | 语言 | Jupyter Notebook |
-| Forks | 15,909 |
+| Forks | 15,919 |
 | Issues | 2 |
 | Topics | ai, artificial-intelligence, attention-mechanism, deep-learning, finetuning, from-scratch, generative-ai, gpt, instruction-tuning, language-model, large-language-models, llm, machine-learning, natural-language-processing, pretraining, python, pytorch, tokenizer, transformers |
 | 许可证 | Other |
@@ -1842,10 +1842,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 164,580 |
+| Stars | 164,612 |
 | 语言 | Python |
-| Forks | 34,400 |
-| Issues | 2,395 |
+| Forks | 34,386 |
+| Issues | 2,402 |
 | Topics | audio, deep-learning, deepseek, gemma, glm, hacktoberfest, llm, machine-learning, model-hub, natural-language-processing, nlp, pretrained-models, python, pytorch, pytorch-transformers, qwen, speech-recognition, transformer, vlm |
 | 许可证 | Apache License 2.0 |
 
@@ -1864,10 +1864,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,344 |
+| Stars | 90,411 |
 | 语言 | Python |
-| Forks | 21,359 |
-| Issues | 7,159 |
+| Forks | 21,400 |
+| Issues | 7,192 |
 | Topics | amd, blackwell, cuda, deepseek, deepseek-v3, gpt, gpt-oss, inference, kimi, llama, llm, llm-serving, model-serving, moe, openai, pytorch, qwen, qwen3, tpu, transformer |
 | 许可证 | Apache License 2.0 |
 
@@ -1886,10 +1886,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 130,470 |
+| Stars | 130,611 |
 | 语言 | Python |
-| Forks | 15,374 |
-| Issues | 4,730 |
+| Forks | 15,390 |
+| Issues | 4,740 |
 | Topics | ai, comfy, comfyui, python, pytorch, stable-diffusion |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -1908,10 +1908,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 102,654 |
+| Stars | 102,659 |
 | 语言 | Python |
-| Forks | 29,026 |
-| Issues | 17,420 |
+| Forks | 29,031 |
+| Issues | 17,440 |
 | Topics | autograd, deep-learning, gpu, machine-learning, neural-network, numpy, python, tensor |
 | 许可证 | Other |
 
@@ -1936,19 +1936,19 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,025 |
+| Stars | 112,274 |
 | 语言 | Python |
-| Forks | 10,886 |
-| Issues | 1,158 |
+| Forks | 10,927 |
+| Issues | 1,152 |
 | Topics | ai-agents, antigravity, ast, claude-code, code-analysis, code-search, codex, cursor, developer-tools, gemini, graphrag, knowledge-graph, leiden, llm, mcp, openclaw, rag, skills, tree-sitter |
 | 许可证 | Apache License 2.0 |
 
 ---
 
-Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
+Graphify-Labs/graphify 是一个Python项目，拥有 112,274 Stars。Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. ...
 
 **技术亮点**:
-- 活跃的开源社区 (112,025 Stars)
+- 活跃的开源社区 (112,274 Stars)
 - 使用 Python 开发
 
 **适用场景**:
@@ -1970,19 +1970,19 @@ Graphify-Labs/graphify 是一个Python项目，拥有 112,025 Stars。Turn any c
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 243,977 |
+| Stars | 244,187 |
 | 语言 | JavaScript |
-| Forks | 36,904 |
-| Issues | 154 |
+| Forks | 36,925 |
+| Issues | 120 |
 | Topics | ai-agents, anthropic, claude, claude-code, developer-tools, llm, mcp, productivity |
 | 许可证 | MIT License |
 
 ---
 
-affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
+affaan-m/ECC 是一个JavaScript项目，拥有 244,187 Stars。The agent harness performance optimization system. Skills, instincts, memory, security, and research...
 
 **技术亮点**:
-- 活跃的开源社区 (243,977 Stars)
+- 活跃的开源社区 (244,187 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -2004,19 +2004,19 @@ affaan-m/ECC 是一个JavaScript项目，拥有 243,977 Stars。The agent harnes
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,100 |
+| Stars | 69,249 |
 | 语言 | JavaScript |
-| Forks | 13,055 |
-| Issues | 310 |
+| Forks | 13,091 |
+| Issues | 330 |
 | Topics | ai, ai-agent, anthropic, ats, automation, beginner-friendly, career, careerops, claude, claude-code, cli, first-timers-only, golang, good-first-issue, interview-prep, job-application, job-hunting, job-search, open-source, resume |
 | 许可证 | MIT License |
 
 ---
 
-santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
+santifer/career-ops 是一个JavaScript项目，拥有 69,249 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
 
 **技术亮点**:
-- 活跃的开源社区 (69,100 Stars)
+- 活跃的开源社区 (69,249 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -2038,10 +2038,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,727 |
+| Stars | 48,749 |
 | 语言 | Go |
-| Forks | 4,397 |
-| Issues | 222 |
+| Forks | 4,399 |
+| Issues | 218 |
 | Topics | agents, ai, api, audio-generation, decentralized, distributed, image-generation, libp2p, llama, llm, mamba, mcp, musicgen, object-detection, rerank, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
@@ -2060,7 +2060,7 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 47,525 |
+| Stars | 47,541 |
 | 语言 | Java |
 | Forks | 16,172 |
 | Issues | 38 |
@@ -2082,10 +2082,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 85,477 |
+| Stars | 85,568 |
 | 语言 | TypeScript |
-| Forks | 11,180 |
-| Issues | 604 |
+| Forks | 11,202 |
+| Issues | 606 |
 | Topics | agent, artificial-intelligence, chatgpt, claude-ai, cli, developer-tools, gpt, llm, openai |
 | 许可证 | MIT License |
 
@@ -2104,10 +2104,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 202,724 |
+| Stars | 202,804 |
 | 语言 | TypeScript |
-| Forks | 60,444 |
-| Issues | 1,117 |
+| Forks | 60,457 |
+| Issues | 1,122 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
@@ -2126,10 +2126,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,403 |
+| Stars | 116,339 |
 | 语言 | JavaScript |
-| Forks | 6,311 |
-| Issues | 179 |
+| Forks | 6,350 |
+| Issues | 182 |
 | Topics | agent-skills, ai-agents, claude, claude-code, claude-code-plugin, cursor-rules, developer-tools, llm, prompt-engineering, yagni |
 | 许可证 | MIT License |
 
@@ -2148,10 +2148,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 472,362 |
+| Stars | 472,768 |
 | 语言 | Python |
-| Forks | 52,109 |
-| Issues | 1,807 |
+| Forks | 52,183 |
+| Issues | 1,822 |
 | Topics | api, apis, dataset, development, free, list, lists, open-source, public, public-api, public-apis, resources, software |
 | 许可证 | MIT License |
 
@@ -2170,10 +2170,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 187,579 |
+| Stars | 187,744 |
 | 语言 | Python |
-| Forks | 16,208 |
-| Issues | 2,597 |
+| Forks | 16,235 |
+| Issues | 2,598 |
 | Topics | cli, downloader, python, sponsorblock, youtube-dl, youtube-downloader, yt-dlp |
 | 许可证 | The Unlicense |
 
@@ -2192,10 +2192,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 101,911 |
+| Stars | 101,924 |
 | 语言 | Python |
-| Forks | 9,825 |
-| Issues | 79 |
+| Forks | 9,828 |
+| Issues | 81 |
 | Topics | api, async, asyncio, fastapi, framework, json, json-schema, openapi, openapi3, pydantic, python, python-types, python3, redoc, rest, starlette, swagger, swagger-ui, uvicorn, web |
 | 许可证 | MIT License |
 
@@ -2214,10 +2214,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,561 |
+| Stars | 90,595 |
 | 语言 | Python |
-| Forks | 10,643 |
-| Issues | 334 |
+| Forks | 10,651 |
+| Issues | 337 |
 | Topics | cli, cti, cybersecurity, forensics, hacktoberfest, information-gathering, infosec, linux, osint, pentesting, python, python3, reconnaissance, redteam, sherlock, tools |
 | 许可证 | MIT License |
 
@@ -2236,10 +2236,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 189,755 |
+| Stars | 190,041 |
 | 语言 | TypeScript |
-| Forks | 41,872 |
-| Issues | 20,176 |
+| Forks | 41,887 |
+| Issues | 20,198 |
 | Topics | editor, electron, microsoft, typescript, visual-studio-code |
 | 许可证 | MIT License |
 
@@ -2258,9 +2258,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,515 |
+| Stars | 95,521 |
 | 语言 | TypeScript |
-| Forks | 9,573 |
+| Forks | 9,574 |
 | Issues | 263 |
 | Topics | automation, chrome, chromium, developer-tools, firefox, headless-chrome, node-module, testing, web |
 | 许可证 | Apache License 2.0 |
@@ -2280,7 +2280,7 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 82,702 |
+| Stars | 82,716 |
 | 语言 | Go |
 | Forks | 2,862 |
 | Issues | 327 |
@@ -2302,7 +2302,7 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 81,738 |
+| Stars | 81,759 |
 | 语言 | Go |
 | Forks | 3,005 |
 | Issues | 1,024 |
@@ -2327,9 +2327,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 87,779 |
+| Stars | 87,888 |
 | 语言 | TypeScript |
-| Forks | 8,660 |
+| Forks | 8,666 |
 | Issues | 372 |
 | Topics | editor, oss, videoeditor |
 | 许可证 | MIT License |
@@ -2355,19 +2355,19 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,100 |
+| Stars | 69,249 |
 | 语言 | JavaScript |
-| Forks | 13,055 |
-| Issues | 310 |
+| Forks | 13,091 |
+| Issues | 330 |
 | Topics | ai, ai-agent, anthropic, ats, automation, beginner-friendly, career, careerops, claude, claude-code, cli, first-timers-only, golang, good-first-issue, interview-prep, job-application, job-hunting, job-search, open-source, resume |
 | 许可证 | MIT License |
 
 ---
 
-santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
+santifer/career-ops 是一个JavaScript项目，拥有 69,249 Stars。Open-source AI job search: scan job portals, evaluate listings into a structured A-H report with a g...
 
 **技术亮点**:
-- 活跃的开源社区 (69,100 Stars)
+- 活跃的开源社区 (69,249 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -2389,10 +2389,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,340 |
+| Stars | 80,350 |
 | 语言 | Go |
-| Forks | 6,604 |
-| Issues | 385 |
+| Forks | 6,609 |
+| Issues | 387 |
 | Topics | ai, alerting, cncf, data-visualization, database, devops, docker, grafana, influxdb, kubernetes, linux, machine-learning, mcp, mongodb, monitoring, mysql, netdata, observability, postgresql, prometheus |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -2411,10 +2411,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 202,724 |
+| Stars | 202,804 |
 | 语言 | TypeScript |
-| Forks | 60,444 |
-| Issues | 1,117 |
+| Forks | 60,457 |
+| Issues | 1,122 |
 | Topics | ai, apis, automation, cli, data-flow, development, integration-framework, integrations, ipaas, low-code, low-code-platform, mcp, mcp-client, mcp-server, n8n, no-code, self-hosted, typescript, workflow, workflow-automation |
 | 许可证 | Other |
 
@@ -2433,9 +2433,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 52,198 |
+| Stars | 52,202 |
 | 语言 | Go |
-| Forks | 10,477 |
+| Forks | 10,479 |
 | Issues | 331 |
 | Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
 | 许可证 | Apache License 2.0 |
@@ -2455,10 +2455,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 125,326 |
+| Stars | 125,568 |
 | 语言 | Go |
-| Forks | 43,940 |
-| Issues | 2,975 |
+| Forks | 43,945 |
+| Issues | 2,994 |
 | Topics | cncf, containers, go, kubernetes |
 | 许可证 | Apache License 2.0 |
 
@@ -2477,10 +2477,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,011 |
+| Stars | 72,015 |
 | 语言 | Go |
-| Forks | 19,207 |
-| Issues | 3,891 |
+| Forks | 19,210 |
+| Issues | 3,902 |
 | Topics | containers, docker, go, golang |
 | 许可证 | Apache License 2.0 |
 
@@ -2499,10 +2499,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 57,664 |
+| Stars | 57,673 |
 | 语言 | Go |
-| Forks | 7,074 |
-| Issues | 2,524 |
+| Forks | 7,075 |
+| Issues | 2,515 |
 | Topics | bitbucket, cicd, devops, docker-registry-v2, git, git-gui, git-lfs, git-server, gitea, github, github-actions, gitlab, go, golang, hacktoberfest, maven-server, npm-registry, self-hosted, typescript, vue |
 | 许可证 | MIT License |
 
@@ -2521,9 +2521,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 95,515 |
+| Stars | 95,521 |
 | 语言 | TypeScript |
-| Forks | 9,573 |
+| Forks | 9,574 |
 | Issues | 263 |
 | Topics | automation, chrome, chromium, developer-tools, firefox, headless-chrome, node-module, testing, web |
 | 许可证 | Apache License 2.0 |
@@ -2543,9 +2543,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,722 |
+| Stars | 90,746 |
 | 语言 | JavaScript |
-| Forks | 8,303 |
+| Forks | 8,312 |
 | Issues | 792 |
 | Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
 | 许可证 | MIT License |
@@ -2565,10 +2565,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 64,636 |
+| Stars | 64,656 |
 | 语言 | Go |
-| Forks | 6,170 |
-| Issues | 914 |
+| Forks | 6,174 |
+| Issues | 913 |
 | Topics | consul, docker, etcd, go, golang, kubernetes, letsencrypt, load-balancer, marathon, mesos, microservice, reverse-proxy, traefik, zookeeper |
 | 许可证 | MIT License |
 
@@ -2587,10 +2587,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,624 |
+| Stars | 62,638 |
 | 语言 | Go |
-| Forks | 4,701 |
-| Issues | 45 |
+| Forks | 4,698 |
+| Issues | 46 |
 | Topics | docker, foss, go, markdown, memo, microblog, note-taking, notecard, own-your-data, react, self-hosted, social-network, sqlite |
 | 许可证 | MIT License |
 
@@ -2612,7 +2612,7 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 71,684 |
+| Stars | 71,697 |
 | 语言 | Go |
 | Forks | 2,019 |
 | Issues | 372 |
@@ -2640,10 +2640,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,340 |
+| Stars | 80,350 |
 | 语言 | Go |
-| Forks | 6,604 |
-| Issues | 385 |
+| Forks | 6,609 |
+| Issues | 387 |
 | Topics | ai, alerting, cncf, data-visualization, database, devops, docker, grafana, influxdb, kubernetes, linux, machine-learning, mcp, mongodb, monitoring, mysql, netdata, observability, postgresql, prometheus |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -2662,10 +2662,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 84,696 |
+| Stars | 84,890 |
 | 语言 | TypeScript |
-| Forks | 12,717 |
-| Issues | 334 |
+| Forks | 12,754 |
+| Issues | 362 |
 | Topics | agent, ai, dashboard, geopolitics, mcp, mcp-server, monitoring, news, opensource, osint, palantir, situation |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -2684,10 +2684,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 91,944 |
+| Stars | 92,022 |
 | 语言 | Rust |
-| Forks | 12,203 |
-| Issues | 568 |
+| Forks | 12,217 |
+| Issues | 571 |
 | Topics | awesome, claude, densepose, esp32, firmware, home-assistant, home-automation, iot, monitoring, networking, npm, pose-estimation, react, rf, self-learning, skills, spatial-intelligence, typescript, wifi, wifi-security |
 | 许可证 | MIT License |
 
@@ -2706,9 +2706,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,722 |
+| Stars | 90,746 |
 | 语言 | JavaScript |
-| Forks | 8,303 |
+| Forks | 8,312 |
 | Issues | 792 |
 | Topics | docker, monitor, monitoring, responsive, self-hosted, selfhosted, single-page-app, socket-io, uptime, uptime-monitoring, webapp, websocket |
 | 许可证 | MIT License |
@@ -2728,10 +2728,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 65,878 |
+| Stars | 65,887 |
 | 语言 | Go |
-| Forks | 10,806 |
-| Issues | 879 |
+| Forks | 10,812 |
+| Issues | 881 |
 | Topics | alerting, graphing, hacktoberfest, metrics, monitoring, prometheus, time-series |
 | 许可证 | Apache License 2.0 |
 
@@ -2756,10 +2756,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,727 |
+| Stars | 48,749 |
 | 语言 | Go |
-| Forks | 4,397 |
-| Issues | 222 |
+| Forks | 4,399 |
+| Issues | 218 |
 | Topics | agents, ai, api, audio-generation, decentralized, distributed, image-generation, libp2p, llama, llm, mamba, mcp, musicgen, object-detection, rerank, stable-diffusion, text-generation, tts |
 | 许可证 | MIT License |
 
@@ -2778,10 +2778,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 472,362 |
+| Stars | 472,768 |
 | 语言 | Python |
-| Forks | 52,109 |
-| Issues | 1,807 |
+| Forks | 52,183 |
+| Issues | 1,822 |
 | Topics | api, apis, dataset, development, free, list, lists, open-source, public, public-api, public-apis, resources, software |
 | 许可证 | MIT License |
 
@@ -2800,10 +2800,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 101,911 |
+| Stars | 101,924 |
 | 语言 | Python |
-| Forks | 9,825 |
-| Issues | 79 |
+| Forks | 9,828 |
+| Issues | 81 |
 | Topics | api, async, asyncio, fastapi, framework, json, json-schema, openapi, openapi3, pydantic, python, python-types, python3, redoc, rest, starlette, swagger, swagger-ui, uvicorn, web |
 | 许可证 | MIT License |
 
@@ -2822,10 +2822,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 101,005 |
+| Stars | 101,007 |
 | 语言 | TypeScript |
-| Forks | 27,439 |
-| Issues | 1,146 |
+| Forks | 27,437 |
+| Issues | 1,153 |
 | Topics | angular, javascript, pwa, typescript, web, web-framework, web-performance |
 | 许可证 | MIT License |
 
@@ -2844,9 +2844,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 69,401 |
+| Stars | 69,403 |
 | 语言 | JavaScript |
-| Forks | 24,854 |
+| Forks | 24,864 |
 | Issues | 228 |
 | Topics | express, javascript, nodejs, server |
 | 许可证 | MIT License |
@@ -2866,10 +2866,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,301 |
+| Stars | 75,323 |
 | 语言 | Go |
-| Forks | 4,923 |
-| Issues | 267 |
+| Forks | 4,928 |
+| Issues | 269 |
 | Topics | acme, automatic-https, caddy, caddyfile, go, golang, http, http-server, http3, https, privacy, reverse-proxy, security, tls, web-server |
 | 许可证 | Apache License 2.0 |
 
@@ -2888,9 +2888,9 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 60,867 |
+| Stars | 60,880 |
 | 语言 | Go |
-| Forks | 3,662 |
+| Forks | 3,663 |
 | Issues | 19 |
 | Topics | authentication, backend, golang, realtime |
 | 许可证 | MIT License |
@@ -2913,10 +2913,10 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,129 |
+| Stars | 89,139 |
 | 语言 | Go |
-| Forks | 8,682 |
-| Issues | 765 |
+| Forks | 8,683 |
+| Issues | 766 |
 | Topics | framework, gin, go, middleware, performance, router, server |
 | 许可证 | MIT License |
 
@@ -2941,19 +2941,19 @@ santifer/career-ops 是一个JavaScript项目，拥有 69,100 Stars。Open-sourc
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 65,346 |
+| Stars | 65,369 |
 | 语言 | JavaScript |
-| Forks | 7,212 |
-| Issues | 334 |
+| Forks | 7,210 |
+| Issues | 328 |
 | Topics | agent-computer, agent-harness, agent-orchestration, agentic-ai, ai-agents, computer-use, hermes-agent, llm, local-ai, localai, multimodal, no-code, open-claw, rag, self-hosted-ai, vector-database |
 | 许可证 | MIT License |
 
 ---
 
-Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
+Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,369 Stars。Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-fi...
 
 **技术亮点**:
-- 活跃的开源社区 (65,346 Stars)
+- 活跃的开源社区 (65,369 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -2975,10 +2975,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 80,340 |
+| Stars | 80,350 |
 | 语言 | Go |
-| Forks | 6,604 |
-| Issues | 385 |
+| Forks | 6,609 |
+| Issues | 387 |
 | Topics | ai, alerting, cncf, data-visualization, database, devops, docker, grafana, influxdb, kubernetes, linux, machine-learning, mcp, mongodb, monitoring, mysql, netdata, observability, postgresql, prometheus |
 | 许可证 | GNU General Public License v3.0 |
 
@@ -2997,10 +2997,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 108,542 |
+| Stars | 108,575 |
 | 语言 | TypeScript |
-| Forks | 13,659 |
-| Issues | 1,058 |
+| Forks | 13,667 |
+| Issues | 1,072 |
 | Topics | ai, alternative, auth, database, deno, embeddings, example, firebase, nextjs, oauth2, pgvector, postgis, postgres, postgresql, postgrest, realtime, supabase, vectors, websockets |
 | 许可证 | Apache License 2.0 |
 
@@ -3019,10 +3019,10 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 45,853 |
+| Stars | 45,874 |
 | 语言 | Go |
-| Forks | 4,206 |
-| Issues | 1,327 |
+| Forks | 4,210 |
+| Issues | 1,332 |
 | Topics | anns, cloud-native, diskann, distributed, embedding-database, embedding-similarity, embedding-store, faiss, golang, hnsw, image-search, llm, nearest-neighbor-search, rag, vector-database, vector-search, vector-similarity, vector-store |
 | 许可证 | Apache License 2.0 |
 
@@ -3041,9 +3041,9 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 52,198 |
+| Stars | 52,202 |
 | 语言 | Go |
-| Forks | 10,477 |
+| Forks | 10,479 |
 | Issues | 331 |
 | Topics | cncf, consensus, database, distributed-database, distributed-systems, etcd, go, key-value, kubernetes, raft |
 | 许可证 | Apache License 2.0 |
@@ -3069,19 +3069,19 @@ Mintplex-Labs/anything-llm 是一个JavaScript项目，拥有 65,346 Stars。Sto
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,767 |
+| Stars | 63,797 |
 | 语言 | JavaScript |
-| Forks | 10,458 |
+| Forks | 10,464 |
 | Issues | 49 |
 | Topics | ai, ai-agents, ai-prompts, anthropic, chatbot, chatgpt, claude, claude-code, codex, cursor, gemini, generative-ai, google, grok, llm, openai, prompt, prompt-engineering, system-prompt, system-prompts |
 | 许可证 | Creative Commons Zero v1.0 Universal |
 
 ---
 
-asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
+asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,797 Stars。Extracted system prompts from Anthropic - Claude Fable 5, Opus 5, Claude Design, Claude Code. OpenAI...
 
 **技术亮点**:
-- 活跃的开源社区 (63,767 Stars)
+- 活跃的开源社区 (63,797 Stars)
 - 使用 JavaScript 开发
 
 **适用场景**:
@@ -3103,19 +3103,19 @@ asgeirtj/system_prompts_leaks 是一个JavaScript项目，拥有 63,767 Stars。
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 101,635 |
+| Stars | 101,747 |
 | 语言 | Go |
-| Forks | 5,905 |
-| Issues | 379 |
+| Forks | 5,917 |
+| Issues | 335 |
 | Topics | ai, anthropic, caveman, claude, claude-code, llm, meme, prompt-engineering, skill, tokens |
 | 许可证 | Other |
 
 ---
 
-JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking ...
+JuliusBrussee/caveman 是一个Go项目，拥有 101,747 Stars。🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking ...
 
 **技术亮点**:
-- 活跃的开源社区 (101,635 Stars)
+- 活跃的开源社区 (101,747 Stars)
 - 使用 Go 开发
 
 **适用场景**:
@@ -3137,10 +3137,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 168,124 |
+| Stars | 168,174 |
 | 语言 | HTML |
-| Forks | 21,687 |
-| Issues | 69 |
+| Forks | 21,683 |
+| Issues | 70 |
 | Topics | ai, artificial-intelligence, awesome-list, chatgpt, chatgpt-prompts, claude, gemini, gpt, gpt-4, llm, machine-learning, nextjs, open-source, openai, prompt-engineering, prompts, prompts-chat, typescript |
 | 许可证 | Other |
 
@@ -3159,10 +3159,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,932 |
+| Stars | 68,004 |
 | 语言 | Python |
-| Forks | 5,255 |
-| Issues | 573 |
+| Forks | 5,264 |
+| Issues | 577 |
 | Topics | agent, ai, anthropic, claude-code, compression, context-engineering, context-window, cursor, fastapi, langchain, llm, mcp, openai, prompt-engineering, proxy, python, rag, token-optimization, tokens, typescript |
 | 许可证 | Apache License 2.0 |
 
@@ -3181,10 +3181,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 115,403 |
+| Stars | 116,339 |
 | 语言 | JavaScript |
-| Forks | 6,311 |
-| Issues | 179 |
+| Forks | 6,350 |
+| Issues | 182 |
 | Topics | agent-skills, ai-agents, claude, claude-code, claude-code-plugin, cursor-rules, developer-tools, llm, prompt-engineering, yagni |
 | 许可证 | MIT License |
 
@@ -3203,10 +3203,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 75,405 |
+| Stars | 75,476 |
 | 语言 | Python |
-| Forks | 9,379 |
-| Issues | 182 |
+| Forks | 9,388 |
+| Issues | 183 |
 | Topics | agent, llm, rag, tutorial |
 | 许可证 | Other |
 
@@ -3225,9 +3225,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 316,787 |
+| Stars | 317,007 |
 | 语言 | Python |
-| Forks | 28,600 |
+| Forks | 28,607 |
 | Issues | 18 |
 | Topics | awesome, awesome-list, python, python-frameworks, python-libraries, python-tools |
 | 许可证 | Other |
@@ -3247,10 +3247,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 281,198 |
+| Stars | 281,276 |
 | 语言 | Python |
-| Forks | 36,057 |
-| Issues | 271 |
+| Forks | 36,067 |
+| Issues | 273 |
 | Topics | beginner-project, cpp, golang, javascript, project, python, tutorial, webdevelopment |
 | 许可证 | MIT License |
 
@@ -3269,10 +3269,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,957 |
+| Stars | 90,961 |
 | 语言 | TypeScript |
-| Forks | 10,413 |
-| Issues | 1,774 |
+| Forks | 10,416 |
+| Issues | 1,771 |
 | Topics | angular, components, design-systems, documentation, html, javascript, react, react-native, stories, storybook, styleguide, svelte, testing, typescript, ui, vite, vue, web-components, webpack, workshop |
 | 许可证 | MIT License |
 
@@ -3291,10 +3291,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,974 |
+| Stars | 89,982 |
 | 语言 | TypeScript |
-| Forks | 9,197 |
-| Issues | 1,751 |
+| Forks | 9,199 |
+| Issues | 1,753 |
 | Topics | diagrams, diagrams-as-code, documentation, flowchart, javascript, mindmap, typescript, uml-diagrams |
 | 许可证 | MIT License |
 
@@ -3313,9 +3313,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 61,918 |
+| Stars | 61,962 |
 | 语言 | JavaScript |
-| Forks | 6,273 |
+| Forks | 6,274 |
 | Issues | 31 |
 | Topics | chinese, english-learning, tutorial |
 | 许可证 | Other |
@@ -3335,10 +3335,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 182,556 |
+| Stars | 182,623 |
 | 语言 | Go |
-| Forks | 13,517 |
-| Issues | 219 |
+| Forks | 13,522 |
+| Issues | 220 |
 | Topics | awesome, awesome-list, go, golang, golang-library, hacktoberfest |
 | 许可证 | MIT License |
 
@@ -3360,7 +3360,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 128,849 |
+| Stars | 128,859 |
 | 语言 | JavaScript |
 | Forks | 12,484 |
 | Issues | 0 |
@@ -3388,10 +3388,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,783 |
+| Stars | 99,067 |
 | 语言 | TypeScript |
-| Forks | 12,230 |
-| Issues | 138 |
+| Forks | 12,282 |
+| Issues | 137 |
 | 许可证 | MIT License |
 
 
@@ -3409,11 +3409,33 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 118,174 |
+| Stars | 118,461 |
 | 语言 | Python |
-| Forks | 18,001 |
-| Issues | 12 |
+| Forks | 18,082 |
+| Issues | 14 |
 | Topics | ai-video-generator, content-creation, ffmpeg, instagram-reels, llm, python, short-video, subtitles, text-to-speech, tiktok, video-automation, video-workflow, workflow-automation, youtube-shorts |
+| 许可证 | MIT License |
+
+
+### obra/superpowers
+
+**描述**: An agentic skills framework & software development methodology that works.
+
+**发现来源**: keyword
+
+**发现原因**: Keyword: AI agent
+
+**质量评分**: 93/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 279,359 |
+| 语言 | Shell |
+| Forks | 25,018 |
+| Issues | 334 |
+| Topics | ai, brainstorming, coding, obra, sdlc, skills, subagent-driven-development, superpowers |
 | 许可证 | MIT License |
 
 
@@ -3431,7 +3453,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 57,482 |
+| Stars | 57,487 |
 | 语言 | Python |
 | Forks | 7,611 |
 | Issues | 4 |
@@ -3453,10 +3475,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,524 |
+| Stars | 90,683 |
 | 语言 | JavaScript |
-| Forks | 9,687 |
-| Issues | 121 |
+| Forks | 9,707 |
+| Issues | 122 |
 | Topics | agent-skills, antigravity, claude-code, codex, cursor, skills |
 | 许可证 | MIT License |
 
@@ -3475,10 +3497,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 48,145 |
+| Stars | 48,232 |
 | 语言 | Go |
-| Forks | 6,182 |
-| Issues | 1,376 |
+| Forks | 6,198 |
+| Issues | 1,413 |
 | 许可证 | Other |
 
 
@@ -3496,10 +3518,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 148,636 |
+| Stars | 148,832 |
 | 语言 | Shell |
-| Forks | 23,972 |
-| Issues | 142 |
+| Forks | 24,002 |
+| Issues | 143 |
 | 许可证 | MIT License |
 
 
@@ -3517,10 +3539,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 92,409 |
+| Stars | 92,603 |
 | 语言 | Unknown |
-| Forks | 10,651 |
-| Issues | 903 |
+| Forks | 10,672 |
+| Issues | 908 |
 | Topics | agent-skills, ai-design, byok, claude-code-for-design, claude-design, codex-design, coding-agents, cursor-design, deepseek, deepseek-harness, design-systems, desktop-app, dsh, dsh-plugin, figma-alternative, hermes-agent, local-first, prototyping, ui-generator, vibe-coding |
 | 许可证 | Apache License 2.0 |
 
@@ -3539,10 +3561,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 132,057 |
+| Stars | 132,175 |
 | 语言 | Python |
-| Forks | 11,870 |
-| Issues | 333 |
+| Forks | 11,894 |
+| Issues | 336 |
 | Topics | ai, copilot, development, engineering, prd, spec, spec-driven |
 | 许可证 | MIT License |
 
@@ -3561,10 +3583,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,186 |
+| Stars | 96,190 |
 | 语言 | Python |
-| Forks | 14,033 |
-| Issues | 39 |
+| Forks | 14,034 |
+| Issues | 35 |
 | Topics | ai, ai-deep-fake, ai-face, ai-webcam, artificial-intelligence, deep-fake, deepfake, deepfake-webcam, faceswap, fake-webcam, gan, real-time-deepfake, realtime, realtime-deepfake, realtime-face-changer, video-deepfake, webcam, webcamera |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -3583,12 +3605,34 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 143,203 |
+| Stars | 143,222 |
 | 语言 | Unknown |
-| Forks | 34,850 |
+| Forks | 34,849 |
 | Issues | 160 |
 | Topics | ai, bolt, cluely, copilot, cursor, cursorai, devin, github-copilot, lovable, open-source, perplexity, replit, system-prompts, trae, trae-ai, trae-ide, v0, vscode, windsurf, windsurf-ai |
 | 许可证 | GNU General Public License v3.0 |
+
+
+### EbookFoundation/free-programming-books
+
+**描述**: :books: Freely available programming books
+
+**发现来源**: trending
+
+**发现原因**: Trending in Python
+
+**质量评分**: 88/100
+
+**活跃度**: high
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 395,544 |
+| 语言 | Python |
+| Forks | 66,720 |
+| Issues | 82 |
+| Topics | books, education, hacktoberfest, list, resource |
+| 许可证 | Creative Commons Attribution 4.0 International |
 
 
 ### clash-verge-rev/clash-verge-rev
@@ -3605,9 +3649,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 140,791 |
+| Stars | 140,968 |
 | 语言 | TypeScript |
-| Forks | 10,133 |
+| Forks | 10,149 |
 | Issues | 418 |
 | Topics | clash, clash-meta, clash-verge, linux, mac, mihomo, tauri-app, windows |
 | 许可证 | GNU General Public License v3.0 |
@@ -3627,10 +3671,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 136,923 |
+| Stars | 137,016 |
 | 语言 | TypeScript |
-| Forks | 7,921 |
-| Issues | 37 |
+| Forks | 7,933 |
+| Issues | 51 |
 | Topics | iptv, m3u, playlist, streams, tv |
 | 许可证 | The Unlicense |
 
@@ -3649,10 +3693,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 130,227 |
+| Stars | 130,336 |
 | 语言 | TypeScript |
-| Forks | 19,584 |
-| Issues | 810 |
+| Forks | 19,600 |
+| Issues | 820 |
 | 许可证 | MIT License |
 
 
@@ -3670,10 +3714,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 63,614 |
+| Stars | 63,783 |
 | 语言 | JavaScript |
-| Forks | 3,892 |
-| Issues | 47 |
+| Forks | 3,905 |
+| Issues | 52 |
 | 许可证 | Apache License 2.0 |
 
 
@@ -3691,10 +3735,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 49,562 |
+| Stars | 49,570 |
 | 语言 | Go |
-| Forks | 10,614 |
-| Issues | 1,918 |
+| Forks | 10,616 |
+| Issues | 1,920 |
 | Topics | cloud, cloud-management, graph, infrastructure-as-code, terraform |
 | 许可证 | Other |
 
@@ -3713,10 +3757,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 126,117 |
+| Stars | 126,248 |
 | 语言 | C++ |
-| Forks | 22,357 |
-| Issues | 2,271 |
+| Forks | 22,425 |
+| Issues | 2,313 |
 | Topics | ggml |
 | 许可证 | MIT License |
 
@@ -3735,7 +3779,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,375 |
+| Stars | 62,365 |
 | 语言 | Python |
 | Forks | 1,683 |
 | Issues | 35 |
@@ -3757,10 +3801,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 46,168 |
+| Stars | 46,385 |
 | 语言 | TypeScript |
-| Forks | 5,102 |
-| Issues | 344 |
+| Forks | 5,115 |
+| Issues | 334 |
 | 许可证 | Other |
 
 
@@ -3778,10 +3822,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 224,083 |
+| Stars | 224,112 |
 | 语言 | Python |
-| Forks | 50,997 |
-| Issues | 1,063 |
+| Forks | 50,999 |
+| Issues | 1,064 |
 | Topics | algorithm, algorithm-competitions, algorithms-implemented, algos, community-driven, education, hacktoberfest, interview, learn, practice, python, searches, sorting-algorithms, sorts |
 | 许可证 | MIT License |
 
@@ -3800,10 +3844,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 90,168 |
+| Stars | 90,177 |
 | 语言 | Python |
-| Forks | 38,428 |
-| Issues | 3,542 |
+| Forks | 38,430 |
+| Issues | 3,494 |
 | Topics | asyncio, hacktoberfest, home-automation, internet-of-things, iot, mqtt, python, raspberry-pi |
 | 许可证 | Apache License 2.0 |
 
@@ -3822,34 +3866,12 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 454,753 |
+| Stars | 454,802 |
 | 语言 | TypeScript |
-| Forks | 46,069 |
-| Issues | 234 |
+| Forks | 46,075 |
+| Issues | 230 |
 | Topics | careers, certification, community, curriculum, d3, education, freecodecamp, javascript, learn-to-code, math, nodejs, nonprofits, programming, react, teachers |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
-
-
-### nilbuild/developer-roadmap
-
-**描述**: Interactive roadmaps, guides and other educational content to help developers grow in their careers.
-
-**发现来源**: trending
-
-**发现原因**: Trending in TypeScript
-
-**质量评分**: 85/100
-
-**活跃度**: high
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 365,790 |
-| 语言 | TypeScript |
-| Forks | 44,876 |
-| Issues | 19 |
-| Topics | angular-roadmap, backend-roadmap, blockchain-roadmap, computer-science, dba-roadmap, developer-roadmap, devops-roadmap, frontend-roadmap, go-roadmap, java-roadmap, javascript-roadmap, nodejs-roadmap, python-roadmap, qa-roadmap, react-roadmap, roadmap, software-architect-roadmap, vue-roadmap |
-| 许可证 | Other |
 
 
 ### excalidraw/excalidraw
@@ -3866,10 +3888,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 130,716 |
+| Stars | 130,762 |
 | 语言 | TypeScript |
-| Forks | 15,045 |
-| Issues | 3,418 |
+| Forks | 15,054 |
+| Issues | 3,422 |
 | Topics | canvas, collaboration, diagrams, drawing, hacktoberfest, productivity, whiteboard |
 | 许可证 | MIT License |
 
@@ -3888,10 +3910,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 122,429 |
+| Stars | 122,512 |
 | 语言 | TypeScript |
-| Forks | 10,021 |
-| Issues | 2,237 |
+| Forks | 10,029 |
+| Issues | 2,264 |
 | Topics | base-ui, components, laravel, nextjs, radix-ui, react, react-aria, react-aria-components, shadcn, tailwindcss, tanstack, ui, vite |
 | 许可证 | MIT License |
 
@@ -3910,10 +3932,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 112,887 |
+| Stars | 112,930 |
 | 语言 | TypeScript |
-| Forks | 6,748 |
-| Issues | 694 |
+| Forks | 6,756 |
+| Issues | 698 |
 | Topics | backup-tool, flutter, google-photos, google-photos-alternative, javascript, mobile-app, nestjs, nodejs, photo-gallery, photos, photos-management, self-hosted, svelte, sveltekit, typescript, videos |
 | 许可证 | GNU Affero General Public License v3.0 |
 
@@ -3932,10 +3954,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 99,247 |
+| Stars | 99,272 |
 | 语言 | TypeScript |
-| Forks | 54,698 |
-| Issues | 1,106 |
+| Forks | 54,699 |
+| Issues | 1,109 |
 | Topics | ant-design, antd, design-systems, react, typescript, ui-kit, ui-library |
 | 许可证 | MIT License |
 
@@ -3954,10 +3976,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,938 |
+| Stars | 89,959 |
 | 语言 | TypeScript |
-| Forks | 11,522 |
-| Issues | 506 |
+| Forks | 11,533 |
+| Issues | 510 |
 | 许可证 | Other |
 
 
@@ -3975,9 +3997,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 248,011 |
+| Stars | 248,317 |
 | 语言 | JavaScript |
-| Forks | 51,256 |
+| Forks | 51,260 |
 | Issues | 1,281 |
 | Topics | declarative, frontend, javascript, library, react, ui |
 | 许可证 | MIT License |
@@ -3997,10 +4019,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 119,661 |
+| Stars | 119,948 |
 | 语言 | JavaScript |
-| Forks | 36,618 |
-| Issues | 1,190 |
+| Forks | 36,628 |
+| Issues | 1,189 |
 | Topics | javascript, js, linux, macos, mit, node, nodejs, runtime, windows |
 | 许可证 | Other |
 
@@ -4019,10 +4041,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 114,898 |
+| Stars | 114,922 |
 | 语言 | JavaScript |
-| Forks | 36,507 |
-| Issues | 380 |
+| Forks | 36,511 |
+| Issues | 379 |
 | Topics | 3d, augmented-reality, canvas, html5, javascript, svg, virtual-reality, webaudio, webgl, webgl2, webgpu, webxr |
 | 许可证 | MIT License |
 
@@ -4041,7 +4063,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 109,192 |
+| Stars | 109,194 |
 | 语言 | JavaScript |
 | Forks | 11,829 |
 | Issues | 78 |
@@ -4063,10 +4085,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 98,958 |
+| Stars | 98,967 |
 | 语言 | JavaScript |
-| Forks | 32,550 |
-| Issues | 1,488 |
+| Forks | 32,556 |
+| Issues | 1,492 |
 | Topics | design-system, material-design, material-ui, react, react-components |
 | 许可证 | MIT License |
 
@@ -4085,10 +4107,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 88,012 |
+| Stars | 88,017 |
 | 语言 | JavaScript |
 | Forks | 5,220 |
-| Issues | 1,051 |
+| Issues | 1,056 |
 | Topics | compiler, template, ui |
 | 许可证 | MIT License |
 
@@ -4107,9 +4129,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,492 |
+| Stars | 72,508 |
 | 语言 | JavaScript |
-| Forks | 4,895 |
+| Forks | 4,897 |
 | Issues | 115 |
 | Topics | animation, anime, canvas, css, javascript, javascript-library, svg |
 | 许可证 | MIT License |
@@ -4129,7 +4151,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 72,231 |
+| Stars | 72,234 |
 | 语言 | JavaScript |
 | Forks | 16,986 |
 | Issues | 910 |
@@ -4151,9 +4173,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 67,359 |
+| Stars | 67,374 |
 | 语言 | JavaScript |
-| Forks | 4,307 |
+| Forks | 4,309 |
 | Issues | 15 |
 | Topics | blocker, browser-extension, chromium, firefox, javascript, ublock, ublock-origin |
 | 许可证 | GNU General Public License v3.0 |
@@ -4176,7 +4198,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 | Stars | 65,964 |
 | 语言 | JavaScript |
 | Forks | 9,523 |
-| Issues | 131 |
+| Issues | 134 |
 | Topics | amd, build-tool, commonjs, compiler, es2015, es6, esm, javascript, javascript-compiler, javascript-modules, loaders, module-bundler, plugins, web, web-performance, webpack |
 | 许可证 | MIT License |
 
@@ -4195,9 +4217,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 62,837 |
+| Stars | 62,845 |
 | 语言 | JavaScript |
-| Forks | 5,757 |
+| Forks | 5,758 |
 | Issues | 4 |
 | Topics | diagram-editor, electron-app, graphics, javascript-applications |
 | 许可证 | Apache License 2.0 |
@@ -4217,10 +4239,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 136,563 |
+| Stars | 136,822 |
 | 语言 | Go |
-| Forks | 19,312 |
-| Issues | 10,082 |
+| Forks | 19,314 |
+| Issues | 10,100 |
 | Topics | go, golang, language, programming-language |
 | 许可证 | BSD 3-Clause "New" or "Revised" License |
 
@@ -4239,10 +4261,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 110,753 |
+| Stars | 110,779 |
 | 语言 | Go |
-| Forks | 13,771 |
-| Issues | 5,166 |
+| Forks | 13,773 |
+| Issues | 5,171 |
 | Topics | javascript, language, typechecker, typescript |
 | 许可证 | Apache License 2.0 |
 
@@ -4261,10 +4283,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 109,086 |
+| Stars | 109,085 |
 | 语言 | Go |
-| Forks | 15,213 |
-| Issues | 49 |
+| Forks | 15,210 |
+| Issues | 48 |
 | Topics | expose, firewall, frp, go, http-proxy, nat, p2p, proxy, reverse-proxy, tunnel |
 | 许可证 | Apache License 2.0 |
 
@@ -4283,10 +4305,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 89,570 |
+| Stars | 89,620 |
 | 语言 | Go |
-| Forks | 8,348 |
-| Issues | 245 |
+| Forks | 8,355 |
+| Issues | 244 |
 | Topics | blog-engine, cms, content-management-system, documentation-tool, go, hugo, static-site-generator |
 | 许可证 | Apache License 2.0 |
 
@@ -4305,10 +4327,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 88,091 |
+| Stars | 88,109 |
 | 语言 | Go |
-| Forks | 5,436 |
-| Issues | 379 |
+| Forks | 5,438 |
+| Issues | 378 |
 | Topics | go, p2p, peer-to-peer, synchronization |
 | 许可证 | Mozilla Public License 2.0 |
 
@@ -4327,7 +4349,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 59,436 |
+| Stars | 59,450 |
 | 语言 | Go |
 | Forks | 5,345 |
 | Issues | 1,244 |
@@ -4349,10 +4371,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 51,313 |
+| Stars | 51,314 |
 | 语言 | Go |
-| Forks | 22,135 |
-| Issues | 423 |
+| Forks | 22,136 |
+| Issues | 427 |
 | Topics | blockchain, ethereum, geth, go, p2p |
 | 许可证 | GNU Lesser General Public License v3.0 |
 
@@ -4371,34 +4393,12 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 50,107 |
+| Stars | 50,119 |
 | 语言 | Go |
-| Forks | 7,936 |
+| Forks | 7,937 |
 | Issues | 565 |
 | Topics | file-server, gin, golang, onedrive, solidjs, webdav |
 | 许可证 | GNU Affero General Public License v3.0 |
-
-
-### obra/superpowers
-
-**描述**: An agentic skills framework & software development methodology that works.
-
-**发现来源**: keyword
-
-**发现原因**: Keyword: AI agent
-
-**质量评分**: 83/100
-
-**活跃度**: medium
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 279,077 |
-| 语言 | Shell |
-| Forks | 24,990 |
-| Issues | 332 |
-| Topics | ai, brainstorming, coding, obra, sdlc, skills, subagent-driven-development, superpowers |
-| 许可证 | MIT License |
 
 
 ### 521xueweihan/HelloGitHub
@@ -4415,36 +4415,14 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 173,489 |
+| Stars | 173,609 |
 | 语言 | Python |
-| Forks | 12,672 |
-| Issues | 655 |
+| Forks | 12,675 |
+| Issues | 657 |
 | Topics | awesome, github, hellogithub, python |
 
 
 ### ⭐ 中优先级
-
-
-### EbookFoundation/free-programming-books
-
-**描述**: :books: Freely available programming books
-
-**发现来源**: trending
-
-**发现原因**: Trending in Python
-
-**质量评分**: 78/100
-
-**活跃度**: medium
-
-| 指标 | 数值 |
-|------|------|
-| Stars | 395,475 |
-| 语言 | Python |
-| Forks | 66,723 |
-| Issues | 91 |
-| Topics | books, education, hacktoberfest, list, resource |
-| 许可证 | Creative Commons Attribution 4.0 International |
 
 
 ### 3b1b/manim
@@ -4461,12 +4439,34 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 92,154 |
+| Stars | 92,171 |
 | 语言 | Python |
 | Forks | 7,592 |
 | Issues | 490 |
 | Topics | 3b1b-videos, animation, explanatory-math-videos, python |
 | 许可证 | MIT License |
+
+
+### nilbuild/developer-roadmap
+
+**描述**: Interactive roadmaps, guides and other educational content to help developers grow in their careers.
+
+**发现来源**: trending
+
+**发现原因**: Trending in TypeScript
+
+**质量评分**: 75/100
+
+**活跃度**: medium
+
+| 指标 | 数值 |
+|------|------|
+| Stars | 365,854 |
+| 语言 | TypeScript |
+| Forks | 44,881 |
+| Issues | 21 |
+| Topics | angular-roadmap, backend-roadmap, blockchain-roadmap, computer-science, dba-roadmap, developer-roadmap, devops-roadmap, frontend-roadmap, go-roadmap, java-roadmap, javascript-roadmap, nodejs-roadmap, python-roadmap, qa-roadmap, react-roadmap, roadmap, software-architect-roadmap, vue-roadmap |
+| 许可证 | Other |
 
 
 ### yangshun/tech-interview-handbook
@@ -4483,10 +4483,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 142,270 |
+| Stars | 142,299 |
 | 语言 | TypeScript |
-| Forks | 16,785 |
-| Issues | 35 |
+| Forks | 16,789 |
+| Issues | 36 |
 | Topics | algorithm, algorithm-interview, algorithm-interview-questions, algorithms, behavioral-interviews, coding-interviews, interview-practice, interview-preparation, interview-questions, system-design |
 | 许可证 | MIT License |
 
@@ -4505,10 +4505,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 97,371 |
+| Stars | 97,389 |
 | 语言 | TypeScript |
-| Forks | 5,588 |
-| Issues | 61 |
+| Forks | 5,593 |
+| Issues | 63 |
 | Topics | css, css-framework, functional-css, postcss, responsive, tailwindcss, utility-classes |
 | 许可证 | MIT License |
 
@@ -4527,10 +4527,10 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 96,488 |
+| Stars | 96,501 |
 | 语言 | JavaScript |
-| Forks | 15,828 |
-| Issues | 115 |
+| Forks | 15,829 |
+| Issues | 117 |
 | Topics | css, curriculum, education, html, javascript, learning, microsoft-for-beginners, tutorials |
 | 许可证 | MIT License |
 
@@ -4549,9 +4549,9 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 79,844 |
+| Stars | 79,845 |
 | 语言 | JavaScript |
-| Forks | 37,179 |
+| Forks | 37,211 |
 | Issues | 293 |
 | Topics | dynamic, profile-readme, readme-generator, readme-stats, serverless |
 | 许可证 | MIT License |
@@ -4571,7 +4571,7 @@ JuliusBrussee/caveman 是一个Go项目，拥有 101,635 Stars。🪨 why use ma
 
 | 指标 | 数值 |
 |------|------|
-| Stars | 66,514 |
+| Stars | 66,519 |
 | 语言 | JavaScript |
 | Forks | 9,137 |
 | Issues | 4 |
