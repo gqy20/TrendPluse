@@ -1,0 +1,144 @@
+{
+  "date": "2026-09-04",
+  "generated_at": "2026-09-04T21:12:57.888932",
+  "total_candidates": 132,
+  "selected_count": 10,
+  "candidates": [
+    {
+      "repo": "DietrichGebert/ponytail",
+      "name": "ponytail",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "Graphify-Labs/graphify",
+      "name": "graphify",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "JuliusBrussee/caveman",
+      "name": "caveman",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Go",
+      "classified_categories": [
+        "LLM 界面",
+        "学习资源"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    },
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "name": "anything-llm",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索",
+        "数据/基础设施"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "name": "hermes-agent",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "TauricResearch/TradingAgents",
+      "name": "TradingAgents",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in Python",
+      "classified_categories": [
+        "AI Agents"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "name": "ECC",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "[keyword, trending] Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "开发工具"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "asgeirtj/system_prompts_leaks",
+      "name": "system_prompts_leaks",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "Trending in JavaScript",
+      "classified_categories": [
+        "AI Agents",
+        "LLM 界面",
+        "学习资源"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "bojieli/ai-agent-book",
+      "name": "ai-agent-book",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "keyword",
+      "discovery_reason": "Keyword: RAG",
+      "classified_categories": [
+        "AI Agents",
+        "RAG/检索"
+      ],
+      "suggested_category": "Agentic AI 核心框架"
+    },
+    {
+      "repo": "career-ops-hq/career-ops",
+      "name": "career-ops",
+      "priority": "high",
+      "quality_score": 100,
+      "discovery_source": "trending",
+      "discovery_reason": "Trending in JavaScript",
+      "classified_categories": [
+        "LLM 界面",
+        "开发工具",
+        "DevOps/基础设施"
+      ],
+      "suggested_category": "Anthropic 工具与集成"
+    }
+  ]
+}
