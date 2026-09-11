@@ -1,617 +1,27 @@
 {
   "date": "2026-09-11",
-  "summary_brief": "2026年9月11日，AI Agent生态延续5月中旬(5/15-21)\"全面质量可靠性清算\"主线，但进入推进点升级的平台化阶段——叙事重心从\"补修理债\"转为\"企业级治理+统一抽象\"，高影响信号占比38%(13/34)为近半年高位。三大收敛点：(1)安全从补丁演化为体系化标配——MCP OAuth/凭证/URL交换流程系统性加固、工具审批与细粒度权限(Codex测试命令审批、Agno authz门控)成为跨框架默认，把3月的沙箱共识下探至工具调用与认证层；(2)运行时可靠性从状态修复升级为企业级运维自动化——OpenClaw失败更新自动回滚+外部配置只读(面向K8s部署)、ruflo租约到期自动释放、gptme状态泄漏修复、Cline fork会话持久化，说明\"Agent长时运行\"已被当成主流生产场景；(3)治理从碎片走向统一抽象——DeepAgents与OpenClaw同日推出统一插件管理界面(工具/技能/规则整合)、多提供商模型目录统一，标志Agent配置从撕裂的provider/插件生态走向收敛。工作流内嵌化(Cline桌面端内嵌PR/CI、OpenClaw云会话预启动+快照、终端交互式问答)则指向Agent从代码助手向完整开发环境协作平台演进。相对历史信号密度(34/9仓库)低于3/31峰值(77)与7月的Release井喷期(最高416)，属高位平台期的高质量收敛日，最大历史意义是把此前分散的加固动作凝练成行业级共识，而非出现全新转折。",
-  "engineering_signals": [
-    {
-      "id": "eng-sec-1",
-      "title": "MCP 生态安全性与认证流程系统性加固",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "多个项目同步处理 MCP 连接与认证相关的安全漏洞：DeepAgents 修复 MCP OAuth 流程与凭证处理，Dify 将 MCP 连接错误从不透明 500 改为携带原因的 4xx（避免泄露内部细节），Semantic Kernel 从 PAT 迁移到 GitHub App 认证。这标志着 MCP 作为 Agent 工具连接标准正在经历安全成熟期，凭证管理、错误处理和最小权限成为行业级共识。",
-      "sources": [
-        "https://github.com/langgenius/dify/pull/42177",
-        "https://github.com/microsoft/semantic-kernel/pull/14411",
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8"
-      ],
-      "related_repos": [
-        "langgenius/dify",
-        "microsoft/semantic-kernel",
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": [
-        "pr-7",
-        "pr-11",
-        "release-3"
-      ]
-    },
-    {
-      "id": "eng-rel-1",
-      "title": "Agent 运行时可靠性大幅加固：会话状态、租约与回滚机制",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "从 ruflo 的 claims 租约到期自动释放、gptme 的 set -e 状态泄漏修复、Cline 的 fork 会话状态持久化，到 OpenClaw 的失败更新自动回滚与对话历史可靠性增强，多个项目同日在修复运行时状态一致性和恢复能力问题。这反映出 Agent 长时运行（多会话、checkpoint、云预启动）成为主流场景后，状态正确性与失败恢复成为决定用户体验的核心瓶颈。",
-      "sources": [
-        "https://github.com/cline/cline/pull/14052",
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4",
-        "https://github.com/gptme/gptme/pull/3810",
-        "https://github.com/cline/cline/pull/14053",
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8",
-        "https://github.com/ruvnet/ruflo/pull/3292"
-      ],
-      "related_repos": [
-        "cline/cline",
-        "openclaw/openclaw",
-        "gptme/gptme",
-        "ruvnet/ruflo",
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": [
-        "pr-1",
-        "pr-3",
-        "pr-5",
-        "pr-6",
-        "release-4",
-        "release-6",
-        "release-11"
-      ]
-    },
-    {
-      "id": "eng-abs-1",
-      "title": "工具/插件管理统一抽象成为多项目共同方向",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "DeepAgents 与 OpenClaw 同日推出统一的插件管理界面（将工具、技能、规则、插件配置整合），Cline 也新增并排 provider 选择器简化配置发现。这一趋势表明 Agent 生态正在从碎片化的配置方式走向统一抽象层，以降低多工具、多模型、多供应商场景下的用户学习成本，提升可发现性。",
-      "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon==0.0.8",
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4",
-        "https://github.com/cline/cline/pull/14058"
-      ],
-      "related_repos": [
-        "cline/cline",
-        "openclaw/openclaw",
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": [
-        "pr-4",
-        "release-1",
-        "release-7"
-      ]
-    },
-    {
-      "id": "eng-wf-1",
-      "title": "开发工作流内嵌化：PR 集成、云会话预启动与交互式终端体验",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "Cline 桌面端将 PR 状态与 CI 检查直接嵌入开发环境，OpenClaw 支持从 GitHub 仓库预启动云会话并创建快照，同时增强 TUI 终端交互（键盘驱动的问答、语音字幕顺序修复）。这些变更共同指向 Agent 工具从单纯的代码生成助手向完整开发环境内嵌协作平台演进。",
-      "sources": [
-        "https://github.com/cline/cline/releases/tag/desktop-v0.0.26",
-        "https://github.com/openai/codex/pull/44752",
-        "https://github.com/openai/codex/pull/44749",
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "cline/cline",
-        "openclaw/openclaw",
-        "openai/codex"
-      ],
-      "source_signal_ids": [
-        "pr-17",
-        "pr-19",
-        "release-0",
-        "release-8",
-        "release-9"
-      ]
-    },
-    {
-      "id": "eng-tool-1",
-      "title": "Agent 工具审批与细粒度权限控制成为标配安全机制",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "DeepAgents 通过 tools.json 支持工具审批管理，OpenAI Codex 测试命令审批（含文件夹信任检查），Agno 修复 authz 门控测试与异步实现同步。工具调用权限的细粒度化正在成为 Agent 安全架构的统一要求，从实验性功能向标准化演进。",
-      "sources": [
-        "https://github.com/agno-agi/agno/pull/10122",
-        "https://github.com/openai/codex/pull/44755",
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8",
-        "https://github.com/openai/codex/pull/44814"
-      ],
-      "related_repos": [
-        "agno-agi/agno",
-        "openai/codex",
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": [
-        "pr-8",
-        "pr-15",
-        "pr-16",
-        "release-5"
-      ]
-    }
-  ],
+  "summary_brief": "今日（2026-09-11）AI Agent 生态未检测到任何符合条件的趋势信号——工程、研究、Commit、Release 四类信号全部为 0，活跃度 commit 数亦为 0，尽管仍在监控 87 个主流仓库（claude-code、openclaw、codex、dify、deepagents 等均无有效产出）。这是经历 7/25 至 9/11 约七周空窗期后的首个报告日，信号量直接归零。相对历史而言，这一结果并不代表生态衰退：3-7 月持续演进的成熟主线（AI Agent 安全沙箱化、运行时可靠性加固、统一插件/多提供商抽象、开发工作流内嵌化）仍是全量历史的强基线，今日零信号更可能源于采集或筛选层面未提取到合格信号（首日运行、阈值或数据源口径），而非行业性趋势消失。最大历史意义在于：经长期高质量收敛期后今日进入纯静默观察日，未出现任何新增推进点，也无需讨论\"把前一天趋势误当今日新趋势\"的问题——今天根本没有可延续的新信号，过去的加固共识（MCP 认证加固、工具审批、自动回滚）仍是应重点跟进的遗留方向。",
+  "engineering_signals": [],
   "research_signals": [],
   "commit_signals": [],
-  "release_signals": [
-    {
-      "id": "signal-0",
-      "title": "桌面端GitHub PR集成",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "将PR状态、CI检查直接嵌入开发环境，减少上下文切换，显著提升开发者工作流效率。",
-      "sources": [
-        "https://github.com/cline/cline/releases/tag/desktop-v0.0.26"
-      ],
-      "related_repos": [
-        "cline/cline"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-1",
-      "title": "统一插件管理体验",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "将工具、技能、规则、插件等配置统一为一致的管理界面，降低用户学习成本，提升可发现性。",
-      "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon==0.0.8"
-      ],
-      "related_repos": [
-        "cline/cline",
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-2",
-      "title": "多提供商模型目录统一",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "所有使用共享目录的提供商都能实时获取最新模型列表，简化了模型管理和选择流程。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "cline/cline",
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-3",
-      "title": "MCP安全性与可靠性加固",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "针对MCP OAuth流程、凭证处理、URL交换等关键安全漏洞进行系统性修复，防止凭证丢失和未授权访问，对Agent生态安全至关重要。",
-      "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8"
-      ],
-      "related_repos": [
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-4",
-      "title": "子代理编排可靠性提升",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "修复后台子代理启动/停止、调度任务投递、会话隔离等关键问题，确保多Agent协作的稳定性和可恢复性。",
-      "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8"
-      ],
-      "related_repos": [
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-5",
-      "title": "工具审批管理功能",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "通过tools.json支持工具审批管理，为Agent工具调用提供更细粒度的控制和安全保障。",
-      "sources": [
-        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8"
-      ],
-      "related_repos": [
-        "langchain-ai/deepagents"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-6",
-      "title": "失败更新自动回滚",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 5,
-      "why_it_matters": "在更新失败时自动恢复至上一可用版本，并保留配置和服务，极大降低升级风险，是系统可靠性的重要保障。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-7",
-      "title": "统一插件管理平台",
-      "type": "abstraction",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "将插件发现、安装、配置、权限管理整合到统一界面，简化插件生命周期管理，提升系统可扩展性。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-8",
-      "title": "云会话预启动与快照",
-      "type": "workflow",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "支持从本地项目或GitHub仓库预启动云会话，并可创建可复用快照，显著减少环境准备时间，提升云端开发效率。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-9",
-      "title": "终端交互式问答",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "在TUI会话中支持键盘驱动的选择、自由文本和多问题提示，扩展了Agent在纯终端环境下的交互能力。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-10",
-      "title": "外部配置只读模式",
-      "type": "safety",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "通过环境变量支持配置只读，防止系统覆盖部署管理的配置，对Kubernetes等自动化部署场景至关重要。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-11",
-      "title": "对话历史可靠性增强",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "修复流中断、超时、重复回复等历史记录问题，确保对话上下文的完整性和一致性，对长会话和审计场景意义重大。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-12",
-      "title": "语音委派任务闭环",
-      "type": "capability",
-      "category": "engineering",
-      "impact_score": 3,
-      "why_it_matters": "修复语音会话中委派子Agent结果无法返回的问题，完善了语音交互的端到端流程。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    },
-    {
-      "id": "signal-13",
-      "title": "Gateway响应性能优化",
-      "type": "performance",
-      "category": "engineering",
-      "impact_score": 4,
-      "why_it_matters": "将历史规划、完整性检查等重任务移出主线程，并优化多项资源使用，显著提升系统在高负载下的响应速度。",
-      "sources": [
-        "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4"
-      ],
-      "related_repos": [
-        "openclaw/openclaw"
-      ],
-      "source_signal_ids": []
-    }
-  ],
+  "release_signals": [],
   "stats": {
-    "total_signals": 34,
-    "pr_count": 20,
+    "total_signals": 0,
+    "pr_count": 0,
     "commit_count": 0,
-    "release_count": 14,
-    "unique_repos": 9,
-    "total_prs_analyzed": 20,
-    "total_releases": 3,
-    "high_impact_signals": 13,
-    "total_commits_analyzed": 253,
-    "total_releases_analyzed": 3,
-    "total_breaking_changes": 2
+    "release_count": 0,
+    "unique_repos": 0,
+    "total_prs_analyzed": 0,
+    "total_releases": 0,
+    "high_impact_signals": 0,
+    "total_commits_analyzed": 0,
+    "total_releases_analyzed": 0,
+    "total_breaking_changes": 0
   },
   "activity": {
-    "total_commits": 253,
-    "active_repos_count": 28,
+    "total_commits": 0,
+    "active_repos_count": 0,
     "top_repos": [
-      {
-        "repo": "openclaw/openclaw",
-        "commits": 100,
-        "top_contributors": [
-          "steipete",
-          "vincentkoc",
-          "obviyus",
-          "RomneyDa",
-          "fuller-stack-dev"
-        ]
-      },
-      {
-        "repo": "openai/codex",
-        "commits": 30,
-        "top_contributors": [
-          "etraut-openai",
-          "bc-openai",
-          "vkg-oai",
-          "seanh-oai",
-          "jif-oai"
-        ]
-      },
-      {
-        "repo": "langgenius/dify",
-        "commits": 20,
-        "top_contributors": [
-          "lyzno1",
-          "CodingOnStar",
-          "iamjoel",
-          "CoralGarden52",
-          "Harsh23Kashyap"
-        ]
-      },
-      {
-        "repo": "bytedance/deer-flow",
-        "commits": 10,
-        "top_contributors": [
-          "ggnnggez",
-          "KevinAndrewDong",
-          "tiammomo",
-          "WillemJiang",
-          "RykerFeng"
-        ]
-      },
-      {
-        "repo": "agentscope-ai/agentscope",
-        "commits": 9,
-        "top_contributors": [
-          "DavdGao",
-          "liugy789",
-          "CoralGarden52",
-          "Tsubaki-01"
-        ]
-      },
-      {
-        "repo": "vercel/next.js",
-        "commits": 9,
-        "top_contributors": [
-          "eps1lon",
-          "unstubbable",
-          "itsybitsci",
-          "next-js-bot[bot]"
-        ]
-      },
-      {
-        "repo": "cline/cline",
-        "commits": 8,
-        "top_contributors": [
-          "saoudrizwan",
-          "dominiccooney",
-          "abeatrix"
-        ]
-      },
-      {
-        "repo": "microsoft/agent-framework",
-        "commits": 8,
-        "top_contributors": [
-          "SergeyMenshykh",
-          "baywet",
-          "rogerbarreto",
-          "westey-m",
-          "CoralGarden52"
-        ]
-      },
-      {
-        "repo": "zed-industries/zed",
-        "commits": 7,
-        "top_contributors": [
-          "tidely",
-          "benbrandt",
-          "SomeoneToIgnore",
-          "cameron1024",
-          "ConradIrwin"
-        ]
-      },
-      {
-        "repo": "Arize-ai/phoenix",
-        "commits": 7,
-        "top_contributors": [
-          "mikeldking",
-          "github-actions[bot]"
-        ]
-      },
-      {
-        "repo": "langchain-ai/deepagents",
-        "commits": 6,
-        "top_contributors": [
-          "jkennedyvz",
-          "eyurtsev",
-          "github-actions[bot]",
-          "hntrl"
-        ]
-      },
-      {
-        "repo": "microsoft/playwright",
-        "commits": 5,
-        "top_contributors": [
-          "yury-s",
-          "dgozman",
-          "pavelfeldman",
-          "ashrafiucse"
-        ]
-      },
-      {
-        "repo": "promptfoo/promptfoo",
-        "commits": 4,
-        "top_contributors": [
-          "mldangelo-oai",
-          "renovate[bot]",
-          "mldangelo"
-        ]
-      },
-      {
-        "repo": "vercel/ai",
-        "commits": 4,
-        "top_contributors": [
-          "gr2m",
-          "n1ckoates",
-          "felixarntz"
-        ]
-      },
-      {
-        "repo": "anomalyco/opencode",
-        "commits": 3,
-        "top_contributors": [
-          "JacobNWolf",
-          "opencode-agent[bot]",
-          "heimoshuiyu"
-        ]
-      },
-      {
-        "repo": "openclaw/openclaw-windows-node",
-        "commits": 3,
-        "top_contributors": [
-          "joelagnel",
-          "Steven23456",
-          "shanselman"
-        ]
-      },
-      {
-        "repo": "ValueCell-ai/ClawX",
-        "commits": 3,
-        "top_contributors": [
-          "su8su",
-          "z0gSh1u"
-        ]
-      },
-      {
-        "repo": "openai/openai-python",
-        "commits": 2,
-        "top_contributors": [
-          "heri-espino",
-          "he-yufeng"
-        ]
-      },
-      {
-        "repo": "gptme/gptme",
-        "commits": 2,
-        "top_contributors": [
-          "TimeToBuildBob"
-        ]
-      },
-      {
-        "repo": "OpenHands/OpenHands",
-        "commits": 2,
-        "top_contributors": [
-          "tofarr",
-          "all-hands-bot"
-        ]
-      },
-      {
-        "repo": "agno-agi/agno",
-        "commits": 2,
-        "top_contributors": [
-          "devansh173",
-          "n1uz1"
-        ]
-      },
-      {
-        "repo": "ruvnet/ruflo",
-        "commits": 2,
-        "top_contributors": [
-          "ruvnet"
-        ]
-      },
-      {
-        "repo": "openclaw/clawhub",
-        "commits": 2,
-        "top_contributors": [
-          "Patrick-Erichsen"
-        ]
-      },
-      {
-        "repo": "microsoft/semantic-kernel",
-        "commits": 1,
-        "top_contributors": [
-          "moonbox3"
-        ]
-      },
-      {
-        "repo": "mem0ai/mem0",
-        "commits": 1,
-        "top_contributors": [
-          "harshgupta-mem0"
-        ]
-      },
-      {
-        "repo": "crewAIInc/crewAI",
-        "commits": 1,
-        "top_contributors": [
-          "Vidit-Ostwal"
-        ]
-      },
-      {
-        "repo": "vercel/turborepo",
-        "commits": 1,
-        "top_contributors": [
-          "vercel-gh-bot-2[bot]"
-        ]
-      },
-      {
-        "repo": "vercel-labs/agent-browser",
-        "commits": 1,
-        "top_contributors": [
-          "ctate"
-        ]
-      },
       {
         "repo": "anthropics/claude-code",
         "commits": 0,
@@ -713,12 +123,22 @@
         "top_contributors": []
       },
       {
+        "repo": "cline/cline",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "Aider-AI/aider",
         "commits": 0,
         "top_contributors": []
       },
       {
         "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
         "commits": 0,
         "top_contributors": []
       },
@@ -733,12 +153,22 @@
         "top_contributors": []
       },
       {
+        "repo": "gptme/gptme",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "TransformerOptimus/SuperAGI",
         "commits": 0,
         "top_contributors": []
       },
       {
         "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "OpenHands/OpenHands",
         "commits": 0,
         "top_contributors": []
       },
@@ -753,6 +183,11 @@
         "top_contributors": []
       },
       {
+        "repo": "langgenius/dify",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "run-llama/llama_index",
         "commits": 0,
         "top_contributors": []
@@ -763,7 +198,27 @@
         "top_contributors": []
       },
       {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
         "commits": 0,
         "top_contributors": []
       },
@@ -773,12 +228,42 @@
         "top_contributors": []
       },
       {
+        "repo": "openai/codex",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "huggingface/smolagents",
         "commits": 0,
         "top_contributors": []
       },
       {
+        "repo": "ruvnet/ruflo",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "AndyMik90/Aperant",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anomalyco/opencode",
         "commits": 0,
         "top_contributors": []
       },
@@ -793,6 +278,21 @@
         "top_contributors": []
       },
       {
+        "repo": "zed-industries/zed",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "openclaw/acpx",
         "commits": 0,
         "top_contributors": []
@@ -803,7 +303,17 @@
         "top_contributors": []
       },
       {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
         "commits": 0,
         "top_contributors": []
       },
@@ -823,6 +333,11 @@
         "top_contributors": []
       },
       {
+        "repo": "microsoft/agent-framework",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "aaif-goose/goose",
         "commits": 0,
         "top_contributors": []
@@ -833,7 +348,27 @@
         "top_contributors": []
       },
       {
+        "repo": "Arize-ai/phoenix",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "vercel/chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/next.js",
         "commits": 0,
         "top_contributors": []
       },
@@ -844,6 +379,16 @@
       },
       {
         "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
         "commits": 0,
         "top_contributors": []
       },
@@ -868,6 +413,11 @@
         "top_contributors": []
       },
       {
+        "repo": "microsoft/playwright",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
         "repo": "karpathy/autoresearch",
         "commits": 0,
         "top_contributors": []
@@ -875,160 +425,11 @@
     ]
   },
   "releases": {
-    "total_count": 3,
-    "unique_repos_count": 3,
-    "releases": [
-      {
-        "repo": "cline/cline",
-        "version": "desktop-v0.0.26",
-        "author": "github-actions[bot]",
-        "date": "2026-09-11",
-        "summary": "\n- The composer now shows the current branch's GitHub pull request — PR number, merge status, changed-line totals, and CI checks. Click through to open it in your browser, or expand CI to inspect individual checks and their logs; status refreshes every 30 seconds while visible, on window focus, and on demand. If the branch has no PR, **Create PR** opens GitHub's comparison form. Requires the GitHub CLI (`gh`) installed and signed in, plus a GitHub.com `origin` remote; the row hides itself on the default branch, detached HEAD, and unsupported repositories. Cline does not push commits or submit the PR for you\n- The Customize view's Tools, Skills, and Rules tabs now read as one consistent list instead of three different ones, matching the pattern Plugins already used. Tools gets a search bar that filters both sections and per-section Enable all/Disable all that only touches what's visible; Skills gets an in-place enable/disable toggle — previously the desktop app had no concept of a disabled skill, so disabled ones were hidden and unreachable — and the same Copy path / Uninstall menu Plugins use. Tabs are reordered to Tools, Plugins, Skills, Rules, MCP, Hooks and open on Tools, and the sidebar's \"New Task\" button is now \"New Session\"\n- Deleting a queued prompt no longer leaves it in the transcript as a message that never ran. The sidecar inferred a queued prompt had started whenever the pending list shrank and its head changed — which is exactly what deleting the first queued prompt (or discarding the queue) looks like. It now relies only on the runtime's real start event\n- A session forked from a checkpoint restore no longer comes back stuck on \"Thinking...\". Sessions that materialize with seeded history never passed their status when persisting, so the row and manifest were written as \"running\" while the live session was idle; resuming from that manifest then showed a session that was never going to finish\n- Sending an image with no text no longer fails with \"session input requires a prompt string\" — the composer asks for a message instead of letting the request through to a backend that rejects it\n- Image attachments in formats the model pipeline can't read (HEIC, TIFF, SVG, BMP, ICO, and friends) are now rejected at attach time — by picker, paste, or drag-and-drop — instead of failing later in the turn. Files whose type has to be inferred from the extension are classified the same way\n- Signing out of ChatGPT (Codex) now sticks. Sign-out removes the provider entry, but the runtime re-imports any missing provider from the classic extension's stored credentials on every command, so the next action signed you straight back in. The legacy Codex credentials are now cleared too, and a failed clear reports the sign-out as failed instead of quietly succeeding\n- Auth failures on providers that log in through a local CLI — Claude Code, Codex CLI, OpenCode — now point you at that CLI instead of Settings → Models, where there is nothing to fix. \"OAuth session expired\", \"Not logged in · Please run /login\", and similar messages are also recognized as credential failures now, so they get a hint at all\n- Model lists now refresh from the live catalog for every provider that uses the shared catalog, not just Cline and Cline Pass. Providers with their own endpoint-owned model lists are unaffected, and the first providers listing is still network-free\n- Cline Pass and free models now report zero cost instead of the upstream provider's price\n- Session history rows no longer overlap their own hover metadata when a label is wider than the fixed label column\n- Scheduled sessions no longer stall out. The poller could stop advancing, and capacity waits were counted as run attempts, so a schedule could burn through its retries without ever running. Execution lifecycle and capacity claims are now fenced atomically. New recurring schedules also default to your local timezone instead of UTC; existing schedules without a timezone keep it that way when edited\n- Automation event acceptance is now atomic and retryable, so an event can't be half-accepted and lost if delivery fails mid-way\n- Nested PowerShell commands no longer flood errors and look like a hang. Commands run through an outer PowerShell bootstrap, so a nested `powershell -Command \"... $_ ...\"` had `$_` interpolated away by the outer parser before the inner shell saw it — a `Where-Object { $_.Name ... }` pipeline then errored once per item over a large tree while still exiting 0. Redundant nested invocations are now unwrapped and run directly, only when that provably preserves semantics (same PowerShell edition, no profile loading, fully quoted command). Cline is also told which edition it's actually on — Windows PowerShell vs. Microsoft PowerShell — and to stop wrapping commands in a shell it's already running in\n- Prompt telemetry to Cline's tracing backend is now limited to Cline and Cline Pass requests. Turns run against your own provider keys are not traced\n- Cline Pass now appears in the composer's provider picker alongside Cline. One Cline sign-in configures both — Cline Pass stores its credentials under the Cline account rather than having its own — but the picker only listed providers with their own saved settings entry, and onboarding writes just the Cline one. A new Cline Pass user therefore saw a single row\n- The composer's provider picker has a **Set up another provider** row at the bottom that opens Settings → Models. The picker only lists what you have already configured, so there was no way to reach the rest of the catalog from the composer\n- Dropped the \"Configured\" checkmark from the composer's provider picker (added in 0.0.25). Every row in that picker has a saved settings entry, so for anyone who set their providers up in the app every row carried the same green check and it read as decoration. Settings is still where provider readiness is shown, and it distinguishes a real credential from an entry a legacy migration left behind\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.25...desktop-v0.0.26\n",
-        "assets_count": 6,
-        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.26",
-        "ai_summary": {
-          "change_type": "improvement",
-          "key_changes": [
-            "Composer 新增显示当前分支的 GitHub PR 信息，包括 PR 编号、合并状态、变更行数和 CI 检查，支持点击打开浏览器及按需刷新状态",
-            "Customize 视图的工具、技能和规则选项卡统一为一致的列表样式，工具选项卡新增搜索栏和批量启用/禁用功能，技能选项卡新增就地切换开关",
-            "修复删除排队提示词后仍残留在转录中的问题，现在仅依赖运行时真实的启动事件",
-            "修复从检查点恢复后分叉的会话卡在\"思考中\"状态的问题",
-            "修复发送无文本图片时出错的问题"
-          ],
-          "summary_cn": "此版本为桌面应用带来多项改进和修复。主要新增了 Composer 中 GitHub PR 信息的实时展示功能，需要安装并登录 GitHub CLI 才能使用；同时统一了 Customize 视图中各选项卡的列表样式，并为工具和技能选项卡增加了搜索、批量操作和切换功能。此外还修复了删除排队提示词残留、检查点恢复后会话卡死以及发送无文本图片失败等三个问题。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "langchain-ai/deepagents",
-        "version": "deepagents-talon==0.0.8",
-        "author": "github-actions[bot]",
-        "date": "2026-09-11",
-        "summary": "### Features\n\n- Added `send_message` support for progress updates. ([#6264](https://github.com/langchain-ai/deepagents/pull/6264))\n- Added targeted conversation deletion. ([#6235](https://github.com/langchain-ai/deepagents/pull/6235))\n- Added support for managing tool approvals through `tools.json`. ([#6248](https://github.com/langchain-ai/deepagents/pull/6248))\n\n### Bug Fixes\n\n- Improved MCP reliability and safety by hardening OAuth device-flow and credential handling, preserving refresh tokens, making configuration updates bounded and non-destructive, reporting protocol errors to the model, and preventing URL swaps past the auto-approve guard. ([#6170](https://github.com/langchain-ai/deepagents/pull/6170), [#6172](https://github.com/langchain-ai/deepagents/pull/6172), [#6171](https://github.com/langchain-ai/deepagents/pull/6171), [#6239](https://github.com/langchain-ai/deepagents/pull/6239), [#6173](https://github.com/langchain-ai/deepagents/pull/6173))\n- Improved background subagent and conversation reliability, including recoverable start/stop behavior, scheduled-job delivery, clearer orchestration enforcement, preventing one conversation from stalling or outliving the rest, and suppressing results from discarded turns. ([#6166](https://github.com/langchain-ai/deepagents/pull/6166), [#6228](https://github.com/langchain-ai/deepagents/pull/6228), [#6167](https://github.com/langchain-ai/deepagents/pull/6167), [#6168](https://github.com/langchain-ai/deepagents/pull/6168), [#6231](https://github.com/langchain-ai/deepagents/pull/6231))\n- Improved indexing and vector maintenance by bounding archive scans, query embeddings, deletion markers, vector rebuilds, and indexing workers, while surfacing indexing failures and resolving import-cycle and PostgreSQL dependency issues. ([#6162](https://github.com/langchain-ai/deepagents/pull/6162), [#6165](https://github.com/langchain-ai/deepagents/pull/6165), [#6163](https://github.com/langchain-ai/deepagents/pull/6163))\n- Fixed local voice transcription and embedding retries, and ensured local model downloads persist. ([#6255](https://github.com/langchain-ai/deepagents/pull/6255), [#6137](https://github.com/langchain-ai/deepagents/pull/6137))\n- Improved startup, teardown, and provider cleanup by safely unwinding channels that fail mid-start, sharing the optional-driver loader, and closing provider clients. ([#6169](https://github.com/langchain-ai/deepagents/pull/6169), [#6164](https://github.com/langchain-ai/deepagents/pull/6164))\n\n---\n\nInternal maintainers: @jkennedyvz, @linted\n\nReleased by: @jkennedyvz\n\n<details>\n<summary>Git log since deepagents-talon==0.0.7</summary>\n\nThis commit history includes changes to this package. Commits are listed newest first.\n\n- [`5469657`](https://github.com/langchain-ai/deepagents/commit/54696577caf3dfcefb662db08b4a8034ec6a35cd) release(deepagents-talon): 0.0.8 (#6184)\n- [`a97ba32`](https://github.com/langchain-ai/deepagents/commit/a97ba320fa797e9546efe3486ce703e8efd30fb4) fix(talon): fix local voice transcription and embedding retries (#6255)\n- [`15606d2`](https://github.com/langchain-ai/deepagents/commit/15606d280a8ddb86c8966fef0bab257f8070944f) feat(talon): add `send_message` for progress updates (#6264)\n- [`a273ad6`](https://github.com/langchain-ai/deepagents/commit/a273ad6c6a595c3aff915b744750711b50d544e3) feat(talon): manage tool approvals through `tools.json` (#6248)\n- [`edd0bcf`](https://github.com/langchain-ai/deepagents/commit/edd0bcfc61dc16eabea0b3a59aa84569e3b240dc) fix(talon): report MCP protocol errors to the model (#6239)\n- [`d889f40`](https://github.com/langchain-ai/deepagents/commit/d889f40ec72880ae2642300f62eceb9efe185757) chore(deps): raise dependency minimums for `all` (#6237)\n- [`4fb301d`](https://github.com/langchain-ai/deepagents/commit/4fb301d647c860d0d8f2108149e58cd9fe623352) feat(talon): add targeted conversation deletion (#6235)\n- [`481773c`](https://github.com/langchain-ai/deepagents/commit/481773caed336c86034e1c72b4988e7e93968610) fix(talon): keep results a discarded turn never reported (#6231)\n- [`b6dc5c5`](https://github.com/langchain-ai/deepagents/commit/b6dc5c5a8c6c1124f8e243868a83b9af188b08c7) fix(talon): deliver background subagents launched by a scheduled job (#6228)\n- [`5406820`](https://github.com/langchain-ai/deepagents/commit/5406820ec1c00ce521b0f54bb786c511da092f01) fix(talon): unwind the channel that fails mid-start, and keep teardown safe (#6169)\n- [`134ffc7`](https://github.com/langchain-ai/deepagents/commit/134ffc7bb4eba504ee90aaae3a70df87c6ea3217) fix(talon): stop one conversation from stalling or outliving the rest (#6168)\n- [`05620cc`](https://github.com/langchain-ai/deepagents/commit/05620cc72bfa7b81ce41064641cfa5808cb7c74a) fix(talon): make subagent orchestration state what it enforces (#6167)\n- [`d4c41b0`](https://github.com/langchain-ai/deepagents/commit/d4c41b048132eb27e2337b60b21463403b615390) fix(talon): make background subagents and host start/stop recoverable (#6166)\n- [`1c477e9`](https://github.com/langchain-ai/deepagents/commit/1c477e982d3d4f6027e0928d03516c4520b25e21) release(deepagents-code): 0.1.68 (#6202)\n- [`7c3cebe`](https://github.com/langchain-ai/deepagents/commit/7c3cebe1df407ac947c34d56a1a21945aaddae23) chore(deps): raise dependency minimums for `all` (#6212)\n- [`fc91199`](https://github.com/langchain-ai/deepagents/commit/fc91199a44b99990cca49341169aea858da222fc) fix(talon): persist local model downloads (#6137)\n- [`a4905a2`](https://github.com/langchain-ai/deepagents/commit/a4905a2fe555fef3cd01563392f87c0446acd8aa) chore(deps): bump httpx2 from 2.10.0 to 2.12.0 in /libs/talon (#6193)\n- [`51faa4c`](https://github.com/langchain-ai/deepagents/commit/51faa4c98bb06d5b5cd330fecb556b85318b1e31) chore(talon): bump compatible dependencies (#6191)\n- [`d0fbc7c`](https://github.com/langchain-ai/deepagents/commit/d0fbc7c16c233bc8e65e56e4be485d72c7a8abb2) release(deepagents-code): 0.1.67 (#6059)\n- [`b83d161`](https://github.com/langchain-ai/deepagents/commit/b83d161b817c7493e1c200977639db084bec6be2) chore(deps): bump httpcore2 from 2.9.1 to 2.10.0 in /libs/talon (#6181)\n- [`f6ae37c`](https://github.com/langchain-ai/deepagents/commit/f6ae37cb1f20486f2da9d5a304681ea96de99bc1) chore(deps): raise dependency minimums for `all` (#6186)\n- [`f526c90`](https://github.com/langchain-ai/deepagents/commit/f526c9083e7bd504a7a9393847023d4e0dfe02de) chore(deps): bump js-yaml from 4.3.1 to 4.3.2 in /libs/talon/deepagents_talon/channels/whatsapp_bridge (#6180)\n- [`d886742`](https://github.com/langchain-ai/deepagents/commit/d8867426af3ab83c31d64a11e5b84a21ce86a43d) fix(talon): close a url swap past the MCP auto-approve guard (#6173)\n- [`7dc07cb`](https://github.com/langchain-ai/deepagents/commit/7dc07cbb60f144e2b7fc266ee452b06c8b8dd10c) fix(talon): stop losing MCP refresh tokens on a refresh response (#6172)\n- [`f995931`](https://github.com/langchain-ai/deepagents/commit/f9959311bfeb788191f971fe32552b01adbac199) fix(talon): make MCP configuration updates bounded and non-destructive (#6171)\n- [`e6c5829`](https://github.com/langchain-ai/deepagents/commit/e6c58294d6792bcf433eb5f38fec1b5be70cc065) fix(talon): harden the MCP OAuth device flow and credential paths (#6170)\n- [`8462c24`](https://github.com/langchain-ai/deepagents/commit/8462c24524541f49a3eb53037580110586973c8c) fix(talon): bound the vector rebuild, break the import cycle, pin postgres (#6165)\n- [`02cea21`](https://github.com/langchain-ai/deepagents/commit/02cea210d7f3e5bc2bf89453e8a6e4af59031f59) fix(talon): share one optional-driver loader and close provider clients (#6164)\n- [`03653d6`](https://github.com/langchain-ai/deepagents/commit/03653d6d95ceb0b1b6739998fd9475e304489d12) fix(talon): surface indexing failures and bound the indexing worker (#6163)\n- [`79c23e6`](https://github.com/langchain-ai/deepagents/commit/79c23e669bf81cddf16e4ab1582ccc9b26d8bea7) fix(talon): bound archive scans, query embeddings, and deletion markers (#6162)\n- [`8566aef`](https://github.com/langchain-ai/deepagents/commit/8566aef97bd32c5482986ea55eb0077ce42a354d) chore(deps): raise dependency minimums for `all` (#6146)\n- [`25e68f9`](https://github.com/langchain-ai/deepagents/commit/25e68f9504328a7fc5fa6ef0c5083cbb9cb7362c) test(talon): make history backoff coverage deterministic (#6142)\n- [`18106be`](https://github.com/langchain-ai/deepagents/commit/18106be837bcdd9005b2dd73280d871a0621bf99) chore(deps): raise dependency minimums for `all` (#6130)\n\n</details>",
-        "assets_count": 2,
-        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-talon%3D%3D0.0.8",
-        "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "新增 send_message 支持，用于进度更新通知",
-            "新增针对特定对话的定向删除功能",
-            "新增通过 tools.json 管理工具审批的能力",
-            "大幅强化 MCP 的 OAuth 认证、凭据处理与配置更新的健壮性和安全性",
-            "改进后台子代理及对话的可靠性与索引维护"
-          ],
-          "summary_cn": "本次版本主要引入了三个新功能：支持通过 send_message 发送进度更新、支持定向删除特定对话，以及可通过 tools.json 配置文件管理工具审批流程。同时，该版本对 MCP 集成安全性进行了全面加固（包括 OAuth 设备流、凭据与刷新令牌处理），并修复了后台子代理、对话调度及索引维护中的多项可靠性问题。",
-          "impact_level": 3
-        }
-      },
-      {
-        "repo": "openclaw/openclaw",
-        "version": "v2026.9.4",
-        "author": "github-actions[bot]",
-        "date": "2026-09-11",
-        "summary": "## 2026.9.4\n\n### Highlights\n\n- **Recover from compatible failed updates:** retain the previous package and restore it with the previous configuration and service when schema and configuration checks prove rollback is safe; database migrations still require a verified pre-update backup. (#140339) Thanks @fuller-stack-dev.\n- **Plugins in one place:** discover bundled and ClawHub plugins, install them from the Control UI, and manage their setup, settings, and access in a unified Plugins workspace. (#135839, #135840, #139042, #137659, #137886, #138755, #142624, #142782) Thanks @Patrick-Erichsen.\n- **Prepared cloud sessions:** start eligible Linux sessions from prepared local projects or public GitHub repositories, and build reusable snapshots from the Control UI before starting a conversation. (#143227, #143372, #143410, #143838, #143929)\n- **Answer questions in the terminal:** use keyboard-driven choices, free-text answers, and multi-question prompts in both Gateway-connected and local TUI sessions. (#143273)\n- **GPT Image 2.5:** select the new Flare and Sunburst variants for image generation and editing through OpenAI or fal without changing your existing default model. Related #143007. (#143068, #143069) Thanks @vincentkoc.\n- **More dependable conversation history:** recover final replies after interrupted streams, retain timeout notices after reload, and prevent duplicate final answers when live chat hands off to saved history. Related #141839. (#142168, #142135, #142422) Thanks @LiuwqGit, @obviyus, @chelsealong, @von8794, and @jalehman.\n- **Voice that finishes delegated work:** return subagent results to Talk and deliver the final answer even after repeated rounds of delegation. (#129535, #142830) Thanks @vincentkoc.\n- **Externally managed configuration:** set `OPENCLAW_CONFIG_READONLY=1` to keep OpenClaw from rewriting deployment-managed configuration while preserving read-only diagnostics and ordinary runtime state. Related #140706. (#140719) Thanks @sallyom.\n\n### Changes\n\n- **Rollback and recovery:** eligible schema-neutral update failures restore the retained package, command shim, service, and pre-activation configuration, then verify the previous Gateway again. Changed database schemas, incompatible new databases, or intervening operator configuration edits block automatic rollback; a recovered update remains a failed update with a recorded rollback outcome. Use a [verified backup](https://docs.openclaw.ai/install/updating/rollback-and-recovery) before migration-bearing upgrades. (#140339) Thanks @fuller-stack-dev.\n- **Plugin organization:** browse installed plugins by category, keep detail tabs together, use short plugin-page URLs such as `/reports`, and discover installed and ClawHub skills through one search. (#142710, #142711, #142712, #142713, #143183, #143758) Thanks @Patrick-Erichsen.\n- **Cloud ready workers:** eligible local Git projects and public GitHub repository sessions can reuse prepared workers without repeating setup; private repository-only sessions and paired devices remain outside this preparation flow. The default reserve target is one per project/profile, capped at four Gateway-wide. Ready workers incur provider running-machine charges until deleted. Set `cloudWorkers.profiles.<id>.readyWorkers` or `cloudWorkers.preparedPool.maxTotal` to zero to disable the corresponding reserves. See [warm images and ready workers](https://docs.openclaw.ai/gateway/cloud-workers/warm-images#ready-workers). (#143227, #143372, #143410)\n- **Terminal question controls:** navigate choices with arrows or numbers, type an Other answer, toggle multi-select choices, and reopen a pending prompt with `/question`; local-mode questions last only for the running TUI process. (#143273)\n- **Chat navigation and composition:** use a compact left-side conversation rail with sender identities in shared-chat previews, add selected text to the main composer, and preview attached videos before sending. Related #142207, #142592, #143473. (#142227, #143486, #142543, #142623) Thanks @vyctorbrzezowski and @Patrick-Erichsen.\n- **Skill learning:** open learning from past work in a normal session that you can inspect and continue. (#142909) Thanks @obviyus.\n- **Command review:** let the automatic command reviewer allow, deny, or escalate a command using bounded conversation context while retaining the execution policy's authority. (#141987, #142279)\n- **Node runtime recovery:** offer a Node.js update when the CLI runtime is incompatible and keep diagnostics and update commands available to help repair the installation. (#142742, #143344) Thanks @jason-allen-oneal and @morrow-bluedot.\n- **Read-only deployments:** honor host-owned `OPENCLAW_CONFIG_READONLY=1` across configuration writes, setup, Doctor repairs, plugin changes, and updates; read-only configuration commands continue to work, and this mode does not make runtime state read-only. Related #140706. (#140719) Thanks @sallyom.\n- **Upcoming SDK deprecation:** `agent-harness-credential-prompt-string-argument` entered deprecation on September 9, 2026; the legacy string argument to `buildCredentialSafetyPrompt` remains supported through November 30, 2026; plugin authors should pass `{ controlToolsAvailable }`. See [credential prompt migration](https://docs.openclaw.ai/plugins/sdk-migration/removed-surfaces#credential-prompt-builder). Related #128076. (#143238) Thanks @ejc3.\n- **SDK context compatibility:** `sdk-untrusted-context-identifier-aliases` reached its September 8, 2026 removal date but remains `removal-pending`; retain the deprecated untrusted-named context aliases while published plugin readers migrate to the channel-named replacements; removal remains pending migration verification and explicit breaking-release acceptance. See [plugin compatibility](https://docs.openclaw.ai/plugins/compatibility). (#142708)\n- **Cloud snapshot controls:** build, rebuild, inspect, pin, delete, and roll back supported cloud-worker snapshots from Settings → Connections → Cloud workers → Snapshots. Active builds can be canceled with confirmation; held or pinned images remain protected. Snapshot storage and ready-worker charges still apply. (#143814, #143838, #143893, #143929)\n- **Cloud placement and diagnostics:** edit advanced worker profiles and repository defaults, inspect cloud-session machine specifications, and select native Windows workers when the backend supports them. Warm images and desktops remain Linux-only. (#143801, #143864, #143769, #143798)\n- **Deepgram voice notes:** transcribe voice notes with `flux-general-en` or `flux-general-multi` through Deepgram Flux; these models require `ffmpeg`. See [Flux configuration](https://docs.openclaw.ai/providers/deepgram#flux-models). Related #129452. (#141836) Thanks @obviyus and @safzanpirani.\n- **Slow session diagnostics:** identify the work holding a session lifecycle queue and see which artifact-cleanup preparation stage is taking time. Related #143885, #143939. (#143886, #143942)\n\n### Fixes\n\n- **Access and content boundaries:** preserve existing WhatsApp group allowlists during security repairs, continue blocking cloud-metadata addresses when private IPv6 exceptions are enabled, bound Slack HTTP request bodies, and restrict Tlon citation retrieval to the cited post. Reject stale signed Feishu webhook callbacks, prevent attachment reads from sibling agent sandboxes, and stop pipelined MCP calls after a rejected upload. Related #107972. (#142589, #137684, #136508, #142041, #143484, #143521, #143724) Thanks @eleqtrizit, @drobison00, @pgondhi987, and @yetval.\n- **Workspace and backup safety:** preserve concurrent workspace edits, include required external configuration files in full backups, keep private update captures out of ordinary exports even after they move, and tolerate a disappearing live SQLite sidecar after its database is snapshotted. Related #141042, #143678. (#135865, #141161, #143693, #143799, #143899) Thanks @yetval, @obviyus, @LiuwqGit, @Cobblestone-Digital1, and @fuller-stack-dev.\n- **Migration recovery:** recover markerless multi-agent configurations, leave ambiguous Skill Workshop migrations available for review, explain hard-linked session migration refusals, and preserve normalized media when republishing migrated archives. Retain legacy Codex assistant messages during session SQLite import and repair the dangling Workshop review index. Related #142582, #142585, #143094, #142584, #143593, #140100. (#143202, #143141, #143195, #143595, #140296, #142522) Thanks @GitHoubi, @fahrenhe1t, @fuller-stack-dev, @ylcn91, @ikenraf, @jjjhenriksen, @RomneyDa, and @pash-openai.\n- **Doctor and authentication:** preserve source state during full lint, keep saved authentication profiles aligned during migration, scope legacy auth-profile refusals to affected providers, recover legacy node tokens with invalid scopes, and prevent stale shared OAuth refresh generations from overwriting newer credentials. Restore Zalo User policy promotion and stop Moonshot China setup from repeatedly reinstalling its provider. Related #143173, #143263, #143865, #143630. (#142839, #143310, #143599, #141477, #143429, #143860, #143742) Thanks @thien-ngn, @obviyus, @tskerpnext, @matthewmoroz, @vincentkoc, @wangmiao0668000666, and @zwyhmcn.\n- **Reply delivery and history:** recover final replies from terminated streams and earlier tool errors, retain partial failed-turn text and timeout outcomes, preserve paragraph and code-block boundaries, and report truncated Responses replies as incomplete. Preserve long transcript history across `sessions_yield`, avoid duplicate final replies during history hydration and duplicate user turns after Claude CLI resume, and retain final ChatGPT Responses frames at stream end. Related #141839, #132762, #143641. (#142168, #142135, #140833, #142778, #137381, #142422, #143598, #125977, #143722, #143960, #120902) Thanks @LiuwqGit, @obviyus, @chelsealong, @von8794, @leapdragon, @zhangguiping-xydt, @jalehman, @harjothkhara, @CK-XYZ, @ayaangazali, @rgregg, @Marvinthebored, @Peetiegonzalez, and @zenglingbiao.\n- **Chat continuity:** keep submitted images visible during history handoff, prevent cold-session switching flashes, and reconcile concurrent session updates consistently. (#143407, #134868, #143049) Thanks @jesse-merhi.\n- **Claude CLI session reuse:** keep warm sessions alive when skills-watcher readiness changes but prepared skill content is unchanged, while invalidating reuse after real skill-content changes. Related #144368. (#144402) Thanks @vincentkoc.\n- **Voice conversations:** deliver yielded and repeatedly delegated results, permit independent voice consultations from model-locked requester sessions, and truncate interrupted realtime audio at the amount actually played. Related #142483, #138592. (#129535, #142830, #142736, #138619) Thanks @vincentkoc, @RileyJJY, @jai-assistant, @LiuwqGit, @obviyus, and @fabiolr.\n- **Telegram:** retain replies when an HTTP proxy rejects its tunnel, recognize bot-ID mentions in text and photo captions, preserve code-example spacing, and stop late stall reactions after preparation is canceled. Related #140265, #141078. (#140388, #140266, #142504, #141079) Thanks @Hekzory, @obviyus, @cai-ops, and @ooiuuii.\n- **Discord:** restore delegation from guild messages, preserve ambient voice-note transcripts, show member presence immediately after reconnect, and retain repeated component captions and link emoji. Related #142832, #141054. (#143006, #142860, #141218, #142342) Thanks @Marvinthebored, @Peetiegonzalez, @obviyus, @ericcaiwx-star, @aatreya, @harshitgupta31415, @vincentkoc, and @nissl24.\n- **Slack:** resolve Enterprise workspace ownership for heartbeat DMs, keep acknowledgement reactions independent of status reactions, and avoid formatting ordinary prose as code after Windows root paths. Related #142489. (#138689, #142595, #142288) Thanks @Kimiyu-186, @sunlit-deng, and @alexjpanagis.\n- **Mattermost and Signal:** keep sibling Mattermost accounts connected during secret-reference reloads, preserve replacement previews while retracting earlier messages, and retain Signal reply quotes when streamed delivery fails. (#142193, #143621, #142600) Thanks @ceckert and @obviyus.\n- **Channel text fidelity:** preserve unknown Matrix message text and escaped mentions, decode HTML-only Teams messages correctly, retain Feishu rich-text styles and unrelated tools, and keep outbound WhatsApp response prefixes out of inbound messages. Related #140971, #138779. (#135359, #142369, #142496, #142627, #141984, #138819) Thanks @teddytennant, @obviyus, @SunnyShu0925, @hayden-cc, @sunlit-deng, @vincentkoc, and @Jackten.\n- **Android chat and folding screens:** wait for picked attachments before sending their captions, restore completed tool activity, distinguish connection state from chat readiness, and keep thinking controls, background tasks, and the branch picker inside their fold panes. Related #142805. (#143162, #142810, #143128, #141860, #141899, #142418) Thanks @ansxor, @IWhatsskill, and @vincentkoc.\n- **Mobile connection feedback:** show failures and recovery for unreachable Gateways and report battery fractions as the intended percentage. Related #141066. (#142651, #141069) Thanks @vincentkoc, @NullArbitrage, and @obviyus.\n- **Provider and model selection:** preserve authored catalog rows, exact model identities, metadata, and credentials when aliases coexist or catalogs refresh. Keep model overrides, context limits, thinking choices, vision, compaction, and tool inventories tied to the selected model and provider; hide unsupported thinking or Fast choices and preserve session lists after fallback. (#142302, #142898, #142751, #142790, #142646, #142682, #143337, #143643, #143686, #143708, #143777, #143780, #143822, #143848, #143872, #143954, #143967, #143975, #143994, #143999, #144009, #144010, #144034, #144060, #144107, #142822) Thanks @obviyus.\n- **Provider requests:** preserve Anthropic prompt-cache reuse across transient runtime context, treat Kimi quota exhaustion as a rate limit rather than an authentication failure, preserve managed Responses session affinity, and recover supported malformed streamed tool arguments and silent tool rejections. Related #140607, #142524, #140918, #135111. (#140621, #142656, #141107, #141323, #142176) Thanks @LightningWareLLC, @RileyJJY, @obviyus, @rico007, @louisfy, @alexph-dev, @lraesly, and @1Vision365-PeterTijsma.\n- **Memory:** use the selected fallback provider’s embedding model and index status, observe external LanceDB writes, and retain recall through trigger timeouts. Keep top search results stable as result limits change, give managed local embedding startup its own readiness budget, honor bounded provider cooldowns, require real query diversity for promotion, and skip unnecessary recall for inter-session deliveries. Preserve first-run setup after empty dreaming and bound pre-compaction flush context while recording when no memory-write tool exists. Related #137805, #142479, #141787, #143188, #134604, #143169, #108893, #143821. (#142364, #142609, #137806, #142567, #141808, #143193, #127031, #136984, #143590, #134959, #119624, #143903) Thanks @Yigtwxx, @obviyus, @azuretek, @ylcn91, @BsnizND, @SunnyShu0925, @dh-js, @KirDE, @ayaangazali, @linhongyu510, @scottcha, @wangmiao0668000666, @PeterHodl, @shojikumaru, @developercrocodiles, @pcpilot-dev, @LiuwqGit, and @kiagentkronos-cell.\n- **Update handoff and restart:** keep older updaters and Git installs upgrading from 2026.9.1 able to restart the Gateway; accept shipped 2026.9.2/2026.9.3 service handoffs without weakening current service-owner checks. Preserve pnpm-generation handoff and schema-upgrade restart intent, prepare managed helper schemas before readiness, replace unsupported service Node runtimes, retain restored-version verification, and prevent systemd restart hangs. Related #143204, #140821, #143543. (#142195, #142631, #143137, #143159, #142817, #140914, #143859, #143738, #144031) Thanks @jason-allen-oneal, @wangmiao0668000666, @NianJiuZst, @obviyus, @rboy1, @RomneyDa, and @IWhatsskill.\n- **Plugin updates:** converge the plugin cohort when core is already current without turning unchanged installations into needless updates, retain bundled aliases during rehearsal, avoid false Memory Core migration refusals, and explain retained official plugin pins. (#143174, #143462, #143190, #143138, #142457) Thanks @RomneyDa, @PollyBot13, and @obviyus.\n- **CLI update and transcript reliability:** allow updates when native inspection confirms no installed Gateway service, while retaining strict service-owner checks; keep transcript plaintext and JSON output free of unrelated startup warnings. Related #144356, #144357. (#144402) Thanks @vincentkoc.\n- **Update recovery feedback:** allow long Doctor finalization to finish, clear orphaned update runs instead of showing permanent progress, retain cleanup outcomes and recoverable warnings, and avoid linking unavailable reports. Preserve diagnostics when history is unavailable and require confirmation before automatic triage launches a coding agent; verified rollback follow-up actions remain opt-in. Related #139714. (#143321, #143557, #143139, #143774, #143767, #143844, #143921, #143965, #143748, #143657) Thanks @fuller-stack-dev and @Colton-Harris.\n- **Gateway responsiveness:** move cold history planning, integrity checks, and archive pruning off the main thread; keep prepared updates and post-eviction maintenance responsive; reduce memory spikes when inspecting long sessions. Reduce unused plugin and model catalog preparation, bound parallel remote workspace hashing, avoid unnecessary diagnostic copies, and keep automation delivery previews responsive. (#143332, #143226, #143379, #143434, #143602, #143175, #143783, #143846, #144095, #144017, #144109, #144014)\n- **Session retention:** stop excess cleanup once disk pressure clears, preserve history that becomes protected during cleanup, and avoid premature daily resets around daylight-saving gaps. (#143285, #142505, #142482)\n- **Browser actions:** keep existing browser sessions from timing out prematurely, preserve newer pending dialogs when older actions settle, report blocked or interrupted CLI actions, and leave browser focus intact during passive following. (#143365, #142608, #142480, #134480) Thanks @scotthuang and @obviyus.\n- **Settings and sign-in:** preserve settings drafts after deleting array rows, make agent automations editable from Settings, and request the Gateway token when a remembered device token is stale. Related #139781. (#142564, #139782, #143156) Thanks @jjjhenriksen and @vyctorbrzezowski.\n- **Plugin and skill installation:** prevent installed-plugin matches across different ClawHub registries, report newer releases for pinned installs, recover capability-consent dead ends, and retain bundled trust for development-path installs. Preserve plugin selection and restart progress, rank official catalog results consistently, refresh skill snapshots on Gateway restart, and avoid cutting off skill installation after two minutes. Related #137624, #143111, #122107. (#143644, #137892, #143125, #143516, #143000, #143671, #143730, #143731, #122110) Thanks @pfrederiksen, @vincentkoc, @LiuwqGit, @obviyus, @yxloveql, @RomneyDa, @gozu, @Patrick-Erichsen, and @sappkevin.\n- **Paired devices and Linux:** expose window discovery on the first computer action, preserve activation and observation results, open chat desktops on their assigned machines, and identify who took desktop control. Honor SSH alias ports, retain remote credential references on reconnect, and keep background-update results actionable. Related #121934. (#141277, #142900, #142907, #121938, #143736, #143953, #143831, #143828) Thanks @oywino, @obviyus, and @vincentkoc.\n- **Plugin schema typing:** preserve catchall input and output types, including transformations, in multi-account channel schemas. Related #144358. (#144402) Thanks @vincentkoc.\n- **Doctor update finalization:** allow implicit Codex preferences when the plugin is absent while retaining errors for explicitly required runtimes; finish configuration-less updates without creating a configuration file; close only Doctor’s private snapshot database before cleanup, leaving the source database open. Related #143786, #143797, #138260. Thanks @osipovia.\n- **Delegation and reset:** keep background completion wakes alive after a foreground reply, preserve subagent history when a parent thread changes, show full subagent transcripts in the task sidebar, and keep session resets responsive while stopping yielded child work. Canceled automations release their pending result waits. Related #143389. (#143866, #143869, #143747, #143916, #143832) Thanks @obviyus, @aleps001, and @pash-openai.\n- **Provider routing and search:** preserve stable routing identities for standalone OpenCode and OpenCode Go turns, retain provider turn headers for explicit sessions, preserve local-model request prefixes, and keep Gemini web search available with new API keys. Global web-search disable remains effective in session controls. Related #137257, #96974, #121401. (#143659, #143558, #143890, #137371, #111964, #121557) Thanks @HAPPYFAPTAIN, @obviyus, @RomneyDa, @vincentkoc, @gwiltschek, @dillona, @anguslogan01, @zyw02, and @cursoragent.\n- **Update ownership and cloud continuity:** stop plugin persistence and rollback actions after updater authority is lost, reject unverified Gateway replacements, preserve cloud machines across Gateway updates, and continue submitted turns across worker-runtime updates. Related #143750, #143841. (#144130, #143791, #143863, #143858, #143910) Thanks @fuller-stack-dev and @vincentkoc.\n- **Runtime and state diagnostics:** re-execute the CLI under an available supported Node runtime before refusing to start, preserve the selected Bun SQLite library in managed services, retain macOS launchd error logs, restore Linux Bun CPU diagnostics, and tolerate transient locks during read-only state access. Schema-drift failures name the repair path. Related #90711, #143800. (#143464, #143651, #142186, #143519, #143805, #143908, #143531) Thanks @RomneyDa, @Enominera, and @pash-openai.\n- **Control UI recovery:** restore Send when Stop finds an already-finished run, retain terminal sessions after interrupted restoration, report failed Review file opens, stop stale task reads after Review changes, and keep session files and embedded reports from being squeezed into nested scrolling regions. Related #143356, #143971. (#143437, #144015, #143958, #144073, #143854, #143765) Thanks @ylcn91, @obviyus, @YanHE1169, @vincentkoc, @Marvinthebored, and @Peetiegonzalez.\n- **Tool and export fidelity:** preserve flat tool arguments beside empty search wrappers, keep native image-generation hooks available, retain paginated read evidence in trajectory exports, and report the actual filesystem error when workspace writes fail. Related #143830, #115920. (#143729, #143717, #143930, #116378) Thanks @xydigitLybnnnn, @obviyus, @linhongyu510, @cp1369, @sloptop-the-terrible, and @609NFT.\n\n### Complete contribution record\n\nThis audited record covers the complete 58fcf69cadd0be59ecee41b21b655f195ccda7b2..0b7ddbd9c5e97a82b6bd7a36daa8dcff984d338d history: 1,174 in-range PRs + 0 retained seed-only PRs = 1,174 unique PRs. The generation manifest also supplies direct commits as editorial input; the grouped notes above prioritize user impact.\n\nShipped baseline exclusions: v2026.9.3 (19 PRs: #111451, #120728, #121140, #129636, #131475, #132740, #133652, #134290, #134400, #135043, #139089, #139196, #139393, #139722, #140263, #140274, #140672, #140803, #141055).\n\n#### Pull requests\n\n- **PR #142314**\n- **PR #137684** Thanks @eleqtrizit.\n- **PR #142311**\n- **PR #142288**\n- **PR #142230**\n- **PR #142290**\n- **PR #111899** Related #111407. Thanks @xialonglee and @obviyus and @MrNozz.\n- **PR #142302** Thanks @obviyus.\n- **PR #142318** Related #142244.\n- **PR #142346**\n- **PR #142339** Related #142330. Thanks @vyctorbrzezowski.\n- **PR #142305**\n- **PR #142360** Thanks @vincentkoc.\n- **PR #142291**\n- **PR #142365**\n- **PR #142187**\n- **PR #142361**\n- **PR #141266** Thanks @vincentkoc.\n- **PR #142359** Related #142351.\n- **PR #142334**\n- **PR #142342**\n- **PR #142324**\n- **PR #142363** Related #142362.\n- **PR #142366**\n- **PR #142195**\n- **PR #137565** Thanks @jalehman.\n- **PR #135411**\n- **PR #142274** Related #142211. Thanks @vyctorbrzezowski.\n- **PR #129186** Thanks @vincentkoc.\n- **PR #137686** Thanks @ly85206559 and @obviyus.\n- **PR #141689** Thanks @vincentkoc and @RomneyDa.\n- **PR #142378** Thanks @RomneyDa.\n- **PR #142354**\n- **PR #142042** Thanks @RomneyDa.\n- **PR #138350** Thanks @vyctorbrzezowski.\n- **PR #142376**\n- **PR #142385**\n- **PR #142327**\n- **PR #142353** Thanks @RomneyDa.\n- **PR #142114**\n- **PR #142369**\n- **PR #141477** Thanks @vincentkoc.\n- **PR #142381**\n- **PR #142205** Related #142204.\n- **PR #142344** Thanks @RomneyDa.\n- **PR #136508** Thanks @drobison00.\n- **PR #142246** Related #142222. Thanks @vyctorbrzezowski.\n- **PR #142348** Thanks @RomneyDa.\n- **PR #138689** Thanks @Kimiyu-186.\n- **PR #142379** Thanks @vincentkoc.\n- **PR #141221** Thanks @vincentkoc.\n- **PR #142345** Thanks @vincentkoc.\n- **PR #142388**\n- **PR #142332** Related #142212. Thanks @vyctorbrzezowski.\n- **PR #142384** Thanks @obviyus.\n- **PR #142367** Thanks @obviyus.\n- **PR #142411**\n- **PR #137668** Related #137665. Thanks @elbourne12345 and @obviyus.\n- **PR #127254**\n- **PR #142213** Related #142209. Thanks @vyctorbrzezowski.\n- **PR #142396**\n- **PR #142400** Related #142598. Thanks @hannesrudolph.\n- **PR #142374** Related #142373.\n- **PR #142402** Related #142397.\n- **PR #142420**\n- **PR #141224** Thanks @vincentkoc.\n- **PR #141860** Thanks @vincentkoc.\n- **PR #142350**\n- **PR #142437** Related #142598. Thanks @hannesrudolph.\n- **PR #142135** Related #141839. Thanks @chelsealong and @obviyus and @von8794.\n- **PR #142227** Related #142207. Thanks @vyctorbrzezowski.\n- **PR #142425** Thanks @vincentkoc.\n- **PR #142138** Thanks @fabiolr and @obviyus.\n- **PR #142415**\n- **PR #141987**\n- **PR #142431** Thanks @RomneyDa.\n- **PR #142407** Thanks @RomneyDa.\n- **PR #142410** Thanks @RomneyDa.\n- **PR #142409** Thanks @RomneyDa.\n- **PR #142084** Thanks @RomneyDa.\n- **PR #142083** Thanks @RomneyDa.\n- **PR #142082** Thanks @RomneyDa.\n- **PR #142408** Thanks @RomneyDa.\n- **PR #142081** Thanks @RomneyDa.\n- **PR #142387** Related #142386.\n- **PR #138211** Related #138176.\n- **PR #142432** Thanks @vincentkoc.\n- **PR #136462** Thanks @RomneyDa.\n- **PR #142406**\n- **PR #142371**\n- **PR #142391** Related #142390.\n- **PR #137877** Thanks @teddytennant and @obviyus.\n- **PR #142451**\n- **PR #142448** Thanks @vincentkoc.\n- **PR #142405** Thanks @vincentkoc.\n- **PR #142455** Related #142454.\n- **PR #117631**\n- **PR #142404** Related #142403.\n- **PR #142413** Related #142412.\n- **PR #142458**\n- **PR #137869** Related #128928. Thanks @teddytennant and @obviyus and @aniruddhaadak80.\n- **PR #142466**\n- **PR #142279**\n- **PR #142436**\n- **PR #141162** Thanks @vincentkoc.\n- **PR #142460**\n- **PR #142375** Thanks @obviyus.\n- **PR #142440**\n- **PR #142467** Thanks @RomneyDa.\n- **PR #142447** Related #142446.\n- **PR #141725** Related #141694. Thanks @leilei3167 and @obviyus and @markthebest12.\n- **PR #142469** Related #142468.\n- **PR #142423**\n- **PR #140719** Related #140706. Thanks @sallyom.\n- **PR #137974** Related #137959. Thanks @SunnyShu0925 and @obviyus and @Hawk5150.\n- **PR #142465**\n- **PR #142428** Thanks @RomneyDa.\n- **PR #142441** Thanks @RomneyDa.\n- **PR #142472** Thanks @RomneyDa.\n- **PR #141896** Thanks @RomneyDa.\n- **PR #141899** Thanks @vincentkoc.\n- **PR #142474** Thanks @vincentkoc.\n- **PR #137806** Related #137805. Thanks @azuretek and @obviyus.\n- **PR #142450** Related #142449.\n- **PR #142495** Related #142493.\n- **PR #142503**\n- **PR #142480**\n- **PR #142364** Thanks @Yigtwxx and @obviyus.\n- **PR #142507**\n- **PR #142426** Thanks @vincentkoc.\n- **PR #142494** Thanks @vincentkoc.\n- **PR #142456** Thanks @RomneyDa.\n- **PR #142065** Thanks @RomneyDa.\n- **PR #142475** Related #142598. Thanks @hannesrudolph.\n- **PR #142444** Related #142443.\n- **PR #142275** Related #142216. Thanks @vyctorbrzezowski.\n- **PR #137664** Thanks @ly85206559 and @obviyus.\n- **PR #142499** Thanks @vincentkoc.\n- **PR #142482**\n- **PR #129610** Thanks @jalehman.\n- **PR #142419** Related #142392. Thanks @jalehman.\n- **PR #142541** Related #142598. Thanks @hannesrudolph.\n- **PR #142249** Related #142247.\n- **PR #142525**\n- **PR #142498** Thanks @obviyus.\n- **PR #142543** Thanks @Patrick-Erichsen.\n- **PR #142544** Thanks @Patrick-Erichsen.\n- **PR #142508**\n- **PR #142519**\n- **PR #142542**\n- **PR #142505**\n- **PR #142442** Thanks @jalehman.\n- **PR #142143** Thanks @IWhatsskill and @vyctorbrzezowski.\n- **PR #142551** Thanks @RomneyDa.\n- **PR #142316** Related #142254. Thanks @vyctorbrzezowski.\n- **PR #142057** Thanks @vincentkoc.\n- **PR #137679** Thanks @teddytennant and @obviyus.\n- **PR #142496**\n- **PR #142546** Related #142539.\n- **PR #142478** Related #142477.\n- **PR #142485** Thanks @eleqtrizit.\n- **PR #137678** Thanks @teddytennant and @obviyus.\n- **PR #142576**\n- **PR #142560** Thanks @vincentkoc.\n- **PR #138303** Related #138301. Thanks @vyctorbrzezowski.\n- **PR #142578** Thanks @jalehman.\n- **PR #142438** Related #126455. Thanks @jalehman and @vyctorbrzezowski.\n- **PR #142488** Related #142487.\n- **PR #142537** Thanks @RomneyDa.\n- **PR #142561** Thanks @RomneyDa.\n- **PR #142491** Related #142490.\n- **PR #142557** Thanks @obviyus.\n- **PR #142538** Thanks @RomneyDa.\n- **PR #142520** Thanks @vincentkoc.\n- **PR #142563** Thanks @RomneyDa.\n- **PR #142562** Thanks @RomneyDa.\n- **PR #142513** Related #142512.\n- **PR #142587** Thanks @vincentkoc.\n- **PR #142372** Thanks @obviyus.\n- **PR #142338** Related #142337.\n- **PR #142570** Related #142569.\n- **PR #142568**\n- **PR #130494** Related #130456. Thanks @jalehman.\n- **PR #142602**\n- **PR #142605** Thanks @vincentkoc.\n- **PR #140680** Thanks @vincentkoc.\n- **PR #142604**\n- **PR #142504**\n- **PR #142518**\n- **PR #142614**\n- **PR #142335** Related #142287. Thanks @vyctorbrzezowski.\n- **PR #142607** Thanks @vincentkoc.\n- **PR #142527**\n- **PR #142418** Thanks @vincentkoc.\n- **PR #142601** Related #142594.\n- **PR #138667** Thanks @Szqub and @obviyus.\n- **PR #142599**\n- **PR #142630**\n- **PR #142573** Thanks @RomneyDa.\n- **PR #142066** Thanks @RomneyDa.\n- **PR #142278** Related #141838. Thanks @MoerAI and @obviyus and @von8794.\n- **PR #142609** Thanks @Yigtwxx and @obviyus.\n- **PR #137485** Related #125360. Thanks @shojikumaru and @obviyus and @noelillinger.\n- **PR #142632**\n- **PR #136545** Related #136544. Thanks @TheAngryPit and @obviyus.\n- **PR #142618**\n- **PR #142612**\n- **PR #142641** Thanks @vincentkoc.\n- **PR #142276** Thanks @vincentkoc.\n- **PR #142625** Thanks @vincentkoc.\n- **PR #142643** Thanks @RomneyDa.\n- **PR #142622** Thanks @obviyus.\n- **PR #142535**\n- **PR #142629**\n- **PR #142554**\n- **PR #142648** Thanks @RomneyDa.\n- **PR #142652** Thanks @jalehman.\n- **PR #142564**\n- **PR #142589** Thanks @eleqtrizit.\n- **PR #142620** Thanks @obviyus.\n- **PR #142666** Thanks @vincentkoc.\n- **PR #142550** Related #142510. Thanks @vyctorbrzezowski.\n- **PR #142577**\n- **PR #142536** Related #142517. Thanks @vyctorbrzezowski.\n- **PR #142667** Thanks @Patrick-Erichsen.\n- **PR #142636**\n- **PR #142600**\n- **PR #141851** Thanks @vincentkoc.\n- **PR #142684** Thanks @Patrick-Erichsen.\n- **PR #141705** Thanks @fabiolr.\n- **PR #141268** Related #141264. Thanks @ooiuuii and @obviyus.\n- **PR #142555** Related #142514. Thanks @vyctorbrzezowski.\n- **PR #142422** Thanks @jalehman.\n- **PR #142669** Thanks @fuller-stack-dev.\n- **PR #142665** Thanks @vyctorbrzezowski.\n- **PR #142500**\n- **PR #142679**\n- **PR #142041** Thanks @pgondhi987.\n- **PR #142675** Thanks @fuller-stack-dev.\n- **PR #142677** Thanks @vincentkoc.\n- **PR #142540** Related #142511. Thanks @vyctorbrzezowski.\n- **PR #142672** Thanks @fuller-stack-dev.\n- **PR #142608**\n- **PR #142690**\n- **PR #142674** Thanks @jalehman.\n- **PR #142691** Related #142689.\n- **PR #142659**\n- **PR #142523** Thanks @vincentkoc.\n- **PR #142686** Thanks @RomneyDa.\n- **PR #131805** Related #86174. Thanks @jalehman and @rqlangley.\n- **PR #142627**\n- **PR #142457** Thanks @PollyBot13 and @obviyus.\n- **PR #142634** Thanks @Patrick-Erichsen.\n- **PR #142687** Thanks @RomneyDa.\n- **PR #142685** Thanks @RomneyDa.\n- **PR #142646** Thanks @obviyus.\n- **PR #142509** Thanks @RomneyDa.\n- **PR #142635**\n- **PR #142683** Thanks @RomneyDa.\n- **PR #142703** Thanks @vincentkoc.\n- **PR #142382** Related #142380. Thanks @sercada and @obviyus.\n- **PR #142696** Related #142680. Thanks @vyctorbrzezowski.\n- **PR #142645** Thanks @vincentkoc.\n- **PR #142613** Related #142596. Thanks @vyctorbrzezowski.\n- **PR #142637** Related #142615. Thanks @vyctorbrzezowski.\n- **PR #142658** Related #142650. Thanks @vyctorbrzezowski.\n- **PR #142248** Thanks @TheAngryPit and @obviyus.\n- **PR #142682** Thanks @obviyus.\n- **PR #141852** Thanks @obviyus.\n- **PR #142708**\n- **PR #141373** Thanks @nocodet888-arch and @obviyus.\n- **PR #142730** Thanks @vincentkoc.\n- **PR #142728**\n- **PR #142731** Thanks @RomneyDa.\n- **PR #142732**\n- **PR #142733**\n- **PR #142725**\n- **PR #142727** Thanks @RomneyDa.\n- **PR #142720** Related #142716. Thanks @vyctorbrzezowski.\n- **PR #142623** Related #142592. Thanks @vyctorbrzezowski.\n- **PR #137192** Related #137190. Thanks @husodrn46 and @obviyus.\n- **PR #141315** Thanks @hugenshen and @obviyus.\n- **PR #142735** Thanks @vincentkoc.\n- **PR #142729** Thanks @vincentkoc.\n- **PR #142567** Related #142479. Thanks @ylcn91 and @obviyus and @BsnizND.\n- **PR #142763**\n- **PR #142714**\n- **PR #142752** Thanks @vincentkoc.\n- **PR #142762** Thanks @vincentkoc.\n- **PR #142775** Thanks @vincentkoc.\n- **PR #138285** Related #138277. Thanks @vyctorbrzezowski.\n- **PR #142774** Thanks @vincentkoc.\n- **PR #142777**\n- **PR #142705** Related #100537. Thanks @MasterSwords1 and @obviyus and @guarismo.\n- **PR #142628** Thanks @vincentkoc.\n- **PR #142757**\n- **PR #142707**\n- **PR #142785**\n- **PR #142779** Thanks @vincentkoc.\n- **PR #142656** Related #142524. Thanks @RileyJJY and @obviyus and @rico007.\n- **PR #142651** Thanks @vincentkoc.\n- **PR #139782** Related #139781. Thanks @jjjhenriksen and @vyctorbrzezowski.\n- **PR #142780** Thanks @vincentkoc.\n- **PR #129535** Thanks @vincentkoc.\n- **PR #142787**\n- **PR #142786** Thanks @vincentkoc.\n- **PR #142790** Thanks @obviyus.\n- **PR #142766** Thanks @obviyus.\n- **PR #142795**\n- **PR #142176** Related #135111. Thanks @lraesly and @obviyus and @1Vision365-PeterTijsma.\n- **PR #142797**\n- **PR #137311** Thanks @Alix-007 and @obviyus.\n- **PR #142796**\n- **PR #142639** Related #142593. Thanks @vyctorbrzezowski.\n- **PR #142806**\n- **PR #142801**\n- **PR #142807**\n- **PR #142778** Thanks @zhangguiping-xydt and @obviyus.\n- **PR #142368** Thanks @Glucksberg and @obviyus.\n- **PR #142738**\n- **PR #142809** Thanks @vincentkoc.\n- **PR #142671** Related #142662. Thanks @vyctorbrzezowski.\n- **PR #142816**\n- **PR #142811**\n- **PR #142803** Thanks @vincentkoc.\n- **PR #131968** Related #131944. Thanks @vyctorbrzezowski and @obviyus.\n- **PR #142818**\n- **PR #142819**\n- **PR #142823** Thanks @jalehman.\n- **PR #142694** Related #142688. Thanks @vyctorbrzezowski.\n- **PR #142827** Thanks @obviyus and @ly85206559.\n- **PR #142814**\n- **PR #142824**\n- **PR #142804**\n- **PR #142833**\n- **PR #137376** Thanks @Yigtwxx and @obviyus.\n- **PR #136266** Thanks @yetval and @obviyus.\n- **PR #142830**\n- **PR #142835** Thanks @vincentkoc.\n- **PR #142837** Thanks @jalehman.\n- **PR #142834**\n- **PR #137381** Thanks @jalehman.\n- **PR #142836**\n- **PR #142845**\n- **PR #134868** Thanks @jesse-merhi.\n- **PR #142595** Related #142489. Thanks @sunlit-deng and @alexjpanagis.\n- **PR #142843**\n- **PR #135964** Thanks @qingminglong and @obviyus.\n- **PR #142840** Thanks @obviyus.\n- **PR #142855** Thanks @vincentkoc.\n- **PR #142751**\n- **PR #136268** Thanks @yetval and @obviyus.\n- **PR #142865**\n- **PR #135865** Thanks @yetval and @obviyus.\n- **PR #142581** Thanks @aim9sour.\n- **PR #142873** Thanks @obviyus.\n- **PR #142858** Thanks @vincentkoc.\n- **PR #142846** Thanks @vincentkoc.\n- **PR #142709** Related #142704. Thanks @vincentkoc.\n- **PR #141161** Related #141042. Thanks @LiuwqGit and @Cobblestone-Digital1.\n- **PR #142849** Thanks @vincentkoc.\n- **PR #142889** Thanks @vincentkoc.\n- **PR #142887**\n- **PR #142886** Thanks @vincentkoc.\n- **PR #142812** Related #142794. Thanks @fanyangCS and @obviyus.\n- **PR #142640** Thanks @vincentkoc.\n- **PR #142899**\n- **PR #142838**\n- **PR #142856**\n- **PR #142903**\n- **PR #136181**\n- **PR #142882** Thanks @vincentkoc.\n- **PR #127746** Thanks @vincentkoc.\n- **PR #142910** Thanks @vincentkoc.\n- **PR #142904** Thanks @vincentkoc.\n- **PR #142876**\n- **PR #142919**\n- **PR #142900** Thanks @vincentkoc.\n- **PR #142891** Thanks @vincentkoc.\n- **PR #142909** Thanks @obviyus.\n- **PR #142912**\n- **PR #142907** Thanks @vincentkoc.\n- **PR #142928**\n- **PR #142906** Related #142905. Thanks @vincentkoc.\n- **PR #137576** Related #137539. Thanks @jalehman.\n- **PR #142908** Thanks @vincentkoc.\n- **PR #142913** Thanks @vincentkoc.\n- **PR #142934**\n- **PR #142917** Thanks @vincentkoc.\n- **PR #142894** Thanks @vincentkoc.\n- **PR #142926** Related #142921. Thanks @vincentkoc.\n- **PR #142944** Related #142881. Thanks @jalehman.\n- **PR #142925** Related #142923. Thanks @vincentkoc.\n- **PR #121938** Related #121934.\n- **PR #142951** Thanks @vincentkoc.\n- **PR #142911** Thanks @vincentkoc.\n- **PR #142884** Related #142883. Thanks @jalehman.\n- **PR #142955** Thanks @jalehman.\n- **PR #142960** Thanks @vincentkoc.\n- **PR #142962**\n- **PR #142839** Thanks @thien-ngn and @obviyus.\n- **PR #142930** Related #142929. Thanks @vincentkoc.\n- **PR #142958** Thanks @vincentkoc.\n- **PR #142946** Thanks @vincentkoc.\n- **PR #137334** Thanks @Alix-007 and @obviyus.\n- **PR #142961** Thanks @vincentkoc.\n- **PR #142896**\n- **PR #142978**\n- **PR #142975**\n- **PR #142808** Thanks @SunnyShu0925 and @obviyus.\n- **PR #142985**\n- **PR #127205**\n- **PR #134480** Thanks @scotthuang and @obviyus.\n- **PR #142986** Thanks @vincentkoc.\n- **PR #142963** Thanks @vincentkoc.\n- **PR #142980** Thanks @vincentkoc.\n- **PR #141218** Related #141054. Thanks @harshitgupta31415 and @vincentkoc and @nissl24.\n- **PR #142982** Thanks @vincentkoc.\n- **PR #143005** Thanks @vincentkoc.\n- **PR #142999** Thanks @vincentkoc.\n- **PR #142984** Thanks @vincentkoc.\n- **PR #135318** Related #135282. Thanks @LiuwqGit and @obviyus and @youens.\n- **PR #143014** Thanks @vincentkoc.\n- **PR #142989** Thanks @vincentkoc.\n- **PR #142995** Thanks @vincentkoc.\n- **PR #143013** Thanks @vincentkoc.\n- **PR #143004** Thanks @vincentkoc.\n- **PR #143022** Thanks @vincentkoc.\n- **PR #127031** Thanks @ayaangazali.\n- **PR #143009**\n- **PR #143025**\n- **PR #135359** Thanks @teddytennant and @obviyus.\n- **PR #142898** Thanks @obviyus.\n- **PR #143027**\n- **PR #142996** Thanks @vincentkoc.\n- **PR #143020**\n- **PR #142864** Thanks @vincentkoc.\n- **PR #142991**\n- **PR #143029** Thanks @vincentkoc.\n- **PR #143042** Thanks @vincentkoc.\n- **PR #141323** Thanks @lraesly.\n- **PR #142859** Thanks @vincentkoc.\n- **PR #143035**\n- **PR #142993** Thanks @vincentkoc.\n- **PR #143021** Thanks @vincentkoc.\n- **PR #143038** Thanks @vincentkoc.\n- **PR #143041** Thanks @vincentkoc.\n- **PR #143040** Thanks @vincentkoc.\n- **PR #143002** Thanks @vincentkoc.\n- **PR #143016** Related #143011. Thanks @vincentkoc.\n- **PR #143045**\n- **PR #143046** Thanks @vincentkoc.\n- **PR #143047**\n- **PR #143039**\n- **PR #141107** Related #140918. Thanks @louisfy and @obviyus and @alexph-dev.\n- **PR #143048**\n- **PR #143057** Thanks @vincentkoc.\n- **PR #143058** Thanks @vincentkoc.\n- **PR #133269** Thanks @xydt-juyaohui and @obviyus.\n- **PR #143055** Thanks @vincentkoc.\n- **PR #142992** Thanks @vincentkoc.\n- **PR #143062** Thanks @vincentkoc.\n- **PR #143059**\n- **PR #143063**\n- **PR #143034**\n- **PR #142933** Thanks @obviyus.\n- **PR #143071**\n- **PR #143072**\n- **PR #143068** Thanks @vincentkoc.\n- **PR #143075**\n- **PR #143076**\n- **PR #143006** Thanks @Marvinthebored and @Peetiegonzalez and @obviyus.\n- **PR #143082** Thanks @vincentkoc.\n- **PR #143085** Thanks @vincentkoc.\n- **PR #143079** Thanks @vincentkoc.\n- **PR #143084**\n- **PR #143087** Thanks @vincentkoc.\n- **PR #143051** Thanks @vincentkoc.\n- **PR #142168** Thanks @LiuwqGit and @obviyus.\n- **PR #142322** Related #142208. Thanks @SunnyShu0925 and @guarismo.\n- **PR #143000** Thanks @gozu and @obviyus.\n- **PR #143091**\n- **PR #143053** Thanks @vincentkoc.\n- **PR #142093** Thanks @pgondhi987.\n- **PR #142927** Related #142924. Thanks @vincentkoc.\n- **PR #143060**\n- **PR #142997** Related #142901. Thanks @ylcn91 and @obviyus and @Conan-Scott.\n- **PR #143052** Thanks @shakkernerd.\n- **PR #143104** Thanks @vincentkoc.\n- **PR #142193** Thanks @ceckert and @obviyus.\n- **PR #143096** Thanks @vincentkoc.\n- **PR #143105**\n- **PR #143103**\n- **PR #141289** Thanks @hugenshen and @obviyus.\n- **PR #142473**\n- **PR #143116** Thanks @vincentkoc.\n- **PR #143102** Thanks @vincentkoc.\n- **PR #143122** Thanks @vincentkoc.\n- **PR #143124** Related #143118.\n- **PR #141808** Related #141787. Thanks @SunnyShu0925 and @obviyus and @dh-js.\n- **PR #143130** Thanks @vincentkoc.\n- **PR #143129** Thanks @vincentkoc.\n- **PR #143108**\n- **PR #141756** Thanks @chelsealong and @obviyus.\n- **PR #136277** Thanks @yetval and @obviyus.\n- **PR #142631** Thanks @jason-allen-oneal.\n- **PR #143112**\n- **PR #143133**\n- **PR #141303** Thanks @hugenshen and @obviyus.\n- **PR #142237**\n- **PR #142860** Related #142832. Thanks @ericcaiwx-star and @aatreya.\n- **PR #142869** Related #142868. Thanks @Marvinthebored and @obviyus.\n- **PR #143149** Thanks @vincentkoc.\n- **PR #143148** Thanks @vincentkoc.\n- **PR #142719** Thanks @RomneyDa.\n- **PR #141771** Related #141701. Thanks @chelsealong and @tomdailey55.\n- **PR #143138**\n- **PR #143152** Thanks @vincentkoc.\n- **PR #143160** Thanks @vincentkoc.\n- **PR #142932** Related #142878. Thanks @ashawwal and @obviyus.\n- **PR #143151** Thanks @vincentkoc.\n- **PR #143117**\n- **PR #143137**\n- **PR #143154** Thanks @vincentkoc.\n- **PR #143161**\n- **PR #143156**\n- **PR #143139**\n- **PR #141307** Thanks @hugenshen and @obviyus.\n- **PR #143163** Thanks @vincentkoc.\n- **PR #143168**\n- **PR #143158** Thanks @vincentkoc.\n- **PR #143140**\n- **PR #143166** Related #143165.\n- **PR #143128**\n- **PR #143164**\n- **PR #143150** Thanks @vincentkoc.\n- **PR #143167** Thanks @Patrick-Erichsen.\n- **PR #143182** Thanks @vincentkoc.\n- **PR #142284** Thanks @obviyus.\n- **PR #143172** Thanks @vincentkoc.\n- **PR #143179** Thanks @vincentkoc.\n- **PR #143194** Thanks @vincentkoc.\n- **PR #143171** Related #143170. Thanks @vincentkoc.\n- **PR #142968** Thanks @vincentkoc.\n- **PR #143181**\n- **PR #143191**\n- **PR #143134** Thanks @vincentkoc.\n- **PR #143192** Thanks @vincentkoc.\n- **PR #143197**\n- **PR #143136** Related #141617. Thanks @yncubys.\n- **PR #143088** Thanks @ly85206559 and @obviyus.\n- **PR #143125** Related #143111. Thanks @LiuwqGit and @obviyus and @yxloveql.\n- **PR #143049**\n- **PR #143203**\n- **PR #143159**\n- **PR #120843** Thanks @vincentkoc.\n- **PR #143147** Thanks @LiuwqGit and @obviyus.\n- **PR #143209**\n- **PR #143213**\n- **PR #143221**\n- **PR #137892** Related #137624. Thanks @pfrederiksen and @vincentkoc.\n- **PR #143109**\n- **PR #128738** Thanks @Leon-SK668 and @obviyus.\n- **PR #143202** Related #142582, #142585. Thanks @GitHoubi.\n- **PR #143222** Thanks @vincentkoc.\n- **PR #142259**\n- **PR #143069** Related #143007. Thanks @vincentkoc.\n- **PR #143219** Thanks @vincentkoc.\n- **PR #143205**\n- **PR #143107** Thanks @vincentkoc.\n- **PR #143175**\n- **PR #143240**\n- **PR #138819** Related #138779. Thanks @sunlit-deng and @vincentkoc and @Jackten.\n- **PR #143247** Thanks @vincentkoc.\n- **PR #142661** Thanks @eleqtrizit.\n- **PR #143249**\n- **PR #142221**\n- **PR #143195** Related #142584. Thanks @GitHoubi.\n- **PR #143258**\n- **PR #143226**\n- **PR #143031**\n- **PR #143153** Related #143001. Thanks @syfvb.\n- **PR #143253** Thanks @vincentkoc.\n- **PR #143261**\n- **PR #142990** Thanks @vincentkoc.\n- **PR #142979** Thanks @vincentkoc.\n- **PR #143237**\n- **PR #143251**\n- **PR #143254**\n- **PR #143223**\n- **PR #143141** Related #143094. Thanks @fahrenhe1t.\n- **PR #143243**\n- **PR #143065**\n- **PR #143268**\n- **PR #142817** Related #143204. Thanks @wangmiao0668000666.\n- **PR #143272** Thanks @vincentkoc.\n- **PR #140621** Related #140607. Thanks @LightningWareLLC.\n- **PR #143207**\n- **PR #143281** Related #143252.\n- **PR #142242**\n- **PR #143174**\n- **PR #142749** Related #141279. Thanks @pengzh1 and @aevgeniou.\n- **PR #143198** Related #142868. Thanks @Marvinthebored.\n- **PR #143273**\n- **PR #143298** Thanks @vincentkoc.\n- **PR #140914** Related #140821. Thanks @NianJiuZst and @obviyus and @rboy1.\n- **PR #142742** Thanks @jason-allen-oneal and @morrow-bluedot.\n- **PR #143097**\n- **PR #143235** Thanks @obviyus.\n- **PR #143271**\n- **PR #143300**\n- **PR #143292** Related #143210. Thanks @fanyuantaier.\n- **PR #143183**\n- **PR #143302**\n- **PR #143190**\n- **PR #143287**\n- **PR #143307**\n- **PR #143288**\n- **PR #142935** Thanks @vincentkoc.\n- **PR #143238** Related #128076. Thanks @ejc3.\n- **PR #143189** Related #143186.\n- **PR #143285**\n- **PR #143269**\n- **PR #143309**\n- **PR #143308**\n- **PR #141163** Related #141123. Thanks @ly85206559 and @orangejon.\n- **PR #143260**\n- **PR #143317**\n- **PR #143316**\n- **PR #143297** Thanks @vincentkoc.\n- **PR #143320**\n- **PR #143321** Thanks @fuller-stack-dev.\n- **PR #142453** Thanks @VACInc.\n- **PR #143313**\n- **PR #143291** Related #124555. Thanks @sallyom and @sercada.\n- **PR #143299** Thanks @qingminglong and @obviyus.\n- **PR #143326** Thanks @vincentkoc.\n- **PR #143324**\n- **PR #143318** Thanks @vincentkoc.\n- **PR #143336**\n- **PR #143325**\n- **PR #143330**\n- **PR #143266**\n- **PR #143337**\n- **PR #143305**\n- **PR #143332**\n- **PR #143339**\n- **PR #143338**\n- **PR #143340**\n- **PR #137255** Thanks @sunlit-deng and @obviyus.\n- **PR #142810** Related #142805. Thanks @ansxor and @IWhatsskill.\n- **PR #143162**\n- **PR #143346**\n- **PR #142699**\n- **PR #143270**\n- **PR #143345**\n- **PR #143349**\n- **PR #140266** Related #140265. Thanks @cai-ops and @obviyus.\n- **PR #141984** Related #140971. Thanks @SunnyShu0925 and @hayden-cc.\n- **PR #143360**\n- **PR #143333** Thanks @vincentkoc.\n- **PR #141600** Thanks @DonnieFi and @IWhatsskill.\n- **PR #143358**\n- **PR #143362**\n- **PR #143352** Related #143348.\n- **PR #143319** Thanks @qingminglong and @obviyus.\n- **PR #143354** Thanks @fuller-stack-dev.\n- **PR #143282** Related #143267. Thanks @LiuwqGit and @obviyus and @jlapenna.\n- **PR #143301** Thanks @vincentkoc.\n- **PR #143365**\n- **PR #143347** Thanks @obviyus.\n- **PR #143312**\n- **PR #143146** Thanks @vincentkoc.\n- **PR #143370**\n- **PR #143369**\n- **PR #142915** Related #142848. Thanks @sunlit-deng and @obviyus and @igs-rogenlo.\n- **PR #133693** Related #133692. Thanks @ekinnee.\n- **PR #143366**\n- **PR #143379**\n- **PR #143378**\n- **PR #143380**\n- **PR #143377**\n- **PR #140388** Thanks @Hekzory and @obviyus.\n- **PR #143392**\n- **PR #143384**\n- **PR #143393**\n- **PR #143361** Thanks @fuller-stack-dev.\n- **PR #143398**\n- **PR #143373** Thanks @vincentkoc.\n- **PR #143401**\n- **PR #143394**\n- **PR #143397**\n- **PR #143402**\n- **PR #143395** Thanks @vincentkoc.\n- **PR #143400**\n- **PR #141841** Related #141807. Thanks @glenn-agent and @obviyus and @dh-js.\n- **PR #142736** Related #142483. Thanks @RileyJJY and @jai-assistant.\n- **PR #143409**\n- **PR #143081** Related #143077. Thanks @barbarhan and @obviyus.\n- **PR #143411**\n- **PR #143403**\n- **PR #143404**\n- **PR #143412**\n- **PR #143408** Related #143388.\n- **PR #143421** Thanks @RomneyDa.\n- **PR #143418**\n- **PR #143407**\n- **PR #143227**\n- **PR #143415**\n- **PR #143425** Thanks @Patrick-Erichsen.\n- **PR #143405**\n- **PR #143344**\n- **PR #143436** Thanks @RomneyDa.\n- **PR #143430** Related #143428.\n- **PR #143424** Related #142429. Thanks @obviyus and @schjonhaug.\n- **PR #143310** Related #143173. Thanks @tskerpnext.\n- **PR #143157** Thanks @vincentkoc.\n- **PR #143427**\n- **PR #143439** Related #143438.\n- **PR #143443**\n- **PR #143416**\n- **PR #143444** Thanks @RomneyDa.\n- **PR #143445** Thanks @RomneyDa.\n- **PR #143447** Thanks @RomneyDa.\n- **PR #140864** Thanks @LiuwqGit and @obviyus.\n- **PR #143456** Thanks @vincentkoc.\n- **PR #143440**\n- **PR #142802** Thanks @keshavbotagent and @obviyus.\n- **PR #141069** Related #141066. Thanks @NullArbitrage and @obviyus.\n- **PR #143459** Thanks @vincentkoc.\n- **PR #143452** Thanks @RomneyDa.\n- **PR #143450** Thanks @RomneyDa.\n- **PR #143453**\n- **PR #143458** Thanks @vincentkoc.\n- **PR #143462** Thanks @RomneyDa.\n- **PR #143469** Thanks @RomneyDa.\n- **PR #143451**\n- **PR #143472** Thanks @vincentkoc.\n- **PR #143414**\n- **PR #141277** Thanks @oywino and @obviyus.\n- **PR #143426**\n- **PR #143446** Thanks @jalehman.\n- **PR #143470**\n- **PR #143487**\n- **PR #143460**\n- **PR #143477**\n- **PR #143463**\n- **PR #143457**\n- **PR #143481**\n- **PR #143449**\n- **PR #143490**\n- **PR #139548** Thanks @srikolagani and @obviyus.\n- **PR #143497** Thanks @vincentkoc.\n- **PR #143517** Thanks @vincentkoc.\n- **PR #143515** Thanks @vincentkoc.\n- **PR #143513** Thanks @RomneyDa.\n- **PR #143514** Thanks @RomneyDa.\n- **PR #143492**\n- **PR #143507**\n- **PR #143510** Thanks @RomneyDa.\n- **PR #143520** Thanks @vincentkoc.\n- **PR #143527**\n- **PR #143522** Thanks @vincentkoc.\n- **PR #143493**\n- **PR #143529**\n- **PR #142741** Related #142737. Thanks @galiniliev.\n- **PR #143434**\n- **PR #143455**\n- **PR #143482**\n- **PR #142844** Related #140246. Thanks @Finn763 and @obviyus and @jmissig.\n- **PR #143532**\n- **PR #143537**\n- **PR #143485**\n- **PR #143193** Related #143188. Thanks @KirDE and @obviyus.\n- **PR #143544**\n- **PR #143342** Related #143177. Thanks @sunlit-deng and @obviyus and @bricelb.\n- **PR #143516** Thanks @RomneyDa.\n- **PR #143508** Thanks @RomneyDa.\n- **PR #143465** Thanks @vincentkoc.\n- **PR #143435** Thanks @vincentkoc.\n- **PR #143574**\n- **PR #143585**\n- **PR #143559**\n- **PR #143486** Related #143473. Thanks @vyctorbrzezowski.\n- **PR #143547**\n- **PR #143599** Related #143263. Thanks @obviyus and @matthewmoroz.\n- **PR #143530**\n- **PR #143491**\n- **PR #143568**\n- **PR #143557**\n- **PR #135839** Thanks @Patrick-Erichsen.\n- **PR #135840** Thanks @Patrick-Erichsen.\n- **PR #139042** Thanks @Patrick-Erichsen.\n- **PR #137659** Thanks @Patrick-Erichsen.\n- **PR #137846** Thanks @Patrick-Erichsen.\n- **PR #137856** Thanks @Patrick-Erichsen.\n- **PR #137886** Thanks @Patrick-Erichsen.\n- **PR #138755** Thanks @Patrick-Erichsen.\n- **PR #142624** Thanks @Patrick-Erichsen.\n- **PR #142710** Thanks @Patrick-Erichsen.\n- **PR #142711** Thanks @Patrick-Erichsen.\n- **PR #142712** Thanks @Patrick-Erichsen.\n- **PR #142713** Thanks @Patrick-Erichsen.\n- **PR #142782** Thanks @Patrick-Erichsen.\n- **PR #143606**\n- **PR #143613**\n- **PR #143605**\n- **PR #143600**\n- **PR #143595** Related #143593. Thanks @fuller-stack-dev.\n- **PR #143586** Thanks @vincentkoc.\n- **PR #143602**\n- **PR #143601**\n- **PR #140833** Thanks @leapdragon and @obviyus.\n- **PR #143542**\n- **PR #143603**\n- **PR #143592**\n- **PR #143579** Related #143575. Thanks @fuller-stack-dev.\n- **PR #143561** Related #143560. Thanks @masatohoshino and @obviyus.\n- **PR #143626**\n- **PR #143372**\n- **PR #143627**\n- **PR #143629**\n- **PR #132158** Thanks @stevenlee-oai.\n- **PR #143628**\n- **PR #143633**\n- **PR #143636**\n- **PR #141079** Related #141078. Thanks @ooiuuii and @obviyus.\n- **PR #143634**\n- **PR #143637**\n- **PR #143639**\n- **PR #143368**\n- **PR #143642**\n- **PR #143621**\n- **PR #143371**\n- **PR #143374**\n- **PR #143644**\n- **PR #143382**\n- **PR #140339** Thanks @fuller-stack-dev.\n- **PR #143383**\n- **PR #114662** Related #114602. Thanks @synthalorian and @obviyus and @jackatagenticforce.\n- **PR #138619** Related #138592. Thanks @LiuwqGit and @obviyus and @fabiolr.\n- **PR #143652**\n- **PR #143655**\n- **PR #143429** Thanks @obviyus.\n- **PR #125977** Thanks @ayaangazali and @obviyus.\n- **PR #143653**\n- **PR #143598** Related #132762. Thanks @harjothkhara and @obviyus and @CK-XYZ.\n- **PR #143660**\n- **PR #141836** Related #129452. Thanks @obviyus and @safzanpirani.\n- **PR #143663**\n- **PR #143651**\n- **PR #142186**\n- **PR #143657** Thanks @fuller-stack-dev.\n- **PR #143662**\n- **PR #143376** Thanks @vincentkoc.\n- **PR #143680**\n- **PR #143667** Related #143654.\n- **PR #143666**\n- **PR #92288** Thanks @ai-hpc and @obviyus.\n- **PR #143690**\n- **PR #137303** Thanks @qingminglong and @obviyus.\n- **PR #143684**\n- **PR #136466** Related #136392. Thanks @vincentkoc.\n- **PR #143697**\n- **PR #143676** Thanks @shakkernerd.\n- **PR #143698**\n- **PR #143705**\n- **PR #142522** Thanks @jjjhenriksen and @RomneyDa and @pash-openai.\n- **PR #143687**\n- **PR #143658**\n- **PR #143709** Thanks @vincentkoc.\n- **PR #143710**\n- **PR #143706**\n- **PR #143682** Related #143656. Thanks @vincentkoc.\n- **PR #143674**\n- **PR #143622**\n- **PR #143675**\n- **PR #143723**\n- **PR #143506** Related #143385. Thanks @sunlit-deng and @obviyus and @dbarbatti.\n- **PR #143720**\n- **PR #143721**\n- **PR #143695**\n- **PR #143531** Thanks @RomneyDa.\n- **PR #143567** Thanks @RomneyDa.\n- **PR #143590** Related #143169. Thanks @wangmiao0668000666 and @obviyus and @PeterHodl.\n- **PR #119624** Thanks @pcpilot-dev.\n- **PR #143519** Related #90711. Thanks @RomneyDa and @Enominera.\n- **PR #109092** Thanks @Pick-cat and @obviyus.\n- **PR #143724**\n- **PR #143726**\n- **PR #143643** Thanks @obviyus.\n- **PR #143708**\n- **PR #143722** Related #143641. Thanks @obviyus and @rgregg.\n- **PR #143734**\n- **PR #143725**\n- **PR #143671**\n- **PR #143741**\n- **PR #143749**\n- **PR #143736**\n- **PR #143693** Related #143678. Thanks @fuller-stack-dev.\n- **PR #143737**\n- **PR #143716**\n- **PR #143746**\n- **PR #143681**\n- **PR #143699**\n- **PR #143712**\n- **PR #143748**\n- **PR #143742** Related #143630. Thanks @zwyhmcn.\n- **PR #143715**\n- **PR #143763**\n- **PR #143686**\n- **PR #143773** Thanks @vincentkoc.\n- **PR #143765**\n- **PR #143762**\n- **PR #143669**\n- **PR #143775** Thanks @vincentkoc.\n- **PR #143717**\n- **PR #137147** Thanks @qingminglong and @obviyus.\n- **PR #143766**\n- **PR #143770** Thanks @vincentkoc.\n- **PR #116378** Related #115920. Thanks @sloptop-the-terrible and @obviyus and @609NFT.\n- **PR #143738** Related #143543. Thanks @RomneyDa.\n- **PR #143704** Thanks @RomneyDa.\n- **PR #143751** Thanks @RomneyDa.\n- **PR #143729** Thanks @xydigitLybnnnn and @obviyus.\n- **PR #143758** Thanks @Patrick-Erichsen.\n- **PR #143760**\n- **PR #143769**\n- **PR #143747**\n- **PR #143696** Thanks @RomneyDa.\n- **PR #143692** Thanks @RomneyDa.\n- **PR #143689** Thanks @RomneyDa.\n- **PR #143582** Thanks @RomneyDa.\n- **PR #143576** Thanks @RomneyDa.\n- **PR #143474** Thanks @RomneyDa.\n- **PR #143570** Thanks @RomneyDa.\n- **PR #143793**\n- **PR #125413**\n- **PR #143782**\n- **PR #143783**\n- **PR #143780**\n- **PR #143754**\n- **PR #122110** Related #122107. Thanks @sappkevin and @obviyus.\n- **PR #143558** Thanks @RomneyDa.\n- **PR #143795**\n- **PR #143796** Thanks @vincentkoc.\n- **PR #143805** Related #143800.\n- **PR #143815**\n- **PR #143807**\n- **PR #120902** Thanks @zenglingbiao and @obviyus.\n- **PR #143798**\n- **PR #143659** Thanks @HAPPYFAPTAIN and @obviyus.\n- **PR #143730** Thanks @Patrick-Erichsen.\n- **PR #143731** Thanks @Patrick-Erichsen.\n- **PR #143801**\n- **PR #121557** Related #121401. Thanks @zyw02 and @cursoragent and @obviyus.\n- **PR #143808**\n- **PR #143828**\n- **PR #143806**\n- **PR #143845** Thanks @vincentkoc.\n- **PR #143855** Thanks @vincentkoc.\n- **PR #143844** Thanks @fuller-stack-dev.\n- **PR #143856** Thanks @vincentkoc.\n- **PR #143835** Thanks @fuller-stack-dev.\n- **PR #143824**\n- **PR #143776**\n- **PR #143846**\n- **PR #143813**\n- **PR #143862**\n- **PR #143789**\n- **PR #143867** Thanks @vincentkoc.\n- **PR #143464**\n- **PR #143816**\n- **PR #143859**\n- **PR #143831**\n- **PR #143664** Thanks @obviyus.\n- **PR #143848**\n- **PR #143799** Thanks @fuller-stack-dev.\n- **PR #143868**\n- **PR #143863** Related #143841. Thanks @fuller-stack-dev.\n- **PR #143791** Related #143750. Thanks @vincentkoc and @fuller-stack-dev.\n- **PR #143877** Thanks @fuller-stack-dev.\n- **PR #143812**\n- **PR #143875**\n- **PR #143849**\n- **PR #143850**\n- **PR #143857** Thanks @vincentkoc.\n- **PR #143853** Thanks @vincentkoc.\n- **PR #143870** Thanks @vincentkoc.\n- **PR #143871**\n- **PR #143869**\n- **PR #137371** Related #137257. Thanks @gwiltschek and @obviyus.\n- **PR #143814**\n- **PR #143811** Thanks @RomneyDa.\n- **PR #143573** Thanks @RomneyDa.\n- **PR #143810** Thanks @RomneyDa.\n- **PR #143768**\n- **PR #143553** Thanks @RomneyDa.\n- **PR #143552** Thanks @RomneyDa.\n- **PR #143551** Thanks @RomneyDa.\n- **PR #143572** Thanks @RomneyDa.\n- **PR #143565** Thanks @RomneyDa.\n- **PR #143562** Thanks @RomneyDa.\n- **PR #143564** Thanks @RomneyDa.\n- **PR #143874**\n- **PR #143785** Thanks @obviyus.\n- **PR #143767**\n- **PR #143889**\n- **PR #143838**\n- **PR #136984** Related #134604. Thanks @linhongyu510 and @obviyus and @scottcha.\n- **PR #143533** Thanks @RomneyDa.\n- **PR #143534** Thanks @RomneyDa.\n- **PR #143536** Thanks @RomneyDa.\n- **PR #143535** Thanks @RomneyDa.\n- **PR #143914**\n- **PR #143861**\n- **PR #143887**\n- **PR #143554** Thanks @RomneyDa.\n- **PR #143854**\n- **PR #143858**\n- **PR #137422** Thanks @qingminglong and @obviyus.\n- **PR #143913**\n- **PR #143895** Thanks @vincentkoc.\n- **PR #143563** Thanks @RomneyDa.\n- **PR #138160** Thanks @SunnyShu0925 and @obviyus.\n- **PR #143919**\n- **PR #143866**\n- **PR #143886** Related #143885.\n- **PR #134959** Related #108893. Thanks @shojikumaru and @obviyus and @developercrocodiles.\n- **PR #143916** Related #143389. Thanks @obviyus and @aleps001.\n- **PR #143851**\n- **PR #111964** Related #96974. Thanks @dillona and @vincentkoc and @anguslogan01.\n- **PR #143912**\n- **PR #143901**\n- **PR #142132** Thanks @mgabor3141 and @obviyus.\n- **PR #143904** Thanks @vincentkoc.\n- **PR #143926** Thanks @vincentkoc.\n- **PR #143873** Thanks @vincentkoc.\n- **PR #143872**\n- **PR #143925**\n- **PR #139071** Thanks @qingminglong and @obviyus.\n- **PR #143777**\n- **PR #143893**\n- **PR #143923** Thanks @vincentkoc.\n- **PR #143792**\n- **PR #143774** Related #139714. Thanks @Colton-Harris.\n- **PR #143927** Thanks @vincentkoc.\n- **PR #143945**\n- **PR #143928**\n- **PR #143864**\n- **PR #143899** Thanks @fuller-stack-dev.\n- **PR #143931** Thanks @vincentkoc.\n- **PR #143922**\n- **PR #143942** Related #143939.\n- **PR #141762** Thanks @xiaoguomeiyitian and @obviyus.\n- **PR #143950** Thanks @vincentkoc.\n- **PR #143920**\n- **PR #143822**\n- **PR #143954**\n- **PR #135539** Thanks @kvnloo and @obviyus.\n- **PR #143962** Thanks @vincentkoc.\n- **PR #143910**\n- **PR #143949** Related #143947.\n- **PR #143964**\n- **PR #143921** Thanks @fuller-stack-dev.\n- **PR #143965**\n- **PR #143974**\n- **PR #143977** Thanks @vincentkoc.\n- **PR #143979** Thanks @vincentkoc.\n- **PR #143759** Related #143756.\n- **PR #143969**\n- **PR #143982** Thanks @vincentkoc.\n- **PR #141283** Thanks @north-echo and @obviyus.\n- **PR #143978**\n- **PR #143924**\n- **PR #143888**\n- **PR #143967**\n- **PR #111706** Thanks @xydt-tanshanshan and @obviyus.\n- **PR #143803**\n- **PR #143975**\n- **PR #143908** Thanks @pash-openai.\n- **PR #143832** Thanks @pash-openai.\n- **PR #143953**\n- **PR #139562** Thanks @TheCrazyLex and @obviyus.\n- **PR #140296** Related #140100. Thanks @ylcn91 and @ikenraf.\n- **PR #143983** Thanks @vincentkoc.\n- **PR #143410**\n- **PR #144004**\n- **PR #143996** Thanks @vincentkoc.\n- **PR #143997**\n- **PR #144018** Thanks @vincentkoc.\n- **PR #144002**\n- **PR #144021** Thanks @vincentkoc.\n- **PR #144030** Thanks @vincentkoc.\n- **PR #144028** Thanks @vincentkoc.\n- **PR #144033**\n- **PR #144039** Thanks @vincentkoc.\n- **PR #143958** Related #143971. Thanks @Marvinthebored and @Peetiegonzalez and @obviyus.\n- **PR #144037** Thanks @RomneyDa.\n- **PR #144051** Thanks @vincentkoc.\n- **PR #144049**\n- **PR #144050**\n- **PR #142822** Thanks @obviyus.\n- **PR #144058**\n- **PR #144032** Thanks @vincentkoc.\n- **PR #144067**\n- **PR #143929**\n- **PR #144017**\n- **PR #144007**\n- **PR #144060**\n- **PR #144014**\n- **PR #144010**\n- **PR #144012**\n- **PR #144029** Thanks @vincentkoc.\n- **PR #143930** Related #143830. Thanks @linhongyu510 and @obviyus and @cp1369.\n- **PR #144009**\n- **PR #144072** Thanks @vincentkoc.\n- **PR #144036**\n- **PR #143993**\n- **PR #143772**\n- **PR #144076**\n- **PR #144038** Related #144035.\n- **PR #144083** Thanks @vincentkoc.\n- **PR #144080**\n- **PR #144073**\n- **PR #144087**\n- **PR #144034**\n- **PR #144022**\n- **PR #144015** Thanks @vincentkoc.\n- **PR #144054**\n- **PR #141071** Related #141000. Thanks @ooiuuii and @obviyus.\n- **PR #144011**\n- **PR #144092**\n- **PR #144091** Thanks @vincentkoc.\n- **PR #143903** Related #143821. Thanks @LiuwqGit and @obviyus and @kiagentkronos-cell.\n- **PR #144075**\n- **PR #143994**\n- **PR #143521** Related #107972. Thanks @eleqtrizit and @yetval.\n- **PR #144090**\n- **PR #144089** Thanks @vincentkoc.\n- **PR #144086** Thanks @vincentkoc.\n- **PR #144024**\n- **PR #144077**\n- **PR #144096**\n- **PR #143999**\n- **PR #144095**\n- **PR #143484** Thanks @eleqtrizit.\n- **PR #144097**\n- **PR #143437** Related #143356. Thanks @ylcn91 and @obviyus and @YanHE1169.\n- **PR #144023** Thanks @vincentkoc.\n- **PR #144108**\n- **PR #144085** Thanks @vincentkoc.\n- **PR #144105** Thanks @vincentkoc.\n- **PR #143960** Thanks @Marvinthebored and @Peetiegonzalez and @obviyus.\n- **PR #144116**\n- **PR #144109**\n- **PR #144031** Thanks @IWhatsskill.\n- **PR #144107**\n- **PR #144117**\n- **PR #144115** Related #144114.\n- **PR #144110**\n- **PR #144122**\n- **PR #144120**\n- **PR #144126** Thanks @vincentkoc.\n- **PR #144088**\n- **PR #144130** Thanks @fuller-stack-dev.\n- **PR #144129** Related #144123. Thanks @vincentkoc.\n- **PR #143890** Thanks @vincentkoc.\n- **PR #143311** Thanks @vincentkoc.\n- **PR #143745** Related #143743. Thanks @vincentkoc.\n- **PR #144135**\n- **PR #143860** Related #143865. Thanks @wangmiao0668000666 and @obviyus.\n- **PR #144121**\n- **PR #144402** Thanks @vincentkoc.\n\n### Release verification\n\n- Signed source: `3a9d69db306cd7f081e06254cb89c4bcc14a7107`.\n- [Full stable validation](https://github.com/openclaw/openclaw/actions/runs/34539227282): passed, attempt 2. Qualification also verified 15 performance measurements and 20 real OpenAI completions across 10 upgrade baselines.\n- [Core npm publication](https://github.com/openclaw/openclaw/actions/runs/34554632555): passed; exact qualified bytes, registry signatures, provenance and fresh install verified.\n- 90 npm plugins and 3 core companion packages: published at `latest`, exact bytes verified.\n- [Docker publication](https://github.com/openclaw/openclaw/actions/runs/34555843439): passed; public GHCR and Docker Hub manifests and attestations match qualified artifacts.\n- [Original publisher](https://github.com/openclaw/openclaw/actions/runs/34552806250): failed during npm propagation readback. GitHub finalized through manual recovery; no package republish.\n- Telegram and Parallels checks: explicitly waived by the release owner, not passed.\n- macOS DMG, ZIP, and debug symbols are public and byte-verified against the signed/notarized artifacts; the [stable update feed](https://github.com/openclaw/openclaw/pull/144636) is live and verified.\n- Pending: ClawHub recovery, npm beta-selector synchronization, remaining native app distribution, and stable main closeout. Android native qualification failed. Windows historical-upgrade and Vercel mirror advisory failures remain recorded.\n- The [repaired split-publication verifier](https://github.com/openclaw/openclaw/pull/144638) passed live npm/Docker verification. Full beta-selector verification and the immutable main-closeout record remain pending. The attached postpublish evidence preserves the earlier recovery snapshot; these follow-ups are not marked complete.",
-        "assets_count": 8,
-        "url": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.4",
-        "ai_summary": {
-          "change_type": "feature",
-          "key_changes": [
-            "新增从失败更新中安全回滚恢复功能，可在架构和配置校验通过时保留并恢复旧包、配置和服务",
-            "统一插件管理：支持从控制界面发现、安装并管理内置及 ClawHub 插件的设置和访问权限",
-            "新增云端会话预制备功能，可从本地项目或 GitHub 仓库启动 Linux 会话并构建可复用快照",
-            "支持在终端中以键盘驱动方式回答问题和多问题提示，涵盖网关连接和本地 TUI 会话",
-            "新增 GPT Image 2.5 的 Flare 和 Sunburst 图像变体选择，无需更改现有默认模型"
-          ],
-          "summary_cn": "本次更新带来了多项核心功能增强：包括失败更新后的安全回滚机制、统一的插件管理工作区、云端会话预制备能力、终端交互式问答支持，以及 GPT Image 2.5 新型图像生成变体。此外还改善了对话历史的可靠性（中断恢复、超时提示保留、防止重复回复），并支持通过 OPENCLAW_CONFIG_READONLY 环境变量启用外部托管配置模式，使系统更稳定、更灵活。",
-          "impact_level": 3
-        }
-      }
-    ]
+    "total_count": 0,
+    "unique_repos_count": 0,
+    "releases": []
   },
-  "breaking_changes": [
-    {
-      "repo": "cline/cline",
-      "tag_name": "desktop-v0.0.26",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "Skills 标签页新增启用/禁用切换功能，此前桌面应用没有禁用技能的概念，被禁用的技能将被隐藏且无法访问",
-          "impact": "medium",
-          "category": "Behavior"
-        },
-        {
-          "description": "Customize 视图的 Tools、Skills 和 Rules 标签页统一为一致的列表样式，与 Plugins 模式保持一致，标签页顺序调整为 Tools、Plugins、Skills、Rules、MCP、Hooks",
-          "impact": "low",
-          "category": "Behavior"
-        },
-        {
-          "description": "侧边栏的 \"New Task\" 按钮更名为 \"New Session\"",
-          "impact": "low",
-          "category": "Behavior"
-        },
-        {
-          "description": "不再支持 HEIC、TIFF、SVG、BMP、ICO 等格式的图片附件，在附件选择、粘贴或拖拽时即被拒绝",
-          "impact": "medium",
-          "category": "Behavior"
-        },
-        {
-          "description": "ChatGPT (Codex) 退出登录现在会同时清除遗留的 Codex 凭据，之前退出后运行时仍会从经典扩展的存储凭据中重新导入",
-          "impact": "medium",
-          "category": "Behavior"
-        },
-        {
-          "description": "提示遥测数据现在仅限 Cline 和 Cline Pass 请求，使用自有提供商密钥的对话不再被追踪",
-          "impact": "low",
-          "category": "Behavior"
-        },
-        {
-          "description": "从 composer 的提供商选择器中移除了 \"Configured\" 勾选标记（0.0.25 版本新增）",
-          "impact": "low",
-          "category": "Behavior"
-        },
-        {
-          "description": "嵌套 PowerShell 命令不再通过外层 PowerShell 引导执行，仅在可证明语义等价时直接解包运行，Cline 现在会识别当前实际运行的 PowerShell 版本",
-          "impact": "medium",
-          "category": "Behavior"
-        }
-      ]
-    },
-    {
-      "repo": "openclaw/openclaw",
-      "tag_name": "v2026.9.4",
-      "has_breaking": true,
-      "changes": [
-        {
-          "description": "新增 OPENCLAW_CONFIG_READONLY=1 环境变量，设置后 OpenClaw 将不再重写部署管理的配置文件，影响配置写入、设置、Doctor 修复、插件变更和更新操作",
-          "impact": "medium",
-          "category": "Config"
-        },
-        {
-          "description": "SDK 弃用：agent-harness-credential-prompt-string-argument 于 2026年9月9日进入弃用期，buildCredentialSafetyPrompt 的旧字符串参数支持至 2026年11月30日，插件作者应改用 { controlToolsAvailable } 参数",
-          "impact": "high",
-          "category": "API"
-        },
-        {
-          "description": "SDK 上下文兼容性：sdk-untrusted-context-identifier-aliases 已到达 2026年9月8日的移除日期，但仍保持 removal-pending 状态，弃用的未信任命名上下文别名在插件读者迁移到频道命名替代品之前继续保留",
-          "impact": "medium",
-          "category": "API"
-        },
-        {
-          "description": "云就绪工作线程默认保留目标为每个项目/配置文件一个，全局上限四个，就绪工作线程在删除前会产生提供商运行中机器的费用，可通过 cloudWorkers.profiles.<id>.readyWorkers 或 cloudWorkers.preparedPool.maxTotal 设置为零来禁用",
-          "impact": "medium",
-          "category": "Config"
-        },
-        {
-          "description": "更新回滚机制变更：仅当 schema 和配置检查证明回滚安全时才保留并恢复之前的包、配置和服务；数据库迁移仍需验证过的更新前备份，变更的数据库 schema、不兼容的新数据库或操作员配置编辑会阻止自动回滚",
-          "impact": "high",
-          "category": "Behavior"
-        },
-        {
-          "description": "本地模式下的终端问题提示仅存在于当前运行的 TUI 进程中，不会持久化",
-          "impact": "low",
-          "category": "Behavior"
-        }
-      ]
-    }
-  ],
+  "breaking_changes": null,
   "monitored_repos": [
     "anthropics/claude-code",
     "anthropics/skills",
@@ -1128,49 +529,40 @@
     "category_coverage": 0.0,
     "agent_metrics_summary": null
   },
-  "trend_status": "continuing",
-  "trend_delta": "相对5月\"被动补课式\"的可靠性清算，今日推进点首次转向自动化运维与统一抽象(回滚自动、配置只读、插件统一管理)；安全覆盖从沙箱下探到认证/工具调用层；工作流内嵌化为新增演进方向。",
+  "trend_status": "weakening",
+  "trend_delta": "相对历史（3-7 月持续密集信号：峰值 7/25 达 79 个 Release 信号、3/31 达 77 信号/日）今日跌至 0 信号，是采集空窗期（7/25→9/11）后的首次零产出，不构成趋势反转，仅代表当日无新检测。",
   "historical_basis_dates": [
+    "2026-07-25",
+    "2026-07-15",
+    "2026-07-18",
     "2026-03-18",
-    "2026-05-13",
-    "2026-05-16",
-    "2026-05-19",
-    "2026-05-20",
-    "2026-05-21",
-    "2026-07-25"
+    "2026-05-21"
   ],
-  "historical_comparison": "与历史最强相关锚点——5月中旬\"质量可靠性清算期\"(5/21单日8仓库40+ P0/P1缺陷)相比，今天的可靠性修复已从\"技术债集中爆发的被动补课\"升级为\"企业级运维自动化\"（失败更新自动回滚、外部配置只读、gateway性能优化、对话历史原子性）；MCP安全与细粒度工具审批则把3月以来的沙箱/安全共识下探到认证与工具调用层，从实验性走向标准化。整体信号密度(34信号/9仓库)远低于3/31全域峰值(77信号)和7月纯Release井喷期(最高416)，属于高位平台期的高质量收敛日，非新转折点。",
-  "top_new_trends": [
-    "企业级治理与统一抽象：DeepAgents与OpenClaw同日推出统一插件管理界面、多提供商模型目录统一，标志Agent配置从碎片收敛",
-    "开发工作流内嵌化：Cline桌面端内嵌PR/CI、OpenClaw云会话预启动+快照、终端交互式问答，Agent向完整开发环境协作平台演进"
-  ],
-  "top_continuing_trends": [
-    "Agent持久会话可靠性与故障恢复(延续5月可靠性清算主线，推进点从补修理债升级为企业级运维自动化：失败自动回滚、租约自动释放、fork会话持久化)",
-    "MCP生态安全性与认证流程加固(把3月以来的安全/沙箱共识下探至工具调用与认证层，成为跨框架标配)",
-    "Agent工具审批与细粒度权限控制(工具调用权限细粒度化从实验走向标准化)"
-  ],
-  "summary_confidence": 0.85,
+  "historical_comparison": "今天（9/11）产出 0 个趋势信号（工程/研究/Commit/Release 全为 0，活跃 commit 亦为 0），而历史在 3-7 月形成了持续且密集的 AI Agent 生态信号流——3/18 的沙箱安全共识（51 信号）、5/15-21 的\"质量可靠性清算\"主线、7 月的 Release 井喷期（7/25 高达 79 个 Release 信号）。今天的零信号置于全量历史中属异常低位，明显低于近期任何一天的检测密度，标志着信号采集进入静默期。",
+  "top_new_trends": [],
+  "top_continuing_trends": [],
+  "summary_confidence": 0.75,
   "daily_summary_agent_run_metrics": {
     "model": "deepseek-v4-flash-aistar",
-    "session_id": "16335575-5cc2-498b-b73c-d8319ad86038",
-    "num_turns": 14,
-    "duration_ms": 264050,
-    "duration_api_ms": 98844,
-    "total_cost_usd": 1.8034099999999997,
+    "session_id": "fe8e742b-4d37-4668-9dc0-65fa41e81d44",
+    "num_turns": 13,
+    "duration_ms": 193311,
+    "duration_api_ms": 169030,
+    "total_cost_usd": 1.8851849999999999,
     "usage": {
-      "input_tokens": 346747,
-      "output_tokens": 2787,
+      "input_tokens": 336224,
+      "output_tokens": 8042,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "total_tokens": 349534,
+      "total_tokens": 344266,
       "tool_uses": 0,
       "duration_ms": 0
     },
     "raw_usage": {
-      "input_tokens": 346747,
+      "input_tokens": 336224,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "output_tokens": 2787,
+      "output_tokens": 8042,
       "server_tool_use": {
         "web_search_requests": 0,
         "web_fetch_requests": 0
@@ -1186,43 +578,23 @@
     }
   },
   "agent_metrics_summary": {
-    "run_count": 28,
+    "run_count": 1,
     "models": [
-      "deepseek-v4-flash-aistar",
-      "ds-v4-flash"
+      "deepseek-v4-flash-aistar"
     ],
-    "total_turns": 17,
-    "total_duration_ms": 324547,
-    "total_api_duration_ms": 141202,
-    "total_cost_usd": 2.331495,
+    "total_turns": 13,
+    "total_duration_ms": 193311,
+    "total_api_duration_ms": 169030,
+    "total_cost_usd": 1.885185,
     "usage": {
-      "input_tokens": 545789,
-      "output_tokens": 15335,
+      "input_tokens": 336224,
+      "output_tokens": 8042,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "total_tokens": 561124,
+      "total_tokens": 344266,
       "tool_uses": 0,
       "duration_ms": 0
     }
   },
-  "daily_llm_usage": {
-    "run_count": 27,
-    "models": [
-      "deepseek-v4-flash-aistar",
-      "ds-v4-flash"
-    ],
-    "total_turns": 3,
-    "total_duration_ms": 60497,
-    "total_api_duration_ms": 42358,
-    "total_cost_usd": 0.528085,
-    "usage": {
-      "input_tokens": 199042,
-      "output_tokens": 12548,
-      "cache_creation_input_tokens": 0,
-      "cache_read_input_tokens": 0,
-      "total_tokens": 211590,
-      "tool_uses": 0,
-      "duration_ms": 0
-    }
-  }
+  "daily_llm_usage": null
 }
