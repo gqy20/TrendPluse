@@ -1,73 +1,44 @@
 @import "tailwindcss";
 
-/* 暗色模式：基于 .dark 类（toggle 切换；prefers-color-scheme 自动跟随） */
-@custom-variant dark (&:where(.dark, .dark *));
+/*
+ * TrendPulse · Editorial System
+ * 暖纸底 + 墨色文字 + 单一蓝色强调 + 发丝线分区 + 大编号锚点。
+ * 规范来源:设计稿「20 · Design QA / Typography & Alignment」:
+ *   - 字号阶梯 58 / 36-44 / 24 / 18-20 / 16 / 13(下限)
+ *   - 桌面主内容左边界 84px,主栏/Rail 分界 1340px
+ *   - 触控热区 ≥44px,正文最小 16px,辅助信息 ≥13px
+ */
 
 @theme {
-  /* 字体（与旧站一致） */
-  --font-sans: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
+  /* 字体栈:不引外部 webfont,全部系统回退 */
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", Georgia, "Times New Roman", serif;
+  --font-sans: "MiSans", "PingFang SC", "Noto Sans SC", "HarmonyOS Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Mono", ui-monospace, monospace;
 
-  /* ───────────────────────────────────────────────
-   * BRAND · 电光蓝（Sui SOTD 同款 #298dff，手工调阶，非 Tailwind 标准色）
-   * 沉稳高级，跳出青色工具感；冷峻未来气质，最贴"信号情报屏"
-   * ──────────────────────────────────────────── */
-  --color-brand-50:  #eaf3ff;
-  --color-brand-100: #d4e7ff;
-  --color-brand-200: #a8cdff;
-  --color-brand-300: #7db4ff;
-  --color-brand-400: #5aa8ff;
-  --color-brand-500: #298dff;
-  --color-brand-600: #1e6fcc;
-  --color-brand-700: #1856a3;
-  --color-brand-800: #133e7a;
-  --color-brand-900: #0d2a52;
+  /* 编辑风色板(纸 + 墨 + 一点蓝) */
+  --color-paper: #f6f4ee;
+  --color-paper-deep: #ecebe4;
+  --color-ink: #1a1a18;
+  --color-ink-2: #6e6e68;
+  --color-ink-3: #9c9c94;
+  --color-hairline: #e2dfd7;
+  --color-accent: #2563eb;
+  --color-accent-deep: #1e4fc4;
+  --color-impact: #c4472f;
+  --color-surface: #faf9f5;
 
-  /* ───────────────────────────────────────────────
-   * SIGNAL · 8 类信号色（低饱和 + 蒙灰统一，告别 Tailwind 拾色器感）
-   * 色盲安全、暗底可读；冷色为主 + 暖色点缀（performance/eval/release）
-   * ⚠ 真正生效的运行时色值在 lib/format.ts SIGNAL_TYPE_COLOR，改色请两处同改
-   * ──────────────────────────────────────────── */
-  --color-signal-capability:  #5b9bd5;  /* 🚀 新能力 · 钢蓝 */
-  --color-signal-abstraction: #a684d6;  /* 🎨 抽象层 · 淡紫 */
-  --color-signal-workflow:    #4fb3aa;  /* ⚙️ 工作流 · 青绿 */
-  --color-signal-eval:        #e0b341;  /* 📊 评估 · 暗金 */
-  --color-signal-safety:      #5bab6e;  /* 🛡️ 安全 · 草绿 */
-  --color-signal-performance: #e8895a;  /* ⚡ 性能 · 暖橙 */
-  --color-signal-commit:      #8e96a3;  /* 💾 提交 · 中性灰蓝 */
-  --color-signal-release:     #d97aa6;  /* 🎯 发布 · 粉 */
+  /* 8 类信号 → 低饱和文字色(mono 标签用,克制不抢戏) */
+  --color-sig-capability: #5b7fb5;
+  --color-sig-abstraction: #8f74c0;
+  --color-sig-workflow: #47968e;
+  --color-sig-eval: #b5923a;
+  --color-sig-safety: #55915f;
+  --color-sig-performance: #c2744d;
+  --color-sig-commit: #7d8490;
+  --color-sig-release: #b56a92;
 
-  /* ───────────────────────────────────────────────
-   * STATUS · 状态语义色（与品牌色解耦，低饱和协调）
-   * 运行时色值见 lib/format.ts STATUS_COLORS
-   * ──────────────────────────────────────────── */
-  --color-status-high:    #e8895a;  /* 高影响 · 暖突出 */
-  --color-status-medium:  #6e7682;  /* 中性 */
-  --color-status-low:     #4a515f;  /* 次要 */
-  --color-status-success: #5bab6e;  /* 正向 · 增长 · 高质量 */
-  --color-status-warning: #e0b341;  /* 注意 · 评分星标 */
-  --color-status-danger:  #e0655a;  /* 危险 · 痛点 · 低质量 */
-}
-
-/* 主题表面变量（带色温，告别纯白/冷灰黑的数字工具感） */
-:root {
-  --tp-bg: #fafbfc;        /* 冷调白，非纯白 */
-  --tp-bg-end: #eef1f6;    /* 纵向渐变末端，略沉，制造纵深 */
-  --tp-fg: #0e1116;
-  --tp-muted: #5c6573;
-  --tp-surface: #ffffff;
-  --tp-surface-2: #f1f4f8;
-  --tp-border: rgba(15, 30, 60, 0.08);
-}
-
-.dark {
-  --tp-bg: #0a0b0e;        /* 微冷蓝黑，非 zinc 冷灰 */
-  --tp-bg-end: #06070a;    /* 末端更深，暗色纵深 */
-  --tp-fg: #f5f7fa;
-  --tp-muted: #8a92a0;
-  --tp-surface: #12141a;
-  --tp-surface-2: #1a1d24;
-  --tp-border: rgba(255, 255, 255, 0.08);
+  --color-status-warning: #b08a3e;
+  --color-status-danger: #c4472f;
 }
 
 html {
@@ -75,106 +46,213 @@ html {
 }
 
 body {
-  /* 纵向渐变（顶亮底沉）+ 极淡灰度噪点，破"平涂塑料感"，制造高级纵深 */
-  background-color: var(--tp-bg);
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"),
-    linear-gradient(to bottom, var(--tp-bg) 0%, var(--tp-bg-end) 100%);
-  background-attachment: fixed;
-  background-size: 140px 140px, 100% 100%;
-  background-repeat: repeat, no-repeat;
-  color: var(--tp-fg);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* 链接基础 */
-a {
-  color: var(--color-brand-600);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-.dark a {
-  color: var(--color-brand-400);
-}
-
-/* 代码字体 */
-code, pre {
-  font-family: var(--font-mono);
-}
-
-/* 选区高亮 */
 ::selection {
-  background: color-mix(in oklab, var(--color-brand-500) 28%, transparent);
+  background: color-mix(in oklab, var(--color-accent) 18%, transparent);
 }
 
-/* ========================================
-   信号筛选栏（SignalSection 岛屿）
-   ======================================== */
-.filter-btn {
-  padding: 0.25rem 0.55rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  color: var(--tp-muted);
-  border: 1px solid transparent;
-  transition: all 0.15s;
+/* ───────────────────────────────────────────────
+ * 排印阶梯(Design QA 六级)
+ * ──────────────────────────────────────────── */
+.tp-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 4.2vw, 58px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
-.filter-btn:hover {
-  background: var(--tp-surface-2);
-  color: var(--tp-fg);
+.tp-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1.25;
+  font-weight: 700;
 }
-.filter-btn.active {
-  background: var(--color-brand-50);
-  color: var(--color-brand-700);
-  border-color: var(--color-brand-200);
+.tp-section {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 700;
 }
-.dark .filter-btn.active {
-  background: color-mix(in oklab, var(--color-brand-500) 22%, transparent);
-  color: var(--color-brand-200);
-  border-color: color-mix(in oklab, var(--color-brand-400) 30%, transparent);
+.tp-item {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 600;
 }
-.action-btn {
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  color: var(--tp-muted);
-  border: 1px solid var(--tp-border);
-  background: transparent;
-  transition: all 0.15s;
+.tp-meta {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-ink-2);
 }
-.action-btn:hover {
-  color: var(--tp-fg);
-  border-color: var(--color-brand-400);
+.tp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+.tp-num {
+  /* 超大装饰序号:衬线数字,页面的视觉锚点 */
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-variant-numeric: lining-nums;
+  line-height: 0.9;
+}
+.tp-mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
 }
 
-/* ========================================
-   动效渐进增强（配合 scripts/motion.ts）
-   - 仅在「JS 启用 + 用户未偏好减少动效」时预隐藏入场目标，防 FOUC
-   - reduce 用户 / 无 JS：内容天然可见，不隐藏
-   - JS 初始化失败时 motion.ts 移除 .js 类，本规则失效，内容恢复可见
-   ======================================== */
-@media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal],
-  .js .hero-eyebrow,
-  .js .hero-title,
-  .js .hero-sub,
-  .js .hero-cta {
-    opacity: 0;
+/* ───────────────────────────────────────────────
+ * 结构组件
+ * ──────────────────────────────────────────── */
+.tp-hairline {
+  border-color: var(--color-hairline);
+}
+
+/* 主内容 + 右侧 Rail 的编辑式两栏(1600 桌面稿,分界 1340px) */
+.tp-shell {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 4.2vw, 84px);
+}
+.tp-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: clamp(28px, 3.4vw, 60px);
+}
+@media (max-width: 1100px) {
+  .tp-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-/* 主题切换过渡：toggle 前给 <html> 临时加 .theme-transitioning，
-   限定 background/border/color 的过渡，避免 transform 等被误过渡 */
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning::before,
-.theme-transitioning::after {
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease,
-    fill 0.3s ease !important;
+/* 右侧 Rail:竖向索引栏,左侧发丝线 */
+.tp-rail {
+  border-left: 1px solid var(--color-hairline);
+  padding-left: clamp(20px, 1.6vw, 28px);
+}
+
+/* 链接:编辑式,蓝色 + 箭头 */
+.tp-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.tp-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* mono 小标签(如 PROJECT / TREND / 判断) */
+.tp-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* 高影响语义:红 */
+.tp-impact-high {
+  color: var(--color-impact);
+}
+
+/* Banner:部分数据 / 信息提示(纸色系) */
+.tp-banner {
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.tp-banner[data-tone='warning'] {
+  border-left: 3px solid var(--color-status-warning);
+}
+.tp-banner[data-tone='info'] {
+  border-left: 3px solid var(--color-accent);
+}
+
+/* 表格:发丝线行,表头小灰字,首行粗底线 */
+.tp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.tp-table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-ink);
+}
+.tp-table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-hairline);
+  vertical-align: top;
+}
+.tp-table tbody tr:hover {
+  background: color-mix(in oklab, var(--color-accent) 4%, transparent);
+}
+
+/* 行交互:hover 浅蓝 + focus ring(热区 ≥44px) */
+.tp-row {
+  display: block;
+  padding-block: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 140ms ease-out;
+}
+.tp-row:hover {
+  background: color-mix(in oklab, var(--color-accent) 4%, transparent);
+}
+.tp-row:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+/* 动效规范:120-180ms ease-out,仅 opacity / 小位移 */
+.tp-fade {
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tp-fade,
+  .tp-row {
+    transition: opacity 160ms ease-out;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+@media (hover: none) {
+  .tp-row {
+    min-height: 44px;
+  }
+}
+
+/* 滚动条:细 + 纸色 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-3);
 }

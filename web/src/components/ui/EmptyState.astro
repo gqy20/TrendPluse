@@ -1,0 +1,20 @@
+---
+/**
+ * 空状态:解释"为什么是空的" + 给出下一步动作。
+ * 不冷冰冰地写"无结果"(设计稿 UX States)。
+ */
+interface Props {
+  title?: string;
+  hint?: string;
+  actionHref?: string;
+  actionLabel?: string;
+}
+const { title = '暂无结果', hint, actionHref, actionLabel = '清除筛选 →' } = Astro.props;
+---
+<div class="border border-dashed border-hairline py-16 px-8 text-center">
+  <p class="tp-item text-ink-2">{title}</p>
+  {hint && <p class="tp-meta mt-2">{hint}</p>}
+  {actionHref
+    ? <a href={actionHref} class="tp-link inline-block mt-5">{actionLabel}</a>
+    : <span class="tp-link inline-block mt-5 cursor-pointer">{actionLabel}</span>}
+</div>

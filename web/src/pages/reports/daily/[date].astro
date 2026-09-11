@@ -1,13 +1,12 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import ReportHeader from '../../../components/report/ReportHeader.astro';
-import StatsBar from '../../../components/report/StatsBar.astro';
-import SignalSection from '../../../components/report/SignalSection.astro';
-import ReleaseList from '../../../components/report/ReleaseList.astro';
-import ActivityTable from '../../../components/report/ActivityTable.astro';
-import IssueInsights from '../../../components/report/IssueInsights.astro';
-import ImpactDistribution from '../../../components/report/ImpactDistribution.astro';
+import StatRow from '../../../components/ui/StatRow.astro';
+import SignalTable from '../../../components/report/SignalTable.astro';
+import SignalDrawer from '../../../components/report/SignalDrawer.astro';
+import Banner from '../../../components/ui/Banner.astro';
+import { routes } from '../../../lib/path';
+import { signalLabel, repoUrl } from '../../../lib/format';
 
 export async function getStaticPaths() {
   const daily = await getCollection('daily');
@@ -23,54 +22,266 @@ interface Props {
 const { entry } = Astro.props;
 const d = entry.data;
 
-const meta: { label: string; value: string | number }[] = [];
-if (d.stats?.high_impact_signals != null) meta.push({ label: '高影响', value: d.stats.high_impact_signals as number });
-if (d.stats?.pr_count != null) meta.push({ label: 'PR', value: d.stats.pr_count as number });
-if (d.stats?.commit_count != null) meta.push({ label: 'Commit', value: d.stats.commit_count as number });
-if (d.stats?.release_count != null) meta.push({ label: 'Release', value: d.stats.release_count as number });
-if (d.summary_confidence != null) meta.push({ label: '置信度', value: `${Math.round(d.summary_confidence * 100)}%` });
+// 全部信号合并,按影响分降序(编辑式排序:重要的在前)
+const allSignals = [
+  ...d.engineering_signals,
+  ...d.research_signals,
+  ...d.commit_signals,
+  ...d.release_signals,
+].sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0));
+const total = allSignals.length;
+
+// 核心结论:summary_brief 首句作大标题,其余作导语
+const sentences = (d.summary_brief || '').split('。').filter(Boolean);
+const headline = sentences[0] ? sentences[0] + '。' : `每日趋势报告 · ${d.date}`;
+const lead = sentences.slice(1).join('。');
+
+const focus = allSignals.slice(0, 4);
+const worthWatching = allSignals.filter((s) => (s.impact_score ?? 0) >= 4).slice(0, 3);
+
+const vol = d.date.replaceAll('-', '.');
+const monitored = d.monitored_repos?.length ?? 0;
+
+const dayAnchor = (i: number) => `#signal-${i}`;
 ---
 
-<BaseLayout title={`每日报告 · ${d.date}`} description={d.summary_brief?.slice(0, 150)}>
-  <article class="space-y-8">
-    <ReportHeader
-      title={`每日趋势报告 · ${d.date}`}
-      subtitle="DAILY REPORT"
-      summary={d.summary_brief}
-      meta={meta}
-    />
+<BaseLayout title={`趋势报告 · ${d.date}`} description={d.summary_brief?.slice(0, 150)}>
+  <article class="tp-shell tp-grid pt-12 pb-8">
+    <div class="min-w-0">
+      <!-- Hero -->
+      <header class="pb-10">
+        <p class="tp-eyebrow mb-4">TREND REPORT · {vol}</p>
+        <h1 class="tp-h2 max-w-[820px]">{headline}</h1>
+        {lead && <p class="tp-body text-ink-2 mt-5 max-w-[680px]">{lead}。</p>}
+        <div class="mt-8">
+          <StatRow
+            stats={[
+              { value: total, label: '信号' },
+              { value: d.stats.high_impact_signals ?? 0, label: '高影响' },
+              { value: d.stats.total_prs_analyzed ?? 0, label: '分析 PR' },
+              ...(d.summary_confidence != null
+                ? [{ value: `${Math.round(d.summary_confidence * 100)}%`, label: '置信度' }]
+                : []),
+            ]}
+          />
+        </div>
+      </header>
 
-    {(d.top_new_trends.length > 0 || d.top_continuing_trends.length > 0) && (
-      <section class="space-y-2">
-        <h2 class="text-xl font-bold">🎯 趋势</h2>
-        {d.top_new_trends.length > 0 && (
-          <div class="flex flex-wrap gap-2">
-            {d.top_new_trends.map((t) => (
-              <span class="text-xs px-2 py-1 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-200">▲ 新 · {t}</span>
-            ))}
+      <!-- 空报告:真实降级态,不硬撑 -->
+      {total === 0 && (
+        <Banner tone="warning" dot="warning" title="今日未捕捉到信号。">
+          过去 24 小时监控仓库未产生满足阈值的活动。已获取的活跃度与发布数据仍在下方展示。
+        </Banner>
+      )}
+
+      <!-- 焦点信号 -->
+      {focus[0] && (
+        <section class="border-t border-hairline pt-12 pb-10" id="signal-0" data-signal-detail={focus[0].id}>
+          <div class="grid md:grid-cols-[190px_minmax(0,1fr)] gap-6">
+            <div>
+              <div class="tp-num text-[100px] text-ink">01<span class="text-[18px] text-ink-3 font-sans font-normal"> / {total}</span></div>
+            </div>
+            <div>
+              <span class="tp-tag">{signalLabel(focus[0].type)} · {focus[0].category === 'research' ? '研究' : '工程'}</span>
+              <h2 class="tp-h2 mt-3">{focus[0].title}</h2>
+              <p class="tp-body text-ink-2 mt-4 max-w-[640px]">{focus[0].why_it_matters}</p>
+              <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+                {focus[0].sources[0] && (
+                  <a href={focus[0].sources[0]} target="_blank" rel="noopener" class="tp-link">查看原始变化 →</a>
+                )}
+                {focus[0].related_repos[0] && (
+                  <a href={repoUrl(focus[0].related_repos[0])} target="_blank" rel="noopener" class="tp-mono text-ink-2 hover:text-accent transition-colors">
+                    {focus[0].related_repos[0]}
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
-        )}
-        {d.top_continuing_trends.length > 0 && (
-          <div class="flex flex-wrap gap-2">
-            {d.top_continuing_trends.map((t) => (
-              <span class="text-xs px-2 py-1 rounded-full bg-[var(--tp-surface-2)] text-[var(--tp-muted)]">→ 续 · {t}</span>
-            ))}
+        </section>
+      )}
+
+      <!-- 次级信号 02-04:三栏 -->
+      {focus.length > 1 && (
+        <section class="border-t border-hairline grid md:grid-cols-3 gap-8 py-10">
+          {
+            focus.slice(1).map((s, i) => (
+              <div id={`signal-${i + 1}`} class:list={[i > 0 && 'md:border-l md:border-hairline', i > 0 && 'md:pl-8']}>
+                <div class="tp-num text-[42px] text-ink-3 mb-3">0{i + 2}</div>
+                <h3 class="tp-item">{s.title}</h3>
+                <p class="tp-meta mt-2.5 line-clamp-3">{s.why_it_matters}</p>
+                {s.sources[0] && (
+                  <a href={s.sources[0]} target="_blank" rel="noopener" class="tp-mono text-ink-3 hover:text-accent transition-colors mt-3 inline-block">
+                    {s.related_repos[0] || 'source'} ↗
+                  </a>
+                )}
+              </div>
+            ))
+          }
+        </section>
+      )}
+
+      <!-- 趋势脉络:新出现 / 持续升温 / 值得关注 -->
+      <section class="border-t border-hairline py-12">
+        <div class="flex items-baseline justify-between mb-8">
+          <h2 class="tp-section">趋势脉络</h2>
+          <span class="tp-meta">从信号中看见正在形成的结构。</span>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="tp-mono text-ink mb-4">新出现 <span class="text-ink-3">({d.top_new_trends.length})</span></h3>
+            {d.top_new_trends.length > 0 ? (
+              <ol class="space-y-3">
+                {d.top_new_trends.slice(0, 3).map((t, i) => (
+                  <li class="flex gap-3 tp-meta text-ink">
+                    <span class="tp-num text-[15px] text-ink-3">0{i + 1}</span>{t}
+                  </li>
+                ))}
+              </ol>
+            ) : <p class="tp-meta text-ink-3">今日无新增趋势</p>}
           </div>
-        )}
+          <div class="md:border-l md:border-hairline md:pl-8">
+            <h3 class="tp-mono text-ink mb-4">持续升温 <span class="text-ink-3">({d.top_continuing_trends.length})</span></h3>
+            {d.top_continuing_trends.length > 0 ? (
+              <ol class="space-y-3">
+                {d.top_continuing_trends.slice(0, 3).map((t, i) => (
+                  <li class="flex gap-3 tp-meta text-ink">
+                    <span class="tp-num text-[15px] text-ink-3">0{i + 1}</span>{t}
+                  </li>
+                ))}
+              </ol>
+            ) : <p class="tp-meta text-ink-3">今日无延续趋势</p>}
+          </div>
+          <div class="md:border-l md:border-hairline md:pl-8">
+            <h3 class="tp-mono text-ink mb-4">值得关注 <span class="text-ink-3">({worthWatching.length})</span></h3>
+            {worthWatching.length > 0 ? (
+              <ol class="space-y-3">
+                {worthWatching.map((s, i) => (
+                  <li class="flex gap-3 tp-meta text-ink">
+                    <span class="tp-num text-[15px] text-ink-3">0{i + 1}</span>{s.title}
+                  </li>
+                ))}
+              </ol>
+            ) : <p class="tp-meta text-ink-3">暂无高影响信号</p>}
+          </div>
+        </div>
       </section>
-    )}
 
-    <StatsBar stats={d.stats} />
+      <!-- 全部信号 -->
+      <section class="border-t border-hairline py-12">
+        <div class="flex items-baseline justify-between mb-6">
+          <h2 class="tp-section">全部信号 <span class="tp-num text-[22px] text-ink-3 ml-1">{total}</span></h2>
+        </div>
+        {total > 0
+          ? <SignalTable signals={allSignals} time={d.date.slice(5)} limit={12} clickable />
+          : <p class="tp-meta">今日无信号。</p>}
+      </section>
 
-    <ImpactDistribution report={d} />
+      <!-- 仓库活跃度 -->
+      {(d.activity?.top_repos?.length ?? 0) > 0 && (
+        <section class="border-t border-hairline py-12">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="tp-section">活跃仓库</h2>
+            <span class="tp-meta">{d.activity?.active_repos_count ?? 0} 个仓库 · {d.activity?.total_commits ?? 0} commits</span>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-x-8 gap-y-6">
+            {d.activity!.top_repos.slice(0, 6).map((r, i) => (
+              <div>
+                <div class="flex items-baseline justify-between">
+                  <a href={repoUrl(r.repo)} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors">{r.repo}</a>
+                  <span class="tp-num text-[22px]">{r.commits}</span>
+                </div>
+                {i === 0 && <div class="h-[2px] bg-accent mt-1.5" style={`width:${Math.min(100, ((r.commits ?? 0) / (d.activity!.top_repos[0].commits || 1)) * 100)}%`} />}
+                {i > 0 && <div class="h-px bg-hairline mt-2" />}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-    <SignalSection title="工程信号" icon="🔧" signals={d.engineering_signals} />
-    <SignalSection title="研究信号" icon="🔬" signals={d.research_signals} />
-    {d.commit_signals.length > 0 && <SignalSection title="Commit 信号" icon="💾" signals={d.commit_signals} />}
-    {d.release_signals.length > 0 && <SignalSection title="Release 信号" icon="🎯" signals={d.release_signals} />}
+      <!-- 发布动态 -->
+      {(d.releases?.releases?.length ?? 0) > 0 && (
+        <section class="border-t border-hairline py-12">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="tp-section">发布动态</h2>
+            <span class="tp-meta">{d.releases?.total_count ?? 0} 个版本</span>
+          </div>
+          <div class="space-y-0">
+            {d.releases!.releases.slice(0, 6).map((r) => (
+              <div class="tp-row border-b border-hairline">
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <a href={r.url} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors">{r.repo}</a>
+                  <span class="tp-mono text-accent">{r.version}</span>
+                  <span class="tp-meta ml-auto">{r.date}</span>
+                </div>
+                {r.ai_summary?.summary_cn && <p class="tp-meta mt-1.5 line-clamp-2">{r.ai_summary.summary_cn}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-    <ReleaseList releases={d.releases as never} />
-    <ActivityTable repos={d.activity?.top_repos || []} />
-    <IssueInsights insights={d.issue_insights} />
+      <!-- Issue 洞察 -->
+      {d.issue_insights?.summary_brief && (
+        <section class="border-t border-hairline py-12">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="tp-section">Issue 洞察</h2>
+            <span class="tp-meta">来自社区的真实反馈</span>
+          </div>
+          <p class="tp-body text-ink-2 max-w-[680px]">{d.issue_insights.summary_brief}</p>
+          {(d.issue_insights.top_pain_points?.length ?? 0) > 0 && (
+            <div class="grid md:grid-cols-3 gap-8 mt-8">
+              {d.issue_insights.top_pain_points!.slice(0, 3).map((p, i) => (
+                <div class="md:border-l md:border-hairline md:pl-6">
+                  <span class="tp-num text-[16px] text-ink-3">0{i + 1}</span>
+                  <h3 class="tp-item mt-2">{p.topic}</h3>
+                  {p.summary && <p class="tp-meta mt-2 line-clamp-3">{p.summary}</p>}
+                  {p.count != null && <p class="tp-mono text-ink-3 mt-2">{p.count} 个相关 issue</p>}
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+    </div>
+
+    <!-- ═══ 右侧 Rail ═══ -->
+    <aside class="tp-rail">
+      <h2 class="tp-item mb-6">今日焦点</h2>
+      {
+        focus.map((s, i) => (
+          <a href={dayAnchor(i)} class="tp-row border-b border-hairline">
+            <div class="flex items-start gap-3">
+              <span class="tp-num text-[26px] text-ink-3">0{i + 1}</span>
+              <span class="tp-meta text-ink leading-snug">{s.title}</span>
+            </div>
+          </a>
+        ))
+      }
+
+      <div class="border-t border-hairline mt-10 pt-8">
+        <h2 class="tp-mono text-ink mb-4">本期信息</h2>
+        <dl class="space-y-2.5">
+          <div class="flex justify-between gap-3"><dt class="tp-meta">报告期</dt><dd class="tp-mono text-ink">{d.date}</dd></div>
+          <div class="flex justify-between gap-3"><dt class="tp-meta">信号</dt><dd class="tp-mono text-ink">{total}</dd></div>
+          <div class="flex justify-between gap-3"><dt class="tp-meta">监控仓库</dt><dd class="tp-mono text-ink">{monitored}</dd></div>
+        </dl>
+      </div>
+
+      <div class="border-t border-hairline mt-8 pt-8">
+        <h2 class="tp-mono text-ink mb-4">数据来源</h2>
+        <dl class="space-y-2.5">
+          <div class="flex justify-between gap-3"><dt class="tp-meta">Pull Requests</dt><dd class="tp-mono text-ink">{d.stats.total_prs_analyzed ?? 0}</dd></div>
+          <div class="flex justify-between gap-3"><dt class="tp-meta">Commits</dt><dd class="tp-mono text-ink">{d.stats.total_commits_analyzed ?? 0}</dd></div>
+          <div class="flex justify-between gap-3"><dt class="tp-meta">Releases</dt><dd class="tp-mono text-ink">{d.stats.total_releases_analyzed ?? 0}</dd></div>
+          <div class="flex justify-between gap-3"><dt class="tp-meta">Issues</dt><dd class="tp-mono text-ink">{(d.issue_insights?.top_pain_points ?? []).reduce((s, p) => s + (p.count ?? 0), 0) || '—'}</dd></div>
+        </dl>
+      </div>
+
+      <a href={routes.reports()} class="tp-link mt-8 block">浏览全部报告 →</a>
+    </aside>
   </article>
+
+  <!-- 信号数据岛:详情抽屉的证据链数据源 -->
+  <script type="application/json" id="tp-signals-data" set:html={JSON.stringify(allSignals)} />
+  <SignalDrawer />
 </BaseLayout>

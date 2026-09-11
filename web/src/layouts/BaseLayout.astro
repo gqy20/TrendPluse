@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/nav/Header.astro';
 import Footer from '../components/nav/Footer.astro';
+import Palette from '../components/search/Palette.astro';
 
 interface Props {
   title?: string;
@@ -9,43 +10,25 @@ interface Props {
 }
 const {
   title = 'TrendPulse',
-  description = '给 AI 编程生态做一块干净的情报屏 · 追踪 GitHub 每日趋势信号',
+  description = '更早看到变化,更从容地创造未来 · GitHub 趋势情报日报',
 } = Astro.props;
 const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
 ---
 <!doctype html>
-<html lang="zh">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <!-- 防 FOUC：构建时即确定主题（跟随系统偏好 + localStorage 记忆） -->
-    <script is:inline>
-      (function () {
-        try {
-          var saved = localStorage.getItem('tp-theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (saved === 'dark' || (!saved && prefersDark)) {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
-    <!-- 标记 JS 启用：配合 global.css 的 .js 预隐藏做动效渐进增强 -->
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />
-    <main class="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-1 w-full">
       <slot />
     </main>
     <Footer />
-    <script>
-      import '../scripts/motion';
-    </script>
+    <Palette />
   </body>
 </html>

@@ -1,0 +1,29 @@
+---
+/**
+ * 编辑风几何海报:同心圆 + 色块 + 竖排英文。
+ * 纯装饰(设计稿内嵌小字对比不足的问题在此规避:文字仅作纹理,不承载信息)。
+ */
+interface Props {
+  class?: string;
+  text?: string;
+}
+const { class: cls = '', text = 'SIGNALS SHAPE A QUIETER FUTURE' } = Astro.props;
+---
+<div class:list={['relative overflow-hidden select-none', cls]} aria-hidden="true">
+  <div class="absolute inset-0 bg-[#e9e4d6]" />
+  <!-- 同心圆环 -->
+  <div class="absolute -right-[18%] -top-[14%] w-[76%] aspect-square rounded-full border border-[#cdc7b2]" />
+  <div class="absolute -right-[6%] top-[4%] w-[52%] aspect-square rounded-full border border-[#cdc7b2] bg-[#e2dcca]" />
+  <!-- 纸面色块(地平线) -->
+  <div class="absolute left-0 right-0 bottom-0 h-[26%] bg-[#d8d2bd]" />
+  <div class="absolute left-0 right-0 bottom-0 h-[24%] bg-[#e6e1d0]" />
+  <!-- 竖排装饰文字:低对比是刻意的,不承载信息 -->
+  <div
+    class="absolute right-[10%] top-[10%] tp-mono text-[10px] leading-[1.9] tracking-[0.3em] text-[#b3ac93] uppercase"
+    style={`writing-mode: vertical-rl; height: 62%;`}
+  >
+    {text}
+  </div>
+  <!-- 信号点:蓝色,全图唯一强调 -->
+  <div class="absolute right-[24%] bottom-[26%] w-2 h-2 rounded-full bg-accent" />
+</div>

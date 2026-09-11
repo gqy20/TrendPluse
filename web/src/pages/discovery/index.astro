@@ -2,45 +2,147 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../../lib/path';
+import StatRow from '../../components/ui/StatRow.astro';
+import HeroArt from '../../components/ui/HeroArt.astro';
+import { formatNumber } from '../../lib/format';
 
 const discovery = (await getCollection('discovery')).sort((a, b) => b.id.localeCompare(a.id));
 const discDate = (id: string) => id.replace(/^discovery-/, '');
-const totalCandidates = discovery.reduce((sum, e) => sum + e.data.candidates.length, 0);
+const totalCandidates = discovery.reduce((sum, e) => sum + (e.data.passed_quality ?? e.data.candidates.length), 0);
+
+const latest = discovery[0]?.data;
+// 本周新增:最近 7 期累计
+const weeklyNew = discovery.slice(0, 7).reduce((sum, e) => sum + (e.data.passed_quality ?? e.data.candidates.length), 0);
+const highRatio = latest?.passed_quality
+  ? Math.round(((latest.high_priority ?? 0) / latest.passed_quality) * 100)
+  : 0;
+
+// 本周值得关注:最新一期,推荐优先 → 7 日增长
+const featured = latest
+  ? [...latest.candidates]
+      .sort((a, b) => (Number(b.recommended) - Number(a.recommended)) || (b.stars_growth_7d ?? 0) - (a.stars_growth_7d ?? 0))
+      .slice(0, 3)
+  : [];
 ---
 
 <BaseLayout title="项目发现" description="从 GitHub Trending 发现值得监控的新项目">
-  <div class="space-y-8">
-    <div>
-      <h1 class="text-3xl font-bold tracking-tight">项目发现</h1>
-      <p class="mt-1 text-[var(--tp-muted)]">
-        从 GitHub Trending 发现值得监控的新项目 · 共 {discovery.length} 期 · 累计 {totalCandidates} 个候选
-      </p>
+  <div class="tp-shell tp-grid pt-12 pb-8">
+    <div class="min-w-0">
+      <!-- Hero -->
+      <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
+        <div>
+          <p class="tp-eyebrow mb-5">DISCOVERY · OPEN SOURCE</p>
+          <h1 class="tp-h1">项目发现</h1>
+          <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
+            每天从 GitHub Trending 里筛掉噪声,只留下值得监控的新项目。先看证据,再决定是否扩大监控范围。
+          </p>
+          <div class="mt-8">
+            <StatRow
+              stats={[
+                { value: discovery.length, label: '发现期数' },
+                { value: formatNumber(totalCandidates), label: '累计候选' },
+                { value: formatNumber(weeklyNew), label: '本周新增' },
+                { value: `${highRatio}%`, label: '高优先占比' },
+              ]}
+            />
+          </div>
+        </div>
+        <HeroArt class="hidden lg:block h-[260px] w-[300px] ml-auto" text="DISCOVER BEFORE IT TREND" />
+      </header>
+
+      {discovery.length === 0 ? (
+        <section class="border-t border-hairline py-16">
+          <div class="border border-dashed border-hairline py-16 px-8 text-center">
+            <p class="tp-item text-ink-2">还没有发现记录</p>
+            <p class="tp-meta mt-2">发现管线尚未产出数据。可以稍后再来,或先看趋势报告。</p>
+            <a href={routes.reports()} class="tp-link inline-block mt-5">去看趋势报告 →</a>
+          </div>
+        </section>
+      ) : (
+        <>
+          <!-- 本周值得关注 -->
+          {featured.length > 0 && (
+            <section class="border-t border-hairline py-12">
+              <div class="flex items-baseline justify-between mb-8">
+                <h2 class="tp-section">本周值得关注</h2>
+                <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-link">0{featured.length} 个重点项目 →</a>
+              </div>
+              <div>
+                {featured.map((p, i) => (
+                  <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-row border-b border-hairline grid md:grid-cols-[80px_minmax(0,380px)_minmax(0,1fr)] gap-6 items-start">
+                    <span class="tp-num text-[34px] text-ink-3">0{i + 1}</span>
+                    <div>
+                      <h3 class="tp-item">{p.name || p.repo}</h3>
+                      <p class="tp-mono text-ink-3 mt-1.5">{p.repo}</p>
+                      <div class="flex flex-wrap gap-x-5 gap-y-1 mt-3">
+                        <span class="tp-mono text-ink-2">★ {formatNumber(p.stars ?? 0)}</span>
+                        {p.stars_growth_7d != null && p.stars_growth_7d > 0 && (
+                          <span class="tp-mono text-accent">+{formatNumber(p.stars_growth_7d)} / 7d</span>
+                        )}
+                        {p.language && <span class="tp-mono text-ink-3">{p.language}</span>}
+                      </div>
+                    </div>
+                    <p class="tp-meta text-ink pt-1">
+                      {p.highlight?.one_liner || p.highlight?.summary || p.description}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- 发现记录 -->
+          <section class="border-t border-hairline py-12">
+            <div class="flex items-baseline justify-between mb-8">
+              <h2 class="tp-section">发现记录 <span class="tp-num text-[22px] text-ink-3 ml-1">{discovery.length}</span></h2>
+              <span class="tp-meta">每期一行,点开看完整候选列表</span>
+            </div>
+            <div class="grid sm:grid-cols-3 gap-x-8 gap-y-6">
+              {discovery.slice(0, 12).map((e) => {
+                const r = e.data;
+                return (
+                  <a href={routes.discoveryReport(discDate(e.id))} class="tp-row border-t border-hairline">
+                    <div class="flex items-baseline justify-between">
+                      <span class="tp-item text-[18px]">{r.date}</span>
+                      <span class="tp-mono text-ink-3">0{String(discovery.indexOf(e) + 1).slice(-2) || ''}</span>
+                    </div>
+                    <div class="flex gap-5 mt-2">
+                      <span class="tp-mono text-ink-2">{r.passed_quality ?? r.candidates.length} 候选</span>
+                      <span class="tp-mono tp-impact-high">{r.high_priority ?? 0} 高优先</span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        </>
+      )}
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-      {discovery.map((entry) => {
-        const r = entry.data;
-        const date = discDate(entry.id);
-        return (
-          <a
-            data-reveal data-hover
-            href={routes.discoveryReport(date)}
-            class="block p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
-          >
-            <div class="flex items-center justify-between">
-              <span class="font-mono text-sm font-semibold">{date}</span>
-              {r.candidates.length > 0 && (
-                <span class="text-xs px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-200">
-                  {r.candidates.length}
-                </span>
-              )}
-            </div>
-            {r.high_priority != null && r.high_priority > 0 && (
-              <div class="mt-2 text-xs text-[var(--tp-muted)]">高优先 {r.high_priority}</div>
-            )}
-          </a>
-        );
-      })}
-    </div>
+    <!-- Rail:筛选(静态锚点 + 说明) -->
+    <aside class="tp-rail">
+      <h2 class="tp-item mb-6">筛选</h2>
+      <div class="pb-6 border-b border-hairline">
+        <h3 class="tp-mono text-ink-2 mb-3">日期</h3>
+        <div class="space-y-2">
+          {discovery.slice(0, 5).map((e) => (
+            <a href={routes.discoveryReport(discDate(e.id))} class="tp-mono text-ink-2 hover:text-accent transition-colors block">
+              {discDate(e.id)}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="py-6 border-b border-hairline">
+        <h3 class="tp-mono text-ink-2 mb-3">优先级</h3>
+        <p class="tp-mono text-accent">仅高优先</p>
+        <p class="tp-meta mt-2">高优先 = 质量分与增长同时达标</p>
+      </div>
+      <div class="py-6">
+        <h3 class="tp-mono text-ink-2 mb-3">排序</h3>
+        <p class="tp-mono text-accent">按质量分</p>
+        <p class="tp-mono text-ink-3 mt-2">按 star 增长</p>
+      </div>
+      <p class="tp-meta mt-6">候选项目经质量过滤(去重、活跃度、license)后入库。</p>
+    </aside>
   </div>
 </BaseLayout>

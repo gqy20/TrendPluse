@@ -2,89 +2,81 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../../lib/path';
-import TrendsOverview from '../../components/report/TrendsOverview.astro';
+import HeroArt from '../../components/ui/HeroArt.astro';
 
 const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
 const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
 const dailyDate = (id: string) => id.replace(/^report-/, '');
 const weeklyId = (id: string) => id.replace(/^weekly-/, '');
-const latest = daily[0]?.data;
 ---
 
 <BaseLayout title="趋势报告" description="TrendPulse 每日 GitHub 趋势信号归档">
-  <div class="space-y-10">
-    <div>
-      <h1 class="text-3xl font-bold tracking-tight">趋势报告</h1>
-      <p class="mt-1 text-[var(--tp-muted)]">
-        共 {daily.length} 份日报 · {weekly.length} 份周报
-      </p>
-    </div>
+  <div class="tp-shell tp-grid pt-12 pb-8">
+    <div class="min-w-0">
+      <!-- Hero -->
+      <header class="grid lg:grid-cols-[minmax(0,1fr)_280px] gap-10 items-end pb-12">
+        <div>
+          <p class="tp-eyebrow mb-5">TREND REPORT · ARCHIVE</p>
+          <h1 class="tp-h1">趋势报告</h1>
+          <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
+            {daily.length} 份日报 · {weekly.length} 份周报。信号不是噪声的堆积,而是趋势形成过程的证据。
+          </p>
+        </div>
+        <HeroArt class="hidden lg:block h-[240px] w-[280px] ml-auto" text="EVERY SIGNAL LEAVES A TRACE" />
+      </header>
 
-    {latest && (
-      <a
-        data-reveal data-hover
-        href={routes.daily(dailyDate(daily[0]!.id))}
-        class="block p-5 rounded-xl border border-brand-200 dark:border-brand-800 bg-gradient-to-br from-brand-50 to-transparent dark:from-brand-900/20 hover:border-brand-400 transition-colors"
-      >
-        <div class="text-xs uppercase tracking-wider text-brand-600 dark:text-brand-300 mb-1">最新日报 · {latest.date}</div>
-        <p class="text-sm leading-relaxed line-clamp-3">{latest.summary_brief}</p>
-      </a>
-    )}
-
-    <TrendsOverview />
-
-    {weekly.length > 0 && (
-      <section class="space-y-3">
-        <h2 class="text-xl font-bold">📅 周报</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-          {weekly.map((entry) => {
-            const w = entry.data;
-            const id = weeklyId(entry.id);
-            return (
-              <a
-                data-reveal data-hover
-                href={routes.weekly(id)}
-                class="block p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-mono text-sm font-semibold">{id}</span>
-                  {w.high_impact_signals != null && (
-                    <span class="text-xs text-[var(--tp-muted)]">★ {w.high_impact_signals}</span>
-                  )}
-                </div>
-                {w.summary_brief && <p class="text-xs text-[var(--tp-muted)] mt-1 line-clamp-2">{w.summary_brief}</p>}
+      <!-- 周报:置顶 -->
+      {weekly.length > 0 && (
+        <section class="border-t border-hairline py-10">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="tp-section">周报 <span class="tp-num text-[22px] text-ink-3 ml-1">{weekly.length}</span></h2>
+          </div>
+          <div>
+            {weekly.slice(0, 6).map((e, i) => (
+              <a href={routes.weekly(weeklyId(e.id))} class="tp-row border-b border-hairline grid md:grid-cols-[70px_150px_minmax(0,1fr)_110px] gap-4 items-baseline">
+                <span class="tp-num text-[26px] text-ink-3">{String(weekly.length - i).padStart(2, '0')}</span>
+                <span class="tp-mono text-accent">{e.data.week_id}</span>
+                <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief}</p>
+                <span class="tp-mono text-ink-3 text-right">{e.data.daily_reports_count ?? 0} 日报</span>
               </a>
-            );
-          })}
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- 日报归档 -->
+      <section class="border-t border-hairline py-10">
+        <div class="flex items-baseline justify-between mb-6">
+          <h2 class="tp-section">日报 <span class="tp-num text-[22px] text-ink-3 ml-1">{daily.length}</span></h2>
+          <span class="tp-meta">按日期倒序</span>
+        </div>
+        <div>
+          {daily.map((e, i) => (
+            <a href={routes.daily(dailyDate(e.id))} class="tp-row border-b border-hairline grid md:grid-cols-[70px_130px_minmax(0,1fr)_90px] gap-4 items-baseline">
+              <span class="tp-num text-[26px] text-ink-3">{String(daily.length - i).padStart(2, '0')}</span>
+              <span class="tp-mono text-ink">{e.data.date}</span>
+              <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief || `${e.data.stats.total_signals ?? 0} 个信号`}</p>
+              <span class="tp-mono text-ink-3 text-right">{e.data.stats.total_signals ?? 0} 信号</span>
+            </a>
+          ))}
         </div>
       </section>
-    )}
+    </div>
 
-    <section class="space-y-3">
-      <h2 class="text-xl font-bold">📋 日报归档</h2>
-      <div class="rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] overflow-hidden">
-        {daily.map((entry, i) => {
-          const d = entry.data;
-          const date = dailyDate(entry.id);
-          return (
-            <a
-              data-reveal
-              href={routes.daily(date)}
-              class:list={[
-                'flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--tp-surface-2)] transition-colors',
-                i > 0 && 'border-t border-[var(--tp-border)]',
-              ]}
-            >
-              <span class="font-mono text-sm w-28 flex-shrink-0">{date}</span>
-              {d.summary_brief ? (
-                <span class="text-xs text-[var(--tp-muted)] truncate flex-1">{d.summary_brief}</span>
-              ) : (
-                <span class="text-xs text-[var(--tp-border)] italic flex-1">无摘要</span>
-              )}
-            </a>
-          );
-        })}
-      </div>
-    </section>
+    <!-- Rail -->
+    <aside class="tp-rail">
+      <h2 class="tp-item mb-6">索引</h2>
+      <a href={daily[0] ? routes.daily(dailyDate(daily[0].id)) : '#'} class="tp-row border-b border-hairline flex justify-between">
+        <span class="tp-meta text-ink">最新日报</span>
+        <span class="tp-mono text-accent">→</span>
+      </a>
+      {weekly[0] && (
+        <a href={routes.weekly(weeklyId(weekly[0].id))} class="tp-row border-b border-hairline flex justify-between">
+          <span class="tp-meta text-ink">最新周报</span>
+          <span class="tp-mono text-accent">→</span>
+        </a>
+      )}
+      <p class="tp-meta mt-6">所有结论都能沿着报告回溯到 PR / Release / Commit。</p>
+    </aside>
   </div>
 </BaseLayout>

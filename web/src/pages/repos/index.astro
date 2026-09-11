@@ -1,46 +1,164 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { loadRepos, groupReposByOwner } from '../../lib/repos';
+import StatRow from '../../components/ui/StatRow.astro';
+import HeroArt from '../../components/ui/HeroArt.astro';
+import { repoUrl } from '../../lib/format';
 
 const repos = loadRepos();
 const groups = groupReposByOwner(repos);
+
+// 最新日报提供:活跃仓库 / 近期变化(高影响信号)
+const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
+const latest = daily[0]?.data;
+const activeTop = latest?.activity?.top_repos ?? [];
+const activeCount = latest?.activity?.active_repos_count ?? 0;
+
+const allSignals = latest
+  ? [...latest.engineering_signals, ...latest.research_signals, ...latest.commit_signals, ...latest.release_signals]
+  : [];
+const recentChanges = [...allSignals]
+  .sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0))
+  .slice(0, 4)
+  .map((s) => ({
+    title: s.title,
+    repo: s.related_repos[0] ?? '',
+    owner: (s.related_repos[0] ?? '').split('/')[0],
+    href: s.sources[0],
+  }));
+
+// 本周变化 rail:取最近 7 期日报统计
+const last7 = daily.slice(0, 7);
+const weekNewSignals = last7.reduce((s, e) => s + (e.data.stats.total_signals ?? 0), 0);
+const weekHigh = last7.reduce((s, e) => s + (e.data.stats.high_impact_signals ?? 0), 0);
+const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).size;
 ---
 
 <BaseLayout title="监控仓库" description={`TrendPulse 监控 ${repos.length} 个 GitHub 仓库`}>
-  <div class="space-y-8">
-    <div data-reveal>
-      <h1 class="text-3xl font-bold tracking-tight">监控仓库</h1>
-      <p class="mt-1 text-[var(--tp-muted)]">
-        共监控 <span class="font-semibold text-[var(--tp-fg)]">{repos.length}</span> 个仓库 ·
-        覆盖 <span class="font-semibold text-[var(--tp-fg)]">{groups.length}</span> 个组织
-      </p>
+  <div class="tp-shell tp-grid pt-12 pb-8">
+    <div class="min-w-0">
+      <!-- Hero -->
+      <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
+        <div>
+          <p class="tp-eyebrow mb-5">MONITOR · REPOSITORIES</p>
+          <h1 class="tp-h1">监控仓库</h1>
+          <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
+            {repos.length} 个仓库 · {groups.length} 个组织。只看真正改变关注优先级的仓库动态,持续监控,仅在变化足够重要时提升优先级。
+          </p>
+          <div class="mt-8">
+            <StatRow
+              stats={[
+                { value: repos.length, label: '监控仓库' },
+                { value: groups.length, label: '组织' },
+                { value: activeCount, label: '今日活跃' },
+                { value: latest?.stats.total_signals ?? 0, label: '今日信号' },
+              ]}
+            />
+          </div>
+        </div>
+        <HeroArt class="hidden lg:block h-[260px] w-[300px] ml-auto" text="WATCH ONLY WHAT MATTERS" />
+      </header>
+
+      {repos.length === 0 ? (
+        <!-- 首次使用态 -->
+        <section class="border-t border-hairline py-16">
+          <div class="border border-dashed border-hairline py-16 px-8 text-center">
+            <p class="tp-item text-ink-2">还没有监控任何仓库</p>
+            <p class="tp-meta mt-2">在仓库根目录的 repos.json 中添加仓库,下一次运行后这里会亮起来。</p>
+            <a href="https://github.com/gqy20/TrendPluse" target="_blank" rel="noopener" class="tp-link inline-block mt-5">查看使用说明 →</a>
+          </div>
+        </section>
+      ) : (
+        <>
+          <!-- 组织视图 -->
+          <section class="border-t border-hairline py-12">
+            <div class="flex items-baseline justify-between mb-8">
+              <h2 class="tp-section">组织视图</h2>
+              <span class="tp-meta">按监控数量排序</span>
+            </div>
+            {groups.map(([owner, items]) => (
+              <div class="mb-10 last:mb-0">
+                <div class="flex items-baseline gap-4 mb-5">
+                  <a href={`https://github.com/${owner}`} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors text-[15px]">{owner}</a>
+                  <span class="tp-mono text-ink-3">{items.length} 个仓库</span>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+                  {items.map((r) => {
+                    const act = activeTop.find((a) => a.repo === r.full);
+                    return (
+                      <a href={r.url} target="_blank" rel="noopener" class="tp-row border-t border-hairline">
+                        <div class="flex items-baseline justify-between gap-3">
+                          <span class="tp-mono text-ink hover:text-accent transition-colors">{r.repo}</span>
+                          {act?.commits != null && <span class="tp-num text-[18px] text-ink-3">{act.commits}</span>}
+                        </div>
+                        {r.description && <p class="tp-meta mt-1 line-clamp-1">{r.description}</p>}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <!-- 近期变化 -->
+          {recentChanges.length > 0 && (
+            <section class="border-t border-hairline py-12">
+              <div class="flex items-baseline justify-between mb-8">
+                <h2 class="tp-section">近期变化</h2>
+                <span class="tp-meta">只看真正改变关注优先级的仓库动态。</span>
+              </div>
+              <div>
+                {recentChanges.map((c, i) => (
+                  <div class="tp-row border-b border-hairline grid md:grid-cols-[64px_260px_minmax(0,1fr)_150px_90px] gap-4 items-baseline">
+                    <span class="tp-num text-[26px] text-ink-3">0{i + 1}</span>
+                    <a href={c.repo ? repoUrl(c.repo) : '#'} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors truncate">{c.repo || '—'}</a>
+                    <p class="tp-meta text-ink line-clamp-1">{c.title}</p>
+                    <span class="tp-mono text-ink-3 truncate">{c.owner}</span>
+                    {c.href
+                      ? <a href={c.href} target="_blank" rel="noopener" class="tp-mono text-accent text-right">来源 ↗</a>
+                      : <span class="tp-mono text-ink-3 text-right">—</span>}
+                  </div>
+                ))}
+              </div>
+              <p class="tp-meta mt-6">更新节奏:持续监控 · 仅在变化足够重要时提升优先级</p>
+            </section>
+          )}
+        </>
+      )}
     </div>
 
-    {groups.map(([owner, items]) => (
-      <section class="space-y-3">
-        <h2 class="text-lg font-bold flex items-center gap-2">
-          <span class="font-mono">{owner}</span>
-          <span class="text-xs font-normal text-[var(--tp-muted)] bg-[var(--tp-surface-2)] px-2 py-0.5 rounded-full">
-            {items.length}
-          </span>
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-          {items.map((r) => (
-            <a
-              data-reveal data-hover
-              href={r.url}
-              target="_blank"
-              rel="noopener"
-              class="block p-3 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors"
-            >
-              <div class="font-mono text-sm font-semibold text-brand-600 dark:text-brand-400">{r.repo}</div>
-              {r.description && (
-                <p class="mt-1 text-xs text-[var(--tp-muted)] line-clamp-2">{r.description}</p>
-              )}
-            </a>
-          ))}
+    <!-- Rail:本周变化 -->
+    <aside class="tp-rail">
+      <h2 class="tp-item mb-6">本周变化</h2>
+      <dl class="space-y-4">
+        <div class="flex items-baseline justify-between gap-3">
+          <dt class="tp-mono text-ink-2">信号</dt>
+          <dd class="tp-num text-[26px]">{weekNewSignals}</dd>
         </div>
-      </section>
-    ))}
+        <div class="flex items-baseline justify-between gap-3">
+          <dt class="tp-mono text-ink-2">高影响</dt>
+          <dd class="tp-num text-[26px] tp-impact-high">{weekHigh}</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-3">
+          <dt class="tp-mono text-ink-2">活跃仓库</dt>
+          <dd class="tp-num text-[26px]">{activeCount}</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-3">
+          <dt class="tp-mono text-ink-2">周覆盖仓库</dt>
+          <dd class="tp-num text-[26px]">{weekRepos}</dd>
+        </div>
+      </dl>
+      <div class="border-t border-hairline mt-8 pt-8">
+        <h2 class="tp-mono text-ink mb-4">数据覆盖</h2>
+        <div class="space-y-2">
+          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Pull Requests</p>
+          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Commits</p>
+          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Releases</p>
+          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Issues</p>
+          <p class="tp-mono text-ink-3 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-hairline" />Trending 对比</p>
+        </div>
+      </div>
+    </aside>
   </div>
 </BaseLayout>

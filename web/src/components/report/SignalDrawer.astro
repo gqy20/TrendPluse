@@ -1,0 +1,167 @@
+---
+/**
+ * 信号详情抽屉 + 证据链(设计稿 07 · Signal Detail / 22 · Evidence Graph)。
+ * 数据来源:页面内嵌 <script type="application/json" id="tp-signals-data">,
+ * 触发:任意 [data-signal-detail="<id>"] 元素。
+ * 证据链四层:判断 → 原始信号 → 原始变化(PR/Release/Commit/Issue)→ 仓库。
+ * 渐进增强:无 JS 时 sources 链接仍然可用。
+ */
+---
+
+<div id="tp-drawer-bg" class="fixed inset-0 z-[90] bg-ink/25 hidden"></div>
+<aside
+  id="tp-drawer"
+  class="fixed right-0 top-0 bottom-0 z-[95] w-[92vw] max-w-[520px] bg-paper border-l border-ink shadow-[-24px_0_80px_-32px_rgba(26,26,24,0.4)] translate-x-full tp-fade overflow-y-auto hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="信号详情"
+>
+  <div id="tp-drawer-content"></div>
+</aside>
+
+<script>
+  interface Sig {
+    id: string;
+    title: string;
+    type: string;
+    category: string;
+    impact_score?: number | null;
+    why_it_matters: string;
+    sources: string[];
+    related_repos: string[];
+    source_signal_ids: string[];
+  }
+
+  const TYPE_LABEL: Record<string, string> = {
+    capability: '新能力',
+    abstraction: '抽象层',
+    workflow: '工作流',
+    eval: '评估',
+    safety: '安全',
+    performance: '性能',
+    commit: '提交',
+    release: '发布',
+  };
+
+  /** 从 URL 推断原始变化类型(设计稿:PR 蓝 / ISSUE 橙 / RELEASE 红 / COMMIT 灰) */
+  function sourceKind(url: string): { label: string; color: string } {
+    if (/\/pull\//.test(url)) return { label: 'PR', color: 'text-accent' };
+    if (/\/issues?\//.test(url)) return { label: 'ISSUE', color: 'text-[#b08a3e]' };
+    if (/\/releases?\//.test(url)) return { label: 'RELEASE', color: 'text-impact' };
+    if (/\/commit/.test(url)) return { label: 'COMMIT', color: 'text-ink-2' };
+    return { label: 'SOURCE', color: 'text-ink-3' };
+  }
+
+  const bg = document.getElementById('tp-drawer-bg')!;
+  const drawer = document.getElementById('tp-drawer')!;
+  const content = document.getElementById('tp-drawer-content')!;
+
+  function signalsMap(): Record<string, Sig> {
+    const el = document.getElementById('tp-signals-data');
+    if (!el) return {};
+    try {
+      return Object.fromEntries((JSON.parse(el.textContent || '[]') as Sig[]).map((s) => [s.id, s]));
+    } catch {
+      return {};
+    }
+  }
+
+  function esc(s: string): string {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function render(s: Sig, map: Record<string, Sig>) {
+    const sources = s.sources.map((u) => {
+      const k = sourceKind(u);
+      const short = u.replace('https://github.com/', '');
+      return `<a href="${u}" target="_blank" rel="noopener" class="tp-row border-b border-hairline flex items-baseline justify-between gap-4">
+        <span class="tp-mono ${k.color}">${k.label}</span>
+        <span class="tp-mono text-ink-2 line-clamp-1 text-right">${esc(short)}</span>
+      </a>`;
+    });
+
+    const children = s.source_signal_ids
+      .map((id) => map[id])
+      .filter(Boolean)
+      .map(
+        (c) => `<button data-signal-detail="${esc(c.id)}" class="tp-row border-b border-hairline w-full text-left">
+          <span class="tp-meta text-ink line-clamp-2">${esc(c.title)}</span>
+        </button>`
+      );
+
+    const repos = s.related_repos
+      .map(
+        (r) => `<a href="https://github.com/${r}" target="_blank" rel="noopener" class="tp-mono border border-hairline px-2.5 py-1 text-ink-2 hover:text-accent hover:border-accent transition-colors">${esc(r)}</a>`
+      )
+      .join('');
+
+    const evidence = children.length
+      ? `<p class="tp-meta text-ink-3 mt-6 mb-1">此判断聚合了 ${children.length} 条原始信号:</p>${children.join('')}`
+      : '';
+
+    content.innerHTML = `
+      <header class="sticky top-0 bg-paper border-b border-hairline px-7 py-5 flex items-start justify-between gap-4">
+        <span class="tp-tag">${TYPE_LABEL[s.type] ?? '信号'} · ${s.category === 'research' ? '研究' : '工程'}</span>
+        <button id="tp-drawer-close" aria-label="关闭" class="tp-mono text-ink-3 hover:text-ink transition-colors">esc ✕</button>
+      </header>
+      <div class="px-7 py-6">
+        <!-- 第一层:判断 -->
+        <h2 class="tp-h2 text-[28px]">${esc(s.title)}</h2>
+        <div class="flex gap-5 mt-3">
+          <span class="tp-mono ${(s.impact_score ?? 0) >= 4 ? 'tp-impact-high' : 'text-ink-2'}">影响 ${s.impact_score ?? '—'}/5</span>
+          <span class="tp-mono text-ink-3">置信度 —</span>
+        </div>
+        <p class="tp-body text-ink-2 mt-5">${esc(s.why_it_matters)}</p>
+
+        <!-- 第二层:原始信号 -->
+        ${evidence}
+
+        <!-- 第三层:原始变化 -->
+        <h3 class="tp-mono text-ink mt-8 mb-2">原始变化 · ${sources.length}</h3>
+        ${sources.join('') || '<p class="tp-meta text-ink-3">无来源链接。</p>'}
+
+        <!-- 第四层:仓库 -->
+        ${repos ? `<h3 class="tp-mono text-ink mt-8 mb-3">涉及仓库</h3><div class="flex flex-wrap gap-2">${repos}</div>` : ''}
+      </div>`;
+
+    document.getElementById('tp-drawer-close')?.addEventListener('click', close);
+    bindTriggers(map);
+  }
+
+  function open(id: string) {
+    const map = signalsMap();
+    const s = map[id];
+    if (!s) return;
+    render(s, map);
+    bg.classList.remove('hidden');
+    drawer.classList.remove('hidden', 'translate-x-full');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    bg.classList.add('hidden');
+    drawer.classList.add('hidden', 'translate-x-full');
+    document.body.style.overflow = '';
+  }
+
+  function bindTriggers(map: Record<string, Sig>) {
+    document.querySelectorAll<HTMLElement>('[data-signal-detail]').forEach((el) => {
+      if ((el as any)._tpBound) return;
+      (el as any)._tpBound = true;
+      el.addEventListener('click', (ev) => {
+        // 内部真实链接(如 sources)不拦截
+        if ((ev.target as HTMLElement).closest('a')) return;
+        ev.preventDefault();
+        open(el.dataset.signalDetail!);
+      });
+    });
+  }
+
+  bindTriggers(signalsMap());
+  bg.addEventListener('click', close);
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && !drawer.classList.contains('hidden')) close();
+  });
+</script>

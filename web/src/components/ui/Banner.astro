@@ -1,0 +1,21 @@
+---
+/**
+ * 状态横幅:部分数据延迟(warning)/ 报告更新(info)。
+ * 降级而非阻断——不隐藏已获取的数据(设计稿 UX States 原则)。
+ */
+interface Props {
+  tone?: 'warning' | 'info';
+  dot?: 'warning' | 'danger' | 'accent';
+  title?: string;
+}
+const { tone = 'info', dot = 'accent', title } = Astro.props;
+const dotColor =
+  dot === 'warning' ? 'bg-status-warning' : dot === 'danger' ? 'bg-status-danger' : 'bg-accent';
+---
+<div class="tp-banner" data-tone={tone} role="status">
+  <span class:list={['inline-block w-2 h-2 rounded-full shrink-0 translate-y-[-1px]', dotColor]} />
+  <p class="tp-meta text-ink">
+    {title && <span class="font-medium">{title}</span>}
+    <span class={title && 'ml-2'}><slot /></span>
+  </p>
+</div>

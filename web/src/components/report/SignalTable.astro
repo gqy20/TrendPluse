@@ -1,0 +1,113 @@
+---
+/**
+ * 全部信号表:编辑式表格,编号 + 标题 + 分类 + 来源 + 时间 + 影响 + 置信度。
+ * 置信度列当前后端无每信号数据,统一显示 "—"(设计稿 UX States:渐进披露)。
+ */
+import type { Signal } from '../../content.config';
+import { signalLabel, repoUrl } from '../../lib/format';
+
+interface Props {
+  signals: Signal[];
+  /** 行号起点(全局连续编号) */
+  start?: number;
+  /** 时间列展示值(日报=报告日期;周报=周区间) */
+  time?: string;
+  /** 展示截断行数,其余隐藏(默认 12,0 = 不限) */
+  limit?: number;
+  showMoreHref?: string;
+  /** 行可点击:打开信号详情抽屉(需要页面内嵌 tp-signals-data) */
+  clickable?: boolean;
+}
+const { signals, start = 1, time, limit = 12, showMoreHref, clickable = false } = Astro.props;
+
+const rows = limit > 0 ? signals.slice(0, limit) : signals;
+const hidden = signals.length - rows.length;
+const CATEGORY_LABEL: Record<string, string> = {
+  engineering: '工程',
+  research: '研究',
+};
+
+/** 来源 URL → 短格式:owner/repo#PR / owner/repo v版本 / owner/repo@sha */
+function shortSource(url: string): string {
+  const m = url.match(/github\.com\/([^/]+\/[^/]+)(?:\/(pull|releases\/tag|commit|issues)\/([^/]+))?/);
+  if (!m) return url.replace(/^https?:\/\//, '').slice(0, 28);
+  const [, repo, kind, id] = m;
+  if (kind === 'pull' || kind === 'issues') return `${repo}#${id}`;
+  if (kind === 'releases/tag') return `${repo} ${id}`;
+  if (kind === 'commit') return `${repo}@${id.slice(0, 7)}`;
+  return repo;
+}
+---
+
+<table class="tp-table">
+  <thead>
+    <tr>
+      <th class="w-[54px]">#</th>
+      <th>标题</th>
+      <th class="w-[110px] hidden md:table-cell">分类</th>
+      <th class="w-[190px] hidden lg:table-cell">来源</th>
+      <th class="w-[110px] hidden md:table-cell">时间</th>
+      <th class="w-[90px]">影响</th>
+      <th class="w-[80px] hidden lg:table-cell">置信度</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((s, i) => (
+        <tr class:list={[clickable && 'cursor-pointer']} data-signal-detail={clickable ? s.id : undefined}>
+          <td class="tp-num text-[20px] text-ink-3">{String(start + i).padStart(2, '0')}</td>
+          <td>
+            <div class="tp-item text-[16px] leading-snug">{s.title}</div>
+            {s.related_repos.length > 0 && (
+              <a
+                href={repoUrl(s.related_repos[0])}
+                target="_blank"
+                rel="noopener"
+                class="tp-mono text-ink-3 hover:text-accent transition-colors"
+              >
+                {s.related_repos[0]}
+              </a>
+            )}
+          </td>
+          <td class="hidden md:table-cell">
+            <span class="tp-mono text-ink-2">
+              {signalLabel(s.type)}
+              {s.category && CATEGORY_LABEL[s.category] ? ` · ${CATEGORY_LABEL[s.category]}` : ''}
+            </span>
+          </td>
+          <td class="hidden lg:table-cell">
+            {s.sources[0] && (
+              <a href={s.sources[0]} target="_blank" rel="noopener" class="tp-mono text-ink-2 hover:text-accent transition-colors whitespace-nowrap">
+                {shortSource(s.sources[0])}
+              </a>
+            )}
+          </td>
+          <td class="tp-mono text-ink-2 hidden md:table-cell">{time ?? '—'}</td>
+          <td>
+            <span class:list={['tp-mono', (s.impact_score ?? 0) >= 4 ? 'tp-impact-high' : 'text-ink-2']}>
+              {(s.impact_score ?? 0) >= 4 ? '● ' : ''}
+              {s.impact_score ?? '—'}/5
+            </span>
+          </td>
+          <td class="tp-mono text-ink-3 hidden lg:table-cell">—</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+{
+  hidden > 0 && (
+    <p class="tp-meta mt-4">
+      已展示前 {rows.length} 条,共 {signals.length} 条
+      {showMoreHref && (
+        <>
+          ·{' '}
+          <a href={showMoreHref} class="tp-link">
+            查看当日完整报告 →
+          </a>
+        </>
+      )}
+    </p>
+  )
+}

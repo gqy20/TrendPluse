@@ -1,8 +1,9 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ReportHeader from '../../components/report/ReportHeader.astro';
-import DiscoveredProjectCard from '../../components/report/DiscoveredProjectCard.astro';
+import StatRow from '../../components/ui/StatRow.astro';
+import { routes } from '../../lib/path';
+import { repoUrl, formatNumber } from '../../lib/format';
 
 export async function getStaticPaths() {
   const discovery = await getCollection('discovery');
@@ -17,28 +18,87 @@ interface Props {
 }
 const { entry } = Astro.props;
 const r = entry.data;
-const candidates = [...r.candidates].sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0));
-
-const meta: { label: string; value: string | number }[] = [];
-if (r.total_discovered != null) meta.push({ label: '发现', value: r.total_discovered });
-if (r.passed_quality != null) meta.push({ label: '通过质量', value: r.passed_quality });
-if (r.high_priority != null) meta.push({ label: '高优先', value: r.high_priority });
-meta.push({ label: '候选', value: r.candidates.length });
+// 推荐优先 → 质量分 → 7 日增长
+const candidates = [...r.candidates].sort(
+  (a, b) =>
+    Number(b.recommended) - Number(a.recommended) ||
+    (b.quality_score || 0) - (a.quality_score || 0) ||
+    (b.stars_growth_7d ?? 0) - (a.stars_growth_7d ?? 0)
+);
 ---
 
 <BaseLayout title={`项目发现 · ${r.date}`} description={`TrendPulse 项目发现 · ${r.candidates.length} 个候选`}>
-  <article class="space-y-8">
-    <ReportHeader title={`项目发现 · ${r.date}`} subtitle="DISCOVERY" meta={meta} />
-
-    {candidates.length > 0 ? (
-      <section class="space-y-3">
-        <h2 data-reveal class="text-xl font-bold">候选项目 · {candidates.length}</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {candidates.map((p) => <DiscoveredProjectCard project={p} />)}
+  <article class="tp-shell tp-grid pt-12 pb-8">
+    <div class="min-w-0">
+      <header class="pb-10">
+        <p class="tp-eyebrow mb-4">
+          <a href={routes.discovery()} class="hover:text-ink transition-colors">DISCOVERY</a> · {r.date.replaceAll('-', '.')}
+        </p>
+        <h1 class="tp-h2">本期发现 {r.passed_quality ?? candidates.length} 个候选项目</h1>
+        <p class="tp-body text-ink-2 mt-5 max-w-[620px]">
+          从 GitHub Trending 采集 {r.total_discovered ?? '—'} 个项目,去除重复 {r.duplicates_removed ?? 0} 个、已在监控 {r.already_monitored ?? 0} 个,通过质量过滤后剩余 {r.passed_quality ?? candidates.length} 个。
+        </p>
+        <div class="mt-8">
+          <StatRow
+            stats={[
+              { value: r.total_discovered ?? 0, label: '采集' },
+              { value: r.passed_quality ?? candidates.length, label: '通过质量' },
+              { value: r.high_priority ?? 0, label: '高优先' },
+              { value: r.duplicates_removed ?? 0, label: '去重' },
+            ]}
+          />
         </div>
-      </section>
-    ) : (
-      <p class="text-sm text-[var(--tp-muted)] italic py-8">本期无候选项目。</p>
-    )}
+      </header>
+
+      {candidates.length > 0 ? (
+        <section class="border-t border-hairline py-10">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="tp-section">候选项目 <span class="tp-num text-[22px] text-ink-3 ml-1">{candidates.length}</span></h2>
+            <span class="tp-meta">按推荐度排序</span>
+          </div>
+          <div>
+            {candidates.slice(0, 30).map((p, i) => (
+              <div class="tp-row border-b border-hairline grid md:grid-cols-[64px_minmax(0,1fr)_200px] gap-5 items-start">
+                <span class="tp-num text-[26px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-baseline gap-x-3">
+                    <a href={repoUrl(p.repo)} target="_blank" rel="noopener" class="tp-item hover:text-accent transition-colors">{p.name || p.repo}</a>
+                    {p.recommended && <span class="tp-tag">推荐</span>}
+                    {(p.recommendation_priority || '').toLowerCase().includes('high') && <span class="tp-mono tp-impact-high">高优先</span>}
+                  </div>
+                  <p class="tp-meta mt-1.5 line-clamp-2">{p.highlight?.one_liner || p.highlight?.summary || p.description}</p>
+                </div>
+                <div class="flex md:justify-end gap-5 tp-mono text-ink-2">
+                  <span>★ {formatNumber(p.stars ?? 0)}</span>
+                  {p.stars_growth_7d != null && p.stars_growth_7d > 0 && <span class="text-accent">+{formatNumber(p.stars_growth_7d)}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+          {candidates.length > 30 && (
+            <p class="tp-meta mt-4">已展示前 30 条,共 {candidates.length} 条。</p>
+          )}
+        </section>
+      ) : (
+        <section class="border-t border-hairline py-16">
+          <div class="border border-dashed border-hairline py-16 px-8 text-center">
+            <p class="tp-item text-ink-2">本期没有通过质量过滤的项目</p>
+            <p class="tp-meta mt-2">Trending 里今天没有值得留下的。这本身也是一个信号。</p>
+            <a href={routes.discovery()} class="tp-link inline-block mt-5">返回全部期数 →</a>
+          </div>
+        </section>
+      )}
+    </div>
+
+    <aside class="tp-rail">
+      <h2 class="tp-item mb-6">本期信息</h2>
+      <dl class="space-y-2.5">
+        <div class="flex justify-between gap-3"><dt class="tp-meta">日期</dt><dd class="tp-mono text-ink">{r.date}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="tp-meta">采集</dt><dd class="tp-mono text-ink">{r.total_discovered ?? '—'}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="tp-meta">去重</dt><dd class="tp-mono text-ink">{r.duplicates_removed ?? 0}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="tp-meta">已在监控</dt><dd class="tp-mono text-ink">{r.already_monitored ?? 0}</dd></div>
+      </dl>
+      <a href={routes.discovery()} class="tp-link mt-8 block">全部发现期数 →</a>
+    </aside>
   </article>
 </BaseLayout>

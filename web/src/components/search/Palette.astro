@@ -1,0 +1,181 @@
+---
+/**
+ * ⌘K 搜索命令面板:全站浮层(设计稿 05 · Search Command Palette / 17 · Mobile Search)。
+ * 纯原生 TS 岛屿:构建期静态站,索引按需 fetch,无框架依赖。
+ * 渐进增强:JS 失效时,Header 的搜索入口仍是 /search 链接。
+ */
+const base = import.meta.env.BASE_URL;
+---
+
+<div
+  id="tp-palette"
+  class="fixed inset-0 z-[100] hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="搜索"
+>
+  <!-- 遮罩 -->
+  <div id="tp-palette-bg" class="absolute inset-0 bg-ink/30"></div>
+  <!-- 面板 -->
+  <div class="absolute left-1/2 top-[12vh] -translate-x-1/2 w-[92vw] max-w-[560px] bg-paper border border-ink shadow-[0_24px_80px_-24px_rgba(26,26,24,0.45)] tp-fade">
+    <div class="flex items-center gap-3 border-b border-hairline px-5 py-4">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="text-ink-3 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></svg>
+      <input
+        id="tp-palette-input"
+        type="text"
+        placeholder="搜索信号、仓库、项目…"
+        autocomplete="off"
+        class="flex-1 bg-transparent outline-none text-[16px] placeholder:text-ink-3"
+      />
+      <kbd class="tp-mono text-ink-3 border border-hairline px-1.5 py-0.5">esc</kbd>
+    </div>
+    <div id="tp-palette-results" class="max-h-[52vh] overflow-y-auto"></div>
+    <div class="border-t border-hairline px-5 py-2.5 flex items-center justify-between tp-mono text-ink-3">
+      <span>↑↓ 切换 · enter 打开</span>
+      <span>信号 / 仓库 / 项目</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface Entry {
+    t: string;
+    r: string;
+    d: string;
+    h: string;
+    i: number;
+  }
+  type Index = { signals: Entry[]; repos: Entry[]; projects: Entry[] };
+
+  const BASE_URL = import.meta.env.BASE_URL;
+  const root = document.getElementById('tp-palette')!;
+  const bg = document.getElementById('tp-palette-bg')!;
+  const input = document.getElementById('tp-palette-input') as HTMLInputElement;
+  const resultsEl = document.getElementById('tp-palette-results')!;
+
+  let index: Index | null = null;
+  let active = 0;
+  let flat: { entry: Entry; group: string }[] = [];
+
+  const loadIndex = async () => {
+    if (index) return index;
+    const res = await fetch(`${BASE_URL}data/search-index.json`);
+    index = (await res.json()) as Index;
+    return index;
+  };
+
+  const open = async () => {
+    root.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    input.value = '';
+    active = 0;
+    resultsEl.innerHTML =
+      '<p class="tp-meta px-5 py-6">输入关键词,试试仓库名、组织名或信号关键词。</p>';
+    input.focus();
+    void loadIndex();
+  };
+
+  const close = () => {
+    root.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
+
+  const groupTitle: Record<string, string> = {
+    signals: '信号',
+    repos: '仓库',
+    projects: '项目',
+  };
+
+  const render = () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q || !index) {
+      if (!q)
+        resultsEl.innerHTML =
+          '<p class="tp-meta px-5 py-6">输入关键词,试试仓库名、组织名或信号关键词。</p>';
+      return;
+    }
+    const match = (e: Entry) => e.t.toLowerCase().includes(q) || e.r.toLowerCase().includes(q);
+    const groups: [string, Entry[]][] = [
+      ['signals', index.signals.filter(match).slice(0, 5)],
+      ['repos', index.repos.filter(match).slice(0, 3)],
+      ['projects', index.projects.filter(match).slice(0, 3)],
+    ];
+    flat = [];
+    let html = '';
+    for (const [key, list] of groups) {
+      if (list.length === 0) continue;
+      html += `<p class="tp-mono text-ink-3 px-5 pt-4 pb-1">${groupTitle[key]}</p>`;
+      for (const e of list) {
+        const idx = flat.length;
+        flat.push({ entry: e, group: key });
+        html += `
+          <a href="${e.h}" data-idx="${idx}" class="tp-palette-item flex items-baseline justify-between gap-4 px-5 py-3 border-t border-hairline ${idx === active ? 'bg-accent/8' : ''}">
+            <span class="tp-meta text-ink line-clamp-1">${e.t}</span>
+            <span class="tp-mono text-ink-3 shrink-0">${e.d || e.r}</span>
+          </a>`;
+      }
+    }
+    if (!flat.length) {
+      resultsEl.innerHTML = `<div class="px-5 py-8">
+        <p class="tp-item text-ink-2">没有找到「${input.value.trim()}」</p>
+        <p class="tp-meta mt-2">可以尝试仓库名、组织名或更短的关键词。</p>
+        <p class="tp-meta mt-4"><a href="${BASE_URL}search/?q=${encodeURIComponent(input.value.trim())}" class="tp-link">查看全部搜索结果 →</a></p>
+      </div>`;
+      return;
+    }
+    resultsEl.innerHTML = html;
+    resultsEl
+      .querySelectorAll<HTMLElement>('.tp-palette-item')
+      .forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          active = Number(el.dataset.idx);
+          highlight();
+        });
+      });
+  };
+
+  const highlight = () => {
+    resultsEl
+      .querySelectorAll<HTMLElement>('.tp-palette-item')
+      .forEach((el) => el.classList.toggle('bg-accent/8', Number(el.dataset.idx) === active));
+    resultsEl
+      .querySelector<HTMLElement>(`.tp-palette-item[data-idx="${active}"]`)
+      ?.scrollIntoView({ block: 'nearest' });
+  };
+
+  let debounce = 0;
+  input.addEventListener('input', () => {
+    window.clearTimeout(debounce);
+    debounce = window.setTimeout(render, 120);
+  });
+
+  input.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+      if (!flat.length) return;
+      active = ev.key === 'ArrowDown' ? (active + 1) % flat.length : (active - 1 + flat.length) % flat.length;
+      highlight();
+    } else if (ev.key === 'Enter') {
+      flat[active]?.entry.h && (window.location.href = flat[active].entry.h);
+    }
+  });
+
+  document.addEventListener('keydown', (ev) => {
+    if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 'k') {
+      ev.preventDefault();
+      root.classList.contains('hidden') ? void open() : close();
+    } else if (ev.key === 'Escape' && !root.classList.contains('hidden')) {
+      close();
+    }
+  });
+
+  bg.addEventListener('click', close);
+
+  // Header 搜索按钮:有 JS 时打开面板,无 JS 时保持 /search 链接
+  document.querySelectorAll('[data-search-trigger]').forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      void open();
+    });
+  });
+</script>

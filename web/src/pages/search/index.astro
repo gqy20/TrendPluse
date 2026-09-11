@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { routes } from '../../lib/path';
+---
+
+<BaseLayout title="搜索" description="搜索 TrendPulse 的信号、仓库与项目">
+  <div class="tp-shell max-w-[860px] pt-12 pb-8">
+    <header class="pb-8">
+      <p class="tp-eyebrow mb-4">SEARCH</p>
+      <h1 class="tp-h1">搜索</h1>
+      <p class="tp-body text-ink-2 mt-5">覆盖最近 90 天的全部信号、监控仓库与最新一期发现项目。</p>
+      <div class="flex items-center gap-3 border-b-2 border-ink mt-8 pb-3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="text-ink-3" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></svg>
+        <input
+          id="search-page-input"
+          type="text"
+          placeholder="试试 claude-code、MCP、安全…"
+          autocomplete="off"
+          class="flex-1 bg-transparent outline-none text-[18px] font-serif placeholder:text-ink-3"
+        />
+      </div>
+    </header>
+
+    <div id="search-page-results" class="pt-4">
+      <p class="tp-meta px-1 py-6">输入关键词开始。也可以随时按 <kbd class="tp-mono border border-hairline px-1.5 py-0.5">⌘K</kbd> 唤起全局搜索。</p>
+    </div>
+  </div>
+
+  <script>
+    interface Entry {
+      t: string;
+      r: string;
+      d: string;
+      h: string;
+      i: number;
+    }
+    type Index = { updated: string; signals: Entry[]; repos: Entry[]; projects: Entry[] };
+
+    const BASE_URL = import.meta.env.BASE_URL;
+    const input = document.getElementById('search-page-input') as HTMLInputElement;
+    const resultsEl = document.getElementById('search-page-results')!;
+
+    let index: Index | null = null;
+
+    const emptyHtml = (q: string) => `
+      <div class="border border-dashed border-hairline py-14 px-8 text-center">
+        <p class="tp-item text-ink-2">没有找到「${q}」</p>
+        <p class="tp-meta mt-2">可以尝试仓库名、组织名或更短的关键词。</p>
+        <button id="search-clear" class="tp-link mt-5">清空搜索 →</button>
+      </div>`;
+
+    const render = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q || !index) return;
+      const match = (e: Entry) => e.t.toLowerCase().includes(q) || e.r.toLowerCase().includes(q);
+
+      const sections: [label: string, list: Entry[]][] = [
+        ['信号', index.signals.filter(match).slice(0, 20)],
+        ['仓库', index.repos.filter(match).slice(0, 6)],
+        ['项目', index.projects.filter(match).slice(0, 6)],
+      ];
+
+      const total = sections.reduce((s, [, l]) => s + l.length, 0);
+      if (total === 0) {
+        resultsEl.innerHTML = emptyHtml(input.value.trim());
+        document.getElementById('search-clear')?.addEventListener('click', () => {
+          input.value = '';
+          input.focus();
+          resultsEl.innerHTML =
+            '<p class="tp-meta px-1 py-6">输入关键词开始。也可以随时按 <kbd class="tp-mono border border-hairline px-1.5 py-0.5">⌘K</kbd> 唤起全局搜索。</p>';
+        });
+        return;
+      }
+
+      let html = `<p class="tp-meta mb-4">共 ${total} 条结果(信号最多展示 20 条)</p>`;
+      for (const [label, list] of sections) {
+        if (!list.length) continue;
+        html += `<h2 class="tp-mono text-ink-2 mt-8 mb-2">${label} · ${list.length}</h2>`;
+        for (const e of list) {
+          html += `
+            <a href="${e.h}" class="tp-row border-b border-hairline flex items-baseline justify-between gap-4">
+              <span class="tp-item text-[16px] line-clamp-1">${e.t}</span>
+              <span class="tp-mono text-ink-3 shrink-0">${e.d || e.r}</span>
+            </a>`;
+        }
+      }
+      resultsEl.innerHTML = html;
+    };
+
+    input.addEventListener('input', () => {
+      window.clearTimeout((input as any)._t);
+      (input as any)._t = window.setTimeout(render, 150);
+    });
+
+    const init = async () => {
+      const res = await fetch(`${BASE_URL}data/search-index.json`);
+      index = (await res.json()) as Index;
+      const q = new URLSearchParams(window.location.search).get('q');
+      if (q) {
+        input.value = q;
+        render();
+      }
+    };
+    void init();
+  </script>
+</BaseLayout>

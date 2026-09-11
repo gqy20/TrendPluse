@@ -1,19 +1,16 @@
 ---
 import { routes } from '../../lib/path';
-const year = new Date().getFullYear();
 ---
-<footer class="border-t border-[var(--tp-border)] mt-16">
-  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--tp-muted)]">
-    <div class="flex items-center gap-2">
-      <span class="inline-flex items-center justify-center w-5 h-5 rounded bg-gradient-to-br from-brand-500 to-brand-700 text-white text-[10px]">⚡</span>
-      <span>© {year} TrendPulse · GitHub 趋势情报屏</span>
-    </div>
-    <p class="hidden md:block text-xs opacity-60">给 AI 编程生态做一块干净的情报屏</p>
-    <nav class="flex items-center gap-4">
-      <a href={routes.home()} class="hover:text-[var(--tp-fg)] transition-colors">首页</a>
-      <a href={routes.reports()} class="hover:text-[var(--tp-fg)] transition-colors">报告</a>
-      <a href={routes.discovery()} class="hover:text-[var(--tp-fg)] transition-colors">发现</a>
-      <a href="https://github.com/gqy20/TrendPluse" target="_blank" rel="noopener" class="hover:text-[var(--tp-fg)] transition-colors">GitHub</a>
+<footer class="mt-24">
+  <div class="tp-shell border-t border-hairline py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+    <span class="font-serif font-bold">TrendPulse<span class="text-accent">.</span></span>
+    <p class="tp-eyebrow">A quieter way to see what's next.</p>
+    <nav class="flex items-center gap-6 tp-meta">
+      <a href={routes.home()} class="hover:text-ink transition-colors">首页</a>
+      <a href={routes.reports()} class="hover:text-ink transition-colors">趋势报告</a>
+      <a href={routes.discovery()} class="hover:text-ink transition-colors">项目发现</a>
+      <a href={routes.repos()} class="hover:text-ink transition-colors">监控仓库</a>
+      <a href="https://github.com/gqy20/TrendPluse" target="_blank" rel="noopener" class="hover:text-ink transition-colors">GitHub</a>
     </nav>
   </div>
 </footer>

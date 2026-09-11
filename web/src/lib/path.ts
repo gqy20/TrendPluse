@@ -21,4 +21,5 @@ export const routes = {
   discovery: () => abs('/discovery/'),
   discoveryReport: (date: string) => abs(`/discovery/${date}/`),
   repos: () => abs('/repos/'),
+  search: () => abs('/search/'),
 };
