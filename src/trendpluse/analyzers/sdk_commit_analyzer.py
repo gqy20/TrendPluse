@@ -1,8 +1,8 @@
 """SDK Commit 分析器。
 
 使用 Claude Agent SDK 的工具调用能力分析 commit 数据。
-- commit 信息写入临时文件
-- SDK 通过 Read/Grep 自主读取分析
+- commit 信息写入临时文件（每批独立文件）
+- SDK 通过 Read/Grep 读取分析，PreToolUse hook 限制只能访问本批文件
 - 返回结构化信号列表
 """
 
@@ -138,19 +138,23 @@ class SDKCommitAnalyzer:
         return [commits[i : i + size] for i in range(0, len(commits), size)]
 
     def _write_commits_file(
-        self, work_dir: Path | str, commits: list[dict[str, Any]]
+        self,
+        work_dir: Path | str,
+        commits: list[dict[str, Any]],
+        suffix: str = "",
     ) -> str:
         """生成 markdown 格式的 commits 文件。
 
         Args:
             work_dir: 工作目录
             commits: commit 数据列表
+            suffix: 文件名后缀（分批时为 -batch-N，确保每批独立文件）
 
         Returns:
             生成的文件路径
         """
         work_path = Path(work_dir)
-        file_path = work_path / "commits.md"
+        file_path = work_path / f"commits{suffix}.md"
 
         lines = [
             "# GitHub Commits Analysis",
@@ -251,6 +255,9 @@ class SDKCommitAnalyzer:
     ) -> list[Signal]:
         """异步分析 commit 材料列表。
 
+        每批写入独立的 commits 文件，SDK 只能看到本批数据
+        （PreToolUse hook 白名单），避免跨批 SHA 混淆与 token 浪费。
+
         Args:
             materials: AnalysisMaterial 列表
 
@@ -267,15 +274,20 @@ class SDKCommitAnalyzer:
         work_dir = tempfile.mkdtemp(prefix="commit_analyzer_")
 
         try:
-            # 写入 commits 文件
-            commits_file = self._write_commits_file(work_dir, commits)
-
-            # 分批处理
+            # 分批处理：每批写独立文件
             batches = self._split_batches(commits)
             all_signals: list[Signal] = []
 
-            for batch in batches:
-                batch_signals = await self._analyze_batch(batch, commits_file)
+            for batch_index, batch in enumerate(batches, 1):
+                batch_file = self._write_commits_file(
+                    work_dir, batch, suffix=f"-batch-{batch_index}"
+                )
+                batch_signals = await self._analyze_batch(
+                    batch,
+                    batch_file,
+                    batch_index=batch_index,
+                    total_batches=len(batches),
+                )
                 all_signals.extend(batch_signals)
 
             return all_signals
@@ -285,33 +297,76 @@ class SDKCommitAnalyzer:
             shutil.rmtree(work_dir, ignore_errors=True)
 
     async def _analyze_batch(
-        self, batch: list[dict[str, Any]], commits_file: str
+        self,
+        batch: list[dict[str, Any]],
+        commits_file: str,
+        *,
+        batch_index: int = 1,
+        total_batches: int = 1,
     ) -> list[Signal]:
         """分析单个批次。
 
         Args:
             batch: 当前批次的 commits
-            commits_file: commits 文件路径
+            commits_file: 本批 commits 文件路径（agent 只能访问它）
+            batch_index: 批次序号（1 起，用于日志）
+            total_batches: 总批数
 
         Returns:
             当前批次的 signals
         """
         prompt = self._build_prompt(commits_file, len(batch))
 
+        # 本批白名单：agent 只能读本批文件
+        original_whitelist = self.query_engine.file_whitelist
+        self.query_engine.file_whitelist = {str(Path(commits_file).resolve())}
         try:
             result: QueryResult[
                 CommitSignalsResult
             ] = await self.query_engine.query_async(prompt)
-
-            if result.metrics is not None:
-                self._run_metrics.append(result.metrics)
-
-            # 验证和匹配
-            return self._validate_and_match(result.output, batch)
-
         except Exception as e:
-            logger.warning(f"批次分析失败: {type(e).__name__}: {e}")
+            logger.warning(
+                "Commit 批次分析失败 (batch %d/%d, commits=%d): %s: %s",
+                batch_index,
+                total_batches,
+                len(batch),
+                type(e).__name__,
+                str(e)[:200],
+            )
             return []
+        finally:
+            self.query_engine.file_whitelist = original_whitelist
+
+        if result.metrics is not None:
+            self._run_metrics.append(result.metrics)
+
+        raw_signals = result.output.signals
+        batch_shas = {c.get("sha") for c in batch}
+        matched = [s for s in raw_signals if s.commit_sha in batch_shas]
+        hallucinated = len(raw_signals) - len(matched)
+
+        # 批次可见性：产出与 SHA 匹配率一目了然（修复"成功但零产出"盲区）
+        logger.info(
+            "Commit batch %d/%d done (commits=%d, raw_signals=%d, "
+            "matched=%d, sha_mismatch=%d, turns=%s, tokens=%s)",
+            batch_index,
+            total_batches,
+            len(batch),
+            len(raw_signals),
+            len(matched),
+            hallucinated,
+            result.metrics.num_turns if result.metrics else "-",
+            result.metrics.usage.total_tokens if result.metrics else "-",
+        )
+        if hallucinated:
+            logger.warning(
+                "Commit batch %d/%d: %d 个信号的 SHA 不在本批内（LLM 幻觉，已过滤）",
+                batch_index,
+                total_batches,
+                hallucinated,
+            )
+
+        return self._validate_and_match(result.output, batch)
 
     def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
         """同步封装。"""

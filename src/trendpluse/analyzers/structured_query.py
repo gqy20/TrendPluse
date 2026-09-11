@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Callable
+from collections.abc import AsyncIterator, Callable, Sequence
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, TypeVar
 
 from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
 from pydantic import BaseModel, ValidationError
 
+from trendpluse.logger import get_logger
 from trendpluse.models.agent_usage import AgentRunMetrics
+
+logger = get_logger(__name__)
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -40,7 +44,13 @@ RETRYABLE_EXCEPTIONS = _get_retryable_exceptions()
 
 
 class StructuredQuery[T: BaseModel]:
-    """结构化输出封装，支持 SDK 调用重试。"""
+    """结构化输出封装，支持 SDK 调用重试与文件白名单。
+
+    Args:
+        file_whitelist: 允许 agent 读取的文件绝对路径列表。提供时通过
+            PreToolUse hook 拦截越界 Read/Grep/Glob（deny 并告知原因），
+            未提供时不注入 hook，保持原有行为。
+    """
 
     def __init__(
         self,
@@ -53,6 +63,7 @@ class StructuredQuery[T: BaseModel]:
         stderr_callback: Callable[[str], None] | None = None,
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
+        file_whitelist: Sequence[str] | None = None,
     ) -> None:
         self.output_model = output_model
         self.model = model
@@ -62,6 +73,10 @@ class StructuredQuery[T: BaseModel]:
         self.stderr_callback = stderr_callback
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
+        # 每次调用可覆盖（_execute_query 优先用参数传入的白名单）
+        self.file_whitelist: set[str] | None = (
+            {str(p) for p in file_whitelist} if file_whitelist is not None else None
+        )
 
     async def query_async(self, prompt: str) -> QueryResult[T]:
         """单次查询，支持验证错误重试。"""
@@ -83,23 +98,106 @@ class StructuredQuery[T: BaseModel]:
         assert last_exc is not None
         raise last_exc
 
+    def _build_whitelist_hook(
+        self, allowed_paths: set[str], denials: list[str]
+    ) -> Callable:
+        """构建 PreToolUse 白名单 hook。
+
+        注意: hook 内部必须防御性编程——SDK 的 hook 异常是 fail-open
+        （放行），任何崩溃都等于白名单失效。
+
+        Args:
+            allowed_paths: 允许访问的绝对路径集合。
+            denials: 记录被拒目标的列表（用于日志）。
+        """
+
+        async def _hook(hook_input, tool_use_id, context):  # noqa: ARG001
+            try:
+                tool_name = hook_input["tool_name"]
+                tool_input = hook_input.get("tool_input") or {}
+                if tool_name in ("Read", "Grep", "Glob"):
+                    target = tool_input.get("file_path") or tool_input.get("path") or ""
+                    try:
+                        resolved = str(Path(target).resolve())
+                    except (OSError, ValueError):
+                        resolved = target
+                    if resolved not in allowed_paths:
+                        denials.append(f"{tool_name}: {target}")
+                        return {
+                            "hookSpecificOutput": {
+                                "hookEventName": "PreToolUse",
+                                "permissionDecision": "deny",
+                                "permissionDecisionReason": (
+                                    f"权限拒绝：{target} 不在本次分析的文件白名单内，"
+                                    "请只分析指定的数据文件"
+                                ),
+                            }
+                        }
+            except Exception as exc:  # pragma: no cover - 防御性
+                logger.error("白名单 hook 内部异常（fail-open 放行）: %s", exc)
+            return {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "allow",
+                }
+            }
+
+        return _hook
+
     async def _execute_query(self, prompt: str) -> QueryResult[T]:
         """执行单次查询。"""
-        options = ClaudeAgentOptions(
-            model=self.model,
-            allowed_tools=self.allowed_tools,
-            output_format=self._build_output_format(),
-            max_turns=self.max_turns,
-            max_budget_usd=self.max_budget_usd,
-            mcp_servers={},
-            strict_mcp_config=True,
-            stderr=self.stderr_callback,
-        )
+        from claude_agent_sdk.types import HookMatcher
+
+        whitelist = self.file_whitelist
+        denials: list[str] = []
+
+        common_kwargs: dict[str, Any] = {
+            "model": self.model,
+            "output_format": self._build_output_format(),
+            "max_turns": self.max_turns,
+            "max_budget_usd": self.max_budget_usd,
+            "mcp_servers": {},
+            "strict_mcp_config": True,
+            "stderr": self.stderr_callback,
+        }
+
+        if whitelist:
+            # 白名单模式: hook 强制要求 streaming prompt（AsyncIterable 消息流）
+            hook = self._build_whitelist_hook(whitelist, denials)
+            options = ClaudeAgentOptions(
+                allowed_tools=self.allowed_tools,
+                hooks={
+                    "PreToolUse": [HookMatcher(matcher="Read|Grep|Glob", hooks=[hook])]
+                },
+                **common_kwargs,
+            )
+
+            async def prompt_stream() -> AsyncIterator[dict[str, Any]]:
+                yield {
+                    "type": "user",
+                    "message": {"role": "user", "content": prompt},
+                    "parent_tool_use_id": None,
+                }
+
+            query_prompt: str | AsyncIterator[dict[str, Any]] = prompt_stream()
+        else:
+            options = ClaudeAgentOptions(
+                allowed_tools=self.allowed_tools,
+                **common_kwargs,
+            )
+            query_prompt = prompt
 
         result_message: ResultMessage | None = None
-        async for message in query(prompt=prompt, options=options):
+        async for message in query(prompt=query_prompt, options=options):
             if isinstance(message, ResultMessage):
                 result_message = message
+
+        if denials:
+            logger.warning(
+                "文件白名单拦截越界访问 %d 次: %s",
+                len(denials),
+                "; ".join(denials[:5]),
+            )
 
         if result_message is None:
             raise RuntimeError("未收到 ResultMessage")
