@@ -9,6 +9,10 @@ from unittest.mock import Mock, patch
 from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData, Signal
 
+# 日报落盘目录，由 conftest 的 isolate_module_output_dir fixture 重定向到
+# tmp_path，避免测试产物写进仓库内的 reports/daily/。
+_OUTPUT_DIR = "reports/daily"
+
 
 class MockSignalDeduplicator:
     """Mock SignalDeduplicator for testing"""
@@ -33,7 +37,7 @@ def _build_mock_settings(**overrides):
     settings.enable_parallel_collection = False
     settings.max_parallel_workers = 4
     settings.include_prereleases = False
-    settings.output_dir = "reports/daily"
+    settings.output_dir = _OUTPUT_DIR
     settings.feishu_webhook_url = ""
     settings.feishu_at_mobiles_list = []
     for key, value in overrides.items():

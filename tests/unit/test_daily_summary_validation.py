@@ -34,6 +34,7 @@ def test_validate_smoke_daily_summary_rejects_missing_key_fields():
                 "top_new_trends": ["新趋势"],
                 "top_continuing_trends": [],
                 "summary_confidence": 0.8,
+                "stats": {"total_signals": 5},
             }
         )
 
@@ -53,5 +54,34 @@ def test_validate_smoke_daily_summary_rejects_empty_trend_lists():
                 "top_new_trends": [],
                 "top_continuing_trends": [],
                 "summary_confidence": 0.5,
+                "stats": {"total_signals": 5},
+            }
+        )
+
+
+def test_validate_smoke_daily_summary_skips_trend_fields_when_zero_signals():
+    """零信号场景（smoke 低活动仓库）只校验 summary_brief 已回填。"""
+    validate_smoke_daily_summary(
+        {
+            "summary_brief": "今日无信号，agent 已跑通。",
+            "trend_status": None,
+            "trend_delta": "",
+            "historical_basis_dates": [],
+            "historical_comparison": "",
+            "top_new_trends": [],
+            "top_continuing_trends": [],
+            "summary_confidence": None,
+            "stats": {"total_signals": 0},
+        }
+    )
+
+
+def test_validate_smoke_daily_summary_rejects_empty_brief_when_zero_signals():
+    """零信号场景下 summary_brief 仍不能为空。"""
+    with pytest.raises(ValueError, match="summary_brief 不能为空"):
+        validate_smoke_daily_summary(
+            {
+                "summary_brief": "",
+                "stats": {"total_signals": 0},
             }
         )

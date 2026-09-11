@@ -528,3 +528,132 @@ def _build_claude_agent_sdk_stub() -> ModuleType:
 
 
 _maybe_stub("claude_agent_sdk", _build_claude_agent_sdk_stub)
+
+
+# ============ 配置隔离：让测试不受本机 .env 与 shell 环境变量影响 ============
+
+# `Settings` 通过 pydantic-settings 读取 `.env`（仓库根目录），且
+# `load_alternative_api_key` / `monitored_repo_configs` 会直接读 os.environ。
+# 开发者本机的 `.env`（含真实密钥）与 shell 里残留的 ANTHROPIC_* 变量
+# 会静默污染配置类断言，因此这里统一在每个测试前隔离。
+_EXTRA_ENV_NAMES = frozenset(
+    {
+        # config.py 中的备选 API Key 读取路径
+        "ANTHROPIC_AUTH_KEY",
+        "ANTHROPIC_AUTH_TOKEN",
+        # github_token 的别名链
+        "PAT_TOKEN",
+        "GITHUB_PAT",
+    }
+)
+
+
+def _collect_settings_env_names() -> frozenset[str]:
+    """收集 Settings 所有字段对应的环境变量名（含 validation_alias）。"""
+    from pydantic import AliasChoices, AliasPath
+
+    from trendpluse.config import Settings
+
+    names: set[str] = set(_EXTRA_ENV_NAMES)
+    for field_name, field_info in Settings.model_fields.items():
+        names.add(field_name.upper())
+        alias = field_info.validation_alias
+        if isinstance(alias, str):
+            names.add(alias)
+        elif isinstance(alias, AliasChoices):
+            for choice in alias.choices:
+                if isinstance(choice, str):
+                    names.add(choice)
+                elif isinstance(choice, AliasPath):  # pragma: no cover
+                    continue
+    return frozenset(names)
+
+
+@pytest.fixture(autouse=True)
+def isolate_settings_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    """禁用 .env 文件源并清理相关环境变量，保证配置测试可重复。
+
+    测试内部若需要特定取值，仍可用 `monkeypatch.setenv(...)` 显式设置，
+    本 fixture 会先于测试体执行，不会覆盖测试自身的设置。
+    """
+    from trendpluse.config import Settings
+
+    monkeypatch.setitem(Settings.model_config, "env_file", None)
+    for name in _collect_settings_env_names():
+        monkeypatch.delenv(name, raising=False)
+
+
+# ============ 输出目录隔离：把测试模块的 _OUTPUT_DIR 指向 tmp_path ============
+
+# 约定：测试模块若定义模块级 `_OUTPUT_DIR`，本 fixture 会在每个用例前把它
+# 重定向到 tmp_path，从而避免 mock settings 里写死的 "reports/daily"
+# 把测试产物落盘到仓库内（配合下方的会话级守卫使用）。
+
+
+@pytest.fixture(autouse=True)
+def isolate_module_output_dir(
+    request: pytest.FixtureRequest,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """把测试模块的 `_OUTPUT_DIR` 重定向到临时目录。"""
+    module = request.module
+    if module is not None and hasattr(module, "_OUTPUT_DIR"):
+        monkeypatch.setattr(
+            module,
+            "_OUTPUT_DIR",
+            str(tmp_path / "reports" / "daily"),
+        )
+
+
+# ============ 产物守卫：单测不得写入仓库内 reports/ 与 data/ ============
+
+# 历史问题：部分用例把 mock settings 的 output_dir 写成仓库真实路径
+# "reports/daily"，ReportPublisher._save_json 会覆盖已跟踪的
+# report-*.json（并洗掉末尾换行符），导致每次跑测试都产生脏 diff。
+# 这里加一道会话级守卫：只要有测试改动这两个目录，就在收尾时直接失败。
+_GUARDED_ARTIFACT_DIRS = ("reports", "data")
+
+
+def _snapshot_artifacts() -> dict[str, tuple[int, int]]:
+    """记录守卫目录下所有文件的大小与 mtime。"""
+    root = Path(__file__).resolve().parents[1]
+    snapshot: dict[str, tuple[int, int]] = {}
+    for relative_dir in _GUARDED_ARTIFACT_DIRS:
+        base = root / relative_dir
+        if not base.is_dir():
+            continue
+        for path in base.rglob("*"):
+            if not path.is_file():
+                continue
+            stat = path.stat()
+            snapshot[str(path.relative_to(root))] = (stat.st_size, stat.st_mtime_ns)
+    return snapshot
+
+
+@pytest.fixture(autouse=True, scope="session")
+def guard_repo_artifacts():
+    """会话级守卫：确保测试跑完后仓库产物目录未被改动。"""
+    before = _snapshot_artifacts()
+    yield
+    after = _snapshot_artifacts()
+
+    changed = sorted(
+        name for name in before.keys() & after.keys() if before[name] != after[name]
+    )
+    added = sorted(after.keys() - before.keys())
+    removed = sorted(before.keys() - after.keys())
+
+    problems: list[str] = []
+    if changed:
+        problems.append(f"被修改 {len(changed)} 个: {changed[:5]}")
+    if added:
+        problems.append(f"被新增 {len(added)} 个: {added[:5]}")
+    if removed:
+        problems.append(f"被删除 {len(removed)} 个: {removed[:5]}")
+
+    assert not problems, (
+        "单元测试污染了仓库产物目录（reports/ 或 data/）。"
+        "请把测试用的 output_dir / snapshot_dir / issue_dump_dir 指向 tmp_path，"
+        "不要写死仓库相对路径。\n  " + "\n  ".join(problems)
+    )

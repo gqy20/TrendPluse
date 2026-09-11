@@ -140,8 +140,12 @@ class TestCreateGithubRetryDecorator:
         assert dummy_func() == "success"
 
     def test_retries_on_github_exception(self):
-        """应该重试 GithubException"""
-        decorator = create_github_retry_decorator(max_attempts=2)
+        """应该重试可恢复的 GithubException（429 / 5xx）"""
+        decorator = create_github_retry_decorator(
+            max_attempts=2,
+            wait_min=0,
+            wait_max=1,
+        )
 
         call_count = 0
 
@@ -150,23 +154,52 @@ class TestCreateGithubRetryDecorator:
             nonlocal call_count
             call_count += 1
             if call_count < 2:
-                raise GithubException(403, {"message": "Rate limit"})
+                raise GithubException(429, {"message": "Rate limit"})
             return "success"
 
         result = failing_func()
         assert result == "success"
         assert call_count == 2
 
+    def test_does_not_retry_on_permanent_client_error(self):
+        """4xx 永久错误（除 429）不应重试"""
+        decorator = create_github_retry_decorator(
+            max_attempts=3,
+            wait_min=0,
+            wait_max=1,
+        )
+
+        call_count = 0
+
+        @decorator
+        def failing_func():
+            nonlocal call_count
+            call_count += 1
+            raise GithubException(404, {"message": "Not Found"})
+
+        with raises(GithubException):
+            failing_func()
+        assert call_count == 1
+
     def test_reraises_after_max_attempts(self):
         """超过最大重试次数后应该重新抛出异常"""
-        decorator = create_github_retry_decorator(max_attempts=2)
+        decorator = create_github_retry_decorator(
+            max_attempts=2,
+            wait_min=0,
+            wait_max=1,
+        )
+
+        call_count = 0
 
         @decorator
         def always_failing_func():
-            raise GithubException(403, {"message": "Always error"})
+            nonlocal call_count
+            call_count += 1
+            raise GithubException(500, {"message": "Always error"})
 
         with raises(GithubException):
             always_failing_func()
+        assert call_count == 2
 
     def test_custom_wait_parameters(self):
         """应该支持自定义等待参数"""
