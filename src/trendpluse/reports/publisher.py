@@ -70,10 +70,15 @@ class ReportPublisher:
             logger.warning(f"发送飞书通知失败: {exc}")
 
     def _save_json(self, report: DailyReport | WeeklyReport, output_path: Path) -> None:
-        """保存 JSON 数据。"""
+        """保存 JSON 数据。
+
+        末尾补一个换行符：入库的历史报告均带换行（pre-commit 的
+        end-of-file-fixer 也会强制补），落盘时不补会导致每次重写都产生
+        仅差一个换行符的脏 diff。
+        """
         json_path = output_path.with_suffix(".json")
         json_path.parent.mkdir(parents=True, exist_ok=True)
         json_path.write_text(
-            report.model_dump_json(indent=2, ensure_ascii=False),
+            report.model_dump_json(indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
         )

@@ -48,6 +48,48 @@ def test_save_daily_report_uses_configured_output_dir(tmp_path) -> None:
     assert "2026-03-06" in json_path.read_text(encoding="utf-8")
 
 
+def test_save_daily_report_json_ends_with_newline(tmp_path) -> None:
+    """JSON 落盘应带末尾换行，与入库文件及 end-of-file-fixer 保持一致。
+
+    回归背景：以前不写末尾换行，重写已跟踪的 report-*.json 时会产生
+    仅差一个换行符的脏 diff。
+    """
+    service = ReportPublisher(
+        reporter=DummyReporter(),
+        daily_output_dir=str(tmp_path / "daily"),
+        weekly_output_dir=str(tmp_path / "weekly"),
+    )
+    report = DailyReport(date="2026-03-06", summary_brief="test")
+
+    service.save_daily(report, datetime(2026, 3, 6))
+
+    raw = (tmp_path / "daily" / "report-2026-03-06.json").read_text(encoding="utf-8")
+    assert raw.endswith("}\n")
+    assert not raw.endswith("\n\n")
+
+
+def test_save_weekly_report_json_ends_with_newline(tmp_path) -> None:
+    """周报 JSON 同样应带末尾换行。"""
+    service = ReportPublisher(
+        reporter=DummyReporter(),
+        daily_output_dir=str(tmp_path / "daily"),
+        weekly_output_dir=str(tmp_path / "weekly"),
+    )
+    report = WeeklyReport(
+        week_id="2026-W10",
+        start_date="2026-03-02",
+        end_date="2026-03-08",
+        summary_brief="test",
+    )
+
+    service.save_weekly(report, datetime(2026, 3, 8))
+
+    weekly_files = list((tmp_path / "weekly").glob("weekly-*.json"))
+    assert len(weekly_files) == 1
+    raw = weekly_files[0].read_text(encoding="utf-8")
+    assert raw.endswith("}\n")
+
+
 def test_notify_daily_report_is_delegated() -> None:
     """测试日报通知委托给 notifier。"""
     notifier = DummyNotifier()
