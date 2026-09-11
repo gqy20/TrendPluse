@@ -26,6 +26,9 @@ def root_propagation():
 class TestLoggerArchitecture:
     def test_root_logger_has_single_handler_tree(self):
         """根 logger 挂 console + 轮转文件两个 handler。"""
+        # 显式初始化再断言:避免依赖此前测试执行顺序留下的全局 logger 状态
+        # (CI 全量套件下 root logger 可能被多次重配,断言"配置后"而非"遗留"状态)
+        setup_logger()
         root = get_logger(ROOT_LOGGER_NAME)
         assert len(root.handlers) == 2
         file_handlers = [
