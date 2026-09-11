@@ -6,6 +6,11 @@ from unittest.mock import Mock, patch
 from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData
 
+# 日报落盘目录。conftest 的 isolate_module_output_dir fixture 会在每个用例前
+# 把它重定向到 tmp_path，避免 ReportPublisher._save_json 把测试产物写进
+# 仓库内的 reports/daily/（历史上会反复洗掉 report-*.json 的末尾换行符）。
+_OUTPUT_DIR = "reports/daily"
+
 
 class MockSignalDeduplicator:
     """Mock SignalDeduplicator for testing"""
@@ -30,12 +35,13 @@ def _build_mock_settings(**overrides):
     settings.enable_parallel_collection = False
     settings.max_parallel_workers = 4
     settings.include_prereleases = False
-    settings.output_dir = "reports/daily"
+    settings.output_dir = _OUTPUT_DIR
     settings.feishu_webhook_url = ""
     settings.feishu_at_mobiles_list = []
     settings.llm_retry_max_attempts = 3
     settings.llm_retry_wait_min = 1
     settings.llm_retry_wait_max = 10
+    settings.commit_agent_max_budget_usd = 12.0
     for key, value in overrides.items():
         setattr(settings, key, value)
     return settings
@@ -157,7 +163,7 @@ class TestTrendPulsePipeline:
         mock_commit_analyzer.assert_called_once_with(
             model="glm-4.7",
             max_turns=30,
-            max_budget_usd=3.0,
+            max_budget_usd=12.0,
             batch_size=200,
         )
         mock_release_analyzer.assert_called_once_with(

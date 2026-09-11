@@ -133,7 +133,7 @@ def build_analyzer_components(
         commit_analyzer=commit_analyzer_factory(
             model=settings.anthropic_model,
             max_turns=30,
-            max_budget_usd=3.0,
+            max_budget_usd=getattr(settings, "commit_agent_max_budget_usd", 10.0),
             batch_size=200,
         ),
         release_analyzer=release_analyzer_factory(**llm_kwargs),

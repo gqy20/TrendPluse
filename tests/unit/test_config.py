@@ -225,6 +225,52 @@ class TestSettings:
         # Assert
         assert settings.daily_token_budget == 50_000_000
 
+    def test_commit_agent_max_budget_usd_default_value(self, monkeypatch):
+        """测试：commit_agent_max_budget_usd 默认值应该是 10.0。"""
+        # Arrange
+        self._clear_github_token_env(monkeypatch)
+        monkeypatch.delenv("COMMIT_AGENT_MAX_BUDGET_USD", raising=False)
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.commit_agent_max_budget_usd == 10.0
+
+    def test_commit_agent_max_budget_usd_from_env(self, monkeypatch):
+        """测试：COMMIT_AGENT_MAX_BUDGET_USD 应可覆盖默认预算。"""
+        # Arrange
+        self._clear_github_token_env(monkeypatch)
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+        monkeypatch.setenv("COMMIT_AGENT_MAX_BUDGET_USD", "25.5")
+
+        # Act
+        from trendpluse.config import Settings
+
+        settings = Settings()
+
+        # Assert
+        assert settings.commit_agent_max_budget_usd == 25.5
+
+    def test_commit_agent_max_budget_usd_rejects_out_of_range(self, monkeypatch):
+        """测试：预算超出 0.1-200 范围时应校验失败。"""
+        # Arrange
+        self._clear_github_token_env(monkeypatch)
+        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
+        monkeypatch.setenv("COMMIT_AGENT_MAX_BUDGET_USD", "500")
+
+        # Act / Assert
+        from trendpluse.config import Settings
+
+        with pytest.raises(ValidationError):
+            Settings()
+
     def test_issue_agent_review_confidence_threshold_default_value(self, monkeypatch):
         """测试：Issue Agent 审核阈值默认值应该是 0.6"""
         # Arrange

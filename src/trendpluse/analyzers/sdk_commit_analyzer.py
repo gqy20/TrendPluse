@@ -129,7 +129,8 @@ class SDKCommitAnalyzer:
         Args:
             model: 模型名称（可选，默认使用 SDK 配置）
             max_turns: 最大交互轮次（默认 30）
-            max_budget_usd: 最大预算（默认 $3.0）
+            max_budget_usd: 最大预算（默认 $10.0，可由
+                COMMIT_AGENT_MAX_BUDGET_USD 配置）
             batch_size: 每批处理的 commit 数量（默认 200）
         """
         self.model = model

@@ -228,6 +228,16 @@ class Settings(BaseSettings):
         le=100.0,
         description="Issue Agent 单文件最大预算（美元，默认10）",
     )
+    commit_agent_max_budget_usd: float = Field(
+        default=10.0,
+        ge=0.1,
+        le=200.0,
+        description=(
+            "Commit 分析 Agent 单批次最大预算（美元，默认10）。"
+            "经第三方网关调用时 SDK 会按 Claude 官方价目估算成本，"
+            "预算过低会导致整批 commit 信号丢失"
+        ),
+    )
     enable_daily_summary_agent: bool = Field(
         default=True,
         description="是否启用基于全量历史日报的日报总结 Agent",
