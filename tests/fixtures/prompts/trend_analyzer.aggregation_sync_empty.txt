@@ -1,0 +1,45 @@
+分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
+
+日期: 2026-01-01
+
+## 数据统计
+- PR 信号: 0 个
+- Commit 技术点: 0 个
+- Release 信号: 0 个
+
+## PR 信号
+无
+
+## Commit 技术点
+无
+
+## Release 信号
+无
+
+## 分析要求
+
+请识别**跨类型的模式和趋势**，例如：
+- 多个项目同时推出相似功能（可能同时出现在 PR 和 Commit 中）
+- 技术方向的集体演进（多个相关变更指向同一趋势）
+- 重要版本发布与相关 PR/Commit 的关联
+
+## 输出要求
+
+返回一份 DailyReport，只包含以下字段：
+1. date: 日期字符串
+2. summary_brief: 当日总览（2-3 句话）
+3. engineering_signals: 聚合后的高层次工程趋势列表
+4. research_signals: 聚合后的高层次研究趋势列表（仅当上游无 research 类信号时为空；上游存在 research 信号时必须聚合，不得丢弃）
+
+**以下字段由代码自动填充，无需返回**：
+- activity: 仓库活跃度数据（代码采集）
+- releases: Release 数据（代码采集）
+- breaking_changes: 不兼容变更（代码检测）
+- monitored_repos: 监控仓库列表（代码配置）
+
+重要：
+- **source_signal_ids 字段必须填写**，用于后续溯源
+- ID 格式为 "类型-索引"，例如 "pr-0", "commit-1", "release-2"
+- **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
+- 只返回真正有价值的跨类型趋势
+- 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary

@@ -1,0 +1,42 @@
+# SDK Commit 分析器提示词。
+# 变量: commits_file
+commit_analysis: |
+  你是一个技术趋势分析专家。请分析 GitHub commits 数据，提取有价值的技术趋势信号。
+
+  ## 任务
+  1. 首先读取 {$ commits_file $} 文件了解 commit 数据
+  2. 仔细分析每个 commit 的技术内容
+  3. 识别有价值的技术趋势信号
+
+  ## 趋势类型
+  - capability: 🚀 新功能/能力
+  - performance: ⚡ 性能优化
+  - safety: 🛡️ 安全性增强
+  - abstraction: 🎨 抽象/架构改进
+  - workflow: ⚙️ 工作流优化
+  - eval: 📊 评估/测试改进
+
+  ## 输出要求
+  返回 JSON 格式的 signals 数组，每个 signal 必须包含：
+  - commit_sha: 精确匹配输入数据中的 sha 值（必需）
+  - title: 5-10 字简短标题（中文）
+  - type: 上述趋势类型之一
+  - category: engineering 或 research（判定标准见下）
+  - impact_score: 1-5 的整数评分
+  - why_it_matters: 说明为什么重要（中文，1-2句话）
+  - related_repos: 相关仓库列表（可选）
+  - trends: 趋势关键词列表（可选）
+  - tech_details: 技术细节字典（可选）
+
+  ## category 判定标准
+  - engineering（默认）：功能交付、bug 修复、重构、适配接入、安全加固、UX 改进
+  - research（仅当明确符合以下之一）：新算法或新架构；论文（arXiv/DOI）的实现；新评测方法或基准；实验性范式探索
+  - 拿不准时选 engineering，防止过度分类
+
+  如果分析认为没有有价值的趋势，返回空数组。
+
+  ## 重要提示
+  - 必须完整阅读文件，不能遗漏任何 commit
+  - commit_sha 必须精确匹配输入数据中的 sha 字段值
+  - 所有文本内容必须使用中文
+  - 只返回真正有价值的趋势（避免琐碎修复）

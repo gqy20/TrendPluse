@@ -21,6 +21,7 @@ from trendpluse.analyzers.structured_query import QueryResult, StructuredQuery
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
 from trendpluse.models.source import AnalysisMaterial
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -63,47 +64,6 @@ class CommitSignalsResult(BaseModel):
 
     signals: list[CommitSignalItem] = Field(default_factory=list)
     analyzed_count: int = Field(default=0, description="分析的 commit 数量")
-
-
-# ============ Prompt 模板 ============
-
-
-COMMIT_ANALYSIS_PROMPT = """\
-你是一个技术趋势分析专家。请分析 GitHub commits 数据，提取有价值的技术趋势信号。
-
-## 任务
-1. 首先读取 {commits_file} 文件了解 commit 数据
-2. 仔细分析每个 commit 的技术内容
-3. 识别有价值的技术趋势信号
-
-## 趋势类型
-- capability: 🚀 新功能/能力
-- performance: ⚡ 性能优化
-- safety: 🛡️ 安全性增强
-- abstraction: 🎨 抽象/架构改进
-- workflow: ⚙️ 工作流优化
-- eval: 📊 评估/测试改进
-
-## 输出要求
-返回 JSON 格式的 signals 数组，每个 signal 必须包含：
-- commit_sha: 精确匹配输入数据中的 sha 值（必需）
-- title: 5-10 字简短标题（中文）
-- type: 上述趋势类型之一
-- category: engineering 或 research
-- impact_score: 1-5 的整数评分
-- why_it_matters: 说明为什么重要（中文，1-2句话）
-- related_repos: 相关仓库列表（可选）
-- trends: 趋势关键词列表（可选）
-- tech_details: 技术细节字典（可选）
-
-如果分析认为没有有价值的趋势，返回空数组。
-
-## 重要提示
-- 必须完整阅读文件，不能遗漏任何 commit
-- commit_sha 必须精确匹配输入数据中的 sha 字段值
-- 所有文本内容必须使用中文
-- 只返回真正有价值的趋势（避免琐碎修复）
-"""
 
 
 # ============ SDKCommitAnalyzer 实现 ============
@@ -223,8 +183,9 @@ class SDKCommitAnalyzer:
 
     def _build_prompt(self, commits_file: str, batch_size: int) -> str:
         """构建分析 prompt。"""
-        return COMMIT_ANALYSIS_PROMPT.format(
-            commits_file=commits_file, batch_size=batch_size
+        return render_prompt(
+            "sdk_commit_analyzer.commit_analysis",
+            commits_file=commits_file,
         )
 
     def _validate_and_match(

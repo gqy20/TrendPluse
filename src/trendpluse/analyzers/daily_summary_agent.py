@@ -18,6 +18,7 @@ from trendpluse.logger import get_logger
 from trendpluse.models.agent_usage import AgentRunMetrics
 from trendpluse.models.daily_summary import DailySummaryResult
 from trendpluse.models.signal import DailyReport
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -241,22 +242,11 @@ class DailySummaryAgent:
         raise RuntimeError("DailySummaryAgent 未返回任何结果")
 
     def _build_prompt(self, current_report_path: Path) -> str:
-        return (
-            "你是日报总结智能体。你的目标不是复述历史，而是判断今天的"
-            "趋势在全量历史中的位置。\n\n"
-            "请按以下顺序工作：\n"
-            f"1. 先读取历史日报索引：{self.history_index_path}\n"
-            f"2. 再读取今天的日报草稿：{current_report_path}\n"
-            f"3. 历史日报原文目录：{self.reports_dir}\n"
-            "4. 你可以自行决定需要回读哪些历史日报原文，不要只局限于最近几天\n\n"
-            "要求：\n"
-            "- 历史日报都可以作为参考范围\n"
-            "- 但最终 summary_brief 必须聚焦“今天发生了什么，以及相对历史意味着什么”\n"
-            "- 先读索引建立全局认识，再自主挑选需要深读的历史日报\n"
-            "- 不要把前一天的趋势原样当成今天的新趋势\n"
-            "- 如果今天是延续趋势，明确指出延续和新增推进点\n"
-            "- 所有输出必须使用中文\n\n"
-            "请返回 JSON，字段必须严格符合 schema。\n"
+        return render_prompt(
+            "daily_summary_agent.enhance",
+            history_index_path=self.history_index_path,
+            current_report_path=current_report_path,
+            reports_dir=self.reports_dir,
         )
 
     @staticmethod

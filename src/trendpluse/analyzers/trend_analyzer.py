@@ -12,6 +12,7 @@ from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODE
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import DailyReport, ReportStats, Signal
 from trendpluse.models.source import AnalysisMaterial
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -51,18 +52,58 @@ class TrendAnalyzer(BaseLLMAnalyzer):
 
     def _build_material_prompt(self, material: AnalysisMaterial) -> str:
         """基于分析材料构建提示词。"""
-        number = material.source_ref.external_id
-        return f"""分析以下 GitHub PR，提取趋势信号。
+        return render_prompt(
+            "trend_analyzer.pr_signal_extraction",
+            number=material.source_ref.external_id,
+            title=material.title,
+            body=material.body,
+            repo=material.source_ref.repo,
+            author=material.author,
+            url=material.source_ref.url,
+        )
 
-PR 编号: {number}
-PR 标题: {material.title}
-PR 描述: {material.body}
-仓库: {material.source_ref.repo}
-作者: {material.author}
-链接: {material.source_ref.url}
+    def _build_aggregation_prompt(
+        self,
+        *,
+        date: str,
+        pr_signals: list[Signal],
+        commit_signals: list[Signal],
+        release_signals: list[Signal],
+    ) -> str:
+        """构建跨类型聚合提示词（同步/异步共用）。"""
+        return render_prompt(
+            "trend_analyzer.aggregation",
+            date=date,
+            pr_count=len(pr_signals),
+            commit_count=len(commit_signals),
+            release_count=len(release_signals),
+            pr_text=(
+                self._format_signals_with_ids(pr_signals, "pr") if pr_signals else "无"
+            ),
+            commit_text=(
+                self._format_signals_with_ids(commit_signals, "commit")
+                if commit_signals
+                else "无"
+            ),
+            release_text=(
+                self._format_signals_with_ids(release_signals, "release")
+                if release_signals
+                else "无"
+            ),
+        )
 
-请提取关键信息并返回结构化信号。
-"""
+    def _build_generate_report_prompt(self, *, date: str, signals: list[Signal]) -> str:
+        """构建旧版单类型报告提示词（同步/异步共用）。"""
+        categorized = self.categorize_signals(signals)
+        return render_prompt(
+            "trend_analyzer.generate_report",
+            date=date,
+            engineering_count=len(categorized["engineering"]),
+            research_count=len(categorized["research"]),
+            high_impact_count=len(self.filter_high_impact(signals, threshold=4)),
+            engineering_text=self._format_signals(categorized["engineering"]),
+            research_text=self._format_signals(categorized["research"]),
+        )
 
     def _apply_material_defaults(
         self, signal: Signal, material: AnalysisMaterial
@@ -260,53 +301,13 @@ PR 描述: {material.body}
         for idx, signal in enumerate(release_signals):
             signal_map[f"release-{idx}"] = signal
 
-        # 步骤 2: 使用带 ID 的格式化函数，确保 LLM 能看到完整信息
-        prompt = f"""分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
-
-日期: {date}
-
-## 数据统计
-- PR 信号: {len(pr_signals)} 个
-- Commit 技术点: {len(commit_signals)} 个
-- Release 信号: {len(release_signals)} 个
-
-## PR 信号
-{self._format_signals_with_ids(pr_signals, "pr") if pr_signals else "无"}
-
-## Commit 技术点
-{self._format_signals_with_ids(commit_signals, "commit") if commit_signals else "无"}
-
-## Release 信号
-{self._format_signals_with_ids(release_signals, "release") if release_signals else "无"}
-
-## 分析要求
-
-请识别**跨类型的模式和趋势**，例如：
-- 多个项目同时推出相似功能（可能同时出现在 PR 和 Commit 中）
-- 技术方向的集体演进（多个相关变更指向同一趋势）
-- 重要版本发布与相关 PR/Commit 的关联
-
-## 输出要求
-
-返回一份 DailyReport，只包含以下字段：
-1. date: 日期字符串
-2. summary_brief: 当日总览（2-3 句话）
-3. engineering_signals: 聚合后的高层次工程趋势列表
-4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
-
-**以下字段由代码自动填充，无需返回**：
-- activity: 仓库活跃度数据（代码采集）
-- releases: Release 数据（代码采集）
-- breaking_changes: 不兼容变更（代码检测）
-- monitored_repos: 监控仓库列表（代码配置）
-
-重要：
-- **source_signal_ids 字段必须填写**，用于后续溯源
-- ID 格式为 "类型-索引"，例如 "pr-0", "commit-1", "release-2"
-- **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
-- 只返回真正有价值的跨类型趋势
-- 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
-"""
+        # 步骤 2: 使用统一模板构建 prompt（带 ID 的格式化在模板层完成）
+        prompt = self._build_aggregation_prompt(
+            date=date,
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+        )
 
         # 步骤 3: 调用 LLM 聚合信号
         def _call():
@@ -357,52 +358,12 @@ PR 描述: {material.body}
         for idx, signal in enumerate(release_signals):
             signal_map[f"release-{idx}"] = signal
 
-        prompt = f"""分析以下多种类型的 GitHub 活动，识别高层次的技术趋势。
-
-日期: {date}
-
-## 数据统计
-- PR 信号: {len(pr_signals)} 个
-- Commit 技术点: {len(commit_signals)} 个
-- Release 信号: {len(release_signals)} 个
-
-## PR 信号
-{self._format_signals_with_ids(pr_signals, "pr") if pr_signals else "无"}
-
-## Commit 技术点
-{self._format_signals_with_ids(commit_signals, "commit") if commit_signals else "无"}
-
-## Release 信号
-{self._format_signals_with_ids(release_signals, "release") if release_signals else "无"}
-
-## 分析要求
-
-请识别**跨类型的模式和趋势**，例如：
-- 多个项目同时推出相似功能（可能同时出现在 PR 和 Commit 中）
-- 技术方向的集体演进（多个相关变更指向同一趋势）
-- 重要版本发布与相关 PR/Commit 的关联
-
-## 输出要求
-
-返回一份 DailyReport，只包含以下字段：
-1. date: 日期字符串
-2. summary_brief: 当日总览（2-3 句话）
-3. engineering_signals: 聚合后的高层次工程趋势列表
-4. research_signals: 聚合后的高层次研究趋势列表（目前可为空列表）
-
-**以下字段由代码自动填充，无需返回**：
-- activity: 仓库活跃度数据（代码采集）
-- releases: Release 数据（代码采集）
-- breaking_changes: 不兼容变更（代码检测）
-- monitored_repos: 监控仓库列表（代码配置）
-
-重要：
-- **source_signal_ids 字段必须填写**，用于后续溯源
-- ID 格式为 "类型-索引"，例如 "pr-0", "commit-1", "release-2"
-- **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
-- 只返回真正有价值的跨类型趋势
-- 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
-"""
+        prompt = self._build_aggregation_prompt(
+            date=date,
+            pr_signals=pr_signals,
+            commit_signals=commit_signals,
+            release_signals=release_signals,
+        )
 
         async def _call():
             if self.async_instructor_client is None:
@@ -449,37 +410,11 @@ PR 描述: {material.body}
         Returns:
             每日报告
         """
-        # 分类信号
-        categorized = self.categorize_signals(signals)
-
         # 筛选高影响信号
         high_impact_count = len(self.filter_high_impact(signals, threshold=4))
 
         # 构建 Prompt
-        prompt = f"""基于以下信号生成每日趋势报告。
-
-日期: {date}
-工程信号数量: {len(categorized["engineering"])}
-研究信号数量: {len(categorized["research"])}
-高影响信号数量: {high_impact_count}
-
-工程信号:
-{self._format_signals(categorized["engineering"])}
-
-研究信号:
-{self._format_signals(categorized["research"])}
-
-## 输出要求
-
-返回 DailyReport，只包含：
-- date: 日期字符串
-- summary_brief: 当日总览（2-3 句话）
-- engineering_signals: 工程信号列表
-- research_signals: 研究信号列表（目前可为空）
-
-**无需返回以下字段**（由代码自动填充）：
-- activity, releases, breaking_changes, monitored_repos
-"""
+        prompt = self._build_generate_report_prompt(date=date, signals=signals)
 
         def _call():
             return self.client.chat.completions.create(
@@ -504,33 +439,9 @@ PR 描述: {material.body}
     async def generate_report_async(
         self, signals: list[Signal], date: str
     ) -> DailyReport:
-        categorized = self.categorize_signals(signals)
         high_impact_count = len(self.filter_high_impact(signals, threshold=4))
 
-        prompt = f"""基于以下信号生成每日趋势报告。
-
-日期: {date}
-工程信号数量: {len(categorized["engineering"])}
-研究信号数量: {len(categorized["research"])}
-高影响信号数量: {high_impact_count}
-
-工程信号:
-{self._format_signals(categorized["engineering"])}
-
-研究信号:
-{self._format_signals(categorized["research"])}
-
-## 输出要求
-
-返回 DailyReport，只包含：
-- date: 日期字符串
-- summary_brief: 当日总览（2-3 句话）
-- engineering_signals: 工程信号列表
-- research_signals: 研究信号列表（目前可为空）
-
-**无需返回以下字段**（由代码自动填充）：
-- activity, releases, breaking_changes, monitored_repos
-"""
+        prompt = self._build_generate_report_prompt(date=date, signals=signals)
 
         async def _call():
             if self.async_instructor_client is None:
@@ -680,7 +591,10 @@ PR 描述: {material.body}
             补充了 sources 的报告
         """
 
-        for signal in report.engineering_signals:
+        for signal in [
+            *report.engineering_signals,
+            *report.research_signals,
+        ]:
             # 检查是否有 source_signal_ids 字段
             signal_ids = getattr(signal, "source_signal_ids", None)
 

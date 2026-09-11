@@ -1,0 +1,16 @@
+分析以下 GitHub PR，提取趋势信号。
+
+PR 编号: 42
+PR 标题: 示例 PR 标题
+PR 描述: 示例 PR 描述内容
+仓库: owner/repo
+作者: alice
+链接: https://github.com/owner/repo/pull/42
+
+## category 判定标准
+
+- engineering（默认）：功能交付、bug 修复、重构、适配接入、安全加固、UX 改进
+- research（仅当明确符合以下之一）：新算法或新架构；论文（arXiv/DOI）的实现；新评测方法或基准；实验性范式探索
+- 拿不准时选 engineering，防止过度分类
+
+请提取关键信息并返回结构化信号。

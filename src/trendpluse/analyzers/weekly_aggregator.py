@@ -16,6 +16,7 @@ from pydantic import BaseModel, Field
 from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import CoreTrend
+from trendpluse.prompts import render_prompt
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 logger = get_logger(__name__)
@@ -152,6 +153,25 @@ class WeeklyAggregator:
                 backoff = wait_min * (2 ** (attempt - 1))
                 await asyncio.sleep(min(wait_max, backoff))
 
+    def _build_aggregate_prompt(self, signals: list) -> str:
+        """构建周报聚合提示词（同步/异步共用）。"""
+        from trendpluse.models.signal import Signal
+
+        signal_summaries = []
+        for sig in signals:
+            if isinstance(sig, Signal):
+                signal_summaries.append(
+                    f"- [{sig.id}] {sig.title}\n"
+                    f"  类型: {sig.type} | 影响: {sig.impact_score}/5\n"
+                    f"  说明: {sig.why_it_matters}\n"
+                    f"  仓库: {', '.join(sig.related_repos)}"
+                )
+        return render_prompt(
+            "weekly_aggregator.aggregate",
+            signal_count=len(signals),
+            signal_summaries_text="\n".join(signal_summaries),
+        )
+
     def aggregate(self, signals: list) -> WeeklyAggregationResult:
         """聚合信号列表
 
@@ -171,59 +191,7 @@ class WeeklyAggregator:
                 total_signals=0,
             )
 
-        from trendpluse.models.signal import Signal
-
-        # 构建提示词
-        signal_summaries = []
-        for sig in signals:
-            if isinstance(sig, Signal):
-                signal_summaries.append(
-                    f"- [{sig.id}] {sig.title}\n"
-                    f"  类型: {sig.type} | 影响: {sig.impact_score}/5\n"
-                    f"  说明: {sig.why_it_matters}\n"
-                    f"  仓库: {', '.join(sig.related_repos)}"
-                )
-
-        prompt = f"""你是一个技术趋势分析专家。请分析以下 {len(signals)} 个信号，
-识别出本周的核心技术趋势（3-5 个）。
-
-## 信号列表
-
-{chr(10).join(signal_summaries)}
-
-## 分析要求
-
-1. **趋势识别**：将语义相关的信号整合为一个趋势
-   - 例如：3 个关于"异步架构"的信号 → "异步架构普及"趋势
-   - 不同类型的信号可以归为同一趋势（如 capability + abstraction）
-
-2. **趋势命名**：为每个趋势生成简洁有力的标题
-
-3. **主题分类**：使用以下主题之一
-   - architecture: 架构模式
-   - tooling: 工具链/框架
-   - performance: 性能优化
-   - safety: 安全性
-   - research: 研究创新
-   - workflow: 工作流
-   - ecosystem: 生态发展
-
-4. **趋势描述**：说明为什么这是本周的核心趋势
-
-5. **周报摘要**：生成 1-2 句话的本周总览
-
-## 返回格式要求
-
-请直接返回 JSON 格式（不要使用 markdown 代码块）。
-
-返回示例（请严格遵循此格式）:
-{{"core_trends":[{{"title":"趋势标题","theme":"architecture","description":"趋势描述","signal_ids":["sig-1","sig-2"],"impact_level":5}}],"summary_brief":"本周总览"}}
-
-**重要**：
-- 必须是完整的 JSON 对象（以 {{ 开头，}} 结尾）
-- 不要使用 markdown 代码块（```json）
-- core_trends 和 summary_brief 都是必需字段
-"""
+        prompt = self._build_aggregate_prompt(signals)
 
         def _call():
             return self._client.messages.create(
@@ -273,58 +241,7 @@ class WeeklyAggregator:
                 total_signals=0,
             )
 
-        from trendpluse.models.signal import Signal
-
-        signal_summaries = []
-        for sig in signals:
-            if isinstance(sig, Signal):
-                signal_summaries.append(
-                    f"- [{sig.id}] {sig.title}\n"
-                    f"  类型: {sig.type} | 影响: {sig.impact_score}/5\n"
-                    f"  说明: {sig.why_it_matters}\n"
-                    f"  仓库: {', '.join(sig.related_repos)}"
-                )
-
-        prompt = f"""你是一个技术趋势分析专家。请分析以下 {len(signals)} 个信号，
-识别出本周的核心技术趋势（3-5 个）。
-
-## 信号列表
-
-{chr(10).join(signal_summaries)}
-
-## 分析要求
-
-1. **趋势识别**：将语义相关的信号整合为一个趋势
-   - 例如：3 个关于"异步架构"的信号 → "异步架构普及"趋势
-   - 不同类型的信号可以归为同一趋势（如 capability + abstraction）
-
-2. **趋势命名**：为每个趋势生成简洁有力的标题
-
-3. **主题分类**：使用以下主题之一
-   - architecture: 架构模式
-   - tooling: 工具链/框架
-   - performance: 性能优化
-   - safety: 安全性
-   - research: 研究创新
-   - workflow: 工作流
-   - ecosystem: 生态发展
-
-4. **趋势描述**：说明为什么这是本周的核心趋势
-
-5. **周报摘要**：生成 1-2 句话的本周总览
-
-## 返回格式要求
-
-请直接返回 JSON 格式（不要使用 markdown 代码块）。
-
-返回示例（请严格遵循此格式）:
-{{"core_trends":[{{"title":"趋势标题","theme":"architecture","description":"趋势描述","signal_ids":["sig-1","sig-2"],"impact_level":5}}],"summary_brief":"本周总览"}}
-
-**重要**：
-- 必须是完整的 JSON 对象（以 {{ 开头，}} 结尾）
-- 不要使用 markdown 代码块（```json）
-- core_trends 和 summary_brief 都是必需字段
-"""
+        prompt = self._build_aggregate_prompt(signals)
 
         async def _call():
             return await self._async_client.messages.create(

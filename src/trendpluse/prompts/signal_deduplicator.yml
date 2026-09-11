@@ -1,0 +1,23 @@
+# SignalDeduplicator 提示词。
+# duplicate_check 变量: title/type/why_it_matters/history_text
+duplicate_check: |
+  你是一个技术趋势分析专家。判断以下新信号是否与历史信号重复。
+
+  ## 新信号
+  标题: {$ title $}
+  类型: {$ type $}
+  重要性: {$ why_it_matters $}
+
+  ## 历史信号（相似标题）
+  {$ history_text $}
+
+  ## 判断标准
+  - 如果描述的是同一个技术趋势/特性，判定为"重复"
+  - 如果是不同的改进或新特性，判定为"不重复"
+  - 标题微调但本质相同 → 重复
+  - 类型或特性不同 → 不重复
+
+  ## 回答格式
+  只回答一个词：
+  - DUPLICATE（重复）
+  - UNIQUE（不重复）

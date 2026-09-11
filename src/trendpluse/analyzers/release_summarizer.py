@@ -14,6 +14,7 @@ from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODE
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import ReleaseSummary
 from trendpluse.models.source import AnalysisMaterial
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -201,8 +202,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                 messages=[
                     {
                         "role": "system",
-                        "content": "你是一个专业的软件变更分析专家，"
-                        "擅长分析 Release Notes 并提取关键信息。",
+                        "content": render_prompt("release_summarizer.system"),
                     },
                     {"role": "user", "content": prompt},
                 ],
@@ -220,8 +220,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                     messages=[
                         {
                             "role": "system",
-                            "content": "你是一个专业的软件变更分析专家，"
-                            "擅长分析 Release Notes 并提取关键信息。",
+                            "content": render_prompt("release_summarizer.system"),
                         },
                         {"role": "user", "content": prompt},
                     ],
@@ -234,8 +233,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                     messages=[
                         {
                             "role": "system",
-                            "content": "你是一个专业的软件变更分析专家，"
-                            "擅长分析 Release Notes 并提取关键信息。",
+                            "content": render_prompt("release_summarizer.system"),
                         },
                         {"role": "user", "content": prompt},
                     ],
@@ -244,6 +242,16 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             )
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
+
+    @staticmethod
+    def _build_single_release_prompt(release: dict) -> str:
+        """构建单 Release 总结提示词（同步/异步共用）。"""
+        return render_prompt(
+            "release_summarizer.single_release",
+            repo=release.get("repo", ""),
+            tag_name=release.get("tag_name", ""),
+            body=release.get("body", "")[:2000],
+        )
 
     def _summarize_single_release(self, release: dict) -> ReleaseSummary:
         """总结单个 Release
@@ -267,27 +275,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                 impact_level=1,
             )
 
-        # 构建 Prompt
-        prompt = f"""分析以下 GitHub Release 的变更内容，生成结构化的中文总结。
-
-仓库: {repo}
-版本: {tag_name}
-
-Release Notes:
-{body[:2000]}
-
-请分析并提取：
-1. 变更类型（feature/fix/improvement/breaking/other）
-2. 3-5 个关键变更点（简洁的中文描述）
-3. 中文总结（2-3 句话概括主要变更）
-4. 影响级别（1-5，5 为最高）
-
-注意：
-- **所有文本内容必须使用中文**（key_changes、summary_cn）
-- 优先识别 Breaking Changes（影响级别应为 5）
-- 如果是主版本升级（如 v1.0.0 到 v2.0.0），通常意味着 Breaking Changes
-- 新功能优先于修复，修复优先于改进
-"""
+        prompt = self._build_single_release_prompt(release)
 
         # 使用 instructor 获取结构化输出（带重试机制）
         try:
@@ -332,26 +320,7 @@ Release Notes:
                 impact_level=1,
             )
 
-        prompt = f"""分析以下 GitHub Release 的变更内容，生成结构化的中文总结。
-
-仓库: {repo}
-版本: {tag_name}
-
-Release Notes:
-{body[:2000]}
-
-请分析并提取：
-1. 变更类型（feature/fix/improvement/breaking/other）
-2. 3-5 个关键变更点（简洁的中文描述）
-3. 中文总结（2-3 句话概括主要变更）
-4. 影响级别（1-5，5 为最高）
-
-注意：
-- **所有文本内容必须使用中文**（key_changes、summary_cn）
-- 优先识别 Breaking Changes（影响级别应为 5）
-- 如果是主版本升级（如 v1.0.0 到 v2.0.0），通常意味着 Breaking Changes
-- 新功能优先于修复，修复优先于改进
-"""
+        prompt = self._build_single_release_prompt(release)
 
         try:
             return await self._call_llm_for_summary_async(prompt)

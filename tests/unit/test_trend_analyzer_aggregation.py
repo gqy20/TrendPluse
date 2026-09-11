@@ -10,6 +10,7 @@ from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import Signal
+from trendpluse.models.source import AnalysisMaterial
 
 
 class TestTrendAnalyzerCrossTypeAggregation:
@@ -211,3 +212,87 @@ class TestTrendAnalyzerCrossTypeAggregation:
         # Assert
         assert len(report.engineering_signals) == 1
         assert len(report.engineering_signals[0].sources) == 2
+
+
+class TestResearchSignalAggregation:
+    """research 信号聚合与强一致性回填测试"""
+
+    def test_research_signal_sources_resolved_from_ids(self):
+        """research 趋势的 sources 也必须被强一致性机制回填。"""
+        analyzer = TrendAnalyzer(api_key="test-key")
+
+        pr_signals = [
+            Signal(
+                id="pr-0",
+                title="实现新注意力机制的论文代码",
+                type="capability",
+                category="research",
+                impact_score=4,
+                why_it_matters="论文实现",
+                sources=["https://github.com/owner/repo/pull/42"],
+                related_repos=["owner/repo"],
+            )
+        ]
+
+        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+            mock_response = MagicMock()
+            mock_response.date = "2026-01-04"
+            mock_response.summary_brief = "研究趋势"
+            mock_response.engineering_signals = []
+            # LLM 返回的 research 趋势：带 source_signal_ids 但 sources 为空
+            mock_response.research_signals = [
+                Signal(
+                    id="research-trend-1",
+                    title="新注意力机制落地",
+                    type="capability",
+                    category="research",
+                    impact_score=4,
+                    why_it_matters="多篇实现指向同一机制",
+                    sources=[],
+                    related_repos=[],
+                    source_signal_ids=["pr-0"],
+                )
+            ]
+            mock_response.commit_signals = []
+            mock_response.stats = {}
+            mock_create.return_value = mock_response
+
+            report = analyzer.aggregate_and_generate_report(
+                pr_signals=pr_signals,
+                commit_signals=[],
+                release_signals=[],
+                date="2026-01-04",
+            )
+
+        assert len(report.research_signals) == 1
+        trend = report.research_signals[0]
+        assert trend.sources == ["https://github.com/owner/repo/pull/42"]
+        assert trend.related_repos == ["owner/repo"]
+
+    def test_aggregation_prompt_requires_research_aggregation(self):
+        """聚合 prompt 必须要求保留 research 信号，禁止"可为空"暗示。"""
+        analyzer = TrendAnalyzer(api_key="test-key")
+        prompt = analyzer._build_aggregation_prompt(
+            date="2026-01-04",
+            pr_signals=[],
+            commit_signals=[],
+            release_signals=[],
+        )
+        assert "目前可为空" not in prompt
+        assert "存在 research 信号时必须聚合，不得丢弃" in prompt
+
+    def test_category_criteria_present_in_extraction_prompts(self):
+        """上游提取 prompt 必须包含 category 判定标准。"""
+        analyzer = TrendAnalyzer(api_key="test-key")
+        pr_prompt = analyzer._build_material_prompt(
+            AnalysisMaterial.from_pr_details(
+                {
+                    "repo_name": "owner/repo",
+                    "number": 1,
+                    "title": "t",
+                    "body": "b",
+                }
+            )
+        )
+        assert "category 判定标准" in pr_prompt
+        assert "防止过度分类" in pr_prompt

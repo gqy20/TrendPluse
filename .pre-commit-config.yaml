@@ -3,7 +3,9 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: ^tests/fixtures/
       - id: end-of-file-fixer
+        exclude: ^tests/fixtures/
       - id: check-yaml
         exclude: ^mkdocs\.yml$
       - id: check-added-large-files
@@ -33,4 +35,5 @@ repos:
           - pyproject.toml
           - rich>=13.0.0
           - tenacity>=9.0.0
+          - jinja2>=3.1.0
         args: [--config-file=pyproject.toml]

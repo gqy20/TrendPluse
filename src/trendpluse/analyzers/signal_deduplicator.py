@@ -11,6 +11,7 @@ from typing import Any
 
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH
 from trendpluse.models.signal import Signal
+from trendpluse.prompts import render_prompt
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
 
@@ -246,27 +247,13 @@ class SignalDeduplicator:
             for s in history[:3]  # 只对比最相似的 3 个
         )
 
-        prompt = f"""你是一个技术趋势分析专家。判断以下新信号是否与历史信号重复。
-
-## 新信号
-标题: {signal.title}
-类型: {signal.type}
-重要性: {signal.why_it_matters}
-
-## 历史信号（相似标题）
-{history_text}
-
-## 判断标准
-- 如果描述的是同一个技术趋势/特性，判定为"重复"
-- 如果是不同的改进或新特性，判定为"不重复"
-- 标题微调但本质相同 → 重复
-- 类型或特性不同 → 不重复
-
-## 回答格式
-只回答一个词：
-- DUPLICATE（重复）
-- UNIQUE（不重复）
-"""
+        prompt = render_prompt(
+            "signal_deduplicator.duplicate_check",
+            title=signal.title,
+            type=signal.type,
+            why_it_matters=signal.why_it_matters,
+            history_text=history_text,
+        )
 
         # 调用 LLM
         def _call():

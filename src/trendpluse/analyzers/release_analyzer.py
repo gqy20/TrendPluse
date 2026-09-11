@@ -13,6 +13,7 @@ from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import Signal
 from trendpluse.models.source import AnalysisMaterial
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -198,65 +199,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             prompt 文本
         """
         releases_text = json.dumps(releases, ensure_ascii=False, indent=2)
-
-        prompt = """\
-你是一个技术趋势分析专家。请分析以下 GitHub Releases，提取有价值的\
-版本升级趋势和重要特性信息。
-
-## Release 数据
-
-{releases_text}
-
-## 分析要求
-
-请识别以下内容：
-
-1. **重大版本升级**：
-   - 主版本升级（major version bump）
-   - Breaking changes
-   - 重大架构变更
-
-2. **重要新特性**：
-   - 新功能发布（capability）
-   - 抽象层改进（abstraction）
-   - 工作流优化（workflow）
-   - 安全性增强（safety）
-   - 性能优化（performance）
-
-3. **评估标准**：
-   - 优先关注主版本升级（如 v1.0.0 → v2.0.0）
-   - 关注重要的次版本更新（如包含 breaking changes）
-   - **过滤掉纯 bug 修复的补丁版本**（如 v1.0.0 → v1.0.1）
-   - 关注影响范围广的特性
-   - 关注技术创新点
-
-## 输出格式
-
-请以 JSON 数组格式返回，每个元素包含：
-
-```json
-[
-  {{
-    "title": "简短标题（5-10字）",
-    "type": "信号类型（capability/abstraction/workflow/eval/safety/performance）",
-    "category": "分类（engineering/research）",
-    "impact_score": 影响评分（1-5）,
-    "why_it_matters": "为什么重要（1-2句话）",
-    "related_repos": ["相关仓库名"],
-    "sources": ["release链接"]
-  }}
-]
-```
-
-注意：
-- **所有文本内容必须使用中文**（title、why_it_matters 等）
-- **只返回真正有价值的重大更新**
-- **忽略纯 bug 修复的补丁版本**
-- **如果没有重要更新，返回空数组 []**
-- impact_score 基于影响范围和重要性（主版本升级通常 4-5 分）
-"""
-
-        return prompt.format(releases_text=releases_text)
+        return render_prompt("release_analyzer.analysis", releases_text=releases_text)
 
     def _parse_signals(
         self, llm_response: str, releases: list[dict[str, Any]]

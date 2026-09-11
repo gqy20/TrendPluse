@@ -9,6 +9,7 @@ from typing import Any
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
+from trendpluse.prompts import render_prompt
 
 logger = get_logger(__name__)
 
@@ -166,65 +167,9 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             prompt 文本
         """
         releases_text = json.dumps(releases, ensure_ascii=False, indent=2)
-
-        prompt = f"""你是一个技术分析专家。请分析以下 GitHub Releases，\
-识别 breaking changes（不兼容更新）。
-
-## Release 数据
-
-{releases_text}
-
-## 分析要求
-
-请识别以下内容：
-
-1. **Breaking Changes 判断标准**：
-   - API 移除或重命名
-   - 函数签名变更
-   - 行为不兼容改变
-   - 配置格式变更
-   - 依赖版本要求改变
-
-2. **影响等级评估**：
-   - high：需要大量代码迁移，影响核心功能
-   - medium：需要少量代码调整
-   - low：配置或轻微行为变更
-
-3. **分类**：
-   - API：接口相关
-   - Config：配置相关
-   - Behavior：行为变更
-   - Dependency：依赖变更
-
-## 输出格式
-
-请以 JSON 数组格式返回，**只包含有 breaking changes 的 releases**：
-
-```json
-[
-  {{
-    "repo": "仓库名",
-    "tag_name": "版本标签",
-    "has_breaking": true,
-    "changes": [
-      {{
-        "description": "变更描述（中文，简短明确）",
-        "impact": "影响等级（high/medium/low）",
-        "category": "分类（API/Config/Behavior/Dependency）"
-      }}
-    ]
-  }}
-]
-```
-
-注意：
-- **所有描述必须使用中文**
-- **只返回有 breaking changes 的版本**
-- **如果某个版本没有 breaking changes，不要包含在结果中**
-- **如果没有任何 breaking changes，返回空数组 []**
-"""
-
-        return prompt
+        return render_prompt(
+            "breaking_changes_detector.analysis", releases_text=releases_text
+        )
 
     def _parse_response(self, llm_response: str) -> list[dict]:
         """解析 LLM 响应
