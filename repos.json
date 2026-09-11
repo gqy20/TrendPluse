@@ -212,10 +212,6 @@
     "description": "OpenClaw 主仓库，个人 AI assistant 与代理生态核心项目。"
   },
   {
-    "url": "https://github.com/openclaw/skills",
-    "description": "OpenClaw Skills 生态与技能归档仓库。"
-  },
-  {
     "url": "https://github.com/openclaw/clawhub",
     "description": "OpenClaw 官方技能目录与发现入口。"
   },
