@@ -104,6 +104,7 @@ class WeeklyPipelineApp:
         aggregator = WeeklyAggregator(
             api_key=self.settings.anthropic_api_key,
             base_url=self.settings.anthropic_base_url,
+            model=self.settings.anthropic_model,
             retry_max_attempts=self.settings.llm_retry_max_attempts,
             retry_wait_min=self.settings.llm_retry_wait_min,
             retry_wait_max=self.settings.llm_retry_wait_max,

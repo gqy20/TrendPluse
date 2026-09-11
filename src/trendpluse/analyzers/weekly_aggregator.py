@@ -9,10 +9,11 @@ from collections.abc import Sequence
 from json import JSONDecodeError
 
 import anthropic
-from anthropic import Anthropic
+from anthropic import Anthropic, AsyncAnthropic
 from anthropic.types import TextBlock
 from pydantic import BaseModel, Field
 
+from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import CoreTrend
 from trendpluse.utils.retry import create_anthropic_retry_decorator
@@ -50,6 +51,7 @@ class WeeklyAggregator:
         self,
         api_key: str,
         base_url: str | None = None,
+        model: str | None = None,
         retry_max_attempts: int = 3,
         retry_wait_min: int = 1,
         retry_wait_max: int = 10,
@@ -59,8 +61,15 @@ class WeeklyAggregator:
         Args:
             api_key: Anthropic API 密钥
             base_url: API 基础 URL（可选）
+            model: 模型名称（可选，默认跟随 DEFAULT_ANTHROPIC_MODEL）。
+                不得硬编码，否则切换网关后会因模型不存在而失败
+            retry_max_attempts: LLM 调用最大重试次数
+            retry_wait_min: 重试最小等待时间（秒）
+            retry_wait_max: 重试最大等待时间（秒）
         """
         self._client = Anthropic(api_key=api_key, base_url=base_url)
+        self._async_client = AsyncAnthropic(api_key=api_key, base_url=base_url)
+        self._model = model or DEFAULT_ANTHROPIC_MODEL
         self._retry_max_attempts = retry_max_attempts
         self._retry_wait_min = retry_wait_min
         self._retry_wait_max = retry_wait_max
@@ -69,7 +78,7 @@ class WeeklyAggregator:
             wait_min=retry_wait_min,
             wait_max=retry_wait_max,
         )
-        logger.info("WeeklyAggregator 初始化 model=glm-4.7（硬编码）")
+        logger.info("WeeklyAggregator 初始化 model=%s", self._model)
 
     @staticmethod
     def _extract_text_from_response(response) -> str:
@@ -218,7 +227,7 @@ class WeeklyAggregator:
 
         def _call():
             return self._client.messages.create(
-                model="glm-4.7",
+                model=self._model,
                 max_tokens=2000,
                 messages=[
                     {
@@ -318,8 +327,8 @@ class WeeklyAggregator:
 """
 
         async def _call():
-            return await self._client.messages.create(
-                model="glm-4.7",
+            return await self._async_client.messages.create(
+                model=self._model,
                 max_tokens=2000,
                 messages=[{"role": "user", "content": prompt}],
             )

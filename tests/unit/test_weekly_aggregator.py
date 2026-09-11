@@ -17,6 +17,53 @@ from trendpluse.analyzers.weekly_aggregator import (
 from trendpluse.models.signal import CoreTrend, Signal
 
 
+@pytest.fixture
+def sample_signals():
+    """创建示例信号"""
+    return [
+        Signal(
+            id="sig-1",
+            title="项目 A 新增异步支持",
+            type="capability",
+            category="engineering",
+            impact_score=5,
+            why_it_matters="采用异步架构提升性能",
+            sources=["https://github.com/test/a"],
+            related_repos=["test/a"],
+        ),
+        Signal(
+            id="sig-2",
+            title="项目 B 重构为异步架构",
+            type="abstraction",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="从同步迁移到异步",
+            sources=["https://github.com/test/b"],
+            related_repos=["test/b"],
+        ),
+        Signal(
+            id="sig-3",
+            title="项目 C 新增异步工具",
+            type="capability",
+            category="engineering",
+            impact_score=4,
+            why_it_matters="提供异步开发工具",
+            sources=["https://github.com/test/c"],
+            related_repos=["test/c"],
+        ),
+        Signal(
+            id="sig-4",
+            title="新型模型架构研究",
+            type="eval",
+            category="research",
+            impact_score=5,
+            why_it_matters="提出新的模型架构",
+            sources=["https://github.com/test/d"],
+            related_repos=["test/d"],
+        ),
+    ]
+
+
 class TestWeeklyAggregationResult:
     """测试周报聚合结果模型"""
 
@@ -80,52 +127,6 @@ class TestCoreTrend:
 
 class TestWeeklyAggregator:
     """测试周报聚合器"""
-
-    @pytest.fixture
-    def sample_signals(self):
-        """创建示例信号"""
-        return [
-            Signal(
-                id="sig-1",
-                title="项目 A 新增异步支持",
-                type="capability",
-                category="engineering",
-                impact_score=5,
-                why_it_matters="采用异步架构提升性能",
-                sources=["https://github.com/test/a"],
-                related_repos=["test/a"],
-            ),
-            Signal(
-                id="sig-2",
-                title="项目 B 重构为异步架构",
-                type="abstraction",
-                category="engineering",
-                impact_score=4,
-                why_it_matters="从同步迁移到异步",
-                sources=["https://github.com/test/b"],
-                related_repos=["test/b"],
-            ),
-            Signal(
-                id="sig-3",
-                title="项目 C 新增异步工具",
-                type="capability",
-                category="engineering",
-                impact_score=4,
-                why_it_matters="提供异步开发工具",
-                sources=["https://github.com/test/c"],
-                related_repos=["test/c"],
-            ),
-            Signal(
-                id="sig-4",
-                title="新型模型架构研究",
-                type="eval",
-                category="research",
-                impact_score=5,
-                why_it_matters="提出新的模型架构",
-                sources=["https://github.com/test/d"],
-                related_repos=["test/d"],
-            ),
-        ]
 
     def test_aggregate_empty_signals(self):
         """测试聚合空信号列表"""
@@ -430,3 +431,86 @@ class TestWeeklyAggregator:
         assert result.core_trends == []
         assert "降级为按高影响信号展示" in result.summary_brief
         assert result.total_signals == len(sample_signals)
+
+
+class TestWeeklyAggregatorModelWiring:
+    """模型配置接线测试。
+
+    回归背景：模型曾被硬编码为 "glm-4.7"，切换到第三方网关后该模型不存在
+    （503 model_not_found），会导致每周一的周报 AI 聚合必然失败。
+    """
+
+    def _ok_response(self) -> SimpleNamespace:
+        return SimpleNamespace(
+            content=[
+                TextBlock(
+                    text=(
+                        '{"core_trends":[{"title":"模型可配置",'
+                        '"theme":"architecture","description":"模型跟随配置",'
+                        '"signal_ids":["sig-1"],"impact_level":4}],'
+                        '"summary_brief":"本周模型配置生效"}'
+                    ),
+                    type="text",
+                )
+            ]
+        )
+
+    def test_sync_call_uses_configured_model(self, sample_signals):
+        """同步聚合应把配置的模型传给 API，而不是硬编码值。"""
+        aggregator = WeeklyAggregator(api_key="test-key", model="my-gateway-model")
+        captured: dict[str, Any] = {}
+
+        def _fake_create(*args, **kwargs):
+            captured.update(kwargs)
+            return self._ok_response()
+
+        aggregator._client.messages.create = _fake_create
+        aggregator._llm_retry = lambda func: func
+
+        aggregator.aggregate(sample_signals)
+
+        assert captured["model"] == "my-gateway-model"
+
+    def test_model_defaults_to_config_default(self):
+        """未显式传 model 时应回落到配置里的默认模型。"""
+        from trendpluse.config import DEFAULT_ANTHROPIC_MODEL
+
+        aggregator = WeeklyAggregator(api_key="test-key")
+
+        assert aggregator._model == DEFAULT_ANTHROPIC_MODEL
+
+    def test_hardcoded_glm_model_is_gone(self):
+        """源码中不应再残留硬编码的 glm-4.7。"""
+        from pathlib import Path
+
+        source = (
+            Path(__file__).resolve().parents[2]
+            / "src"
+            / "trendpluse"
+            / "analyzers"
+            / "weekly_aggregator.py"
+        ).read_text(encoding="utf-8")
+
+        assert 'model="glm-4.7"' not in source
+
+    @pytest.mark.asyncio
+    async def test_async_call_awaits_async_client(self, sample_signals):
+        """异步聚合必须走 AsyncAnthropic 客户端。
+
+        回归背景：此前 `aggregate_async` 对同步 client 的返回值做 `await`，
+        运行时会抛 TypeError；因测试替换了 `_run_with_llm_retry_async`
+        而长期未被发现。这里不替换重试包装，直接跑真实 await 路径。
+        """
+        aggregator = WeeklyAggregator(api_key="test-key", model="my-gateway-model")
+        captured: dict[str, Any] = {}
+
+        async def _fake_create(*args, **kwargs):
+            captured.update(kwargs)
+            return self._ok_response()
+
+        aggregator._async_client.messages.create = _fake_create
+
+        result = await aggregator.aggregate_async(sample_signals)
+
+        assert captured["model"] == "my-gateway-model"
+        assert result.summary_brief == "本周模型配置生效"
