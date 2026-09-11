@@ -25,7 +25,17 @@
 | `639f8bb` | 忽略 `data/` 运行态缓存 |
 | `a70fc81` | `load_daily_history_index` 返回类型标注（消除 `no-any-return`） |
 
-当前基线：`690 passed / 4 skipped`，ruff、ruff format、mypy（95 文件）全绿。
+## 已完成（第二轮实施，2026-09-11）
+
+| Commit | 内容 |
+|---|---|
+| `e541639` | prompt 全量外置 YAML（golden test 字节级锁定）+ research 信号聚合修复（判定标准 + `_resolve_sources_from_ids` 覆盖 research） |
+| `9d45f5a` | **P0-2** 悬空 ID 剔除（定性为 LLM 幻觉，`pr-418` 类脏引用不再落盘）；**P0-1** 前端 release 卡片 `[object Object]`；**P2-3** 前端 5 处 `z.unknown()` 换真实 zod schema + 组件类型推导；附带发现并修复 `top_pain_points` 对象误渲染 |
+| `ed7f9de` | **P1-1/2/3** 全流程 LLM usage 记录（6 个直连分析器 + commit 分析 + daily_llm_usage 汇总 + 历史索引 token 字段 + budget 软限制）；model=null 从 `ResultMessage.model_usage` 源头修复；名义成本标注 |
+| `ff6943b` | **P1-4/P3-2.2** repos.json 8 个转移仓库更新（gh api 确认，省 301 跳转）；retry 补 SSLError/TransportError；**P3-2.1 待决策**：`openclaw/agent-skills` 是否纳入监控 |
+| `f4974e5` | **P2-1** actionable/bridge-result 落盘收敛到 `data/discovery/` + git rm 191 个历史中间产物 + JSON/MD 配对校验脚本接入 smoke CI；**P2-2** AGENTS.md 过期陈述修正 |
+
+当前基线：`755 passed / 4 skipped`，ruff、ruff format、mypy（97 文件）、astro check/build 全绿。
 
 ---
 
