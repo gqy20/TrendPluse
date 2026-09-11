@@ -1,7 +1,7 @@
 ---
 /**
- * 统计条:大衬线数字 + 小灰标签,竖发丝线分隔。
- * 数字与标签使用固定列起点,不依赖字符宽度对齐(Design QA 规则 03)。
+ * 统计条(设计稿日报/发现/监控页统一规格):
+ * mono 30px 数字 + 13px 灰标签(#7d8591)+ 半透明竖分隔线。
  */
 interface Stat {
   value: number | string;
@@ -17,20 +17,15 @@ const { stats, class: cls = '' } = Astro.props;
 const fmt = (v: number | string) =>
   typeof v === 'number' ? v.toLocaleString('en-US') : v;
 ---
-<div class:list={['flex flex-wrap items-stretch gap-y-4', cls]}>
+<div class:list={['flex flex-wrap items-start gap-y-4', cls]}>
   {
     stats.map((s, i) => (
-      <div class:list={['flex items-start gap-4', i > 0 && 'pl-6 sm:pl-8 relative']}>
-        {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-hairline" />}
-        <div>
-          <a
-            href={s.href}
-            class="tp-num text-[34px] block hover:text-accent transition-colors"
-          >
-            {fmt(s.value)}
-          </a>
-          <div class="tp-meta mt-1.5">{s.label}</div>
-        </div>
+      <div class:list={['flex items-start gap-4', i > 0 && 'pl-9 relative']}>
+        {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-[rgba(216,211,200,0.75)] opacity-68" />}
+        <a href={s.href} class="tp-num text-[30px] text-[#13171f] hover:text-accent transition-colors">
+          {fmt(s.value)}
+        </a>
+        <span class="text-[13px] text-[#7d8591] opacity-72 mt-3">{s.label}</span>
       </div>
     ))
   }

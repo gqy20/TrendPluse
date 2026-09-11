@@ -1,33 +1,27 @@
 ---
 /**
- * 全部信号表:编辑式表格,编号 + 标题 + 分类 + 来源 + 时间 + 影响 + 置信度。
- * 置信度列当前后端无每信号数据,统一显示 "—"(设计稿 UX States:渐进披露)。
+ * 全部信号表(设计稿「01 · Trend Report · Final」规格):
+ * - 表头中文小灰字(#9ea3ad,13px,非大写)
+ * - 编号 mono、标题 Sans 13、分类中文、来源/时间 mono
+ * - 影响 = 3 根小柱(≥4 红×3 / 3 橙×2 / ≤2 灰×1)
+ * - 置信度 = 10 个小方点(蓝=已得,浅灰=未得;后端暂无数据→全浅灰)
  */
 import type { Signal } from '../../content.config';
-import { signalLabel, repoUrl } from '../../lib/format';
+import { signalLabel } from '../../lib/format';
 
 interface Props {
   signals: Signal[];
-  /** 行号起点(全局连续编号) */
   start?: number;
-  /** 时间列展示值(日报=报告日期;周报=周区间) */
   time?: string;
-  /** 展示截断行数,其余隐藏(默认 12,0 = 不限) */
   limit?: number;
-  showMoreHref?: string;
-  /** 行可点击:打开信号详情抽屉(需要页面内嵌 tp-signals-data) */
   clickable?: boolean;
 }
-const { signals, start = 1, time, limit = 12, showMoreHref, clickable = false } = Astro.props;
+const { signals, start = 1, time, limit = 12, clickable = false } = Astro.props;
 
 const rows = limit > 0 ? signals.slice(0, limit) : signals;
 const hidden = signals.length - rows.length;
-const CATEGORY_LABEL: Record<string, string> = {
-  engineering: '工程',
-  research: '研究',
-};
 
-/** 来源 URL → 短格式:owner/repo#PR / owner/repo v版本 / owner/repo@sha */
+/** 来源 URL → 短格式 */
 function shortSource(url: string): string {
   const m = url.match(/github\.com\/([^/]+\/[^/]+)(?:\/(pull|releases\/tag|commit|issues)\/([^/]+))?/);
   if (!m) return url.replace(/^https?:\/\//, '').slice(0, 28);
@@ -37,77 +31,79 @@ function shortSource(url: string): string {
   if (kind === 'commit') return `${repo}@${id.slice(0, 7)}`;
   return repo;
 }
+
+/** 影响分 → 柱数与颜色档 */
+function impactBars(score?: number | null): { n: number; color: string } {
+  const s = score ?? 0;
+  if (s >= 4) return { n: 3, color: '#cc3b33' };
+  if (s >= 3) return { n: 2, color: '#bf732e' };
+  return { n: 1, color: '#636b78' };
+}
 ---
 
 <table class="tp-table">
   <thead>
     <tr>
-      <th class="w-[54px]">#</th>
-      <th>标题</th>
-      <th class="w-[110px] hidden md:table-cell">分类</th>
-      <th class="w-[190px] hidden lg:table-cell">来源</th>
-      <th class="w-[110px] hidden md:table-cell">时间</th>
-      <th class="w-[90px]">影响</th>
-      <th class="w-[80px] hidden lg:table-cell">置信度</th>
+      <th class="w-[54px] font-sans normal-case tracking-normal text-[13px] opacity-62">#</th>
+      <th class="font-sans normal-case tracking-normal text-[13px] opacity-62">标题</th>
+      <th class="w-[110px] hidden md:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">分类</th>
+      <th class="w-[190px] hidden lg:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">来源</th>
+      <th class="w-[110px] hidden md:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">时间</th>
+      <th class="w-[120px] font-sans normal-case tracking-normal text-[13px] opacity-62">影响</th>
+      <th class="w-[96px] hidden lg:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">置信度</th>
     </tr>
   </thead>
   <tbody>
     {
-      rows.map((s, i) => (
-        <tr class:list={[clickable && 'cursor-pointer']} data-signal-detail={clickable ? s.id : undefined}>
-          <td class="tp-num text-[20px] text-ink-3">{String(start + i).padStart(2, '0')}</td>
-          <td>
-            <div class="tp-item text-[16px] leading-snug">{s.title}</div>
-            {s.related_repos.length > 0 && (
-              <a
-                href={repoUrl(s.related_repos[0])}
-                target="_blank"
-                rel="noopener"
-                class="tp-mono text-ink-3 hover:text-accent transition-colors"
-              >
-                {s.related_repos[0]}
-              </a>
-            )}
-          </td>
-          <td class="hidden md:table-cell">
-            <span class="tp-mono text-ink-2">
-              {signalLabel(s.type)}
-              {s.category && CATEGORY_LABEL[s.category] ? ` · ${CATEGORY_LABEL[s.category]}` : ''}
-            </span>
-          </td>
-          <td class="hidden lg:table-cell">
-            {s.sources[0] && (
-              <a href={s.sources[0]} target="_blank" rel="noopener" class="tp-mono text-ink-2 hover:text-accent transition-colors whitespace-nowrap">
-                {shortSource(s.sources[0])}
-              </a>
-            )}
-          </td>
-          <td class="tp-mono text-ink-2 hidden md:table-cell">{time ?? '—'}</td>
-          <td>
-            <span class:list={['tp-mono', (s.impact_score ?? 0) >= 4 ? 'tp-impact-high' : 'text-ink-2']}>
-              {(s.impact_score ?? 0) >= 4 ? '● ' : ''}
-              {s.impact_score ?? '—'}/5
-            </span>
-          </td>
-          <td class="tp-mono text-ink-3 hidden lg:table-cell">—</td>
-        </tr>
-      ))
+      rows.map((s, i) => {
+        const bars = impactBars(s.impact_score);
+        return (
+          <tr class:list={[clickable && 'cursor-pointer']} data-signal-detail={clickable ? s.id : undefined}>
+            <td class="tp-mono text-ink-3 text-[13px]">{String(start + i).padStart(2, '0')}</td>
+            <td>
+              <div class="text-[13px] leading-[1.45]">{s.title}</div>
+              {s.related_repos[0] && (
+                <span class="tp-mono text-ink-3 text-[12px]">{s.related_repos[0]}</span>
+              )}
+            </td>
+            <td class="hidden md:table-cell text-[13px] text-[#636b78]">{signalLabel(s.type)}</td>
+            <td class="hidden lg:table-cell">
+              {s.sources[0] && (
+                <a href={s.sources[0]} target="_blank" rel="noopener" class="tp-mono text-[12px] text-[#636b78] hover:text-accent transition-colors whitespace-nowrap">
+                  {shortSource(s.sources[0])}
+                </a>
+              )}
+            </td>
+            <td class="tp-mono text-[12px] text-[#636b78] hidden md:table-cell">{time ?? '—'}</td>
+            <td>
+              <span class="inline-flex gap-[4px] items-center">
+                {[1, 2, 3].map((k) => (
+                  <span
+                    class="inline-block h-[10px] w-[6px] rounded-[1px]"
+                    style={`background:${k <= bars.n ? bars.color : '#f0ede5'}`}
+                  />
+                ))}
+              </span>
+            </td>
+            {/* 置信度:10 点,后端无每信号数据,暂全浅灰 */}
+            <td class="hidden lg:table-cell">
+              <span class="inline-flex gap-[2px] items-center">
+                {Array.from({ length: 10 }).map(() => (
+                  <span class="inline-block size-[5px] rounded-[1px] bg-[#f0ede5]" />
+                ))}
+              </span>
+            </td>
+          </tr>
+        );
+      })
     }
   </tbody>
 </table>
 
 {
   hidden > 0 && (
-    <p class="tp-meta mt-4">
-      已展示前 {rows.length} 条,共 {signals.length} 条
-      {showMoreHref && (
-        <>
-          ·{' '}
-          <a href={showMoreHref} class="tp-link">
-            查看当日完整报告 →
-          </a>
-        </>
-      )}
+    <p class="tp-mono text-ink-3 mt-4">
+      已展示前 {rows.length} 条 · 共 {signals.length} 条
     </p>
   )
 }
