@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from typing import Any, cast
 
 from trendpluse.logger import get_logger
+from trendpluse.models.agent_usage import AgentMetricsSummary
 from trendpluse.models.report_inputs import DailyPipelineInputs
 from trendpluse.models.signal import DailyReport
 
@@ -344,6 +345,7 @@ class DailyPipelineApp:
             release_signals=daily_inputs.release_signals,
             date=date.strftime("%Y-%m-%d"),
         )
+        self._collect_daily_llm_usage(report)
         self.daily_report_finalizer.finalize_daily_report(
             report=report,
             date=date,
@@ -368,6 +370,7 @@ class DailyPipelineApp:
             date=date.strftime("%Y-%m-%d"),
         )
         logger.info("Aggregation done in %.2fs", time.perf_counter() - step_start)
+        self._collect_daily_llm_usage(report)
         await self.daily_report_finalizer.finalize_daily_report_async(
             report=report,
             date=date,
@@ -375,6 +378,42 @@ class DailyPipelineApp:
             pr_signals=pr_signals,
         )
         return cast(DailyReport, report)
+
+    def _collect_daily_llm_usage(self, report: DailyReport) -> None:
+        """汇总全流程 LLM usage 写入日报，并对 token 预算做软限制告警。"""
+        summaries = []
+        for component in (
+            self.analyzer,
+            self.commit_analyzer,
+            getattr(self.release_workflow, "release_summarizer", None),
+            getattr(self.release_workflow, "release_analyzer", None),
+            getattr(self.release_workflow, "breaking_changes_detector", None),
+        ):
+            getter = getattr(component, "get_llm_metrics_summary", None)
+            if callable(getter):
+                summary = getter()
+                if summary is not None:
+                    summaries.append(summary)
+
+        report.daily_llm_usage = AgentMetricsSummary.combine(summaries=summaries)
+        self._check_daily_token_budget(report.daily_llm_usage)
+
+    def _check_daily_token_budget(self, usage: Any) -> None:
+        """token 预算软限制：超限告警不熔断（分析中途熔断会丢整批数据）。"""
+        budget = getattr(self.settings, "daily_token_budget", 0)
+        if not isinstance(budget, int) or budget <= 0:
+            return
+        if usage is None:
+            return
+        total_tokens = usage.usage.total_tokens
+        if total_tokens > budget:
+            logger.warning(
+                "今日 LLM token 消耗 %d 已超过预算 %d（超 %.0f%%），"
+                "请评估是否需要调整监控范围或 daily_token_budget",
+                total_tokens,
+                budget,
+                (total_tokens - budget) / budget * 100,
+            )
 
     def run_issue_agent_analysis(self, snapshot_date: str) -> None:
         """兼容旧入口的 Issue Agent 分析。"""

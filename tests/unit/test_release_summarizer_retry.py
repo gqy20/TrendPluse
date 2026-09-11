@@ -3,6 +3,7 @@
 使用 TDD 方法测试 AI 调用失败后的自动重试功能。
 """
 
+from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
@@ -37,9 +38,9 @@ class TestReleaseSummarizerRetry:
                 from anthropic import APITimeoutError
 
                 raise APITimeoutError("模拟 API 超时")
-            return mock_summary
+            return (mock_summary, SimpleNamespace(usage=None, model=None))
 
-        mock_client.chat.completions.create.side_effect = (
+        mock_client.chat.completions.create_with_completion.side_effect = (
             mock_create_fails_then_succeeds
         )
 
@@ -68,7 +69,9 @@ class TestReleaseSummarizerRetry:
 
             raise APITimeoutError("持续 API 超时")
 
-        mock_client.chat.completions.create.side_effect = mock_create_always_fails
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            mock_create_always_fails
+        )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client
@@ -98,7 +101,9 @@ class TestReleaseSummarizerRetry:
 
             raise AuthenticationError("无效的 API 密钥")
 
-        mock_client.chat.completions.create.side_effect = mock_create_auth_error
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            mock_create_auth_error
+        )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client

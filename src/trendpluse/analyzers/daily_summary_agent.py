@@ -228,6 +228,7 @@ class DailySummaryAgent:
                     duration_api_ms=message.duration_api_ms,
                     total_cost_usd=message.total_cost_usd,
                     usage=message.usage,
+                    model_usage=message.model_usage,
                 )
                 if message.structured_output is not None:
                     structured_output = message.structured_output

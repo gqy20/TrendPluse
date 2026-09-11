@@ -108,8 +108,13 @@ class TestTrendAnalyzerGoldens:
 
     def test_aggregation_sync(self):
         analyzer = TrendAnalyzer(api_key="test")
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
-            mock_create.return_value = _mock_report_response()
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
+            mock_create.return_value = (
+                _mock_report_response(),
+                SimpleNamespace(usage=None, model=None),
+            )
             analyzer.aggregate_and_generate_report(
                 pr_signals=[_signal(1)],
                 commit_signals=[_signal(2)],
@@ -123,9 +128,12 @@ class TestTrendAnalyzerGoldens:
         analyzer = TrendAnalyzer(api_key="test")
         assert analyzer.async_instructor_client is not None
         with patch.object(
-            analyzer.async_instructor_client.chat.completions, "create"
+            analyzer.async_instructor_client.chat.completions, "create_with_completion"
         ) as mock_create:
-            mock_create.return_value = _mock_report_response()
+            mock_create.return_value = (
+                _mock_report_response(),
+                SimpleNamespace(usage=None, model=None),
+            )
 
             async def _run():
                 return await analyzer.aggregate_and_generate_report_async(
@@ -141,8 +149,13 @@ class TestTrendAnalyzerGoldens:
 
     def test_aggregation_sync_empty(self):
         analyzer = TrendAnalyzer(api_key="test")
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
-            mock_create.return_value = _mock_report_response()
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
+            mock_create.return_value = (
+                _mock_report_response(),
+                SimpleNamespace(usage=None, model=None),
+            )
             analyzer.aggregate_and_generate_report(
                 pr_signals=[],
                 commit_signals=[],
@@ -154,8 +167,13 @@ class TestTrendAnalyzerGoldens:
 
     def test_generate_report_sync(self):
         analyzer = TrendAnalyzer(api_key="test")
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
-            mock_create.return_value = _mock_report_response()
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
+            mock_create.return_value = (
+                _mock_report_response(),
+                SimpleNamespace(usage=None, model=None),
+            )
             analyzer.generate_report(
                 [_signal(1), _signal(2, category="research")], DATE
             )
@@ -166,9 +184,12 @@ class TestTrendAnalyzerGoldens:
         analyzer = TrendAnalyzer(api_key="test")
         assert analyzer.async_instructor_client is not None
         with patch.object(
-            analyzer.async_instructor_client.chat.completions, "create"
+            analyzer.async_instructor_client.chat.completions, "create_with_completion"
         ) as mock_create:
-            mock_create.return_value = _mock_report_response()
+            mock_create.return_value = (
+                _mock_report_response(),
+                SimpleNamespace(usage=None, model=None),
+            )
 
             async def _run():
                 return await analyzer.generate_report_async(
@@ -198,8 +219,13 @@ class TestReleaseAnalyzerGoldens:
 class TestReleaseSummarizerGoldens:
     def test_system_and_user_sync(self):
         summarizer = ReleaseSummarizer(api_key="test")
-        with patch.object(summarizer.client.chat.completions, "create") as mock_create:
-            mock_create.return_value = MagicMock()
+        with patch.object(
+            summarizer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
+            mock_create.return_value = (
+                MagicMock(),
+                SimpleNamespace(usage=None, model=None),
+            )
             summarizer._summarize_single_release(_release_dict())
             messages = mock_create.call_args.kwargs["messages"]
         _assert_golden("release_summarizer.system", messages[0]["content"])
@@ -209,9 +235,13 @@ class TestReleaseSummarizerGoldens:
         summarizer = ReleaseSummarizer(api_key="test")
         assert summarizer.async_instructor_client is not None
         with patch.object(
-            summarizer.async_instructor_client.chat.completions, "create"
+            summarizer.async_instructor_client.chat.completions,
+            "create_with_completion",
         ) as mock_create:
-            mock_create.return_value = MagicMock()
+            mock_create.return_value = (
+                MagicMock(),
+                SimpleNamespace(usage=None, model=None),
+            )
 
             async def _run():
                 return await summarizer._summarize_single_release_async(_release_dict())

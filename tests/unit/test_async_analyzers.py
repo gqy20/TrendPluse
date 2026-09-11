@@ -1,5 +1,7 @@
 """异步 LLM 分析器测试"""
 
+from types import SimpleNamespace
+
 import pytest
 
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
@@ -14,6 +16,9 @@ class _AsyncChatStub:
 
     async def create(self, *args, **kwargs):
         return self._result
+
+    async def create_with_completion(self, *args, **kwargs):
+        return (self._result, SimpleNamespace(usage=None, model=None))
 
 
 class _AsyncInstructorClientStub:

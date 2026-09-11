@@ -173,6 +173,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
 
         # 使用基类方法提取文本
         message = self._run_with_llm_retry(_call)
+        self._record_llm_usage(message)
         return self._extract_text_from_response(message)
 
     async def _call_llm_async(self, releases: list[dict[str, Any]]) -> str:
@@ -187,6 +188,7 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             )
 
         message = await self._run_with_llm_retry_async(_call)
+        self._record_llm_usage(message)
         return self._extract_text_from_response(message)
 
     def _build_prompt(self, releases: list[dict[str, Any]]) -> str:

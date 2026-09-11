@@ -3,6 +3,7 @@
 测试 ProjectHighlightAnalyzer 的功能。
 """
 
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from trendpluse.discovery.highlight_analyzer import ProjectHighlightAnalyzer
@@ -92,7 +93,10 @@ class TestProjectHighlightAnalyzer:
         )
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create.return_value = mock_highlight
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_highlight,
+            SimpleNamespace(usage=None, model=None),
+        )
         mock_instructor.return_value = mock_client
 
         analyzer = ProjectHighlightAnalyzer(
@@ -113,8 +117,8 @@ class TestProjectHighlightAnalyzer:
         import anthropic
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create.side_effect = anthropic.APITimeoutError(
-            "Request timeout"
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            anthropic.APITimeoutError("Request timeout")
         )
         mock_instructor.return_value = mock_client
 
@@ -135,7 +139,9 @@ class TestProjectHighlightAnalyzer:
     def test_analyze_with_validation_error(self, mock_instructor, mock_env_vars):
         """测试 LLM 返回错误时的降级处理"""
         mock_client = MagicMock()
-        mock_client.chat.completions.create.side_effect = RuntimeError("LLM error")
+        mock_client.chat.completions.create_with_completion.side_effect = RuntimeError(
+            "LLM error"
+        )
         mock_instructor.return_value = mock_client
 
         analyzer = ProjectHighlightAnalyzer(

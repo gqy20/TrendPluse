@@ -188,7 +188,7 @@ class DailyReportFinalizer:
 
     @staticmethod
     def _refresh_agent_metrics(report: DailyReport) -> None:
-        """刷新日报级 Agent usage 聚合统计。"""
+        """刷新日报级 Agent usage 聚合统计（含全流程 LLM 消耗）。"""
         issue_summary = (
             report.issue_insights.agent_metrics_summary
             if report.issue_insights is not None
@@ -196,7 +196,7 @@ class DailyReportFinalizer:
         )
         report.agent_metrics_summary = AgentMetricsSummary.combine(
             runs=[report.daily_summary_agent_run_metrics],
-            summaries=[issue_summary],
+            summaries=[issue_summary, report.daily_llm_usage],
         )
 
     def _refresh_history_index(self) -> None:

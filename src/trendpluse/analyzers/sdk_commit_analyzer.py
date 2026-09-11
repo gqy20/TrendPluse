@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from trendpluse.analyzers.structured_query import QueryResult, StructuredQuery
 from trendpluse.logger import get_logger
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
 from trendpluse.models.signal import Signal
 from trendpluse.models.source import AnalysisMaterial
 from trendpluse.prompts import render_prompt
@@ -100,6 +101,9 @@ class SDKCommitAnalyzer:
         self.batch_size = batch_size
         self.allowed_tools = ["Read", "Grep"]
 
+        # 各批次 Agent usage 记录
+        self._run_metrics: list[AgentRunMetrics] = []
+
         # 初始化 SDK 查询引擎
         self.query_engine = StructuredQuery[CommitSignalsResult](
             output_model=CommitSignalsResult,
@@ -108,6 +112,10 @@ class SDKCommitAnalyzer:
             max_turns=max_turns,
             max_budget_usd=max_budget_usd,
         )
+
+    def get_llm_metrics_summary(self) -> AgentMetricsSummary | None:
+        """获取各批次累计的 Agent usage 聚合统计。"""
+        return AgentMetricsSummary.from_runs(self._run_metrics)
 
     def _material_to_commit(self, material: AnalysisMaterial) -> dict[str, Any]:
         """将分析材料转换为 commit 字典。"""
@@ -294,6 +302,9 @@ class SDKCommitAnalyzer:
             result: QueryResult[
                 CommitSignalsResult
             ] = await self.query_engine.query_async(prompt)
+
+            if result.metrics is not None:
+                self._run_metrics.append(result.metrics)
 
             # 验证和匹配
             return self._validate_and_match(result.output, batch)

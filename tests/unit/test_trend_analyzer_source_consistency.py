@@ -6,6 +6,9 @@
 3. 确保 100% 一致性（不依赖 LLM 正确传递）
 """
 
+from types import SimpleNamespace
+from unittest.mock import patch
+
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import DailyReport, Signal
 
@@ -210,7 +213,6 @@ class TestTrendAnalyzerSourceConsistency:
     def test_aggregate_and_generate_report_builds_signal_map(self):
         """测试：aggregate_and_generate_report 正确构建 signal_map"""
         # Arrange
-        from unittest.mock import patch
 
         analyzer = TrendAnalyzer(api_key="test-key")
 
@@ -264,7 +266,12 @@ class TestTrendAnalyzerSourceConsistency:
 
         # Mock client.chat.completions.create 返回我们的 mock_report
         with patch.object(
-            analyzer.client.chat.completions, "create", return_value=mock_report
+            analyzer.client.chat.completions,
+            "create_with_completion",
+            return_value=(
+                mock_report,
+                SimpleNamespace(usage=None, model=None),
+            ),
         ):
             # Act
             result = analyzer.aggregate_and_generate_report(

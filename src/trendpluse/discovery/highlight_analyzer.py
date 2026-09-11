@@ -89,8 +89,7 @@ class ProjectHighlightAnalyzer(BaseLLMAnalyzer):
         try:
 
             def _call():
-                return self.client.chat.completions.create(
-                    model=self.model,
+                return self._structured_create(
                     response_model=ProjectHighlight,
                     messages=[{"role": "user", "content": prompt}],
                     max_tokens=1000,

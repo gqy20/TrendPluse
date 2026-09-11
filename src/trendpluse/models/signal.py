@@ -236,6 +236,11 @@ class DailyReport(BaseModel):
         default=None,
         description="日报内所有 Agent 调用 usage 与成本聚合",
     )
+    daily_llm_usage: AgentMetricsSummary | None = Field(
+        default=None,
+        description="全流程 LLM 调用 usage 聚合（PR/release/commit 分析、"
+        "趋势聚合等；total_cost_usd 为 SDK 名义估算值，成本核算以 token 为准）",
+    )
 
 
 class WeeklyActivity(BaseModel):

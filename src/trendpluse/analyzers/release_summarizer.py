@@ -196,8 +196,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         """
 
         def _call():
-            return self.client.chat.completions.create(
-                model=self.model,
+            return self._structured_create(
                 response_model=ReleaseSummary,
                 messages=[
                     {
@@ -213,32 +212,16 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
     async def _call_llm_for_summary_async(self, prompt: str) -> ReleaseSummary:
         async def _call():
-            if self.async_instructor_client is None:
-                return self.client.chat.completions.create(
-                    model=self.model,
-                    response_model=ReleaseSummary,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": render_prompt("release_summarizer.system"),
-                        },
-                        {"role": "user", "content": prompt},
-                    ],
-                    max_tokens=1000,
-                )
-            return await self._maybe_await(
-                self.async_instructor_client.chat.completions.create(
-                    model=self.model,
-                    response_model=ReleaseSummary,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": render_prompt("release_summarizer.system"),
-                        },
-                        {"role": "user", "content": prompt},
-                    ],
-                    max_tokens=1000,
-                )
+            return await self._structured_create_async(
+                response_model=ReleaseSummary,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": render_prompt("release_summarizer.system"),
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=1000,
             )
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]

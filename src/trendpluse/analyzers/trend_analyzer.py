@@ -151,8 +151,7 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         """
 
         def _call():
-            return self.client.chat.completions.create(
-                model=self.model,
+            return self._structured_create(
                 response_model=Signal,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1000,
@@ -162,20 +161,10 @@ class TrendAnalyzer(BaseLLMAnalyzer):
 
     async def _call_llm_for_signal_async(self, prompt: str) -> Signal:
         async def _call():
-            if self.async_instructor_client is None:
-                return self.client.chat.completions.create(
-                    model=self.model,
-                    response_model=Signal,
-                    messages=[{"role": "user", "content": prompt}],
-                    max_tokens=1000,
-                )
-            return await self._maybe_await(
-                self.async_instructor_client.chat.completions.create(
-                    model=self.model,
-                    response_model=Signal,
-                    messages=[{"role": "user", "content": prompt}],
-                    max_tokens=1000,
-                )
+            return await self._structured_create_async(
+                response_model=Signal,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1000,
             )
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
@@ -311,8 +300,7 @@ class TrendAnalyzer(BaseLLMAnalyzer):
 
         # 步骤 3: 调用 LLM 聚合信号
         def _call():
-            return self.client.chat.completions.create(
-                model=self.model,
+            return self._structured_create(
                 response_model=DailyReport,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=3000,
@@ -366,22 +354,10 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         )
 
         async def _call():
-            if self.async_instructor_client is None:
-                return await asyncio.to_thread(
-                    lambda: self.client.chat.completions.create(
-                        model=self.model,
-                        response_model=DailyReport,
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=3000,
-                    )
-                )
-            return await self._maybe_await(
-                self.async_instructor_client.chat.completions.create(
-                    model=self.model,
-                    response_model=DailyReport,
-                    messages=[{"role": "user", "content": prompt}],
-                    max_tokens=3000,
-                )
+            return await self._structured_create_async(
+                response_model=DailyReport,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=3000,
             )
 
         report = await self._run_with_llm_retry_async(_call)
@@ -417,8 +393,7 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_generate_report_prompt(date=date, signals=signals)
 
         def _call():
-            return self.client.chat.completions.create(
-                model=self.model,
+            return self._structured_create(
                 response_model=DailyReport,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=2000,
@@ -444,22 +419,10 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         prompt = self._build_generate_report_prompt(date=date, signals=signals)
 
         async def _call():
-            if self.async_instructor_client is None:
-                return await asyncio.to_thread(
-                    lambda: self.client.chat.completions.create(
-                        model=self.model,
-                        response_model=DailyReport,
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=2000,
-                    )
-                )
-            return await self._maybe_await(
-                self.async_instructor_client.chat.completions.create(
-                    model=self.model,
-                    response_model=DailyReport,
-                    messages=[{"role": "user", "content": prompt}],
-                    max_tokens=2000,
-                )
+            return await self._structured_create_async(
+                response_model=DailyReport,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=2000,
             )
 
         report = await self._run_with_llm_retry_async(_call)

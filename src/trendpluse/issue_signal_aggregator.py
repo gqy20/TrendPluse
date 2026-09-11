@@ -92,8 +92,7 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
         )
 
         def _call() -> IssueGlobalSummaryResponse:
-            response = self.client.chat.completions.create(
-                model=self.model,
+            return self._structured_create(
                 response_model=self.response_model,
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -101,7 +100,6 @@ class IssueGlobalSummarizer(BaseLLMAnalyzer):
                 ],
                 max_tokens=1200,
             )
-            return response
 
         response = self._run_with_llm_retry(_call)
         return response

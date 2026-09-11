@@ -56,6 +56,8 @@ class DailyHistoryIndexBuilder:
         ]
         stats = data.get("stats") or {}
         issue_insights = data.get("issue_insights") or {}
+        llm_usage = data.get("daily_llm_usage") or {}
+        usage = llm_usage.get("usage") or {}
         return DailyHistoryEntry(
             date=str(data.get("date", "")),
             summary_brief=str(data.get("summary_brief", "")),
@@ -66,6 +68,8 @@ class DailyHistoryIndexBuilder:
             high_impact_signals=int(stats.get("high_impact_signals", 0) or 0),
             signal_count=int(stats.get("total_signals", 0) or 0),
             issue_summary_brief=issue_insights.get("summary_brief"),
+            total_tokens=int(usage.get("total_tokens", 0) or 0),
+            total_cost_usd=float(llm_usage.get("total_cost_usd", 0.0) or 0.0),
         )
 
     @staticmethod

@@ -1,5 +1,6 @@
 """AI 分析器单元测试"""
 
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
@@ -36,7 +37,10 @@ class TestTrendAnalyzer:
         )
 
         mock_client = Mock()
-        mock_client.chat.completions.create.return_value = mock_signal
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_signal,
+            SimpleNamespace(usage=None, model=None),
+        )
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
@@ -87,9 +91,9 @@ class TestTrendAnalyzer:
         )
 
         mock_client = Mock()
-        mock_client.chat.completions.create.side_effect = [
-            mock_signal_1,
-            mock_signal_2,
+        mock_client.chat.completions.create_with_completion.side_effect = [
+            (mock_signal_1, SimpleNamespace(usage=None, model=None)),
+            (mock_signal_2, SimpleNamespace(usage=None, model=None)),
         ]
         mock_from_anthropic.return_value = mock_client
 
@@ -134,7 +138,10 @@ class TestTrendAnalyzer:
         )
 
         mock_client = Mock()
-        mock_client.chat.completions.create.return_value = mock_signal
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_signal,
+            SimpleNamespace(usage=None, model=None),
+        )
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
@@ -185,7 +192,10 @@ class TestTrendAnalyzer:
         )
 
         mock_client = Mock()
-        mock_client.chat.completions.create.return_value = mock_report
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_report,
+            SimpleNamespace(usage=None, model=None),
+        )
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")

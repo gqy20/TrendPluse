@@ -10,6 +10,8 @@ from typing import Any, TypeVar
 from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
 from pydantic import BaseModel, ValidationError
 
+from trendpluse.models.agent_usage import AgentRunMetrics
+
 T = TypeVar("T", bound=BaseModel)
 
 
@@ -19,6 +21,7 @@ class QueryResult[T: BaseModel]:
 
     output: T
     session_id: str
+    metrics: AgentRunMetrics | None = None
 
 
 def _get_retryable_exceptions() -> tuple[type[Exception], ...]:
@@ -112,7 +115,22 @@ class StructuredQuery[T: BaseModel]:
             else self.output_model.model_validate(result_message.structured_output)
         )
 
-        return QueryResult(output=output, session_id=result_message.session_id)
+        metrics = AgentRunMetrics.from_sdk_result(
+            model=self.model,
+            session_id=result_message.session_id,
+            num_turns=result_message.num_turns,
+            duration_ms=result_message.duration_ms,
+            duration_api_ms=result_message.duration_api_ms,
+            total_cost_usd=result_message.total_cost_usd,
+            usage=result_message.usage,
+            model_usage=result_message.model_usage,
+        )
+
+        return QueryResult(
+            output=output,
+            session_id=result_message.session_id,
+            metrics=metrics,
+        )
 
     def query(self, prompt: str) -> QueryResult[T]:
         """同步封装。"""

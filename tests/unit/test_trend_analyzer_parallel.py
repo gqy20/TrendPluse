@@ -4,6 +4,7 @@
 """
 
 import time
+from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
@@ -70,9 +71,11 @@ class TestTrendAnalyzerParallel:
         def mock_create_with_delay(*args, **kwargs):
             call_count[0] += 1
             time.sleep(0.05)  # 模拟 API 延迟
-            return mock_signal
+            return (mock_signal, SimpleNamespace(usage=None, model=None))
 
-        mock_client.chat.completions.create.side_effect = mock_create_with_delay
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            mock_create_with_delay
+        )
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
@@ -109,7 +112,10 @@ class TestTrendAnalyzerParallel:
     def test_analyze_materials_single_pr_with_max_workers(self, mock_signal):
         """测试：单个 PR 材料时 max_workers=3 应正常工作"""
         mock_client = MagicMock()
-        mock_client.chat.completions.create.return_value = mock_signal
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_signal,
+            SimpleNamespace(usage=None, model=None),
+        )
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
@@ -138,7 +144,10 @@ class TestTrendAnalyzerParallel:
         failed_repo = "test/repo2"
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create.return_value = mock_signal
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_signal,
+            SimpleNamespace(usage=None, model=None),
+        )
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
@@ -180,7 +189,10 @@ class TestTrendAnalyzerParallel:
     def test_analyze_materials_default_max_workers(self, sample_materials, mock_signal):
         """测试：不提供 max_workers 时应使用默认值"""
         mock_client = MagicMock()
-        mock_client.chat.completions.create.return_value = mock_signal
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_signal,
+            SimpleNamespace(usage=None, model=None),
+        )
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client

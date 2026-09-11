@@ -4,6 +4,7 @@
 """
 
 import time
+from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
@@ -50,9 +51,11 @@ class TestReleaseSummarizerParallel:
         def mock_create_with_delay(*args, **kwargs):
             call_count[0] += 1
             time.sleep(0.05)  # 模拟 API 延迟
-            return mock_summary
+            return (mock_summary, SimpleNamespace(usage=None, model=None))
 
-        mock_client.chat.completions.create.side_effect = mock_create_with_delay
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            mock_create_with_delay
+        )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client
@@ -161,7 +164,10 @@ class TestReleaseSummarizerParallel:
         """测试：不提供 max_workers 时应使用默认值"""
         # 创建 mock 客户端
         mock_client = MagicMock()
-        mock_client.chat.completions.create.return_value = mock_summary
+        mock_client.chat.completions.create_with_completion.return_value = (
+            mock_summary,
+            SimpleNamespace(usage=None, model=None),
+        )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
         summarizer.client = mock_client

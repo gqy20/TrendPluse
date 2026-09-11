@@ -81,7 +81,13 @@ class AgentUsageBreakdown(BaseModel):
 
 
 class AgentRunMetrics(BaseModel):
-    """单次 Agent 调用的 usage 与成本。"""
+    """单次 Agent 调用的 usage 与成本。
+
+    注意：``total_cost_usd`` 是 claude-agent-sdk 按其内置价目表折算的
+    **名义估算值**。SDK 不认识的模型名（如网关转发的第三方模型）会套用
+    默认 Claude 价目，不等于真实支出。成本核算应以 token 数为准，
+    如需真实金额请按网关实际单价另行换算。
+    """
 
     model: str | None = Field(default=None)
     session_id: str | None = Field(default=None)
@@ -103,16 +109,64 @@ class AgentRunMetrics(BaseModel):
         duration_api_ms: Any,
         total_cost_usd: Any,
         usage: Mapping[str, Any] | None,
+        model_usage: Mapping[str, Any] | None = None,
     ) -> AgentRunMetrics:
-        """从 SDK ResultMessage 提取统计。"""
+        """从 SDK ResultMessage 提取统计。
+
+        Args:
+            model: 显式配置的模型名（可能为 None，表示由 SDK 自选默认）。
+            model_usage: SDK 按模型分组的 usage。model 为 None 时，
+                从中提取实际生效的模型名，避免指标里 model 为空。
+        """
         raw_usage = dict(usage or {})
+        resolved_model = model
+        if not (isinstance(resolved_model, str) and resolved_model.strip()):
+            resolved_model = None
+            for model_name in model_usage or {}:
+                if isinstance(model_name, str) and model_name.strip():
+                    resolved_model = model_name.strip()
+                    break
         return cls(
-            model=model,
+            model=resolved_model,
             session_id=str(session_id) if isinstance(session_id, str) else None,
             num_turns=_coerce_int(num_turns),
             duration_ms=_coerce_int(duration_ms),
             duration_api_ms=_coerce_int(duration_api_ms),
             total_cost_usd=_coerce_float(total_cost_usd),
+            usage=AgentUsageBreakdown.from_usage(raw_usage),
+            raw_usage=raw_usage,
+        )
+
+    @classmethod
+    def from_anthropic_response(
+        cls,
+        response: Any,
+        *,
+        model: str | None = None,
+    ) -> AgentRunMetrics | None:
+        """从 Anthropic SDK 原始响应提取统计。
+
+        Args:
+            response: Anthropic messages.create 的响应对象。
+            model: 分析器配置的模型名（响应缺失时使用）。
+
+        Returns:
+            无 usage 信息时返回 None。
+        """
+        usage = getattr(response, "usage", None)
+        if usage is None:
+            return None
+        raw_usage: dict[str, Any] = {}
+        model_dump = getattr(usage, "model_dump", None)
+        if callable(model_dump):
+            raw_usage = dict(model_dump())
+        elif isinstance(usage, dict):
+            raw_usage = dict(usage)
+        resolved_model = getattr(response, "model", None)
+        if not (isinstance(resolved_model, str) and resolved_model.strip()):
+            resolved_model = model
+        return cls(
+            model=resolved_model,
             usage=AgentUsageBreakdown.from_usage(raw_usage),
             raw_usage=raw_usage,
         )

@@ -19,6 +19,16 @@ class DailyHistoryEntry(BaseModel):
     high_impact_signals: int = Field(default=0, ge=0)
     signal_count: int = Field(default=0, ge=0)
     issue_summary_brief: str | None = Field(default=None)
+    total_tokens: int = Field(
+        default=0,
+        ge=0,
+        description="当日 LLM 总 token 消耗（跨天成本趋势用）",
+    )
+    total_cost_usd: float = Field(
+        default=0.0,
+        ge=0.0,
+        description="当日 LLM 名义成本（SDK 按 Claude 价目折算，非真实支出）",
+    )
 
 
 class DailyHistoryIndex(BaseModel):

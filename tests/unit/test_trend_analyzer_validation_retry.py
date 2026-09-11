@@ -4,6 +4,7 @@
 系统应该能够自动重试并最终成功。
 """
 
+from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
@@ -44,19 +45,22 @@ class TestValidationErrorRetry:
             if call_count[0] < 3:
                 raise validation_error
             # 第三次返回正确格式的报告
-            return DailyReport(
-                date="2026-03-10",
-                summary_brief="Test summary",
-                stats=ReportStats(
-                    total_signals=10,
-                    total_prs_analyzed=5,
-                    total_commits_analyzed=3,
-                    total_releases=2,
-                    high_impact_signals=2,
+            return (
+                DailyReport(
+                    date="2026-03-10",
+                    summary_brief="Test summary",
+                    stats=ReportStats(
+                        total_signals=10,
+                        total_prs_analyzed=5,
+                        total_commits_analyzed=3,
+                        total_releases=2,
+                        high_impact_signals=2,
+                    ),
                 ),
+                SimpleNamespace(usage=None, model=None),
             )
 
-        mock_client.chat.completions.create.side_effect = (
+        mock_client.chat.completions.create_with_completion.side_effect = (
             mock_create_fails_then_succeeds
         )
 
@@ -94,7 +98,9 @@ class TestValidationErrorRetry:
             # 始终抛出 ValidationError
             raise validation_error
 
-        mock_client.chat.completions.create.side_effect = mock_create_always_fails
+        mock_client.chat.completions.create_with_completion.side_effect = (
+            mock_create_always_fails
+        )
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client

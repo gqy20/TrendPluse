@@ -6,6 +6,7 @@
 3. 生成的趋势信号包含多个来源
 """
 
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
@@ -76,7 +77,9 @@ class TestTrendAnalyzerCrossTypeAggregation:
         ]
 
         # Act
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
             mock_response = MagicMock()
             mock_response.date = "2026-01-04"
             mock_response.summary_brief = "今日 AI Agent 领域有 5 个重要更新"
@@ -108,7 +111,10 @@ class TestTrendAnalyzerCrossTypeAggregation:
                 "total_prs_analyzed": 1,
                 "high_impact_signals": 1,
             }
-            mock_create.return_value = mock_response
+            mock_create.return_value = (
+                mock_response,
+                SimpleNamespace(usage=None, model=None),
+            )
 
             report = analyzer.aggregate_and_generate_report(
                 pr_signals=pr_signals,
@@ -177,7 +183,9 @@ class TestTrendAnalyzerCrossTypeAggregation:
         ]
 
         # Mock LLM 响应
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
             mock_response = MagicMock()
             mock_response.date = "2026-01-04"
             mock_response.summary_brief = "多项目采用相似功能"
@@ -199,7 +207,10 @@ class TestTrendAnalyzerCrossTypeAggregation:
             mock_response.research_signals = []
             mock_response.commit_signals = []
             mock_response.stats = {}
-            mock_create.return_value = mock_response
+            mock_create.return_value = (
+                mock_response,
+                SimpleNamespace(usage=None, model=None),
+            )
 
             # Act
             report = analyzer.aggregate_and_generate_report(
@@ -234,7 +245,9 @@ class TestResearchSignalAggregation:
             )
         ]
 
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
             mock_response = MagicMock()
             mock_response.date = "2026-01-04"
             mock_response.summary_brief = "研究趋势"
@@ -255,7 +268,10 @@ class TestResearchSignalAggregation:
             ]
             mock_response.commit_signals = []
             mock_response.stats = {}
-            mock_create.return_value = mock_response
+            mock_create.return_value = (
+                mock_response,
+                SimpleNamespace(usage=None, model=None),
+            )
 
             report = analyzer.aggregate_and_generate_report(
                 pr_signals=pr_signals,
@@ -314,7 +330,9 @@ class TestResearchSignalAggregation:
             )
         ]
 
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
             mock_response = MagicMock()
             mock_response.date = "2026-01-04"
             mock_response.summary_brief = "总览"
@@ -335,7 +353,10 @@ class TestResearchSignalAggregation:
             mock_response.research_signals = []
             mock_response.commit_signals = []
             mock_response.stats = {}
-            mock_create.return_value = mock_response
+            mock_create.return_value = (
+                mock_response,
+                SimpleNamespace(usage=None, model=None),
+            )
 
             report = analyzer.aggregate_and_generate_report(
                 pr_signals=pr_signals,
@@ -352,7 +373,9 @@ class TestResearchSignalAggregation:
         """全部引用悬空时清空列表，sources 为空并告警，不产生脏引用。"""
         analyzer = TrendAnalyzer(api_key="test-key")
 
-        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+        with patch.object(
+            analyzer.client.chat.completions, "create_with_completion"
+        ) as mock_create:
             mock_response = MagicMock()
             mock_response.date = "2026-01-04"
             mock_response.summary_brief = "总览"
@@ -372,7 +395,10 @@ class TestResearchSignalAggregation:
             mock_response.research_signals = []
             mock_response.commit_signals = []
             mock_response.stats = {}
-            mock_create.return_value = mock_response
+            mock_create.return_value = (
+                mock_response,
+                SimpleNamespace(usage=None, model=None),
+            )
 
             report = analyzer.aggregate_and_generate_report(
                 pr_signals=[],

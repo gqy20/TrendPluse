@@ -1,12 +1,14 @@
 """LLM 分析器基类
 
 提供统一的 LLM 客户端初始化，支持 instructor 和 Anthropic 两种模式。
+所有走本基类的 LLM 调用都会把 usage 记录到 ``llm_usage_runs``，
+通过 :meth:`get_llm_metrics_summary` 获取聚合统计。
 """
 
 import asyncio
 import inspect
 from abc import ABC
-from typing import Any
+from typing import Any, TypeVar
 
 import anthropic
 import instructor
@@ -15,6 +17,7 @@ from anthropic.types import TextBlock
 from pydantic import BaseModel, ValidationError
 
 from trendpluse.logger import get_logger
+from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
 from trendpluse.models.signal import Signal
 from trendpluse.utils.retry import create_anthropic_retry_decorator
 
@@ -22,6 +25,8 @@ logger = get_logger(__name__)
 
 # Instructor 和 Anthropic 客户端的联合类型
 LLMClient = instructor.Instructor | Anthropic
+
+T = TypeVar("T", bound=BaseModel)
 
 
 class BaseLLMAnalyzer(ABC):
@@ -74,7 +79,64 @@ class BaseLLMAnalyzer(ABC):
         if use_instructor:
             self.async_instructor_client = instructor.from_anthropic(self.async_client)  # type: ignore[assignment]
 
+        # LLM usage 记录（每次调用追加一条）
+        self.llm_usage_runs: list[AgentRunMetrics] = []
+
         logger.info("LLM 初始化: %s model=%s", self.__class__.__name__, self.model)
+
+    def _record_llm_usage(self, response: Any) -> None:
+        """从原始响应提取 usage 并记录（无 usage 时静默跳过）。"""
+        metrics = AgentRunMetrics.from_anthropic_response(response, model=self.model)
+        if metrics is not None:
+            self.llm_usage_runs.append(metrics)
+
+    def get_llm_metrics_summary(self) -> AgentMetricsSummary | None:
+        """获取本实例累计的 LLM usage 聚合统计。"""
+        return AgentMetricsSummary.from_runs(self.llm_usage_runs)
+
+    def _structured_create(
+        self,
+        *,
+        response_model: type[T],
+        messages: list[Any],
+        max_tokens: int,
+    ) -> T:
+        """instructor 结构化调用（同步），统一记录 usage。"""
+        result, raw_response = self.client.chat.completions.create_with_completion(
+            model=self.model,
+            response_model=response_model,
+            messages=messages,
+            max_tokens=max_tokens,
+        )
+        self._record_llm_usage(raw_response)
+        return result
+
+    async def _structured_create_async(
+        self,
+        *,
+        response_model: type[T],
+        messages: list[Any],
+        max_tokens: int,
+    ) -> T:
+        """instructor 结构化调用（异步），统一记录 usage。"""
+        if self.async_instructor_client is None:
+            return await asyncio.to_thread(
+                self._structured_create,
+                response_model=response_model,
+                messages=messages,
+                max_tokens=max_tokens,
+            )
+        (
+            result,
+            raw_response,
+        ) = await self.async_instructor_client.chat.completions.create_with_completion(
+            model=self.model,
+            response_model=response_model,
+            messages=messages,
+            max_tokens=max_tokens,
+        )
+        self._record_llm_usage(raw_response)
+        return result
 
     def _run_with_llm_retry(self, func):
         """统一封装 LLM 调用重试逻辑（可配置）"""
