@@ -7,7 +7,6 @@ import argparse
 import os
 from datetime import datetime
 
-from dotenv import load_dotenv
 from rich.console import Console
 
 from trendpluse.app.feishu_notifications import (
@@ -28,6 +27,7 @@ from trendpluse.cli.report_json_common import (
     print_weekly_report_summary,
     resolve_week_id,
 )
+from trendpluse.utils.env import load_env
 
 console = Console()
 
@@ -37,7 +37,7 @@ def main():
     parser = argparse.ArgumentParser(description="发送 TrendPulse 周报飞书通知")
     parser.parse_args()
 
-    load_dotenv()
+    load_env()
 
     # 获取环境变量
     config = load_feishu_cli_config()

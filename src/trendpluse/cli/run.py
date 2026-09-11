@@ -9,13 +9,13 @@ import os
 import sys
 from datetime import datetime
 
-from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 
 from trendpluse.app.runtime import run_daily_pipeline
 from trendpluse.config import Settings
 from trendpluse.logger import get_logger
+from trendpluse.utils.env import load_env
 
 console = Console()
 logger = get_logger(__name__)
@@ -88,7 +88,8 @@ def main():
     parser = argparse.ArgumentParser(description="运行 TrendPulse 每日趋势分析")
     parser.parse_args()
 
-    load_dotenv()
+    # .env 优先于进程已有的环境变量，确保主进程与 claude CLI 子进程配置一致
+    load_env()
 
     console.print(
         Panel.fit(
