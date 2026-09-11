@@ -2,15 +2,15 @@
 import { routes } from '../../lib/path';
 ---
 <footer class="mt-24">
-  <div class="tp-shell border-t border-hairline py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-    <span class="font-serif font-bold">TrendPulse<span class="text-accent">.</span></span>
-    <p class="tp-eyebrow">A quieter way to see what's next.</p>
-    <nav class="flex items-center gap-6 tp-meta">
+  <div class="tp-shell border-t border-hairline py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 tp-mono text-ink">
+    <span>TrendPulse</span>
+    <p class="text-ink-4">A quieter way to see what’s next.</p>
+    <nav class="flex items-center gap-6 text-ink-4">
       <a href={routes.home()} class="hover:text-ink transition-colors">首页</a>
       <a href={routes.reports()} class="hover:text-ink transition-colors">趋势报告</a>
       <a href={routes.discovery()} class="hover:text-ink transition-colors">项目发现</a>
       <a href={routes.repos()} class="hover:text-ink transition-colors">监控仓库</a>
-      <a href="https://github.com/gqy20/TrendPluse" target="_blank" rel="noopener" class="hover:text-ink transition-colors">GitHub</a>
     </nav>
+    <span class="text-ink-4">2026 · Daily Intelligence</span>
   </div>
 </footer>

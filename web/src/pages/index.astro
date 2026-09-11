@@ -3,9 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../lib/path';
 import { loadRepos, groupReposByOwner } from '../lib/repos';
-import StatRow from '../components/ui/StatRow.astro';
-import HeroArt from '../components/ui/HeroArt.astro';
-import { signalLabel } from '../lib/format';
+import { formatNumber } from '../lib/format';
 
 const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
 const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
@@ -13,9 +11,7 @@ const discovery = (await getCollection('discovery')).sort((a, b) => b.id.localeC
 
 const latest = daily[0];
 const latestData = latest?.data;
-const latestWeekly = weekly[0]?.data;
 const dailyDate = (id: string) => id.replace(/^report-/, '');
-const weeklyId = (id: string) => id.replace(/^weekly-/, '');
 
 const repos = loadRepos();
 const ownerGroups = groupReposByOwner(repos);
@@ -25,92 +21,113 @@ const allSignals = latestData
   ? [...latestData.engineering_signals, ...latestData.research_signals, ...latestData.commit_signals, ...latestData.release_signals]
   : [];
 const topSignal = [...allSignals].sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0))[0];
-const highImpact = latestData?.stats.high_impact_signals ?? 0;
 
-// 项目发现:最新一期推荐项目(推荐优先,其次 7 日 star 增长)
+// 项目发现:最新一期推荐项目
 const latestDiscovery = discovery[0]?.data;
 const featured = latestDiscovery
   ? [...latestDiscovery.candidates]
       .sort((a, b) => (Number(b.recommended) - Number(a.recommended)) || (b.stars_growth_7d ?? 0) - (a.stars_growth_7d ?? 0))
       .slice(0, 3)
   : [];
+
+// 监控动态:最新一期高影响信号涉及的仓库
+const recentRepos = [...allSignals]
+  .sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0))
+  .filter((s) => s.related_repos[0])
+  .slice(0, 3)
+  .map((s) => ({ repo: s.related_repos[0], title: s.title }));
+
+const statNum = (v: number) => formatNumber(v);
+const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
 ---
 
 <BaseLayout title="首页">
-  <div class="tp-shell tp-grid pt-12 pb-4">
+  <div class="tp-shell tp-grid pt-10 pb-4">
     <!-- ═══ 主栏 ═══ -->
     <div class="min-w-0">
-      <!-- Hero -->
-      <section class="grid lg:grid-cols-[minmax(0,1fr)_330px] gap-10 items-end pb-12">
+      <!-- Hero:衬线大标题 + Signal Field 视觉(设计稿 02 · Home) -->
+      <section class="grid lg:grid-cols-[minmax(0,1fr)_332px] gap-10 items-start pb-12">
         <div>
-          <p class="tp-eyebrow mb-5">SIGNAL · INSIGHT · NEXT</p>
-          <h1 class="tp-h1">更早看到变化，<br />更从容地创造未来。</h1>
-          <p class="tp-body text-ink-2 mt-6 max-w-[560px]">
-            每日追踪 GitHub 上 AI 编程生态的趋势信号——从产品发布、技术进展到行业应用，捕捉正在发生的变化。
+          <h1 class="tp-h1">让 AI 趋势<br />更早被看见</h1>
+          <p class="tp-body text-ink-2 mt-6 max-w-[720px]">
+            从海量开源、产品与研究信号中，捕捉真正重要的变化。<br />
+            TrendPulse 持续追踪 AI 编程生态，帮助你更快理解趋势与机会。
           </p>
-          <a href={latest ? routes.daily(dailyDate(latest.id)) : routes.reports()} class="tp-link inline-block mt-6">
+          <a href={latest ? routes.daily(dailyDate(latest.id)) : routes.reports()} class="tp-link inline-block mt-7 text-[14px]">
             阅读今日报告 →
           </a>
         </div>
-        <HeroArt class="hidden lg:block h-[300px] ml-auto w-[330px]" />
+        <img src={heroImg} alt="" width="332" height="300" class="hidden lg:block justify-self-end" />
       </section>
 
-      <!-- 统计条 -->
-      <div class="border-y border-hairline py-7">
-        <StatRow
-          stats={[
-            { value: daily.length, label: '日报', href: routes.reports() },
-            { value: weekly.length, label: '周报', href: routes.reports() },
-            { value: discovery.length, label: '项目发现', href: routes.discovery() },
-            { value: repos.length, label: '监控仓库', href: routes.repos() },
-          ]}
-        />
+      <!-- 统计行:mono 数字 + 竖分隔(设计稿 y=376) -->
+      <div class="border-y border-hairline py-6 mb-12 flex flex-wrap gap-y-4">
+        {[
+          { v: statNum(daily.length), label: '日报', href: routes.reports() },
+          { v: statNum(weekly.length), label: '周报', href: routes.reports() },
+          { v: statNum(discovery.length), label: '项目', href: routes.discovery() },
+          { v: statNum(repos.length), label: '仓库', href: routes.repos() },
+        ].map((s, i) => (
+          <div class:list={['flex items-start gap-4', i > 0 && 'pl-7 sm:pl-9 relative']}>
+            {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-hairline opacity-55" />}
+            <a href={s.href} class="tp-num text-[29px] hover:text-accent transition-colors">{s.v}</a>
+            <span class="tp-mono text-ink-2 mt-2.5">{s.label}</span>
+          </div>
+        ))}
       </div>
 
-      <!-- 今日情报:大编号 01 + 今日最重要变化 -->
-      {latestData && topSignal && (
-        <section class="py-14">
-          <div class="grid md:grid-cols-[150px_minmax(0,1fr)] gap-6">
-            <div class="tp-num text-[90px] text-ink">01</div>
-            <div>
-              <p class="tp-tag mb-3">今日最重要变化</p>
-              <h2 class="tp-h2">{topSignal.title}</h2>
-              <p class="tp-body text-ink-2 mt-4 max-w-[640px] line-clamp-3">{topSignal.why_it_matters}</p>
-              <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5">
-                <a href={routes.daily(dailyDate(latest!.id))} class="tp-link">阅读今日报告 →</a>
-                <span class="tp-meta">{latestData.date} · {signalLabel(topSignal.type)} · 影响 {topSignal.impact_score}/5</span>
+      <!-- 三栏卡片:最新报告 / 发现项目 / 监控动态(设计稿 Approved Home Card) -->
+      <section class="grid md:grid-cols-3 gap-6 pb-14">
+        <!-- 最新报告 -->
+        {latestData && topSignal && (
+          <a href={routes.daily(dailyDate(latest!.id))} class="tp-card p-6 flex flex-col min-h-[330px] group">
+            <h2 class="tp-section text-[20px]">最新报告</h2>
+            <p class="tp-mono text-ink-3 mt-5">{latestData.date}</p>
+            <p class="tp-mono text-[20px] leading-[1.45] mt-3 group-hover:text-accent transition-colors">{topSignal.title}</p>
+            <p class="text-[14px] leading-[1.7] text-ink-2 mt-4 line-clamp-3">{topSignal.why_it_matters}</p>
+            <p class="tp-mono text-accent mt-auto pt-5">
+              {latestData.stats.total_signals ?? 0} · {latestData.stats.high_impact_signals ?? 0} · {latestData.stats.total_prs_analyzed ?? 0}
+            </p>
+          </a>
+        )}
+
+        <!-- 发现项目 -->
+        {featured.length > 0 && (
+          <a href={routes.discovery()} class="tp-card p-6 flex flex-col min-h-[330px] group">
+            <h2 class="tp-section text-[20px]">发现项目</h2>
+            {featured.map((p) => (
+              <div class="mt-5 flex items-baseline justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="tp-mono text-[16px] font-medium group-hover:text-accent transition-colors truncate">{p.name || p.repo}</p>
+                  <p class="tp-mono text-ink-3 text-[13px] mt-0.5 truncate">{p.description}</p>
+                </div>
+                {p.stars_growth_7d != null && p.stars_growth_7d > 0 && (
+                  <span class="tp-mono text-ink-3 shrink-0">+{formatNumber(p.stars_growth_7d)}</span>
+                )}
               </div>
-            </div>
-          </div>
-        </section>
-      )}
+            ))}
+            <p class="tp-mono text-accent mt-auto pt-5">{discovery.length} 期发现 →</p>
+          </a>
+        )}
 
-      <!-- 项目发现 -->
-      {featured.length > 0 && (
-        <section class="border-t border-hairline pt-12 pb-14">
-          <div class="flex items-baseline justify-between mb-8">
-            <h2 class="tp-section">项目发现</h2>
-            <a href={routes.discovery()} class="tp-link">全部 {discovery.length} 期 →</a>
-          </div>
-          <div class="grid md:grid-cols-3 gap-8">
-            {
-              featured.map((p, i) => (
-                <a href={routes.discoveryReport(latestDiscovery!.date)} class="tp-row border-t border-hairline">
-                  <div class="tp-num text-[40px] text-ink-3 mb-3">0{i + 1}</div>
-                  <h3 class="tp-item">{p.name}</h3>
-                  <p class="tp-meta mt-2 line-clamp-2">{p.description}</p>
-                  {p.stars_growth_7d != null && p.stars_growth_7d > 0 && (
-                    <p class="tp-mono text-accent mt-2">+{p.stars_growth_7d.toLocaleString('en-US')} ★ / 7d</p>
-                  )}
-                </a>
-              ))
-            }
-          </div>
-        </section>
-      )}
+        <!-- 监控动态 -->
+        {recentRepos.length > 0 && (
+          <a href={routes.repos()} class="tp-card p-6 flex flex-col min-h-[330px] group">
+            <h2 class="tp-section text-[20px]">监控动态</h2>
+            {recentRepos.map((r) => (
+              <div class="mt-5 flex items-baseline justify-between gap-3">
+                <p class="tp-mono text-[15px] font-medium group-hover:text-accent transition-colors truncate">{r.repo}</p>
+                <span class="tp-mono text-ink-3 shrink-0">{latestData?.date.slice(5) ?? ''}</span>
+              </div>
+            ))}
+            <p class="text-[13px] text-ink-2 mt-4 line-clamp-2">{recentRepos[0]?.title}</p>
+            <p class="tp-mono text-accent mt-auto pt-5">{repos.length} 个仓库 →</p>
+          </a>
+        )}
+      </section>
 
-      <!-- 监控中的世界:组织视图 -->
-      <section class="border-t border-hairline pt-12">
+      <!-- 监控中的世界:三列机构 -->
+      <section class="border-t border-hairline pt-10">
         <div class="flex items-baseline justify-between mb-8">
           <h2 class="tp-section">监控中的世界</h2>
           <a href={routes.repos()} class="tp-link">{repos.length} 个仓库 →</a>
@@ -119,10 +136,10 @@ const featured = latestDiscovery
           {
             ownerGroups.slice(0, 6).map(([owner, list]) => (
               <div>
-                <a href={routes.repos()} class="tp-mono text-ink hover:text-accent transition-colors">
+                <a href={routes.repos()} class="tp-mono text-[15px] text-ink hover:text-accent transition-colors">
                   {owner}
                 </a>
-                <p class="tp-meta mt-1.5">{list.length} 个仓库</p>
+                <p class="tp-mono text-ink-3 mt-1">{list.length} 个仓库</p>
               </div>
             ))
           }
@@ -130,33 +147,29 @@ const featured = latestDiscovery
       </section>
     </div>
 
-    <!-- ═══ 右侧 Rail ═══ -->
+    <!-- ═══ Rail:今日索引(设计稿 mono 28px 编号体系) ═══ -->
     <aside class="tp-rail">
-      <h2 class="tp-item mb-6">今日索引</h2>
+      <h2 class="text-[20px] font-normal mb-6">今日索引</h2>
       {
-        allSignals
+        [...allSignals]
           .sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0))
           .slice(0, 4)
           .map((s, i) => (
             <a href={latest ? routes.daily(dailyDate(latest.id)) : '#'} class="tp-row border-b border-hairline">
-              <div class="flex items-start gap-3">
-                <span class="tp-num text-[26px] text-ink-3">0{i + 1}</span>
-                <span class="tp-meta text-ink leading-snug">{s.title}</span>
-              </div>
+              <span class="tp-num text-[28px] block">0{i + 1}</span>
+              <span class="text-[14px] leading-[1.5] mt-2 block">{s.title}</span>
             </a>
           ))
       }
-      {
-        latestData && (
-          <p class="tp-meta mt-6">
-            今日共 {latestData.stats.total_signals ?? 0} 个信号<br />
-            {highImpact} 个高影响变化
-          </p>
-        )
-      }
-      {latestWeekly && weekly[0] && (
-        <a href={routes.weekly(weeklyId(weekly[0].id))} class="tp-link mt-6 block">最新周报 {latestWeekly.week_id} →</a>
-      )}
+      <p class="tp-mono text-ink-2 leading-[1.7] mt-8">
+        更早看到变化，<br />更从容地创造未来。
+      </p>
+      <div class="border-t border-hairline mt-8 pt-6">
+        <p class="tp-eyebrow">TREND PULSE DAILY REPORT</p>
+        {latestData && (
+          <p class="tp-mono text-ink-2 mt-4">今日共 {latestData.stats.total_signals ?? 0} 个信号 / {latestData.stats.high_impact_signals ?? 0} 个高影响变化</p>
+        )}
+      </div>
     </aside>
   </div>
 </BaseLayout>

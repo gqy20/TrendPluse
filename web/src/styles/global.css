@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
 /*
- * TrendPulse · Editorial System
- * 暖纸底 + 墨色文字 + 单一蓝色强调 + 发丝线分区 + 大编号锚点。
- * 规范来源:设计稿「20 · Design QA / Typography & Alignment」:
- *   - 字号阶梯 58 / 36-44 / 24 / 18-20 / 16 / 13(下限)
- *   - 桌面主内容左边界 84px,主栏/Rail 分界 1340px
- *   - 触控热区 ≥44px,正文最小 16px,辅助信息 ≥13px
+ * TrendPulse · Editorial System(按 Figma 精确规格校准)
+ * 色值/字体/字号直接取自设计稿「02 · Home · Final」等画板:
+ *   - 纸底 #f9f7f1 / 墨 #0f1217 / 蓝 #1a57de / 线 #e0dfda / 卡 #fbfaf6+#e5e0d6
+ *   - 衬线(Noto Serif SC)只用于大标题;数据气质由 JetBrains Mono 承担;
+ *     正文 Noto Sans SC(系统回退 PingFang/MiSans)
  */
 
 @theme {
-  /* 字体栈:不引外部 webfont,全部系统回退 */
-  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", Georgia, "Times New Roman", serif;
-  --font-sans: "MiSans", "PingFang SC", "Noto Sans SC", "HarmonyOS Sans SC", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Mono", ui-monospace, monospace;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  --font-sans: "Noto Sans SC", "MiSans", "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
 
-  /* 编辑风色板(纸 + 墨 + 一点蓝) */
-  --color-paper: #f6f4ee;
+  /* 编辑风色板(设计稿实测值) */
+  --color-paper: #f9f7f1;
   --color-paper-deep: #ecebe4;
-  --color-ink: #1a1a18;
-  --color-ink-2: #6e6e68;
-  --color-ink-3: #9c9c94;
-  --color-hairline: #e2dfd7;
-  --color-accent: #2563eb;
-  --color-accent-deep: #1e4fc4;
+  --color-ink: #0f1217;
+  --color-ink-2: #5c6470;
+  --color-ink-3: #8b929c;
+  --color-ink-4: #9ea6b0;
+  --color-hairline: #e0dfda;
+  --color-accent: #1a57de;
+  --color-accent-deep: #1443b4;
   --color-impact: #c4472f;
-  --color-surface: #faf9f5;
+  --color-surface: #fbfaf6;
+  --color-surface-border: #e5e0d6;
 
-  /* 8 类信号 → 低饱和文字色(mono 标签用,克制不抢戏) */
+  /* 8 类信号 → 低饱和文字色 */
   --color-sig-capability: #5b7fb5;
   --color-sig-abstraction: #8f74c0;
   --color-sig-workflow: #47968e;
@@ -61,51 +61,54 @@ body {
 }
 
 /* ───────────────────────────────────────────────
- * 排印阶梯(Design QA 六级)
+ * 排印体系(设计稿实测)
  * ──────────────────────────────────────────── */
+/* Hero 大标题:衬线 Regular,64/68 */
 .tp-h1 {
   font-family: var(--font-serif);
-  font-size: clamp(34px, 4.2vw, 58px);
-  line-height: 1.15;
-  font-weight: 700;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1.06;
+  font-weight: 400;
   letter-spacing: 0.01em;
 }
+/* 核心结论:衬线,中号 */
 .tp-h2 {
   font-family: var(--font-serif);
-  font-size: clamp(26px, 2.6vw, 40px);
-  line-height: 1.25;
-  font-weight: 700;
-}
-.tp-section {
-  font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: clamp(26px, 2.4vw, 40px);
   line-height: 1.3;
-  font-weight: 700;
-}
-.tp-item {
-  font-family: var(--font-serif);
-  font-size: 19px;
-  line-height: 1.45;
   font-weight: 600;
+}
+/* 区块标题:Sans Medium 24(设计稿"最新报告/发现项目/监控动态") */
+.tp-section {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+/* 列表/条目标题:mono(设计稿卡片标题用 JetBrains Mono) */
+.tp-item {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 500;
 }
 .tp-meta {
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--color-ink-2);
 }
 .tp-eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.06em;
   color: var(--color-ink-3);
 }
+/* 数字锚点:mono Medium(设计稿统计数字/rail 编号/超大序号全是 mono) */
 .tp-num {
-  /* 超大装饰序号:衬线数字,页面的视觉锚点 */
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-variant-numeric: lining-nums;
-  line-height: 0.9;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 .tp-mono {
   font-family: var(--font-mono);
@@ -119,7 +122,7 @@ body {
   border-color: var(--color-hairline);
 }
 
-/* 主内容 + 右侧 Rail 的编辑式两栏(1600 桌面稿,分界 1340px) */
+/* 主内容 + 右侧 Rail(1600 桌面稿:左边界 84px,rail 分界 1340px) */
 .tp-shell {
   max-width: 1600px;
   margin-inline: auto;
@@ -128,22 +131,37 @@ body {
 .tp-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 200px;
-  gap: clamp(28px, 3.4vw, 60px);
+  gap: 0;
+}
+/* rail 与主栏间距:主栏右侧留 clamp,rail 左发丝线 */
+.tp-grid > :first-child {
+  padding-right: clamp(28px, 3.4vw, 60px);
 }
 @media (max-width: 1100px) {
   .tp-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+  .tp-grid > :first-child {
+    padding-right: 0;
+  }
 }
 
-/* 右侧 Rail:竖向索引栏,左侧发丝线 */
 .tp-rail {
   border-left: 1px solid var(--color-hairline);
-  padding-left: clamp(20px, 1.6vw, 28px);
+  padding-left: clamp(20px, 1.7vw, 28px);
 }
 
-/* 链接:编辑式,蓝色 + 箭头 */
+/* 白卡(设计稿 Approved Home Card) */
+.tp-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: 8px;
+}
+
+/* 链接:蓝 mono 小字(设计稿规格) */
 .tp-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
   color: var(--color-accent);
   text-decoration: none;
   white-space: nowrap;
@@ -153,7 +171,7 @@ body {
   text-underline-offset: 3px;
 }
 
-/* mono 小标签(如 PROJECT / TREND / 判断) */
+/* mono 小标签 */
 .tp-tag {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -162,19 +180,19 @@ body {
   color: var(--color-accent);
 }
 
-/* 高影响语义:红 */
 .tp-impact-high {
   color: var(--color-impact);
 }
 
-/* Banner:部分数据 / 信息提示(纸色系) */
+/* Banner:部分数据 / 信息提示 */
 .tp-banner {
-  border: 1px solid var(--color-hairline);
+  border: 1px solid var(--color-surface-border);
   background: var(--color-surface);
   padding: 12px 16px;
   display: flex;
   gap: 10px;
   align-items: baseline;
+  border-radius: 8px;
 }
 .tp-banner[data-tone='warning'] {
   border-left: 3px solid var(--color-status-warning);
@@ -183,7 +201,7 @@ body {
   border-left: 3px solid var(--color-accent);
 }
 
-/* 表格:发丝线行,表头小灰字,首行粗底线 */
+/* 表格:发丝线行,表头小灰字 */
 .tp-table {
   width: 100%;
   border-collapse: collapse;

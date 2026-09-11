@@ -3,7 +3,6 @@ import { routes } from '../../lib/path';
 
 const base = import.meta.env.BASE_URL;
 const rawPath = Astro.url.pathname;
-// 去掉 base 前缀,得到根相对路径用于高亮判断
 const relPath = rawPath.startsWith(base) ? rawPath.slice(base.length) : rawPath;
 
 const nav = [
@@ -12,49 +11,53 @@ const nav = [
   { href: routes.discovery(), label: '项目发现', active: relPath.startsWith('/discovery') },
   { href: routes.repos(), label: '监控仓库', active: relPath.startsWith('/repos') },
 ];
+const iconUrl = (p: string) => `${import.meta.env.BASE_URL}assets/${p}`;
 ---
-<header class="tp-shell relative">
+<header class="tp-shell">
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 sm:h-[92px] py-4 sm:py-0">
-    <!-- 品牌:衬线字标 + 小注 -->
-    <a href={routes.home()} class="flex items-baseline gap-3 group">
-      <span class="font-serif text-[21px] sm:text-[28px] font-bold tracking-tight leading-none">TrendPulse<span class="text-accent">.</span></span>
-      <span class="tp-eyebrow hidden sm:inline">情报屏</span>
+    <!-- 品牌:bolt + mono 字标(设计稿规格) -->
+    <a href={routes.home()} class="flex items-center gap-2.5">
+      <img src={iconUrl('bolt.svg')} alt="" width="20" height="24" class="h-[24px] w-[20px]" />
+      <span class="tp-num text-[27px] tracking-tight leading-none">TrendPulse</span>
     </a>
 
-    <nav class="flex items-center gap-4 sm:gap-7 text-[13px] sm:text-[15px] whitespace-nowrap order-last sm:order-none -ml-1 sm:ml-0">
+    <!-- 导航:104px 节距,14px Sans Medium,激活蓝+下划线 -->
+    <nav class="flex items-center gap-6 lg:gap-9 text-[14px] whitespace-nowrap order-last sm:order-none -ml-1 sm:ml-0">
       {nav.map((item) => (
         <a
           href={item.href}
           class:list={[
-            'relative py-1 transition-colors whitespace-nowrap',
-            item.active ? 'text-accent font-medium' : 'text-ink-2 hover:text-ink',
+            'relative py-2 transition-colors font-medium whitespace-nowrap',
+            item.active ? 'text-accent font-bold' : 'text-[#13171f] hover:text-accent',
           ]}
         >
           {item.label}
-          {item.active && <span class="absolute -bottom-[2px] left-0 right-0 h-[2px] bg-accent" />}
+          {item.active && <span class="absolute -bottom-[14px] left-1/2 -translate-x-1/2 w-10 h-[2px] bg-accent" />}
         </a>
       ))}
     </nav>
 
-    <div class="flex items-center gap-4">
+    <!-- 搜索 + 头像:40px 圆形按钮(设计稿 Interaction 组件) -->
+    <div class="flex items-center gap-3">
       <a
         href={routes.search()}
         data-search-trigger
-        class="flex items-center gap-2 text-ink-2 hover:text-ink transition-colors min-h-[44px] min-w-[44px] justify-center sm:justify-start sm:min-h-0 sm:min-w-0"
         aria-label="搜索"
+        class="inline-flex items-center justify-center size-[40px] rounded-full hover:bg-[#f1efe8] transition-colors"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></svg>
-        <span class="hidden md:inline tp-meta">探索更大的技术视野</span>
+        <img src={iconUrl('icon-search.svg')} alt="" width="18" height="18" />
       </a>
       <a
         href="https://github.com/gqy20/TrendPluse"
         target="_blank"
         rel="noopener"
         aria-label="GitHub 仓库"
-        class="inline-flex items-center justify-center w-[30px] h-[30px] rounded-full border border-hairline text-ink-2 hover:text-accent hover:border-accent transition-colors tp-mono"
+        class="inline-flex items-center justify-center size-[40px] rounded-full bg-[#f6f4ee] hover:opacity-80 transition-opacity"
       >
-        T
+        <img src={iconUrl('icon-account.svg')} alt="" width="18" height="18" />
       </a>
     </div>
   </div>
+  <!-- 全局分隔线:64px 边界(设计稿 y=92) -->
+  <div class="border-t border-hairline" />
 </header>
