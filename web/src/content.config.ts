@@ -33,6 +33,92 @@ const repoActivitySchema = z
   })
   .passthrough();
 
+// 与后端 models/signal.py ReleaseSummary 对齐
+const releaseSummarySchema = z.object({
+  change_type: z.string().catch(''),
+  key_changes: z.array(z.string()).default([]),
+  summary_cn: z.string().catch(''),
+  impact_level: z.coerce.number().nullish(),
+});
+
+// 与后端 models/signal.py ReleaseInfo 对齐
+const releaseInfoSchema = z
+  .object({
+    repo: z.string().catch(''),
+    version: z.string().catch(''),
+    author: z.string().catch(''),
+    date: z.string().catch(''),
+    summary: z.string().catch(''),
+    url: z.string().catch(''),
+    assets_count: z.coerce.number().nullish(),
+    ai_summary: releaseSummarySchema.nullish(),
+  })
+  .passthrough();
+
+// 与后端 models/signal.py ReleasesData 对齐
+const releasesDataSchema = z
+  .object({
+    total_count: z.coerce.number().nullish(),
+    unique_repos_count: z.coerce.number().nullish(),
+    releases: z.array(releaseInfoSchema).default([]),
+  })
+  .passthrough();
+
+// 与后端 models/signal.py ReportStats 对齐
+const reportStatsSchema = z
+  .object({
+    total_signals: z.coerce.number().nullish(),
+    pr_count: z.coerce.number().nullish(),
+    commit_count: z.coerce.number().nullish(),
+    release_count: z.coerce.number().nullish(),
+    unique_repos: z.coerce.number().nullish(),
+    total_prs_analyzed: z.coerce.number().nullish(),
+    total_releases: z.coerce.number().nullish(),
+    high_impact_signals: z.coerce.number().nullish(),
+    total_commits_analyzed: z.coerce.number().nullish(),
+    total_releases_analyzed: z.coerce.number().nullish(),
+    total_breaking_changes: z.coerce.number().nullish(),
+  })
+  .passthrough();
+
+// 与后端 BreakingChangesDetector 输出结构对齐
+const breakingChangeSchema = z.object({
+  repo: z.string().catch(''),
+  tag_name: z.string().catch(''),
+  has_breaking: z.boolean().nullish(),
+  changes: z
+    .array(
+      z.object({
+        description: z.string().catch(''),
+        impact: z.string().catch(''),
+        category: z.string().catch(''),
+      })
+    )
+    .default([]),
+});
+
+// 与后端 models/issue_agent.py IssueAgentPainPoint 对齐（渲染所需字段子集）
+const painPointSchema = z
+  .object({
+    topic: z.string().catch(''),
+    summary: z.string().nullish(),
+    category: z.string().nullish(),
+    count: z.coerce.number().nullish(),
+    affected_repos: z.array(z.string()).default([]),
+    sample_urls: z.array(z.string()).default([]),
+    priority: z.string().nullish(),
+  })
+  .passthrough();
+
+// issue_insights 仅渲染这三个字段，其余 passthrough 保留
+const issueInsightsSchema = z
+  .object({
+    summary_brief: z.string().nullish(),
+    global_highlights: z.array(z.string()).nullish(),
+    top_pain_points: z.array(painPointSchema).nullish(),
+  })
+  .passthrough();
+
 const dailySchema = z
   .object({
     date: z.string().catch(''),
@@ -41,7 +127,7 @@ const dailySchema = z
     research_signals: z.array(signalSchema).default([]),
     commit_signals: z.array(signalSchema).default([]),
     release_signals: z.array(signalSchema).default([]),
-    stats: z.record(z.string(), z.unknown()).default({}),
+    stats: reportStatsSchema.catch({}),
     activity: z
       .object({
         total_commits: z.coerce.number().nullish(),
@@ -50,10 +136,10 @@ const dailySchema = z
       })
       .passthrough()
       .nullish(),
-    releases: z.record(z.string(), z.unknown()).nullish(),
-    breaking_changes: z.unknown().nullish(),
+    releases: releasesDataSchema.nullish(),
+    breaking_changes: z.array(breakingChangeSchema).nullish(),
     monitored_repos: z.array(z.string()).default([]),
-    issue_insights: z.record(z.string(), z.unknown()).nullish(),
+    issue_insights: issueInsightsSchema.nullish(),
     top_new_trends: z.array(z.string()).default([]),
     top_continuing_trends: z.array(z.string()).default([]),
     historical_basis_dates: z.array(z.string()).default([]),
@@ -97,6 +183,14 @@ const weeklySchema = z
   })
   .passthrough();
 
+// discovery highlight 仅渲染 summary / one_liner，其余 passthrough 保留
+const projectHighlightSchema = z
+  .object({
+    summary: z.string().nullish(),
+    one_liner: z.string().nullish(),
+  })
+  .passthrough();
+
 const discoveredProjectSchema = z
   .object({
     repo: z.string().catch(''),
@@ -119,7 +213,7 @@ const discoveredProjectSchema = z
     discovery_reason: z.string().catch(''),
     recommended: z.boolean().nullish(),
     recommendation_priority: z.string().catch(''),
-    highlight: z.record(z.string(), z.unknown()).nullish(),
+    highlight: projectHighlightSchema.nullish(),
   })
   .passthrough();
 
@@ -162,3 +256,10 @@ export type DailyReport = z.infer<typeof dailySchema>;
 export type WeeklyReport = z.infer<typeof weeklySchema>;
 export type DiscoveryReport = z.infer<typeof discoverySchema>;
 export type RepoActivity = z.infer<typeof repoActivitySchema>;
+export type ReleaseSummaryInfo = z.infer<typeof releaseSummarySchema>;
+export type ReleaseInfo = z.infer<typeof releaseInfoSchema>;
+export type ReleasesData = z.infer<typeof releasesDataSchema>;
+export type ReportStats = z.infer<typeof reportStatsSchema>;
+export type IssueInsights = z.infer<typeof issueInsightsSchema>;
+export type PainPoint = z.infer<typeof painPointSchema>;
+export type ProjectHighlight = z.infer<typeof projectHighlightSchema>;

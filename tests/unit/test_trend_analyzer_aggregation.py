@@ -296,3 +296,91 @@ class TestResearchSignalAggregation:
         )
         assert "category 判定标准" in pr_prompt
         assert "防止过度分类" in pr_prompt
+
+    def test_dangling_source_signal_ids_removed(self):
+        """悬空 ID（LLM 幻觉）必须从 source_signal_ids 剔除，不进前端与历史索引。"""
+        analyzer = TrendAnalyzer(api_key="test-key")
+
+        pr_signals = [
+            Signal(
+                id="pr-0",
+                title="真实信号",
+                type="capability",
+                category="engineering",
+                impact_score=4,
+                why_it_matters="真实存在",
+                sources=["https://github.com/owner/repo/pull/1"],
+                related_repos=["owner/repo"],
+            )
+        ]
+
+        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+            mock_response = MagicMock()
+            mock_response.date = "2026-01-04"
+            mock_response.summary_brief = "总览"
+            mock_response.engineering_signals = [
+                Signal(
+                    id="trend-1",
+                    title="趋势",
+                    type="capability",
+                    category="engineering",
+                    impact_score=4,
+                    why_it_matters="混合引用",
+                    sources=[],
+                    related_repos=[],
+                    # pr-0 真实存在，pr-418 是 LLM 幻觉
+                    source_signal_ids=["pr-0", "pr-418"],
+                )
+            ]
+            mock_response.research_signals = []
+            mock_response.commit_signals = []
+            mock_response.stats = {}
+            mock_create.return_value = mock_response
+
+            report = analyzer.aggregate_and_generate_report(
+                pr_signals=pr_signals,
+                commit_signals=[],
+                release_signals=[],
+                date="2026-01-04",
+            )
+
+        trend = report.engineering_signals[0]
+        assert trend.source_signal_ids == ["pr-0"]
+        assert trend.sources == ["https://github.com/owner/repo/pull/1"]
+
+    def test_all_dangling_source_signal_ids_emptied(self):
+        """全部引用悬空时清空列表，sources 为空并告警，不产生脏引用。"""
+        analyzer = TrendAnalyzer(api_key="test-key")
+
+        with patch.object(analyzer.client.chat.completions, "create") as mock_create:
+            mock_response = MagicMock()
+            mock_response.date = "2026-01-04"
+            mock_response.summary_brief = "总览"
+            mock_response.engineering_signals = [
+                Signal(
+                    id="trend-1",
+                    title="纯幻觉趋势",
+                    type="capability",
+                    category="engineering",
+                    impact_score=4,
+                    why_it_matters="全部悬空",
+                    sources=[],
+                    related_repos=[],
+                    source_signal_ids=["pr-999", "commit-888"],
+                )
+            ]
+            mock_response.research_signals = []
+            mock_response.commit_signals = []
+            mock_response.stats = {}
+            mock_create.return_value = mock_response
+
+            report = analyzer.aggregate_and_generate_report(
+                pr_signals=[],
+                commit_signals=[],
+                release_signals=[],
+                date="2026-01-04",
+            )
+
+        trend = report.engineering_signals[0]
+        assert trend.source_signal_ids == []
+        assert trend.sources == []

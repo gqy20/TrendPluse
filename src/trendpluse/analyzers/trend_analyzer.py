@@ -602,6 +602,7 @@ class TrendAnalyzer(BaseLLMAnalyzer):
                 # 根据 IDs 查找原始 sources（确定性操作）
                 resolved_sources: list[str] = []
                 resolved_repos: set[str] = set()
+                valid_ids: list[str] = []
 
                 for sig_id in signal_ids:
                     if sig_id in signal_map:
@@ -610,11 +611,17 @@ class TrendAnalyzer(BaseLLMAnalyzer):
                         resolved_sources.extend(original_signal.sources)
                         # 收集 repos
                         resolved_repos.update(original_signal.related_repos)
+                        valid_ids.append(sig_id)
                     else:
                         from trendpluse.logger import get_logger
 
                         logger = get_logger(__name__)
-                        logger.warning(f"聚合信号引用了不存在的 ID: {sig_id}")
+                        logger.warning(
+                            f"聚合信号引用了不存在的 ID: {sig_id}，已从引用中剔除"
+                        )
+
+                # 去除悬空 ID，避免脏引用进入前端与历史索引
+                signal.source_signal_ids = valid_ids
 
                 # 去重并设置
                 signal.sources = list(set(resolved_sources))

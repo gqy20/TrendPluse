@@ -19,11 +19,7 @@ const qualityColor =
         : STATUS_COLORS.danger;
 const starsGrowth = project.stars_growth_7d;
 const highlight: string | undefined =
-  typeof project.highlight?.summary === 'string'
-    ? project.highlight.summary
-    : project.highlight?.one_liner && typeof project.highlight.one_liner === 'string'
-      ? project.highlight.one_liner
-      : undefined;
+  project.highlight?.summary ?? project.highlight?.one_liner ?? undefined;
 ---
 
 <article data-reveal data-hover class="p-4 rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] hover:border-brand-300 transition-colors flex flex-col gap-2">

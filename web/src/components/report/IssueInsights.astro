@@ -1,17 +1,17 @@
 ---
+import type {
+  IssueInsights as IssueInsightsData,
+  PainPoint,
+} from '../../content.config';
+
 interface Props {
-  insights: Record<string, unknown> | null | undefined;
+  insights: IssueInsightsData | null | undefined;
 }
 const { insights } = Astro.props;
 
-const summary: string | undefined =
-  typeof insights?.summary_brief === 'string' ? insights.summary_brief : undefined;
-const highlights: string[] = Array.isArray(insights?.global_highlights)
-  ? (insights!.global_highlights as string[])
-  : [];
-const painPoints: string[] = Array.isArray(insights?.top_pain_points)
-  ? (insights!.top_pain_points as string[])
-  : [];
+const summary: string | undefined = insights?.summary_brief ?? undefined;
+const highlights: string[] = insights?.global_highlights ?? [];
+const painPoints: PainPoint[] = insights?.top_pain_points ?? [];
 
 const visible = Boolean(summary || highlights.length || painPoints.length);
 ---
@@ -36,9 +36,30 @@ const visible = Boolean(summary || highlights.length || painPoints.length);
       {painPoints.length > 0 && (
         <div>
           <div class="text-xs uppercase tracking-wider text-[var(--tp-muted)] mb-1.5">共性问题</div>
-          <ul class="space-y-1 text-sm">
+          <ul class="space-y-1.5 text-sm">
             {painPoints.map((p) => (
-              <li class="flex gap-2"><span class="text-status-warning flex-shrink-0">!</span><span>{p}</span></li>
+              <li class="flex gap-2 items-baseline">
+                <span class="text-status-warning flex-shrink-0">!</span>
+                <span>
+                  {p.topic || '未命名主题'}
+                  {p.count != null && (
+                    <span class="ml-1.5 text-xs text-[var(--tp-muted)]">×{p.count}</span>
+                  )}
+                  {p.priority && (
+                    <span class={`ml-1.5 text-xs font-medium ${p.priority === 'P0' ? 'text-status-danger' : 'text-status-warning'}`}>{p.priority}</span>
+                  )}
+                  {p.sample_urls.length > 0 && (
+                    <a
+                      href={p.sample_urls[0]}
+                      target="_blank"
+                      rel="noopener"
+                      class="ml-1.5 text-xs text-brand-500 hover:underline"
+                    >
+                      例证
+                    </a>
+                  )}
+                </span>
+              </li>
             ))}
           </ul>
         </div>
