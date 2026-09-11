@@ -36,6 +36,9 @@ class GitHubEventsCollector(BaseGitHubCollector):
         # 确保 since 有时区信息
         since = self.ensure_timezone_aware(since)
 
+        # 失败仓库追踪（list.append 在 CPython 下线程安全）
+        failed_repos: list[str] = []
+
         # 定义获取单个仓库事件的函数
         def _fetch_one(repo_name: str) -> list[dict]:
             """获取单个仓库的事件"""
@@ -74,7 +77,7 @@ class GitHubEventsCollector(BaseGitHubCollector):
                                     "merged": pr.merged,
                                     "draft": pr.draft or False,
                                     "labels": labels,
-                                    "author": pr.user.login if pr.user else "Unknown",
+                                    "author": (pr.user.login if pr.user else "Unknown"),
                                     "additions": pr.additions,
                                     "deletions": pr.deletions,
                                     "changed_files": pr.changed_files,
@@ -87,6 +90,7 @@ class GitHubEventsCollector(BaseGitHubCollector):
             except GithubException as e:
                 # 记录错误但继续处理其他仓库
                 logger.error(f"获取仓库 {repo_name} 事件失败: {e}")
+                failed_repos.append(repo_name)
 
             return events
 
@@ -97,5 +101,24 @@ class GitHubEventsCollector(BaseGitHubCollector):
         events = []
         for event_list in all_events_lists:
             events.extend(event_list)
+
+        # 运行汇总：成功/失败/事件总数一目了然
+        ok_count = len(repos) - len(failed_repos)
+        logger.info(
+            "Events collection done: repos=%d ok=%d failed=%d events=%d",
+            len(repos),
+            ok_count,
+            len(failed_repos),
+            len(events),
+        )
+        if failed_repos:
+            preview = ", ".join(failed_repos[:10])
+            suffix = " ..." if len(failed_repos) > 10 else ""
+            logger.warning(
+                "事件采集失败仓库 %d 个: %s%s",
+                len(failed_repos),
+                preview,
+                suffix,
+            )
 
         return events

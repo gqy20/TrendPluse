@@ -60,6 +60,12 @@ class DailyPipelineApp:
 
         pr_signals = self._collect_pr_signals(day_ago)
         if not pr_signals:
+            logger.warning(
+                "今日将生成空报告（PR 信号链断点见上一条 WARNING；"
+                "commit_signals=%d, release_signals=%d）",
+                len(daily_inputs.commit_signals),
+                len(daily_inputs.release_signals),
+            )
             return cast(
                 DailyReport,
                 self.daily_report_finalizer.handle_empty_report(
@@ -92,6 +98,12 @@ class DailyPipelineApp:
         logger.info("→ [2/3] 采集并分析 PR 信号（大头：81 仓库 PR + LLM 分析）")
         pr_signals = await self._collect_pr_signals_async(day_ago)
         if not pr_signals:
+            logger.warning(
+                "今日将生成空报告（PR 信号链断点见上一条 WARNING；"
+                "commit_signals=%d, release_signals=%d）",
+                len(daily_inputs.commit_signals),
+                len(daily_inputs.release_signals),
+            )
             return cast(
                 DailyReport,
                 await self.daily_report_finalizer.handle_empty_report_async(
@@ -251,17 +263,32 @@ class DailyPipelineApp:
         """同步收集并分析 PR 信号。"""
         candidates = self._collect_pr_candidates(day_ago)
         if not candidates:
+            logger.warning("PR 信号链断点: candidates=0（事件采集/筛选后无候选）")
             return []
 
         pr_materials = self._read_pr_materials(candidates)
         if not pr_materials:
+            logger.warning(
+                "PR 信号链断点: materials=0（candidates=%d 但读取详情全失败）",
+                len(candidates),
+            )
             return []
 
         signals = self.analyzer.analyze_materials(pr_materials)
         if not signals:
+            logger.warning(
+                "PR 信号链断点: signals=0（materials=%d 但 LLM 分析全部失败/被过滤）",
+                len(pr_materials),
+            )
             return []
 
-        return cast(list[Any], self.deduplicator.deduplicate(signals))
+        pr_signals = self.deduplicator.deduplicate(signals)
+        if not pr_signals:
+            logger.warning(
+                "PR 信号链断点: after_dedup=0（signals=%d 去重后全部判定重复）",
+                len(signals),
+            )
+        return cast(list[Any], pr_signals)
 
     async def _collect_pr_signals_async(self, day_ago: datetime) -> list[Any]:
         """异步收集并分析 PR 信号。"""
@@ -273,6 +300,7 @@ class DailyPipelineApp:
             len(candidates),
         )
         if not candidates:
+            logger.warning("PR 信号链断点: candidates=0（事件采集/筛选后无候选）")
             return []
 
         step_start = time.perf_counter()
@@ -283,6 +311,10 @@ class DailyPipelineApp:
             len(pr_materials),
         )
         if not pr_materials:
+            logger.warning(
+                "PR 信号链断点: materials=0（candidates=%d 但读取详情全失败）",
+                len(candidates),
+            )
             return []
 
         step_start = time.perf_counter()
@@ -293,6 +325,10 @@ class DailyPipelineApp:
             len(signals),
         )
         if not signals:
+            logger.warning(
+                "PR 信号链断点: signals=0（materials=%d 但 LLM 分析全部失败/被过滤）",
+                len(pr_materials),
+            )
             return []
 
         step_start = time.perf_counter()
@@ -302,6 +338,11 @@ class DailyPipelineApp:
             time.perf_counter() - step_start,
             len(pr_signals),
         )
+        if not pr_signals:
+            logger.warning(
+                "PR 信号链断点: after_dedup=0（signals=%d 去重后全部判定重复）",
+                len(signals),
+            )
         return cast(list[Any], pr_signals)
 
     def _collect_issue_artifacts(self, snapshot_date: str) -> None:
@@ -396,7 +437,27 @@ class DailyPipelineApp:
                     summaries.append(summary)
 
         report.daily_llm_usage = AgentMetricsSummary.combine(summaries=summaries)
+        self._log_daily_llm_usage(report.daily_llm_usage)
         self._check_daily_token_budget(report.daily_llm_usage)
+
+    @staticmethod
+    def _log_daily_llm_usage(usage: Any) -> None:
+        """运行时打印全流程 LLM 消耗汇总（此前只在日报 JSON 落盘）。"""
+        if usage is None:
+            logger.info("Daily LLM usage: 无记录（未发生 LLM 调用）")
+            return
+        logger.info(
+            "Daily LLM usage: runs=%d models=%s tokens=%d "
+            "(in=%d out=%d cache_read=%d) nominal_cost=$%.4f "
+            "(cost 为 SDK 按 Claude 价目折算的名义值)",
+            usage.run_count,
+            ",".join(usage.models) or "-",
+            usage.usage.total_tokens,
+            usage.usage.input_tokens,
+            usage.usage.output_tokens,
+            usage.usage.cache_read_input_tokens,
+            usage.total_cost_usd,
+        )
 
     def _check_daily_token_budget(self, usage: Any) -> None:
         """token 预算软限制：超限告警不熔断（分析中途熔断会丢整批数据）。"""

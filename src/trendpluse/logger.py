@@ -1,7 +1,16 @@
-"""日志模块 - Rich 格式化支持"""
+"""日志模块 - Rich 格式化支持
+
+架构：只有根 logger ``trendpluse`` 挂 handler（控制台 + 按天轮转文件），
+子模块 logger（``trendpluse.xxx``）冒泡到根输出。避免每个模块各自挂
+文件 handler——多个轮转 handler 操作同一文件会互相冲突。
+
+文件按天轮转（``TimedRotatingFileHandler``），保留 30 天，
+轮转后文件名形如 ``trendpluse.log.2026-09-11``，天然按日期可切分。
+"""
 
 import logging
 import os
+from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 
 from rich.console import Console
@@ -12,6 +21,8 @@ install_rich_traceback(show_locals=True)
 
 console = Console()
 
+ROOT_LOGGER_NAME = "trendpluse"
+
 
 class LoggerConfig:
     """日志系统配置类"""
@@ -21,10 +32,12 @@ class LoggerConfig:
     DEFAULT_LEVEL = logging.INFO
     DEFAULT_FORMAT = "%(message)s"
     FILE_FORMAT = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+    ROTATION_WHEN = "midnight"
+    ROTATION_BACKUP_COUNT = 30
 
 
 def setup_logger(
-    name: str = "trendpluse",
+    name: str = ROOT_LOGGER_NAME,
     level: int = LoggerConfig.DEFAULT_LEVEL,
     log_to_file: bool = True,
     log_dir: Path | None = None,
@@ -45,8 +58,8 @@ def setup_logger(
 
     示例:
         >>> logger = setup_logger("my_module", level=logging.DEBUG)
-        >>> logger.info("应用程序已启动")
-        >>> logger.debug("调试信息")
+        >>> logger.info("应用程序启动")
+        >>> logger.debug("调试")
     """
     env_level = os.getenv("LOG_LEVEL", "").strip().upper()
     if env_level:
@@ -57,7 +70,6 @@ def setup_logger(
     logger.propagate = False
 
     logger.handlers.clear()
-
     console_handler = RichHandler(
         console=console,
         rich_tracebacks=True,
@@ -75,7 +87,13 @@ def setup_logger(
 
         log_dir.mkdir(parents=True, exist_ok=True)
 
-        file_handler = logging.FileHandler(log_path, encoding="utf-8")
+        # 按天轮转，保留 30 天；单次 cron 运行天然落在同一天文件内
+        file_handler = TimedRotatingFileHandler(
+            log_path,
+            when=LoggerConfig.ROTATION_WHEN,
+            backupCount=LoggerConfig.ROTATION_BACKUP_COUNT,
+            encoding="utf-8",
+        )
         file_handler.setLevel(level)
         file_handler.setFormatter(logging.Formatter(LoggerConfig.FILE_FORMAT))
         logger.addHandler(file_handler)
@@ -83,9 +101,12 @@ def setup_logger(
     return logger
 
 
-def get_logger(name: str = "trendpluse") -> logging.Logger:
+def get_logger(name: str = ROOT_LOGGER_NAME) -> logging.Logger:
     """
     获取或创建日志记录器实例
+
+    ``trendpluse`` 及其子 logger 共享根 handler（冒泡输出）；
+    其他名字独立配置（测试等场景）。
 
     参数:
         name: 日志记录器名称
@@ -97,6 +118,12 @@ def get_logger(name: str = "trendpluse") -> logging.Logger:
         >>> logger = get_logger(__name__)
         >>> logger.info("模块已加载")
     """
+    if name == ROOT_LOGGER_NAME or name.startswith(ROOT_LOGGER_NAME + "."):
+        root = logging.getLogger(ROOT_LOGGER_NAME)
+        if not root.handlers:
+            setup_logger()
+        return logging.getLogger(name)
+
     logger = logging.getLogger(name)
     if not logger.handlers:
         return setup_logger(name)

@@ -41,6 +41,7 @@ async def test_run_daily_async_uses_async_empty_report_finalizer() -> None:
             activity_data=None,
             commit_signals=[],
             releases_data=None,
+            release_signals=[],
         )
     )
     cast(Any, app)._collect_pr_signals_async = AsyncMock(return_value=[])

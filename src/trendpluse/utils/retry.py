@@ -1,6 +1,7 @@
 """重试装饰器工厂函数
 
 统一管理 LLM 和 GitHub API 的重试策略，避免重复的 @retry 装饰器配置。
+所有重试在等待前打 WARNING 日志（含失败原因与等待时长），重试过程不再静默。
 """
 
 import ssl
@@ -11,12 +12,45 @@ import httpx
 from github import GithubException
 from pydantic import ValidationError
 from tenacity import (
+    RetryCallState,
     retry,
     retry_if_exception,
     retry_if_exception_type,
     stop_after_attempt,
     wait_exponential,
 )
+
+from trendpluse.logger import get_logger
+
+logger = get_logger(__name__)
+
+
+def _log_retry_attempt(retry_state: RetryCallState) -> None:
+    """tenacity before_sleep 回调：重试等待前记录失败原因。"""
+
+    if retry_state.outcome is None or not retry_state.outcome.failed:
+        logger.warning(
+            "调用重试（第 %d 次尝试后）",
+            retry_state.attempt_number,
+        )
+        return
+
+    wait_seconds = retry_state.next_action.sleep if retry_state.next_action else 0.0
+    exc = retry_state.outcome.exception()
+    if isinstance(exc, ValidationError):
+        # Pydantic 验证失败日志很长，只记第一个错误
+        detail = f"ValidationError: {exc.errors()[:1]}"
+    elif exc is not None:
+        text = str(exc)[:200]
+        detail = f"{type(exc).__name__}: {text}" if text else type(exc).__name__
+    else:
+        detail = "未知错误"
+    logger.warning(
+        "第 %d 次尝试失败: %s，%.1fs 后重试",
+        retry_state.attempt_number,
+        detail[:300],
+        wait_seconds,
+    )
 
 
 def create_anthropic_retry_decorator(
@@ -68,6 +102,7 @@ def create_anthropic_retry_decorator(
         stop=stop_after_attempt(max_attempts),
         wait=wait_exponential(multiplier=1, min=wait_min, max=wait_max),
         retry=retry_if_exception_type(_retryable_errors),
+        before_sleep=_log_retry_attempt,
         reraise=True,
     )
 
@@ -121,5 +156,6 @@ def create_github_retry_decorator(
         stop=stop_after_attempt(max_attempts),
         wait=wait_exponential(multiplier=1, min=wait_min, max=wait_max),
         retry=retry_if_exception(_retryable),
+        before_sleep=_log_retry_attempt,
         reraise=True,
     )
