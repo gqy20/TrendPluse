@@ -149,6 +149,12 @@ logs/
 data/issue_snapshots/
 data/issues/
 
+# 运行态缓存：由 pipeline 生成，不入库（CI 也只提交 reports/）
+# signal_history.json 为信号去重历史，history/ 为日报历史索引，snapshots/ 为采集快照
+data/signal_history.json
+data/history/
+data/snapshots/
+
 # 现代工具
 .ruff_cache/
 .hatch/
