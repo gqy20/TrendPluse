@@ -100,6 +100,7 @@ def discover(
     actionable_limit: int = 10,
     highlight_limit: int = 10,
     output_dir: Path | None = None,
+    actionable_dir: Path | None = None,
 ) -> DiscoveryReport:
     """执行项目发现流程。"""
     actual_settings = settings or Settings()
@@ -193,7 +194,16 @@ def discover(
         json_file = output_dir / f"discovery-{report.date}.json"
         reporter.save_json(report, json_file)
 
-        actionable_file = output_dir / f"discovery-{report.date}-actionable.json"
+        if actionable_dir is not None:
+            effective_actionable_dir = actionable_dir
+        else:
+            # 中间产物不入库：actionable 落 data/（gitignored），
+            # 只被 bridge_discovery_to_monitoring 消费一次
+            effective_actionable_dir = Path("data/discovery")
+        effective_actionable_dir.mkdir(parents=True, exist_ok=True)
+        actionable_file = (
+            effective_actionable_dir / f"discovery-{report.date}-actionable.json"
+        )
         actionable_candidates = build_actionable_candidates(
             report.candidates, max_candidates=actionable_limit
         )

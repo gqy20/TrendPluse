@@ -2,11 +2,13 @@
 
 ## Project Structure & Module Organization
 - `src/trendpluse/`: core application code (collectors, analyzers, reporters, notifiers).
-- `scripts/`: runnable entry points (e.g., `scripts/run.py`, `scripts/generate_report_index.py`).
-- `tests/`: pytest suite (primarily `tests/unit/`).
-- `reports/`: generated Markdown/JSON trend reports.
-- `docs/` and `mkdocs.yml`: documentation sources and MkDocs config.
-- `data/` and `templates/`: input data, snapshots, and Jinja templates.
+  - `src/trendpluse/prompts/`: LLM prompt templates (YAML + jinja2, rendered via `render_prompt`).
+- `scripts/`: runnable entry points (e.g., `scripts/run-daily-cron.sh`, `scripts/check_report_consistency.py`).
+- `tests/`: pytest suite (primarily `tests/unit/`; golden fixtures in `tests/fixtures/prompts/`).
+- `reports/`: generated Markdown/JSON trend reports (JSON is the source of truth; MD is a derived view).
+- `docs/`: project documentation (e.g., `docs/ROADMAP.md`).
+- `data/`: runtime state (history index, issue snapshots, discovery intermediates) — gitignored.
+- `web/`: Astro + Tailwind + GSAP frontend, deployed to GitHub Pages subpath `/TrendPluse/`.
 
 ## Build, Test, and Development Commands
 Use `uv` and the Makefile for standard tasks:
@@ -17,8 +19,7 @@ Use `uv` and the Makefile for standard tasks:
 - `make test`: run pytest.
 - `make test-cov`: pytest with coverage report (`htmlcov/`).
 - `make run`: run daily analysis (`scripts/run.py`).
-- `make gen-index`: generate report index.
-- `make docs` / `make docs-serve`: build or serve MkDocs.
+- Frontend: `cd web && pnpm check` (type check) / `pnpm build` (site build).
 
 ## Coding Style & Naming Conventions
 - Python 3.13+, `src/` layout.

@@ -119,6 +119,7 @@ class TestDiscoverProjectsIntegration:
             min_quality_score=50.0,
             days=30,
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         # 验证报告
@@ -159,6 +160,7 @@ class TestDiscoverProjectsIntegration:
         discover(
             github_token="test_token",
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         # 检查文件已创建
@@ -205,6 +207,7 @@ class TestDiscoverProjectsIntegration:
         report = discover(
             github_token="test_token",
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         assert report.total_discovered == 0
@@ -257,6 +260,7 @@ class TestDiscoverProjectsIntegration:
         report = discover(
             github_token="test_token",
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         # 应该去重，只剩 1 个
@@ -316,6 +320,7 @@ class TestDiscoverProjectsIntegration:
             github_token="test_token",
             settings=settings,
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         actionable_files = list(tmp_path.glob("discovery-*-actionable.json"))
@@ -368,6 +373,7 @@ class TestDiscoverProjectsIntegration:
             github_token="test_token",
             settings=settings,
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         actionable_file = next(tmp_path.glob("discovery-*-actionable.json"))
@@ -424,6 +430,7 @@ class TestDiscoverProjectsIntegration:
             github_token="test_token",
             settings=settings,
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         analyze_args = analyzer_instance.analyze_batch.call_args[0][0]
@@ -454,6 +461,7 @@ class TestDiscoverProjectsRealAPI:
             days=7,
             min_quality_score=50.0,
             output_dir=tmp_path,
+            actionable_dir=tmp_path,
         )
 
         assert isinstance(report, DiscoveryReport)

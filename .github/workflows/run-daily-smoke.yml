@@ -64,6 +64,11 @@ jobs:
       - name: Run daily smoke analysis
         run: uv run trendpluse-run
 
+      - name: Check report consistency (JSON/MD pairing)
+        run: |
+          # 有 JSON 必有同名 MD（孤儿 MD 仅告警），防止渲染层断链
+          uv run python scripts/check_report_consistency.py --reports-dir tmp/smoke/reports
+
       - name: Validate smoke outputs
         run: |
           REPORT_JSON="tmp/smoke/reports/daily/report-${REPORT_DATE}.json"

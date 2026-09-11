@@ -100,14 +100,14 @@ jobs:
           MAX_ADD_PER_RUN: ${{ inputs.max_add_per_run || github.event.inputs.max_add_per_run || 10 }}
         run: |
           set -e
-          BRIDGE_RESULT_FILE="reports/discovery/discovery-bridge-result.json"
+          BRIDGE_RESULT_FILE="data/discovery/discovery-bridge-result.json"
           if [ "$BRIDGE_MODE" = "off" ]; then
             echo "Bridge mode is off; skip."
             echo '{"mode":"off","status":"skipped"}' > "$BRIDGE_RESULT_FILE"
             exit 0
           fi
 
-          ACTIONABLE_FILE=$(ls -1t reports/discovery/discovery-*-actionable.json | head -1 || true)
+          ACTIONABLE_FILE=$(ls -1t data/discovery/discovery-*-actionable.json | head -1 || true)
           if [ -z "$ACTIONABLE_FILE" ]; then
             echo "No actionable file found; skip bridge."
             echo '{"mode":"'"$BRIDGE_MODE"'","status":"no_actionable_file"}' > "$BRIDGE_RESULT_FILE"
@@ -132,7 +132,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: discovery-bridge-result
-          path: reports/discovery/discovery-bridge-result.json
+          path: data/discovery/discovery-bridge-result.json
           retention-days: 30
 
       - name: Upload reports
@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: discovery-reports-json
-          path: reports/discovery/discovery-*.json
+          path: reports/discovery/discovery-????-??-??.json
           retention-days: 30
 
       - name: Commit and push reports
