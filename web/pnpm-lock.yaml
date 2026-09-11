@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/noto-sans-sc':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/noto-serif-sc':
+        specifier: ^5.3.0
+        version: 5.3.0
       astro:
         specifier: ^5.0.0
         version: 5.18.2(@types/node@26.0.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.2)(typescript@5.9.3)(yaml@2.9.0)
@@ -424,6 +433,15 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/jetbrains-mono@5.3.0':
+    resolution: {integrity: sha512-fqDfB5I9f1p1TV486aUgB9t8zP84P0O1FtQR5Ol9vjwPy+S+EIGlVYm1cvj2W5shcZMTg2nZFdVMoH5wFu8a1A==}
+
+  '@fontsource/noto-sans-sc@5.3.0':
+    resolution: {integrity: sha512-HeqIlGm0+ohOKxZLuHj1qW6r6avHH0OWdKERAcSDI0RQ+MXrteuLKA+M+5eOA8rYy0MFvOR5AT0fQo2rUkye0Q==}
+
+  '@fontsource/noto-serif-sc@5.3.0':
+    resolution: {integrity: sha512-0/zaEFkidiWldE62rTeD74x8ygUsQvejiSNtO0LQxQk3qpaHnlMZ3w4C7yH80B4KTIg8VKeFP4oSgwWMchY9+g==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -2472,6 +2490,12 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@fontsource/jetbrains-mono@5.3.0': {}
+
+  '@fontsource/noto-sans-sc@5.3.0': {}
+
+  '@fontsource/noto-serif-sc@5.3.0': {}
 
   '@img/colour@1.1.0':
     optional: true
