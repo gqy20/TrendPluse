@@ -71,11 +71,10 @@
 
 ## 附：事实基线（供后续对比）
 
-- 网关：`https://newapi.tashan.chat`，模型 `deepseek-v4-flash-aistar`
-  （`.tashan` 原写的 `deepseek-v4-flash-aistarZZ` 返回 `503 model_not_found`，group vip 下无可用 channel）
-- 网关可用模型（14 个，均标注 `supported_endpoint_types: ['openai']`，但 `/v1/messages` 实测可用）：
-  `DeepSeek-V4-Flash-0731`、`DeepSeek-V4-Pro-0813`、`GLM-5.3`、`Kimi-K3`、`Qwen3.8-Max`、
-  `deepseek-v4-flash-aistar`、`glm-5.3-flash`、`glm5.2`、`minimax-m3`、`qwen3.6-27b` 等
+- LLM 网关：第三方 OpenAI 兼容网关（地址与模型名见 `.env` / `.env.example`，不入库文档），
+  曾因模型名拼写错误返回 `503 model_not_found`（group 下无可用 channel），修正后正常
+- 网关可用模型（14 个，均标注 `supported_endpoint_types: ['openai']`，但 `/v1/messages` 实测可用），
+  具体清单以网关 `/v1/models` 实时查询为准
 - 监控仓库：80 个（由 `repos.json` 提供结构化 url + description；`.env` 中 `GITHUB_REPOS` 保持注释，
   因为设置它会覆盖 `repos.json` 的结构化配置）
 - `commit_signals` 字段落盘为 0 属**设计如此**（`reports/builder.py` 聚合后清空以避免重复展示），
