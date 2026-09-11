@@ -13,7 +13,8 @@ def load_daily_history_index(index_path: Path) -> DailyHistoryIndex:
     if not index_path.exists():
         return DailyHistoryIndex()
     content = index_path.read_text(encoding="utf-8")
-    return DailyHistoryIndex.model_validate_json(content)
+    index: DailyHistoryIndex = DailyHistoryIndex.model_validate_json(content)
+    return index
 
 
 class DailyHistoryIndexBuilder:
