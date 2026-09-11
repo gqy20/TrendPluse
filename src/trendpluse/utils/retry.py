@@ -3,9 +3,11 @@
 统一管理 LLM 和 GitHub API 的重试策略，避免重复的 @retry 装饰器配置。
 """
 
+import ssl
 from collections.abc import Callable
 
 import anthropic
+import httpx
 from github import GithubException
 from pydantic import ValidationError
 from tenacity import (
@@ -95,7 +97,10 @@ def create_github_retry_decorator(
         >>>     ...
 
     可重试的错误类型:
-        - GithubException: 所有 GitHub API 异常
+        - GithubException: 速率限制（429）与 5xx 服务端错误
+        - ssl.SSLError / httpx.TransportError: 瞬时网络中断
+          （如 GraphQL 查询的 UNEXPECTED_EOF_WHILE_READING）
+        - 4xx 永久错误不重试
 
     重试策略:
         - 指数退避：4s → 8s → 16s → ... → wait_max
@@ -106,11 +111,11 @@ def create_github_retry_decorator(
     """
 
     def _retryable(exc: BaseException) -> bool:
-        """只重试可恢复错误（速率限制 429 + 5xx）。4xx 永久错误不重试。"""
+        """只重试可恢复错误（速率限制 429 + 5xx + 瞬时网络错误）。"""
         if isinstance(exc, GithubException):
             status = getattr(exc, "status", 0) or 0
             return status == 429 or status >= 500
-        return False
+        return isinstance(exc, (ssl.SSLError, httpx.TransportError, ConnectionError))
 
     return retry(
         stop=stop_after_attempt(max_attempts),

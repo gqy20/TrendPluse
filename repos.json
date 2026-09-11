@@ -84,7 +84,7 @@
     "description": "面向开发者的开源 AI 编码助手。"
   },
   {
-    "url": "https://github.com/paul-gauthier/aider",
+    "url": "https://github.com/Aider-AI/aider",
     "description": "终端中的 AI 结对编程工具。"
   },
   {
@@ -104,7 +104,7 @@
     "description": "面向提示与工作流的知识自动化工具。"
   },
   {
-    "url": "https://github.com/ErikBjare/gptme",
+    "url": "https://github.com/gptme/gptme",
     "description": "终端中的个人 AI 助手。"
   },
   {
@@ -116,7 +116,7 @@
     "description": "经典自主代理框架。"
   },
   {
-    "url": "https://github.com/OpenDevin/OpenDevin",
+    "url": "https://github.com/OpenHands/OpenHands",
     "description": "面向软件工程任务的开放代理平台。"
   },
   {
@@ -176,7 +176,7 @@
     "description": "Hugging Face 的轻量智能体框架。"
   },
   {
-    "url": "https://github.com/ruvnet/claude-flow",
+    "url": "https://github.com/ruvnet/ruflo",
     "description": "Claude 工作流与代理编排项目。"
   },
   {
@@ -188,7 +188,7 @@
     "description": "LangChain 的深度代理实验项目。"
   },
   {
-    "url": "https://github.com/AndyMik90/Auto-Claude",
+    "url": "https://github.com/AndyMik90/Aperant",
     "description": "围绕 Claude 的自主编码代理项目。"
   },
   {
@@ -196,7 +196,7 @@
     "description": "面向开发流程的开源 AI 编码工具。"
   },
   {
-    "url": "https://github.com/openinterpreter/open-interpreter",
+    "url": "https://github.com/openinterpreter/openinterpreter",
     "description": "可执行系统命令的开放解释器代理。"
   },
   {
@@ -252,7 +252,7 @@
     "description": "微软的 AI Agent 与多代理工作流框架。"
   },
   {
-    "url": "https://github.com/block/goose",
+    "url": "https://github.com/aaif-goose/goose",
     "description": "可安装、执行、编辑和测试的开源 AI 代理。"
   },
   {
@@ -272,7 +272,7 @@
     "description": "Vercel AI SDK，聚焦 AI 应用与代理构建。"
   },
   {
-    "url": "https://github.com/vercel/ai-chatbot",
+    "url": "https://github.com/vercel/chatbot",
     "description": "Vercel 官方 AI Chatbot 模板项目。"
   },
   {

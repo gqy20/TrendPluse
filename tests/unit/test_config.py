@@ -61,7 +61,7 @@ class TestSettings:
             "cline/cline",  # AI 编程助手
             "langchain-ai/langchain",  # Agent 框架
             "openai/swarm",  # Agentic AI
-            "AndyMik90/Auto-Claude",  # 自主编程代理
+            "AndyMik90/Aperant",  # 自主编程代理（原 Auto-Claude）
         ]
         for repo in core_repos:
             assert repo in settings.github_repos, f"核心仓库 {repo} 未找到"
