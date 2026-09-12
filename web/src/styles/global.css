@@ -130,7 +130,7 @@ body {
 }
 .tp-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 200px;
+  grid-template-columns: minmax(0, 1fr) 232px;
   gap: 0;
 }
 /* rail 与主栏间距:主栏右侧留 clamp,rail 左发丝线 */

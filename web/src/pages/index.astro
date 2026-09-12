@@ -60,8 +60,8 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
         <img src={heroImg} alt="" width="332" height="300" class="hidden lg:block justify-self-end" />
       </section>
 
-      <!-- 统计行:mono 数字 + 竖分隔(设计稿 y=376) -->
-      <div class="border-y border-hairline py-6 mb-12 flex flex-wrap gap-y-4">
+      <!-- 统计行:mono 数字 + 竖分隔 -->
+      <div class="pb-14 flex flex-wrap gap-y-4">
         {[
           { v: statNum(daily.length), label: '日报', href: routes.reports() },
           { v: statNum(weekly.length), label: '周报', href: routes.reports() },

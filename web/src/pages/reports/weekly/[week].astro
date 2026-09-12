@@ -87,8 +87,8 @@ const lead = sentences.slice(1).join('。');
             <span class="px-3 py-1 bg-ink text-paper">周</span>
           </nav>
         </div>
-        <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] !font-normal max-w-[860px]">{headline}</h1>
-        {lead && <p class="tp-body text-ink-2 mt-5 max-w-[680px]">{lead}。</p>}
+        <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] !font-normal max-w-[980px]">{headline}</h1>
+        {lead && <p class="tp-body text-ink-2 mt-5 max-w-[800px]">{lead}。</p>}
         <div class="mt-8">
           <StatRow
             stats={[
@@ -171,7 +171,7 @@ const lead = sentences.slice(1).join('。');
             <h2 class="tp-section">本周活跃仓库</h2>
             <span class="tp-meta">{w.weekly_activity?.active_repos_count ?? 0} 个仓库 · {w.weekly_activity?.total_commits ?? 0} commits</span>
           </div>
-          <div class="space-y-5 max-w-[640px]">
+          <div class="space-y-5 max-w-[880px]">
             {topRepos.slice(0, 6).map((r) => (
               <div class="grid grid-cols-[minmax(0,1fr)_60px] items-center gap-4">
                 <div>

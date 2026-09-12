@@ -76,8 +76,8 @@ const vol = d.date.replaceAll('-', '.');
       <header class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 items-start pb-10">
         <div>
           <p class="tp-mono text-ink-3 mb-4">{vol}</p>
-          <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] max-w-[860px]">{headline}</h1>
-          {lead && <p class="tp-body text-[#4f5763] mt-5 max-w-[720px]">{lead}。</p>}
+          <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] max-w-[980px]">{headline}</h1>
+          {lead && <p class="tp-body text-[#4f5763] mt-5 max-w-[820px]">{lead}。</p>}
 
           <!-- 统计行:mono 30px + 竖分隔 + 置信度 5 格小柱 -->
           <div class="mt-9 flex flex-wrap items-start gap-y-4">
@@ -123,8 +123,8 @@ const vol = d.date.replaceAll('-', '.');
               <span class="tp-mono text-ink-3 ml-2">/ {total}</span>
             </div>
             <div>
-              <h2 class="tp-h1 !text-[clamp(26px,2.7vw,44px)] !leading-[1.18] !font-normal max-w-[620px]">{focus[0].title}</h2>
-              <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[580px]">{focus[0].why_it_matters}</p>
+              <h2 class="tp-h1 !text-[clamp(26px,2.7vw,44px)] !leading-[1.18] !font-normal max-w-[760px]">{focus[0].title}</h2>
+              <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[720px]">{focus[0].why_it_matters}</p>
               {focus[0].sources[0] && (
                 <a href={focus[0].sources[0]} target="_blank" rel="noopener" class="tp-link inline-block mt-5 text-[13px]">查看原始变化 →</a>
               )}
