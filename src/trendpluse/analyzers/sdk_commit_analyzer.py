@@ -344,17 +344,19 @@ class SDKCommitAnalyzer:
         batch_shas = {c.get("sha") for c in batch}
         matched = [s for s in raw_signals if s.commit_sha in batch_shas]
         hallucinated = len(raw_signals) - len(matched)
+        research_count = sum(1 for s in matched if s.category == "research")
 
         # 批次可见性：产出与 SHA 匹配率一目了然（修复"成功但零产出"盲区）
         logger.info(
             "Commit batch %d/%d done (commits=%d, raw_signals=%d, "
-            "matched=%d, sha_mismatch=%d, turns=%s, tokens=%s)",
+            "matched=%d, sha_mismatch=%d, research=%d, turns=%s, tokens=%s)",
             batch_index,
             total_batches,
             len(batch),
             len(raw_signals),
             len(matched),
             hallucinated,
+            research_count,
             result.metrics.num_turns if result.metrics else "-",
             result.metrics.usage.total_tokens if result.metrics else "-",
         )

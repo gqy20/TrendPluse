@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - `src/trendpluse/`: core application code (collectors, analyzers, reporters, notifiers).
   - `src/trendpluse/prompts/`: LLM prompt templates (YAML + jinja2, rendered via `render_prompt`).
-- `scripts/`: runnable entry points (e.g., `scripts/run-daily-cron.sh`, `scripts/check_report_consistency.py`).
+- `scripts/`: runnable entry points (e.g., `scripts/run-daily-cron.sh`).
 - `tests/`: pytest suite (primarily `tests/unit/`; golden fixtures in `tests/fixtures/prompts/`).
 - `reports/`: generated Markdown/JSON trend reports (JSON is the source of truth; MD is a derived view).
 - `docs/`: project documentation (e.g., `docs/ROADMAP.md`).

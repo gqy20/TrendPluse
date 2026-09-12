@@ -254,7 +254,23 @@ class TrendAnalyzer(BaseLLMAnalyzer):
                 continue
             signals.append(cast(Signal, result))
 
+        self._log_category_distribution("PR", signals)
         return signals
+
+    @staticmethod
+    def _log_category_distribution(source: str, signals: list[Signal]) -> None:
+        """打印上游信号 category 分布（research 分类触发的可观测性）。"""
+        if not signals:
+            return
+        counts: dict[str, int] = {}
+        for signal in signals:
+            counts[signal.category] = counts.get(signal.category, 0) + 1
+        distribution = " ".join(
+            f"{category}={count}" for category, count in sorted(counts.items())
+        )
+        logger.info(
+            "%s 信号 category 分布: %s (total=%d)", source, distribution, len(signals)
+        )
 
     async def analyze_prs_async(
         self, pr_list: list[dict], max_workers: int = 5
