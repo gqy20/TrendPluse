@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import StatRow from '../../../components/ui/StatRow.astro';
 import SignalTable from '../../../components/report/SignalTable.astro';
+import SignalTypeBar from '../../../components/report/SignalTypeBar.astro';
 import { routes } from '../../../lib/path';
 import { repoUrl } from '../../../lib/format';
 
@@ -99,6 +100,11 @@ const lead = sentences.slice(1).join('。');
             ]}
           />
         </div>
+        {allSignals.length > 0 && (
+          <div class="mt-8 max-w-[820px]">
+            <SignalTypeBar signals={allSignals} />
+          </div>
+        )}
       </header>
 
       <!-- 空周:解释为什么是空的,给下一步(设计稿 UX States) -->
@@ -117,7 +123,7 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 核心趋势 -->
       {w.core_trends.length > 0 && (
-        <section class="border-t border-hairline py-12">
+        <section class="border-t border-hairline py-12 scroll-mt-6" id="trends">
           <div class="flex items-baseline justify-between mb-8">
             <h2 class="tp-section">核心趋势 <span class="tp-num text-[22px] text-ink-3 ml-1">{String(w.core_trends.length).padStart(2, '0')}</span></h2>
             <span class="tp-meta">本周提炼的方向性判断。</span>
@@ -144,7 +150,7 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 7 日趋势地图 -->
       {weekDays.length > 0 && (
-        <section class="border-t border-hairline py-12">
+        <section class="border-t border-hairline py-12 scroll-mt-6" id="weekmap">
           <div class="flex items-baseline justify-between mb-8">
             <h2 class="tp-section">7 日信号分布</h2>
             <span class="tp-meta">每天不是一个点,而是趋势形成过程的一层证据。</span>
@@ -166,7 +172,7 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 本周活跃仓库:条形榜 -->
       {topRepos.length > 0 && (
-        <section class="border-t border-hairline py-12">
+        <section class="border-t border-hairline py-12 scroll-mt-6" id="repos">
           <div class="flex items-baseline justify-between mb-8">
             <h2 class="tp-section">本周活跃仓库</h2>
             <span class="tp-meta">{w.weekly_activity?.active_repos_count ?? 0} 个仓库 · {w.weekly_activity?.total_commits ?? 0} commits</span>
@@ -189,17 +195,31 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 全部信号 -->
       {allSignals.length > 0 && (
-        <section class="border-t border-hairline py-12">
+        <section class="border-t border-hairline py-12 scroll-mt-6" id="signals">
           <div class="flex items-baseline justify-between mb-6">
             <h2 class="tp-section">全部信号 <span class="tp-num text-[22px] text-ink-3 ml-1">{allSignals.length}</span></h2>
           </div>
-          <SignalTable signals={allSignals} time={`${w.start_date.slice(5)}+`} limit={12} />
+          <SignalTable signals={allSignals} time={`${w.start_date.slice(5)}+`} limit={0} filterable />
         </section>
       )}
     </div>
 
-    <!-- ═══ Rail ═══ -->
+    <!-- ═══ Rail:sticky 目录 + 本期信息 ═══ -->
     <aside class="tp-rail">
+      <div class="lg:sticky lg:top-6 mb-8">
+        <h2 class="text-[14px] mb-4">本页</h2>
+        <nav data-spy>
+          {[
+            ['#trends', '核心趋势'],
+            ['#weekmap', '7 日分布'],
+            ['#repos', '活跃仓库'],
+            ['#signals', '全部信号'],
+          ].map(([href, label]) => (
+            <a href={href} class="spy-link block py-1.5 tp-mono text-ink-2 hover:text-ink transition-colors">{label}</a>
+          ))}
+        </nav>
+      </div>
+
       <h2 class="tp-item mb-6">本期信息</h2>
       <dl class="space-y-2.5">
         <div class="flex justify-between gap-3"><dt class="tp-meta">周</dt><dd class="tp-mono text-ink">{w.week_id}</dd></div>
@@ -220,4 +240,27 @@ const lead = sentences.slice(1).join('。');
       <a href={routes.reports()} class="tp-link mt-8 block">浏览全部报告 →</a>
     </aside>
   </article>
+
+  <script>
+    // Scroll spy:高亮当前区块对应的目录项(与日报页同构)
+    const links = document.querySelectorAll<HTMLAnchorElement>('.spy-link');
+    const map = new Map<string, HTMLAnchorElement>();
+    links.forEach((a) => map.set(a.getAttribute('href')!.slice(1), a));
+    const sections = [...map.keys()]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (sections.length > 0 && 'IntersectionObserver' in window) {
+      const spy = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            links.forEach((a) => a.classList.remove('!text-accent'));
+            map.get((e.target as HTMLElement).id)?.classList.add('!text-accent');
+          }
+        },
+        { rootMargin: '-30% 0px -60% 0px' }
+      );
+      sections.forEach((s) => spy.observe(s));
+    }
+  </script>
 </BaseLayout>

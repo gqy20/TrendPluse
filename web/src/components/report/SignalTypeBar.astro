@@ -1,0 +1,51 @@
+---
+/**
+ * 信号分类分布条(首屏仪表化):
+ * 分段横条(宽度=类型占比,低饱和类型色)+ 图例,一眼看今天的全景。
+ */
+import type { Signal } from '../../content.config';
+import { signalLabel } from '../../lib/format';
+
+interface Props {
+  signals: Signal[];
+}
+const { signals } = Astro.props;
+
+const TYPE_COLOR: Record<string, string> = {
+  capability: 'var(--color-sig-capability)',
+  abstraction: 'var(--color-sig-abstraction)',
+  workflow: 'var(--color-sig-workflow)',
+  eval: 'var(--color-sig-eval)',
+  safety: 'var(--color-sig-safety)',
+  performance: 'var(--color-sig-performance)',
+  commit: 'var(--color-sig-commit)',
+  release: 'var(--color-sig-release)',
+};
+
+const counts = new Map<string, number>();
+for (const s of signals) counts.set(s.type, (counts.get(s.type) ?? 0) + 1);
+const parts = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+const total = signals.length || 1;
+---
+
+{parts.length > 0 && (
+  <div>
+    <div class="flex h-[8px] rounded-[2px] overflow-hidden gap-[2px]">
+      {parts.map(([t, n]) => (
+        <span
+          class="block h-full rounded-[2px]"
+          style={`width:${(n / total) * 100}%;background:${TYPE_COLOR[t] ?? 'var(--color-ink-3)'}`}
+          title={`${signalLabel(t)} ${n}`}
+        />
+      ))}
+    </div>
+    <div class="flex flex-wrap gap-x-5 gap-y-1.5 mt-3">
+      {parts.map(([t, n]) => (
+        <span class="flex items-center gap-1.5 tp-mono text-ink-2">
+          <span class="inline-block size-[7px] rounded-[2px]" style={`background:${TYPE_COLOR[t] ?? 'var(--color-ink-3)'}`} />
+          {signalLabel(t)} <span class="text-ink-3">{n}</span>
+        </span>
+      ))}
+    </div>
+  </div>
+)}
