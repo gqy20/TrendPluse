@@ -144,15 +144,22 @@ class DailyPipelineApp:
             len(detailed_releases),
         )
 
+        # workflow 级并行：release LLM（总结/信号/breaking）与 commit LLM
+        # 互不依赖，同时起跑——原串行排队的 ~220s 被吸收进 commit 分析时间窗
+        release_task: asyncio.Task[Any] | None = None
+        if self.settings.enable_release_analysis:
+            release_task = asyncio.create_task(
+                self.release_workflow.run_async(releases_data, detailed_releases)
+            )
+
         results = await self._run_async_analysis_tasks(
             detailed_commits=detailed_commits,
             detailed_releases=detailed_releases,
             snapshot_date=snapshot_date,
         )
-        if self.settings.enable_release_analysis:
-            release_result = await self.release_workflow.run_async(
-                releases_data, detailed_releases
-            )
+
+        if release_task is not None:
+            release_result = cast(ReleaseWorkflowResult, await release_task)
         else:
             # 插拔模式：跳过 release 链全部 LLM（总结/信号/breaking），
             # 原始 release 数据仍进报告展示区

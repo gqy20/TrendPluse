@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import shutil
 import tempfile
 from datetime import datetime
@@ -273,21 +274,40 @@ class SDKCommitAnalyzer:
         work_dir = tempfile.mkdtemp(prefix="commit_analyzer_")
 
         try:
-            # 分批处理：每批写独立文件
+            # 分批处理：每批写独立文件；批间并行（每批独立 agent run，
+            # 白名单随调用传递，互不共享实例状态）。单批失败不连坐。
             batches = self._split_batches(commits)
-            all_signals: list[Signal] = []
+            batch_files = [
+                self._write_commits_file(work_dir, batch, suffix=f"-batch-{index}")
+                for index, batch in enumerate(batches, 1)
+            ]
+            results = await asyncio.gather(
+                *(
+                    self._analyze_batch(
+                        batch,
+                        batch_file,
+                        batch_index=index,
+                        total_batches=len(batches),
+                    )
+                    for index, (batch, batch_file) in enumerate(
+                        zip(batches, batch_files), 1
+                    )
+                ),
+                return_exceptions=True,
+            )
 
-            for batch_index, batch in enumerate(batches, 1):
-                batch_file = self._write_commits_file(
-                    work_dir, batch, suffix=f"-batch-{batch_index}"
-                )
-                batch_signals = await self._analyze_batch(
-                    batch,
-                    batch_file,
-                    batch_index=batch_index,
-                    total_batches=len(batches),
-                )
-                all_signals.extend(batch_signals)
+            all_signals: list[Signal] = []
+            for index, result in enumerate(results, 1):
+                if isinstance(result, BaseException):
+                    logger.warning(
+                        "Commit 批次并行分析失败 (batch %d/%d): %s: %s",
+                        index,
+                        len(batches),
+                        type(result).__name__,
+                        str(result)[:200],
+                    )
+                    continue
+                all_signals.extend(result)
 
             return all_signals
 
@@ -316,13 +336,14 @@ class SDKCommitAnalyzer:
         """
         prompt = self._build_prompt(commits_file, len(batch))
 
-        # 本批白名单：agent 只能读本批文件
-        original_whitelist = self.query_engine.file_whitelist
-        self.query_engine.file_whitelist = {str(Path(commits_file).resolve())}
+        # 本批白名单随调用传递（agent 只能读本批文件）。
+        # 不再改写 query_engine 实例状态——批间并行下共享状态会互相覆盖。
         try:
             result: QueryResult[
                 CommitSignalsResult
-            ] = await self.query_engine.query_async(prompt)
+            ] = await self.query_engine.query_async(
+                prompt, file_whitelist={str(Path(commits_file).resolve())}
+            )
         except Exception as e:
             logger.warning(
                 "Commit 批次分析失败 (batch %d/%d, commits=%d): %s: %s",
@@ -333,8 +354,6 @@ class SDKCommitAnalyzer:
                 str(e)[:200],
             )
             return []
-        finally:
-            self.query_engine.file_whitelist = original_whitelist
 
         if result.metrics is not None:
             self._run_metrics.append(result.metrics)

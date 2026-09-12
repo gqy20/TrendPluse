@@ -102,17 +102,17 @@ class TestBatchIsolation:
 
     @pytest.mark.asyncio
     async def test_each_batch_gets_own_file_and_whitelist(self, tmp_path):
-        """每批独立文件，且白名单随批切换（mock query_async 层验证）。"""
+        """每批独立文件，白名单随调用传递（批间并行下互不共享实例状态）。"""
         analyzer = SDKCommitAnalyzer(batch_size=2)
         materials = [_commit_material(f"sha{i}000000") for i in range(4)]
 
         seen: list[tuple[str, frozenset[str]]] = []
         empty_output = CommitSignalsResult(signals=[])
 
-        async def fake_query_async(prompt):
-            # prompt 中含本批文件路径；白名单此刻应已切换为本批
-            assert analyzer.query_engine.file_whitelist is not None
-            seen.append((prompt, frozenset(analyzer.query_engine.file_whitelist)))
+        async def fake_query_async(prompt, *, file_whitelist=None):
+            # 白名单应以调用参数传入，而非实例状态
+            assert file_whitelist is not None
+            seen.append((prompt, frozenset(file_whitelist)))
             return SimpleNamespace(output=empty_output, metrics=None)
 
         with patch.object(analyzer.query_engine, "query_async", new=fake_query_async):
@@ -127,7 +127,7 @@ class TestBatchIsolation:
             assert batch_file in prompt
         # 两批的白名单是不同文件
         assert seen[0][1] != seen[1][1]
-        # 运行后白名单还原为初始（None）
+        # 实例状态全程不被改写（并行安全的根）
         assert analyzer.query_engine.file_whitelist is None
 
     @pytest.mark.asyncio

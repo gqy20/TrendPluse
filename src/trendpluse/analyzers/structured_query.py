@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import AsyncIterator, Callable, Sequence
+from collections.abc import AsyncIterator, Callable, Collection
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, TypeVar
@@ -63,7 +63,7 @@ class StructuredQuery[T: BaseModel]:
         stderr_callback: Callable[[str], None] | None = None,
         retry_max_attempts: int = 3,
         retry_wait_seconds: float = 1.0,
-        file_whitelist: Sequence[str] | None = None,
+        file_whitelist: Collection[str] | None = None,
     ) -> None:
         self.output_model = output_model
         self.model = model
@@ -73,18 +73,30 @@ class StructuredQuery[T: BaseModel]:
         self.stderr_callback = stderr_callback
         self.retry_max_attempts = retry_max_attempts
         self.retry_wait_seconds = retry_wait_seconds
-        # 每次调用可覆盖（_execute_query 优先用参数传入的白名单）
+        # 每次调用可覆盖（query_async 的 file_whitelist 参数优先于此实例值）
         self.file_whitelist: set[str] | None = (
             {str(p) for p in file_whitelist} if file_whitelist is not None else None
         )
 
-    async def query_async(self, prompt: str) -> QueryResult[T]:
-        """单次查询，支持验证错误重试。"""
+    async def query_async(
+        self,
+        prompt: str,
+        *,
+        file_whitelist: Collection[str] | None = None,
+    ) -> QueryResult[T]:
+        """单次查询，支持验证错误重试。
+
+        Args:
+            prompt: 查询提示词。
+            file_whitelist: 本次调用生效的文件白名单（绝对路径）。
+                并发调用各批次传各自的白名单，互不共享实例状态；
+                None 则回退到实例级白名单。
+        """
         last_exc: Exception | None = None
 
         for attempt in range(1, self.retry_max_attempts + 1):
             try:
-                return await self._execute_query(prompt)
+                return await self._execute_query(prompt, file_whitelist)
             except RETRYABLE_EXCEPTIONS as exc:
                 last_exc = exc
                 if attempt >= self.retry_max_attempts:
@@ -144,11 +156,25 @@ class StructuredQuery[T: BaseModel]:
 
         return _hook
 
-    async def _execute_query(self, prompt: str) -> QueryResult[T]:
-        """执行单次查询。"""
+    async def _execute_query(
+        self,
+        prompt: str,
+        whitelist_override: Collection[str] | None = None,
+    ) -> QueryResult[T]:
+        """执行单次查询。
+
+        Args:
+            prompt: 查询提示词。
+            whitelist_override: 调用级白名单，优先于实例级配置。
+                传空集合表示显式无白名单；None 表示未传，回退实例值。
+        """
         from claude_agent_sdk.types import HookMatcher
 
-        whitelist = self.file_whitelist
+        whitelist = (
+            {str(p) for p in whitelist_override}
+            if whitelist_override is not None
+            else self.file_whitelist
+        )
         denials: list[str] = []
 
         common_kwargs: dict[str, Any] = {
