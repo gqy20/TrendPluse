@@ -8,18 +8,18 @@
  */
 ---
 
-<div id="tp-drawer-bg" class="fixed inset-0 z-[90] bg-ink/25 hidden"></div>
-<aside
-  id="tp-drawer"
-  class="fixed right-0 top-0 bottom-0 z-[95] w-[92vw] max-w-[520px] bg-paper border-l border-ink shadow-[-24px_0_80px_-32px_rgba(26,26,24,0.4)] translate-x-full tp-fade overflow-y-auto hidden"
-  role="dialog"
-  aria-modal="true"
-  aria-label="信号详情"
->
+<dialog id="tp-drawer" aria-label="信号详情" class="signal-dialog">
   <div id="tp-drawer-content"></div>
-</aside>
+</dialog>
+<style>
+  .signal-dialog { position:fixed; inset:0 0 0 auto; margin:0; width:min(100vw,560px); height:100dvh; max-width:100vw; max-height:100dvh; border:0; padding:0; background:var(--color-paper); color:var(--color-ink); overflow-y:auto; overscroll-behavior:contain; overflow-wrap:anywhere; }
+  .signal-dialog::backdrop { background:rgb(15 18 23 / .28); }
+  .signal-dialog :global(button) { cursor:pointer; min-height:40px; }
+  .signal-dialog :global(:focus-visible) { outline:2px solid var(--color-accent); outline-offset:3px; }
+</style>
 
 <script>
+  import { renderRating } from '../../lib/ratings';
   interface Sig {
     id: string;
     title: string;
@@ -52,8 +52,9 @@
     return { label: 'SOURCE', color: 'text-ink-3' };
   }
 
-  const bg = document.getElementById('tp-drawer-bg')!;
-  const drawer = document.getElementById('tp-drawer')!;
+  const drawer = document.getElementById('tp-drawer') as HTMLDialogElement;
+  let trigger: HTMLElement | null = null;
+  let originalOverflow = '';
   const content = document.getElementById('tp-drawer-content')!;
 
   function signalsMap(): Record<string, Sig> {
@@ -69,14 +70,14 @@
   function esc(s: string): string {
     const d = document.createElement('div');
     d.textContent = s;
-    return d.innerHTML;
+    return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
   function render(s: Sig, map: Record<string, Sig>) {
-    const sources = s.sources.map((u) => {
+    const sources = s.sources.filter(u => /^https?:\/\//i.test(u)).map((u) => {
       const k = sourceKind(u);
       const short = u.replace('https://github.com/', '');
-      return `<a href="${u}" target="_blank" rel="noopener" class="tp-row border-b border-hairline flex items-baseline justify-between gap-4">
+      return `<a href="${esc(u)}" target="_blank" rel="noopener" class="tp-row border-b border-hairline flex items-baseline justify-between gap-4">
         <span class="tp-mono ${k.color}">${k.label}</span>
         <span class="tp-mono text-ink-2 line-clamp-1 text-right">${esc(short)}</span>
       </a>`;
@@ -93,7 +94,7 @@
 
     const repos = s.related_repos
       .map(
-        (r) => `<a href="https://github.com/${r}" target="_blank" rel="noopener" class="tp-mono border border-hairline px-2.5 py-1 text-ink-2 hover:text-accent hover:border-accent transition-colors">${esc(r)}</a>`
+        (r) => `<a href="https://github.com/${esc(r)}" target="_blank" rel="noopener" class="tp-mono border border-hairline px-2.5 py-1 text-ink-2 hover:text-accent hover:border-accent transition-colors">${esc(r)}</a>`
       )
       .join('');
 
@@ -110,8 +111,7 @@
         <!-- 第一层:判断 -->
         <h2 class="tp-h2 text-[28px]">${esc(s.title)}</h2>
         <div class="flex gap-5 mt-3">
-          <span class="tp-mono ${(s.impact_score ?? 0) >= 4 ? 'tp-impact-high' : 'text-ink-2'}">影响 ${s.impact_score ?? '—'}/5</span>
-          <span class="tp-mono text-ink-3">置信度 —</span>
+          <span class="flex items-center gap-3 tp-mono text-ink-2">影响 ${renderRating(s.impact_score)}</span>
         </div>
         <p class="tp-body text-ink-2 mt-5">${esc(s.why_it_matters)}</p>
 
@@ -127,41 +127,38 @@
       </div>`;
 
     document.getElementById('tp-drawer-close')?.addEventListener('click', close);
-    bindTriggers(map);
   }
 
-  function open(id: string) {
+  function open(id: string, opener: HTMLElement) {
     const map = signalsMap();
     const s = map[id];
     if (!s) return;
+    if (!drawer.open) {
+      trigger = opener;
+      originalOverflow = document.body.style.overflow;
+    }
     render(s, map);
-    bg.classList.remove('hidden');
-    drawer.classList.remove('hidden', 'translate-x-full');
+    if (!drawer.open) drawer.showModal();
     document.body.style.overflow = 'hidden';
+    drawer.scrollTop = 0;
+    document.getElementById('tp-drawer-close')?.focus({ preventScroll:true });
   }
 
-  function close() {
-    bg.classList.add('hidden');
-    drawer.classList.add('hidden', 'translate-x-full');
-    document.body.style.overflow = '';
-  }
+  function close() { drawer.close(); }
 
-  function bindTriggers(map: Record<string, Sig>) {
-    document.querySelectorAll<HTMLElement>('[data-signal-detail]').forEach((el) => {
-      if ((el as any)._tpBound) return;
-      (el as any)._tpBound = true;
-      el.addEventListener('click', (ev) => {
-        // 内部真实链接(如 sources)不拦截
-        if ((ev.target as HTMLElement).closest('a')) return;
-        ev.preventDefault();
-        open(el.dataset.signalDetail!);
-      });
-    });
-  }
-
-  bindTriggers(signalsMap());
-  bg.addEventListener('click', close);
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && !drawer.classList.contains('hidden')) close();
+  drawer.addEventListener('close', () => {
+    document.body.style.overflow = originalOverflow;
+    trigger?.focus({ preventScroll:true });
+  });
+  drawer.addEventListener('click', event => {
+    const rect = drawer.getBoundingClientRect();
+    if (event.target === drawer && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) close();
+  });
+  document.addEventListener('click', event => {
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-signal-detail]');
+    if (!target || (event.target as HTMLElement).closest('a')) return;
+    event.preventDefault();
+    const opener = target instanceof HTMLButtonElement ? target : target.querySelector<HTMLButtonElement>('button[data-signal-detail]') ?? target;
+    open(target.dataset.signalDetail!, opener);
   });
 </script>

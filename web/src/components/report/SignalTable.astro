@@ -1,196 +1,124 @@
 ---
-/**
- * 全部信号表(设计稿规格 + 筛选增强):
- * - 表头中文小灰字;编号 mono;影响 3 小柱;置信度 10 方点
- * - filterable:类型/影响筛选 chips(纯前端,数据来自行 data 属性)
- */
+import Rating from './Rating.astro';
 import type { Signal } from '../../content.config';
 import { signalLabel } from '../../lib/format';
-
-interface Props {
-  signals: Signal[];
-  start?: number;
-  time?: string;
-  limit?: number;
-  clickable?: boolean;
-  filterable?: boolean;
-}
+interface Props { signals: Signal[]; start?: number; time?: string; limit?: number; clickable?: boolean; filterable?: boolean }
 const { signals, start = 1, time, limit = 12, clickable = false, filterable = false } = Astro.props;
-
-const all = limit > 0 ? signals.slice(0, limit) : signals;
-const hidden = signals.length - all.length;
-
-/** 来源 URL → 短格式 */
+const types = [...new Set(signals.map(s => s.type))];
+/** 将来源链接压缩为可快速浏览的仓库与变更标识。 */
 function shortSource(url: string): string {
-  const m = url.match(/github\.com\/([^/]+\/[^/]+)(?:\/(pull|releases\/tag|commit|issues)\/([^/]+))?/);
-  if (!m) return url.replace(/^https?:\/\//, '').slice(0, 28);
-  const [, repo, kind, id] = m;
-  if (kind === 'pull' || kind === 'issues') return `${repo}#${id}`;
-  if (kind === 'releases/tag') return `${repo} ${id}`;
-  if (kind === 'commit') return `${repo}@${id.slice(0, 7)}`;
-  return repo;
+  const value = url.replace(/^https?:\/\/(www\.)?github\.com\//, '');
+  return value.replace('/pull/', '#').replace('/issues/', '#').replace('/releases/tag/', ' ').replace(/\/commit\/(.{7}).*/, '@$1');
 }
-
-/** 影响分 → 柱数与颜色档 */
-function impactBars(score?: number | null): { n: number; color: string } {
-  const s = score ?? 0;
-  if (s >= 4) return { n: 3, color: '#cc3b33' };
-  if (s >= 3) return { n: 2, color: '#bf732e' };
-  return { n: 1, color: '#636b78' };
-}
-
-// 筛选 chips:仅列出实际出现的类型
-const types = [...new Set(all.map((s) => s.type).filter(Boolean))];
 ---
-
-<div data-signal-table>
-  {
-    filterable && types.length > 1 && (
-      <div class="flex flex-wrap items-center gap-2 mb-5" data-signal-filters>
-        <button type="button" data-f="type:all" class="sf-chip sf-chip--on">
-          全部
-        </button>
-        {types.map((t) => (
-          <button type="button" data-f={`type:${t}`} class="sf-chip">
-            {signalLabel(t)}
-          </button>
-        ))}
-        <span class="w-px h-4 bg-hairline mx-1.5" />
-        <button type="button" data-f="impact:all" class="sf-chip sf-chip--on">
-          全部影响
-        </button>
-        <button type="button" data-f="impact:high" class="sf-chip">
-          高影响
-        </button>
-        <span class="sf-count tp-mono text-ink-3 ml-2" data-signal-count>
-          {all.length} 条
-        </span>
-      </div>
-    )
-  }
-
-  <table class="tp-table">
-    <thead>
-      <tr>
-        <th class="w-[54px] font-sans normal-case tracking-normal text-[13px] opacity-62">#</th>
-        <th class="font-sans normal-case tracking-normal text-[13px] opacity-62">标题</th>
-        <th class="w-[110px] hidden md:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">分类</th>
-        <th class="w-[190px] hidden lg:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">来源</th>
-        <th class="w-[110px] hidden md:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">时间</th>
-        <th class="w-[120px] font-sans normal-case tracking-normal text-[13px] opacity-62">影响</th>
-        <th class="w-[96px] hidden lg:table-cell font-sans normal-case tracking-normal text-[13px] opacity-62">置信度</th>
-      </tr>
-    </thead>
+<div data-signal-table data-page-size={limit > 0 ? limit : 12}>
+  {filterable && <div class="signal-controls">
+    <div class="signal-type-tags" role="group" aria-label="筛选信号分类">
+      <button type="button" data-type-filter="all" aria-pressed="true">全部</button>
+      {types.map(t => <button type="button" data-type-filter={t} aria-pressed="false">{signalLabel(t)}</button>)}
+    </div>
+    <div class="signal-impact-tags" role="group" aria-label="筛选影响程度">
+      <button type="button" data-impact-filter="all" aria-pressed="true">全部影响</button>
+      <button type="button" data-impact-filter="high" aria-pressed="false">高影响</button>
+    </div>
+    <label class="signal-search">搜索 <input type="search" data-filter="search" placeholder="标题或仓库" aria-label="搜索信号标题或仓库" /></label>
+  </div>}
+  <p class="signal-count" data-signal-count aria-live="polite">共 {signals.length} 条信号</p>
+  <table class="signal-table">
+    <thead><tr><th scope="col" class="signal-number">#</th><th scope="col">标题</th><th scope="col" class="signal-category">分类</th><th scope="col" class="signal-source">来源</th><th scope="col" class="signal-time">时间</th><th scope="col" class="signal-impact">影响</th></tr></thead>
     <tbody>
-      {
-        all.map((s, i) => {
-          const bars = impactBars(s.impact_score);
-          return (
-            <tr
-              class:list={[clickable && 'cursor-pointer']}
-              data-signal-detail={clickable ? s.id : undefined}
-              data-type={s.type}
-              data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'}
-            >
-              <td class="tp-mono text-ink-3 text-[13px]">{String(start + i).padStart(2, '0')}</td>
-              <td>
-                <div class="text-[13px] leading-[1.45]">{s.title}</div>
-                {s.related_repos[0] && <span class="tp-mono text-ink-3 text-[12px]">{s.related_repos[0]}</span>}
-              </td>
-              <td class="hidden md:table-cell text-[13px] text-[#636b78]">{signalLabel(s.type)}</td>
-              <td class="hidden lg:table-cell">
-                {s.sources[0] && (
-                  <a href={s.sources[0]} target="_blank" rel="noopener" class="tp-mono text-[12px] text-[#636b78] hover:text-accent transition-colors whitespace-nowrap">
-                    {shortSource(s.sources[0])}
-                  </a>
-                )}
-              </td>
-              <td class="tp-mono text-[12px] text-[#636b78] hidden md:table-cell">{time ?? '—'}</td>
-              <td>
-                <span class="inline-flex gap-[4px] items-center">
-                  {[1, 2, 3].map((k) => (
-                    <span class="inline-block h-[10px] w-[6px] rounded-[1px]" style={`background:${k <= bars.n ? bars.color : '#f0ede5'}`} />
-                  ))}
-                </span>
-              </td>
-              <td class="hidden lg:table-cell">
-                <span class="inline-flex gap-[2px] items-center">
-                  {Array.from({ length: 10 }).map(() => (
-                    <span class="inline-block size-[5px] rounded-[1px] bg-[#f0ede5]" />
-                  ))}
-                </span>
-              </td>
-            </tr>
-          );
-        })
-      }
+      {signals.map((s, i) => <tr class:list={['signal-entry', clickable && 'signal-clickable']} data-signal-detail={clickable ? s.id : undefined} data-type={s.type} data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'} data-search={`${s.title} ${s.related_repos.join(' ')}`.toLowerCase()}>
+        <td class="signal-number">{String(start + i).padStart(2, '0')}</td>
+        <td>
+          {clickable ? <button type="button" class="signal-title" data-signal-detail={s.id} aria-haspopup="dialog">{s.title}</button> : <span class="signal-title">{s.title}</span>}
+          {s.related_repos[0] && <span class="signal-repo">{s.related_repos[0]}</span>}
+        </td>
+        <td class="signal-category">{signalLabel(s.type)}</td>
+        <td class="signal-source">{s.sources[0] && /^https?:\/\//i.test(s.sources[0]) ? <a href={s.sources[0]} target="_blank" rel="noopener" title={s.sources[0]}>{shortSource(s.sources[0])} ↗</a> : '—'}</td>
+        <td class="signal-time">{time ?? '—'}</td>
+        <td class="signal-impact"><Rating value={s.impact_score} /></td>
+      </tr>)}
     </tbody>
   </table>
-
-  {
-    hidden > 0 && (
-      <p class="tp-mono text-ink-3 mt-4">
-        已展示前 {all.length} 条 · 共 {signals.length} 条
-      </p>
-    )
-  }
+  <p data-signal-empty hidden>没有匹配的信号，请调整筛选条件。</p>
+  <button type="button" class="signal-more" data-signal-more hidden>显示更多信号</button>
 </div>
-
 <style>
-  .sf-chip {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding: 5px 12px;
-    border: 1px solid var(--color-hairline);
-    border-radius: 999px;
-    color: var(--color-ink-2);
-    background: transparent;
-    cursor: pointer;
-    transition: all 140ms ease-out;
-  }
-  .sf-chip:hover {
-    border-color: var(--color-ink-3);
-    color: var(--color-ink);
-  }
-  .sf-chip--on {
-    background: var(--color-ink);
-    border-color: var(--color-ink);
-    color: var(--color-paper);
-  }
+  .signal-impact-tags { display:flex; flex:0 0 auto; gap:6px; }
+  .signal-type-tags { display:flex; flex:0 0 auto; gap:6px; }
+  .signal-type-tags button,.signal-impact-tags button { border:1px solid var(--color-hairline); border-radius:999px; padding:7px 11px; min-height:40px; white-space:nowrap; font-size:13px; color:var(--color-ink-2); background:transparent; }
+  .signal-type-tags button:hover,.signal-impact-tags button:hover { border-color:var(--color-ink-2); color:var(--color-ink); }
+  .signal-type-tags button[aria-pressed=true],.signal-impact-tags button[aria-pressed=true] { background:var(--color-ink); color:var(--color-paper); border-color:var(--color-ink); }
+  .signal-controls { display:flex; flex-wrap:nowrap; align-items:center; gap:16px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:thin; padding:4px; margin:0 -4px 12px; }
+  .signal-search { flex:0 0 auto; margin-left:auto; white-space:nowrap; }
+  .signal-search input { width:176px; }
+  label { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--color-ink-2); }
+  select,input { min-height:40px; border:1px solid var(--color-hairline); border-radius:6px; padding:6px 10px; background:transparent; color:var(--color-ink); max-width:100%; }
+  input::placeholder { color:var(--color-ink-2); }
+  .signal-count { font-size:12px; color:var(--color-ink-2); margin-bottom:12px; }
+  [hidden] { display:none; }
+  .signal-table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  th { padding:10px 12px; text-align:left; font-size:12px; color:var(--color-ink-2); font-weight:400; border-bottom:1px solid var(--color-hairline); }
+  td { padding:14px 12px; vertical-align:top; border-bottom:1px solid var(--color-hairline); font-size:12px; color:var(--color-ink-2); overflow-wrap:anywhere; }
+  .signal-number { width:48px; font-family:var(--font-mono); }
+  .signal-category { width:84px; }
+  .signal-source { width:24%; }
+  .signal-time { width:82px; font-family:var(--font-mono); }
+  .signal-impact { width:88px; }
+  .signal-title { display:block; width:100%; text-align:left; color:var(--color-ink); font-size:14px; line-height:1.6; background:transparent; cursor:inherit; }
+  .signal-repo { display:block; margin-top:4px; font-family:var(--font-mono); font-size:11px; color:var(--color-ink-2); }
+  .signal-clickable { cursor:pointer; }
+  .signal-clickable:hover { background:color-mix(in srgb,var(--color-accent) 4%,transparent); }
+  .signal-clickable:hover .signal-title,a:hover { color:var(--color-accent); }
+  .signal-source a { font-family:var(--font-mono); font-size:11px; }
+  button { cursor:pointer; }
+  .signal-more { margin-top:20px; border:1px solid var(--color-hairline); border-radius:6px; padding:12px 20px; font-size:14px; }
+  @media(max-width:900px) { .signal-source,.signal-time { display:none; } }
+  @media(max-width:600px) { .signal-category { display:none; } .signal-number { width:32px; } .signal-impact { width:64px; } th,td { padding:12px 6px; } }
 </style>
-
 <script>
-  // 筛选岛屿:类型 + 影响,同一 [data-signal-table] 独立
-  document.querySelectorAll('[data-signal-table]').forEach((root) => {
-    const bar = root.querySelector('[data-signal-filters]');
-    if (!bar) return;
-    const rows = Array.from(root.querySelectorAll('tbody tr'));
-    const countEl = root.querySelector('[data-signal-count]');
-    const state = { type: 'all', impact: 'all' };
-
+  document.querySelectorAll<HTMLElement>('[data-signal-table]').forEach(root => {
+    const rows = [...root.querySelectorAll<HTMLElement>('.signal-entry')];
+    const count = root.querySelector<HTMLElement>('[data-signal-count]')!;
+    const more = root.querySelector<HTMLButtonElement>('[data-signal-more]')!;
+    const empty = root.querySelector<HTMLElement>('[data-signal-empty]')!;
+    const size = Number(root.dataset.pageSize) || 12;
+    let shown = size;
+    let selectedType = 'all';
+    let selectedImpact = 'all';
     const apply = () => {
-      let visible = 0;
-      rows.forEach((r) => {
-        const el = r as HTMLElement;
-        const ok =
-          (state.type === 'all' || el.dataset.type === state.type) &&
-          (state.impact === 'all' || el.dataset.impact === state.impact);
-        el.classList.toggle('hidden', !ok);
-        if (ok) visible++;
-      });
-      if (countEl) countEl.textContent = `${visible} 条`;
+      const type = selectedType, impact = selectedImpact;
+      const search = root.querySelector<HTMLInputElement>('[data-filter=search]')?.value.trim().toLowerCase() ?? '';
+      const matches = rows.filter(row => (type === 'all' || row.dataset.type === type) && (impact === 'all' || row.dataset.impact === impact) && row.dataset.search!.includes(search));
+      rows.forEach(row => { row.hidden = true; });
+      matches.slice(0, shown).forEach(row => { row.hidden = false; });
+      count.textContent = `已显示 ${Math.min(shown, matches.length)} / ${matches.length} 条 · 共 ${rows.length} 条信号`;
+      more.hidden = shown >= matches.length;
+      more.textContent = `再显示 ${Math.min(size, Math.max(0, matches.length - shown))} 条信号`;
+      empty.hidden = matches.length > 0;
     };
-
-    bar.addEventListener('click', (ev) => {
-      const btn = (ev.target as HTMLElement).closest<HTMLButtonElement>('button[data-f]');
-      if (!btn) return;
-      const [kind, val] = btn.dataset.f!.split(':') as ['type' | 'impact', string];
-      state[kind] = val;
-      bar.querySelectorAll<HTMLButtonElement>(`button[data-f^="${kind}:"]`).forEach((b) => {
-        const on = b === btn;
-        b.classList.toggle('sf-chip--on', on);
+    root.querySelectorAll<HTMLButtonElement>('[data-type-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        selectedType = button.dataset.typeFilter!;
+        root.querySelectorAll<HTMLButtonElement>('[data-type-filter]').forEach(tag => tag.setAttribute('aria-pressed', String(tag === button)));
+        shown = size;
+        apply();
       });
-      apply();
     });
+    root.querySelectorAll<HTMLButtonElement>('[data-impact-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        selectedImpact = button.dataset.impactFilter!;
+        root.querySelectorAll<HTMLButtonElement>('[data-impact-filter]').forEach(tag => tag.setAttribute('aria-pressed', String(tag === button)));
+        shown = size;
+        apply();
+      });
+    });
+    root.querySelectorAll('[data-filter]').forEach(control => control.addEventListener('input', () => { shown = size; apply(); }));
+    more.onclick = () => {
+      const before = rows.filter(r => !r.hidden);
+      shown += size; apply();
+      rows.find(r => !r.hidden && !before.includes(r))?.querySelector('button')?.focus({ preventScroll:true });
+    };
+    apply();
   });
 </script>

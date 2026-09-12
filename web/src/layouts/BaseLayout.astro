@@ -15,9 +15,11 @@ import Palette from '../components/search/Palette.astro';
 interface Props {
   title?: string;
   description?: string;
+  fillViewport?: boolean;
 }
 const {
   title = 'TrendPulse',
+  fillViewport = true,
   description = '更早看到变化,更从容地创造未来 · GitHub 趋势情报日报',
 } = Astro.props;
 const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
@@ -29,9 +31,14 @@ const fullTitle = title === 'TrendPulse' ? title : `${title} · TrendPulse`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <meta name="theme-color" content="#1a57de" />
+    <link rel="icon" sizes="32x32" type="image/png" href={`${import.meta.env.BASE_URL}assets/brand/icon-32.png`} />
+    <link rel="alternate icon" href={`${import.meta.env.BASE_URL}favicon.ico?v=2`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
+    <link rel="manifest" href={`${import.meta.env.BASE_URL}site.webmanifest`} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg?v=2`} />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class:list={["flex flex-col", fillViewport && "min-h-screen"]}>
     <Header />
     <main class="flex-1 w-full">
       <slot />

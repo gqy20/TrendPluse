@@ -1,0 +1,35 @@
+---
+import { recordedCount } from '../../lib/report-data';
+interface Props {
+  title: string; date?: string; unit: string; sourceHref?: string; note: string;
+  rows: { label:string; value:unknown; color?:string }[];
+}
+const { title, date, unit, sourceHref, note, rows } = Astro.props;
+const values = rows.map(row => ({ ...row, count:recordedCount(row.value) }));
+const max = Math.max(1, ...values.map(row => row.count ?? 0));
+---
+<figure class="snapshot-bars" aria-label={title}>
+  <header><h2>{title}</h2><span>{date ?? '暂无报告'} · 单位：{unit}</span></header>
+  <div class="snapshot-rows">
+    {values.map(row => <div class="snapshot-row" role="img" aria-label={`${row.label}：${row.count == null ? '未记录' : `${row.count} ${unit}`}`}>
+      <span>{row.label}</span>
+      <span class="snapshot-track"><span style={`width:${(row.count ?? 0) / max * 100}%;background:${row.color ?? 'var(--color-accent)'}`} /></span>
+      <strong>{row.count == null ? '—' : row.count.toLocaleString('en-US')}</strong>
+    </div>)}
+  </div>
+  <figcaption>{sourceHref && <a href={sourceHref}>查看本期数据 →</a>}<span>{note}</span></figcaption>
+</figure>
+<style>
+  .snapshot-bars { padding-top:4px; }
+  header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px; }
+  h2 { font-size:16px; font-weight:500; }
+  header > span { font-size:11px; color:var(--color-ink-2); }
+  .snapshot-rows { display:flex; flex-direction:column; gap:18px; margin-block:24px; }
+  .snapshot-row { display:grid; grid-template-columns:92px minmax(0,1fr) 44px; align-items:center; gap:12px; font-size:12px; }
+  .snapshot-track { display:block; height:8px; background:var(--color-paper-deep); border-radius:2px; }
+  .snapshot-track > span { display:block; height:100%; border-radius:2px; }
+  strong { font-family:var(--font-mono); font-size:14px; text-align:right; font-weight:500; }
+  figcaption { font-size:12px; color:var(--color-ink-2); line-height:1.7; }
+  figcaption a { color:var(--color-accent); display:inline-block; margin-bottom:6px; }
+  figcaption > span { display:block; }
+</style>

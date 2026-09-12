@@ -1,7 +1,12 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ReadingNav from '../../../components/report/ReadingNav.astro';
+import ReportIntro from '../../../components/report/ReportIntro.astro';
+import Rating from '../../../components/report/Rating.astro';
+import WeeklySignalChart from '../../../components/report/WeeklySignalChart.astro';
 import StatRow from '../../../components/ui/StatRow.astro';
+import SignalDrawer from '../../../components/report/SignalDrawer.astro';
 import SignalTable from '../../../components/report/SignalTable.astro';
 import SignalTypeBar from '../../../components/report/SignalTypeBar.astro';
 import { routes } from '../../../lib/path';
@@ -25,43 +30,16 @@ interface Props {
   wk?: string;
   daily: CollectionEntry<'daily'>[];
 }
-const { entry, y, wk, daily } = Astro.props;
+const { entry, daily } = Astro.props;
 const w = entry.data;
 
 const allSignals = [...w.engineering_signals, ...w.research_signals].sort(
   (a, b) => (b.impact_score || 0) - (a.impact_score || 0)
 );
 
-// 周内各日信号量:用于 7 日趋势地图(ISO 周:周一为一,与后端 get_week_id 对齐)
-function isoWeekOfDay(dateStr: string): number | null {
-  const d = new Date(`${dateStr}T00:00:00Z`);
-  if (Number.isNaN(d.getTime())) return null;
-  const day = d.getUTCDay();
-  return day === 0 ? 7 : day;
-}
 const weekDays = daily
-  .filter((e) => {
-    if (!y || !wk) return false;
-    const iw = isoWeekOfDay(e.data.date);
-    if (iw == null) return false;
-    // 粗筛同 ISO 周:取该日所在周的周一,比较年-周
-    const d = new Date(`${e.data.date}T00:00:00Z`);
-    const monday = new Date(d);
-    monday.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
-    const my = monday.getUTCFullYear();
-    const jan4 = new Date(Date.UTC(my, 0, 4));
-    const week1Mon = new Date(jan4);
-    week1Mon.setUTCDate(jan4.getUTCDate() - ((jan4.getUTCDay() + 6) % 7));
-    const weekNo = Math.round((monday.getTime() - week1Mon.getTime()) / 604800000) + 1;
-    return `${my}-W${String(weekNo).padStart(2, '0')}` === `${y}-W${wk}`;
-  })
+  .filter(e => e.data.date >= w.start_date && e.data.date <= w.end_date)
   .sort((a, b) => a.data.date.localeCompare(b.data.date));
-
-const DAY_LABELS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-const dayCounts = DAY_LABELS.map(
-  (_, i) => weekDays.find((e) => isoWeekOfDay(e.data.date) === i + 1)?.data.stats.total_signals ?? 0
-);
-const maxDay = Math.max(1, ...dayCounts);
 
 // 活跃仓库榜:只展示有 commit 的仓库,条形宽度以最大值为基准
 const topReposAll = w.weekly_activity?.top_repos ?? [];
@@ -70,26 +48,21 @@ const maxCommits = Math.max(1, ...topRepos.map((r) => r.commits || 0));
 // 空周:无信号且无趋势时的整页空态
 const isEmptyWeek = allSignals.length === 0 && w.core_trends.length === 0;
 
-const sentences = (w.summary_brief || '').split('。').filter(Boolean);
-const headline = sentences[0] ? sentences[0] + '。' : `周报 · ${w.week_id}`;
-const lead = sentences.slice(1).join('。');
 ---
 
 <BaseLayout title={`周报 · ${w.week_id}`} description={w.summary_brief?.slice(0, 150)}>
-  <article class="tp-shell tp-grid pt-12 pb-8">
+  <div class="report-layout tp-shell">
+  <ReadingNav mode="weekly" date={w.start_date} label="周报" sections={[
+    { id: 'trends', label: '核心趋势', show: w.core_trends.length > 0 },
+    { id: 'repos', label: '活跃仓库', show: topRepos.length > 0 },
+    { id: 'signals', label: '全部信号', show: allSignals.length > 0 },
+  ]} />
+  <article class="report-reading pt-12 pb-8">
     <div class="min-w-0">
-      <!-- Hero:日 / 周 切换 + 核心结论 -->
-      <header class="pb-10">
-        <div class="flex items-center justify-between mb-6">
-          <p class="tp-mono text-ink-3">{w.week_id} · {w.start_date} – {w.end_date}</p>
-          <!-- 日/周切换器 -->
-          <nav class="tp-mono flex items-center border border-hairline">
-            <a href={routes.reports()} class="px-3 py-1 text-ink-3 hover:text-ink transition-colors">日</a>
-            <span class="px-3 py-1 bg-ink text-paper">周</span>
-          </nav>
-        </div>
-        <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] !font-normal max-w-[980px]">{headline}</h1>
-        {lead && <p class="tp-body text-ink-2 mt-5 max-w-[800px]">{lead}。</p>}
+      <!-- Hero:核心结论 -->
+      <header id="overview" class="hero-data pb-10">
+        <div>
+        <ReportIntro summary={w.summary_brief} fallback="一周趋势" />
         <div class="mt-8">
           <StatRow
             stats={[
@@ -100,16 +73,15 @@ const lead = sentences.slice(1).join('。');
             ]}
           />
         </div>
-        {allSignals.length > 0 && (
-          <div class="mt-8 max-w-[820px]">
-            <SignalTypeBar signals={allSignals} />
-          </div>
-        )}
+        </div>
+      <div class="hero-week-chart" id="weekmap">
+        <WeeklySignalChart compact start={w.start_date} end={w.end_date} reports={weekDays.map(day => ({ date:day.data.date, count:day.data.stats.total_signals, url:routes.daily(day.id.replace(/^report-/, '')) }))} />
+      </div>
       </header>
 
       <!-- 空周:解释为什么是空的,给下一步(设计稿 UX States) -->
       {isEmptyWeek && (
-        <section class="border-t border-hairline py-14">
+        <section class="py-14">
           <div class="border border-dashed border-hairline py-14 px-8 text-center">
             <p class="tp-item text-ink-2">这一周没有留下信号</p>
             <p class="tp-meta mt-2">该周期内监控仓库未产生满足阈值的活动,或管线停跑。可以先回到日报或查看监控仓库列表。</p>
@@ -123,7 +95,7 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 核心趋势 -->
       {w.core_trends.length > 0 && (
-        <section class="border-t border-hairline py-12 scroll-mt-6" id="trends">
+        <section class="py-12 scroll-mt-6" id="trends">
           <div class="flex items-baseline justify-between mb-8">
             <h2 class="tp-section">核心趋势 <span class="tp-num text-[22px] text-ink-3 ml-1">{String(w.core_trends.length).padStart(2, '0')}</span></h2>
             <span class="tp-meta">本周提炼的方向性判断。</span>
@@ -135,44 +107,25 @@ const lead = sentences.slice(1).join('。');
                 <span class="tp-tag pt-2">{t.theme}</span>
                 <div>
                   <h3 class="tp-item">{t.title}</h3>
-                  <p class="tp-meta mt-2">{t.description}</p>
+                  <p class="text-[15px] text-ink-2 leading-relaxed mt-2">{t.description}</p>
+                  {allSignals.some(s => t.signal_ids.includes(s.id)) && <details class="mt-3">
+                    <summary class="tp-link cursor-pointer py-2">查看支撑信号</summary>
+                    <div class="flex flex-col items-start gap-2 mt-2">
+                      {allSignals.filter(s => t.signal_ids.includes(s.id)).map(s => <button type="button" class="text-left text-[14px] text-accent py-2 cursor-pointer" data-signal-detail={s.id}>{s.title} →</button>)}
+                    </div>
+                  </details> }
                 </div>
-                <div class="pt-2 hidden md:block">
-                  <!-- 热度虚线:长度随影响级别,红=强(≥4)蓝=中 -->
-                  <div class:list={['border-t-2 border-dashed', (t.impact_level ?? 3) >= 4 ? 'border-impact' : 'border-accent']} style={`width:${Math.min(100, ((t.impact_level ?? 3) / 5) * 100)}%`} />
-                  <span class="tp-mono text-ink-3 mt-1.5 block">影响 {t.impact_level ?? '—'}/5</span>
-                </div>
+                <div class="pt-2 flex items-center gap-3"><span class="tp-meta">影响</span><Rating value={t.impact_level} /></div>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- 7 日趋势地图 -->
-      {weekDays.length > 0 && (
-        <section class="border-t border-hairline py-12 scroll-mt-6" id="weekmap">
-          <div class="flex items-baseline justify-between mb-8">
-            <h2 class="tp-section">7 日信号分布</h2>
-            <span class="tp-meta">每天不是一个点,而是趋势形成过程的一层证据。</span>
-          </div>
-          <div class="flex items-end gap-3 sm:gap-5 h-[140px]">
-            {dayCounts.map((c, i) => (
-              <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
-                <span class="tp-mono text-ink-3">{c || ''}</span>
-                <div
-                  class:list={['w-full max-w-[34px] transition-all', c > 0 ? 'bg-accent/80' : 'bg-hairline']}
-                  style={`height:${Math.max(3, (c / maxDay) * 88)}%`}
-                />
-                <span class="tp-mono text-ink-3">{DAY_LABELS[i]}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <!-- 本周活跃仓库:条形榜 -->
       {topRepos.length > 0 && (
-        <section class="border-t border-hairline py-12 scroll-mt-6" id="repos">
+        <section class="py-12 scroll-mt-6" id="repos">
           <div class="flex items-baseline justify-between mb-8">
             <h2 class="tp-section">本周活跃仓库</h2>
             <span class="tp-meta">{w.weekly_activity?.active_repos_count ?? 0} 个仓库 · {w.weekly_activity?.total_commits ?? 0} commits</span>
@@ -195,72 +148,19 @@ const lead = sentences.slice(1).join('。');
 
       <!-- 全部信号 -->
       {allSignals.length > 0 && (
-        <section class="border-t border-hairline py-12 scroll-mt-6" id="signals">
+        <section class="py-12 scroll-mt-6" id="signals">
           <div class="flex items-baseline justify-between mb-6">
             <h2 class="tp-section">全部信号 <span class="tp-num text-[22px] text-ink-3 ml-1">{allSignals.length}</span></h2>
           </div>
-          <SignalTable signals={allSignals} time={`${w.start_date.slice(5)}+`} limit={0} filterable />
+          <div class="mb-6"><SignalTypeBar signals={allSignals} period={`${w.start_date} 至 ${w.end_date}`} targetId="signals" sourceDescription="本期周报汇总的工程与研究信号" /></div>
+          <SignalTable signals={allSignals} time={`${w.start_date.slice(5)}+`} limit={12} clickable filterable />
         </section>
       )}
     </div>
 
-    <!-- ═══ Rail:sticky 目录 + 本期信息 ═══ -->
-    <aside class="tp-rail">
-      <div class="lg:sticky lg:top-6 mb-8">
-        <h2 class="text-[14px] mb-4">本页</h2>
-        <nav data-spy>
-          {[
-            ['#trends', '核心趋势'],
-            ['#weekmap', '7 日分布'],
-            ['#repos', '活跃仓库'],
-            ['#signals', '全部信号'],
-          ].map(([href, label]) => (
-            <a href={href} class="spy-link block py-1.5 tp-mono text-ink-2 hover:text-ink transition-colors">{label}</a>
-          ))}
-        </nav>
-      </div>
-
-      <h2 class="tp-item mb-6">本期信息</h2>
-      <dl class="space-y-2.5">
-        <div class="flex justify-between gap-3"><dt class="tp-meta">周</dt><dd class="tp-mono text-ink">{w.week_id}</dd></div>
-        <div class="flex justify-between gap-3"><dt class="tp-meta">周期</dt><dd class="tp-mono text-ink text-right">{w.start_date}<br />{w.end_date}</dd></div>
-        <div class="flex justify-between gap-3"><dt class="tp-meta">信号</dt><dd class="tp-mono text-ink">{allSignals.length}</dd></div>
-        <div class="flex justify-between gap-3"><dt class="tp-meta">高影响</dt><dd class="tp-mono text-ink">{w.high_impact_signals ?? '—'}</dd></div>
-      </dl>
-      <div class="border-t border-hairline mt-8 pt-8">
-        <h2 class="tp-mono text-ink mb-5">本期日报</h2>
-        {weekDays.map((e) => (
-          <a href={routes.daily(e.data.date)} class="tp-row flex justify-between items-baseline py-3">
-            <span class="tp-mono text-ink">{e.data.date.slice(5)}</span>
-            <span class="tp-mono text-ink-3">{e.data.stats.total_signals ?? 0} 信号</span>
-          </a>
-        ))}
-        {weekDays.length === 0 && <p class="tp-meta text-ink-3">该周无日报归档</p>}
-      </div>
-      <a href={routes.reports()} class="tp-link mt-8 block">浏览全部报告 →</a>
-    </aside>
   </article>
+  </div>
 
-  <script>
-    // Scroll spy:高亮当前区块对应的目录项(与日报页同构)
-    const links = document.querySelectorAll<HTMLAnchorElement>('.spy-link');
-    const map = new Map<string, HTMLAnchorElement>();
-    links.forEach((a) => map.set(a.getAttribute('href')!.slice(1), a));
-    const sections = [...map.keys()]
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => !!el);
-    if (sections.length > 0 && 'IntersectionObserver' in window) {
-      const spy = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (!e.isIntersecting) continue;
-            links.forEach((a) => a.classList.remove('!text-accent'));
-            map.get((e.target as HTMLElement).id)?.classList.add('!text-accent');
-          }
-        },
-        { rootMargin: '-30% 0px -60% 0px' }
-      );
-      sections.forEach((s) => spy.observe(s));
-    }
-  </script>
+  <script is:inline type="application/json" id="tp-signals-data" set:html={JSON.stringify(allSignals).replace(/</g, "\\u003c")} />
+  <SignalDrawer />
 </BaseLayout>

@@ -1,4 +1,5 @@
 ---
+import SnapshotBars from '../components/data/SnapshotBars.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../lib/path';
@@ -38,7 +39,6 @@ const recentRepos = [...allSignals]
   .map((s) => ({ repo: s.related_repos[0], title: s.title }));
 
 const statNum = (v: number) => formatNumber(v);
-const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
 ---
 
 <BaseLayout title="首页">
@@ -46,18 +46,19 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
     <!-- ═══ 主栏 ═══ -->
     <div class="min-w-0">
       <!-- Hero:衬线大标题 + Signal Field 视觉(设计稿 02 · Home) -->
-      <section class="grid lg:grid-cols-[minmax(0,1fr)_332px] gap-10 items-start pb-12">
+      <section class="hero-data pb-12">
         <div>
           <h1 class="tp-h1">让 AI 趋势<br />更早被看见</h1>
           <p class="tp-body text-ink-2 mt-6 max-w-[720px]">
             从海量开源、产品与研究信号中，捕捉真正重要的变化。<br />
             TrendPulse 持续追踪 AI 编程生态，帮助你更快理解趋势与机会。
           </p>
-          <a href={latest ? routes.daily(dailyDate(latest.id)) : routes.reports()} class="tp-link inline-block mt-7 text-[14px]">
-            阅读今日报告 →
-          </a>
         </div>
-        <img src={heroImg} alt="" width="332" height="300" class="hidden lg:block justify-self-end" />
+        <SnapshotBars title="最新信号来源" date={latestData?.date} unit="条" sourceHref={latest ? routes.daily(dailyDate(latest.id)) : undefined} rows={[
+          { label:'PR 信号', value:latestData?.stats.pr_count, color:'var(--color-accent)' },
+          { label:'Commit 信号', value:latestData?.stats.commit_count, color:'var(--color-sig-workflow)' },
+          { label:'Release 信号', value:latestData?.stats.release_count, color:'var(--color-sig-release)' },
+        ]} note="来源：最新日报按来源统计的信号数。柱长与数量成比例，不与归并后的明细数量混用。" />
       </section>
 
       <!-- 统计行:mono 数字 + 竖分隔 -->
@@ -69,7 +70,6 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
           { v: statNum(repos.length), label: '仓库', href: routes.repos() },
         ].map((s, i) => (
           <div class:list={['flex items-start gap-4', i > 0 && 'pl-7 sm:pl-9 relative']}>
-            {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-hairline opacity-55" />}
             <a href={s.href} class="tp-num text-[29px] hover:text-accent transition-colors">{s.v}</a>
             <span class="tp-mono text-ink-2 mt-2.5">{s.label}</span>
           </div>
@@ -80,21 +80,27 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
       <section class="grid md:grid-cols-3 gap-6 pb-14">
         <!-- 最新报告 -->
         {latestData && topSignal && (
-          <a href={routes.daily(dailyDate(latest!.id))} class="tp-card p-6 flex flex-col min-h-[330px] group">
-            <h2 class="tp-section text-[20px]">最新报告</h2>
+          <a href={routes.daily(dailyDate(latest!.id))} class="tp-card p-6 flex flex-col group home-summary-card">
+            <header class="home-card-header">
+              <h2>最新报告</h2>
+              <div class="home-card-count">
+                <span>{latestData.stats.total_signals ?? 0} 个信号</span>
+                <small>{latestData.stats.high_impact_signals ?? 0} 重点 · {latestData.stats.total_prs_analyzed ?? 0} PR</small>
+              </div>
+            </header>
             <p class="tp-mono text-ink-3 mt-5">{latestData.date}</p>
             <p class="tp-mono text-[20px] leading-[1.45] mt-3 group-hover:text-accent transition-colors">{topSignal.title}</p>
             <p class="text-[14px] leading-[1.7] text-ink-2 mt-4 line-clamp-3">{topSignal.why_it_matters}</p>
-            <p class="tp-mono text-accent mt-auto pt-5">
-              {latestData.stats.total_signals ?? 0} · {latestData.stats.high_impact_signals ?? 0} · {latestData.stats.total_prs_analyzed ?? 0}
-            </p>
           </a>
         )}
 
         <!-- 发现项目 -->
         {featured.length > 0 && (
-          <a href={routes.discovery()} class="tp-card p-6 flex flex-col min-h-[330px] group">
-            <h2 class="tp-section text-[20px]">发现项目</h2>
+          <a href={routes.discovery()} class="tp-card p-6 flex flex-col group home-summary-card">
+            <header class="home-card-header">
+              <h2>发现项目</h2>
+              <span class="home-card-count">{discovery.length} 期发现 →</span>
+            </header>
             {featured.map((p) => (
               <div class="mt-5 flex items-baseline justify-between gap-3">
                 <div class="min-w-0">
@@ -106,14 +112,16 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
                 )}
               </div>
             ))}
-            <p class="tp-mono text-accent mt-auto pt-5">{discovery.length} 期发现 →</p>
           </a>
         )}
 
         <!-- 监控动态 -->
         {recentRepos.length > 0 && (
-          <a href={routes.repos()} class="tp-card p-6 flex flex-col min-h-[330px] group">
-            <h2 class="tp-section text-[20px]">监控动态</h2>
+          <a href={routes.repos()} class="tp-card p-6 flex flex-col group home-summary-card">
+            <header class="home-card-header">
+              <h2>监控动态</h2>
+              <span class="home-card-count">{repos.length} 个仓库 →</span>
+            </header>
             {recentRepos.map((r) => (
               <div class="mt-5 flex items-baseline justify-between gap-3">
                 <p class="tp-mono text-[15px] font-medium group-hover:text-accent transition-colors truncate">{r.repo}</p>
@@ -121,13 +129,12 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
               </div>
             ))}
             <p class="text-[13px] text-ink-2 mt-4 line-clamp-2">{recentRepos[0]?.title}</p>
-            <p class="tp-mono text-accent mt-auto pt-5">{repos.length} 个仓库 →</p>
           </a>
         )}
       </section>
 
       <!-- 监控中的世界:三列机构 -->
-      <section class="border-t border-hairline pt-10">
+      <section class="pt-10">
         <div class="flex items-baseline justify-between mb-8">
           <h2 class="tp-section">监控中的世界</h2>
           <a href={routes.repos()} class="tp-link">{repos.length} 个仓库 →</a>
@@ -169,3 +176,11 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
     </aside>
   </div>
 </BaseLayout>
+
+<style>
+  .home-card-header { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .home-card-header h2 { font-size:20px; font-weight:500; line-height:1.4; white-space:nowrap; }
+  .home-card-count { font-size:12px; color:var(--color-accent); text-align:right; font-variant-numeric:tabular-nums; }
+  .home-card-count small { display:block; font-size:11px; color:var(--color-ink-2); margin-top:4px; }
+  .home-summary-card { min-width:0; }
+</style>

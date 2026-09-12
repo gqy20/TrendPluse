@@ -1,7 +1,7 @@
 ---
 /**
  * 统计条(设计稿日报/发现/监控页统一规格):
- * mono 30px 数字 + 13px 灰标签(#7d8591)+ 半透明竖分隔线。
+ * mono 30px 数字 + 13px 标签，通过留白区分统计项。
  */
 interface Stat {
   value: number | string;
@@ -17,11 +17,10 @@ const { stats, class: cls = '' } = Astro.props;
 const fmt = (v: number | string) =>
   typeof v === 'number' ? v.toLocaleString('en-US') : v;
 ---
-<div class:list={['flex flex-wrap items-start gap-y-4', cls]}>
+<div class:list={['flex flex-wrap items-start gap-x-10 gap-y-6', cls]}>
   {
-    stats.map((s, i) => (
-      <div class:list={['flex items-start gap-4', i > 0 && 'pl-9 relative']}>
-        {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-[rgba(216,211,200,0.75)] opacity-68" />}
+    stats.map((s) => (
+      <div class="flex items-start gap-4">
         <a href={s.href} class="tp-num text-[30px] text-[#13171f] hover:text-accent transition-colors">
           {fmt(s.value)}
         </a>

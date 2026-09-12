@@ -14,32 +14,32 @@ const nav = [
 ];
 const iconUrl = (p: string) => `${import.meta.env.BASE_URL}assets/${p}`;
 ---
-<header class="tp-shell w-full">
-  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 sm:h-[92px] py-4 sm:py-0">
-    <!-- 品牌:bolt + mono 字标(设计稿规格) -->
-    <a href={routes.home()} class="flex items-center gap-2.5">
-      <img src={iconUrl('bolt.svg')} alt="" width="20" height="24" class="h-[24px] w-[20px]" />
-      <span class="tp-num text-[27px] tracking-tight leading-none">TrendPulse</span>
+<header class="site-header tp-shell w-full">
+  <div class="site-header-inner">
+    <!-- 品牌：趋势拐点标志与轮廓化字标 -->
+    <a href={routes.home()} class="site-brand flex items-center gap-2.5">
+      <img src={iconUrl('brand/logo.svg')} alt="TrendPulse" width="220" height="44" class="site-logo" />
     </a>
 
     <!-- 导航:104px 节距,14px Sans Medium,激活蓝+下划线 -->
-    <nav class="flex items-center gap-6 lg:gap-9 text-[14px] whitespace-nowrap order-last sm:order-none -ml-1 sm:ml-0">
+    <nav class="site-main-nav flex items-center gap-6 lg:gap-9 text-[14px] whitespace-nowrap" aria-label="主导航">
       {nav.map((item) => (
         <a
           href={item.href}
+          aria-current={item.active ? "page" : undefined}
           class:list={[
             'relative py-2 transition-colors font-medium whitespace-nowrap',
             item.active ? 'text-accent font-bold' : 'text-[#13171f] hover:text-accent',
           ]}
         >
           {item.label}
-          {item.active && <span class="absolute -bottom-[14px] left-1/2 -translate-x-1/2 w-10 h-[2px] bg-accent" />}
+          {item.active && <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-[2px] bg-accent" />}
         </a>
       ))}
     </nav>
 
     <!-- 搜索 + 头像:40px 圆形按钮(设计稿 Interaction 组件) -->
-    <div class="flex items-center gap-3">
+    <div class="site-actions flex items-center gap-3">
       <a
         href={routes.search()}
         data-search-trigger
@@ -59,6 +59,22 @@ const iconUrl = (p: string) => `${import.meta.env.BASE_URL}assets/${p}`;
       </a>
     </div>
   </div>
-  <!-- 全局分隔线:64px 边界(设计稿 y=92) -->
-  <div class="border-t border-hairline" />
+
 </header>
+
+<style>
+  .site-header { position:sticky; top:0; z-index:50; background:var(--color-paper); box-shadow:0 1px 0 var(--color-hairline); }
+  .site-header-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; height:76px; }
+  .site-main-nav { height:100%; }
+  .site-main-nav > a { display:flex; align-items:center; height:100%; }
+  .site-logo { width:220px; height:44px; max-width:100%; object-fit:contain; object-position:left center; }
+  .site-header a:focus-visible { outline:2px solid var(--color-accent); outline-offset:3px; }
+  @media(max-width:700px) {
+    .site-header { top:-56px; }
+    .site-header-inner { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:56px 44px; height:100px; gap:0 8px; }
+    .site-brand { grid-column:1; grid-row:1; gap:6px; }
+    .site-brand .site-logo { width:176px; height:auto; }
+    .site-actions { grid-column:2; grid-row:1; gap:4px; }
+    .site-main-nav { grid-column:1 / -1; grid-row:2; justify-content:space-between; gap:12px; }
+  }
+</style>

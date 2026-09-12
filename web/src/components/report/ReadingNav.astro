@@ -1,0 +1,66 @@
+---
+import ReportPicker from './ReportPicker.astro';
+interface Props { label: string; mode: 'daily' | 'weekly'; date: string; sections: { id: string; label: string; show?: boolean }[] }
+const { label, sections, mode, date } = Astro.props;
+const items = [{ id: 'overview', label: '概览' }, ...sections.filter(s => s.show !== false)];
+---
+<nav class="reading-nav" aria-label="报告章节" data-reading-nav>
+  <span class="reading-label">{label}</span>
+  <div class="reading-links">{items.map(s => <a href={`#${s.id}`}>{s.label}</a>)}</div>
+  <label class="reading-mobile">章节 <select aria-label="跳转章节">{items.map(s => <option value={s.id}>{s.label}</option>)}</select></label>
+  <ReportPicker mode={mode} date={date} sidebar />
+</nav>
+<style>
+  .reading-nav { position:sticky; top:calc(var(--site-nav-height) + 24px); z-index:30; align-self:start; display:flex; flex-direction:column; gap:20px; margin-top:36px; background:var(--color-paper); }
+  .reading-label { font-size:13px; color:var(--color-ink-2); padding-left:12px; }
+  .reading-links { display:flex; flex-direction:column; gap:4px; }
+  a { display:block; font-size:14px; padding:10px 12px; color:var(--color-ink-2); border-radius:6px; }
+  a:hover { color:var(--color-accent); }
+  a[aria-current] { color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 7%,transparent); font-weight:500; }
+  .reading-top { font-size:12px; }
+  .reading-mobile { display:none; }
+  @media(max-width:1100px) {
+    .reading-nav { top:var(--site-nav-height); z-index:30; flex-direction:row; align-items:center; gap:12px; margin-top:0; min-height:52px; }
+    .reading-label { padding-left:0; }
+    .reading-links,.reading-top { display:none; }
+    .reading-mobile { display:flex; align-items:center; gap:8px; margin-left:auto; font-size:13px; }
+    select { background:transparent; padding:12px 0; max-width:100px; }
+    .reading-mobile { order:3; gap:4px; }
+  }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-reading-nav]').forEach(nav => {
+    const links = [...nav.querySelectorAll<HTMLAnchorElement>('.reading-links a')];
+    const sections = links.map(a => document.getElementById(a.hash.slice(1))).filter((s): s is HTMLElement => !!s);
+    const select = nav.querySelector<HTMLSelectElement>('select')!;
+    const jump = (id: string) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+      const distance = Math.abs(section.getBoundingClientRect().top);
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      section.scrollIntoView({ behavior: reduced || distance > innerHeight ? 'instant' : 'smooth', block: 'start' });
+      section.setAttribute('tabindex', '-1');
+      section.focus({ preventScroll: true });
+      history.replaceState(null, '', `#${id}`);
+      update();
+    };
+    nav.addEventListener('click', event => {
+      const a = (event.target as HTMLElement).closest<HTMLAnchorElement>('a');
+      if (!a || !a.getAttribute('href')?.startsWith('#')) return;
+      event.preventDefault(); jump(a.hash.slice(1));
+    });
+    select.addEventListener('change', () => jump(select.value));
+    const update = () => {
+      const headerBottom = document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 0;
+      const threshold = matchMedia('(max-width:1100px)').matches ? Math.max(headerBottom, nav.getBoundingClientRect().top) + nav.offsetHeight + 24 : headerBottom + 48;
+      const current = sections.filter(s => s.getBoundingClientRect().top <= threshold).at(-1) ?? sections[0];
+      if (!current) return;
+      links.forEach(a => { if (a.hash === `#${current.id}`) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+      select.value = current.id;
+    };
+    let pending = false;
+    addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(() => { update(); pending = false; }); } }, { passive:true });
+    addEventListener('resize', update);
+    update();
+  });
+</script>

@@ -1,4 +1,4 @@
-# TrendPulse
+# <img src="web/public/assets/brand/mark.svg" alt="" width="32" height="32"> TrendPulse
 
 [![CI](https://img.shields.io/badge/GitHub-Actions-blue)](https://github.com/gqy20/TrendPluse/actions)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)

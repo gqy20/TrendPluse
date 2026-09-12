@@ -51,7 +51,7 @@ const candidates = [...r.candidates].sort(
       </header>
 
       {candidates.length > 0 ? (
-        <section class="border-t border-hairline py-10">
+        <section class="py-10">
           <div class="flex items-baseline justify-between mb-6">
             <h2 class="tp-section">候选项目 <span class="tp-num text-[22px] text-ink-3 ml-1">{candidates.length}</span></h2>
             <span class="tp-meta">按推荐度排序</span>
@@ -80,7 +80,7 @@ const candidates = [...r.candidates].sort(
           )}
         </section>
       ) : (
-        <section class="border-t border-hairline py-16">
+        <section class="py-16">
           <div class="border border-dashed border-hairline py-16 px-8 text-center">
             <p class="tp-item text-ink-2">本期没有通过质量过滤的项目</p>
             <p class="tp-meta mt-2">Trending 里今天没有值得留下的。这本身也是一个信号。</p>

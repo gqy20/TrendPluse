@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../../lib/path';
 import StatRow from '../../components/ui/StatRow.astro';
-import HeroArt from '../../components/ui/HeroArt.astro';
+import SnapshotBars from '../../components/data/SnapshotBars.astro';
 import { formatNumber } from '../../lib/format';
 
 const discovery = (await getCollection('discovery')).sort((a, b) => b.id.localeCompare(a.id));
@@ -11,11 +11,11 @@ const discDate = (id: string) => id.replace(/^discovery-/, '');
 const totalCandidates = discovery.reduce((sum, e) => sum + (e.data.passed_quality ?? e.data.candidates.length), 0);
 
 const latest = discovery[0]?.data;
-// 本周新增:最近 7 期累计
+// 最近七期通过质量评估的数量，未做跨期去重。
 const weeklyNew = discovery.slice(0, 7).reduce((sum, e) => sum + (e.data.passed_quality ?? e.data.candidates.length), 0);
-const highRatio = latest?.passed_quality
-  ? Math.round(((latest.high_priority ?? 0) / latest.passed_quality) * 100)
-  : 0;
+const highRatio = latest && latest.candidates.length > 0 && latest.high_priority != null
+  ? Math.round(latest.high_priority / latest.candidates.length * 100)
+  : null;
 
 // 本周值得关注:最新一期,推荐优先 → 7 日增长
 const featured = latest
@@ -29,7 +29,7 @@ const featured = latest
   <div class="tp-shell tp-grid pt-12 pb-8">
     <div class="min-w-0">
       <!-- Hero -->
-      <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
+      <header class="hero-data pb-12">
         <div>
           <h1 class="tp-h1">项目发现</h1>
           <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
@@ -39,18 +39,23 @@ const featured = latest
             <StatRow
               stats={[
                 { value: discovery.length, label: '发现期数' },
-                { value: formatNumber(totalCandidates), label: '累计候选' },
-                { value: formatNumber(weeklyNew), label: '本周新增' },
-                { value: `${highRatio}%`, label: '高优先占比' },
+                { value: formatNumber(totalCandidates), label: '累计通过次数' },
+                { value: formatNumber(weeklyNew), label: '最近七期通过' },
+                { value: highRatio == null ? '—' : `${highRatio}%`, label: '候选中高优先' },
               ]}
             />
           </div>
         </div>
-        <HeroArt class="hidden lg:block h-[260px] w-[300px] ml-auto" text="DISCOVER BEFORE IT TREND" />
+        <SnapshotBars title="本期筛选结果" date={latest?.date} unit="个项目" sourceHref={discovery[0] ? routes.discoveryReport(discDate(discovery[0].id)) : undefined} rows={[
+          { label:'发现项目', value:latest?.total_discovered },
+          { label:'通过质量评估', value:latest?.passed_quality },
+          { label:'候选清单', value:latest ? latest.candidates.length : undefined, color:'var(--color-sig-workflow)' },
+          { label:'高优先级', value:latest?.high_priority, color:'var(--color-impact)' },
+        ]} note="来源：本期发现报告。发现与质量评估为去重前数量，候选清单与高优先级为去除已监控项目并去重后的数量。" />
       </header>
 
       {discovery.length === 0 ? (
-        <section class="border-t border-hairline py-16">
+        <section class="py-16">
           <div class="border border-dashed border-hairline py-16 px-8 text-center">
             <p class="tp-item text-ink-2">还没有发现记录</p>
             <p class="tp-meta mt-2">发现管线尚未产出数据。可以稍后再来,或先看趋势报告。</p>
@@ -61,7 +66,7 @@ const featured = latest
         <>
           <!-- 本周值得关注:三栏白卡 -->
           {featured.length > 0 && (
-            <section class="border-t border-hairline py-12">
+            <section class="py-12">
               <div class="flex items-baseline justify-between mb-8">
                 <h2 class="tp-section">本周值得关注</h2>
                 <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-link">0{featured.length} 个重点项目 →</a>
@@ -85,7 +90,7 @@ const featured = latest
           )}
 
           <!-- 发现记录 -->
-          <section class="border-t border-hairline py-12">
+          <section class="py-12">
             <div class="flex items-baseline justify-between mb-8">
               <h2 class="tp-section">发现记录 <span class="tp-num text-[22px] text-ink-3 ml-1">{discovery.length}</span></h2>
               <span class="tp-meta">每期一行,点开看完整候选列表</span>
@@ -115,7 +120,7 @@ const featured = latest
     <!-- Rail:筛选(静态锚点 + 说明) -->
     <aside class="tp-rail">
       <h2 class="tp-item mb-6">筛选</h2>
-      <div class="pb-6 border-b border-hairline">
+      <div class="pb-6">
         <h3 class="tp-mono text-ink-2 mb-3">日期</h3>
         <div class="space-y-2">
           {discovery.slice(0, 5).map((e) => (
@@ -125,7 +130,7 @@ const featured = latest
           ))}
         </div>
       </div>
-      <div class="py-6 border-b border-hairline">
+      <div class="py-6">
         <h3 class="tp-mono text-ink-2 mb-3">优先级</h3>
         <p class="tp-mono text-accent">仅高优先</p>
         <p class="tp-meta mt-2">高优先 = 质量分与增长同时达标</p>

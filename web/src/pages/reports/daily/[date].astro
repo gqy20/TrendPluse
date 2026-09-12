@@ -1,27 +1,31 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ReadingNav from '../../../components/report/ReadingNav.astro';
+import ReportIntro from '../../../components/report/ReportIntro.astro';
+import Rating from '../../../components/report/Rating.astro';
 import SignalTable from '../../../components/report/SignalTable.astro';
 import SignalTypeBar from '../../../components/report/SignalTypeBar.astro';
 import SignalDrawer from '../../../components/report/SignalDrawer.astro';
-import Banner from '../../../components/ui/Banner.astro';
+import HistoryContext from '../../../components/report/HistoryContext.astro';
 import { routes } from '../../../lib/path';
+import Banner from '../../../components/ui/Banner.astro';
 
 export async function getStaticPaths() {
   const daily = await getCollection('daily');
   const sorted = daily.sort((a, b) => b.id.localeCompare(a.id));
-  return sorted.map((entry, idx) => ({
+  const archive = new Map(daily.map(item => [item.data.date, routes.daily(item.id.replace(/^report-/, ''))]));
+  return sorted.map((entry) => ({
     params: { date: entry.id.replace(/^report-/, '') },
-    props: { entry, prev: sorted[idx - 1]?.id.replace(/^report-/, ''), next: sorted[idx + 1]?.id.replace(/^report-/, '') },
+    props: { entry, historicalReports: entry.data.historical_basis_dates.map(date => ({ date, href: archive.get(date) })) },
   }));
 }
 
 interface Props {
   entry: CollectionEntry<'daily'>;
-  prev?: string;
-  next?: string;
+  historicalReports: { date:string; href?:string }[];
 }
-const { entry, prev } = Astro.props;
+const { entry, historicalReports } = Astro.props;
 const d = entry.data;
 
 const allSignals = [
@@ -32,19 +36,9 @@ const allSignals = [
 ].sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0));
 const total = allSignals.length;
 const focus = allSignals.slice(0, 4);
-const worthWatching = allSignals.filter((s) => (s.impact_score ?? 0) >= 4).slice(0, 3);
 
-// Hero:首句大标题,其余导语
-const sentences = (d.summary_brief || '').split('。').filter(Boolean);
-const headline = sentences[0] ? sentences[0] + '。' : `每日趋势报告 · ${d.date}`;
-const lead = sentences.slice(1).join('。');
-
-// 报告级置信度 → 5 格小柱
-const conf5 = d.summary_confidence != null ? Math.round(d.summary_confidence * 5) : null;
-
-// 历史位置:最近 7 天轴(含本期)
-const histDates = (d.historical_basis_dates ?? []).slice(-6);
-const trendLabel = d.trend_status || (d.top_new_trends.length > 0 ? '新出现' : '持续观察');
+const historicalComparison = typeof d.historical_comparison === 'string' ? d.historical_comparison : undefined;
+const hasHistory = !!historicalComparison || historicalReports.length > 0;
 
 // Issue Radar:痛点卡片,severity 色按出现顺序 红/橙/蓝
 const painPoints = (d.issue_insights?.top_pain_points ?? []).slice(0, 3);
@@ -60,58 +54,40 @@ const REL_TYPE_COLOR: Record<string, string> = {
 };
 const releases = (d.releases?.releases ?? []).slice(0, 3);
 
-const heroImg = `${import.meta.env.BASE_URL}assets/signal-field-v3.svg`;
-const vol = d.date.replaceAll('-', '.');
 ---
 
 <BaseLayout title={`趋势报告 · ${d.date}`} description={d.summary_brief?.slice(0, 150)}>
-  <article class="tp-shell tp-grid pt-8 pb-8">
+  <div class="report-layout tp-shell">
+  <ReadingNav mode="daily" date={d.date} label="日报" sections={[
+    { id: 'focus', label: '今日重点', show: total > 0 },
+    { id: 'trends', label: '趋势脉络', show: d.top_new_trends.length + d.top_continuing_trends.length > 0 },
+    { id: 'signals', label: '全部信号' },
+    { id: 'history', label: '历史位置', show: hasHistory },
+    { id: 'issues', label: 'Issues', show: painPoints.length > 0 },
+    { id: 'releases', label: 'Releases', show: releases.length > 0 },
+  ]} />
+  <article class="report-reading pt-8 pb-8">
     <div class="min-w-0">
-      <!-- 日 / 周切换器(设计稿 150×36 胶囊滑块) -->
-      <div class="inline-flex items-center bg-[#f4f2ed] rounded-[18px] p-[3px] mb-8">
-        <span class="px-[27px] py-1.5 rounded-[15px] bg-white text-accent text-[14px] font-medium">日</span>
-        <a href={routes.reports()} class="px-[27px] py-1.5 text-[#9ea3ad] text-[14px] font-medium hover:text-ink transition-colors">周</a>
-      </div>
 
       <!-- Hero:50px 衬线 + 统计行(含置信度小柱) + v3 视觉 -->
-      <header class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 items-start pb-10">
+      <header id="overview" class="hero-data pb-8">
         <div>
-          <p class="tp-mono text-ink-3 mb-4">{vol}</p>
-          <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] max-w-[980px]">{headline}</h1>
-          {lead && <p class="tp-body text-[#4f5763] mt-5 max-w-[820px]">{lead}。</p>}
+          <ReportIntro summary={d.summary_brief} fallback="每日趋势" date={d.date} />
 
-          <!-- 统计行:mono 30px + 竖分隔 + 置信度 5 格小柱 -->
-          <div class="mt-9 flex flex-wrap items-start gap-y-4">
-            {[
-              { v: total, label: '信号' },
-              { v: d.stats.high_impact_signals ?? 0, label: '重点' },
-              { v: d.stats.unique_repos ?? 0, label: '资料' },
-            ].map((s, i) => (
-              <div class:list={['flex items-start gap-4', i > 0 && 'pl-9 relative']}>
-                {i > 0 && <span class="absolute left-0 top-1 bottom-1 w-px bg-[rgba(216,211,200,0.75)] opacity-68" />}
-                <span class="tp-num text-[30px] text-[#13171f]">{s.v}</span>
-                <span class="text-[13px] text-[#7d8591] opacity-72 mt-2.5">{s.label}</span>
-              </div>
-            ))}
-            {conf5 != null && (
-              <div class="flex items-start gap-4 pl-9 relative">
-                <span class="absolute left-0 top-1 bottom-1 w-px bg-[rgba(216,211,200,0.75)] opacity-68" />
-                <span class="inline-flex gap-[2px] items-end mt-2">
-                  {[1, 2, 3, 4, 5].map((k) => (
-                    <span class:list={['inline-block w-[8px] rounded-[2px]', k <= 4 ? 'bg-[rgba(26,87,222,0.85)]' : 'bg-[rgba(214,212,201,0.55)]']} style={`height:${8 + k * 4}px`} />
-                  ))}
-                </span>
-                <span class="text-[13px] text-[#7d8591] opacity-72 mt-2.5">置信</span>
-              </div>
-            )}
+          <div class="report-metrics-block">
+            <div class="report-metrics">
+              {[
+                { value: total, label: '信号' },
+                { value: d.stats.high_impact_signals ?? 0, label: '重点' },
+                { value: d.stats.unique_repos ?? 0, label: '资料' },
+              ].map(stat => <div><span class="tp-num">{stat.value}</span><span>{stat.label}</span></div>)}
+              <div><Rating kind="confidence" value={d.summary_confidence} large /><span>置信</span></div>
+            </div>
+            <p class="report-source-note">本期已分析 {d.stats.total_prs_analyzed ?? 0} 个 PR · 来源：PR / Commits / Releases / Issues</p>
           </div>
 
-          <!-- 分类分布条:一眼看全景 -->
-          <div class="mt-8 max-w-[820px]">
-            <SignalTypeBar signals={allSignals} />
-          </div>
         </div>
-        <img src={heroImg} alt="" width="360" height="300" class="hidden lg:block justify-self-end" />
+        <SignalTypeBar signals={allSignals} period={d.date} heading="信号分类" targetId="signals" panel />
       </header>
 
       {total === 0 && (
@@ -122,16 +98,16 @@ const vol = d.date.replaceAll('-', '.');
 
       <!-- 焦点信号:mono 78px 编号 + 衬线 44px 标题(详情进抽屉) -->
       {focus[0] && (
-        <section class="border-t border-hairline pt-10 pb-8 scroll-mt-6" id="focus" data-signal-detail={focus[0].id}>
-          <div class="grid md:grid-cols-[170px_minmax(0,1fr)] gap-6">
+        <section class="pt-10 pb-8 scroll-mt-6" id="focus">
+          <div class="grid md:grid-cols-[64px_minmax(0,1fr)] gap-6">
             <div>
-              <span class="tp-num text-[78px] text-[#13171f] leading-[0.92]">01</span>
-              <span class="tp-mono text-ink-3 ml-2">/ {total}</span>
+              <span class="tp-num text-[36px] text-[#13171f] leading-[0.92]">01</span>
+
             </div>
             <div>
-              <h2 class="tp-h1 !text-[clamp(26px,2.7vw,44px)] !leading-[1.18] !font-normal max-w-[760px]">{focus[0].title}</h2>
+              <h2 class="tp-h1 !text-[clamp(23px,2.1vw,32px)] !leading-[1.18] !font-normal max-w-[760px]">{focus[0].title}</h2>
               <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[720px] line-clamp-2">{focus[0].why_it_matters}</p>
-              <span class="tp-link inline-block mt-5 text-[13px] cursor-pointer">展开详情与证据链 →</span>
+              <button type="button" data-signal-detail={focus[0].id} class="tp-link inline-block mt-4 py-2 cursor-pointer">查看分析与证据 →</button>
             </div>
           </div>
         </section>
@@ -139,13 +115,13 @@ const vol = d.date.replaceAll('-', '.');
 
       <!-- 次级信号 02-04:mono 30px 编号 + 竖分隔线 -->
       {focus.length > 1 && (
-        <section class="border-t border-hairline grid md:grid-cols-3 py-8">
+        <section class="grid md:grid-cols-3 py-8">
           {
             focus.slice(1).map((s, i) => (
-              <div id={`signal-${i + 1}`} class:list={['px-0 md:px-7', i === 0 && 'md:pl-0', i > 0 && 'md:border-l md:border-[rgba(204,201,194,0.35)]']}>
+              <div id={`signal-${i + 1}`} class:list={['px-0 md:px-7', i === 0 && 'md:pl-0']}>
                 <span class="tp-num text-[30px] text-[#13171f]">0{i + 2}</span>
                 <h3 class="text-[17px] leading-[1.6] mt-2">{s.title}</h3>
-                <p class="text-[15px] leading-[1.7] text-[#4f5763] opacity-78 mt-2 line-clamp-3">{s.why_it_matters}</p>
+                <button type="button" data-signal-detail={s.id} class="tp-link mt-3 py-2 cursor-pointer">查看分析与证据 →</button>
               </div>
             ))
           }
@@ -153,18 +129,17 @@ const vol = d.date.replaceAll('-', '.');
       )}
 
       <!-- 趋势脉络:蓝字栏题 + mono 编号列表 -->
-      <section class="border-t border-hairline py-10 scroll-mt-6" id="trends">
+      {(d.top_new_trends.length + d.top_continuing_trends.length > 0) && <section class="py-10 scroll-mt-6" id="trends">
         <div class="flex items-baseline gap-6 mb-7">
           <h2 class="tp-section">趋势脉络</h2>
           <span class="text-[13px] text-[#69707a] opacity-65">从信号中看见正在形成的结构。</span>
         </div>
-        <div class="grid md:grid-cols-3 gap-0">
+        <div class="grid md:grid-cols-2 gap-6">
           {[
             { title: '新出现', items: d.top_new_trends.slice(0, 3) },
             { title: '持续升温', items: d.top_continuing_trends.slice(0, 3) },
-            { title: '值得关注', items: worthWatching.map((s) => s.title) },
-          ].map((col, ci) => (
-            <div class:list={['px-0 md:px-7', ci === 0 && 'md:pl-0', ci > 0 && 'md:border-l md:border-hairline']}>
+          ].filter(col => col.items.length > 0).map((col, ci) => (
+            <div class:list={['px-0 md:px-7', ci === 0 && 'md:pl-0']}>
               <div class="flex items-baseline gap-3">
                 <h3 class="text-[15px] text-accent">{col.title}</h3>
                 <span class="tp-mono text-[#69707a]">({col.items.length})</span>
@@ -184,54 +159,24 @@ const vol = d.date.replaceAll('-', '.');
             </div>
           ))}
         </div>
-      </section>
+      </section>}
 
       <!-- 全部信号:主交互区(类型/影响筛选 + 行点开抽屉) -->
-      <section class="border-t border-hairline py-10 scroll-mt-6" id="signals">
+      <section class="py-10 scroll-mt-6" id="signals">
         <div class="flex items-baseline gap-4 mb-5">
           <h2 class="tp-section">全部信号</h2>
           <span class="tp-mono text-[#9ea3ad]">{total}</span>
         </div>
         {total > 0
-          ? <SignalTable signals={allSignals} time={d.date.slice(5)} limit={0} clickable filterable />
+          ? <SignalTable signals={allSignals} time={d.date.slice(5)} limit={12} clickable filterable />
           : <p class="tp-mono text-ink-4">今日无信号。</p>}
       </section>
 
-      <!-- 历史位置:水平轨道时间线 -->
-      {(d.historical_comparison || histDates.length > 0) && (
-        <section class="border-t border-hairline py-10 scroll-mt-6" id="history">
-          <div class="flex items-baseline gap-6 mb-8">
-            <h2 class="tp-section">历史位置</h2>
-            <span class="text-[13px] text-[#9ea3ad]">对比历史日报,判断今天的变化是新出现、持续升温,还是结构性转向。</span>
-          </div>
-          <div class="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6 items-center">
-            <div>
-              <p class="text-[20px] text-accent font-medium">{trendLabel}</p>
-              {d.historical_comparison && <p class="text-[15px] text-[#636b78] leading-[1.7] mt-2">{d.historical_comparison}</p>}
-            </div>
-            {histDates.length > 0 && (
-              <div>
-                <div class="flex items-center">
-                  {histDates.map((dt, i) => (
-                    <div class="flex items-center">
-                      <div class:list={['h-[2px] w-[54px] rounded-[1px] bg-[rgba(227,224,214,0.7)]']} />
-                      <span class:list={['inline-block size-[8px] rounded-[4px]', i === histDates.length - 1 ? 'bg-accent' : 'bg-[#e3e0d6]']} />
-                    </div>
-                  ))}
-                </div>
-                <div class="flex tp-mono text-[#9ea3ad] mt-3">
-                  {histDates.map((dt) => <span class="w-[54px] text-center -ml-1">{dt.slice(5).replaceAll('-', '/')}</span>)}
-                  <span class="tp-mono text-accent -ml-[6px]">{d.date.slice(5).replaceAll('-', '/')}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      {hasHistory && <HistoryContext date={d.date} status={d.trend_status} comparison={historicalComparison} references={historicalReports} />}
 
       <!-- Issue Radar:色条卡片 -->
       {painPoints.length > 0 && (
-        <section class="border-t border-hairline py-10 scroll-mt-6" id="issues">
+        <section class="py-10 scroll-mt-6" id="issues">
           <div class="flex items-baseline gap-6 mb-7">
             <h2 class="tp-section">Issue Radar</h2>
             <span class="text-[13px] text-[#9ea3ad]">从用户 Issue 中提取跨仓库痛点,而不是只看代码提交。</span>
@@ -239,7 +184,6 @@ const vol = d.date.replaceAll('-', '.');
           <div class="grid md:grid-cols-3 gap-6">
             {painPoints.map((p, i) => (
               <div class="bg-[#f9f7f2] rounded-[8px] p-5 pl-6 relative min-h-[150px]">
-                <span class="absolute left-0 top-0 bottom-0 w-[4px] rounded-[2px]" style={`background:${PAIN_COLORS[i] ?? '#636b78'}`} />
                 <div class="flex items-baseline justify-between gap-3">
                   <h3 class="text-[18px] font-medium">{p.topic}</h3>
                   <span class="tp-num text-[18px]" style={`color:${PAIN_COLORS[i] ?? '#636b78'}`}>{p.count ?? '—'}</span>
@@ -253,12 +197,11 @@ const vol = d.date.replaceAll('-', '.');
 
       <!-- Release Radar -->
       {releases.length > 0 && (
-        <section class="border-t border-hairline py-10 scroll-mt-6" id="releases">
+        <section class="py-10 scroll-mt-6" id="releases">
           <h2 class="tp-section mb-7">Release Radar</h2>
           <div class="grid md:grid-cols-3 gap-6">
             {releases.map((r) => {
               const color = REL_TYPE_COLOR[r.ai_summary?.change_type ?? 'other'] ?? '#636b78';
-              const lv = r.ai_summary?.impact_level ?? 3;
               return (
                 <a href={r.url} target="_blank" rel="noopener" class="block">
                   <p class="tp-mono !text-[16px] font-medium text-ink">{r.repo.split('/')[1] ?? r.repo}</p>
@@ -266,11 +209,7 @@ const vol = d.date.replaceAll('-', '.');
                     <span class="tp-mono text-[#9ea3ad]">{r.version}</span>
                     <span class="inline-block size-[8px] rounded-[4px]" style={`background:${color}`} />
                   </div>
-                  <span class="inline-flex gap-[4px] mt-3">
-                    {[1, 2, 3, 4, 5].map((k) => (
-                      <span class="inline-block h-[5px] w-[10px] rounded-[2px]" style={`background:${k <= lv ? color : '#f0ede5'}`} />
-                    ))}
-                  </span>
+                  <span class="inline-block mt-3"><Rating value={r.ai_summary?.impact_level} /></span>
                 </a>
               );
             })}
@@ -279,74 +218,11 @@ const vol = d.date.replaceAll('-', '.');
       )}
     </div>
 
-    <!-- ═══ Rail:sticky 目录 + 焦点索引 + 本期信息 ═══ -->
-    <aside class="tp-rail">
-      <div class="lg:sticky lg:top-6">
-        <h2 class="text-[14px] mb-4">本页</h2>
-        <nav data-spy class="mb-8">
-          {[
-            ['#focus', '焦点信号'],
-            ['#trends', '趋势脉络'],
-            ['#signals', '全部信号'],
-            ['#history', '历史位置'],
-            ['#issues', 'Issue Radar'],
-            ['#releases', 'Release Radar'],
-          ].map(([href, label]) => (
-            <a href={href} class="spy-link block py-1.5 tp-mono text-ink-2 hover:text-ink transition-colors">{label}</a>
-          ))}
-        </nav>
-
-        <h2 class="text-[14px] mb-4">今日焦点</h2>
-        {
-          focus.map((s, i) => (
-            <a href="#focus" class="tp-row border-b border-[rgba(222,217,207,0.8)] last:border-b-0 pb-4 mb-1" data-signal-detail={s.id}>
-              <span class="tp-num text-[28px] block">0{i + 1}</span>
-              <span class="text-[15px] leading-[1.5] mt-1.5 block">{s.title}</span>
-            </a>
-          ))
-        }
-      </div>
-
-      <div class="border-t border-hairline mt-8 pt-7">
-        <h2 class="text-[13px] mb-3">本期信息</h2>
-        <p class="tp-mono text-ink mb-2">{d.date.slice(8)} {d.date.slice(5, 7).toUpperCase()} {d.date.slice(0, 4)}</p>
-        <p class="text-[13px] text-[#636b78] leading-[1.6]">过去 24 小时<br />{total} signals · {d.stats.unique_repos ?? 0} repos<br />{d.stats.total_prs_analyzed ?? 0} PRs analyzed</p>
-      </div>
-      <div class="mt-7 pt-7">
-        <h2 class="text-[13px] mb-3">数据来源</h2>
-        <p class="tp-mono text-[#636b78] leading-[1.6]">Pull Requests<br />Commits · Releases<br />Issues</p>
-      </div>
-      <div class="border-t border-hairline mt-7 pt-7 flex gap-5">
-        {prev && <a href={routes.daily(prev)} class="tp-link">← 上一期</a>}
-        <a href={routes.reports()} class="tp-link">全部报告 →</a>
-      </div>
-    </aside>
   </article>
+  </div>
 
-  <script>
-    // Scroll spy:高亮当前区块对应的目录项
-    const links = document.querySelectorAll<HTMLAnchorElement>('.spy-link');
-    const map = new Map<string, HTMLAnchorElement>();
-    links.forEach((a) => map.set(a.getAttribute('href')!.slice(1), a));
-    const sections = [...map.keys()]
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => !!el);
-    if (sections.length > 0 && 'IntersectionObserver' in window) {
-      const spy = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (!e.isIntersecting) continue;
-            links.forEach((a) => a.classList.remove('!text-accent'));
-            map.get((e.target as HTMLElement).id)?.classList.add('!text-accent');
-          }
-        },
-        { rootMargin: '-30% 0px -60% 0px' }
-      );
-      sections.forEach((s) => spy.observe(s));
-    }
-  </script>
 
   <!-- 信号数据岛 + 详情抽屉 -->
-  <script type="application/json" id="tp-signals-data" set:html={JSON.stringify(allSignals)} />
+  <script is:inline type="application/json" id="tp-signals-data" set:html={JSON.stringify(allSignals).replace(/</g, "\\u003c")} />
   <SignalDrawer />
 </BaseLayout>

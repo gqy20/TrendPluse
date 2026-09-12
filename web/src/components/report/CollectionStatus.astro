@@ -1,0 +1,65 @@
+---
+import { recordedCount } from '../../lib/report-data';
+interface Props {
+  compact?: boolean; date?: string; reportUrl?: string; configured: number; listed: number | null;
+  prs: unknown; commits: unknown; releases: unknown; issueParsed: unknown; issueFailed: unknown;
+}
+const { compact = false, date, reportUrl, configured, listed, prs, commits, releases, issueParsed, issueFailed } = Astro.props;
+const failed = recordedCount(issueFailed);
+const sources = [
+  { label:'Pull Requests', count:recordedCount(prs), unit:'个已分析 PR', note:'进入日报分析的 PR 数量', error:false },
+  { label:'Commits', count:recordedCount(commits), unit:'次提交', note:'活跃度采集记录的提交总数', error:false },
+  { label:'Releases', count:recordedCount(releases), unit:'次发布', note:'发布采集记录的版本总数', error:false },
+  { label:'Issues', count:recordedCount(issueParsed), unit:'份已解析结果', note:failed == null ? '未提供解析失败计数' : `${failed} 份解析失败`, error:failed != null && failed > 0 },
+].map(row => ({ ...row, state:row.error ? '解析异常' : row.count == null ? '未记录' : row.count === 0 ? '零记录' : '有产出' }));
+---
+<section data-compact={compact} class="collection-status" aria-labelledby="collection-status-title">
+  <header><h2 class="tp-section" id="collection-status-title">采集数据状态</h2><span>{date ? `${date} 日报快照` : '暂无日报快照'}</span></header>
+  <div class="collection-sources">
+    {sources.map(row => <div class="collection-source" data-state={row.state}>
+      <div class="collection-label"><h3>{row.label}</h3><span class="collection-state"><i aria-hidden="true" />{row.state}</span></div>
+      <p class="collection-count" title={`${row.count ?? '未记录'} ${row.unit}`} aria-label={`${row.count ?? '未记录'} ${row.unit}`}><strong>{row.count == null ? '—' : row.count.toLocaleString('en-US')}</strong><span>{row.unit}</span></p>
+      <p class="collection-note">{row.note}</p>
+    </div>)}
+  </div>
+  <div class="collection-coverage"><span>本期监控清单</span><div role="img" aria-label={listed == null ? '本期未提供监控清单' : `当前配置 ${configured} 个仓库，其中 ${listed} 个在本期监控清单内`}><span style={`width:${listed != null && configured > 0 ? Math.min(100, listed / configured * 100) : 0}%`} /></div><span>{listed ?? '—'} / {configured} 个当前配置仓库</span></div>
+  <details class="collection-definitions" open={!compact}><summary>来源与口径</summary>
+  <p class="collection-caption">{reportUrl ? <a href={reportUrl}>来源：本期日报 →</a> : '来源：日报归档'} · 监控范围来自当前仓库配置。本图反映报告中的采集与分析产出；零记录表示计数为 0，未记录表示没有该字段。报告尚未提供逐仓库请求成功／失败状态，清单覆盖不代表采集成功率。</p></details>
+</section>
+<style>
+  .collection-status { padding:24px 0 36px; }
+  header { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:12px; }
+  header > span,.collection-caption,.collection-note { font-size:12px; color:var(--color-ink-2); line-height:1.7; }
+  .collection-sources { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; margin:28px 0; }
+  .collection-label { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+  h3 { font-size:14px; font-weight:500; }
+  .collection-state { display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--color-ink-2); }
+  .collection-state i { width:6px; height:6px; border-radius:50%; background:var(--color-ink-3); }
+  [data-state="有产出"] i { background:var(--color-accent); }
+  [data-state="解析异常"] i { background:var(--color-impact); }
+  [data-state="未记录"] i { background:transparent; border:1px solid var(--color-ink-3); }
+  .collection-count { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin:16px 0 8px; }
+  strong { font-family:var(--font-mono); font-size:28px; font-weight:500; }
+  .collection-count > span { font-size:11px; color:var(--color-ink-2); }
+  .collection-coverage { display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:12px; margin:24px 0 16px; color:var(--color-ink-2); }
+  .collection-coverage > div { height:6px; flex:1; min-width:80px; max-width:320px; background:var(--color-paper-deep); }
+  .collection-coverage > div > span { display:block; height:100%; background:var(--color-accent); }
+  .collection-caption a { color:var(--color-accent); }
+  @media(max-width:900px) { .collection-sources { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .collection-definitions > summary { color:var(--color-ink-2); font-size:12px; cursor:pointer; }
+  .collection-status[data-compact=false] .collection-definitions > summary { display:none; }
+  .collection-status[data-compact=true] { padding:0; }
+  .collection-status[data-compact=true] header { gap:6px; }
+  .collection-status[data-compact=true] .tp-section { font-size:16px; }
+  .collection-status[data-compact=true] header > span { font-size:11px; }
+  .collection-status[data-compact=true] .collection-sources { grid-template-columns:1fr; gap:16px; margin-block:20px; }
+  .collection-status[data-compact=true] .collection-source { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 12px; }
+  .collection-status[data-compact=true] .collection-label { gap:8px; }
+  .collection-status[data-compact=true] .collection-count { margin:0; gap:8px; grid-column:2; grid-row:1 / 3; justify-content:flex-end; align-content:center; }
+  .collection-status[data-compact=true] strong { font-size:22px; }
+  .collection-status[data-compact=true] .collection-count > span { display:block; font-size:10px; }
+  .collection-status[data-compact=true] .collection-count { flex-direction:column; align-items:flex-end; justify-content:center; gap:0; }
+  .collection-status[data-compact=true] .collection-note { font-size:10px; }
+  .collection-status[data-compact=true] .collection-coverage { gap:8px; margin-block:16px; font-size:11px; }
+  .collection-status[data-compact=true] .collection-caption { margin-top:8px; }
+</style>

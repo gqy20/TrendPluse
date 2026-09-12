@@ -1,0 +1,294 @@
+---
+import { getCollection } from 'astro:content';
+import { routes } from '../../lib/path';
+interface Props { mode?: 'daily' | 'weekly'; date?: string; compact?: boolean; sidebar?: boolean }
+const { mode = 'daily', date, sidebar = false } = Astro.props;
+const compact = sidebar || Astro.props.compact || false;
+const [daily, weekly] = await Promise.all([getCollection('daily'), getCollection('weekly')]);
+const entries = [
+  ...daily.map(e => ({ kind: 'daily', date: e.data.date, end: e.data.date, label: e.data.date, summary: e.data.summary_brief?.slice(0, 360) || '该日报暂无摘要。', url: routes.daily(e.id.replace(/^report-/, '')), count: e.data.stats.total_signals ?? 0 })),
+  ...weekly.map(e => ({ kind: 'weekly', date: e.data.start_date, end: e.data.end_date, label: `${e.data.start_date} 至 ${e.data.end_date}`, summary: e.data.summary_brief?.slice(0, 360) || '该周报暂无摘要。', url: routes.weekly(e.id.replace(/^weekly-/, '')), count: e.data.engineering_signals.length + e.data.research_signals.length })),
+].sort((a, b) => a.date.localeCompare(b.date));
+const currentEntries = entries.filter(e => e.kind === mode);
+const current = currentEntries.find(e => e.date === date) ?? currentEntries.at(-1);
+const index = currentEntries.indexOf(current!);
+---
+<report-picker data-mode={mode} data-date={date ?? current?.date ?? ''} data-compact={String(compact)} data-sidebar={String(sidebar)}>
+  {compact && !sidebar && <nav class="rp-period-nav" aria-label="报告日期导航">
+    <a href={`${routes.reports()}?mode=${mode}&date=${date ?? current?.date ?? ''}`}>日期归档</a>
+    <span class="rp-period-label">{current?.label}</span>
+    <div class="rp-neighbors">
+      {index > 0 ? <a href={currentEntries[index - 1].url}>← 上一期</a> : <span aria-disabled="true">← 上一期</span>}
+      {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期 →</a> : <span aria-disabled="true">下一期 →</span>}
+    </div>
+  </nav>}
+  <details class="rp-disclosure" open={!compact}>
+    <summary title={sidebar ? `选择日期：${current?.label ?? ''}` : undefined}>{sidebar ? (mode === 'daily' ? current?.date : `${current?.date.slice(5)} 至 ${current?.end.slice(5)}`) : '选择其他日期'} <span aria-hidden="true">⌄</span></summary>
+    <div class="rp-browser">
+      <div class="rp-calendar">
+        <div class="rp-toolbar">
+          <div class="rp-modes" role="group" aria-label="报告类型">
+            <button type="button" data-kind="daily" aria-pressed={mode === 'daily'}>日报</button>
+            <button type="button" data-kind="weekly" aria-pressed={mode === 'weekly'}>周报</button>
+          </div>
+          <button type="button" class="rp-latest">最新一期 ↗</button>
+        </div>
+        <div class="rp-month-nav">
+          <button type="button" data-month-step="-1" aria-label="上个月">‹</button>
+          <div class="rp-month-selects" role="group" aria-label="选择年月">
+            <label class="rp-select-field"><select class="rp-year" aria-label="选择年份"></select></label>
+            <label class="rp-select-field"><select class="rp-month" aria-label="选择月份"></select></label>
+          </div>
+          <button type="button" data-month-step="1" aria-label="下个月">›</button>
+        </div>
+        <div class="rp-weekdays" aria-hidden="true">{['一', '二', '三', '四', '五', '六', '日'].map(d => <span>{d}</span>)}</div>
+        <div class="rp-days" aria-label="选择报告日期"></div>
+        <p class="rp-hint">蓝点表示有报告，信号为零的报告也可阅读。</p>
+      </div>
+      <section class="rp-preview" aria-label="所选报告" aria-live="polite" aria-atomic="true">
+        <h2 class="rp-preview-date">{current?.label ?? '暂无报告'}</h2>
+        <p class="rp-preview-count">{current ? `${current.count} 个信号` : ''}</p>
+        <p class="rp-preview-summary">{current?.summary ?? '有报告后，可以在这里按日期阅读。'}</p>
+        <a class="rp-read" href={current?.url} hidden={!current}>阅读{mode === 'daily' ? '日报' : '周报'} →</a>
+      </section>
+    </div>
+  </details>
+  {sidebar && <div class="rp-sidebar-neighbors">
+    {index > 0 ? <a href={currentEntries[index - 1].url}>← 上一期</a> : <span aria-disabled="true">← 上一期</span>}
+    {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期 →</a> : <span aria-disabled="true">下一期 →</span>}
+  </div>}
+  <noscript><p>日期选择需要 JavaScript。可直接阅读上方报告，或使用详情页的上一期、下一期链接。</p></noscript>
+  <script is:inline type="application/json" class="rp-data" set:html={JSON.stringify(entries).replace(/</g, '\\u003c')} />
+</report-picker>
+
+<script>
+  interface ReportEntry { kind: string; date: string; end: string; label: string; summary: string; url: string; count: number }
+  class ReportPicker extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = 'true';
+      const entries: ReportEntry[] = JSON.parse(this.querySelector('.rp-data')!.textContent!);
+      const query = new URLSearchParams(location.search);
+      const compact = this.dataset.compact === 'true';
+      const sidebar = this.dataset.sidebar === 'true';
+      let mode = (!compact && query.get('mode') === 'weekly') ? 'weekly' : this.dataset.mode!;
+      let selected = (!compact && query.get('date')) || this.dataset.date || '';
+      const validDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s;
+      if (!validDate(selected)) selected = entries.filter(e => e.kind === mode).at(-1)?.date ?? new Date().toISOString().slice(0, 10);
+      const requestedMonth = !compact ? query.get('month') : null;
+      let month = requestedMonth && validDate(`${requestedMonth}-01`) ? requestedMonth : selected.slice(0, 7);
+      const el = <T extends HTMLElement>(s: string) => this.querySelector<T>(s)!;
+      const years = entries.flatMap(e => [Number(e.date.slice(0, 4)), Number(e.end.slice(0, 4))]);
+      const minYear = Math.min(Number(selected.slice(0, 4)), Number(month.slice(0, 4)), ...years);
+      const maxYear = Math.max(Number(selected.slice(0, 4)), Number(month.slice(0, 4)), ...years);
+      for (let year = minYear; year <= maxYear; year++) el<HTMLSelectElement>('.rp-year').add(new Option(`${year} 年`, String(year)));
+      for (let m = 1; m <= 12; m++) el<HTMLSelectElement>('.rp-month').add(new Option(`${m} 月`, String(m).padStart(2, '0')));
+      const iso = (d: Date) => d.toISOString().slice(0, 10);
+      const at = (s: string) => new Date(`${s}T00:00:00Z`);
+      const addDays = (s: string, n: number) => { const d = at(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); };
+      const reports = () => entries.filter(e => e.kind === mode);
+      const find = (date: string) => reports().find(e => mode === 'daily' ? e.date === date : e.date <= date && e.end >= date);
+      const save = () => {
+        if (compact) return;
+        const url = new URL(location.href);
+        url.searchParams.set('mode', mode);
+        url.searchParams.set('date', selected);
+        url.searchParams.set('month', month);
+        history.replaceState(null, '', url);
+      };
+      const choose = (report: ReportEntry | undefined) => {
+        if (!report) return;
+        if (sidebar) { location.assign(report.url); return; }
+        selected = report.date; render(); save();
+      };
+      const render = () => {
+        el<HTMLSelectElement>('.rp-year').value = month.slice(0, 4);
+        el<HTMLSelectElement>('.rp-month').value = month.slice(5);
+        this.querySelectorAll<HTMLButtonElement>('[data-kind]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kind === mode)));
+        this.querySelectorAll<HTMLButtonElement>('[data-month-step]').forEach(b => {
+          b.disabled = b.dataset.monthStep === '-1' ? month === `${minYear}-01` : month === `${maxYear}-12`;
+        });
+        el<HTMLButtonElement>('.rp-latest').disabled = reports().length === 0;
+        const chosen = find(selected);
+        const grid = el('.rp-days');
+        grid.replaceChildren();
+        const first = at(`${month}-01`);
+        const start = addDays(iso(first), -((first.getUTCDay() + 6) % 7));
+        const daysInMonth = new Date(Date.UTC(Number(month.slice(0, 4)), Number(month.slice(5)), 0)).getUTCDate();
+        const rowCount = Math.ceil((((first.getUTCDay() + 6) % 7) + daysInMonth) / 7);
+        for (let row = 0; row < rowCount; row++) {
+          const rowStart = addDays(start, row * 7);
+          const weekReport = mode === 'weekly' ? find(rowStart) ?? find(addDays(rowStart, 6)) : undefined;
+          const wrapper = document.createElement(mode === 'weekly' ? 'button' : 'div');
+          wrapper.className = 'rp-week';
+          if (wrapper instanceof HTMLButtonElement) {
+            wrapper.type = 'button';
+            wrapper.disabled = !weekReport;
+            wrapper.setAttribute('aria-label', weekReport ? `选择周报：${weekReport.label}` : `${rowStart} 起的一周，无周报`);
+            wrapper.setAttribute('aria-pressed', String(!!weekReport && chosen === weekReport));
+            if (weekReport) { wrapper.classList.add('rp-available'); wrapper.onclick = () => choose(weekReport); }
+          }
+          for (let col = 0; col < 7; col++) {
+            const date = addDays(rowStart, col);
+            const report = mode === 'daily' ? find(date) : weekReport;
+            const cell = document.createElement(mode === 'daily' ? 'button' : 'span');
+            cell.className = 'rp-day';
+            cell.textContent = String(Number(date.slice(8)));
+            if (date.slice(0, 7) !== month) cell.classList.add('rp-outside');
+            if (report) cell.classList.add('rp-available');
+            if (cell instanceof HTMLButtonElement) {
+              cell.type = 'button'; cell.disabled = !report;
+              cell.setAttribute('aria-label', `${date}，${report ? `${report.count} 个信号，阅读日报` : '无日报'}`);
+              cell.setAttribute('aria-pressed', String(!!report && selected === date));
+              cell.onclick = () => choose(report);
+            }
+            wrapper.append(cell);
+          }
+          grid.append(wrapper);
+        }
+        // 重建日期按钮后恢复焦点，键盘用户可以继续选择。
+        const focusLabel = this.dataset.focusLabel;
+        if (focusLabel) { Array.from(grid.querySelectorAll<HTMLButtonElement>('button')).find(b => b.getAttribute('aria-label') === focusLabel)?.focus({ preventScroll: true }); delete this.dataset.focusLabel; }
+        el('.rp-preview-date').textContent = chosen?.label ?? `${month.replace('-', ' 年 ')} 月`;
+        el('.rp-preview-count').textContent = chosen ? `${chosen.count} 个信号` : '暂无所选报告';
+        el('.rp-preview-summary').textContent = chosen?.summary ?? '选择带蓝点的日期，或点击“最新一期”查看最近报告。';
+        const link = el<HTMLAnchorElement>('.rp-read');
+        link.hidden = !chosen;
+        if (chosen) { link.href = chosen.url; link.textContent = `阅读${mode === 'daily' ? '日报' : '周报'} →`; }
+        el('.rp-hint').textContent = mode === 'daily' ? '蓝点表示有日报 · 灰色日期暂无报告' : '点击整周选择 · 蓝点表示有周报';
+      };
+      el('.rp-days').addEventListener('click', event => {
+        const button = (event.target as HTMLElement).closest('button');
+        if (button && !button.disabled) this.dataset.focusLabel = button.getAttribute('aria-label') ?? '';
+      }, true);
+      this.querySelectorAll<HTMLButtonElement>('[data-kind]').forEach(b => b.onclick = () => {
+        mode = b.dataset.kind!;
+        const candidates = reports();
+        const report = find(selected) ?? candidates.find(e => e.date.slice(0, 7) === month) ?? candidates.at(-1);
+        if (report) {
+          selected = report.date;
+          if (report.end < `${month}-01` || report.date > `${month}-31`) month = report.date.slice(0, 7);
+        }
+        render(); save();
+      });
+      this.querySelectorAll<HTMLButtonElement>('[data-month-step]').forEach(b => b.onclick = () => {
+        const d = at(`${month}-01`); d.setUTCMonth(d.getUTCMonth() + Number(b.dataset.monthStep));
+        changeMonth(iso(d).slice(0, 7));
+      });
+      const changeMonth = (value: string) => {
+        month = value;
+        if (!sidebar) selected = reports().find(e => e.date <= `${month}-31` && e.end >= `${month}-01`)?.date ?? `${month}-01`;
+        render(); save();
+      };
+      for (const selector of ['.rp-year', '.rp-month']) el(selector).addEventListener('change', () => changeMonth(`${el<HTMLSelectElement>('.rp-year').value}-${el<HTMLSelectElement>('.rp-month').value}`));
+      el('.rp-latest').onclick = () => { const latest = reports().at(-1); if (latest) { if (sidebar) { choose(latest); return; } selected = latest.date; month = selected.slice(0, 7); render(); save(); } };
+      render();
+      if (sidebar) {
+        const disclosure = el<HTMLDetailsElement>('.rp-disclosure');
+        const summary = disclosure.querySelector('summary')!;
+        const panel = el('.rp-browser');
+        const position = () => {
+          if (!disclosure.open) return;
+          const anchor = summary.getBoundingClientRect();
+          const minimumTop = (document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 0) + 8;
+          panel.style.maxHeight = `${innerHeight - minimumTop - 12}px`;
+          const rect = panel.getBoundingClientRect();
+          const desktop = matchMedia('(min-width:1101px)').matches;
+          const left = desktop ? anchor.right + 12 : anchor.left;
+          const top = desktop ? anchor.top : anchor.bottom + 8;
+          panel.style.left = `${Math.max(12, Math.min(left, innerWidth - rect.width - 12))}px`;
+          panel.style.top = `${Math.max(minimumTop, Math.min(top, innerHeight - rect.height - 12))}px`;
+        };
+        disclosure.addEventListener('toggle', position);
+        new ResizeObserver(position).observe(panel);
+        addEventListener('resize', position);
+        addEventListener('scroll', position, { passive:true });
+        document.addEventListener('click', event => { if (!this.contains(event.target as Node)) disclosure.open = false; });
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape' && disclosure.open) { disclosure.open = false; summary.focus({ preventScroll:true }); }
+        });
+      }
+    }
+  }
+  if (!customElements.get('report-picker')) customElements.define('report-picker', ReportPicker);
+</script>
+
+<style is:global>
+  report-picker { display:block; color:var(--color-ink); }
+  .rp-browser { display:grid; grid-template-columns:minmax(320px, 1fr) minmax(280px, .85fr); gap:clamp(24px,4vw,64px); padding-block:16px; }
+  .rp-calendar { min-width:0; }
+  .rp-toolbar,.rp-month-nav,.rp-period-nav,.rp-neighbors { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .rp-modes { display:flex; gap:4px; background:var(--color-paper-deep); padding:4px; border-radius:8px; }
+  .rp-modes button { padding:7px 20px; border-radius:5px; font-size:14px; }
+  .rp-modes button[aria-pressed=true] { background:var(--color-paper); color:var(--color-accent); font-weight:700; }
+  .rp-latest,.rp-period-nav a { color:var(--color-accent); font-size:14px; }
+  .rp-month-nav { margin:16px 0 8px; }
+  .rp-month-nav>button { width:44px; height:44px; border-radius:8px; font-size:26px; line-height:1; color:var(--color-ink-2); flex-shrink:0; }
+  .rp-month-nav>button:not(:disabled):hover { background:var(--color-paper-deep); color:var(--color-accent); }
+  .rp-month-selects { display:flex; align-items:center; gap:4px; padding:4px; background:var(--color-paper-deep); border-radius:10px; }
+  .rp-select-field { position:relative; display:block; border-radius:6px; }
+  .rp-select-field::after { content:''; position:absolute; right:13px; top:18px; width:6px; height:6px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); pointer-events:none; color:var(--color-ink-2); }
+  .rp-month-selects select { display:block; appearance:none; -webkit-appearance:none; width:100%; min-height:44px; border:0; border-radius:6px; background:transparent; color:var(--color-ink); font-size:16px; font-weight:500; font-variant-numeric:tabular-nums; padding:8px 34px 8px 14px; cursor:pointer; }
+  .rp-select-field:hover,.rp-select-field:focus-within { background:var(--color-paper); }
+  .rp-month-selects option { background:var(--color-paper); color:var(--color-ink); }
+  .rp-weekdays,.rp-week { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); width:100%; }
+  .rp-weekdays span { text-align:center; color:var(--color-ink-2); font-size:12px; padding:8px 0; }
+  .rp-days { display:grid; gap:4px; }
+  .rp-week { border-radius:6px; }
+  .rp-day { display:flex; align-items:center; justify-content:center; position:relative; height:56px; font-size:20px; border-radius:6px; font-variant-numeric:tabular-nums; }
+  .rp-day.rp-available::after { content:''; position:absolute; bottom:5px; width:4px; height:4px; border-radius:50%; background:var(--color-accent); }
+  .rp-day.rp-outside { opacity:.45; }
+  .rp-day:disabled,.rp-week:disabled { color:var(--color-ink-3); cursor:default; }
+  .rp-day[aria-pressed=true],.rp-week[aria-pressed=true] { background:var(--color-accent); color:white; }
+  .rp-day[aria-pressed=true]::after,.rp-week[aria-pressed=true] .rp-day::after { background:white; }
+  report-picker button:not(:disabled) { cursor:pointer; }
+  report-picker button:disabled { cursor:default; }
+  .rp-month-nav>button:disabled,.rp-latest:disabled { opacity:.35; }
+  .rp-day:not(:disabled):hover,.rp-week.rp-available:hover { background:color-mix(in srgb,var(--color-accent) 10%,transparent); color:var(--color-accent); }
+  report-picker :is(button,select,a,summary):focus-visible { outline:2px solid var(--color-accent); outline-offset:3px; }
+  .rp-hint { font-size:12px; color:var(--color-ink-2); margin-top:16px; }
+  .rp-preview { padding:18px 0 0; display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
+  .rp-preview-date { font-size:clamp(32px,3.4vw,52px); font-family:var(--font-serif); line-height:1.4; text-wrap:balance; }
+  .rp-preview-count { font-size:13px; color:var(--color-ink-2); margin-top:12px; }
+  .rp-preview-summary { font-size:16px; line-height:1.85; margin:24px 0; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:6; overflow:hidden; overflow-wrap:anywhere; }
+  .rp-read { display:inline-block; background:var(--color-ink); color:var(--color-paper); padding:12px 22px; border-radius:6px; margin-top:4px; }
+  .rp-read[hidden] { display:none; }
+  .rp-disclosure>summary { cursor:pointer; color:var(--color-accent); font-size:14px; padding:12px 0; }
+  report-picker[data-compact=false]>.rp-disclosure>summary { display:none; }
+  .rp-period-nav { flex-wrap:wrap; padding-block:8px; }
+  .rp-period-label { font-size:14px; }
+  .rp-neighbors { font-size:13px; }
+  .rp-neighbors [aria-disabled] { color:var(--color-ink-3); }
+  report-picker[data-compact=true] { margin-bottom:24px; }
+  @media(max-width:700px) {
+    .rp-month-nav { gap:4px; }
+    .rp-month-selects { flex-shrink:0; }
+    .rp-month-selects select { font-size:15px; padding:8px 26px 8px 10px; }
+    .rp-select-field::after { right:9px; }
+    .rp-browser { grid-template-columns:minmax(0,1fr); gap:24px; padding-top:12px; }
+    .rp-day { height:44px; font-size:18px; }
+    .rp-preview { border-left:0; padding:12px 0 0; }
+    .rp-preview-summary { -webkit-line-clamp:3; margin:16px 0; font-size:14px; }
+    .rp-preview-date { font-size:32px; }
+    .rp-period-label { order:3; width:100%; }
+  }
+</style>
+
+<style is:global>
+  report-picker[data-sidebar=true][data-compact=true] { position:relative; margin:0; }
+  report-picker[data-sidebar=true] .rp-disclosure > summary { display:flex; justify-content:space-between; align-items:center; gap:6px; list-style:none; padding:10px 12px; border-radius:6px; background:var(--color-paper-deep); color:var(--color-ink); font-size:13px; font-variant-numeric:tabular-nums; cursor:pointer; }
+  report-picker[data-sidebar=true] summary::-webkit-details-marker { display:none; }
+  report-picker[data-sidebar=true] .rp-browser { position:fixed; z-index:40; width:min(360px,calc(100vw - 24px)); max-height:calc(100dvh - 24px); overflow-y:auto; display:block; padding:16px; border:1px solid var(--color-hairline); border-radius:8px; background:var(--color-paper); }
+  report-picker[data-sidebar=true] .rp-preview, report-picker[data-sidebar=true] .rp-modes { display:none; }
+  report-picker[data-sidebar=true] .rp-toolbar { justify-content:flex-end; }
+  report-picker[data-sidebar=true] .rp-month-nav { gap:4px; margin-top:8px; }
+  report-picker[data-sidebar=true] .rp-day { height:40px; font-size:15px; }
+  report-picker[data-sidebar=true] .rp-hint { font-size:11px; }
+  .rp-sidebar-neighbors { display:flex; justify-content:space-between; gap:8px; margin-top:10px; font-size:11px; }
+  .rp-sidebar-neighbors a { color:var(--color-accent); }
+  .rp-sidebar-neighbors [aria-disabled] { color:var(--color-ink-3); }
+  @media(max-width:1100px) {
+    report-picker[data-sidebar=true] .rp-sidebar-neighbors { display:none; }
+    report-picker[data-sidebar=true] .rp-disclosure > summary { font-size:12px; padding:8px; }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import { weekSeries } from '../../lib/report-data';
+interface Props { compact?: boolean; start: string; end: string; reports: { date:string; count?:number | null; url:string }[] }
+const { start, end, reports, compact = false } = Astro.props;
+const days = weekSeries(start, reports);
+const maximum = Math.max(1, ...days.map(d => d.count ?? 0));
+const ceiling = Math.max(4, Math.ceil(maximum / 4) * 4);
+const recorded = days.filter(d => d.count != null);
+const total = recorded.reduce((sum,d) => sum + d.count!, 0);
+---
+<figure class="week-chart" data-compact={compact}>
+  <div class="week-chart-heading"><h2 class="tp-section">七日信号变化</h2><span>{start} 至 {end}</span></div>
+  <p class="week-chart-summary">已记录 {recorded.length} / 7 天 · {recorded.length > 0 ? `${recorded.length === 7 ? '本周共' : '已记录日期合计'} ${total} 条信号` : '暂无可用的每日信号计数'}</p>
+  <div class="week-chart-body">
+    <div class="week-axis" aria-hidden="true"><span>{ceiling}</span><span>{ceiling / 2}</span><span>0</span></div>
+    <div class="week-columns">
+      {days.map((day, i) => {
+        const previous = days[i - 1]?.count;
+        const delta = day.count != null && previous != null ? day.count - previous : null;
+        const state = day.status === 'missing' ? '缺档' : day.status === 'unknown' ? '未记录' : `${day.count} 条信号`;
+        const label = `${day.date} · ${state}${delta != null ? ` · 比前日${delta >= 0 ? '+' : ''}${delta}` : ''}`;
+        return <div class="week-day" data-state={day.status}>
+          <span class="week-value">{day.count ?? '—'}</span>
+          <a class:list={['week-plot', day.status !== 'recorded' && 'week-unrecorded']} href={day.url} aria-label={label} title={label}>
+            {day.count != null ? <span class:list={['week-bar', day.count === 0 && 'week-zero']} style={`height:${day.count / ceiling * 100}%`} /> : <span class="week-gap">{state}</span>}
+          </a>
+          <a class="week-date" href={day.url} aria-label={day.url ? `阅读 ${day.date} 日报` : `${day.date} 无日报`}>{day.date.slice(5)}</a>
+          <span class="week-delta">{delta == null ? '—' : delta === 0 ? '持平' : `${delta > 0 ? '+' : ''}${delta}`}</span>
+        </div>;
+      })}
+    </div>
+  </div>
+  <figcaption>{compact ? '来源：同期日报。单位为条，下方为较前日增减；缺档不计零。点击日期查看日报。' : '来源：同期日报的每日信号总数，点击日期可查阅。纵轴单位为条，日期下方为较前一日增减；缺档或未记录不按零计算。每日数量未经跨日去重，不能等同于周报提炼的趋势数量。'}</figcaption>
+</figure>
+<style>
+  .week-chart-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px; }
+  .week-chart-heading > span,.week-chart-summary,figcaption { font-size:12px; color:var(--color-ink-2); line-height:1.7; }
+  .week-chart-summary { margin-top:12px; }
+  .week-chart-body { display:flex; gap:12px; margin:24px 0 18px; }
+  .week-axis { display:flex; flex-direction:column; justify-content:space-between; width:36px; height:180px; margin-top:28px; font-size:11px; color:var(--color-ink-2); text-align:right; }
+  .week-columns { flex:1; min-width:0; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:12px; }
+  .week-day { display:flex; flex-direction:column; align-items:center; min-width:0; }
+  .week-value { height:28px; font-size:13px; font-variant-numeric:tabular-nums; }
+  .week-plot { display:flex; align-items:flex-end; justify-content:center; width:100%; height:180px; border-bottom:1px solid var(--color-hairline); }
+  .week-plot[href]:hover .week-bar { background:var(--color-accent-deep); }
+  .week-bar { display:block; width:clamp(16px,3vw,38px); background:var(--color-accent); border-radius:3px 3px 0 0; }
+  .week-zero { min-height:2px; }
+  .week-gap { display:flex; align-items:center; justify-content:center; height:100%; width:100%; color:var(--color-ink-2); border:1px dashed var(--color-hairline); border-bottom:0; font-size:11px; }
+  .week-date { font-size:12px; margin-top:12px; color:var(--color-ink-2); white-space:nowrap; }
+  .week-date[href] { color:var(--color-accent); }
+  .week-delta { font-size:11px; margin-top:4px; color:var(--color-ink-2); }
+  @media(max-width:600px) { .week-columns { gap:6px; } .week-axis { width:22px; } .week-chart-body { gap:6px; } .week-date { font-size:10px; } }
+  .week-chart[data-compact=true] .tp-section { font-size:16px; }
+  .week-chart[data-compact=true] .week-chart-heading { gap:6px; }
+  .week-chart[data-compact=true] .week-chart-heading > span { font-size:11px; }
+  .week-chart[data-compact=true] .week-chart-summary { font-size:11px; }
+  .week-chart[data-compact=true] .week-axis,.week-chart[data-compact=true] .week-plot { height:120px; }
+  .week-chart[data-compact=true] .week-axis { width:24px; }
+  .week-chart[data-compact=true] .week-columns { gap:6px; }
+  .week-chart[data-compact=true] .week-chart-body { gap:6px; margin-block:16px; }
+  .week-chart[data-compact=true] .week-date { font-size:10px; }
+  .week-chart[data-compact=true] .week-bar { width:20px; }
+</style>

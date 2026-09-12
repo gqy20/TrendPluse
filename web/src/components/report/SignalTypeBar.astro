@@ -8,8 +8,13 @@ import { signalLabel } from '../../lib/format';
 
 interface Props {
   signals: Signal[];
+  period?: string;
+  targetId?: string;
+  heading?: string;
+  panel?: boolean;
+  sourceDescription?: string;
 }
-const { signals } = Astro.props;
+const { signals, period, targetId, heading, panel = false, sourceDescription = '本期日报的工程、研究、提交与发布信号' } = Astro.props;
 
 const TYPE_COLOR: Record<string, string> = {
   capability: 'var(--color-sig-capability)',
@@ -28,24 +33,62 @@ const parts = [...counts.entries()].sort((a, b) => b[1] - a[1]);
 const total = signals.length || 1;
 ---
 
-{parts.length > 0 && (
-  <div>
+{(parts.length > 0 || panel) && (
+  <figure data-signal-distribution data-target={targetId} class:list={[panel && 'distribution-panel']}>
+    {heading && <h2 class="text-[14px] font-medium mb-3">{heading}</h2>}
+    {panel ? <div class="distribution-rows">
+      {parts.map(([type, count]) => <button type="button" data-signal-type={type} class="distribution-row" aria-label={`${signalLabel(type)}：${count} 条，占 ${Math.round(count / total * 1000) / 10}%，筛选该分类`}>
+        <span>{signalLabel(type)}</span>
+        <span class="distribution-track"><span style={`width:${count / total * 100}%;background:${TYPE_COLOR[type] ?? 'var(--color-ink-3)'}`} /></span>
+        <strong>{count}</strong><small>{Math.round(count / total * 1000) / 10}%</small>
+      </button>)}
+      {parts.length === 0 && <p class="text-[13px] text-ink-2">本期没有可分类的信号。</p>}
+    </div> : <>
     <div class="flex h-[8px] rounded-[2px] overflow-hidden gap-[2px]">
       {parts.map(([t, n]) => (
-        <span
-          class="block h-full rounded-[2px]"
+        <button type="button" data-signal-type={t}
+          class="block h-full rounded-[2px] cursor-pointer"
           style={`width:${(n / total) * 100}%;background:${TYPE_COLOR[t] ?? 'var(--color-ink-3)'}`}
-          title={`${signalLabel(t)} ${n}`}
+          aria-label={`${signalLabel(t)}：${n} 条，占 ${Math.round(n / total * 1000) / 10}%${targetId ? '，筛选该分类' : ''}`}
+          title={`${signalLabel(t)} ${n} 条 · ${Math.round(n / total * 1000) / 10}%`}
         />
       ))}
     </div>
     <div class="flex flex-wrap gap-x-5 gap-y-1.5 mt-3">
       {parts.map(([t, n]) => (
-        <span class="flex items-center gap-1.5 tp-mono text-ink-2">
+        <button type="button" data-signal-type={t} class="flex items-center gap-1.5 tp-mono text-ink-2 py-1 cursor-pointer" title={`${signalLabel(t)} ${n} 条 · ${Math.round(n / total * 1000) / 10}%`}>
           <span class="inline-block size-[7px] rounded-[2px]" style={`background:${TYPE_COLOR[t] ?? 'var(--color-ink-3)'}`} />
           {signalLabel(t)} <span class="text-ink-3">{n}</span>
-        </span>
+        </button>
       ))}
     </div>
-  </div>
+    </>}
+    {period && <figcaption class="text-[12px] leading-relaxed text-ink-2 mt-3">{period} · {panel ? `来源：本期 ${signals.length} 条信号明细，每条计一次。点击分类可筛选。` : `按本页 ${signals.length} 条信号明细分组，每条计一次。来源：${sourceDescription}；图例可直接筛选，悬停查看数量与占比。`}</figcaption>}
+  </figure>
 )}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-signal-distribution]').forEach(chart => {
+    chart.addEventListener('click', event => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-signal-type]');
+      const target = chart.dataset.target ? document.getElementById(chart.dataset.target) : chart.closest('section');
+      const tag = [...target?.querySelectorAll<HTMLButtonElement>('[data-type-filter]') ?? []].find(item => item.dataset.typeFilter === button?.dataset.signalType);
+      if (!button || !tag) return;
+      tag.click();
+      target?.scrollIntoView({ behavior:'instant', block:'start' });
+      tag.focus({ preventScroll:true });
+    });
+  });
+</script>
+
+<style>
+  .distribution-panel { padding-top:4px; }
+  .distribution-panel h2 { font-size:16px; }
+  .distribution-rows { display:flex; flex-direction:column; gap:8px; }
+  .distribution-row { display:grid; grid-template-columns:60px minmax(0,1fr) 28px 36px; align-items:center; gap:10px; min-height:28px; width:100%; text-align:left; font-size:12px; cursor:pointer; }
+  .distribution-row:hover { color:var(--color-accent); }
+  .distribution-track { display:block; height:6px; background:var(--color-paper-deep); border-radius:2px; }
+  .distribution-track > span { display:block; height:100%; border-radius:2px; }
+  strong { font-weight:500; text-align:right; font-variant-numeric:tabular-nums; }
+  small { font-size:11px; text-align:right; color:var(--color-ink-2); }
+</style>

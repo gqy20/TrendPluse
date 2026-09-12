@@ -1,0 +1,44 @@
+---
+interface Props { summary: string; fallback: string; date?: string }
+const { summary, fallback, date } = Astro.props;
+const clean = date ? summary.replace(new RegExp(`^${date}[，,\\s]*`), '') : summary;
+const first = clean.split('。')[0];
+const useHeadline = first && first.length <= 60;
+const headline = useHeadline ? first : fallback;
+const body = useHeadline ? clean.slice(first.length).replace(/^。/, '') : clean;
+---
+<div class="report-intro">
+  <h1>{headline}</h1>
+  {body && <div data-report-summary>
+    <p>{body}</p>
+    <button type="button" hidden aria-expanded="false">展开完整摘要</button>
+  </div>}
+</div>
+<style>
+  h1 { font-family:var(--font-serif); font-size:clamp(26px,2.6vw,40px); line-height:1.3; text-wrap:balance; max-width:28em; }
+  p { margin-top:16px; font-size:16px; line-height:1.8; color:var(--color-ink-2); max-width:48em; overflow-wrap:anywhere; }
+  [data-collapsed=true] p { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  button { margin-top:8px; color:var(--color-accent); font-size:13px; cursor:pointer; min-height:32px; }
+  button[hidden] { display:none; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-report-summary]').forEach(root => {
+    const p = root.querySelector('p')!;
+    const button = root.querySelector('button')!;
+    const measure = () => {
+      if (button.getAttribute('aria-expanded') === 'true') return;
+      root.dataset.collapsed = 'true';
+      button.hidden = p.scrollHeight <= p.clientHeight + 1;
+    };
+    button.onclick = () => {
+      const expanded = button.getAttribute('aria-expanded') !== 'true';
+      const before = root.getBoundingClientRect().top;
+      root.dataset.collapsed = String(!expanded);
+      button.setAttribute('aria-expanded', String(expanded));
+      button.textContent = expanded ? '收起摘要' : '展开完整摘要';
+      if (!expanded && before < 60) root.scrollIntoView({ behavior:'instant', block:'start' });
+    };
+    new ResizeObserver(measure).observe(p);
+    measure();
+  });
+</script>

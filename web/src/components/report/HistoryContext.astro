@@ -1,0 +1,52 @@
+---
+interface Props {
+  date: string;
+  status?: string | null;
+  comparison?: string;
+  references: { date:string; href?:string }[];
+}
+const { date, status, comparison, references } = Astro.props;
+const labels: Record<string,string> = {
+  new:'新趋势出现', continuing:'延续演进', resurfacing:'重新受到关注', weakening:'趋势减弱', mixed:'多种趋势并存',
+};
+const label = status ? labels[status] ?? '持续观察' : '持续观察';
+const dates = [...new Map(references.filter(item => /^\d{4}-\d{2}-\d{2}$/.test(item.date) && item.date < date).map(item => [item.date,item])).values()].sort((a,b) => a.date.localeCompare(b.date));
+const displayDate = (value:string) => value.slice(0,4) === date.slice(0,4) ? value.slice(5).replace('-', '.') : value.replaceAll('-', '.');
+---
+<section class="history-context py-10" id="history">
+  <header class="history-heading">
+    <h2 class="tp-section">历史位置</h2>
+    <span class="history-status">{label}</span>
+  </header>
+  {comparison ? <p class="history-comparison">{comparison}</p> : <p class="history-empty">本期未提供详细历史对比结论{dates.length > 0 ? '，可从下方参考日期回看变化。' : '。'}</p>}
+  {dates.length > 0 && <div class="history-evidence">
+    <div class="history-evidence-heading"><h3>对比依据</h3><span>参考 {dates.length} 个历史日期 · 按时间排序</span></div>
+    <ul class="history-dates" aria-label="历史参考报告，按时间排序">
+      {dates.map(item => <li>
+        {item.href ? <a href={item.href} aria-label={`阅读 ${item.date} 日报`}><time datetime={item.date}>{displayDate(item.date)}</time><span aria-hidden="true">↗</span></a> : <span class="history-unavailable" title={`${item.date} 被本期报告引用，但站内暂无对应归档`}><time datetime={item.date}>{displayDate(item.date)}</time><small>未归档</small></span>}
+      </li>)}
+      <li class="history-current" aria-current="date"><time datetime={date}>{displayDate(date)}</time><span>本期</span></li>
+    </ul>
+  </div>}
+</section>
+<style>
+  .history-heading { display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px; }
+  .history-status { display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--color-accent); }
+  .history-status::before { content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
+  .history-comparison { max-width:60em; font-size:16px; line-height:1.9; color:var(--color-ink-2); text-wrap:pretty; }
+  .history-empty { font-size:14px; color:var(--color-ink-2); }
+  .history-evidence { margin-top:28px; }
+  .history-evidence-heading { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px; margin-bottom:12px; }
+  .history-evidence-heading h3 { font-size:13px; font-weight:500; }
+  .history-evidence-heading > span { font-size:12px; color:var(--color-ink-2); }
+  .history-dates { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:0; margin:0; list-style:none; }
+  .history-dates a,.history-unavailable,.history-current { display:flex; align-items:center; gap:8px; padding:10px 12px; min-height:44px; border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums; }
+  .history-dates a { color:var(--color-ink); background:var(--color-paper-deep); }
+  .history-dates a:hover { color:var(--color-accent); }
+  .history-dates a > span { color:var(--color-ink-2); font-size:11px; }
+  .history-unavailable { color:var(--color-ink-2); }
+  .history-unavailable small { font-size:11px; }
+  .history-current { color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 7%,transparent); }
+  .history-current > span { font-size:11px; }
+  @media(max-width:700px) { .history-comparison { font-size:15px; line-height:1.85; } .history-heading { margin-bottom:16px; } .history-evidence { margin-top:22px; } }
+</style>

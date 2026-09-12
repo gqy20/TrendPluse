@@ -3,7 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { loadRepos, groupReposByOwner } from '../../lib/repos';
 import StatRow from '../../components/ui/StatRow.astro';
-import HeroArt from '../../components/ui/HeroArt.astro';
+import CollectionStatus from '../../components/report/CollectionStatus.astro';
+import { routes } from '../../lib/path';
 import { repoUrl } from '../../lib/format';
 
 const repos = loadRepos();
@@ -13,7 +14,10 @@ const groups = groupReposByOwner(repos);
 const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
 const latest = daily[0]?.data;
 const activeTop = latest?.activity?.top_repos ?? [];
-const activeCount = latest?.activity?.active_repos_count ?? 0;
+const activeCount = latest?.activity?.active_repos_count;
+const configuredNames = new Set(groups.flatMap(([, list]) => list.map(repo => repo.full)));
+const listedNames = latest?.monitored_repos.length ? new Set(latest.monitored_repos) : null;
+const listedCount = listedNames ? [...configuredNames].filter(name => listedNames.has(name)).length : null;
 
 const allSignals = latest
   ? [...latest.engineering_signals, ...latest.research_signals, ...latest.commit_signals, ...latest.release_signals]
@@ -28,8 +32,12 @@ const recentChanges = [...allSignals]
     href: s.sources[0],
   }));
 
-// 本周变化 rail:取最近 7 期日报统计
-const last7 = daily.slice(0, 7);
+// 最近七个自然日，以最新日报日期为窗口终点。
+const windowEnd = latest?.date;
+const windowStartDate = windowEnd ? new Date(`${windowEnd}T00:00:00Z`) : null;
+windowStartDate?.setUTCDate(windowStartDate.getUTCDate() - 6);
+const windowStart = windowStartDate?.toISOString().slice(0, 10);
+const last7 = windowStart && windowEnd ? daily.filter(e => e.data.date >= windowStart && e.data.date <= windowEnd) : [];
 const weekNewSignals = last7.reduce((s, e) => s + (e.data.stats.total_signals ?? 0), 0);
 const weekHigh = last7.reduce((s, e) => s + (e.data.stats.high_impact_signals ?? 0), 0);
 const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).size;
@@ -39,7 +47,7 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
   <div class="tp-shell tp-grid pt-12 pb-8">
     <div class="min-w-0">
       <!-- Hero -->
-      <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
+      <header class="hero-data pb-8">
         <div>
           <h1 class="tp-h1">监控仓库</h1>
           <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
@@ -50,18 +58,20 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
               stats={[
                 { value: repos.length, label: '监控仓库' },
                 { value: groups.length, label: '组织' },
-                { value: activeCount, label: '今日活跃' },
-                { value: latest?.stats.total_signals ?? 0, label: '今日信号' },
+                { value: activeCount ?? '—', label: '本期活跃' },
+                { value: latest?.stats.total_signals ?? '—', label: '本期信号' },
               ]}
             />
           </div>
         </div>
-        <HeroArt class="hidden lg:block h-[260px] w-[300px] ml-auto" text="WATCH ONLY WHAT MATTERS" />
+      <CollectionStatus compact date={latest?.date} reportUrl={daily[0] ? routes.daily(daily[0].id.replace(/^report-/, '')) : undefined} configured={repos.length} listed={listedCount} prs={latest?.stats.total_prs_analyzed} commits={latest?.activity?.total_commits} releases={latest?.releases?.total_count} issueParsed={latest?.issue_insights?.parsed_files} issueFailed={latest?.issue_insights?.failed_files} />
       </header>
+
+
 
       {repos.length === 0 ? (
         <!-- 首次使用态 -->
-        <section class="border-t border-hairline py-16">
+        <section class="py-16">
           <div class="border border-dashed border-hairline py-16 px-8 text-center">
             <p class="tp-item text-ink-2">还没有监控任何仓库</p>
             <p class="tp-meta mt-2">在仓库根目录的 repos.json 中添加仓库,下一次运行后这里会亮起来。</p>
@@ -71,7 +81,7 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
       ) : (
         <>
           <!-- 组织视图 -->
-          <section class="border-t border-hairline py-12">
+          <section class="py-12">
             <div class="flex items-baseline justify-between mb-8">
               <h2 class="tp-section">组织视图</h2>
               <span class="tp-meta">按监控数量排序</span>
@@ -102,7 +112,7 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
 
           <!-- 近期变化 -->
           {recentChanges.length > 0 && (
-            <section class="border-t border-hairline py-12">
+            <section class="py-12">
               <div class="flex items-baseline justify-between mb-8">
                 <h2 class="tp-section">近期变化</h2>
                 <span class="tp-meta">只看真正改变关注优先级的仓库动态。</span>
@@ -129,7 +139,8 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
 
     <!-- Rail:本周变化 -->
     <aside class="tp-rail">
-      <h2 class="tp-item mb-6">本周变化</h2>
+      <h2 class="tp-item mb-3">最近七日</h2>
+      <p class="tp-meta mb-6">{windowStart} 至 {windowEnd}<br />已归档 {last7.length} / 7 天</p>
       <dl class="space-y-4">
         <div class="flex items-baseline justify-between gap-3">
           <dt class="tp-mono text-ink-2">信号</dt>
@@ -140,24 +151,14 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
           <dd class="tp-num text-[26px] tp-impact-high">{weekHigh}</dd>
         </div>
         <div class="flex items-baseline justify-between gap-3">
-          <dt class="tp-mono text-ink-2">活跃仓库</dt>
-          <dd class="tp-num text-[26px]">{activeCount}</dd>
+          <dt class="tp-mono text-ink-2">本期活跃仓库</dt>
+          <dd class="tp-num text-[26px]">{activeCount ?? '—'}</dd>
         </div>
         <div class="flex items-baseline justify-between gap-3">
-          <dt class="tp-mono text-ink-2">周覆盖仓库</dt>
+          <dt class="tp-mono text-ink-2">监控清单并集</dt>
           <dd class="tp-num text-[26px]">{weekRepos}</dd>
         </div>
       </dl>
-      <div class="border-t border-hairline mt-8 pt-8">
-        <h2 class="tp-mono text-ink mb-4">数据覆盖</h2>
-        <div class="space-y-2">
-          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Pull Requests</p>
-          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Commits</p>
-          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Releases</p>
-          <p class="tp-mono text-ink-2 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" />Issues</p>
-          <p class="tp-mono text-ink-3 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-hairline" />Trending 对比</p>
-        </div>
-      </div>
     </aside>
   </div>
 </BaseLayout>

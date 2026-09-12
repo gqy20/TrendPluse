@@ -1,16 +1,7 @@
----
-import { routes } from '../../lib/path';
----
-<footer class="mt-24 w-full">
-  <div class="tp-shell border-t border-hairline py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 tp-mono text-ink">
-    <span>TrendPulse</span>
+<footer class="mt-4 w-full">
+  <div class="tp-shell py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 tp-mono text-ink">
+    <img src={`${import.meta.env.BASE_URL}assets/brand/logo-black.svg`} alt="TrendPulse" width="140" height="28" />
     <p class="text-ink-4">A quieter way to see what’s next.</p>
-    <nav class="flex items-center gap-6 text-ink-4">
-      <a href={routes.home()} class="hover:text-ink transition-colors">首页</a>
-      <a href={routes.reports()} class="hover:text-ink transition-colors">趋势报告</a>
-      <a href={routes.discovery()} class="hover:text-ink transition-colors">项目发现</a>
-      <a href={routes.repos()} class="hover:text-ink transition-colors">监控仓库</a>
-    </nav>
     <span class="text-ink-4">2026 · Daily Intelligence</span>
   </div>
 </footer>

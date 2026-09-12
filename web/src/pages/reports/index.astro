@@ -1,159 +1,20 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { routes } from '../../lib/path';
-
-const daily = (await getCollection('daily')).sort((a, b) => b.id.localeCompare(a.id));
-const weekly = (await getCollection('weekly')).sort((a, b) => b.id.localeCompare(a.id));
-const dailyDate = (id: string) => id.replace(/^report-/, '');
-const weeklyId = (id: string) => id.replace(/^weekly-/, '');
-
-// ── 热力日历:日期 → 信号数/摘要 ───────────────────────────
-const byDate = new Map(daily.map((e) => [e.data.date, e]));
-const dates = [...byDate.keys()].sort();
-const first = new Date(`${dates[0]}T00:00:00Z`);
-const last = new Date(`${dates[dates.length - 1]}T00:00:00Z`);
-
-/** 信号数 → 蓝阶分档(0=空档纸灰) */
-function heatLevel(n: number): string {
-  if (n === 0) return '#ecebe4';
-  if (n < 10) return '#c9d4ee';
-  if (n < 20) return '#8aa7e8';
-  if (n < 30) return '#4d79e0';
-  return '#1a57de';
-}
-
-// 从第一个周一开始,按周列 × 7 行铺格子(GitHub contributions 布局)
-const start = new Date(first);
-start.setUTCDate(start.getUTCDate() - ((start.getUTCDay() + 6) % 7));
-const cells: { date: string; count: number; brief: string; month: number; inMonthStart: boolean }[] = [];
-for (let d = new Date(start); d <= last; d.setUTCDate(d.getUTCDate() + 1)) {
-  const iso = d.toISOString().slice(0, 10);
-  const e = byDate.get(iso);
-  cells.push({
-    date: iso,
-    count: e?.data.stats.total_signals ?? 0,
-    brief: (e?.data.summary_brief ?? '').slice(0, 60),
-    month: d.getUTCMonth(),
-    inMonthStart: d.getUTCDate() <= 7,
-  });
-}
-
-// 月份标签:每个月第一格所在的列号
-const monthLabels: { col: number; label: string }[] = [];
-{
-  let lastMonth = -1;
-  cells.forEach((c, i) => {
-    if (c.month !== lastMonth) {
-      monthLabels.push({ col: Math.floor(i / 7), label: `${c.month + 1}月` });
-      lastMonth = c.month;
-    }
-  });
-}
-const totalCols = Math.ceil(cells.length / 7);
+import ReportPicker from '../../components/report/ReportPicker.astro';
 ---
-
-<BaseLayout title="趋势报告" description="TrendPulse 每日 GitHub 趋势信号归档">
-  <div class="tp-shell tp-grid pt-12 pb-8">
-    <div class="min-w-0">
-      <header class="pb-12">
-        <h1 class="tp-h1">趋势报告</h1>
-        <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
-          {daily.length} 份日报 · {weekly.length} 份周报。每天不是一个点,而是趋势形成过程的一层证据。
-        </p>
-      </header>
-
-      <!-- 信号热力日历 -->
-      <section class="border-t border-hairline py-12">
-        <div class="flex items-baseline justify-between mb-8">
-          <h2 class="tp-section">信号日历</h2>
-          <div class="flex items-center gap-2 tp-mono text-ink-3">
-            少
-            {[0, 8, 15, 25, 35].map((n) => <span class="inline-block size-[11px] rounded-[2px]" style={`background:${heatLevel(n)}`} />)}
-            多
-          </div>
-        </div>
-
-        <div class="overflow-x-auto pb-2">
-          <div class="min-w-max">
-            <!-- 月份标签行 -->
-            <div class="relative h-5 ml-8" style={`width:${totalCols * 15}px`}>
-              {monthLabels.map((m) => (
-                <span class="absolute tp-mono text-ink-3 text-[11px]" style={`left:${m.col * 15}px`}>{m.label}</span>
-              ))}
-            </div>
-            <div class="flex gap-1.5">
-              <!-- 星期轴 -->
-              <div class="grid grid-rows-7 gap-[4px] tp-mono text-[10px] text-ink-4 pr-1 pt-[1px] text-right leading-[11px]">
-                <span></span><span>一</span><span></span><span>三</span><span></span><span>五</span><span></span>
-              </div>
-              <!-- 格子:按周列流动 -->
-              <div class="grid grid-rows-7 grid-flow-col gap-[4px]">
-                {cells.map((c) => (
-                  <a
-                    href={c.count > 0 ? routes.daily(c.date) : '#'}
-                    title={`${c.date}${c.count > 0 ? ` · ${c.count} 个信号${c.brief ? ' · ' + c.brief : ''}` : ' · 无报告'}`}
-                    class:list={['inline-block size-[11px] rounded-[2px] transition-opacity', c.count > 0 ? 'hover:opacity-70' : 'cursor-default']}
-                    style={`background:${heatLevel(c.count)}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 周报 -->
-      {weekly.length > 0 && (
-        <section class="border-t border-hairline py-12">
-          <div class="flex items-baseline justify-between mb-8">
-            <h2 class="tp-section">周报 <span class="tp-num text-[20px] text-ink-3 ml-1">{weekly.length}</span></h2>
-            <span class="tp-meta">一周的结构性判断</span>
-          </div>
-          <div>
-            {weekly.slice(0, 6).map((e, i) => (
-              <a href={routes.weekly(weeklyId(e.id))} class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[150px_minmax(0,1fr)_110px] gap-4 items-baseline">
-                <span class="tp-num !text-[18px] text-accent">{e.data.week_id}</span>
-                <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief}</p>
-                <span class="tp-mono text-ink-3 text-right">{e.data.daily_reports_count ?? 0} 日报</span>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <!-- 近期日报 -->
-      <section class="border-t border-hairline py-12">
-        <div class="flex items-baseline justify-between mb-8">
-          <h2 class="tp-section">近期日报</h2>
-          <span class="tp-meta">按日期倒序 · 完整归档见日历</span>
-        </div>
-        <div>
-          {daily.slice(0, 10).map((e) => (
-            <a href={routes.daily(dailyDate(e.id))} class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[130px_minmax(0,1fr)_90px] gap-4 items-baseline">
-              <span class="tp-mono text-ink">{e.data.date}</span>
-              <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief || `${e.data.stats.total_signals ?? 0} 个信号`}</p>
-              <span class="tp-mono text-ink-3 text-right">{e.data.stats.total_signals ?? 0} 信号</span>
-            </a>
-          ))}
-        </div>
-      </section>
-    </div>
-
-    <!-- Rail -->
-    <aside class="tp-rail">
-      <h2 class="tp-item mb-6">索引</h2>
-      <a href={daily[0] ? routes.daily(dailyDate(daily[0].id)) : '#'} class="tp-row border-b border-hairline flex justify-between">
-        <span class="tp-meta text-ink">最新日报</span>
-        <span class="tp-mono text-accent">→</span>
-      </a>
-      {weekly[0] && (
-        <a href={routes.weekly(weeklyId(weekly[0].id))} class="tp-row border-b border-hairline flex justify-between">
-          <span class="tp-meta text-ink">最新周报</span>
-          <span class="tp-mono text-accent">→</span>
-        </a>
-      )}
-      <p class="tp-meta mt-6">所有结论都能沿着报告回溯到 PR / Release / Commit。</p>
-    </aside>
+<BaseLayout fillViewport={false} title="趋势报告" description="按日期查阅 TrendPulse 日报与周报">
+  <div class="tp-shell report-archive">
+    <header class="report-archive-header">
+      <h1 class="tp-h1">趋势报告</h1>
+      <p>选一个日期，回到那一天的变化。</p>
+    </header>
+    <ReportPicker />
   </div>
 </BaseLayout>
+<style>
+  .report-archive { padding-top:32px; padding-bottom:16px; }
+  .report-archive-header { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding-bottom:40px; }
+  .report-archive-header h1 { font-size:36px; }
+  .report-archive-header p { color:var(--color-ink-2); font-size:14px; }
+  @media(max-width:700px) { .report-archive-header { display:block; padding-bottom:28px; } .report-archive-header p { margin-top:12px; } }
+</style>

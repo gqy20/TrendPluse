@@ -1,0 +1,6 @@
+---
+import { renderRating, type RatingKind } from '../../lib/ratings';
+interface Props { value?: number | null; kind?: RatingKind; large?: boolean }
+const { value, kind = 'impact', large = false } = Astro.props;
+---
+<Fragment set:html={renderRating(value, kind, large)} />
