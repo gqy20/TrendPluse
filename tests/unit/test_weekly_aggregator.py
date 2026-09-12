@@ -287,8 +287,8 @@ class TestWeeklyAggregator:
         assert result.core_trends[0].title == "异步架构成为本周主流"
         assert result.total_signals == len(sample_signals)
 
-    def test_aggregate_falls_back_after_repeated_invalid_json(self, sample_signals):
-        """同步聚合在多次解析失败后应降级为高影响信号展示。"""
+    def test_aggregate_raises_after_repeated_invalid_json(self, sample_signals):
+        """同步聚合多次失败应抛异常（失败可见，不模板降级）。"""
         aggregator = WeeklyAggregator(api_key="test-key", retry_max_attempts=2)
         responses = iter(
             [
@@ -313,11 +313,8 @@ class TestWeeklyAggregator:
         aggregator._client.messages.create = lambda *args, **kwargs: next(responses)
         aggregator._llm_retry = lambda func: func
 
-        result = aggregator.aggregate(sample_signals)
-
-        assert result.core_trends == []
-        assert "降级为按高影响信号展示" in result.summary_brief
-        assert result.total_signals == len(sample_signals)
+        with pytest.raises(RuntimeError, match="周报聚合连续失败"):
+            aggregator.aggregate(sample_signals)
 
     @pytest.mark.asyncio
     async def test_aggregate_async_skips_thinking_block_and_reads_text_block(
@@ -395,10 +392,10 @@ class TestWeeklyAggregator:
         assert result.total_signals == len(sample_signals)
 
     @pytest.mark.asyncio
-    async def test_aggregate_async_falls_back_after_repeated_invalid_json(
+    async def test_aggregate_async_raises_after_repeated_invalid_json(
         self, sample_signals
     ):
-        """异步聚合在多次解析失败后应降级为高影响信号展示。"""
+        """异步聚合多次失败应抛异常（失败可见，不模板降级）。"""
         aggregator = WeeklyAggregator(api_key="test-key", retry_max_attempts=2)
         responses = iter(
             [
@@ -426,11 +423,8 @@ class TestWeeklyAggregator:
 
         cast(Any, aggregator)._run_with_llm_retry_async = _fake_retry
 
-        result = await aggregator.aggregate_async(sample_signals)
-
-        assert result.core_trends == []
-        assert "降级为按高影响信号展示" in result.summary_brief
-        assert result.total_signals == len(sample_signals)
+        with pytest.raises(RuntimeError, match="周报聚合连续失败"):
+            await aggregator.aggregate_async(sample_signals)
 
 
 class TestWeeklyAggregatorModelWiring:

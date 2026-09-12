@@ -191,8 +191,8 @@ class TestRunAsyncIntegration:
         summarize_call = comps["release_summarizer"].summarize_materials_async.call_args
         assert len(summarize_materials_arg(summarize_call)) == 1
 
-        # 信号 = normal fallback 1 + 批量整批 1
-        assert len(result.release_signals) == 2
+        # 信号 = 批量整批 1（normal analyzer 空产出不再模板伪造）
+        assert len(result.release_signals) == 1
 
         # 落盘数据完整（16 条），批量组 ai_summary 为 AI 分析结论
         assert len(result.detailed_releases) == 16

@@ -376,10 +376,14 @@ class ReleaseProcessor:
             list[Signal],
             self.release_analyzer.analyze_materials(release_materials),
         )
-        if release_signals:
+        if not release_signals:
+            logger.warning(
+                "release 信号分析零产出（normal=%d）——失败可见，不再模板伪造",
+                len(normal_releases),
+            )
+        else:
             self._log_category_distribution("release", release_signals)
-            return release_signals
-        return self.build_fallback_signals(normal_releases)
+        return release_signals
 
     async def analyze_signals_async(
         self, normal_releases: list[dict[str, Any]]
@@ -392,10 +396,14 @@ class ReleaseProcessor:
             list[Signal],
             await self.release_analyzer.analyze_materials_async(release_materials),
         )
-        if release_signals:
+        if not release_signals:
+            logger.warning(
+                "release 信号分析零产出（normal=%d）——失败可见，不再模板伪造",
+                len(normal_releases),
+            )
+        else:
             self._log_category_distribution("release", release_signals)
-            return release_signals
-        return self.build_fallback_signals(normal_releases)
+        return release_signals
 
     @staticmethod
     def _log_category_distribution(source: str, signals: list[Signal]) -> None:
@@ -507,40 +515,3 @@ class ReleaseProcessor:
         """判断 tag 是否为浮动主版本别名。"""
         normalized = tag_name.lstrip("v")
         return bool(match(r"^\d+$", normalized))
-
-    def build_fallback_signals(
-        self, detailed_releases: list[dict[str, Any]]
-    ) -> list[Signal]:
-        """构建 release 信号兜底结果。"""
-        signals: list[Signal] = []
-        for idx, release in enumerate(detailed_releases):
-            repo = str(release.get("repo", "")).strip()
-            tag_name = str(
-                release.get("tag_name") or release.get("name") or f"unknown-{idx + 1}"
-            ).strip()
-            source_url = str(release.get("html_url", "")).strip()
-            version_info = release.get("version_info") or {}
-            major = int(version_info.get("major", 0)) if version_info else 0
-            is_prerelease = bool(version_info.get("is_prerelease", False))
-
-            impact_score = 4 if major >= 1 and not is_prerelease else 3
-            title = f"{repo} 发布 {tag_name}" if repo else f"版本发布 {tag_name}"
-            why_it_matters = (
-                f"{repo} 发布新版本 {tag_name}，建议评估变更影响与兼容性。"
-                if repo
-                else f"检测到新版本 {tag_name}，建议评估变更影响与兼容性。"
-            )
-
-            signals.append(
-                Signal(
-                    id=f"release-fallback-{idx}",
-                    title=title,
-                    type="release",
-                    category="engineering",
-                    impact_score=impact_score,
-                    why_it_matters=why_it_matters,
-                    sources=[source_url] if source_url else [],
-                    related_repos=[repo] if repo else [],
-                )
-            )
-        return signals

@@ -123,21 +123,6 @@ class WeeklyAggregator:
 
             return WeeklyAggregationResult.model_validate(data)
 
-    def _build_fallback_result(self, signals: list) -> WeeklyAggregationResult:
-        """在 LLM 输出持续异常时构造降级周报摘要。"""
-        high_impact_count = sum(
-            1 for signal in signals if getattr(signal, "impact_score", 0) >= 4
-        )
-        summary = (
-            f"本周共汇总 {len(signals)} 个信号，其中高影响信号 {high_impact_count} 个。"
-            "由于周报聚合模型连续返回非法结构，本期核心趋势已降级为按高影响信号展示。"
-        )
-        return WeeklyAggregationResult(
-            core_trends=[],
-            summary_brief=summary,
-            total_signals=len(signals),
-        )
-
     async def _run_with_llm_retry_async(self, func):
         retryable_errors = (anthropic.APITimeoutError, anthropic.RateLimitError)
         attempts = self._retry_max_attempts
@@ -229,8 +214,7 @@ class WeeklyAggregator:
             return result
 
         if last_error is not None:
-            logger.warning("周报聚合降级为高影响信号展示: %s", last_error)
-            return self._build_fallback_result(signals)
+            raise RuntimeError(f"周报聚合连续失败: {last_error}") from last_error
         raise RuntimeError("周报聚合未返回结果且未捕获具体异常")
 
     async def aggregate_async(self, signals: list) -> WeeklyAggregationResult:
@@ -274,9 +258,8 @@ class WeeklyAggregator:
             return result
 
         if last_error is not None:
-            logger.warning("异步周报聚合降级为高影响信号展示: %s", last_error)
-            return self._build_fallback_result(signals)
-        raise RuntimeError("异步周报聚合未返回结果且未捕获具体异常")
+            raise RuntimeError(f"周报聚合连续失败: {last_error}") from last_error
+        raise RuntimeError("周报聚合未返回结果且未捕获具体异常")
 
     def _extract_json_from_markdown(self, response: str) -> str:
         """从 markdown 代码块中提取 JSON
