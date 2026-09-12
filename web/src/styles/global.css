@@ -122,11 +122,11 @@ body {
   border-color: var(--color-hairline);
 }
 
-/* 主内容 + 右侧 Rail(1600 桌面稿:左边界 84px,rail 分界 1340px) */
+/* 主内容 + 右侧 Rail(宽屏占用更充分,两侧留白收紧) */
 .tp-shell {
-  max-width: 1600px;
+  max-width: 1840px;
   margin-inline: auto;
-  padding-inline: clamp(24px, 4.2vw, 84px);
+  padding-inline: clamp(24px, 3vw, 60px);
 }
 .tp-grid {
   display: grid;

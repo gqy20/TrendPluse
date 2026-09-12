@@ -79,8 +79,8 @@ const lead = sentences.slice(1).join('。');
     <div class="min-w-0">
       <!-- Hero:日 / 周 切换 + 核心结论 -->
       <header class="pb-10">
-        <div class="flex items-center justify-between mb-5">
-          <p class="tp-eyebrow">TREND REPORT · {w.week_id} · {w.start_date} – {w.end_date}</p>
+        <div class="flex items-center justify-between mb-6">
+          <p class="tp-mono text-ink-3">{w.week_id} · {w.start_date} – {w.end_date}</p>
           <!-- 日/周切换器 -->
           <nav class="tp-mono flex items-center border border-hairline">
             <a href={routes.reports()} class="px-3 py-1 text-ink-3 hover:text-ink transition-colors">日</a>
@@ -208,9 +208,9 @@ const lead = sentences.slice(1).join('。');
         <div class="flex justify-between gap-3"><dt class="tp-meta">高影响</dt><dd class="tp-mono text-ink">{w.high_impact_signals ?? '—'}</dd></div>
       </dl>
       <div class="border-t border-hairline mt-8 pt-8">
-        <h2 class="tp-mono text-ink mb-4">本期日报</h2>
+        <h2 class="tp-mono text-ink mb-5">本期日报</h2>
         {weekDays.map((e) => (
-          <a href={routes.daily(e.data.date)} class="tp-row border-b border-hairline flex justify-between">
+          <a href={routes.daily(e.data.date)} class="tp-row flex justify-between items-baseline py-3">
             <span class="tp-mono text-ink">{e.data.date.slice(5)}</span>
             <span class="tp-mono text-ink-3">{e.data.stats.total_signals ?? 0} 信号</span>
           </a>

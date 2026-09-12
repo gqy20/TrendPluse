@@ -41,7 +41,6 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
       <!-- Hero -->
       <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
         <div>
-          <p class="tp-eyebrow mb-5">MONITOR · REPOSITORIES</p>
           <h1 class="tp-h1">监控仓库</h1>
           <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
             {repos.length} 个仓库 · {groups.length} 个组织。只看真正改变关注优先级的仓库动态,持续监控,仅在变化足够重要时提升优先级。

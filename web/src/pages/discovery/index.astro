@@ -31,7 +31,6 @@ const featured = latest
       <!-- Hero -->
       <header class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 items-end pb-12">
         <div>
-          <p class="tp-eyebrow mb-5">DISCOVERY · OPEN SOURCE</p>
           <h1 class="tp-h1">项目发现</h1>
           <p class="tp-body text-ink-2 mt-5 max-w-[560px]">
             每天从 GitHub Trending 里筛掉噪声,只留下值得监控的新项目。先看证据,再决定是否扩大监控范围。
@@ -60,31 +59,25 @@ const featured = latest
         </section>
       ) : (
         <>
-          <!-- 本周值得关注 -->
+          <!-- 本周值得关注:三栏白卡 -->
           {featured.length > 0 && (
             <section class="border-t border-hairline py-12">
               <div class="flex items-baseline justify-between mb-8">
                 <h2 class="tp-section">本周值得关注</h2>
                 <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-link">0{featured.length} 个重点项目 →</a>
               </div>
-              <div>
-                {featured.map((p, i) => (
-                  <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-row border-b border-hairline grid md:grid-cols-[80px_minmax(0,380px)_minmax(0,1fr)] gap-6 items-start">
-                    <span class="tp-num text-[34px] text-ink-3">0{i + 1}</span>
-                    <div>
-                      <h3 class="tp-item">{p.name || p.repo}</h3>
-                      <p class="tp-mono text-ink-3 mt-1.5">{p.repo}</p>
-                      <div class="flex flex-wrap gap-x-5 gap-y-1 mt-3">
-                        <span class="tp-mono text-ink-2">★ {formatNumber(p.stars ?? 0)}</span>
-                        {p.stars_growth_7d != null && p.stars_growth_7d > 0 && (
-                          <span class="tp-mono text-accent">+{formatNumber(p.stars_growth_7d)} / 7d</span>
-                        )}
-                        {p.language && <span class="tp-mono text-ink-3">{p.language}</span>}
-                      </div>
+              <div class="grid md:grid-cols-3 gap-6">
+                {featured.map((p) => (
+                  <a href={latest ? routes.discoveryReport(latest.date) : '#'} class="tp-card p-6 flex flex-col min-h-[220px] group">
+                    <h3 class="tp-mono !text-[17px] font-medium group-hover:text-accent transition-colors truncate">{p.name || p.repo}</h3>
+                    <p class="tp-mono text-ink-3 mt-1 truncate">{p.repo}</p>
+                    <p class="tp-meta text-ink-2 mt-4 line-clamp-3">{p.highlight?.one_liner || p.highlight?.summary || p.description}</p>
+                    <div class="mt-auto pt-5 flex items-baseline justify-between">
+                      <span class="tp-mono text-ink-2">★ {formatNumber(p.stars ?? 0)}</span>
+                      {p.stars_growth_7d != null && p.stars_growth_7d > 0 && (
+                        <span class="tp-mono text-accent">+{formatNumber(p.stars_growth_7d)} / 7d</span>
+                      )}
                     </div>
-                    <p class="tp-meta text-ink pt-1">
-                      {p.highlight?.one_liner || p.highlight?.summary || p.description}
-                    </p>
                   </a>
                 ))}
               </div>

@@ -75,6 +75,7 @@ const vol = d.date.replaceAll('-', '.');
       <!-- Hero:50px 衬线 + 统计行(含置信度小柱) + v3 视觉 -->
       <header class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 items-start pb-10">
         <div>
+          <p class="tp-mono text-ink-3 mb-4">{vol}</p>
           <h1 class="tp-h1 !text-[clamp(30px,3.1vw,50px)] !leading-[1.18] max-w-[860px]">{headline}</h1>
           {lead && <p class="tp-body text-[#4f5763] mt-5 max-w-[720px]">{lead}。</p>}
 
