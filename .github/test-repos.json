@@ -1,42 +1,162 @@
 [
-  "anthropics/claude-code",
-  "anthropics/skills",
-  "anthropics/claude-cookbooks",
-  "anthropics/claude-quickstarts",
-  "anthropics/courses",
-  "anthropics/prompt-eng-interactive-tutorial",
-  "anthropics/claude-agent-sdk-python",
-  "anthropics/claude-agent-sdk-typescript",
-  "anthropics/claude-agent-sdk-demos",
-  "anthropics/anthropic-sdk-python",
-  "anthropics/anthropic-sdk-typescript",
-  "anthropics/anthropic-sdk-go",
-  "anthropics/anthropic-sdk-java",
-  "anthropics/claude-code-action",
-  "anthropics/claude-code-security-review",
-  "anthropics/claude-plugins-official",
-  "anthropics/devcontainer-features",
-  "anthropics/evals",
-  "anthropics/political-neutrality-eval",
-  "anthropics/hh-rlhf",
-  "cline/cline",
-  "openai/openai-python",
-  "openai/openai-quickstart-python",
-  "langchain-ai/langchain",
-  "langchain-ai/langgraph",
-  "google-gemini/gemini-cli",
-  "openai/swarm",
-  "openai/codex",
-  "langchain-ai/deepagents",
-  "openai/openai-agents-python",
-  "Arize-ai/phoenix",
-  "vercel/ai",
-  "Aider-AI/aider",
-  "continuedev/continue",
-  "danielmiessler/fabric",
-  "gptme/gptme",
-  "TransformerOptimus/SuperAGI",
-  "Significant-Gravitas/AutoGPT",
-  "OpenHands/OpenHands",
-  "langgenius/dify"
+  {
+    "url": "https://github.com/anthropics/claude-code",
+    "description": "Anthropic 的 CLI 编码代理工具。"
+  },
+  {
+    "url": "https://github.com/anthropics/skills",
+    "description": "Anthropic 官方技能与工作流示例集合。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-cookbooks",
+    "description": "Claude 的实践食谱与集成示例。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-quickstarts",
+    "description": "Claude 快速上手示例项目。"
+  },
+  {
+    "url": "https://github.com/anthropics/courses",
+    "description": "Anthropic 官方课程与教学材料。"
+  },
+  {
+    "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+    "description": "Prompt Engineering 交互式教程。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-agent-sdk-python",
+    "description": "Claude Agent SDK Python 版。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-agent-sdk-typescript",
+    "description": "Claude Agent SDK TypeScript 版。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-agent-sdk-demos",
+    "description": "Claude Agent SDK 演示与示例。"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-python",
+    "description": "Anthropic Python 官方 SDK。"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+    "description": "Anthropic TypeScript 官方 SDK。"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-go",
+    "description": "Anthropic Go 官方 SDK。"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-java",
+    "description": "Anthropic Java 官方 SDK。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-code-action",
+    "description": "Claude Code 的 GitHub Action 集成。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-code-security-review",
+    "description": "Claude Code 安全审查工具。"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-plugins-official",
+    "description": "Anthropic 官方插件仓库。"
+  },
+  {
+    "url": "https://github.com/anthropics/devcontainer-features",
+    "description": "Anthropic 开发容器功能集合。"
+  },
+  {
+    "url": "https://github.com/anthropics/evals",
+    "description": "Anthropic 模型评测与评估工具。"
+  },
+  {
+    "url": "https://github.com/anthropics/political-neutrality-eval",
+    "description": "政治中立性评测项目。"
+  },
+  {
+    "url": "https://github.com/anthropics/hh-rlhf",
+    "description": "Anthropic HH-RLHF 数据与研究仓库。"
+  },
+  {
+    "url": "https://github.com/cline/cline",
+    "description": "面向开发者的开源 AI 编码助手。"
+  },
+  {
+    "url": "https://github.com/Aider-AI/aider",
+    "description": "终端中的 AI 结对编程工具。"
+  },
+  {
+    "url": "https://github.com/continuedev/continue",
+    "description": "IDE 内的 AI 开发助手。"
+  },
+  {
+    "url": "https://github.com/openai/openai-python",
+    "description": "OpenAI Python 官方 SDK。"
+  },
+  {
+    "url": "https://github.com/openai/openai-quickstart-python",
+    "description": "OpenAI Python 快速开始示例。"
+  },
+  {
+    "url": "https://github.com/danielmiessler/fabric",
+    "description": "面向提示与工作流的知识自动化工具。"
+  },
+  {
+    "url": "https://github.com/gptme/gptme",
+    "description": "终端中的个人 AI 助手。"
+  },
+  {
+    "url": "https://github.com/TransformerOptimus/SuperAGI",
+    "description": "多代理自动化框架。"
+  },
+  {
+    "url": "https://github.com/Significant-Gravitas/AutoGPT",
+    "description": "经典自主代理框架。"
+  },
+  {
+    "url": "https://github.com/OpenHands/OpenHands",
+    "description": "面向软件工程任务的开放代理平台。"
+  },
+  {
+    "url": "https://github.com/langchain-ai/langchain",
+    "description": "LLM 应用开发框架。"
+  },
+  {
+    "url": "https://github.com/langchain-ai/langgraph",
+    "description": "多步骤、多代理编排框架。"
+  },
+  {
+    "url": "https://github.com/langgenius/dify",
+    "description": "LLM 应用开发与运营平台。"
+  },
+  {
+    "url": "https://github.com/google-gemini/gemini-cli",
+    "description": "Gemini 的命令行工具。"
+  },
+  {
+    "url": "https://github.com/openai/swarm",
+    "description": "轻量级多代理实验框架。"
+  },
+  {
+    "url": "https://github.com/openai/codex",
+    "description": "OpenAI 代码代理相关项目。"
+  },
+  {
+    "url": "https://github.com/langchain-ai/deepagents",
+    "description": "LangChain 的深度代理实验项目。"
+  },
+  {
+    "url": "https://github.com/openai/openai-agents-python",
+    "description": "OpenAI 官方多代理工作流 Python 框架。"
+  },
+  {
+    "url": "https://github.com/Arize-ai/phoenix",
+    "description": "AI Observability 与评估平台。"
+  },
+  {
+    "url": "https://github.com/vercel/ai",
+    "description": "Vercel AI SDK，聚焦 AI 应用与代理构建。"
+  }
 ]
