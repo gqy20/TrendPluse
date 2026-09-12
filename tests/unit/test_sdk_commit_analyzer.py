@@ -5,7 +5,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from pathlib import Path
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -387,55 +386,3 @@ class TestAnalyzeMaterialsAsync:
 
         # 2 批，每批调用一次 query_async
         assert mock_engine.query_async.call_count == 2
-
-
-class TestSyncAnalyze:
-    """同步分析测试。"""
-
-    def test_sync_analyze_works_without_event_loop(self, sample_materials):
-        """无事件循环时同步调用正常。"""
-        from trendpluse.analyzers.sdk_commit_analyzer import SDKCommitAnalyzer
-
-        analyzer = SDKCommitAnalyzer()
-
-        mock_result = CommitSignalsResult(
-            signals=[
-                CommitSignalItem(
-                    title="测试",
-                    type="capability",
-                    category="engineering",
-                    impact_score=3,
-                    why_it_matters="测试",
-                    commit_sha="abc123def456",
-                    related_repos=[],
-                    trends=[],
-                    tech_details={},
-                ),
-            ],
-            analyzed_count=1,
-        )
-
-        mock_query_result = MagicMock()
-        mock_query_result.output = mock_result
-
-        with patch.object(analyzer, "query_engine") as mock_engine:
-            mock_engine.query_async = AsyncMock(return_value=mock_query_result)
-            result = analyzer.analyze_materials(sample_materials)
-
-        assert isinstance(result, list)
-        assert len(result) == 1
-
-    def test_sync_analyze_raises_when_event_loop_exists(self, sample_materials):
-        """检测到事件循环时抛出错误。"""
-        from trendpluse.analyzers.sdk_commit_analyzer import SDKCommitAnalyzer
-
-        analyzer = SDKCommitAnalyzer()
-
-        async def run_test():
-            return analyzer.analyze_materials(sample_materials)
-
-        async def main():
-            with pytest.raises(RuntimeError, match="事件循环"):
-                await run_test()
-
-        asyncio.run(main())

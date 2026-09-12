@@ -52,39 +52,6 @@ class DailyPipelineApp:
         # SDK 批量 PR 分析器（全量文件探索，唯一 PR 信号路径）
         self.pr_analyzer = pr_analyzer
 
-    def run_daily(self, date: datetime | None = None) -> DailyReport:
-        """运行每日分析流程。"""
-        if date is None:
-            date = datetime.now()
-
-        day_ago = date - timedelta(days=1)
-        daily_inputs = self._collect_daily_inputs(day_ago)
-        self._collect_issue_artifacts(date.strftime("%Y-%m-%d"))
-
-        pr_signals = self._collect_pr_signals(day_ago)
-        if not pr_signals:
-            logger.warning(
-                "今日将生成空报告（PR 信号链断点见上一条 WARNING；"
-                "commit_signals=%d, release_signals=%d）",
-                len(daily_inputs.commit_signals),
-                len(daily_inputs.release_signals),
-            )
-            return cast(
-                DailyReport,
-                self.daily_report_finalizer.handle_empty_report(
-                    date=date,
-                    activity_data=daily_inputs.activity_data,
-                    commit_signals=daily_inputs.commit_signals,
-                    releases_data=daily_inputs.releases_data,
-                ),
-            )
-
-        return self._build_daily_report(
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
-
     async def run_daily_async(self, date: datetime | None = None) -> DailyReport:
         """运行每日分析流程（异步）。"""
         start_time = time.perf_counter()
@@ -125,33 +92,6 @@ class DailyPipelineApp:
         )
         logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
         return report
-
-    def _collect_daily_inputs(self, day_ago: datetime) -> DailyPipelineInputs:
-        """同步收集日报所需的基础输入。"""
-        activity_data, detailed_commits = (
-            self.activity_collector.collect_activity_graphql(
-                repos=self.settings.github_repos,
-                since=day_ago,
-                max_workers=self.settings.max_parallel_workers,
-            )
-        )
-        releases_data, detailed_releases = self.release_collector.collect_releases(
-            repos=self.settings.github_repos,
-            since=day_ago,
-            include_prereleases=self.settings.include_prereleases,
-            max_workers=self.settings.max_parallel_workers,
-        )
-        release_result = self.release_workflow.run(releases_data, detailed_releases)
-        commit_signals = self._analyze_commit_signals(detailed_commits)
-        return DailyPipelineInputs(
-            activity_data,
-            detailed_commits,
-            release_result.releases_data,
-            release_result.detailed_releases,
-            commit_signals,
-            release_result.release_signals,
-            release_result.breaking_changes,
-        )
 
     async def _collect_daily_inputs_async(
         self, day_ago: datetime, snapshot_date: str
@@ -253,46 +193,6 @@ class DailyPipelineApp:
             commit_signals = commit_result
         return commit_signals
 
-    def _analyze_commit_signals(
-        self, detailed_commits: list[dict[str, Any]]
-    ) -> list[Any]:
-        """分析 commit 技术信号。"""
-        if not detailed_commits:
-            return []
-        commit_materials = self.commit_material_builder.build(detailed_commits)
-        return cast(list[Any], self.commit_analyzer.analyze_materials(commit_materials))
-
-    def _collect_pr_signals(self, day_ago: datetime) -> list[Any]:
-        """同步收集并分析 PR 信号。"""
-        candidates = self._collect_pr_candidates(day_ago)
-        if not candidates:
-            logger.warning("PR 信号链断点: candidates=0（事件采集/筛选后无候选）")
-            return []
-
-        pr_materials = self._read_pr_materials(candidates)
-        if not pr_materials:
-            logger.warning(
-                "PR 信号链断点: materials=0（candidates=%d 但读取详情全失败）",
-                len(candidates),
-            )
-            return []
-
-        signals = self.pr_analyzer.analyze_materials(pr_materials)
-        if not signals:
-            logger.warning(
-                "PR 信号链断点: signals=0（materials=%d 但 LLM 分析全部失败/被过滤）",
-                len(pr_materials),
-            )
-            return []
-
-        pr_signals = self.deduplicator.deduplicate(signals)
-        if not pr_signals:
-            logger.warning(
-                "PR 信号链断点: after_dedup=0（signals=%d 去重后全部判定重复）",
-                len(signals),
-            )
-        return cast(list[Any], pr_signals)
-
     async def _collect_pr_signals_async(self, day_ago: datetime) -> list[Any]:
         """异步收集并分析 PR 信号。"""
         step_start = time.perf_counter()
@@ -348,13 +248,6 @@ class DailyPipelineApp:
             )
         return cast(list[Any], pr_signals)
 
-    def _collect_issue_artifacts(self, snapshot_date: str) -> None:
-        """收集 issue 落盘与 agent 分析产物。"""
-        self.issue_workflow.collect_and_analyze(
-            self.settings.github_repos,
-            snapshot_date,
-        )
-
     def _collect_pr_candidates(self, day_ago: datetime) -> list[dict[str, Any]]:
         """收集并筛选 PR 候选事件。"""
         events = self.collector.fetch_events(
@@ -374,29 +267,6 @@ class DailyPipelineApp:
                 max_workers=self.settings.max_parallel_workers,
             ),
         )
-
-    def _build_daily_report(
-        self,
-        *,
-        date: datetime,
-        daily_inputs: DailyPipelineInputs,
-        pr_signals: list[Any],
-    ) -> DailyReport:
-        """同步聚合并完成日报收尾。"""
-        report = self.analyzer.aggregate_and_generate_report(
-            pr_signals=pr_signals,
-            commit_signals=daily_inputs.commit_signals,
-            release_signals=daily_inputs.release_signals,
-            date=date.strftime("%Y-%m-%d"),
-        )
-        self._collect_daily_llm_usage(report)
-        self.daily_report_finalizer.finalize_daily_report(
-            report=report,
-            date=date,
-            daily_inputs=daily_inputs,
-            pr_signals=pr_signals,
-        )
-        return cast(DailyReport, report)
 
     async def _build_daily_report_async(
         self,
@@ -478,7 +348,3 @@ class DailyPipelineApp:
                 budget,
                 (total_tokens - budget) / budget * 100,
             )
-
-    def run_issue_agent_analysis(self, snapshot_date: str) -> None:
-        """兼容旧入口的 Issue Agent 分析。"""
-        self.issue_workflow.run_issue_agent_analysis(snapshot_date)

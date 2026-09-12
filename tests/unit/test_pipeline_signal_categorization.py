@@ -4,11 +4,56 @@
 engineering_signals 和 research_signals 中。
 """
 
+import asyncio
 from datetime import datetime
 from unittest.mock import Mock, patch
 
 from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData, Signal
+
+
+def _wire_daily_async(
+    pipeline,
+    mock_commit_analyzer=None,
+    mock_release_analyzer=None,
+) -> None:
+    """为 run_daily_async 接线 AsyncMock，信号取自测试配置的 mock 工厂。"""
+    from unittest.mock import AsyncMock
+
+    from trendpluse.app.release_processor import ReleaseWorkflowResult
+
+    app = pipeline.daily_app
+
+    commit_signals = (
+        mock_commit_analyzer.return_value.analyze_materials.return_value
+        if mock_commit_analyzer is not None
+        else []
+    )
+    release_signals = (
+        mock_release_analyzer.return_value.analyze_materials.return_value
+        if mock_release_analyzer is not None
+        else []
+    )
+    releases_data, detailed_releases = (
+        app.release_collector.collect_releases.return_value or (None, [])
+    )
+
+    app.commit_analyzer.analyze_materials_async = AsyncMock(return_value=commit_signals)
+    app.pr_analyzer.analyze_materials_async = AsyncMock(return_value=[])
+    app.issue_workflow.collect_and_analyze_async = AsyncMock(return_value=None)
+    app.release_workflow.run_async = AsyncMock(
+        return_value=ReleaseWorkflowResult(
+            releases_data=releases_data,
+            detailed_releases=detailed_releases,
+            release_signals=release_signals,
+            breaking_changes=[],
+        )
+    )
+    # 聚合结果默认取 analyzer mock 已配置的（若无则保持原 Mock 引用）
+    if hasattr(app.analyzer, "aggregate_and_generate_report"):
+        app.analyzer.aggregate_and_generate_report_async = AsyncMock(
+            return_value=app.analyzer.aggregate_and_generate_report.return_value
+        )
 
 
 class MockSignalDeduplicator:
@@ -173,7 +218,12 @@ class TestSignalCategorization:
 
         # Act - 运行 pipeline
         pipeline = TrendPulsePipeline()
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        _wire_daily_async(
+            pipeline,
+            mock_commit_analyzer,
+            mock_release_analyzer,
+        )
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert - 验证 commit_signals 被清空（避免重复显示）
         assert len(report.commit_signals) == 0

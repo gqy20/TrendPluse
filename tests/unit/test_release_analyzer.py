@@ -1,6 +1,8 @@
 """Release 分析器单元测试"""
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.models.source import AnalysisMaterial
@@ -18,6 +20,7 @@ class TestReleaseAnalyzer:
             model="glm-4.7",
             base_url="https://api.test.com",
         )
+        analyzer.async_instructor_client = None
 
         # Assert
         assert analyzer.api_key == "test_key"
@@ -30,12 +33,14 @@ class TestReleaseAnalyzer:
         """测试：使用默认模型初始化"""
         # Arrange & Act
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         # Assert
         assert analyzer.model == "glm-4.7"
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_returns_signals(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_returns_signals(self, mock_anthropic):
         """测试：分析 release 材料应返回信号列表"""
         # Arrange
         mock_client = MagicMock()
@@ -48,10 +53,12 @@ class TestReleaseAnalyzer:
             '"sources": ["https://github.com/test/repo/releases/v1.0.0"]}]'
         )
         mock_message.content = [MagicMock(text=response_json)]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
+        analyzer.async_client = mock_client
         materials = [
             AnalysisMaterial.from_release_details(
                 {
@@ -65,7 +72,7 @@ class TestReleaseAnalyzer:
         ]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert
         assert len(signals) == 1
@@ -75,18 +82,21 @@ class TestReleaseAnalyzer:
         assert signals[0].impact_score == 4
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_with_empty_list(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_with_empty_list(self, mock_anthropic):
         """测试：空 release 材料应返回空列表"""
         # Arrange
         mock_anthropic.return_value = MagicMock()
         analyzer = ReleaseAnalyzer(api_key="test_key")
-        signals = analyzer.analyze_materials([])
+        analyzer.async_instructor_client = None
+        signals = await analyzer.analyze_materials_async([])
 
         # Assert
         assert signals == []
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_handles_llm_error_gracefully(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_handles_llm_error_gracefully(self, mock_anthropic):
         """测试：LLM API 错误应优雅处理并返回空列表"""
         # Arrange
         mock_client = MagicMock()
@@ -94,6 +104,8 @@ class TestReleaseAnalyzer:
         mock_anthropic.return_value = mock_client
 
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
+        analyzer.async_client = mock_client
         materials = [
             AnalysisMaterial.from_release_details(
                 {
@@ -105,13 +117,14 @@ class TestReleaseAnalyzer:
         ]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert - 应返回空列表而不是抛出异常
         assert signals == []
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_parses_markdown_code_blocks(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_parses_markdown_code_blocks(self, mock_anthropic):
         """测试：应正确解析 markdown 代码块包裹的 JSON"""
         # Arrange
         mock_client = MagicMock()
@@ -124,10 +137,12 @@ class TestReleaseAnalyzer:
             '"sources": ["https://github.com/test/repo/releases/v1.0.0"]}]\n```'
         )
         mock_message.content = [MagicMock(text=response_text)]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
+        analyzer.async_client = mock_client
         materials = [
             AnalysisMaterial.from_release_details(
                 {
@@ -139,24 +154,27 @@ class TestReleaseAnalyzer:
         ]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert
         assert len(signals) == 1
         assert signals[0].title == "测试"
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_filters_minor_releases(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_filters_minor_releases(self, mock_anthropic):
         """测试：应过滤掉不重要的版本更新"""
         # Arrange
         mock_client = MagicMock()
         mock_message = MagicMock()
         # 返回空数组表示没有重要信号
         mock_message.content = [MagicMock(text="[]")]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
+        analyzer.async_client = mock_client
         materials = [
             AnalysisMaterial.from_release_details(
                 {
@@ -169,13 +187,16 @@ class TestReleaseAnalyzer:
         ]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert
         assert signals == []
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_analyze_materials_identifies_major_version_upgrade(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_identifies_major_version_upgrade(
+        self, mock_anthropic
+    ):
         """测试：应识别主版本升级"""
         # Arrange
         mock_client = MagicMock()
@@ -188,10 +209,12 @@ class TestReleaseAnalyzer:
             '"sources": ["https://github.com/test/repo/releases/v2.0.0"]}]'
         )
         mock_message.content = [MagicMock(text=response_json)]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         analyzer = ReleaseAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
+        analyzer.async_client = mock_client
         materials = [
             AnalysisMaterial.from_release_details(
                 {
@@ -204,7 +227,7 @@ class TestReleaseAnalyzer:
         ]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert
         assert len(signals) == 1

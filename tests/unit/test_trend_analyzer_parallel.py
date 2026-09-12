@@ -48,7 +48,8 @@ class TestTrendAnalyzerParallel:
             for i in range(6)
         ]
 
-    def test_analyze_materials_accepts_max_workers_parameter(self):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_accepts_max_workers_parameter(self):
         """测试：analyze_materials 方法应接受 max_workers 参数"""
         analyzer = TrendAnalyzer(
             api_key="test-key",
@@ -56,12 +57,17 @@ class TestTrendAnalyzerParallel:
 
         import inspect
 
-        sig = inspect.signature(analyzer.analyze_materials)
+        sig = inspect.signature(analyzer.analyze_materials_async)
         params = list(sig.parameters.keys())
 
-        assert "max_workers" in params, "analyze_materials 应接受 max_workers 参数"
+        assert "max_workers" in params, (
+            "analyze_materials_async 应接受 max_workers 参数"
+        )
 
-    def test_analyze_materials_parallel_speedup(self, sample_materials, mock_signal):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_parallel_speedup(
+        self, sample_materials, mock_signal
+    ):
         """测试：并行处理应比串行处理更快"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -79,17 +85,22 @@ class TestTrendAnalyzerParallel:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
 
         # 串行处理（max_workers=1）
         call_count[0] = 0
         start = time.time()
-        signals_serial = analyzer.analyze_materials(sample_materials, max_workers=1)
+        signals_serial = await analyzer.analyze_materials_async(
+            sample_materials, max_workers=1
+        )
         serial_time = time.time() - start
 
         # 并行处理（max_workers=3）
         call_count[0] = 0
         start = time.time()
-        signals_parallel = analyzer.analyze_materials(sample_materials, max_workers=3)
+        signals_parallel = await analyzer.analyze_materials_async(
+            sample_materials, max_workers=3
+        )
         parallel_time = time.time() - start
 
         # 验证结果一致
@@ -101,15 +112,17 @@ class TestTrendAnalyzerParallel:
             f"并行处理 ({parallel_time:.2f}s) 应该显著快于串行 ({serial_time:.2f}s)"
         )
 
-    def test_analyze_materials_empty_list_with_max_workers(self):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_empty_list_with_max_workers(self):
         """测试：空列表时 max_workers 参数不应导致错误"""
         analyzer = TrendAnalyzer(api_key="test-key")
 
-        signals = analyzer.analyze_materials([], max_workers=3)
+        signals = await analyzer.analyze_materials_async([], max_workers=3)
 
         assert signals == []
 
-    def test_analyze_materials_single_pr_with_max_workers(self, mock_signal):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_single_pr_with_max_workers(self, mock_signal):
         """测试：单个 PR 材料时 max_workers=3 应正常工作"""
         mock_client = MagicMock()
         mock_client.chat.completions.create_with_completion.return_value = (
@@ -119,6 +132,7 @@ class TestTrendAnalyzerParallel:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
 
         material = AnalysisMaterial.from_pr_details(
             {
@@ -131,11 +145,12 @@ class TestTrendAnalyzerParallel:
             }
         )
 
-        signals = analyzer.analyze_materials([material], max_workers=3)
+        signals = await analyzer.analyze_materials_async([material], max_workers=3)
 
         assert len(signals) == 1
 
-    def test_analyze_materials_handles_individual_failures_gracefully(
+    @pytest.mark.asyncio
+    async def test_analyze_materials_handles_individual_failures_gracefully(
         self, mock_signal
     ):
         """测试：单个 PR 材料失败不应影响其他材料。"""
@@ -151,15 +166,16 @@ class TestTrendAnalyzerParallel:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
 
         # 使用 patch 来控制 analyze_material 的行为
         from unittest.mock import patch
 
-        def mock_analyze_material(material):
+        async def mock_analyze_material(material):
             """模拟分析：特定 PR 失败"""
             if material.source_ref.repo == failed_repo:
                 raise Exception("模拟 API 失败")
-            return TrendAnalyzer.analyze_material(analyzer, material)
+            return await TrendAnalyzer.analyze_material_async(analyzer, material)
 
         materials = [
             AnalysisMaterial.from_pr_details(
@@ -176,9 +192,9 @@ class TestTrendAnalyzerParallel:
         ]
 
         with patch.object(
-            analyzer, "analyze_material", side_effect=mock_analyze_material
+            analyzer, "analyze_material_async", side_effect=mock_analyze_material
         ):
-            signals = analyzer.analyze_materials(materials, max_workers=3)
+            signals = await analyzer.analyze_materials_async(materials, max_workers=3)
 
         # 应该成功处理 4 个（1 个失败）
         assert len(signals) == 4, f"期望 4 个信号，实际返回 {len(signals)} 个"
@@ -186,7 +202,10 @@ class TestTrendAnalyzerParallel:
         signal_repos = [s.related_repos[0] for s in signals if s.related_repos]
         assert failed_repo not in signal_repos, f"失败的 PR {failed_repo} 不应在结果中"
 
-    def test_analyze_materials_default_max_workers(self, sample_materials, mock_signal):
+    @pytest.mark.asyncio
+    async def test_analyze_materials_default_max_workers(
+        self, sample_materials, mock_signal
+    ):
         """测试：不提供 max_workers 时应使用默认值"""
         mock_client = MagicMock()
         mock_client.chat.completions.create_with_completion.return_value = (
@@ -196,8 +215,9 @@ class TestTrendAnalyzerParallel:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
 
         # 应该能正常调用（使用默认 max_workers）
-        signals = analyzer.analyze_materials(sample_materials)
+        signals = await analyzer.analyze_materials_async(sample_materials)
 
         assert len(signals) == 6

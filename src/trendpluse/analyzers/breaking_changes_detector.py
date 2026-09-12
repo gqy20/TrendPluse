@@ -48,49 +48,6 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             retry_wait_max=retry_wait_max,
         )
 
-    def detect_breaking_changes(self, releases: dict[str, Any]) -> list[dict]:
-        """检测 breaking changes
-
-        Args:
-            releases: release 数据字典
-
-        Returns:
-            breaking changes 列表
-        """
-        # 获取详细的 release 列表
-        detailed_releases = releases.get("detailed_releases", [])
-
-        # 处理空列表
-        if not detailed_releases:
-            logger.debug("BreakingChangesDetector: 收到空 release 列表")
-            return []
-
-        logger.debug(
-            f"BreakingChangesDetector: 开始分析 {len(detailed_releases)} 个 releases"
-        )
-
-        try:
-            # 调用 LLM 分析
-            logger.debug("BreakingChangesDetector: 调用 LLM 分析...")
-            llm_response = self._call_llm(detailed_releases)
-            logger.debug(
-                f"BreakingChangesDetector: LLM 响应长度: {len(llm_response)} 字符"
-            )
-
-            # 解析响应
-            breaking_changes = self._parse_response(llm_response)
-            logger.debug(
-                f"BreakingChangesDetector: 检测到 "
-                f"{len(breaking_changes)} 个 breaking changes"
-            )
-
-            return breaking_changes
-
-        except Exception as e:
-            # 出错时返回空列表
-            logger.debug(f"BreakingChangesDetector: 检测失败 - {type(e).__name__}: {e}")
-            return []
-
     async def detect_breaking_changes_async(
         self, releases: dict[str, Any]
     ) -> list[dict]:
@@ -112,37 +69,6 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
                 f"BreakingChangesDetector: 异步检测失败 - {type(e).__name__}: {e}"
             )
             return []
-
-    def _call_llm(self, releases: list[dict[str, Any]]) -> str:
-        """调用 LLM 分析 releases
-
-        Args:
-            releases: release 数据列表
-
-        Returns:
-            LLM 响应文本
-        """
-        # 构建 prompt
-        prompt = self._build_prompt(releases)
-
-        # 调用 API
-        def _call():
-            return self.client.messages.create(  # type: ignore[call-overload]
-                model=self.model,
-                max_tokens=4096,
-                temperature=0.3,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
-            )
-
-        # 使用基类方法提取文本
-        message = self._run_with_llm_retry(_call)
-        self._record_llm_usage(message)
-        return self._extract_text_from_response(message)
 
     async def _call_llm_async(self, releases: list[dict[str, Any]]) -> str:
         prompt = self._build_prompt(releases)

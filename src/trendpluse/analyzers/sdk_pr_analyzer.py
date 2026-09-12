@@ -8,7 +8,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import shutil
 import tempfile
 from pathlib import Path
@@ -347,15 +346,3 @@ class SDKPRAnalyzer:
             matched = deduped
 
         return self._validate_and_match(PRSignalsResult(signals=matched), batch)
-
-    def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
-        """同步封装。"""
-        try:
-            asyncio.get_running_loop()
-        except RuntimeError:
-            pass
-        else:
-            raise RuntimeError(
-                "检测到正在运行的事件循环，请改用 analyze_materials_async()。",
-            )
-        return asyncio.run(self.analyze_materials_async(materials))

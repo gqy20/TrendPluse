@@ -95,10 +95,6 @@ class TrendPulsePipeline:
             )
         return Anthropic(api_key=self.settings.anthropic_api_key)
 
-    def run_daily(self, date: datetime | None = None) -> DailyReport:
-        """运行每日分析流程。"""
-        return self.daily_app.run_daily(date)
-
     async def run_daily_async(self, date: datetime | None = None) -> DailyReport:
         """运行每日分析流程（异步）。"""
         return await self.daily_app.run_daily_async(date)

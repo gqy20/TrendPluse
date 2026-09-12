@@ -9,6 +9,8 @@
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import Signal
 from trendpluse.models.source import AnalysisMaterial
@@ -17,12 +19,14 @@ from trendpluse.models.source import AnalysisMaterial
 class TestTrendAnalyzerCrossTypeAggregation:
     """测试 TrendAnalyzer 跨类型聚合功能"""
 
-    def test_aggregates_pr_commit_and_release_signals(self):
+    @pytest.mark.asyncio
+    async def test_aggregates_pr_commit_and_release_signals(self):
         """测试：能够聚合 PR、Commit、Release 三种信号类型"""
         # Arrange
         analyzer = TrendAnalyzer(
             api_key="test-key",
         )
+        analyzer.async_instructor_client = None
 
         # 模拟三种类型的信号
         pr_signals = [
@@ -116,7 +120,7 @@ class TestTrendAnalyzerCrossTypeAggregation:
                 SimpleNamespace(usage=None, model=None),
             )
 
-            report = analyzer.aggregate_and_generate_report(
+            report = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=pr_signals,
                 commit_signals=commit_signals,
                 release_signals=release_signals,
@@ -136,28 +140,32 @@ class TestTrendAnalyzerCrossTypeAggregation:
         assert "swarm/commit/def456" in trend.sources[2]
         assert "autogpt/releases/tag/v0.5.0" in trend.sources[3]
 
-    def test_method_exists_and_accepts_three_signal_types(self):
+    @pytest.mark.asyncio
+    async def test_method_exists_and_accepts_three_signal_types(self):
         """测试：新方法存在且接受三种信号类型"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         # Act & Assert - 方法应该存在
-        assert hasattr(analyzer, "aggregate_and_generate_report")
+        assert hasattr(analyzer, "aggregate_and_generate_report_async")
 
         # 方法签名应该接受这些参数
         import inspect
 
-        sig = inspect.signature(analyzer.aggregate_and_generate_report)
+        sig = inspect.signature(analyzer.aggregate_and_generate_report_async)
         params = list(sig.parameters.keys())
         assert "pr_signals" in params
         assert "commit_signals" in params
         assert "release_signals" in params
         assert "date" in params
 
-    def test_generates_trend_from_only_commit_signals(self):
+    @pytest.mark.asyncio
+    async def test_generates_trend_from_only_commit_signals(self):
         """测试：只有 commit 信号时也能生成趋势"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         commit_signals = [
             Signal(
@@ -213,7 +221,7 @@ class TestTrendAnalyzerCrossTypeAggregation:
             )
 
             # Act
-            report = analyzer.aggregate_and_generate_report(
+            report = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=[],
                 commit_signals=commit_signals,
                 release_signals=[],
@@ -228,9 +236,11 @@ class TestTrendAnalyzerCrossTypeAggregation:
 class TestResearchSignalAggregation:
     """research 信号聚合与强一致性回填测试"""
 
-    def test_research_signal_sources_resolved_from_ids(self):
+    @pytest.mark.asyncio
+    async def test_research_signal_sources_resolved_from_ids(self):
         """research 趋势的 sources 也必须被强一致性机制回填。"""
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         pr_signals = [
             Signal(
@@ -273,7 +283,7 @@ class TestResearchSignalAggregation:
                 SimpleNamespace(usage=None, model=None),
             )
 
-            report = analyzer.aggregate_and_generate_report(
+            report = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=pr_signals,
                 commit_signals=[],
                 release_signals=[],
@@ -288,6 +298,7 @@ class TestResearchSignalAggregation:
     def test_aggregation_prompt_requires_research_aggregation(self):
         """聚合 prompt 必须要求保留 research 信号，禁止"可为空"暗示。"""
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
         prompt = analyzer._build_aggregation_prompt(
             date="2026-01-04",
             pr_signals=[],
@@ -300,6 +311,7 @@ class TestResearchSignalAggregation:
     def test_category_criteria_present_in_extraction_prompts(self):
         """上游提取 prompt 必须包含 category 判定标准。"""
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
         pr_prompt = analyzer._build_material_prompt(
             AnalysisMaterial.from_pr_details(
                 {
@@ -313,9 +325,11 @@ class TestResearchSignalAggregation:
         assert "category 判定标准" in pr_prompt
         assert "防止过度分类" in pr_prompt
 
-    def test_dangling_source_signal_ids_removed(self):
+    @pytest.mark.asyncio
+    async def test_dangling_source_signal_ids_removed(self):
         """悬空 ID（LLM 幻觉）必须从 source_signal_ids 剔除，不进前端与历史索引。"""
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         pr_signals = [
             Signal(
@@ -358,7 +372,7 @@ class TestResearchSignalAggregation:
                 SimpleNamespace(usage=None, model=None),
             )
 
-            report = analyzer.aggregate_and_generate_report(
+            report = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=pr_signals,
                 commit_signals=[],
                 release_signals=[],
@@ -369,9 +383,11 @@ class TestResearchSignalAggregation:
         assert trend.source_signal_ids == ["pr-0"]
         assert trend.sources == ["https://github.com/owner/repo/pull/1"]
 
-    def test_all_dangling_source_signal_ids_emptied(self):
+    @pytest.mark.asyncio
+    async def test_all_dangling_source_signal_ids_emptied(self):
         """全部引用悬空时清空列表，sources 为空并告警，不产生脏引用。"""
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         with patch.object(
             analyzer.client.chat.completions, "create_with_completion"
@@ -400,7 +416,7 @@ class TestResearchSignalAggregation:
                 SimpleNamespace(usage=None, model=None),
             )
 
-            report = analyzer.aggregate_and_generate_report(
+            report = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=[],
                 commit_signals=[],
                 release_signals=[],

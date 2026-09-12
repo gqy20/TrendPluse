@@ -1,5 +1,6 @@
 """Pipeline 主流程单元测试"""
 
+import asyncio
 from datetime import datetime
 from unittest.mock import Mock, patch
 
@@ -149,8 +150,10 @@ class TestTrendPulsePipeline:
 
         # Act
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Assert
@@ -255,9 +258,7 @@ class TestTrendPulsePipeline:
         mock_release_summarizer_instance.summarize_materials.return_value = {}
         mock_release_summarizer.return_value = mock_release_summarizer_instance
 
-        mock_commit_analyzer_instance = _mock_empty_material_analyzer(
-            mock_commit_analyzer
-        )
+        _mock_empty_material_analyzer(mock_commit_analyzer)
         _mock_empty_material_analyzer(mock_release_analyzer)
 
         mock_filter_instance = Mock()
@@ -293,12 +294,14 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Act
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert
         assert report is not None
@@ -311,11 +314,11 @@ class TestTrendPulsePipeline:
             mock_reader_instance.refs_from_candidates.return_value,
             max_workers=4,
         )
-        mock_analyzer_instance.analyze_materials.assert_called_once()
-        mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
+        pipeline.daily_app.pr_analyzer.analyze_materials_async.assert_called_once()
+        pipeline.daily_app.analyzer.aggregate_and_generate_report_async.assert_called_once()
         mock_reporter_instance.save_daily.assert_called_once()
         # 验证 commit 分析被调用
-        mock_commit_analyzer_instance.analyze_materials.assert_called_once()
+        pipeline.daily_app.commit_analyzer.analyze_materials_async.assert_called_once()
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
@@ -386,12 +389,15 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = Mock()
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
+            run_release_chain=True,
         )
-        pipeline.run_daily(date=datetime(2026, 1, 2))
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
-        mock_release_summarizer_instance.summarize_materials.assert_called_once()
+        mock_release_summarizer_instance.summarize_materials_async.assert_called_once()
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
@@ -449,9 +455,7 @@ class TestTrendPulsePipeline:
             detailed_releases=detailed_releases,
         )
 
-        mock_commit_analyzer_instance = _mock_empty_material_analyzer(
-            mock_commit_analyzer
-        )
+        _mock_empty_material_analyzer(mock_commit_analyzer)
         _mock_empty_material_analyzer(mock_release_analyzer)
 
         mock_filter_instance = Mock()
@@ -474,12 +478,14 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Act
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert
         assert report is not None
@@ -487,9 +493,9 @@ class TestTrendPulsePipeline:
         mock_filter_instance.filter_candidates.assert_called_once()
         # 没有候选事件时应该跳过 PR 分析，但仍分析 commits
         mock_reader_instance.read_many.assert_not_called()
-        mock_analyzer_instance.analyze_materials.assert_not_called()
+        mock_analyzer_instance.analyze_materials_async.assert_not_called()
         # commit 分析仍应被调用
-        mock_commit_analyzer_instance.analyze_materials.assert_called_once()
+        pipeline.daily_app.commit_analyzer.analyze_materials_async.assert_called_once()
 
     @patch("trendpluse.app.pipeline.Settings")
     @patch("trendpluse.app.bootstrap.ReportPublisher")
@@ -548,12 +554,14 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Act
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert - 验证报告被保存
         mock_reporter_instance.save_daily.assert_called_once()
@@ -612,12 +620,14 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Act
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert
         mock_reporter_instance.save_daily.assert_called_once()
@@ -687,15 +697,70 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            pr_signals=mock_analyzer.return_value.analyze_materials.return_value,
+            report=mock_analyzer.return_value.aggregate_and_generate_report.return_value,
         )
 
         # Act
-        report = pipeline.run_daily(date=datetime(2026, 1, 2))
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
         # Assert
         mock_reporter_instance.save_daily.assert_called_once()
         assert report is not None
         # 验证 AI 分析被调用了
-        mock_analyzer_instance.analyze_materials.assert_called_once()
+        pipeline.daily_app.pr_analyzer.analyze_materials_async.assert_called_once()
+
+
+def _wire_daily_async(
+    pipeline,
+    *,
+    pr_signals=None,
+    commit_signals=None,
+    release_signals=None,
+    report=None,
+    run_release_chain=False,
+    summary_result=None,
+):
+    """为 run_daily_async 接线 AsyncMock（替代已删除的 sync 链）。
+
+    run_release_chain=True 时保留真实 ReleaseProcessor.run_async，
+    组件挂 async mock（供断言 summarize 调用参数的测试使用）。
+    """
+    from unittest.mock import AsyncMock
+
+    app = pipeline.daily_app
+    app.commit_analyzer.analyze_materials_async = AsyncMock(
+        return_value=commit_signals or []
+    )
+    app.pr_analyzer.analyze_materials_async = AsyncMock(return_value=pr_signals or [])
+    app.analyzer.aggregate_and_generate_report_async = AsyncMock(
+        return_value=report or _build_mock_report()
+    )
+    app.issue_workflow.collect_and_analyze_async = AsyncMock(return_value=None)
+
+    if run_release_chain:
+        app.release_workflow.release_summarizer.summarize_materials_async = AsyncMock(
+            return_value=summary_result or {}
+        )
+        app.release_workflow.release_analyzer.analyze_materials_async = AsyncMock(
+            return_value=release_signals or []
+        )
+        app.release_workflow.breaking_changes_detector.detect_breaking_changes_async = (
+            AsyncMock(return_value=[])
+        )
+    else:
+        from trendpluse.app.release_processor import ReleaseWorkflowResult
+        from trendpluse.models.signal import ReleasesData
+
+        app.release_workflow.run_async = AsyncMock(
+            return_value=ReleaseWorkflowResult(
+                releases_data=ReleasesData(
+                    total_count=0, unique_repos_count=0, releases=[]
+                ),
+                detailed_releases=[],
+                release_signals=release_signals or [],
+                breaking_changes=[],
+            )
+        )

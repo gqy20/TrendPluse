@@ -3,8 +3,9 @@
 这是修复报告重复显示 Commit 信号问题的测试。
 """
 
+import asyncio
 from datetime import datetime
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 from trendpluse.app.pipeline import TrendPulsePipeline
 from trendpluse.models.signal import ActivityData, ReleasesData, Signal
@@ -12,6 +13,50 @@ from trendpluse.models.signal import ActivityData, ReleasesData, Signal
 # 日报落盘目录，由 conftest 的 isolate_module_output_dir fixture 重定向到
 # tmp_path，避免测试产物写进仓库内的 reports/daily/。
 _OUTPUT_DIR = "reports/daily"
+
+
+def _wire_daily_async(
+    pipeline,
+    mock_commit_analyzer=None,
+    mock_release_analyzer=None,
+) -> None:
+    """为 run_daily_async 接线 AsyncMock，信号取自测试配置的 mock 工厂。"""
+    from unittest.mock import AsyncMock
+
+    from trendpluse.app.release_processor import ReleaseWorkflowResult
+
+    app = pipeline.daily_app
+
+    commit_signals = (
+        mock_commit_analyzer.return_value.analyze_materials.return_value
+        if mock_commit_analyzer is not None
+        else []
+    )
+    release_signals = (
+        mock_release_analyzer.return_value.analyze_materials.return_value
+        if mock_release_analyzer is not None
+        else []
+    )
+    releases_data, detailed_releases = (
+        app.release_collector.collect_releases.return_value or (None, [])
+    )
+
+    app.commit_analyzer.analyze_materials_async = AsyncMock(return_value=commit_signals)
+    app.pr_analyzer.analyze_materials_async = AsyncMock(return_value=[])
+    app.issue_workflow.collect_and_analyze_async = AsyncMock(return_value=None)
+    app.release_workflow.run_async = AsyncMock(
+        return_value=ReleaseWorkflowResult(
+            releases_data=releases_data,
+            detailed_releases=detailed_releases,
+            release_signals=release_signals,
+            breaking_changes=[],
+        )
+    )
+    # 聚合结果默认取 analyzer mock 已配置的（若无则保持原 Mock 引用）
+    if hasattr(app.analyzer, "aggregate_and_generate_report"):
+        app.analyzer.aggregate_and_generate_report_async = AsyncMock(
+            return_value=app.analyzer.aggregate_and_generate_report.return_value
+        )
 
 
 class MockSignalDeduplicator:
@@ -238,10 +283,15 @@ class TestCommitSignalsClearing:
 
         # Act
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            mock_commit_analyzer,
+            mock_release_analyzer,
         )
-        report = pipeline.run_daily(date=datetime(2026, 1, 12))
+        pipeline.daily_app.pr_analyzer.analyze_materials_async = AsyncMock(
+            return_value=mock_analyzer.return_value.analyze_materials.return_value
+        )
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 12)))
 
         # Assert
         assert report is not None
@@ -348,10 +398,15 @@ class TestCommitSignalsClearing:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
-        pipeline.daily_app.pr_analyzer.analyze_materials = (
-            mock_analyzer.return_value.analyze_materials
+        _wire_daily_async(
+            pipeline,
+            mock_commit_analyzer,
+            mock_release_analyzer,
         )
-        report = pipeline.run_daily(date=datetime(2026, 1, 12))
+        pipeline.daily_app.pr_analyzer.analyze_materials_async = AsyncMock(
+            return_value=mock_analyzer.return_value.analyze_materials.return_value
+        )
+        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 12)))
 
         assert report.commit_signals == []
         assert len(report.release_signals) == 1

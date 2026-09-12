@@ -6,7 +6,6 @@
 import asyncio
 import shutil
 import tempfile
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, cast
 
@@ -66,52 +65,6 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             retry_wait_max=retry_wait_max,
         )
 
-    def _summarize_release_payloads(
-        self,
-        detailed_releases: list[dict],
-        max_workers: int = 5,
-    ) -> dict[str, ReleaseSummary]:
-        """批量总结 release 数据。"""
-        # 处理空列表
-        if not detailed_releases:
-            return {}
-
-        # 单个 release 时直接调用，避免线程池开销
-        if len(detailed_releases) == 1:
-            release = detailed_releases[0]
-            key = f"{release['repo']}@{release['tag_name']}"
-            return {key: self._summarize_single_release(release)}
-
-        # 并行处理多个 releases
-        summaries: dict[str, ReleaseSummary] = {}
-
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            # 提交所有任务
-            future_to_key: dict = {}
-            for release in detailed_releases:
-                key = f"{release['repo']}@{release['tag_name']}"
-                future = executor.submit(self._summarize_single_release, release)
-                future_to_key[future] = key
-
-            # 收集结果
-            for future in as_completed(future_to_key):
-                key = future_to_key[future]
-                try:
-                    summaries[key] = future.result()
-                except Exception as e:
-                    # 单个失败不影响其他 releases
-                    logger.debug(f"ReleaseSummarizer: 总结失败 {key} - {e}")
-                    # 失败时添加一个默认的 ReleaseSummary
-                    repo, tag_name = key.split("@")
-                    summaries[key] = ReleaseSummary(
-                        change_type="other",
-                        key_changes=[],
-                        summary_cn=f"{repo} {tag_name} 发布（分析失败）",
-                        impact_level=1,
-                    )
-
-        return summaries
-
     @staticmethod
     def _material_to_release(material: AnalysisMaterial) -> dict:
         """将分析材料还原为 release 总结所需结构。"""
@@ -123,19 +76,6 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         if "body" not in raw_payload:
             raw_payload["body"] = material.body
         return raw_payload
-
-    def summarize_materials(
-        self,
-        materials: list[AnalysisMaterial],
-        max_workers: int = 5,
-    ) -> dict[str, ReleaseSummary]:
-        """基于分析材料批量总结 Releases。"""
-        releases = [
-            self._material_to_release(material)
-            for material in materials
-            if material.source_ref.source_type == "release"
-        ]
-        return self._summarize_release_payloads(releases, max_workers=max_workers)
 
     async def _summarize_release_payloads_async(
         self, detailed_releases: list[dict], max_workers: int = 5
@@ -159,11 +99,21 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         summaries: dict[str, ReleaseSummary] = {}
-        for result in results:
-            if isinstance(result, Exception):
-                continue
-            release, summary = cast(tuple[dict, ReleaseSummary], result)
+        for release, result in zip(detailed_releases, results):
             key = f"{release['repo']}@{release['tag_name']}"
+            if isinstance(result, Exception):
+                # 与同步版语义一致：单失败不丢，落默认总结
+                logger.debug(f"ReleaseSummarizer: 异步总结失败 {key} - {result}")
+                summaries[key] = ReleaseSummary(
+                    change_type="other",
+                    key_changes=[],
+                    summary_cn=(
+                        f"{release['repo']} {release['tag_name']} 发布（异步分析失败）"
+                    ),
+                    impact_level=1,
+                )
+                continue
+            _, summary = cast(tuple[dict, ReleaseSummary], result)
             summaries[key] = summary
 
         return summaries
@@ -190,35 +140,6 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             for release in detailed_releases
         ]
         return await self.summarize_materials_async(materials, max_workers=max_workers)
-
-    def _call_llm_for_summary(self, prompt: str) -> ReleaseSummary:
-        """调用 LLM 生成 Release 总结（带重试机制）
-
-        Args:
-            prompt: 分析提示词
-
-        Returns:
-            ReleaseSummary 对象
-
-        Raises:
-            RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
-            Exception: 其他错误向上传播
-        """
-
-        def _call():
-            return self._structured_create(
-                response_model=ReleaseSummary,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": render_prompt("release_summarizer.system"),
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                max_tokens=1000,
-            )
-
-        return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
     # 单个 release changelog 的完整预算（instructor 路径）。
     # 网关模型 1M 上下文，30K 字符（≈7.5K tokens）对任何真实 changelog
@@ -417,60 +338,6 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             tag_name=release.get("tag_name", ""),
             body=cls.clip_changelog(release.get("body", "")),
         )
-
-    def _summarize_single_release(self, release: dict) -> ReleaseSummary:
-        """总结单个 Release
-
-        Args:
-            release: 单个 Release 的详细信息
-
-        Returns:
-            ReleaseSummary 对象
-        """
-        body = release.get("body", "")
-        tag_name = release.get("tag_name", "")
-        repo = release.get("repo", "")
-
-        # 如果没有 body，返回默认总结
-        if not body or body.strip() == "":
-            return ReleaseSummary(
-                change_type="other",
-                key_changes=[],
-                summary_cn=f"{repo} {tag_name} 发布，暂无详细说明。",
-                impact_level=1,
-            )
-
-        prompt = self._build_single_release_prompt(release)
-
-        # 使用 instructor 获取结构化输出（带重试机制）
-        try:
-            return self._call_llm_for_summary(prompt)  # type: ignore[no-any-return]
-        except RETRYABLE_ERRORS as e:
-            # 重试耗尽后的可重试错误
-            logger.debug(
-                f"ReleaseSummarizer: 重试耗尽 - {type(e).__name__}: {e}, "
-                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
-            )
-            # 返回默认总结
-            return ReleaseSummary(
-                change_type="other",
-                key_changes=[],
-                summary_cn=f"{repo} {tag_name} 发布（重试失败）",
-                impact_level=1,
-            )
-        except Exception as e:
-            # 其他错误（如认证错误，不重试）
-            logger.debug(
-                f"ReleaseSummarizer: 分析失败 - {type(e).__name__}: {e}, "
-                f"Release: {repo}@{tag_name}, Body 长度: {len(body)} 字符"
-            )
-            # 返回默认总结
-            return ReleaseSummary(
-                change_type="other",
-                key_changes=[],
-                summary_cn=f"{repo} {tag_name} 发布",
-                impact_level=1,
-            )
 
     async def _summarize_single_release_async(self, release: dict) -> ReleaseSummary:
         body = release.get("body", "")

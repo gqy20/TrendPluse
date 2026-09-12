@@ -4,7 +4,6 @@
 """
 
 import asyncio
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import cast
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
@@ -110,41 +109,11 @@ class TrendAnalyzer(BaseLLMAnalyzer):
 
         return signal
 
-    def analyze_material(self, material: AnalysisMaterial) -> Signal:
-        """分析单个材料提取信号。"""
-        prompt = self._build_material_prompt(material)
-
-        signal = self._call_llm_for_signal(prompt)
-        return self._apply_material_defaults(signal, material)  # type: ignore[no-any-return]
-
     async def analyze_material_async(self, material: AnalysisMaterial) -> Signal:
         prompt = self._build_material_prompt(material)
 
         signal = await self._call_llm_for_signal_async(prompt)
         return self._apply_material_defaults(signal, material)  # type: ignore[no-any-return]
-
-    def _call_llm_for_signal(self, prompt: str) -> Signal:
-        """调用 LLM 提取 PR 信号（带重试机制）
-
-        Args:
-            prompt: 分析提示词
-
-        Returns:
-            提取的信号
-
-        Raises:
-            RETRYABLE_ERRORS: 可重试的错误（超时、速率限制）
-            Exception: 其他错误向上传播
-        """
-
-        def _call():
-            return self._structured_create(
-                response_model=Signal,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1000,
-            )
-
-        return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
     async def _call_llm_for_signal_async(self, prompt: str) -> Signal:
         async def _call():
@@ -155,53 +124,6 @@ class TrendAnalyzer(BaseLLMAnalyzer):
             )
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
-
-    def analyze_materials(
-        self, materials: list[AnalysisMaterial], max_workers: int = 5
-    ) -> list[Signal]:
-        """批量分析多个材料（并行处理）
-
-        Args:
-            materials: 分析材料列表
-            max_workers: 最大并行线程数
-
-        Returns:
-            信号列表
-        """
-        if not materials:
-            return []
-
-        if len(materials) == 1:
-            material = materials[0]
-            try:
-                return [self.analyze_material(material)]
-            except Exception as e:
-                repo_name = material.source_ref.repo
-                number = material.source_ref.external_id
-                logger.debug(f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}")
-                return []
-
-        signals = []
-
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            future_to_material: dict = {}
-            for material in materials:
-                future = executor.submit(self.analyze_material, material)
-                future_to_material[future] = material
-
-            for future in as_completed(future_to_material):
-                material = future_to_material[future]
-                try:
-                    signal = future.result()
-                    signals.append(signal)
-                except Exception as e:
-                    repo_name = material.source_ref.repo
-                    number = material.source_ref.external_id
-                    logger.debug(
-                        f"TrendAnalyzer: 分析 PR {repo_name}#{number} 失败: {e}"
-                    )
-
-        return signals
 
     async def analyze_materials_async(
         self, materials: list[AnalysisMaterial], max_workers: int = 5
@@ -258,81 +180,6 @@ class TrendAnalyzer(BaseLLMAnalyzer):
         logger.info(
             "%s 信号 category 分布: %s (total=%d)", source, distribution, len(signals)
         )
-
-    async def analyze_prs_async(
-        self, pr_list: list[dict], max_workers: int = 5
-    ) -> list[Signal]:
-        """兼容旧版 PR 详情输入的异步批量分析入口。"""
-        materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
-        return await self.analyze_materials_async(materials, max_workers=max_workers)
-
-    def aggregate_and_generate_report(
-        self,
-        pr_signals: list[Signal],
-        commit_signals: list[Signal],
-        release_signals: list[Signal],
-        date: str,
-    ) -> DailyReport:
-        """跨类型聚合信号并生成高层次趋势报告（使用强一致性机制）
-
-        Args:
-            pr_signals: PR 信号列表
-            commit_signals: Commit 技术点信号列表
-            release_signals: Release 信号列表
-            date: 日期
-
-        Returns:
-            每日报告，包含聚合后的高层次趋势
-        """
-        # 步骤 1: 构建 ID 到 Signal 的映射（用于后处理解析）
-        signal_map: dict[str, Signal] = {}
-        for idx, signal in enumerate(pr_signals):
-            signal_map[f"pr-{idx}"] = signal
-        for idx, signal in enumerate(commit_signals):
-            signal_map[f"commit-{idx}"] = signal
-        for idx, signal in enumerate(release_signals):
-            signal_map[f"release-{idx}"] = signal
-
-        # 步骤 2: 使用统一模板构建 prompt（带 ID 的格式化在模板层完成）
-        prompt = self._build_aggregation_prompt(
-            date=date,
-            pr_signals=pr_signals,
-            commit_signals=commit_signals,
-            release_signals=release_signals,
-        )
-
-        # 步骤 3: 调用 LLM 聚合信号
-        def _call():
-            return self._structured_create(
-                response_model=DailyReport,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=3000,
-            )
-
-        report = self._run_with_llm_retry(_call)
-
-        # 确保日期正确
-        report.date = date
-
-        # 确保统计数据正确
-        report.stats = ReportStats()
-        report.stats.total_prs_analyzed = len(pr_signals)
-        report.stats.total_commits_analyzed = len(commit_signals)
-        report.stats.total_releases = len(release_signals)
-        report.stats.high_impact_signals = len(
-            self.filter_high_impact(report.engineering_signals, threshold=4)
-        )
-
-        # 步骤 4: 使用强一致性机制解析 sources（确定性后处理）
-        # 这是确保 100% 正确性的关键步骤
-        report = self._resolve_sources_from_ids(report, signal_map)
-
-        # 清空低层次信号（已被聚合到高层次趋势中）
-        # 注意：只清空 commit_signals，因为它们被聚合到 engineering/research_signals
-        # release_signals 应该保留，因为它们是独立的分析结果
-        report.commit_signals = []
-
-        return report  # type: ignore[no-any-return]
 
     async def aggregate_and_generate_report_async(
         self,

@@ -1,7 +1,9 @@
 """Breaking Changes 检测器单元测试"""
 
 from typing import Any
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from trendpluse.analyzers.breaking_changes_detector import (
     BreakingChangesDetector,
@@ -20,6 +22,7 @@ class TestBreakingChangesDetector:
             model="glm-4.7",
             base_url="https://api.test.com",
         )
+        detector.async_instructor_client = None
 
         # Assert
         assert detector.api_key == "test_key"
@@ -28,7 +31,8 @@ class TestBreakingChangesDetector:
         mock_anthropic.assert_called_once()
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_breaking_changes_returns_list(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_breaking_changes_returns_list(self, mock_anthropic):
         """测试：检测应返回 breaking changes 列表"""
         # Arrange
         mock_client = MagicMock()
@@ -41,10 +45,12 @@ class TestBreakingChangesDetector:
                 '"impact": "high", "category": "API"}]}]'
             )
         ]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
+        detector.async_client = mock_client
         releases = {
             "detailed_releases": [
                 {
@@ -57,7 +63,7 @@ class TestBreakingChangesDetector:
         }
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert
         assert len(results) == 1
@@ -67,21 +73,24 @@ class TestBreakingChangesDetector:
         assert len(results[0]["changes"]) == 1
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_with_empty_releases(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_with_empty_releases(self, mock_anthropic):
         """测试：空 releases 应返回空列表"""
         # Arrange
         mock_anthropic.return_value = MagicMock()
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
         releases: dict[str, Any] = {"detailed_releases": []}
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert
         assert results == []
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_parses_markdown_code_blocks(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_parses_markdown_code_blocks(self, mock_anthropic):
         """测试：应正确解析 markdown 代码块"""
         # Arrange
         mock_client = MagicMock()
@@ -91,10 +100,12 @@ class TestBreakingChangesDetector:
             '"has_breaking": false, "changes": []}]\n```'
         )
         mock_message.content = [MagicMock(text=response_text)]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
+        detector.async_client = mock_client
         releases = {
             "detailed_releases": [
                 {
@@ -106,14 +117,15 @@ class TestBreakingChangesDetector:
         }
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert
         assert len(results) == 1
         assert results[0]["has_breaking"] is False
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_handles_llm_error_gracefully(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_handles_llm_error_gracefully(self, mock_anthropic):
         """测试：LLM 错误应优雅处理"""
         # Arrange
         mock_client = MagicMock()
@@ -121,6 +133,8 @@ class TestBreakingChangesDetector:
         mock_anthropic.return_value = mock_client
 
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
+        detector.async_client = mock_client
         releases = {
             "detailed_releases": [
                 {
@@ -132,13 +146,14 @@ class TestBreakingChangesDetector:
         }
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert - 应返回空列表
         assert results == []
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_identifies_multiple_breaking_changes(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_identifies_multiple_breaking_changes(self, mock_anthropic):
         """测试：应识别多个 breaking changes"""
         # Arrange
         mock_client = MagicMock()
@@ -152,10 +167,12 @@ class TestBreakingChangesDetector:
             "]}]"
         )
         mock_message.content = [MagicMock(text=response_json)]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
+        detector.async_client = mock_client
         releases = {
             "detailed_releases": [
                 {
@@ -167,7 +184,7 @@ class TestBreakingChangesDetector:
         }
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert
         assert len(results) == 1
@@ -175,17 +192,20 @@ class TestBreakingChangesDetector:
         assert len(results[0]["changes"]) == 2
 
     @patch("trendpluse.analyzers.base.Anthropic")
-    def test_detect_filters_non_breaking_releases(self, mock_anthropic):
+    @pytest.mark.asyncio
+    async def test_detect_filters_non_breaking_releases(self, mock_anthropic):
         """测试：应过滤非 breaking changes 的版本"""
         # Arrange
         mock_client = MagicMock()
         mock_message = MagicMock()
         # AI 返回空数组表示没有 breaking changes
         mock_message.content = [MagicMock(text="[]")]
-        mock_client.messages.create.return_value = mock_message
+        mock_client.messages.create = AsyncMock(return_value=mock_message)
         mock_anthropic.return_value = mock_client
 
         detector = BreakingChangesDetector(api_key="test_key")
+        detector.async_instructor_client = None
+        detector.async_client = mock_client
         releases = {
             "detailed_releases": [
                 {
@@ -197,7 +217,7 @@ class TestBreakingChangesDetector:
         }
 
         # Act
-        results = detector.detect_breaking_changes(releases)
+        results = await detector.detect_breaking_changes_async(releases)
 
         # Assert
         assert results == []

@@ -45,7 +45,8 @@ class TestReleaseSummarizer:
             base_url="https://open.bigmodel.cn/api/anthropic",
         )
 
-    def test_summarize_single_release_with_body(self, summarizer):
+    @pytest.mark.asyncio
+    async def test_summarize_single_release_with_body(self, summarizer):
         """测试总结带有 Release Notes 的 Release"""
         release = {
             "repo": "anomalyco/opencode",
@@ -65,7 +66,7 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
 
         # 注意：这个测试会在实际实现后通过
         # 当前由于 API 调用问题，会返回默认值
-        summary = summarizer._summarize_single_release(release)
+        summary = await summarizer._summarize_single_release_async(release)
 
         # 验证返回类型
         assert isinstance(summary, ReleaseSummary)
@@ -83,7 +84,8 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
         assert isinstance(summary.key_changes, list)
         assert isinstance(summary.summary_cn, str)
 
-    def test_summarize_single_release_empty_body(self, summarizer):
+    @pytest.mark.asyncio
+    async def test_summarize_single_release_empty_body(self, summarizer):
         """测试总结没有 Release Notes 的 Release"""
         release = {
             "repo": "anomalyco/opencode",
@@ -91,7 +93,7 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
             "body": "",
         }
 
-        summary = summarizer._summarize_single_release(release)
+        summary = await summarizer._summarize_single_release_async(release)
 
         assert isinstance(summary, ReleaseSummary)
         assert summary.change_type == "other"
@@ -99,14 +101,15 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
         assert "暂无详细说明" in summary.summary_cn
         assert summary.impact_level == 1
 
-    def test_summarize_single_release_no_body_field(self, summarizer):
+    @pytest.mark.asyncio
+    async def test_summarize_single_release_no_body_field(self, summarizer):
         """测试总结缺少 body 字段的 Release"""
         release = {
             "repo": "anomalyco/opencode",
             "tag_name": "v1.1.13",
         }
 
-        summary = summarizer._summarize_single_release(release)
+        summary = await summarizer._summarize_single_release_async(release)
 
         assert isinstance(summary, ReleaseSummary)
         assert summary.change_type == "other"
@@ -143,7 +146,8 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
                 impact_level=6,  # 高于最大值
             )
 
-    def test_summarize_materials_batch(self, summarizer):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_batch(self, summarizer):
         """测试基于材料批量总结 Releases。"""
         materials = [
             AnalysisMaterial.from_release_details(
@@ -162,7 +166,7 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
             ),
         ]
 
-        summaries = summarizer.summarize_materials(materials)
+        summaries = await summarizer.summarize_materials_async(materials)
 
         assert isinstance(summaries, dict)
         assert len(summaries) == 2

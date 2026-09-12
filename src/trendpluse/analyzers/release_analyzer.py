@@ -78,15 +78,6 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             )
         return raw_payload
 
-    def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
-        """分析 release 材料列表。"""
-        detailed_releases = [
-            self._material_to_release(material)
-            for material in materials
-            if material.source_ref.source_type == "release"
-        ]
-        return self._analyze_release_payloads(detailed_releases)
-
     async def analyze_materials_async(
         self, materials: list[AnalysisMaterial]
     ) -> list[Signal]:
@@ -97,35 +88,6 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
             if material.source_ref.source_type == "release"
         ]
         return await self._analyze_release_payloads_async(detailed_releases)
-
-    def _analyze_release_payloads(
-        self, detailed_releases: list[dict[str, Any]]
-    ) -> list[Signal]:
-        """分析 release 数据列表。"""
-        # 处理空列表
-        if not detailed_releases:
-            logger.debug("ReleaseAnalyzer: 收到空 release 列表")
-            return []
-
-        logger.debug(f"ReleaseAnalyzer: 开始分析 {len(detailed_releases)} 个 releases")
-
-        try:
-            # 调用 LLM 分析
-            logger.debug("ReleaseAnalyzer: 调用 LLM 分析...")
-            llm_response = self._call_llm(detailed_releases)
-            logger.debug(f"ReleaseAnalyzer: LLM 响应长度: {len(llm_response)} 字符")
-            logger.debug(f"ReleaseAnalyzer: LLM 响应预览: {llm_response[:500]}...")
-
-            # 解析响应
-            signals = self._parse_signals(llm_response, detailed_releases)
-            logger.debug(f"ReleaseAnalyzer: 解析得到 {len(signals)} 个信号")
-
-            return signals
-
-        except Exception as e:
-            # 出错时返回空列表
-            logger.debug(f"ReleaseAnalyzer: 分析失败 - {type(e).__name__}: {e}")
-            return []
 
     async def _analyze_release_payloads_async(
         self, detailed_releases: list[dict[str, Any]]
@@ -144,37 +106,6 @@ class ReleaseAnalyzer(BaseLLMAnalyzer):
         except Exception as e:
             logger.debug(f"ReleaseAnalyzer: 异步分析失败 - {type(e).__name__}: {e}")
             return []
-
-    def _call_llm(self, releases: list[dict[str, Any]]) -> str:
-        """调用 LLM 分析 releases
-
-        Args:
-            releases: release 数据列表
-
-        Returns:
-            LLM 响应文本
-        """
-        # 构建 prompt
-        prompt = self._build_prompt(releases)
-
-        # 调用 API
-        def _call():
-            return self.client.messages.create(  # type: ignore[call-overload]
-                model=self.model,
-                max_tokens=4096,
-                temperature=0.3,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
-            )
-
-        # 使用基类方法提取文本
-        message = self._run_with_llm_retry(_call)
-        self._record_llm_usage(message)
-        return self._extract_text_from_response(message)
 
     async def _call_llm_async(self, releases: list[dict[str, Any]]) -> str:
         prompt = self._build_prompt(releases)

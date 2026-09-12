@@ -31,38 +31,6 @@ class _AsyncInstructorClientStub:
 
 
 @pytest.mark.asyncio
-async def test_trend_analyzer_analyze_prs_async():
-    analyzer = TrendAnalyzer(api_key="test", model="test")
-    analyzer.async_instructor_client = _AsyncInstructorClientStub(
-        Signal(
-            id="pr-1",
-            title="测试",
-            type="capability",
-            category="engineering",
-            impact_score=3,
-            why_it_matters="测试",
-            sources=["https://example.com"],
-            related_repos=["repo/a"],
-        )
-    )
-
-    pr_list = [
-        {
-            "repo_name": "repo/a",
-            "number": 1,
-            "title": "Test",
-            "body": "Body",
-            "author": "alice",
-            "url": "https://github.com/repo/a/pull/1",
-        }
-    ]
-
-    results = await analyzer.analyze_prs_async(pr_list, max_workers=2)
-    assert len(results) == 1
-    assert results[0].id == "pr-1"
-
-
-@pytest.mark.asyncio
 async def test_trend_analyzer_analyze_materials_async():
     analyzer = TrendAnalyzer(api_key="test", model="test")
     analyzer.async_instructor_client = _AsyncInstructorClientStub(

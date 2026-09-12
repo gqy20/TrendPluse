@@ -101,13 +101,16 @@ def _mock_report_response() -> MagicMock:
 class TestTrendAnalyzerGoldens:
     def test_pr_signal_extraction(self):
         analyzer = TrendAnalyzer(api_key="test")
+        analyzer.async_instructor_client = None
         _assert_golden(
             "trend_analyzer.pr_signal_extraction",
             analyzer._build_material_prompt(_material()),
         )
 
-    def test_aggregation_sync(self):
+    @pytest.mark.asyncio
+    async def test_aggregation_sync(self):
         analyzer = TrendAnalyzer(api_key="test")
+        analyzer.async_instructor_client = None
         with patch.object(
             analyzer.client.chat.completions, "create_with_completion"
         ) as mock_create:
@@ -115,7 +118,7 @@ class TestTrendAnalyzerGoldens:
                 _mock_report_response(),
                 SimpleNamespace(usage=None, model=None),
             )
-            analyzer.aggregate_and_generate_report(
+            await analyzer.aggregate_and_generate_report_async(
                 pr_signals=[_signal(1)],
                 commit_signals=[_signal(2)],
                 release_signals=[_signal(3)],
@@ -124,7 +127,8 @@ class TestTrendAnalyzerGoldens:
             prompt = mock_create.call_args.kwargs["messages"][0]["content"]
         _assert_golden("trend_analyzer.aggregation_sync", prompt)
 
-    def test_aggregation_async(self):
+    @pytest.mark.asyncio
+    async def test_aggregation_async(self):
         analyzer = TrendAnalyzer(api_key="test")
         assert analyzer.async_instructor_client is not None
         with patch.object(
@@ -135,20 +139,19 @@ class TestTrendAnalyzerGoldens:
                 SimpleNamespace(usage=None, model=None),
             )
 
-            async def _run():
-                return await analyzer.aggregate_and_generate_report_async(
-                    pr_signals=[_signal(1)],
-                    commit_signals=[_signal(2)],
-                    release_signals=[_signal(3)],
-                    date=DATE,
-                )
-
-            asyncio.run(_run())
+            await analyzer.aggregate_and_generate_report_async(
+                pr_signals=[_signal(1)],
+                commit_signals=[_signal(2)],
+                release_signals=[_signal(3)],
+                date=DATE,
+            )
             prompt = mock_create.call_args.kwargs["messages"][0]["content"]
         _assert_golden("trend_analyzer.aggregation_async", prompt)
 
-    def test_aggregation_sync_empty(self):
+    @pytest.mark.asyncio
+    async def test_aggregation_sync_empty(self):
         analyzer = TrendAnalyzer(api_key="test")
+        analyzer.async_instructor_client = None
         with patch.object(
             analyzer.client.chat.completions, "create_with_completion"
         ) as mock_create:
@@ -156,7 +159,7 @@ class TestTrendAnalyzerGoldens:
                 _mock_report_response(),
                 SimpleNamespace(usage=None, model=None),
             )
-            analyzer.aggregate_and_generate_report(
+            await analyzer.aggregate_and_generate_report_async(
                 pr_signals=[],
                 commit_signals=[],
                 release_signals=[],
@@ -179,8 +182,10 @@ class TestReleaseAnalyzerGoldens:
 
 
 class TestReleaseSummarizerGoldens:
-    def test_system_and_user_sync(self):
+    @pytest.mark.asyncio
+    async def test_system_and_user_sync(self):
         summarizer = ReleaseSummarizer(api_key="test")
+        summarizer.async_instructor_client = None
         with patch.object(
             summarizer.client.chat.completions, "create_with_completion"
         ) as mock_create:
@@ -188,7 +193,7 @@ class TestReleaseSummarizerGoldens:
                 MagicMock(),
                 SimpleNamespace(usage=None, model=None),
             )
-            summarizer._summarize_single_release(_release_dict())
+            await summarizer._summarize_single_release_async(_release_dict())
             messages = mock_create.call_args.kwargs["messages"]
         _assert_golden("release_summarizer.system", messages[0]["content"])
         _assert_golden("release_summarizer.single_release", messages[1]["content"])

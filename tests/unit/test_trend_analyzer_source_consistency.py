@@ -9,6 +9,8 @@
 from types import SimpleNamespace
 from unittest.mock import patch
 
+import pytest
+
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import DailyReport, Signal
 
@@ -20,6 +22,7 @@ class TestTrendAnalyzerSourceConsistency:
         """测试：_format_signals_with_ids 包含信号 ID"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         signals = [
             Signal(
@@ -49,6 +52,7 @@ class TestTrendAnalyzerSourceConsistency:
         """测试：空信号列表返回'无'"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         # Act
         result = analyzer._format_signals_with_ids([], "commit")
@@ -60,6 +64,7 @@ class TestTrendAnalyzerSourceConsistency:
         """测试：_resolve_sources_from_ids 保留所有原始 sources"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         # 创建原始信号映射
         signal_map: dict[str, Signal] = {
@@ -128,6 +133,7 @@ class TestTrendAnalyzerSourceConsistency:
         """测试：_resolve_sources_from_ids 处理缺失的 ID"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         signal_map = {
             "commit-0": Signal(
@@ -178,6 +184,7 @@ class TestTrendAnalyzerSourceConsistency:
         """测试：_resolve_sources_from_ids 处理空的 ID 列表"""
         # Arrange
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         signal_map: dict[str, Signal] = {}
 
@@ -210,11 +217,13 @@ class TestTrendAnalyzerSourceConsistency:
         trend = resolved_report.engineering_signals[0]
         assert len(trend.sources) == 1
 
-    def test_aggregate_and_generate_report_builds_signal_map(self):
+    @pytest.mark.asyncio
+    async def test_aggregate_and_generate_report_builds_signal_map(self):
         """测试：aggregate_and_generate_report 正确构建 signal_map"""
         # Arrange
 
         analyzer = TrendAnalyzer(api_key="test-key")
+        analyzer.async_instructor_client = None
 
         pr_signals: list[Signal] = [
             Signal(
@@ -274,7 +283,7 @@ class TestTrendAnalyzerSourceConsistency:
             ),
         ):
             # Act
-            result = analyzer.aggregate_and_generate_report(
+            result = await analyzer.aggregate_and_generate_report_async(
                 pr_signals=pr_signals,
                 commit_signals=commit_signals,
                 release_signals=release_signals,

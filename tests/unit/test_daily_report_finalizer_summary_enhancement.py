@@ -72,8 +72,9 @@ class _FakePublisher:
         self.notified_reports.append(report.model_copy(deep=True))
 
 
-def test_daily_report_finalizer_applies_summary_enhancer_before_publish() -> None:
-    """finalizer 应在保存前应用日报总结增强结果。"""
+@pytest.mark.asyncio
+async def test_daily_report_finalizer_applies_summary_enhancer_before_publish() -> None:
+    """finalizer 应在保存前应用日报总结增强结果（async 唯一路径）。"""
     enhancer = _FakeSummaryEnhancer()
     publisher = _FakePublisher()
     builder = SimpleNamespace(
@@ -96,7 +97,7 @@ def test_daily_report_finalizer_applies_summary_enhancer_before_publish() -> Non
         stats=ReportStats(),
     )
 
-    finalizer.finalize_daily_report(
+    await finalizer.finalize_daily_report_async(
         report=report,
         date=datetime(2026, 3, 12),
         daily_inputs=SimpleNamespace(
@@ -169,7 +170,8 @@ async def test_daily_report_finalizer_async_applies_enhancer() -> None:
     assert publisher.saved_reports[0].summary_brief == "异步增强后的总结。"
 
 
-def test_daily_report_finalizer_merges_issue_and_summary_agent_metrics() -> None:
+@pytest.mark.asyncio
+async def test_daily_report_finalizer_merges_issue_and_summary_agent_metrics() -> None:
     enhancer = _FakeSummaryEnhancer()
     publisher = _FakePublisher()
     builder = SimpleNamespace(
@@ -203,7 +205,7 @@ def test_daily_report_finalizer_merges_issue_and_summary_agent_metrics() -> None
         ),
     )
 
-    finalizer._enhance_summary(report=report, date=datetime(2026, 3, 12))
+    await finalizer._enhance_summary_async(report=report, date=datetime(2026, 3, 12))
     finalizer._refresh_agent_metrics(report)
 
     assert report.agent_metrics_summary is not None

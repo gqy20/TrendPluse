@@ -27,20 +27,23 @@ class TestReleaseSummarizerParallel:
             impact_level=3,
         )
 
-    def test_summarize_materials_accepts_max_workers_parameter(self):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_accepts_max_workers_parameter(self):
         """测试：summarize_materials 方法应接受 max_workers 参数"""
         summarizer = ReleaseSummarizer(
             api_key="test-key",
         )
+        summarizer.async_instructor_client = None
 
         import inspect
 
-        sig = inspect.signature(summarizer.summarize_materials)
+        sig = inspect.signature(summarizer.summarize_materials_async)
         params = list(sig.parameters.keys())
 
         assert "max_workers" in params, "summarize_materials 应接受 max_workers 参数"
 
-    def test_summarize_materials_parallel_speedup(self, mock_summary):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_parallel_speedup(self, mock_summary):
         """测试：并行处理应比串行处理更快"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -58,6 +61,7 @@ class TestReleaseSummarizerParallel:
         )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
         summarizer.client = mock_client
 
         materials = [
@@ -74,13 +78,17 @@ class TestReleaseSummarizerParallel:
         # 串行处理（max_workers=1）
         call_count[0] = 0
         start = time.time()
-        summaries_serial = summarizer.summarize_materials(materials, max_workers=1)
+        summaries_serial = await summarizer.summarize_materials_async(
+            materials, max_workers=1
+        )
         serial_time = time.time() - start
 
         # 并行处理（max_workers=3）
         call_count[0] = 0
         start = time.time()
-        summaries_parallel = summarizer.summarize_materials(materials, max_workers=3)
+        summaries_parallel = await summarizer.summarize_materials_async(
+            materials, max_workers=3
+        )
         parallel_time = time.time() - start
 
         # 验证结果一致
@@ -92,17 +100,21 @@ class TestReleaseSummarizerParallel:
             f"并行处理 ({parallel_time:.2f}s) 应该显著快于串行 ({serial_time:.2f}s)"
         )
 
-    def test_summarize_materials_empty_list_with_max_workers(self):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_empty_list_with_max_workers(self):
         """测试：空列表时 max_workers 参数不应导致错误"""
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
 
-        summaries = summarizer.summarize_materials([], max_workers=3)
+        summaries = await summarizer.summarize_materials_async([], max_workers=3)
 
         assert summaries == {}
 
-    def test_summarize_materials_single_release_with_max_workers(self):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_single_release_with_max_workers(self):
         """测试：单个 release 材料时 max_workers=3 应正常工作"""
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
 
         materials = [
             AnalysisMaterial.from_release_details(
@@ -110,20 +122,22 @@ class TestReleaseSummarizerParallel:
             )
         ]
 
-        summaries = summarizer.summarize_materials(materials, max_workers=3)
+        summaries = await summarizer.summarize_materials_async(materials, max_workers=3)
 
         assert len(summaries) == 1
         assert "test/repo@v1.0.0" in summaries
 
-    def test_summarize_materials_handles_individual_failures_gracefully(
+    @pytest.mark.asyncio
+    async def test_summarize_materials_handles_individual_failures_gracefully(
         self, mock_summary
     ):
         """测试：单个 release 失败不应影响其他 releases"""
         from unittest.mock import patch
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
 
-        def mock_summarize_with_one_failure(release):
+        async def mock_summarize_with_one_failure(release):
             """Mock 方法：test/repo2 失败"""
             time.sleep(0.02)  # 模拟 API 延迟
             # test/repo2 失败
@@ -134,7 +148,7 @@ class TestReleaseSummarizerParallel:
 
         with patch.object(
             summarizer,
-            "_summarize_single_release",
+            "_summarize_single_release_async",
             side_effect=mock_summarize_with_one_failure,
         ):
             materials = [
@@ -148,7 +162,9 @@ class TestReleaseSummarizerParallel:
                 for i in range(5)
             ]
 
-            summaries = summarizer.summarize_materials(materials, max_workers=3)
+            summaries = await summarizer.summarize_materials_async(
+                materials, max_workers=3
+            )
 
             # 所有 5 个都应有结果（失败的返回默认值）
             assert len(summaries) == 5
@@ -160,7 +176,8 @@ class TestReleaseSummarizerParallel:
             )
             assert success_count == 4, f"应该有 4 个成功，实际有 {success_count} 个"
 
-    def test_summarize_materials_default_max_workers(self, mock_summary):
+    @pytest.mark.asyncio
+    async def test_summarize_materials_default_max_workers(self, mock_summary):
         """测试：不提供 max_workers 时应使用默认值"""
         # 创建 mock 客户端
         mock_client = MagicMock()
@@ -170,6 +187,7 @@ class TestReleaseSummarizerParallel:
         )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
         summarizer.client = mock_client
 
         materials = [
@@ -179,6 +197,6 @@ class TestReleaseSummarizerParallel:
         ]
 
         # 应该能正常调用（使用默认 max_workers）
-        summaries = summarizer.summarize_materials(materials)
+        summaries = await summarizer.summarize_materials_async(materials)
 
         assert len(summaries) == 1

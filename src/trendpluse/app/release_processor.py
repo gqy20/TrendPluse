@@ -273,33 +273,6 @@ class ReleaseProcessor:
             for pkg in breaking_pkgs
         ]
 
-    def run(
-        self,
-        releases_data: ReleasesData,
-        detailed_releases: list[dict[str, Any]],
-    ) -> ReleaseWorkflowResult:
-        """同步执行 release 编排。"""
-        normal, bulk_groups = self._split_bulk_releases(detailed_releases)
-        self.apply_summaries(releases_data, normal)
-
-        bulk_analyses: dict[str, BulkReleaseAnalysis] = {}
-        release_signals = self.analyze_signals(normal)
-        for repo, group in bulk_groups.items():
-            analysis = self._analyze_bulk_group(repo, group)
-            bulk_analyses[repo] = analysis
-            self._apply_bulk_analysis_summaries(releases_data, repo, group, analysis)
-            release_signals.extend(self._build_bulk_signals(repo, group, analysis))
-
-        breaking_changes = self.detect_breaking_changes(normal)
-        for repo, analysis in bulk_analyses.items():
-            breaking_changes.extend(self._bulk_breaking_entries(repo, analysis))
-        return ReleaseWorkflowResult(
-            releases_data=releases_data,
-            detailed_releases=detailed_releases,
-            release_signals=release_signals,
-            breaking_changes=breaking_changes,
-        )
-
     async def run_async(
         self,
         releases_data: ReleasesData,
@@ -327,16 +300,6 @@ class ReleaseProcessor:
             release_signals=release_signals,
             breaking_changes=breaking_changes,
         )
-
-    def apply_summaries(
-        self, releases_data: ReleasesData, normal_releases: list[dict[str, Any]]
-    ) -> None:
-        """为 release 数据附加 AI 总结。"""
-        if not normal_releases:
-            return
-        release_materials = self.release_material_builder.build(normal_releases)
-        summaries = self.release_summarizer.summarize_materials(release_materials)
-        self.apply_summary_result(releases_data, normal_releases, summaries)
 
     async def summarize_async(
         self, detailed_releases: list[dict[str, Any]]
@@ -366,24 +329,6 @@ class ReleaseProcessor:
             key = f"{release.repo}@{release.version}"
             if key in summaries:
                 release.ai_summary = summaries[key]
-
-    def analyze_signals(self, normal_releases: list[dict[str, Any]]) -> list[Signal]:
-        """分析 release 信号。"""
-        if not normal_releases:
-            return []
-        release_materials = self.release_material_builder.build(normal_releases)
-        release_signals = cast(
-            list[Signal],
-            self.release_analyzer.analyze_materials(release_materials),
-        )
-        if not release_signals:
-            logger.warning(
-                "release 信号分析零产出（normal=%d）——失败可见，不再模板伪造",
-                len(normal_releases),
-            )
-        else:
-            self._log_category_distribution("release", release_signals)
-        return release_signals
 
     async def analyze_signals_async(
         self, normal_releases: list[dict[str, Any]]
@@ -417,17 +362,6 @@ class ReleaseProcessor:
         logger.info(
             "%s 信号 category 分布: %s (total=%d)", source, distribution, len(signals)
         )
-
-    def detect_breaking_changes(
-        self, detailed_releases: list[dict[str, Any]]
-    ) -> list[Any]:
-        """检测 breaking changes。"""
-        if not detailed_releases:
-            return []
-        breaking_changes = self.breaking_changes_detector.detect_breaking_changes(
-            {"detailed_releases": detailed_releases}
-        )
-        return cast(list[Any], self.deduplicate_breaking_changes(breaking_changes))
 
     async def detect_breaking_changes_async(
         self, detailed_releases: list[dict[str, Any]]

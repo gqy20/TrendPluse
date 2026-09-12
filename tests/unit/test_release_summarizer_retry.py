@@ -25,7 +25,8 @@ class TestReleaseSummarizerRetry:
             impact_level=3,
         )
 
-    def test_retry_on_transient_failure(self, mock_summary):
+    @pytest.mark.asyncio
+    async def test_retry_on_transient_failure(self, mock_summary):
         """测试：临时失败时应重试并最终成功"""
         mock_client = MagicMock()
 
@@ -45,6 +46,7 @@ class TestReleaseSummarizerRetry:
         )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
         summarizer.client = mock_client
 
         release = {
@@ -54,13 +56,14 @@ class TestReleaseSummarizerRetry:
         }
 
         # 应该在重试后成功
-        summary = summarizer._summarize_single_release(release)
+        summary = await summarizer._summarize_single_release_async(release)
 
         # 验证调用了 3 次（初始调用 + 2 次重试）
         assert call_count[0] == 3
         assert summary.change_type == "feature"
 
-    def test_retry_exhausted_gives_up(self):
+    @pytest.mark.asyncio
+    async def test_retry_exhausted_gives_up(self):
         """测试：超过最大重试次数后应放弃并返回默认值"""
         mock_client = MagicMock()
 
@@ -74,6 +77,7 @@ class TestReleaseSummarizerRetry:
         )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
         summarizer.client = mock_client
 
         release = {
@@ -83,13 +87,14 @@ class TestReleaseSummarizerRetry:
         }
 
         # 应该在重试耗尽后返回默认值
-        summary = summarizer._summarize_single_release(release)
+        summary = await summarizer._summarize_single_release_async(release)
 
         # 验证返回了默认值
         assert summary.change_type == "other"
         assert "分析失败" in summary.summary_cn or "发布" in summary.summary_cn
 
-    def test_no_retry_on_permanent_error(self):
+    @pytest.mark.asyncio
+    async def test_no_retry_on_permanent_error(self):
         """测试：永久性错误不应重试（如认证错误）"""
         mock_client = MagicMock()
 
@@ -106,6 +111,7 @@ class TestReleaseSummarizerRetry:
         )
 
         summarizer = ReleaseSummarizer(api_key="test-key")
+        summarizer.async_instructor_client = None
         summarizer.client = mock_client
 
         release = {
@@ -116,7 +122,7 @@ class TestReleaseSummarizerRetry:
 
         # 认证错误应该快速失败（不重试或只重试一次）
         try:
-            summarizer._summarize_single_release(release)
+            await summarizer._summarize_single_release_async(release)
         except Exception:
             pass
 

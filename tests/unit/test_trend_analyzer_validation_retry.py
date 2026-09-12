@@ -32,7 +32,8 @@ def create_validation_error():
 class TestValidationErrorRetry:
     """测试验证错误重试机制"""
 
-    def test_retry_on_validation_error(self):
+    @pytest.mark.asyncio
+    async def test_retry_on_validation_error(self):
         """测试：当 stats 字段返回字符串而非对象时，应该重试并最终成功"""
         mock_client = MagicMock()
 
@@ -66,6 +67,8 @@ class TestValidationErrorRetry:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
+        analyzer.async_instructor_client = None
 
         # 使用同步方法测试
         signals = [
@@ -82,7 +85,7 @@ class TestValidationErrorRetry:
         ]
 
         # 调用聚合路径，验证重试逻辑
-        report = analyzer.aggregate_and_generate_report(
+        report = await analyzer.aggregate_and_generate_report_async(
             pr_signals=signals,
             commit_signals=[],
             release_signals=[],
@@ -93,7 +96,8 @@ class TestValidationErrorRetry:
         assert call_count[0] == 3
         assert report.date == "2026-03-10"
 
-    def test_retry_exhausted_on_validation_error(self):
+    @pytest.mark.asyncio
+    async def test_retry_exhausted_on_validation_error(self):
         """测试：持续验证失败时应该抛出异常"""
         mock_client = MagicMock()
 
@@ -109,6 +113,8 @@ class TestValidationErrorRetry:
 
         analyzer = TrendAnalyzer(api_key="test-key")
         analyzer.client = mock_client
+        analyzer.async_instructor_client = None
+        analyzer.async_instructor_client = None
 
         signals = [
             Signal(
@@ -125,7 +131,7 @@ class TestValidationErrorRetry:
 
         # 超过最大重试次数后应该抛出 ValidationError
         with pytest.raises(ValidationError):
-            analyzer.aggregate_and_generate_report(
+            await analyzer.aggregate_and_generate_report_async(
                 pr_signals=signals,
                 commit_signals=[],
                 release_signals=[],

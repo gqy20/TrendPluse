@@ -3,6 +3,8 @@
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
+import pytest
+
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.models.signal import DailyReport, Signal
 from trendpluse.models.source import AnalysisMaterial, SourceRef
@@ -16,13 +18,15 @@ class TestTrendAnalyzer:
         """测试：使用 API key 初始化"""
         # Arrange & Act
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         # Assert
         assert analyzer is not None
         assert mock_from_anthropic.call_count == 2
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_analyze_single_material_from_pr_details(self, mock_from_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_single_material_from_pr_details(self, mock_from_anthropic):
         """测试：分析单个 PR 材料提取信号。"""
         # Arrange
         mock_signal = Signal(
@@ -44,6 +48,7 @@ class TestTrendAnalyzer:
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         pr_details = {
             "number": 123,
@@ -57,7 +62,7 @@ class TestTrendAnalyzer:
         material = AnalysisMaterial.from_pr_details(pr_details)
 
         # Act
-        signal = analyzer.analyze_material(material)
+        signal = await analyzer.analyze_material_async(material)
 
         # Assert
         assert signal.title == "新功能：支持 Python 3.13"
@@ -65,7 +70,10 @@ class TestTrendAnalyzer:
         assert signal.impact_score == 4
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_analyze_multiple_materials_from_pr_details(self, mock_from_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_multiple_materials_from_pr_details(
+        self, mock_from_anthropic
+    ):
         """测试：批量分析多个 PR 材料。"""
         # Arrange
         mock_signal_1 = Signal(
@@ -98,6 +106,7 @@ class TestTrendAnalyzer:
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         pr_list = [
             {
@@ -116,7 +125,7 @@ class TestTrendAnalyzer:
         materials = [AnalysisMaterial.from_pr_details(pr) for pr in pr_list]
 
         # Act
-        signals = analyzer.analyze_materials(materials)
+        signals = await analyzer.analyze_materials_async(materials)
 
         # Assert
         assert len(signals) == 2
@@ -124,7 +133,8 @@ class TestTrendAnalyzer:
         assert signals[1].title == "功能 B"
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_analyze_single_material(self, mock_from_anthropic):
+    @pytest.mark.asyncio
+    async def test_analyze_single_material(self, mock_from_anthropic):
         """测试：分析单个材料提取信号"""
         mock_signal = Signal(
             id="",
@@ -145,6 +155,7 @@ class TestTrendAnalyzer:
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
         material = AnalysisMaterial(
             source_ref=SourceRef(
                 source_type="pull_request",
@@ -158,14 +169,15 @@ class TestTrendAnalyzer:
             author="alice",
         )
 
-        signal = analyzer.analyze_material(material)
+        signal = await analyzer.analyze_material_async(material)
 
         assert signal.id == "anthropics/skills-123"
         assert signal.sources == ["https://github.com/anthropics/skills/pull/123"]
         assert signal.related_repos == ["anthropics/skills"]
 
     @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_generate_daily_report(self, mock_from_anthropic):
+    @pytest.mark.asyncio
+    async def test_generate_daily_report(self, mock_from_anthropic):
         """测试：生成每日报告"""
         # Arrange
         mock_report = DailyReport(
@@ -199,6 +211,7 @@ class TestTrendAnalyzer:
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         signals = [
             Signal(
@@ -214,7 +227,7 @@ class TestTrendAnalyzer:
         ]
 
         # Act
-        report = analyzer.aggregate_and_generate_report(
+        report = await analyzer.aggregate_and_generate_report_async(
             pr_signals=signals,
             commit_signals=[],
             release_signals=[],
@@ -236,6 +249,7 @@ class TestTrendAnalyzer:
         mock_from_anthropic.return_value = mock_client
 
         analyzer = TrendAnalyzer(api_key="test_key")
+        analyzer.async_instructor_client = None
 
         signals = [
             Signal(

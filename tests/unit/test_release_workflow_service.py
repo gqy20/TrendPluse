@@ -59,7 +59,8 @@ class DummyBreakingChangesDetector:
         return self.changes
 
 
-def test_run_applies_summaries_and_returns_signals() -> None:
+@pytest.mark.asyncio
+async def test_run_applies_summaries_and_returns_signals() -> None:
     """测试同步 workflow 会回填 summary 并返回 signals。"""
     releases_data = ReleasesData(
         total_count=1,
@@ -107,14 +108,15 @@ def test_run_applies_summaries_and_returns_signals() -> None:
         breaking_changes_detector=DummyBreakingChangesDetector([{"repo": "test/repo"}]),
     )
 
-    result = service.run(releases_data, detailed_releases)
+    result = await service.run_async(releases_data, detailed_releases)
 
     assert result.release_signals == [signal]
     assert result.breaking_changes == [{"repo": "test/repo"}]
     assert result.releases_data.releases[0].ai_summary == summary
 
 
-def test_run_returns_empty_visibly_when_release_analyzer_returns_empty() -> None:
+@pytest.mark.asyncio
+async def test_run_returns_empty_visibly_when_release_analyzer_returns_empty() -> None:
     """测试 analyzer 零产出时失败可见（返回空，不模板伪造信号）。"""
     releases_data = ReleasesData(
         total_count=1,
@@ -145,13 +147,14 @@ def test_run_returns_empty_visibly_when_release_analyzer_returns_empty() -> None
         breaking_changes_detector=DummyBreakingChangesDetector([]),
     )
 
-    result = service.run(releases_data, detailed_releases)
+    result = await service.run_async(releases_data, detailed_releases)
 
     # 旧版此处模板伪造 "[3] test/repo 发布 v1.0.0"；现失败可见：空 + 日志告警
     assert result.release_signals == []
 
 
-def test_run_deduplicates_breaking_changes_preferring_specific_tags() -> None:
+@pytest.mark.asyncio
+async def test_run_deduplicates_breaking_changes_preferring_specific_tags() -> None:
     """测试 breaking changes 去重时优先保留具体版本 tag。"""
     releases_data = ReleasesData(total_count=0, unique_repos_count=0, releases=[])
     detailed_releases = [
@@ -194,7 +197,7 @@ def test_run_deduplicates_breaking_changes_preferring_specific_tags() -> None:
         breaking_changes_detector=DummyBreakingChangesDetector(duplicated_changes),
     )
 
-    result = service.run(releases_data, detailed_releases)
+    result = await service.run_async(releases_data, detailed_releases)
 
     assert result.breaking_changes == [
         {
