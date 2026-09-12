@@ -292,6 +292,8 @@ class DailyPipelineApp:
             repos=self.settings.github_repos,
             since=day_ago,
             max_workers=self.settings.max_parallel_workers,
+            # open PR 的 diff 字段仅规模筛选需要，避免 per-PR 补全请求
+            enable_open_pr_diff=self.settings.enable_open_prs,
         )
         return cast(list[dict[str, Any]], self.filter.filter_candidates(events))
 

@@ -23,6 +23,7 @@ class GitHubEventsCollector(BaseGitHubCollector):
         repos: list[str],
         since: datetime,
         max_workers: int | None = None,
+        enable_open_pr_diff: bool = False,
     ) -> list[dict]:
         """并行获取指定仓库的 GitHub 事件
 
@@ -30,6 +31,10 @@ class GitHubEventsCollector(BaseGitHubCollector):
             repos: 仓库列表，格式 ["owner/repo", ...]
             since: 起始时间
             max_workers: 最大线程数（默认为 min(32, len(repos) + 4)）
+            enable_open_pr_diff: 是否为 open PR 读取 diff 字段
+                （additions/deletions/changed_files，供 EventFilter 规模筛选）。
+                list 端点不返回这些字段，读取会触发 per-PR 补全请求，
+                故仅在启用 open PR 筛选（enable_open_prs）时开启。
 
         Returns:
             事件列表
@@ -65,6 +70,19 @@ class GitHubEventsCollector(BaseGitHubCollector):
                         for label in pr.labels:
                             labels.append({"name": label.name})
 
+                    # 性能关键：list 端点不返回 merged 布尔与 diff 字段，
+                    # 直接读会触发 PyGithub 对每个 PR 的单 PR 详情补全请求
+                    # （实测 10 PR 11 次请求；OpenHands 单日 90 个 open PR
+                    # 曾因此耗时 100s+）。merged 用 merged_at 等价判断；
+                    # diff 三字段仅在启用 open PR 规模筛选时按需读取，
+                    # merged PR 的 diff 由 detail fetch 阶段天然提供。
+                    is_merged = pr.merged_at is not None
+                    additions = deletions = changed_files = None
+                    if enable_open_pr_diff and pr.state == "open":
+                        additions = pr.additions
+                        deletions = pr.deletions
+                        changed_files = pr.changed_files
+
                     events.append(
                         {
                             "type": "PullRequestEvent",
@@ -75,13 +93,13 @@ class GitHubEventsCollector(BaseGitHubCollector):
                                     "title": pr.title,
                                     "body": pr.body,
                                     "state": pr.state,
-                                    "merged": pr.merged,
+                                    "merged": is_merged,
                                     "draft": pr.draft or False,
                                     "labels": labels,
                                     "author": (pr.user.login if pr.user else "Unknown"),
-                                    "additions": pr.additions,
-                                    "deletions": pr.deletions,
-                                    "changed_files": pr.changed_files,
+                                    "additions": additions,
+                                    "deletions": deletions,
+                                    "changed_files": changed_files,
                                 }
                             },
                             "created_at": pr.created_at.isoformat(),

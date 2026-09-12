@@ -101,8 +101,8 @@ class EventFilter:
                     if pr.get("draft", False):
                         continue
 
-                    # 检查改动规模
-                    changed_files = pr.get("changed_files", 0)
+                    # 检查改动规模（采集层仅对 open PR 读取，可能为 None）
+                    changed_files = pr.get("changed_files") or 0
                     if changed_files < self.open_pr_min_changed_files:
                         continue
 

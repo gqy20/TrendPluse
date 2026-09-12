@@ -264,14 +264,15 @@ class TestGitHubEventsCollector:
 
     @patch("trendpluse.collectors.base.Github")
     def test_fetch_events_includes_author_and_changes(self, mock_github):
-        """测试：事件应包含作者和变更统计"""
+        """测试：merged 用 merged_at 判断，diff 字段默认不读（避免 per-PR 补全）"""
         # Arrange
         mock_repo = Mock()
         mock_pr = Mock()
         mock_pr.number = 123
         mock_pr.title = "Test PR"
         mock_pr.body = "Test body"
-        mock_pr.merged = True
+        mock_pr.state = "closed"
+        mock_pr.merged_at = datetime.now(UTC)  # 非空 = 已合并
         mock_pr.labels = []  # 空标签列表
         mock_user = Mock()
         mock_user.login = "charlie"
@@ -295,6 +296,49 @@ class TestGitHubEventsCollector:
         event = events[0]
         pr_data = event["payload"]["pull_request"]
         assert pr_data["author"] == "charlie"
-        assert pr_data["additions"] == 100
-        assert pr_data["deletions"] == 50
-        assert pr_data["changed_files"] == 5
+        assert pr_data["merged"] is True
+        # merged PR 的 diff 字段由 detail fetch 阶段提供，采集层不触发补全
+        assert pr_data["additions"] is None
+        assert pr_data["changed_files"] is None
+
+    @patch("trendpluse.collectors.base.Github")
+    def test_fetch_events_open_pr_diff_opt_in(self, mock_github):
+        """测试：open PR 的 diff 字段仅在显式开启时读取"""
+        # Arrange
+        mock_repo = Mock()
+        mock_pr = Mock()
+        mock_pr.number = 124
+        mock_pr.title = "Open PR"
+        mock_pr.body = "body"
+        mock_pr.state = "open"
+        mock_pr.merged_at = None
+        mock_pr.labels = []
+        mock_pr.user = Mock(login="alice")
+        mock_pr.additions = 30
+        mock_pr.deletions = 10
+        mock_pr.changed_files = 4
+        mock_pr.created_at = datetime.now(UTC)
+
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github.return_value.get_repo.return_value = mock_repo
+
+        collector = GitHubEventsCollector()
+        since = datetime.now() - timedelta(days=1)
+
+        # Act - 默认不读
+        events_default = collector.fetch_events(
+            repos=["anthropics/skills"], since=since
+        )
+        # Act - 显式开启（enable_open_prs 场景）
+        events_optin = collector.fetch_events(
+            repos=["anthropics/skills"],
+            since=since,
+            enable_open_pr_diff=True,
+        )
+
+        # Assert
+        assert events_default[0]["payload"]["pull_request"]["additions"] is None
+        optin_pr = events_optin[0]["payload"]["pull_request"]
+        assert optin_pr["additions"] == 30
+        assert optin_pr["deletions"] == 10
+        assert optin_pr["changed_files"] == 4

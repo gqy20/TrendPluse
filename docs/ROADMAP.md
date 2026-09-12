@@ -17,13 +17,25 @@
 > - 生产 run-daily.yml 已设 `MAX_PARALLEL_WORKERS=20`，预期 80 仓库采集
 >   从 726s 降至 ~160-200s（占比 50% → ~20%），LLM 分析成为新大头
 
-**残余瓶颈（下一层）**
-- 单仓库内部分页串行：OpenHands/OpenHands 单仓库 79.2s ≈ 整批总耗时，
-  PyGithub `get_pulls` 按需翻页且默认 per_page 较小
-- 优化方向：REST 换 GraphQL 统一 PR 查询（对齐 activity collector 的做法，
-  一次查询带分页参数），或 `per_page=100` 减少往返
+**残余瓶颈（2026-09-13 已修复：PyGithub 隐性补全请求）**
 
-**涉及文件**：`collectors/github_events.py`（分页优化）、`.github/workflows/run-daily.yml`
+> smoke 慢仓库定位到 OpenHands 单仓库 79-100s 后实测根因：GitHub list 端点
+> 不返回 `merged` 布尔与 diff 三字段（additions/deletions/changed_files），
+> PyGithub 读取时对**每个 PR** 发单 PR 详情补全请求（10 PR → 11 次请求）。
+> OpenHands 单日 92 个 PR（90 open）因此 90+ 次串行往返。
+>
+> 修复：`merged` 改用 `merged_at is not None` 等价判断（list 响应免费）；
+> diff 三字段仅在 `enable_open_prs` 开启时对 open PR 读取
+> （`fetch_events(enable_open_pr_diff=...)`），merged PR 的 diff 由
+> detail fetch 阶段天然提供。实测同仓库同数据：**100.5s/95 请求 → 4.7s/5 请求**。
+>
+> **GraphQL 方向已证伪**：GraphQL 按节点计费（~50 点/页 vs REST 1 点/请求），
+> 5000 点/小时配额下 80 仓库会触顶；补全请求消除后 REST 每仓库仅 1-5 次
+> 往返，已无换 GraphQL 的必要。
+
+**后续观察**
+- 明日日报验证 80 仓库全量 candidate collection 耗时（预期从 726s 降至 ~50s 内）
+- 若仍需压页数（单仓库 PR > 30）：`Github(per_page=100)` 一行即可，暂缓
 
 ---
 
