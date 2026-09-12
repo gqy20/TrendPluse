@@ -188,9 +188,6 @@ def discover(
         output_dir.mkdir(parents=True, exist_ok=True)
 
         reporter = DiscoveryReporter()
-        md_file = output_dir / f"discovery-{report.date}.md"
-        reporter.save_markdown(report, md_file)
-
         json_file = output_dir / f"discovery-{report.date}.json"
         reporter.save_json(report, json_file)
 
@@ -220,8 +217,7 @@ def discover(
         )
 
         console.print(
-            "[green]报告已保存:[/green] "
-            f"{md_file.name}, {json_file.name}, {actionable_file.name}"
+            f"[green]报告已保存:[/green] {json_file.name}, {actionable_file.name}"
         )
 
     return report

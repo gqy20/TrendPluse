@@ -154,17 +154,6 @@ class TestDiscoveryReporter:
         assert json_data["candidates"][0]["repo"] == "owner/repo1"
         assert json_data["candidates"][0]["quality_score"] == 85.0
 
-    def test_save_markdown_to_file(self, sample_report, tmp_path):
-        """测试保存 Markdown 到文件"""
-        reporter = DiscoveryReporter()
-        output_file = tmp_path / "report.md"
-
-        reporter.save_markdown(sample_report, output_file)
-
-        assert output_file.exists()
-        content = output_file.read_text()
-        assert "# 项目发现报告" in content
-
     def test_save_json_to_file(self, sample_report, tmp_path):
         """测试保存 JSON 到文件"""
         reporter = DiscoveryReporter()

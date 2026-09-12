@@ -163,18 +163,12 @@ class TestDiscoverProjectsIntegration:
             actionable_dir=tmp_path,
         )
 
-        # 检查文件已创建
-        md_files = list(tmp_path.glob("*.md"))
+        # 检查文件已创建(JSON 单一格式)
         json_files = list(tmp_path.glob("*.json"))
         actionable_files = list(tmp_path.glob("*-actionable.json"))
 
-        assert len(md_files) == 1
         assert len(json_files) == 2
         assert len(actionable_files) == 1
-
-        # 验证文件内容
-        md_content = md_files[0].read_text()
-        assert "# 项目发现报告" in md_content
 
         base_report_file = next(
             file for file in json_files if not file.name.endswith("-actionable.json")

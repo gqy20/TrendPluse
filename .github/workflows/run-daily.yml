@@ -184,7 +184,6 @@ jobs:
         with:
           name: trend-report-${{ steps.report_date.outputs.date }}
           path: |
-            reports/daily/report-*.md
             reports/daily/report-*.json
             logs/*.log
           retention-days: 30
@@ -197,8 +196,7 @@ jobs:
           git stash
           git pull --rebase origin main
           git stash pop || true
-          # JSON 为前端数据源，md 作为 GitHub 浏览兜底（Astro 直接读 reports/*.json）
-          git add reports/daily/*.md reports/daily/*.json
+          git add reports/daily/*.json
           git diff --quiet && git diff --staged --quiet || git commit -m "docs: update daily trend report [skip ci]"
           git push
 

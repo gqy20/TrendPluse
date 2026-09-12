@@ -302,21 +302,6 @@ class DiscoveryReporter:
             "candidates": [p.model_dump(mode="json") for p in report.candidates],
         }
 
-    def save_markdown(
-        self,
-        report: DiscoveryReport,
-        output_path: Path,
-    ) -> None:
-        """保存 Markdown 报告到文件
-
-        Args:
-            report: 发现报告数据
-            output_path: 输出文件路径
-        """
-        markdown = self.generate_markdown(report)
-        output_path.write_text(markdown, encoding="utf-8")
-        logger.info(f"Markdown 报告已保存: {output_path}")
-
     def save_json(
         self,
         report: DiscoveryReport,
