@@ -117,7 +117,7 @@ class TestTrendPulsePipeline:
 
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ReleaseMaterialBuilder")
     @patch("trendpluse.app.pipeline.CommitMaterialBuilder")
     @patch("trendpluse.app.pipeline.ActivityCollector")
@@ -186,7 +186,7 @@ class TestTrendPulsePipeline:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.ReleaseSummarizer")
@@ -308,13 +308,13 @@ class TestTrendPulsePipeline:
         )
         mock_analyzer_instance.analyze_materials.assert_called_once()
         mock_analyzer_instance.aggregate_and_generate_report.assert_called_once()
-        mock_reporter_instance.save_report.assert_called_once()
+        mock_reporter_instance.save_daily.assert_called_once()
         # 验证 commit 分析被调用
         mock_commit_analyzer_instance.analyze_materials.assert_called_once()
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.ReleaseSummarizer")
@@ -387,7 +387,7 @@ class TestTrendPulsePipeline:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -481,7 +481,7 @@ class TestTrendPulsePipeline:
         mock_commit_analyzer_instance.analyze_materials.assert_called_once()
 
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -542,11 +542,11 @@ class TestTrendPulsePipeline:
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
 
         # Assert - 验证报告被保存
-        mock_reporter_instance.save_report.assert_called_once()
+        mock_reporter_instance.save_daily.assert_called_once()
         assert report is not None
 
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -603,11 +603,11 @@ class TestTrendPulsePipeline:
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
 
         # Assert
-        mock_reporter_instance.save_report.assert_called_once()
+        mock_reporter_instance.save_daily.assert_called_once()
         assert report is not None
 
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -675,7 +675,7 @@ class TestTrendPulsePipeline:
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
 
         # Assert
-        mock_reporter_instance.save_report.assert_called_once()
+        mock_reporter_instance.save_daily.assert_called_once()
         assert report is not None
         # 验证 AI 分析被调用了
         mock_analyzer_instance.analyze_materials.assert_called_once()

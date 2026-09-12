@@ -19,46 +19,32 @@ class DailyNotifier(Protocol):
         """发送日报通知。"""
 
 
-class ReportWriter(Protocol):
-    """报告写入协议。"""
-
-    def save_report(self, report: DailyReport, output_path: str) -> None:
-        """保存日报 Markdown。"""
-
-    def save_weekly_report(self, report: WeeklyReport, output_path: str) -> None:
-        """保存周报 Markdown。"""
-
-
 class ReportPublisher:
     """负责日报/周报的落盘与通知。"""
 
     def __init__(
         self,
         *,
-        reporter: ReportWriter,
         daily_output_dir: str,
         weekly_output_dir: str,
         notifier: DailyNotifier | None = None,
     ) -> None:
-        self.reporter = reporter
         self.daily_output_dir = Path(daily_output_dir)
         self.weekly_output_dir = Path(weekly_output_dir)
         self.notifier = notifier
 
     def save_daily(self, report: DailyReport, date: datetime) -> str:
-        """保存日报 Markdown 与 JSON。"""
-        output_path = self.daily_output_dir / f"report-{date.strftime('%Y-%m-%d')}.md"
-        self.reporter.save_report(report, str(output_path))
-        self._save_json(report, output_path)
-        return str(output_path)
+        """保存日报 JSON(唯一真源格式)。"""
+        json_path = self.daily_output_dir / f"report-{date.strftime('%Y-%m-%d')}.json"
+        self._write_json(report, json_path)
+        return str(json_path)
 
     def save_weekly(self, report: WeeklyReport, date: datetime) -> str:
-        """保存周报 Markdown 与 JSON。"""
+        """保存周报 JSON(唯一真源格式)。"""
         week_id = WeeklyReport.get_week_id(date)
-        output_path = self.weekly_output_dir / f"weekly-{week_id}.md"
-        self.reporter.save_weekly_report(report, str(output_path))
-        self._save_json(report, output_path)
-        return str(output_path)
+        json_path = self.weekly_output_dir / f"weekly-{week_id}.json"
+        self._write_json(report, json_path)
+        return str(json_path)
 
     def notify_daily(self, report: DailyReport) -> None:
         """发送日报通知。"""
@@ -69,14 +55,13 @@ class ReportPublisher:
         except Exception as exc:  # pragma: no cover - 防御性日志
             logger.warning(f"发送飞书通知失败: {exc}")
 
-    def _save_json(self, report: DailyReport | WeeklyReport, output_path: Path) -> None:
-        """保存 JSON 数据。
+    def _write_json(self, report: DailyReport | WeeklyReport, json_path: Path) -> None:
+        """写入 JSON 数据。
 
         末尾补一个换行符：入库的历史报告均带换行（pre-commit 的
         end-of-file-fixer 也会强制补），落盘时不补会导致每次重写都产生
         仅差一个换行符的脏 diff。
         """
-        json_path = output_path.with_suffix(".json")
         json_path.parent.mkdir(parents=True, exist_ok=True)
         json_path.write_text(
             report.model_dump_json(indent=2, ensure_ascii=False) + "\n",

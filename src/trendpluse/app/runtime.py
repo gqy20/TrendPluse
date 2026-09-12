@@ -28,19 +28,13 @@ class WeeklyRunResult:
 
 
 def build_daily_output_path(settings: Settings, date: datetime) -> Path:
-    """构建日报输出路径。"""
-    return Path(settings.output_dir) / f"report-{date.strftime('%Y-%m-%d')}.md"
-
-
-def build_weekly_output_path(date: datetime) -> Path:
-    """构建周报输出路径。"""
-    week_id = WeeklyReport.get_week_id(date)
-    return Path("reports/weekly") / f"weekly-{week_id}.md"
+    """构建日报输出路径(JSON 唯一格式)。"""
+    return Path(settings.output_dir) / f"report-{date.strftime('%Y-%m-%d')}.json"
 
 
 def build_weekly_output_path_from_week_id(week_id: str) -> Path:
-    """根据周标识构建周报输出路径。"""
-    return Path("reports/weekly") / f"weekly-{week_id}.md"
+    """根据周标识构建周报输出路径(JSON 唯一格式)。"""
+    return Path("reports/weekly") / f"weekly-{week_id}.json"
 
 
 async def run_daily_pipeline(

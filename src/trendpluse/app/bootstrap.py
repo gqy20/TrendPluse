@@ -28,7 +28,6 @@ from trendpluse.collectors.issues import IssueCollector
 from trendpluse.collectors.release_material_builder import ReleaseMaterialBuilder
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import DEFAULT_SIGNAL_HISTORY_PATH
-from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.notifiers.feishu import FeishuNotifier
 from trendpluse.reports.builder import DailyReportBuilder
 from trendpluse.reports.publisher import ReportPublisher
@@ -64,7 +63,6 @@ class AnalyzerComponents:
 class ReportingComponents:
     """报告相关组件集合。"""
 
-    reporter: MarkdownReporter
     notifier: FeishuNotifier | None
     builder: DailyReportBuilder
     publisher: ReportPublisher
@@ -156,11 +154,9 @@ def build_reporting_components(
     *,
     settings: Any,
     issue_insights_loader,
-    reporter_factory=MarkdownReporter,
     notifier_factory=FeishuNotifier,
 ) -> ReportingComponents:
     """构建报告相关组件。"""
-    reporter = reporter_factory()
     notifier: FeishuNotifier | None = None
     configured_output_dir = getattr(settings, "output_dir", None)
     daily_output_dir = (
@@ -181,13 +177,11 @@ def build_reporting_components(
         issue_insights_loader=issue_insights_loader,
     )
     publisher = ReportPublisher(
-        reporter=reporter,
         daily_output_dir=daily_output_dir,
         weekly_output_dir="reports/weekly",
         notifier=notifier,
     )
     return ReportingComponents(
-        reporter=reporter,
         notifier=notifier,
         builder=builder,
         publisher=publisher,

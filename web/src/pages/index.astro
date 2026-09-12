@@ -161,11 +161,7 @@ const heroImg = `${import.meta.env.BASE_URL}assets/signal-field.svg`;
             </a>
           ))
       }
-      <p class="tp-mono text-ink-2 leading-[1.7] mt-8">
-        更早看到变化，<br />更从容地创造未来。
-      </p>
       <div class="mt-8 pt-6">
-        <p class="tp-eyebrow">TREND PULSE DAILY REPORT</p>
         {latestData && (
           <p class="tp-mono text-ink-2 mt-4">今日共 {latestData.stats.total_signals ?? 0} 个信号 / {latestData.stats.high_impact_signals ?? 0} 个高影响变化</p>
         )}

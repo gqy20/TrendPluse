@@ -29,7 +29,6 @@ from trendpluse.collectors.release_material_builder import ReleaseMaterialBuilde
 from trendpluse.collectors.releases import ReleaseCollector
 from trendpluse.config import Settings
 from trendpluse.issue_signal_aggregator import IssueGlobalSummarizer
-from trendpluse.markdown_reporter import MarkdownReporter
 from trendpluse.models.signal import DailyReport, WeeklyReport
 from trendpluse.notifiers.feishu import FeishuNotifier
 
@@ -65,7 +64,6 @@ class TrendPulsePipeline:
         reporting = build_reporting_components(
             settings=self.settings,
             issue_insights_loader=lambda _date: None,
-            reporter_factory=MarkdownReporter,
             notifier_factory=FeishuNotifier,
         )
         apps: AppComponents = build_app_components(

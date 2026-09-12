@@ -123,7 +123,7 @@ class TestEmptyReportSummary:
     # 注意：patch 装饰器从下往上应用，参数从上往下对应
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -173,7 +173,7 @@ class TestEmptyReportSummary:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -257,7 +257,7 @@ class TestEmptyReportSummary:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -335,7 +335,7 @@ class TestEmptyReportSummary:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
@@ -415,7 +415,7 @@ class TestEmptyReportSummary:
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
-    @patch("trendpluse.app.pipeline.MarkdownReporter")
+    @patch("trendpluse.app.bootstrap.ReportPublisher")
     @patch("trendpluse.app.pipeline.ActivityCollector")
     @patch("trendpluse.app.pipeline.ReleaseCollector")
     @patch("trendpluse.app.pipeline.SDKCommitAnalyzer")
