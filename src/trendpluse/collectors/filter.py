@@ -1,7 +1,15 @@
 """事件筛选器
 
 从 GH Archive 事件中筛选出值得深入分析的候选事件。
+
+只做**配置级过滤**（merged 状态/标签/改动规模——语义明确的路由规则），
+不做数量截断：重要性判断交给下游 AI（SDK agent 读全量文件自行取舍）。
+数量异常时仅告警不丢数据。
 """
+
+from trendpluse.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class EventFilter:
@@ -24,10 +32,14 @@ class EventFilter:
         "safety",
     }
 
+    # 单日候选数异常熔断阈值（正常日 <50）。超过只告警不截断——
+    # 通常是监控仓库异常（被刷 PR 等），需要人来判断而非静默丢数据
+    ANOMALY_THRESHOLD = 2000
+
     def __init__(
         self,
         labels: list[str] | None = None,
-        max_count: int = 20,
+        max_count: int | None = None,
         enable_open_prs: bool = False,
         open_pr_min_changed_files: int = 3,
     ):
@@ -35,7 +47,9 @@ class EventFilter:
 
         Args:
             labels: 候选标签列表，None 表示使用默认标签
-            max_count: 最大返回数量
+            max_count: 已废弃（保留参数兼容旧调用）。历史上曾按采集
+                完成顺序截断前 N 个，属于"代码替 AI 做重要性判断"，
+                已改为全量透传 + 异常告警
             enable_open_prs: 是否包含 open PR（默认 False，只包含已合并的）
             open_pr_min_changed_files: open PR 最小改动文件数（默认 3）
         """
@@ -45,7 +59,7 @@ class EventFilter:
         self.open_pr_min_changed_files = open_pr_min_changed_files
 
     def filter_candidates(self, events: list[dict]) -> list[dict]:
-        """筛选候选事件
+        """筛选候选事件（配置级过滤，无数量截断）
 
         Args:
             events: 原始事件列表
@@ -106,5 +120,13 @@ class EventFilter:
 
                     candidates.append(event)
 
-        # 限制数量
-        return candidates[: self.max_count]
+        # 不做数量截断：重要性判断由下游 AI 基于全量信息做出。
+        # 仅在数量异常（可能是刷量/配置错误）时告警。
+        if len(candidates) > self.ANOMALY_THRESHOLD:
+            logger.warning(
+                "候选事件数量异常: %d 个（阈值 %d），可能是监控仓库被刷量"
+                "或配置错误，请人工核查（不截断，全量透传下游）",
+                len(candidates),
+                self.ANOMALY_THRESHOLD,
+            )
+        return candidates

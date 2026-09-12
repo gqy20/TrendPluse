@@ -4,12 +4,16 @@
 """
 
 import asyncio
+import shutil
+import tempfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 from typing import Any, cast
 
 import anthropic
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
+from trendpluse.analyzers.structured_query import StructuredQuery
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
 from trendpluse.models.signal import (
@@ -49,6 +53,8 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             model: 模型名称
             base_url: API 基础 URL
         """
+        self._bulk_query_engine: StructuredQuery[BulkReleaseAnalysis] | None = None
+
         # 使用 instructor 模式（默认）
         super().__init__(
             api_key=api_key,
@@ -214,48 +220,103 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
         return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
 
-    # 单个子包 changelog 要点的截断长度（整合材料每行）
-    BULK_CHANGELOG_SNIPPET = 200
+    # 单个 release changelog 的完整预算（instructor 路径）。
+    # 网关模型 1M 上下文，30K 字符（≈7.5K tokens）对任何真实 changelog
+    # 都是无损的；仅对极端超长做头尾保留 + 显式省略标记（AI 知道缺了什么）。
+    CHANGELOG_FULL_BUDGET = 30_000
+    CHANGELOG_HEAD = 22_000
+    CHANGELOG_TAIL = 7_000
 
     @classmethod
-    def build_bulk_material_lines(cls, group: list[dict[str, Any]]) -> list[str]:
-        """将批量发版组整合为紧凑材料行（每包一行，AI 一次看全）。"""
-        lines: list[str] = []
+    def clip_changelog(cls, body: str) -> str:
+        """预算感知的 changelog 保留：全量优先，超长保头尾并显式标注。"""
+        text_value = str(body or "").strip()
+        if len(text_value) <= cls.CHANGELOG_FULL_BUDGET:
+            return text_value
+        omitted = len(text_value) - cls.CHANGELOG_HEAD - cls.CHANGELOG_TAIL
+        return (
+            f"{text_value[: cls.CHANGELOG_HEAD]}"
+            f"\n\n[...中间省略 {omitted} 字符，如需完整内容请查看原文...]"
+            f"\n\n{text_value[-cls.CHANGELOG_TAIL :]}"
+        )
+
+    # ---- 批量发版整批分析（SDK 文件模式：全量 changelog 进文件） ----
+
+    def _get_bulk_query_engine(self) -> StructuredQuery[BulkReleaseAnalysis]:
+        """批量发版分析专用 SDK 引擎（懒初始化）。"""
+        if self._bulk_query_engine is None:
+            self._bulk_query_engine = StructuredQuery[BulkReleaseAnalysis](
+                output_model=BulkReleaseAnalysis,
+                model=self.model,
+                allowed_tools=["Read", "Grep"],
+                max_turns=20,
+                max_budget_usd=5.0,
+            )
+        return self._bulk_query_engine
+
+    @staticmethod
+    def _write_bulk_changelogs_file(
+        work_dir: str, repo: str, group: list[dict[str, Any]]
+    ) -> str:
+        """将批量发版组的全部子包 changelog（全文）写入 markdown 文件。"""
+        lines = [
+            f"# {repo} 批量发版 changelogs",
+            "",
+            f"**包数量:** {len(group)}",
+            "",
+            "---",
+            "",
+        ]
         for release in group:
             name = str(
                 release.get("tag_name") or release.get("name") or "unknown"
             ).strip()
-            body = str(release.get("body") or "").strip().replace("\n", " ")
-            snippet = body[: cls.BULK_CHANGELOG_SNIPPET]
-            lines.append(f"- {name}: {snippet}" if snippet else f"- {name}")
-        return lines
+            url = str(release.get("html_url", "") or "").strip()
+            body = str(release.get("body") or "").strip()
+            lines.append(f"## {name}")
+            if url:
+                lines.append(f"**URL:** {url}")
+            lines.append("")
+            lines.append(body if body else "（无 changelog）")
+            lines.append("")
+            lines.append("---")
+            lines.append("")
+        file_path = Path(work_dir) / "bulk-changelogs.md"
+        file_path.write_text("\n".join(lines), encoding="utf-8")
+        return str(file_path)
 
     def _build_bulk_prompt(self, repo: str, group: list[dict[str, Any]]) -> str:
         return render_prompt(
             "release_summarizer.bulk_group_analysis",
             repo=repo,
             package_count=len(group),
-            package_lines="\n".join(self.build_bulk_material_lines(group)),
         )
+
+    def _analyze_bulk_via_sdk(
+        self, repo: str, group: list[dict[str, Any]]
+    ) -> BulkReleaseAnalysis:
+        """SDK 文件模式整批分析（同步包装）。"""
+        import asyncio
+
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            pass
+        else:
+            raise RuntimeError(
+                "检测到正在运行的事件循环，请改用 summarize_bulk_group_async()。"
+            )
+        return asyncio.run(self.summarize_bulk_group_async(repo, group))
 
     def summarize_bulk_group(
         self, repo: str, group: list[dict[str, Any]]
     ) -> BulkReleaseAnalysis:
-        """整批分析 monorepo 批量发版（一次 LLM 调用看全所有子包）。
+        """整批分析 monorepo 批量发版（全量 changelog 进文件，AI 自主探索）。
 
         失败时返回按版本语义构建的保守降级结果（major 即 notable）。
         """
-        prompt = self._build_bulk_prompt(repo, group)
-
-        def _call():
-            return self._structured_create(
-                response_model=BulkReleaseAnalysis,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=2000,
-            )
-
         try:
-            return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
+            return self._analyze_bulk_via_sdk(repo, group)
         except Exception as e:
             logger.warning(
                 "批量发版整批分析失败(%s, %d 包)，降级为版本语义判断: %s: %s",
@@ -269,17 +330,21 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
     async def summarize_bulk_group_async(
         self, repo: str, group: list[dict[str, Any]]
     ) -> BulkReleaseAnalysis:
-        prompt = self._build_bulk_prompt(repo, group)
-
-        async def _call():
-            return await self._structured_create_async(
-                response_model=BulkReleaseAnalysis,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=2000,
-            )
-
+        """异步整批分析：全量 changelog 写文件，SDK agent 读文件分析。"""
+        work_dir = tempfile.mkdtemp(prefix="bulk_release_")
+        engine = self._get_bulk_query_engine()
         try:
-            return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
+            changelogs_file = self._write_bulk_changelogs_file(work_dir, repo, group)
+            prompt = self._build_bulk_prompt(repo, group)
+
+            original_whitelist = engine.file_whitelist
+            engine.file_whitelist = {str(Path(changelogs_file).resolve())}
+            try:
+                result = await engine.query_async(prompt)
+            finally:
+                engine.file_whitelist = original_whitelist
+
+            return result.output
         except Exception as e:
             logger.warning(
                 "批量发版整批分析失败(%s, %d 包)，降级为版本语义判断: %s: %s",
@@ -289,6 +354,8 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
                 str(e)[:150],
             )
             return self._fallback_bulk_analysis(repo, group)
+        finally:
+            shutil.rmtree(work_dir, ignore_errors=True)
 
     @staticmethod
     def _fallback_bulk_analysis(
@@ -341,14 +408,14 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
 
         return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
 
-    @staticmethod
-    def _build_single_release_prompt(release: dict) -> str:
+    @classmethod
+    def _build_single_release_prompt(cls, release: dict) -> str:
         """构建单 Release 总结提示词（同步/异步共用）。"""
         return render_prompt(
             "release_summarizer.single_release",
             repo=release.get("repo", ""),
             tag_name=release.get("tag_name", ""),
-            body=release.get("body", "")[:2000],
+            body=cls.clip_changelog(release.get("body", "")),
         )
 
     def _summarize_single_release(self, release: dict) -> ReleaseSummary:

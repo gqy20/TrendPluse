@@ -12,6 +12,7 @@ from trendpluse.analyzers.daily_summary_agent import DailySummaryAgent
 from trendpluse.analyzers.release_analyzer import ReleaseAnalyzer
 from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
 from trendpluse.analyzers.sdk_commit_analyzer import SDKCommitAnalyzer
+from trendpluse.analyzers.sdk_pr_analyzer import SDKPRAnalyzer
 from trendpluse.analyzers.signal_deduplicator import SignalDeduplicator
 from trendpluse.analyzers.trend_analyzer import TrendAnalyzer
 from trendpluse.app.daily import DailyPipelineApp
@@ -52,6 +53,7 @@ class AnalyzerComponents:
     """分析组件集合。"""
 
     commit_analyzer: Any
+    pr_analyzer: Any
     release_analyzer: Any
     release_summarizer: Any
     breaking_changes_detector: Any
@@ -112,6 +114,7 @@ def build_analyzer_components(
     settings: Any,
     llm_client: Anthropic,
     commit_analyzer_factory=SDKCommitAnalyzer,
+    pr_analyzer_factory=SDKPRAnalyzer,
     release_analyzer_factory=ReleaseAnalyzer,
     release_summarizer_factory=ReleaseSummarizer,
     breaking_changes_detector_factory=BreakingChangesDetector,
@@ -133,6 +136,12 @@ def build_analyzer_components(
             max_turns=30,
             max_budget_usd=getattr(settings, "commit_agent_max_budget_usd", 10.0),
             batch_size=200,
+        ),
+        pr_analyzer=pr_analyzer_factory(
+            model=settings.anthropic_model,
+            max_turns=30,
+            max_budget_usd=getattr(settings, "pr_agent_max_budget_usd", 10.0),
+            batch_size=40,
         ),
         release_analyzer=release_analyzer_factory(**llm_kwargs),
         release_summarizer=release_summarizer_factory(**llm_kwargs),
@@ -270,6 +279,7 @@ def build_app_components(
             analyzer=analyzers.analyzer,
             deduplicator=analyzers.deduplicator,
             daily_report_finalizer=daily_report_finalizer,
+            pr_analyzer=analyzers.pr_analyzer,
         ),
         weekly_app=WeeklyPipelineApp(
             settings=settings,

@@ -81,7 +81,7 @@ class TestEventFilter:
         assert candidates[0]["payload"]["pull_request"]["number"] == 1
 
     def test_filter_candidates_max_count(self):
-        """测试：限制返回数量"""
+        """测试：max_count 已废弃——不再截断，全量透传（重要性判断归下游 AI）"""
         # Arrange
         events = [
             {
@@ -103,8 +103,8 @@ class TestEventFilter:
         # Act
         candidates = filter.filter_candidates(events)
 
-        # Assert
-        assert len(candidates) == 5
+        # Assert: 历史上曾截断为 max_count=5，现全量透传
+        assert len(candidates) == 10
 
     def test_filter_candidates_includes_releases(self):
         """测试：包含 Release 事件"""

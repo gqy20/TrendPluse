@@ -182,6 +182,7 @@ def test_build_app_components_wires_daily_summary_agent_retry_settings(
         release_analyzer=SimpleNamespace(),
         breaking_changes_detector=SimpleNamespace(),
         commit_analyzer=SimpleNamespace(),
+        pr_analyzer=None,
         analyzer=SimpleNamespace(),
         deduplicator=SimpleNamespace(),
     )
