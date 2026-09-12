@@ -17,7 +17,15 @@ async def test_run_daily_async_uses_async_empty_report_finalizer() -> None:
     """异步日报在无 PR 信号时应走异步空报告收尾。"""
     final_report = object()
     app = DailyPipelineApp(
-        settings=SimpleNamespace(github_repos=[]),
+        settings=SimpleNamespace(
+            github_repos=[],
+            enable_pr_analysis=True,
+            enable_commit_analysis=True,
+            enable_release_analysis=True,
+            enable_issue_agent_analysis=False,
+            enable_daily_summary_agent=False,
+            max_parallel_workers=8,
+        ),
         activity_collector=Mock(),
         release_collector=Mock(),
         issue_workflow=Mock(),

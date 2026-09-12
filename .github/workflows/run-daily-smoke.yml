@@ -27,9 +27,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_REPOS_FILE: .github/test-repos.json
       ENABLE_ISSUE_AGENT_ANALYSIS: "false"
-      ENABLE_DAILY_SUMMARY_AGENT: "true"
+      ENABLE_DAILY_SUMMARY_AGENT: "false"
+      # 纯采集测速模式：三条 LLM 链全关，只测采集并行度与限流
+      ENABLE_PR_ANALYSIS: "false"
+      ENABLE_COMMIT_ANALYSIS: "false"
+      ENABLE_RELEASE_ANALYSIS: "false"
       MAX_CANDIDATES: "6"
-      MAX_PARALLEL_WORKERS: "8"
+      MAX_PARALLEL_WORKERS: "20"
       OUTPUT_DIR: tmp/smoke/reports/daily
       ISSUE_DUMP_DIR: tmp/smoke/data/issues
       DAILY_HISTORY_INDEX_PATH: tmp/smoke/data/history/daily-report-index.json
@@ -81,7 +85,11 @@ jobs:
           report_path = Path("tmp/smoke/reports/daily") / f"report-{os.environ['REPORT_DATE']}.json"
           data = json.loads(report_path.read_text(encoding="utf-8"))
 
-          validate_smoke_daily_summary(data)
+          if os.environ.get("ENABLE_DAILY_SUMMARY_AGENT", "true").lower() != "true":
+              # 纯采集测速模式：无 summary agent 产出，跳过其字段校验
+              print("collection-only mode: skip summary validation")
+          else:
+              validate_smoke_daily_summary(data)
           print("summary_brief:", data["summary_brief"])
           print("trend_delta:", data.get("trend_delta"))
           print("historical_comparison:", data.get("historical_comparison"))

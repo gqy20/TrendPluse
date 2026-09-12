@@ -3,6 +3,7 @@
 使用 PyGithub 直接从 GitHub API 获取事件。
 """
 
+import time
 from datetime import datetime
 
 from github import GithubException
@@ -94,8 +95,22 @@ class GitHubEventsCollector(BaseGitHubCollector):
 
             return events
 
+        # 单仓库耗时记录（并行度调优观测：定位拖慢整批的仓库）
+        repo_timings: dict[str, float] = {}
+        original_fetch_one = _fetch_one
+
+        def _timed_fetch_one(repo_name: str) -> list[dict]:
+            """包装单仓库采集以记录耗时。"""
+            started = time.perf_counter()
+            try:
+                return original_fetch_one(repo_name)
+            finally:
+                repo_timings[repo_name] = time.perf_counter() - started
+
         # 并行获取所有仓库的事件
-        all_events_lists = parallel_execute(_fetch_one, repos, max_workers=max_workers)
+        all_events_lists = parallel_execute(
+            _timed_fetch_one, repos, max_workers=max_workers
+        )
 
         # 合并所有事件列表
         events = []
@@ -119,6 +134,14 @@ class GitHubEventsCollector(BaseGitHubCollector):
                 len(failed_repos),
                 preview,
                 suffix,
+            )
+
+        # 最慢仓库 Top 5：并行池的"长尾轮次"由此定位
+        slowest = sorted(repo_timings.items(), key=lambda kv: -kv[1])[:5]
+        if slowest:
+            logger.info(
+                "Slowest repos: %s",
+                ", ".join(f"{repo}={elapsed:.1f}s" for repo, elapsed in slowest),
             )
 
         return events

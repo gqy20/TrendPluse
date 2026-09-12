@@ -7,6 +7,7 @@ import time
 from datetime import datetime, timedelta
 from typing import Any, cast
 
+from trendpluse.app.release_processor import ReleaseWorkflowResult
 from trendpluse.logger import get_logger
 from trendpluse.models.agent_usage import AgentMetricsSummary
 from trendpluse.models.report_inputs import DailyPipelineInputs
@@ -60,6 +61,7 @@ class DailyPipelineApp:
             date = datetime.now()
 
         day_ago = date - timedelta(days=1)
+        self._log_stage_toggles()
         logger.info("→ [1/3] 采集日报输入（activity / release / commit / issue）")
         daily_inputs = await self._collect_daily_inputs_async(
             day_ago, date.strftime("%Y-%m-%d")
@@ -67,9 +69,13 @@ class DailyPipelineApp:
 
         logger.info("→ [2/3] 采集并分析 PR 信号（大头：81 仓库 PR + LLM 分析）")
         pr_signals = await self._collect_pr_signals_async(day_ago)
-        if not pr_signals:
+        if (
+            not pr_signals
+            and not daily_inputs.commit_signals
+            and not (daily_inputs.release_signals)
+        ):
             logger.warning(
-                "今日将生成空报告（PR 信号链断点见上一条 WARNING；"
+                "今日将生成空报告（信号链断点见上一条 WARNING；"
                 "commit_signals=%d, release_signals=%d）",
                 len(daily_inputs.commit_signals),
                 len(daily_inputs.release_signals),
@@ -92,6 +98,20 @@ class DailyPipelineApp:
         )
         logger.info("Daily pipeline total time %.2fs", time.perf_counter() - start_time)
         return report
+
+    def _log_stage_toggles(self) -> None:
+        """启动时打印各链开关状态（插拔调试可观测性）。"""
+        logger.info(
+            "Stage toggles: pr_analysis=%s commit_analysis=%s release_analysis=%s "
+            "issue_agent=%s daily_summary=%s | workers=%d repos=%d",
+            self.settings.enable_pr_analysis,
+            self.settings.enable_commit_analysis,
+            self.settings.enable_release_analysis,
+            self.settings.enable_issue_agent_analysis,
+            self.settings.enable_daily_summary_agent,
+            self.settings.max_parallel_workers,
+            len(self.settings.github_repos),
+        )
 
     async def _collect_daily_inputs_async(
         self, day_ago: datetime, snapshot_date: str
@@ -129,9 +149,19 @@ class DailyPipelineApp:
             detailed_releases=detailed_releases,
             snapshot_date=snapshot_date,
         )
-        release_result = await self.release_workflow.run_async(
-            releases_data, detailed_releases
-        )
+        if self.settings.enable_release_analysis:
+            release_result = await self.release_workflow.run_async(
+                releases_data, detailed_releases
+            )
+        else:
+            # 插拔模式：跳过 release 链全部 LLM（总结/信号/breaking），
+            # 原始 release 数据仍进报告展示区
+            release_result = ReleaseWorkflowResult(
+                releases_data=releases_data,
+                detailed_releases=detailed_releases,
+                release_signals=[],
+                breaking_changes=[],
+            )
         commit_signals = self._resolve_async_commit_signals(results)
         return DailyPipelineInputs(
             activity_data,
@@ -156,7 +186,7 @@ class DailyPipelineApp:
         if detailed_releases:
             pass
 
-        if detailed_commits:
+        if detailed_commits and self.settings.enable_commit_analysis:
             commit_materials = self.commit_material_builder.build(detailed_commits)
             tasks["commit_signals"] = asyncio.create_task(
                 self.commit_analyzer.analyze_materials_async(commit_materials)
@@ -204,6 +234,14 @@ class DailyPipelineApp:
         )
         if not candidates:
             logger.warning("PR 信号链断点: candidates=0（事件采集/筛选后无候选）")
+            return []
+
+        if not self.settings.enable_pr_analysis:
+            # 插拔模式：候选已采集（耗时可见），仅跳过详情/LLM/去重
+            logger.info(
+                "PR 分析开关关闭，跳过 LLM 链（candidates=%d 已采集）",
+                len(candidates),
+            )
             return []
 
         step_start = time.perf_counter()

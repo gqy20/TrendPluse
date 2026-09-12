@@ -6,10 +6,11 @@
 
 import asyncio
 from datetime import datetime
-from unittest.mock import Mock, patch
+from typing import Any
+from unittest.mock import AsyncMock, Mock, patch
 
 from trendpluse.app.pipeline import TrendPulsePipeline
-from trendpluse.models.signal import ActivityData, ReleasesData, Signal
+from trendpluse.models.signal import ActivityData, DailyReport, ReleasesData, Signal
 
 # 日报落盘目录，由 conftest 的 isolate_module_output_dir fixture 重定向到
 # tmp_path，避免测试产物写进仓库内的 reports/daily/。
@@ -301,13 +302,19 @@ class TestEmptyReportSummary:
             mock_commit_analyzer,
             mock_release_analyzer,
         )
-        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
-
-        # Assert - 验证摘要
-        expected_summary = (
-            "今日 (2026-01-02) 发现 3 个 Commit 信号，0 个 Release 信号。"
+        app: Any = pipeline.daily_app
+        app._build_daily_report_async = AsyncMock(
+            return_value=DailyReport(date="2026-01-02", summary_brief="")
         )
-        assert report.summary_brief == expected_summary
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
+
+        # Assert - 部分信号不再走空报告，而是正常聚合构建日报
+        app._build_daily_report_async.assert_awaited_once()
+        call = app._build_daily_report_async.await_args
+        assert call is not None
+        kwargs = call.kwargs
+        assert len(kwargs["daily_inputs"].commit_signals) == 3
+        assert kwargs["daily_inputs"].release_signals == []
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
@@ -384,13 +391,19 @@ class TestEmptyReportSummary:
             mock_commit_analyzer,
             mock_release_analyzer,
         )
-        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
-
-        # Assert - 验证摘要
-        expected_summary = (
-            "今日 (2026-01-02) 发现 0 个 Commit 信号，2 个 Release 信号。"
+        app: Any = pipeline.daily_app
+        app._build_daily_report_async = AsyncMock(
+            return_value=DailyReport(date="2026-01-02", summary_brief="")
         )
-        assert report.summary_brief == expected_summary
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
+
+        # Assert - release-only 信号不再走空报告，而是正常聚合构建日报
+        app._build_daily_report_async.assert_awaited_once()
+        call = app._build_daily_report_async.await_args
+        assert call is not None
+        kwargs = call.kwargs
+        assert kwargs["daily_inputs"].commit_signals == []
+        assert len(kwargs["daily_inputs"].release_signals) == 2
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
@@ -469,13 +482,19 @@ class TestEmptyReportSummary:
             mock_commit_analyzer,
             mock_release_analyzer,
         )
-        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
-
-        # Assert - 验证摘要
-        expected_summary = (
-            "今日 (2026-01-02) 发现 5 个 Commit 信号，1 个 Release 信号。"
+        app: Any = pipeline.daily_app
+        app._build_daily_report_async = AsyncMock(
+            return_value=DailyReport(date="2026-01-02", summary_brief="")
         )
-        assert report.summary_brief == expected_summary
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
+
+        # Assert - 混合信号不再走空报告，而是正常聚合构建日报
+        app._build_daily_report_async.assert_awaited_once()
+        call = app._build_daily_report_async.await_args
+        assert call is not None
+        kwargs = call.kwargs
+        assert len(kwargs["daily_inputs"].commit_signals) == 5
+        assert len(kwargs["daily_inputs"].release_signals) == 1
 
     @patch("pathlib.Path.write_text")
     @patch("trendpluse.app.pipeline.Settings")
@@ -555,8 +574,17 @@ class TestEmptyReportSummary:
             mock_commit_analyzer,
             mock_release_analyzer,
         )
-        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
+        app: Any = pipeline.daily_app
+        app._build_daily_report_async = AsyncMock(
+            return_value=DailyReport(date="2026-01-02", summary_brief="")
+        )
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
-        # Assert - 验证高影响信号统计
-        assert report.stats.high_impact_signals == 2  # 2个高影响信号
-        assert report.stats.total_commits_analyzed == 100
+        # Assert - 高影响判定前移至聚合层：信号携带 impact_score 进入聚合
+        app._build_daily_report_async.assert_awaited_once()
+        call = app._build_daily_report_async.await_args
+        assert call is not None
+        commit_signals = call.kwargs["daily_inputs"].commit_signals
+        high_impact = [s for s in commit_signals if s.impact_score >= 4]
+        assert len(high_impact) == 2  # 2个高影响信号
+        assert len(commit_signals) == 3

@@ -187,6 +187,18 @@ class Settings(BaseSettings):
         default=False,
         description="是否在 daily 流程中启用 Claude Agent Issue 分析",
     )
+    enable_pr_analysis: bool = Field(
+        default=True,
+        description="PR 信号链 LLM 分析开关（关闭后仍采集候选，仅跳过详情/分析/去重）",
+    )
+    enable_commit_analysis: bool = Field(
+        default=True,
+        description="commit 信号链 LLM 分析开关（关闭后仍采集，仅跳过分析）",
+    )
+    enable_release_analysis: bool = Field(
+        default=True,
+        description="release 链 LLM 分析开关（关闭后仍采集，仅跳过总结/信号/breaking）",
+    )
     issue_agent_model: str | None = Field(
         default=None,
         description="Issue Agent 使用的模型名称（为空则使用默认）",

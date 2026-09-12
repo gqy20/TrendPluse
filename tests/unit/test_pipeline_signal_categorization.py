@@ -6,10 +6,11 @@ engineering_signals 和 research_signals 中。
 
 import asyncio
 from datetime import datetime
-from unittest.mock import Mock, patch
+from typing import Any
+from unittest.mock import AsyncMock, Mock, patch
 
 from trendpluse.app.pipeline import TrendPulsePipeline
-from trendpluse.models.signal import ActivityData, ReleasesData, Signal
+from trendpluse.models.signal import ActivityData, DailyReport, ReleasesData, Signal
 
 
 def _wire_daily_async(
@@ -223,20 +224,20 @@ class TestSignalCategorization:
             mock_commit_analyzer,
             mock_release_analyzer,
         )
-        report = asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
+        app: Any = pipeline.daily_app
+        app._build_daily_report_async = AsyncMock(
+            return_value=DailyReport(date="2026-01-02", summary_brief="")
+        )
+        asyncio.run(pipeline.run_daily_async(date=datetime(2026, 1, 2)))
 
-        # Assert - 验证 commit_signals 被清空（避免重复显示）
-        assert len(report.commit_signals) == 0
-        assert report.commit_signals == []
+        # Assert - commit 信号不再被空报告吞掉，携带 category 进入聚合
+        app._build_daily_report_async.assert_awaited_once()
+        call = app._build_daily_report_async.await_args
+        assert call is not None
+        kwargs = call.kwargs
+        commit_signals = kwargs["daily_inputs"].commit_signals
+        assert len(commit_signals) == 3
 
-        # Assert - 验证 commit_signals 被正确分类
-        assert len(report.engineering_signals) == 2  # 2个 engineering信号
-        assert len(report.research_signals) == 1  # 1个 research信号
-
-        # 验证具体信号
-        engineering_titles = [s.title for s in report.engineering_signals]
-        research_titles = [s.title for s in report.research_signals]
-
-        assert "Engineering Signal" in engineering_titles
-        assert "Another Engineering Signal" in engineering_titles
-        assert "Research Signal" in research_titles
+        categories = [s.category for s in commit_signals]
+        assert categories.count("engineering") == 2
+        assert categories.count("research") == 1
