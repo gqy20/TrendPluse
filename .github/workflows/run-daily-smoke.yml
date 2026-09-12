@@ -7,6 +7,21 @@ on:
         description: "报告日期（YYYY-MM-DD），留空则使用当天 UTC 日期"
         required: false
         type: string
+      enable_pr_analysis:
+        description: "启用 PR LLM 分析链"
+        required: false
+        type: boolean
+        default: false
+      enable_commit_analysis:
+        description: "启用 commit LLM 分析链"
+        required: false
+        type: boolean
+        default: false
+      enable_release_analysis:
+        description: "启用 release LLM 分析链"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -28,10 +43,10 @@ jobs:
       GITHUB_REPOS_FILE: .github/test-repos.json
       ENABLE_ISSUE_AGENT_ANALYSIS: "false"
       ENABLE_DAILY_SUMMARY_AGENT: "false"
-      # 纯采集测速模式：三条 LLM 链全关，只测采集并行度与限流
-      ENABLE_PR_ANALYSIS: "false"
-      ENABLE_COMMIT_ANALYSIS: "false"
-      ENABLE_RELEASE_ANALYSIS: "false"
+      # 三条 LLM 链默认全关（纯采集测速），dispatch 时按需插拔开启
+      ENABLE_PR_ANALYSIS: ${{ inputs.enable_pr_analysis }}
+      ENABLE_COMMIT_ANALYSIS: ${{ inputs.enable_commit_analysis }}
+      ENABLE_RELEASE_ANALYSIS: ${{ inputs.enable_release_analysis }}
       MAX_CANDIDATES: "6"
       MAX_PARALLEL_WORKERS: "20"
       OUTPUT_DIR: tmp/smoke/reports/daily
