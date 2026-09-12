@@ -8,22 +8,22 @@
 
 ---
 
-## P1-4（剩余）采集并行度调优——需实测
+## P1-4（已验证）采集并行度调优——20 并发已上生产，残余瓶颈为单仓库分页串行
 
-> 背景：2026-09-11 实测 candidate collection（80 仓库 PR 事件）占总耗时
-> 50.7%（1100.52s / 2170.65s）。301 重定向开销与网络异常重试已修复
-> （见 CHANGELOG），剩余并行度问题需在当前 HEAD 重测后再定。
+> 2026-09-12 验证完成。smoke run 34701235348（40 仓库 × 20 并发 × 纯采集模式，
+> 三链 LLM 开关见 `ENABLE_PR/COMMIT/RELEASE_ANALYSIS`）：
+> - candidate collection **80.59s**（40 仓库零失败、489 事件、**零限流**）
+> - 同规模 8 并发估算需 5 轮 ≈ 200s+，20 并发 2 轮 → **线性加速确认**
+> - 生产 run-daily.yml 已设 `MAX_PARALLEL_WORKERS=20`，预期 80 仓库采集
+>   从 726s 降至 ~160-200s（占比 50% → ~20%），LLM 分析成为新大头
 
-**现状**
-- `MAX_PARALLEL_WORKERS=8`（上限 32），直接决定 candidate collection 并行度
-- 仓库数随 discovery 桥接持续增长（当前 80），采集耗时线性上涨
+**残余瓶颈（下一层）**
+- 单仓库内部分页串行：OpenHands/OpenHands 单仓库 79.2s ≈ 整批总耗时，
+  PyGithub `get_pulls` 按需翻页且默认 per_page 较小
+- 优化方向：REST 换 GraphQL 统一 PR 查询（对齐 activity collector 的做法，
+  一次查询带分页参数），或 `per_page=100` 减少往返
 
-**待办**
-1. 在当前 HEAD 重跑一次完整采集，确认 301 修复后的耗时占比变化
-2. 逐步上调 `MAX_PARALLEL_WORKERS`（如 16），观察 403/429 限流告警
-3. 如遇限流，评估 GitHub token 升级（Pro 更高配额）或分批采集
-
-**涉及文件**：`.env`、`collectors/github_events.py`、`collectors/activity.py`
+**涉及文件**：`collectors/github_events.py`（分页优化）、`.github/workflows/run-daily.yml`
 
 ---
 
