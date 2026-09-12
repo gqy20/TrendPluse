@@ -34,8 +34,11 @@
 > 往返，已无换 GraphQL 的必要。
 
 **后续观察**
-- 明日日报验证 80 仓库全量 candidate collection 耗时（预期从 726s 降至 ~50s 内）
-- 若仍需压页数（单仓库 PR > 30）：`Github(per_page=100)` 一行即可，暂缓
+- ~~明日日报验证 80 仓库全量 candidate collection 耗时~~ **已验证（smoke run 34704198989，
+  2026-09-13）**：candidate collection 80.59s → **4.54s**（17.8x），OpenHands
+  79.2s → 3.0s，events 492 条无损，40/40 仓库零失败，整个 smoke job 38s。
+  采集已退出瓶颈位，日报耗时大头完全转移至 LLM 分析。P1-4 关闭。
+- 若未来仓库数增长到页数瓶颈（单仓库 PR > 30/页）：`Github(per_page=100)` 一行即可，暂缓
 
 ---
 
