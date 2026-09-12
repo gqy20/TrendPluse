@@ -50,6 +50,38 @@ RELEASE_CHANGE_TYPE_EMOJIS: dict[str, str] = {
 }
 
 
+class NotablePackage(BaseModel):
+    """批量发版中值得单独关注的子包。"""
+
+    package: str = Field(description="包名@版本")
+    reason: str = Field(description="为什么值得单独关注（中文，1 句话）")
+    change_type: Literal["feature", "fix", "improvement", "breaking", "other"] = Field(
+        description="变更类型"
+    )
+    impact_level: int = Field(default=3, ge=1, le=5, description="影响级别 1-5")
+
+
+class BulkReleaseAnalysis(BaseModel):
+    """monorepo 批量发版的整批 AI 分析结果。
+
+    由整合材料（每子包一行要点）一次 LLM 调用产出，
+    替代逐包调用与模板预设判断。
+    """
+
+    summary_cn: str = Field(description="整批发版的中文总结（2-3 句话）")
+    key_changes: list[str] = Field(
+        default_factory=list, description="整批层面值得注意的要点"
+    )
+    notable_packages: list[NotablePackage] = Field(
+        default_factory=list,
+        description="值得单独关注的子包（major/breaking/新能力），无则空列表",
+    )
+    has_breaking_changes: bool = Field(
+        default=False, description="本批是否包含 breaking changes"
+    )
+    impact_level: int = Field(default=3, ge=1, le=5, description="整批影响级别 1-5")
+
+
 class ReleaseSummary(BaseModel):
     """Release 总结（AI 生成）
 

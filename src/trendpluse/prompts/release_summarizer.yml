@@ -22,3 +22,24 @@ single_release: |
   - 优先识别 Breaking Changes（影响级别应为 5）
   - 如果是主版本升级（如 v1.0.0 到 v2.0.0），通常意味着 Breaking Changes
   - 新功能优先于修复，修复优先于改进
+# 批量发版整合分析：monorepo 一次几十个子包发版时的整批分析
+# 变量: repo/package_count/package_lines（每行 "包名@版本: changelog 要点"）
+bulk_group_analysis: |
+  分析以下 GitHub monorepo 批量发版，仓库 {$ repo $} 当日共发布 {$ package_count $} 个子包。
+
+  ## 子包材料（每行一个包）
+
+  {$ package_lines $}
+
+  ## 分析要求
+
+  1. **整体性质**：判断这批发版是纯版本同步（changesets 例行升级）还是包含实质变更
+  2. **值得单独关注的子包**：major 版本跳跃、breaking changes、重要新能力的包单独列出；
+     纯 patch 例行升级不要列出；没有则返回空列表
+  3. **breaking changes**：本批中是否存在不兼容变更
+  4. **影响级别**：整批发版的综合影响（纯同步=1-2，含新能力=3，含 breaking=4-5）
+
+  注意：
+  - **所有文本内容必须使用中文**（summary_cn、reason）
+  - changelog 为空的包按版本号语义判断（major/minor/patch）
+  - 不要臆造 changelog 里没有的变更

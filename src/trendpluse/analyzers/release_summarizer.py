@@ -5,14 +5,18 @@
 
 import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import cast
+from typing import Any, cast
 
 import anthropic
 
 from trendpluse.analyzers.base import BaseLLMAnalyzer
 from trendpluse.config import DEFAULT_ANTHROPIC_BASE_URL, DEFAULT_ANTHROPIC_MODEL
 from trendpluse.logger import get_logger
-from trendpluse.models.signal import ReleaseSummary
+from trendpluse.models.signal import (
+    BulkReleaseAnalysis,
+    NotablePackage,
+    ReleaseSummary,
+)
 from trendpluse.models.source import AnalysisMaterial
 from trendpluse.prompts import render_prompt
 
@@ -209,6 +213,117 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
             )
 
         return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
+
+    # 单个子包 changelog 要点的截断长度（整合材料每行）
+    BULK_CHANGELOG_SNIPPET = 200
+
+    @classmethod
+    def build_bulk_material_lines(cls, group: list[dict[str, Any]]) -> list[str]:
+        """将批量发版组整合为紧凑材料行（每包一行，AI 一次看全）。"""
+        lines: list[str] = []
+        for release in group:
+            name = str(
+                release.get("tag_name") or release.get("name") or "unknown"
+            ).strip()
+            body = str(release.get("body") or "").strip().replace("\n", " ")
+            snippet = body[: cls.BULK_CHANGELOG_SNIPPET]
+            lines.append(f"- {name}: {snippet}" if snippet else f"- {name}")
+        return lines
+
+    def _build_bulk_prompt(self, repo: str, group: list[dict[str, Any]]) -> str:
+        return render_prompt(
+            "release_summarizer.bulk_group_analysis",
+            repo=repo,
+            package_count=len(group),
+            package_lines="\n".join(self.build_bulk_material_lines(group)),
+        )
+
+    def summarize_bulk_group(
+        self, repo: str, group: list[dict[str, Any]]
+    ) -> BulkReleaseAnalysis:
+        """整批分析 monorepo 批量发版（一次 LLM 调用看全所有子包）。
+
+        失败时返回按版本语义构建的保守降级结果（major 即 notable）。
+        """
+        prompt = self._build_bulk_prompt(repo, group)
+
+        def _call():
+            return self._structured_create(
+                response_model=BulkReleaseAnalysis,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=2000,
+            )
+
+        try:
+            return self._run_with_llm_retry(_call)  # type: ignore[no-any-return]
+        except Exception as e:
+            logger.warning(
+                "批量发版整批分析失败(%s, %d 包)，降级为版本语义判断: %s: %s",
+                repo,
+                len(group),
+                type(e).__name__,
+                str(e)[:150],
+            )
+            return self._fallback_bulk_analysis(repo, group)
+
+    async def summarize_bulk_group_async(
+        self, repo: str, group: list[dict[str, Any]]
+    ) -> BulkReleaseAnalysis:
+        prompt = self._build_bulk_prompt(repo, group)
+
+        async def _call():
+            return await self._structured_create_async(
+                response_model=BulkReleaseAnalysis,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=2000,
+            )
+
+        try:
+            return await self._run_with_llm_retry_async(_call)  # type: ignore[no-any-return]
+        except Exception as e:
+            logger.warning(
+                "批量发版整批分析失败(%s, %d 包)，降级为版本语义判断: %s: %s",
+                repo,
+                len(group),
+                type(e).__name__,
+                str(e)[:150],
+            )
+            return self._fallback_bulk_analysis(repo, group)
+
+    @staticmethod
+    def _fallback_bulk_analysis(
+        repo: str, group: list[dict[str, Any]]
+    ) -> BulkReleaseAnalysis:
+        """LLM 失败时的保守降级：按版本号语义识别 major 跳跃。
+
+        比"无信息模板"保守——major bump 仍然标出，避免完全盲区。
+        """
+        notable: list[NotablePackage] = []
+        has_breaking = False
+        for release in group:
+            name = str(release.get("tag_name") or release.get("name") or "")
+            version_info = release.get("version_info") or {}
+            major = int(version_info.get("major", 0) or 0) if version_info else 0
+            if major >= 1:
+                notable.append(
+                    NotablePackage(
+                        package=name,
+                        reason=f"major 版本线 v{major}（整批分析降级，按版本语义标记）",
+                        change_type="other",
+                        impact_level=3,
+                    )
+                )
+                has_breaking = has_breaking or major >= 2
+        return BulkReleaseAnalysis(
+            summary_cn=(
+                f"{repo} monorepo 当日批量发版 {len(group)} 个子包"
+                "（整批 AI 分析降级，仅按版本语义识别 major 跳跃）。"
+            ),
+            key_changes=[],
+            notable_packages=notable[:10],
+            has_breaking_changes=has_breaking,
+            impact_level=3 if notable else 2,
+        )
 
     async def _call_llm_for_summary_async(self, prompt: str) -> ReleaseSummary:
         async def _call():

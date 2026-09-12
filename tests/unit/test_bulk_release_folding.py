@@ -1,4 +1,4 @@
-"""Monorepo 批量发版折叠测试。"""
+"""Monorepo 批量发版整批分析测试。"""
 
 from __future__ import annotations
 
@@ -10,21 +10,39 @@ from trendpluse.app.release_processor import (
     BULK_RELEASE_THRESHOLD,
     ReleaseProcessor,
 )
-from trendpluse.models.signal import ReleasesData
+from trendpluse.models.signal import (
+    BulkReleaseAnalysis,
+    NotablePackage,
+    ReleasesData,
+)
 
 
-def _release(repo: str, version: str) -> dict:
+def _release(repo: str, version: str, body: str = "changelog") -> dict:
     return {
         "repo": repo,
         "tag_name": version,
         "name": version,
-        "body": "changelog",
+        "body": body,
         "html_url": f"https://github.com/{repo}/releases/tag/{version}",
     }
 
 
+def _analysis(
+    summary: str = "纯 changesets 版本同步升级，无重大变更。",
+    notable: list[NotablePackage] | None = None,
+    has_breaking: bool = False,
+    impact: int = 2,
+) -> BulkReleaseAnalysis:
+    return BulkReleaseAnalysis(
+        summary_cn=summary,
+        key_changes=["版本同步"],
+        notable_packages=notable or [],
+        has_breaking_changes=has_breaking,
+        impact_level=impact,
+    )
+
+
 def _make_processor() -> tuple[ReleaseProcessor, dict[str, MagicMock]]:
-    """构造组件全 mock 的 processor，返回各组件便于断言。"""
     components = {
         "release_material_builder": MagicMock(),
         "release_summarizer": MagicMock(),
@@ -77,83 +95,75 @@ class TestSplitBulkReleases:
         assert bulk == {}
 
 
-class TestBulkSignal:
-    def test_folded_signal_structure(self):
-        group = [_release("vercel/ai", f"@ai-sdk/p{i}@2.0.{i}") for i in range(12)]
-        signal = ReleaseProcessor._build_bulk_signal("vercel/ai", group)
-        assert signal.title == "vercel/ai 批量发版 12 个子包"
-        assert signal.type == "release"
-        assert signal.category == "engineering"
-        assert signal.impact_score == 3
-        assert signal.related_repos == ["vercel/ai"]
-        assert len(signal.sources) == 3
-        assert "批量发版" in signal.why_it_matters
+class TestBulkSignalsFromAnalysis:
+    def test_pure_sync_batch(self):
+        group = [_release("vercel/ai", f"@pkg{i}@2.0.{i}") for i in range(20)]
+        signals = ReleaseProcessor._build_bulk_signals("vercel/ai", group, _analysis())
+        assert len(signals) == 1  # 纯同步：仅 1 条整批信号
+        assert "批量发版 20 个子包" in signals[0].title
+        assert signals[0].impact_score == 2
+        assert signals[0].why_it_matters == "纯 changesets 版本同步升级，无重大变更。"
+
+    def test_notable_packages_get_own_signals(self):
+        group = [_release("vercel/ai", f"@pkg{i}@2.0.{i}") for i in range(12)]
+        notable = [
+            NotablePackage(
+                package="@gateway@3.0.0",
+                reason="major 版本跳跃，网关 API 重构",
+                change_type="breaking",
+                impact_level=4,
+            ),
+            NotablePackage(
+                package="@react@2.1.0",
+                reason="新增服务端流式渲染能力",
+                change_type="feature",
+                impact_level=3,
+            ),
+        ]
+        signals = ReleaseProcessor._build_bulk_signals(
+            "vercel/ai", group, _analysis(notable=notable, impact=3)
+        )
+        assert len(signals) == 3  # 1 整批 + 2 notable
+        assert "2 个值得注意" in signals[0].title
+        notable_titles = [s.title for s in signals[1:]]
+        assert "vercel/ai @gateway@3.0.0" in notable_titles
+        gateway = next(s for s in signals if "@gateway" in s.title)
+        assert gateway.impact_score == 4
+        assert gateway.why_it_matters == "major 版本跳跃，网关 API 重构"
+
+    def test_bulk_breaking_entries_from_ai(self):
+        notable = [
+            NotablePackage(
+                package="@gateway@3.0.0",
+                reason="API 不兼容重构",
+                change_type="breaking",
+                impact_level=4,
+            )
+        ]
+        entries = ReleaseProcessor._bulk_breaking_entries(
+            "vercel/ai", _analysis(notable=notable, has_breaking=True, impact=4)
+        )
+        assert len(entries) == 1
+        assert entries[0]["tag_name"] == "@gateway@3.0.0"
+        assert entries[0]["changes"][0]["impact"] == "high"
+
+    def test_no_breaking_no_entries(self):
+        assert ReleaseProcessor._bulk_breaking_entries("r", _analysis()) == []
 
 
-class TestRunAsyncFolding:
+class TestRunAsyncIntegration:
     @pytest.mark.asyncio
-    async def test_bulk_releases_skip_per_release_llm(self):
-        """批量组不进 summarizer/analyzer 的逐个 LLM 调用。"""
+    async def test_bulk_group_analyzed_once_with_full_material(self):
+        """批量组走整批分析：AI 收到含全部子包的材料，非逐包调用。"""
         processor, comps = _make_processor()
-        bulk = [_release("vercel/ai", f"@pkg{i}@1.0.{i}") for i in range(20)]
+        bulk = [
+            _release("vercel/ai", f"@pkg{i}@2.0.{i}", body=f"fix: issue {i}")
+            for i in range(15)
+        ]
         normal = [_release("anthropics/claude-code", "v2.1.269")]
         releases_data = _releases_data(normal + bulk)
 
-        # summarizer 只应收到 normal 组的材料
         comps["release_material_builder"].build.return_value = ["mat-1"]
-        comps["release_summarizer"].summarize_materials_async = AsyncMock(
-            return_value={"anthropics/claude-code@v2.1.269": MagicMock()}
-        )
-        comps["release_analyzer"].analyze_materials_async = AsyncMock(
-            return_value=[
-                MagicMock(
-                    category="engineering",
-                    sources=["u"],
-                    related_repos=["anthropics/claude-code"],
-                )
-            ]
-        )
-        comps["breaking_changes_detector"].detect_breaking_changes_async = AsyncMock(
-            return_value=[]
-        )
-
-        result = await processor.run_async(releases_data, normal + bulk)
-
-        # 逐个 LLM 调用只发生 1 次（normal），而非 21 次
-        built = comps["release_material_builder"].build.call_args_list
-        assert all(len(c.args[0]) <= 1 for c in built)
-
-        # 信号 = normal 1 条 + bulk 折叠 1 条
-        assert len(result.release_signals) == 2
-        bulk_signals = [
-            s
-            for s in result.release_signals
-            if "批量发版" in str(getattr(s, "title", ""))
-        ]
-        assert len(bulk_signals) == 1
-
-        # breaking 检测收到 normal + 批量组采样（5 个）
-        detect_input = comps[
-            "breaking_changes_detector"
-        ].detect_breaking_changes_async.call_args.args[0]
-        assert len(detect_input["detailed_releases"]) == 1 + 5
-
-        # 落盘数据保持完整（21 条），批量组 ai_summary 为共享模板
-        assert len(result.detailed_releases) == 21
-        vercel = [r for r in releases_data.releases if r.repo == "vercel/ai"]
-        assert len(vercel) == 20
-        for r in vercel:
-            assert r.ai_summary is not None
-            assert "批量发版" in r.ai_summary.summary_cn
-
-    @pytest.mark.asyncio
-    async def test_no_bulk_all_normal_path(self):
-        """无批量组时行为与原路径一致（全部逐个处理）。"""
-        processor, comps = _make_processor()
-        releases = [_release("a/repo", "v1.0.0"), _release("b/repo", "v2.0.0")]
-        releases_data = _releases_data(releases)
-
-        comps["release_material_builder"].build.return_value = ["m1", "m2"]
         comps["release_summarizer"].summarize_materials_async = AsyncMock(
             return_value={}
         )
@@ -162,44 +172,100 @@ class TestRunAsyncFolding:
             return_value=[]
         )
 
-        result = await processor.run_async(releases_data, releases)
+        captured: dict = {}
 
-        assert len(result.release_signals) == 2  # fallback 路径逐个生成
-        detect_input = comps[
-            "breaking_changes_detector"
-        ].detect_breaking_changes_async.call_args.args[0]
-        assert len(detect_input["detailed_releases"]) == 2
+        async def fake_bulk_async(repo, group):
+            captured["repo"] = repo
+            captured["group"] = group
+            return _analysis()
+
+        comps["release_summarizer"].summarize_bulk_group_async = fake_bulk_async
+
+        result = await processor.run_async(releases_data, normal + bulk)
+
+        # 整批分析被调用一次，收到完整 15 包材料
+        assert captured["repo"] == "vercel/ai"
+        assert len(captured["group"]) == 15
+
+        # summarizer 的逐包路径只收到 normal（1 个）
+        summarize_call = comps["release_summarizer"].summarize_materials_async.call_args
+        assert len(summarize_materials_arg(summarize_call)) == 1
+
+        # 信号 = normal fallback 1 + 批量整批 1
+        assert len(result.release_signals) == 2
+
+        # 落盘数据完整（16 条），批量组 ai_summary 为 AI 分析结论
+        assert len(result.detailed_releases) == 16
+        vercel = [r for r in releases_data.releases if r.repo == "vercel/ai"]
+        assert len(vercel) == 15
+        for r in vercel:
+            assert r.ai_summary is not None
+            assert "changesets" in r.ai_summary.summary_cn
 
     @pytest.mark.asyncio
-    async def test_category_distribution_logged(self, caplog):
+    async def test_bulk_notable_flow_through(self):
+        """AI 判定的 notable 子包贯通到信号与 breaking。"""
         processor, comps = _make_processor()
-        releases = [_release("a/repo", "v1.0.0")]
-        releases_data = _releases_data(releases)
+        bulk = [_release("vercel/ai", f"@pkg{i}@2.0.{i}") for i in range(12)]
+        releases_data = _releases_data(bulk)
 
-        comps["release_material_builder"].build.return_value = ["m1"]
-        comps["release_summarizer"].summarize_materials_async = AsyncMock(
-            return_value={}
+        comps["release_summarizer"].summarize_bulk_group_async = AsyncMock(
+            return_value=_analysis(
+                notable=[
+                    NotablePackage(
+                        package="@pkg5@2.0.5",
+                        reason="新增重要能力 X",
+                        change_type="feature",
+                        impact_level=4,
+                    )
+                ],
+                has_breaking=False,
+                impact=3,
+            )
         )
-        fake_signal = MagicMock(
-            category="research", sources=["u"], related_repos=["a/repo"]
-        )
-        comps["release_analyzer"].analyze_materials_async = AsyncMock(
-            return_value=[fake_signal]
-        )
+        comps["release_analyzer"].analyze_materials_async = AsyncMock(return_value=[])
         comps["breaking_changes_detector"].detect_breaking_changes_async = AsyncMock(
             return_value=[]
         )
 
-        import logging as _logging
+        result = await processor.run_async(releases_data, bulk)
 
-        root = _logging.getLogger("trendpluse")
-        original = root.propagate
-        root.propagate = True
-        try:
-            with caplog.at_level(_logging.INFO):
-                await processor.run_async(releases_data, releases)
-        finally:
-            root.propagate = original
+        assert len(result.release_signals) == 2  # 整批 + notable
+        notable_signal = next(s for s in result.release_signals if "pkg5" in s.title)
+        assert notable_signal.impact_score == 4
+        # notable 包的落盘 summary 额外标注
+        pkg5 = next(r for r in releases_data.releases if r.version == "@pkg5@2.0.5")
+        assert pkg5.ai_summary is not None
+        assert "值得单独关注" in pkg5.ai_summary.summary_cn
 
-        assert "release 信号 category 分布" in caplog.text
-        assert "research=1" in caplog.text
+    @pytest.mark.asyncio
+    async def test_bulk_llm_failure_falls_back_to_semantic(self):
+        """整批分析 LLM 失败时降级为版本语义判断（major 仍标出）。"""
+        processor, comps = _make_processor()
+        bulk = [
+            _release("vercel/ai", f"@pkg{i}@2.0.{i}", body="sync") for i in range(11)
+        ] + [
+            _release("vercel/ai", "@gateway@3.0.0", body=""),
+        ]
+        bulk[-1]["version_info"] = {"major": 3}
+        releases_data = _releases_data(bulk)
+
+        comps["release_summarizer"].summarize_bulk_group_async = AsyncMock(
+            side_effect=RuntimeError("LLM down")
+        )
+        comps["release_analyzer"].analyze_materials_async = AsyncMock(return_value=[])
+        comps["breaking_changes_detector"].detect_breaking_changes_async = AsyncMock(
+            return_value=[]
+        )
+
+        result = await processor.run_async(releases_data, bulk)
+
+        # 降级路径：整批 1 + major 包 notable 1
+        assert len(result.release_signals) == 2
+        assert any("@gateway@3.0.0" in s.title for s in result.release_signals)
+
+
+def summarize_materials_arg(call) -> list:
+    """从 summarize_materials_async 调用参数中提取 release 材料。"""
+    materials: list = call.args[0] if call.args else call.kwargs.get("materials", [])
+    return materials
