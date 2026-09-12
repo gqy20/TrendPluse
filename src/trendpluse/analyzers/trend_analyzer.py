@@ -92,19 +92,6 @@ class TrendAnalyzer(BaseLLMAnalyzer):
             ),
         )
 
-    def _build_generate_report_prompt(self, *, date: str, signals: list[Signal]) -> str:
-        """构建旧版单类型报告提示词（同步/异步共用）。"""
-        categorized = self.categorize_signals(signals)
-        return render_prompt(
-            "trend_analyzer.generate_report",
-            date=date,
-            engineering_count=len(categorized["engineering"]),
-            research_count=len(categorized["research"]),
-            high_impact_count=len(self.filter_high_impact(signals, threshold=4)),
-            engineering_text=self._format_signals(categorized["engineering"]),
-            research_text=self._format_signals(categorized["research"]),
-        )
-
     def _apply_material_defaults(
         self, signal: Signal, material: AnalysisMaterial
     ) -> Signal:
@@ -392,64 +379,6 @@ class TrendAnalyzer(BaseLLMAnalyzer):
 
         return report  # type: ignore[no-any-return]
 
-    def generate_report(self, signals: list[Signal], date: str) -> DailyReport:
-        """生成每日报告
-
-        Args:
-            signals: 信号列表
-            date: 日期
-
-        Returns:
-            每日报告
-        """
-        # 筛选高影响信号
-        high_impact_count = len(self.filter_high_impact(signals, threshold=4))
-
-        # 构建 Prompt
-        prompt = self._build_generate_report_prompt(date=date, signals=signals)
-
-        def _call():
-            return self._structured_create(
-                response_model=DailyReport,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=2000,
-            )
-
-        report = self._run_with_llm_retry(_call)
-
-        # 确保日期正确
-        report.date = date
-
-        # 确保统计数据正确
-        report.stats = ReportStats()
-        report.stats.total_prs_analyzed = len(signals)
-        report.stats.high_impact_signals = high_impact_count
-
-        return report  # type: ignore[no-any-return]
-
-    async def generate_report_async(
-        self, signals: list[Signal], date: str
-    ) -> DailyReport:
-        high_impact_count = len(self.filter_high_impact(signals, threshold=4))
-
-        prompt = self._build_generate_report_prompt(date=date, signals=signals)
-
-        async def _call():
-            return await self._structured_create_async(
-                response_model=DailyReport,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=2000,
-            )
-
-        report = await self._run_with_llm_retry_async(_call)
-
-        report.date = date
-        report.stats = ReportStats()
-        report.stats.total_prs_analyzed = len(signals)
-        report.stats.high_impact_signals = high_impact_count
-
-        return report  # type: ignore[no-any-return]
-
     def filter_high_impact(
         self, signals: list[Signal], threshold: int = 4
     ) -> list[Signal]:
@@ -463,56 +392,6 @@ class TrendAnalyzer(BaseLLMAnalyzer):
             高影响信号列表
         """
         return [s for s in signals if s.impact_score >= threshold]
-
-    def categorize_signals(self, signals: list[Signal]) -> dict[str, list[Signal]]:
-        """按类型分类信号
-
-        Args:
-            signals: 信号列表
-
-        Returns:
-            分类后的信号字典
-        """
-        categorized: dict[str, list[Signal]] = {
-            "engineering": [],
-            "research": [],
-        }
-
-        for signal in signals:
-            categorized[signal.category].append(signal)
-
-        return categorized
-
-    def _format_signals(self, signals: list[Signal]) -> str:
-        """格式化信号列表为文本
-
-        包含完整信息（sources、related_repos），以便 LLM 在聚合时保留原始链接。
-
-        Args:
-            signals: 信号列表
-
-        Returns:
-            格式化文本
-        """
-        if not signals:
-            return "无"
-
-        lines = []
-        for signal in signals:
-            # 格式化来源链接
-            sources_text = "\n    ".join(signal.sources) if signal.sources else "无"
-            # 格式化相关仓库
-            repos_text = (
-                ", ".join(signal.related_repos) if signal.related_repos else "无"
-            )
-
-            lines.append(
-                f"- {signal.title} (评分: {signal.impact_score}, "
-                f"类型: {signal.type})\n  {signal.why_it_matters}\n"
-                f"  相关仓库: {repos_text}\n  来源:\n    {sources_text}"
-            )
-
-        return "\n".join(lines)
 
     def _format_signals_with_ids(self, signals: list[Signal], prefix: str) -> str:
         """格式化信号列表为文本（带 ID 引用）

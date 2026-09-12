@@ -165,44 +165,6 @@ class TestTrendAnalyzerGoldens:
             prompt = mock_create.call_args.kwargs["messages"][0]["content"]
         _assert_golden("trend_analyzer.aggregation_sync_empty", prompt)
 
-    def test_generate_report_sync(self):
-        analyzer = TrendAnalyzer(api_key="test")
-        with patch.object(
-            analyzer.client.chat.completions, "create_with_completion"
-        ) as mock_create:
-            mock_create.return_value = (
-                _mock_report_response(),
-                SimpleNamespace(usage=None, model=None),
-            )
-            analyzer.generate_report(
-                [_signal(1), _signal(2, category="research")], DATE
-            )
-            prompt = mock_create.call_args.kwargs["messages"][0]["content"]
-        _assert_golden("trend_analyzer.generate_report_sync", prompt)
-
-    def test_generate_report_async(self):
-        analyzer = TrendAnalyzer(api_key="test")
-        assert analyzer.async_instructor_client is not None
-        with patch.object(
-            analyzer.async_instructor_client.chat.completions, "create_with_completion"
-        ) as mock_create:
-            mock_create.return_value = (
-                _mock_report_response(),
-                SimpleNamespace(usage=None, model=None),
-            )
-
-            async def _run():
-                return await analyzer.generate_report_async(
-                    [_signal(1), _signal(2, category="research")], DATE
-                )
-
-            asyncio.run(_run())
-            prompt = mock_create.call_args.kwargs["messages"][0]["content"]
-        _assert_golden("trend_analyzer.generate_report_async", prompt)
-
-
-# ── release_analyzer ─────────────────────────────────────────────────
-
 
 class TestReleaseAnalyzerGoldens:
     def test_analysis(self):

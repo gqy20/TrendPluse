@@ -214,7 +214,12 @@ class TestTrendAnalyzer:
         ]
 
         # Act
-        report = analyzer.generate_report(signals, date="2026-01-02")
+        report = analyzer.aggregate_and_generate_report(
+            pr_signals=signals,
+            commit_signals=[],
+            release_signals=[],
+            date="2026-01-02",
+        )
 
         # Assert
         assert report.date == "2026-01-02"
@@ -261,44 +266,3 @@ class TestTrendAnalyzer:
         # Assert
         assert len(high_impact) == 1
         assert high_impact[0].id == "high"
-
-    @patch("trendpluse.analyzers.base.instructor.from_anthropic")
-    def test_categorize_signals(self, mock_from_anthropic):
-        """测试：按类型分类信号"""
-        # Arrange
-        mock_client = Mock()
-        mock_from_anthropic.return_value = mock_client
-
-        analyzer = TrendAnalyzer(api_key="test_key")
-
-        signals = [
-            Signal(
-                id="eng-1",
-                title="工程信号",
-                type="capability",
-                category="engineering",
-                impact_score=3,
-                why_it_matters="重要",
-                sources=["url"],
-                related_repos=["repo"],
-            ),
-            Signal(
-                id="res-1",
-                title="研究信号",
-                type="eval",
-                category="research",
-                impact_score=4,
-                why_it_matters="重要",
-                sources=["url"],
-                related_repos=["repo"],
-            ),
-        ]
-
-        # Act
-        categorized = analyzer.categorize_signals(signals)
-
-        # Assert
-        assert len(categorized["engineering"]) == 1
-        assert len(categorized["research"]) == 1
-        assert categorized["engineering"][0].id == "eng-1"
-        assert categorized["research"][0].id == "res-1"

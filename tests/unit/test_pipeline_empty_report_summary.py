@@ -33,7 +33,6 @@ def _build_mock_settings(**overrides):
     settings.anthropic_model = "glm-4.7"
     settings.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
     settings.github_repos = ["anthropics/skills"]
-    settings.max_candidates = 20
     settings.days_to_lookback = 1
     settings.enable_parallel_collection = False
     settings.max_parallel_workers = 4

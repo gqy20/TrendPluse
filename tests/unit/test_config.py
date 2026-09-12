@@ -195,21 +195,6 @@ class TestSettings:
         assert settings.anthropic_api_key == ""
         assert settings.github_token == ""  # 也有默认值
 
-    def test_max_candidates_default_value(self, monkeypatch):
-        """测试：max_candidates 默认值应该是 20"""
-        # Arrange
-        self._clear_github_token_env(monkeypatch)
-        monkeypatch.setenv("GITHUB_TOKEN", "test_token")
-        monkeypatch.setenv("ANTHROPIC_API_KEY", "test_key")
-
-        # Act
-        from trendpluse.config import Settings
-
-        settings = Settings()
-
-        # Assert
-        assert settings.max_candidates == 20
-
     def test_daily_token_budget_default_value(self, monkeypatch):
         """测试：daily_token_budget 默认值应该是 50000000。"""
         # Arrange

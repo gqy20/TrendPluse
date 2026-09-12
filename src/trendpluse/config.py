@@ -120,7 +120,6 @@ class Settings(BaseSettings):
         "workflow",
         "safety",
     ]
-    max_candidates: int = 20
     days_to_lookback: int = 7  # PR 和 Release 回溯天数
 
     # Open PR 筛选配置

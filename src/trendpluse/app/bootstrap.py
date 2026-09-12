@@ -99,7 +99,6 @@ def build_collector_components(
         release_collector=release_collector_factory(token=settings.github_token),
         issue_collector=issue_collector_factory(token=settings.github_token),
         event_filter=event_filter_factory(
-            max_count=settings.max_candidates,
             enable_open_prs=settings.enable_open_prs,
             open_pr_min_changed_files=settings.open_pr_min_changed_files,
         ),

@@ -35,6 +35,7 @@ async def test_run_daily_async_uses_async_empty_report_finalizer() -> None:
                 side_effect=AssertionError("不应调用同步空报告收尾")
             ),
         ),
+        pr_analyzer=Mock(),
     )
     cast(Any, app)._collect_daily_inputs_async = AsyncMock(
         return_value=SimpleNamespace(

@@ -34,7 +34,7 @@ class DailyPipelineApp:
         analyzer,
         deduplicator,
         daily_report_finalizer,
-        pr_analyzer=None,
+        pr_analyzer,
     ) -> None:
         self.settings = settings
         self.activity_collector = activity_collector
@@ -49,7 +49,7 @@ class DailyPipelineApp:
         self.analyzer = analyzer
         self.deduplicator = deduplicator
         self.daily_report_finalizer = daily_report_finalizer
-        # SDK 批量 PR 分析器（全量文件探索）；缺省时走 analyzer 的 per-PR 路径
+        # SDK 批量 PR 分析器（全量文件探索，唯一 PR 信号路径）
         self.pr_analyzer = pr_analyzer
 
     def run_daily(self, date: datetime | None = None) -> DailyReport:
@@ -262,46 +262,6 @@ class DailyPipelineApp:
         commit_materials = self.commit_material_builder.build(detailed_commits)
         return cast(list[Any], self.commit_analyzer.analyze_materials(commit_materials))
 
-    def _analyze_pr_materials(self, pr_materials: list[Any]) -> list[Any]:
-        """同步分析 PR 材料：SDK 批量优先，异常/零产出降级 per-PR instructor。"""
-        if self.pr_analyzer is not None:
-            try:
-                signals = self.pr_analyzer.analyze_materials(pr_materials)
-                if signals:
-                    return cast(list[Any], signals)
-                logger.warning(
-                    "SDK PR 分析零产出（materials=%d），降级 per-PR instructor 路径",
-                    len(pr_materials),
-                )
-            except Exception as exc:
-                logger.warning(
-                    "SDK PR 分析异常(%s)，降级 per-PR instructor 路径: %s",
-                    type(exc).__name__,
-                    exc,
-                )
-        return cast(list[Any], self.analyzer.analyze_materials(pr_materials))
-
-    async def _analyze_pr_materials_async(self, pr_materials: list[Any]) -> list[Any]:
-        """异步分析 PR 材料：SDK 批量优先，异常/零产出降级 per-PR instructor。"""
-        if self.pr_analyzer is not None:
-            try:
-                signals = await self.pr_analyzer.analyze_materials_async(pr_materials)
-                if signals:
-                    return cast(list[Any], signals)
-                logger.warning(
-                    "SDK PR 分析零产出（materials=%d），降级 per-PR instructor 路径",
-                    len(pr_materials),
-                )
-            except Exception as exc:
-                logger.warning(
-                    "SDK PR 分析异常(%s)，降级 per-PR instructor 路径: %s",
-                    type(exc).__name__,
-                    exc,
-                )
-        return cast(
-            list[Any], await self.analyzer.analyze_materials_async(pr_materials)
-        )
-
     def _collect_pr_signals(self, day_ago: datetime) -> list[Any]:
         """同步收集并分析 PR 信号。"""
         candidates = self._collect_pr_candidates(day_ago)
@@ -317,7 +277,7 @@ class DailyPipelineApp:
             )
             return []
 
-        signals = self._analyze_pr_materials(pr_materials)
+        signals = self.pr_analyzer.analyze_materials(pr_materials)
         if not signals:
             logger.warning(
                 "PR 信号链断点: signals=0（materials=%d 但 LLM 分析全部失败/被过滤）",
@@ -361,7 +321,7 @@ class DailyPipelineApp:
             return []
 
         step_start = time.perf_counter()
-        signals = await self._analyze_pr_materials_async(pr_materials)
+        signals = await self.pr_analyzer.analyze_materials_async(pr_materials)
         logger.info(
             "PR analysis done in %.2fs (signals=%d)",
             time.perf_counter() - step_start,

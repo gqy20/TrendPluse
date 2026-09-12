@@ -1,9 +1,9 @@
-"""SDK PR 分析器测试（全量文件模式 + 引用校验 + 降级路由）。"""
+"""SDK PR 分析器测试（全量文件模式 + 引用校验）。"""
 
 from __future__ import annotations
 
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -148,77 +148,6 @@ class TestSDKPRAnalyzer:
         assert analyzer.query_engine.file_whitelist is None  # 运行后还原
         # 各批白名单文件互不相同
         assert len({frozenset(w) for w in seen_whitelists}) == 3
-
-
-class TestDailyPRFallbackRouting:
-    @pytest.mark.asyncio
-    async def test_sdk_zero_output_falls_back_to_per_pr(self, log_capture):
-        """SDK 零产出/异常时降级 per-PR instructor（信号门双保险）。"""
-        from trendpluse.app.daily import DailyPipelineApp
-
-        caplog = log_capture
-        app = DailyPipelineApp(
-            settings=SimpleNamespace(github_repos=[]),
-            activity_collector=MagicMock(),
-            release_collector=MagicMock(),
-            issue_workflow=MagicMock(),
-            release_workflow=MagicMock(),
-            commit_material_builder=MagicMock(),
-            commit_analyzer=MagicMock(),
-            collector=MagicMock(),
-            event_filter=MagicMock(),
-            pr_reader=MagicMock(),
-            analyzer=MagicMock(),
-            deduplicator=MagicMock(),
-            daily_report_finalizer=MagicMock(),
-        )
-        fallback_signal = MagicMock()
-        app.analyzer.analyze_materials_async = AsyncMock(return_value=[fallback_signal])
-
-        # SDK 返回空
-        sdk = MagicMock()
-        sdk.analyze_materials_async = AsyncMock(return_value=[])
-        app.pr_analyzer = sdk
-
-        materials = [_material("o/r", 1)]
-        result = await app._analyze_pr_materials_async(materials)
-        assert result == [fallback_signal]
-        assert "降级 per-PR instructor" in caplog.text
-
-        # SDK 抛异常
-        sdk.analyze_materials_async = AsyncMock(side_effect=RuntimeError("boom"))
-        result = await app._analyze_pr_materials_async(materials)
-        assert result == [fallback_signal]
-        app.analyzer.analyze_materials_async.assert_awaited()
-
-    @pytest.mark.asyncio
-    async def test_sdk_success_skips_fallback(self):
-        from trendpluse.app.daily import DailyPipelineApp
-
-        app = DailyPipelineApp(
-            settings=SimpleNamespace(github_repos=[]),
-            activity_collector=MagicMock(),
-            release_collector=MagicMock(),
-            issue_workflow=MagicMock(),
-            release_workflow=MagicMock(),
-            commit_material_builder=MagicMock(),
-            commit_analyzer=MagicMock(),
-            collector=MagicMock(),
-            event_filter=MagicMock(),
-            pr_reader=MagicMock(),
-            analyzer=MagicMock(),
-            deduplicator=MagicMock(),
-            daily_report_finalizer=MagicMock(),
-        )
-        sdk_signal = MagicMock()
-        sdk = MagicMock()
-        sdk.analyze_materials_async = AsyncMock(return_value=[sdk_signal])
-        app.pr_analyzer = sdk
-        app.analyzer.analyze_materials_async = AsyncMock()
-
-        result = await app._analyze_pr_materials_async([_material("o/r", 1)])
-        assert result == [sdk_signal]
-        app.analyzer.analyze_materials_async.assert_not_awaited()
 
 
 class TestClipChangelog:

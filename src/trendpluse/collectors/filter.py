@@ -39,7 +39,6 @@ class EventFilter:
     def __init__(
         self,
         labels: list[str] | None = None,
-        max_count: int | None = None,
         enable_open_prs: bool = False,
         open_pr_min_changed_files: int = 3,
     ):
@@ -47,14 +46,10 @@ class EventFilter:
 
         Args:
             labels: 候选标签列表，None 表示使用默认标签
-            max_count: 已废弃（保留参数兼容旧调用）。历史上曾按采集
-                完成顺序截断前 N 个，属于"代码替 AI 做重要性判断"，
-                已改为全量透传 + 异常告警
             enable_open_prs: 是否包含 open PR（默认 False，只包含已合并的）
             open_pr_min_changed_files: open PR 最小改动文件数（默认 3）
         """
         self.labels = set(labels) if labels else self.CANDIDATE_LABELS
-        self.max_count = max_count
         self.enable_open_prs = enable_open_prs
         self.open_pr_min_changed_files = open_pr_min_changed_files
 

@@ -32,7 +32,6 @@ def _build_mock_settings(**overrides):
     settings.anthropic_model = "glm-4.7"
     settings.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
     settings.github_repos = ["test/repo"]
-    settings.max_candidates = 20
     settings.days_to_lookback = 1
     settings.enable_parallel_collection = False
     settings.max_parallel_workers = 4
@@ -239,6 +238,9 @@ class TestCommitSignalsClearing:
 
         # Act
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
         report = pipeline.run_daily(date=datetime(2026, 1, 12))
 
         # Assert
@@ -346,6 +348,9 @@ class TestCommitSignalsClearing:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
         report = pipeline.run_daily(date=datetime(2026, 1, 12))
 
         assert report.commit_signals == []

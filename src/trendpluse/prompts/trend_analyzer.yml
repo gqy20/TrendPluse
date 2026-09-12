@@ -1,7 +1,6 @@
 # TrendAnalyzer 提示词。
 # pr_signal_extraction 变量: number/title/body/repo/author/url
 # aggregation 变量: date/pr_count/commit_count/release_count/pr_text/commit_text/release_text（text 由 _format_signals_with_ids 预计算）
-# generate_report 变量: date/engineering_count/research_count/high_impact_count/engineering_text/research_text
 pr_signal_extraction: |
   分析以下 GitHub PR，提取趋势信号。
 
@@ -65,27 +64,3 @@ aggregation: |
   - **所有文本内容必须使用中文**（title、why_it_matters、summary_brief 等）
   - 只返回真正有价值的跨类型趋势
   - 如果没有发现明显的跨类型模式，返回空信号列表但保留 summary
-generate_report: |
-  基于以下信号生成每日趋势报告。
-
-  日期: {$ date $}
-  工程信号数量: {$ engineering_count $}
-  研究信号数量: {$ research_count $}
-  高影响信号数量: {$ high_impact_count $}
-
-  工程信号:
-  {$ engineering_text $}
-
-  研究信号:
-  {$ research_text $}
-
-  ## 输出要求
-
-  返回 DailyReport，只包含：
-  - date: 日期字符串
-  - summary_brief: 当日总览（2-3 句话）
-  - engineering_signals: 工程信号列表
-  - research_signals: 研究信号列表（仅当上游无 research 类信号时为空）
-
-  **无需返回以下字段**（由代码自动填充）：
-  - activity, releases, breaking_changes, monitored_repos

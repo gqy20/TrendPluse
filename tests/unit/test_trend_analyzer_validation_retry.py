@@ -81,8 +81,13 @@ class TestValidationErrorRetry:
             )
         ]
 
-        # 调用 generate_report，验证重试逻辑
-        report = analyzer.generate_report(signals, "2026-03-10")
+        # 调用聚合路径，验证重试逻辑
+        report = analyzer.aggregate_and_generate_report(
+            pr_signals=signals,
+            commit_signals=[],
+            release_signals=[],
+            date="2026-03-10",
+        )
 
         # 验证调用了 3 次（初始调用 + 2 次重试）
         assert call_count[0] == 3
@@ -120,4 +125,9 @@ class TestValidationErrorRetry:
 
         # 超过最大重试次数后应该抛出 ValidationError
         with pytest.raises(ValidationError):
-            analyzer.generate_report(signals, "2026-03-10")
+            analyzer.aggregate_and_generate_report(
+                pr_signals=signals,
+                commit_signals=[],
+                release_signals=[],
+                date="2026-03-10",
+            )

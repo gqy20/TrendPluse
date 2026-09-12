@@ -30,7 +30,6 @@ def _build_mock_settings(**overrides):
     settings.anthropic_model = "glm-4.7"
     settings.anthropic_base_url = "https://open.bigmodel.cn/api/anthropic"
     settings.github_repos = ["anthropics/skills"]
-    settings.max_candidates = 20
     settings.days_to_lookback = 1
     settings.enable_parallel_collection = False
     settings.max_parallel_workers = 4
@@ -150,6 +149,9 @@ class TestTrendPulsePipeline:
 
         # Act
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Assert
         assert pipeline is not None
@@ -291,6 +293,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Act
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
@@ -381,6 +386,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = Mock()
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
         pipeline.run_daily(date=datetime(2026, 1, 2))
 
         mock_release_summarizer_instance.summarize_materials.assert_called_once()
@@ -466,6 +474,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Act
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
@@ -537,6 +548,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Act
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
@@ -598,6 +612,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Act
         report = pipeline.run_daily(date=datetime(2026, 1, 2))
@@ -670,6 +687,9 @@ class TestTrendPulsePipeline:
         mock_reporter.return_value = mock_reporter_instance
 
         pipeline = TrendPulsePipeline()
+        pipeline.daily_app.pr_analyzer.analyze_materials = (
+            mock_analyzer.return_value.analyze_materials
+        )
 
         # Act
         report = pipeline.run_daily(date=datetime(2026, 1, 2))

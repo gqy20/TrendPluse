@@ -61,7 +61,6 @@ class TestSignalCategorization:
             "https://open.bigmodel.cn/api/anthropic"
         )
         mock_settings_instance.github_repos = ["anthropics/skills"]
-        mock_settings_instance.max_candidates = 20
         mock_settings_instance.days_to_lookback = 1
         mock_settings_instance.enable_parallel_collection = False
         mock_settings_instance.max_parallel_workers = 4

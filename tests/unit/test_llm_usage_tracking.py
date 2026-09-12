@@ -231,6 +231,7 @@ class TestDailyLlmUsageAggregation:
             analyzer=analyzer,
             deduplicator=MagicMock(),
             daily_report_finalizer=MagicMock(),
+            pr_analyzer=MagicMock(),
         )
 
     def test_collects_usage_from_all_components(self):

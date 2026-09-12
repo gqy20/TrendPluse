@@ -100,36 +100,6 @@ class SDKPRAnalyzer:
         """获取各批次累计的 Agent usage 聚合统计。"""
         return AgentMetricsSummary.from_runs(self._run_metrics)
 
-    @staticmethod
-    def _candidate_to_pr(event: dict[str, Any]) -> dict[str, Any]:
-        """从候选事件提取 PR 数据。"""
-        pr = event.get("payload", {}).get("pull_request", {}) or {}
-        labels = [
-            label.get("name") for label in pr.get("labels", []) if label.get("name")
-        ]
-        try:
-            number = int(pr.get("number", event.get("number", 0)))
-        except (TypeError, ValueError):
-            number = pr.get("number", event.get("number", 0))
-        return {
-            "repo": event.get("repo", {}).get("name", "") or "",
-            "number": number,
-            "title": pr.get("title", "") or "",
-            "body": pr.get("body", "") or "",
-            "author": pr.get("author") or pr.get("user", "") or "Unknown",
-            "state": pr.get("state", ""),
-            "merged": pr.get("merged", False),
-            "draft": pr.get("draft", False),
-            "changed_files": pr.get("changed_files", 0),
-            "additions": pr.get("additions", 0),
-            "deletions": pr.get("deletions", 0),
-            "labels": labels,
-            "url": (
-                event.get("payload", {}).get("url")
-                or f"https://github.com/pull/{pr.get('number', '')}"
-            ),
-        }
-
     def _split_batches(
         self, prs: list[dict[str, Any]], batch_size: int | None = None
     ) -> list[list[dict[str, Any]]]:
@@ -259,24 +229,6 @@ class SDKPRAnalyzer:
         prs = [self._material_to_pr(m) for m in materials]
         return await self._analyze_prs_shared(prs)
 
-    async def analyze_candidates_async(
-        self, candidates: list[dict[str, Any]]
-    ) -> list[Signal]:
-        """异步分析候选事件（全量，无截断）。
-
-        Args:
-            candidates: EventFilter 输出的候选事件列表
-
-        Returns:
-            Signal 列表
-        """
-        if not candidates:
-            return []
-        prs = [self._candidate_to_pr(c) for c in candidates]
-        if not prs:
-            return []
-        return await self._analyze_prs_shared(prs)
-
     async def _analyze_prs_shared(self, prs: list[dict[str, Any]]) -> list[Signal]:
         """共享分批分析流程（材料/候选两个入口复用）。"""
         work_dir = tempfile.mkdtemp(prefix="pr_analyzer_")
@@ -396,7 +348,7 @@ class SDKPRAnalyzer:
 
         return self._validate_and_match(PRSignalsResult(signals=matched), batch)
 
-    def analyze_candidates(self, candidates: list[dict[str, Any]]) -> list[Signal]:
+    def analyze_materials(self, materials: list[AnalysisMaterial]) -> list[Signal]:
         """同步封装。"""
         try:
             asyncio.get_running_loop()
@@ -404,6 +356,6 @@ class SDKPRAnalyzer:
             pass
         else:
             raise RuntimeError(
-                "检测到正在运行的事件循环，请改用 analyze_candidates_async()。",
+                "检测到正在运行的事件循环，请改用 analyze_materials_async()。",
             )
-        return asyncio.run(self.analyze_candidates_async(candidates))
+        return asyncio.run(self.analyze_materials_async(materials))
