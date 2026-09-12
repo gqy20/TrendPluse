@@ -58,7 +58,7 @@ const candidates = [...r.candidates].sort(
           </div>
           <div>
             {candidates.slice(0, 30).map((p, i) => (
-              <div class="tp-row border-b border-hairline grid md:grid-cols-[64px_minmax(0,1fr)_200px] gap-5 items-start">
+              <div class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[64px_minmax(0,1fr)_200px] gap-5 items-start">
                 <span class="tp-num text-[26px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
                 <div class="min-w-0">
                   <div class="flex flex-wrap items-baseline gap-x-3">

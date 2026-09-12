@@ -83,10 +83,10 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
                   <span class="tp-mono text-ink-3">{items.length} 个仓库</span>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
-                  {items.map((r) => {
+                  {items.map((r, ri) => {
                     const act = activeTop.find((a) => a.repo === r.full);
                     return (
-                      <a href={r.url} target="_blank" rel="noopener" class="tp-row border-t border-hairline">
+                      <a href={r.url} target="_blank" rel="noopener" class:list={['tp-row', ri < 3 && 'border-t border-hairline']}>
                         <div class="flex items-baseline justify-between gap-3">
                           <span class="tp-mono text-ink hover:text-accent transition-colors">{r.repo}</span>
                           {act?.commits != null && <span class="tp-num text-[18px] text-ink-3">{act.commits}</span>}
@@ -109,7 +109,7 @@ const weekRepos = new Set(last7.flatMap((e) => e.data.monitored_repos ?? [])).si
               </div>
               <div>
                 {recentChanges.map((c, i) => (
-                  <div class="tp-row border-b border-hairline grid md:grid-cols-[64px_260px_minmax(0,1fr)_150px_90px] gap-4 items-baseline">
+                  <div class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[64px_260px_minmax(0,1fr)_150px_90px] gap-4 items-baseline">
                     <span class="tp-num text-[26px] text-ink-3">0{i + 1}</span>
                     <a href={c.repo ? repoUrl(c.repo) : '#'} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors truncate">{c.repo || '—'}</a>
                     <p class="tp-meta text-ink line-clamp-1">{c.title}</p>

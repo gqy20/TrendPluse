@@ -112,7 +112,7 @@ const totalCols = Math.ceil(cells.length / 7);
           </div>
           <div>
             {weekly.slice(0, 6).map((e, i) => (
-              <a href={routes.weekly(weeklyId(e.id))} class="tp-row border-b border-hairline grid md:grid-cols-[150px_minmax(0,1fr)_110px] gap-4 items-baseline">
+              <a href={routes.weekly(weeklyId(e.id))} class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[150px_minmax(0,1fr)_110px] gap-4 items-baseline">
                 <span class="tp-num !text-[18px] text-accent">{e.data.week_id}</span>
                 <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief}</p>
                 <span class="tp-mono text-ink-3 text-right">{e.data.daily_reports_count ?? 0} 日报</span>
@@ -130,7 +130,7 @@ const totalCols = Math.ceil(cells.length / 7);
         </div>
         <div>
           {daily.slice(0, 10).map((e) => (
-            <a href={routes.daily(dailyDate(e.id))} class="tp-row border-b border-hairline grid md:grid-cols-[130px_minmax(0,1fr)_90px] gap-4 items-baseline">
+            <a href={routes.daily(dailyDate(e.id))} class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[130px_minmax(0,1fr)_90px] gap-4 items-baseline">
               <span class="tp-mono text-ink">{e.data.date}</span>
               <p class="tp-meta text-ink line-clamp-1">{e.data.summary_brief || `${e.data.stats.total_signals ?? 0} 个信号`}</p>
               <span class="tp-mono text-ink-3 text-right">{e.data.stats.total_signals ?? 0} 信号</span>

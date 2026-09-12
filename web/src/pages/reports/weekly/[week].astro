@@ -124,7 +124,7 @@ const lead = sentences.slice(1).join('。');
           </div>
           <div class="space-y-0">
             {w.core_trends.map((t, i) => (
-              <div class="tp-row border-b border-hairline grid md:grid-cols-[80px_110px_minmax(0,1fr)_120px] gap-4 items-start">
+              <div class="tp-row border-b border-hairline last:border-b-0 grid md:grid-cols-[80px_110px_minmax(0,1fr)_120px] gap-4 items-start">
                 <span class="tp-num text-[34px] text-ink">{String(i + 1).padStart(2, '0')}</span>
                 <span class="tp-tag pt-2">{t.theme}</span>
                 <div>

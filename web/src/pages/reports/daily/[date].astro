@@ -280,7 +280,7 @@ const vol = d.date.replaceAll('-', '.');
       <h2 class="text-[14px] mb-5">今日焦点</h2>
       {
         focus.map((s, i) => (
-          <a href={`#signal-${Math.min(i, 3)}`} class="tp-row border-b border-[rgba(222,217,207,0.8)] pb-4 mb-1">
+          <a href={`#signal-${Math.min(i, 3)}`} class="tp-row border-b border-[rgba(222,217,207,0.8)] last:border-b-0 pb-4 mb-1">
             <span class="tp-num text-[28px] block">0{i + 1}</span>
             <span class="text-[15px] leading-[1.5] mt-1.5 block">{s.title}</span>
           </a>
@@ -294,7 +294,7 @@ const vol = d.date.replaceAll('-', '.');
         <p class="tp-mono text-ink mb-2">{d.date.slice(8)} {d.date.slice(5, 7).toUpperCase()} {d.date.slice(0, 4)}</p>
         <p class="text-[13px] text-[#636b78] leading-[1.6]">过去 24 小时<br />{total} signals · {d.stats.unique_repos ?? 0} repos<br />{d.stats.total_prs_analyzed ?? 0} PRs analyzed</p>
       </div>
-      <div class="border-t border-hairline mt-7 pt-7">
+      <div class="mt-7 pt-7">
         <h2 class="text-[13px] mb-3">数据来源</h2>
         <p class="tp-mono text-[#636b78] leading-[1.6]">Pull Requests<br />Commits · Releases<br />Issues</p>
       </div>

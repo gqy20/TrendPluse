@@ -91,10 +91,10 @@ const featured = latest
               <span class="tp-meta">每期一行,点开看完整候选列表</span>
             </div>
             <div class="grid sm:grid-cols-3 gap-x-8 gap-y-6">
-              {discovery.slice(0, 12).map((e) => {
+              {discovery.slice(0, 12).map((e, i) => {
                 const r = e.data;
                 return (
-                  <a href={routes.discoveryReport(discDate(e.id))} class="tp-row border-t border-hairline">
+                  <a href={routes.discoveryReport(discDate(e.id))} class:list={['tp-row', i > 2 && 'border-t border-hairline']}>
                     <div class="flex items-baseline justify-between">
                       <span class="tp-item text-[18px]">{r.date}</span>
                       <span class="tp-mono text-ink-3">0{String(discovery.indexOf(e) + 1).slice(-2) || ''}</span>
