@@ -24,8 +24,7 @@ classifiers = [
 
 dependencies = [
     # 核心依赖
-    # anthropic 1.x 换 httpx2 且智谱网关兼容性未验证，暂按住 0.x
-    "anthropic>=0.45.0,<1.0",
+    "anthropic>=1.5.0",
     "instructor>=1.6.0",
     "PyGithub>=2.5.0",
     "claude-agent-sdk==0.2.152",

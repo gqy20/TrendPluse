@@ -77,7 +77,8 @@ class BreakingChangesDetector(BaseLLMAnalyzer):
             return await self.async_client.messages.create(
                 model=self.model,
                 max_tokens=4096,
-                temperature=0.3,
+                # anthropic SDK 1.x 移除 temperature，经 extra_body 透传给网关侧模型
+                extra_body={"temperature": 0.3},
                 messages=[{"role": "user", "content": prompt}],
             )
 
