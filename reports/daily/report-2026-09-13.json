@@ -1,0 +1,2073 @@
+{
+  "date": "2026-09-13",
+  "summary_brief": "今日（9/13）AI Agent 生态是\"跨平台执行落地 + 层级编排深化 + 供应链安全延续\"的推进日，而非全新转折。最突出的新落地点是 Windows 平台的一等公民化：Codex 正式接入 MXC 沙箱后端并抽取 codex-windows-sandbox 共享库，OpenClaw 发布 v2026.9.3 Windows 节点重大更新（llama-server/Ollama 本地推理、MiniMax TTS、原生媒体渲染、大规模架构重构），把 9/12 确立的\"语音+屏幕级\"交互范式与无数次的沙箱共识真正落到了 Windows 这个被长期视为次要的执行平台。同时，子代理协作与上下文连续性成为多项目同时攻坚的共通课题——deer-flow 增加父上下文快照与任务笔记召回、gptme 支持续接已完成子代理对话并引入伴生工具、openclaw 将子 agent 结果注入父提示、codex 强化 recap（32KiB）与 subagent 续接——这是对昨日\"长会话上下文管理\"主线的层级化深化，新增点在于层级式（父-子）编排中的上下文保真与可恢复性。此外，Agent 供应链安全加固（OpenSSL 3.6.4、CodeQL 扫描、MCP 注入防护、凭据落盘修复）与 Token 成本核算精确化（lobster/deer-flow/codex 校准计费）延续了 5 月以来\"安全共识沉淀\"与成本治理的持续主线。相对历史（3/18 沙箱共识→5/21 质量清算→9/12 语音+屏幕交互范式），今日无方向性转折，而是把既有主线向\"跨平台受控执行 + 层级多 Agent 编排\"两个具体维度推进，生态正从单 Agent 工具调用走向生产级的分层协作与跨平台一等公民。",
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "Windows 平台 Agent 安全沙箱执行能力集中落地",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Codex 正式接入 Windows MXC 沙箱后端并抽取 codex-windows-sandbox 共享库，同时 OpenClaw 发布 v2026.9.3 Windows 节点重大更新（本地推理、原生媒体渲染），标志着 Windows 从 Agent 执行的次要平台转向一等公民，多项目同步补齐跨平台受控执行与安全边界。",
+      "sources": [
+        "https://github.com/openai/codex/pull/45224",
+        "https://github.com/openai/codex/pull/45176",
+        "https://github.com/openai/codex/commit/dfaf451426868c22e6859f5494150fd6338c3257",
+        "https://github.com/openai/codex/commit/e61f3819007ad283b79417b85f44ab19cf1dd781",
+        "https://github.com/openclaw/openclaw-windows-node/commit/bd9ce43b4d9c63fa90196a6a33b1c1be409850b2",
+        "https://github.com/openai/codex/commit/c379459bba59243aa8732d0d0b93cc2f326f87e4"
+      ],
+      "related_repos": [
+        "openclaw/openclaw-windows-node",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-10",
+        "pr-19",
+        "commit-0",
+        "commit-1",
+        "commit-2",
+        "commit-31"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "子代理协作与上下文连续性的多项目合流",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "deer-flow 为子代理新增父上下文快照与任务笔记召回，gptme 支持继续已完成子代理对话并引入伴生工具机制，openclaw 将子 agent 结果注入父提示、acpx 事件化 ACP 计划状态，codex 强化 recap 上下文（32 KiB）与 subagent 续接。多个独立项目几乎同时解决同一问题——层级式 agent 编排中的上下文丢失与可恢复性，标志多 agent 架构从单体转向深度分层协作。",
+      "sources": [
+        "https://github.com/openai/codex/pull/45090",
+        "https://github.com/gptme/gptme/commit/925eab09701db9dbfb580fd1cfdb0b4ff94ac9df",
+        "https://github.com/bytedance/deer-flow/commit/6d5d7bb1d5e891ee07d7354cd4d8c29bf0ca2e39",
+        "https://github.com/gptme/gptme/pull/3820",
+        "https://github.com/gptme/gptme/commit/e4e0f6980ee0fa91f32dd3ce43b813445ecf022f",
+        "https://github.com/openclaw/openclaw/commit/da29aff743b95cb09769e1273bb35b7f52f1eae6",
+        "https://github.com/openclaw/acpx/commit/ffbefbbb726b1fd4623b8e51708a17d21b10b576"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "openclaw/acpx",
+        "openclaw/openclaw",
+        "openai/codex",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-6",
+        "pr-13",
+        "commit-4",
+        "commit-5",
+        "commit-18",
+        "commit-21",
+        "commit-33"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "Agent 生态供应链与依赖安全加固密集落地",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "同日多个项目系统性修复底层安全漏洞：Codex 为 musl 构建直接编译 OpenSSL 3.6.4 安全版、OpenAI Agents SDK 新增 Python 与 Actions 的 CodeQL 静态扫描、phoenix 修复 sqlean C 驱动内存安全缺陷、deer-flow 修复切换技能时密钥落盘泄露。供应链安全正在从单点修复转向体系化防御。",
+      "sources": [
+        "https://github.com/openai/codex/pull/45149",
+        "https://github.com/bytedance/deer-flow/commit/bc4a33aba79f0521aa4fb800a514e456b562cd43",
+        "https://github.com/openai/codex/commit/a592c38c16cdd7623dacc9168926ebccedfb67d3",
+        "https://github.com/openai/openai-agents-python/commit/f73ec30373d7976135460d8989cd0d51cecab1b7",
+        "https://github.com/openai/openai-agents-python/pull/4974",
+        "https://github.com/Arize-ai/phoenix/commit/6f2d5e9baa43fec74563f09e76b4f92603d73053"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "Arize-ai/phoenix",
+        "arize-ai/phoenix-sqlean",
+        "openai/codex",
+        "openai/openai-agents-python"
+      ],
+      "source_signal_ids": [
+        "pr-21",
+        "pr-23",
+        "commit-3",
+        "commit-20",
+        "commit-24",
+        "commit-30"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "MCP 生态安全范式与互操作规范演进",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "ruflo 用随机 nonce 围栏为联邦中继消息做不可伪造标签化以隔离注入型内容，同时发布 ANS/Nostr 联邦协议规范（名称、签名密钥、认证与执行权分离）；Phoenix 在 /mcp 挂载点提供共享技能根目录。MCP 从基础协议定义迈向安全范式与联邦治理，是生态成熟的关键信号。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/pull/3299",
+        "https://github.com/ruvnet/ruflo/pull/3300",
+        "https://github.com/ruvnet/ruflo/commit/3949f9c50f53b5db00833862c1fbd5c628fe7ec0",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.270",
+        "https://github.com/ruvnet/ruflo/commit/39e0b0540c9b018174955fc8a21f355bbac26c6a"
+      ],
+      "related_repos": [
+        "nostr-protocol/nips",
+        "modelcontextprotocol/specification",
+        "Arize-ai/phoenix",
+        "anthropics/claude-agent-sdk-typescript",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "pr-1",
+        "pr-2",
+        "commit-13",
+        "commit-14",
+        "release-1"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "多会话工作流管理与并行开发体验集体升级",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 命令中心改为会话列表、新增 worktree 会话创建与按项目/状态/模型分组；openclaw 按 CPU 自动扩展会话并行度；codex 延迟 recap 减少干扰。多项目同时优化长会话与多 agent 并行场景的管理交互，反映 Agent 使用正从单任务转向持续多任务并行工作流。",
+      "sources": [
+        "https://github.com/openai/codex/pull/45276",
+        "https://github.com/openai/codex/commit/516f2780fd227a80cd9fe89488f5039245090b71",
+        "https://github.com/openai/codex/pull/45255",
+        "https://github.com/openai/codex/commit/6f39a47bb3b04de4c804187bfbf55edc56939aab",
+        "https://github.com/openclaw/openclaw/commit/5d7a2a6ed292fb8b2639e6e28681187920c73df6",
+        "https://github.com/openai/codex/pull/45035",
+        "https://github.com/openai/codex/pull/44957",
+        "https://github.com/openai/codex/pull/45124"
+      ],
+      "related_repos": [
+        "openclaw/openclaw",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-8",
+        "pr-9",
+        "pr-15",
+        "pr-16",
+        "pr-18",
+        "commit-8",
+        "commit-9",
+        "commit-23"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "Token 成本核算与上下文预算准确性成为工程重点",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Codex 从序列化信封改为按内容估算历史 token 以消除虚增，lobster 修复 LLM 结果复用重复计费误触 cost_limit，deer-flow 裁剪已被覆盖的 write_file 载荷以减少冗余 token。多个 Agent 项目从不同角度校准 token 计量，反映成本控制已从粗放到精确。",
+      "sources": [
+        "https://github.com/openai/codex/commit/b04a2c264516ec2e6b3c91dd73ad18a21fd5a88f",
+        "https://github.com/bytedance/deer-flow/commit/cf556fa9d4336063d04ece2e7cdf4e8578089479",
+        "https://github.com/openclaw/lobster/pull/177",
+        "https://github.com/openai/codex/pull/45094",
+        "https://github.com/gptme/gptme/commit/6f9a5bdfcaaa33cca3b8b18d48751020ffd5edee"
+      ],
+      "related_repos": [
+        "openclaw/lobster",
+        "bytedance/deer-flow",
+        "openai/codex",
+        "gptme/gptme"
+      ],
+      "source_signal_ids": [
+        "pr-4",
+        "pr-11",
+        "commit-6",
+        "commit-10",
+        "commit-16"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "AI 安全评测与认证防护精细化",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "promptfoo 将 redteam 代理技能攻击计划锚定到应用实际运行时证据、新增 ElevenLabs 语音与 AVIF/TIFF 图片评测能力，并为企业表单接入 Turnstile 人机验证阻断机器人；deer-flow 按权限门控删除与取消 UI。AI 安全与反滥用正从普适扫盲走向针对性、多模态、业务场景化的纵深防御。",
+      "sources": [
+        "https://github.com/promptfoo/promptfoo/pull/10908",
+        "https://github.com/promptfoo/promptfoo/commit/3c5429b22e8124cdab5552b1b7bf7901b85a5f96",
+        "https://github.com/promptfoo/promptfoo/commit/de123419c769d35ecb304b3a14e498b46d2e082e",
+        "https://github.com/bytedance/deer-flow/commit/ec0ac474c4e44305755cc0e0e10533aaae01486f",
+        "https://github.com/promptfoo/promptfoo/commit/15bba219d294e434d2aeb01dd9ea69c108f8b077",
+        "https://github.com/promptfoo/promptfoo/commit/e9840a7710fb03c8589b35ede893a741b7e332c3"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "bytedance/deer-flow"
+      ],
+      "source_signal_ids": [
+        "pr-25",
+        "commit-25",
+        "commit-37",
+        "commit-39",
+        "commit-41",
+        "commit-46"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "多 Agent 联邦化与协议治理规范化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "ruflo 为 ChatGPT Federation 分配独立 key 与 relay、恢复 OAuth，发布 ANS/Nostr 联邦治理规范草案；openclaw/acpx 事件化 ACP 计划状态以强化 Agent 通信协议互通。去中心化 Agent 通信从实验走向可治理、可互操作的协议标准阶段。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/pull/3299",
+        "https://github.com/ruvnet/ruflo/commit/3949f9c50f53b5db00833862c1fbd5c628fe7ec0",
+        "https://github.com/openclaw/acpx/commit/ffbefbbb726b1fd4623b8e51708a17d21b10b576"
+      ],
+      "related_repos": [
+        "openclaw/acpx",
+        "nostr-protocol/nips",
+        "openclaw/openclaw",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "pr-1",
+        "commit-13",
+        "commit-33"
+      ]
+    },
+    {
+      "id": "eng-8",
+      "title": "认证与凭据处理健壮性跨端修复",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "promptfoo 修复 URL 内嵌百分号编码凭证未解码及 Authorization 头大小写误判致凭证被合并覆盖；Cline 将认证失败收敛为单条可操作提示并让 Account 页识别失效令牌；deer-flow 修复切换技能时密钥落盘。多项目同时加强认证链路与凭据生命周期管理。",
+      "sources": [
+        "https://github.com/promptfoo/promptfoo/commit/b8aa6ff8270720dbfc4ce1ebaf33fe4bffeac801",
+        "https://github.com/cline/cline/pull/14089",
+        "https://github.com/promptfoo/promptfoo/pull/10909",
+        "https://github.com/bytedance/deer-flow/commit/bc4a33aba79f0521aa4fb800a514e456b562cd43"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "bytedance/deer-flow",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-5",
+        "pr-24",
+        "commit-24",
+        "commit-40"
+      ]
+    },
+    {
+      "id": "eng-9",
+      "title": "构建工具与基础设施依赖正确性修复",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "turborepo 修复原生任务依赖在入口点偏好下被误删及 Bun lockfile 剪枝丢失外部分包依赖；promptfoo 适配 libsql 0.18 连接池语义规避锁恢复导致静默失败。构建缓存与数据层正确性成为多项目同时关注的可靠性主题。",
+      "sources": [
+        "https://github.com/vercel/turborepo/commit/b647afc8a32bb5f819957de21dbd7ac882e2464e",
+        "https://github.com/promptfoo/promptfoo/pull/10910",
+        "https://github.com/vercel/turborepo/commit/ce4f04508c61c8d3031b1542983c07eff20e5056"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "vercel/turborepo"
+      ],
+      "source_signal_ids": [
+        "pr-27",
+        "commit-42",
+        "commit-43"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-0",
+      "title": "联邦化 Agent 通信的密码学校验与治理规范探索",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 4,
+      "why_it_matters": "ruflo 为 ANS/Nostr 联邦协议引入密码学向量与验证脚本，将跨组织 agent 互操作建立在可审计的密码学与治理流程之上，同时用 nonce 围栏对抗注入型内容，是从形式化角度推动去中心化 agent 可信通信的研究性探索。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/pull/3299",
+        "https://github.com/ruvnet/ruflo/pull/3300"
+      ],
+      "related_repos": [
+        "nostr-protocol/nips",
+        "modelcontextprotocol/specification",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "pr-1",
+        "pr-2"
+      ]
+    }
+  ],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "OpenClaw Windows 节点重大更新",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "从 v2026.7.1 到 v2026.9.3 的跨版本更新，引入了本地 AI 推理（llama-server、Ollama）、MiniMax TTS、原生聊天媒体渲染等多项重量级新能力，并完成了大规模架构重构，是 Windows 平台 Agent 能力的一次重大跃升。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.270"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "openclaw/openclaw-windows-node"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Phoenix 新增 MCP 技能服务",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "在 /mcp 挂载点提供共享技能根目录，并新增 phoenix-error-analysis 技能，标志着可观测性平台向 MCP 生态和 Agent 技能化方向演进，为 AI 应用的可观测性提供了新的标准化接口。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.270"
+      ],
+      "related_repos": [
+        "Arize-ai/phoenix",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "Cline 桌面版体验与兼容性增强",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "修复了登录态、错误提示等关键交互问题，并新增 Crusoe 提供商支持，同时修复 OpenCode Go 模型路由，提升了多模型提供商场景下的桌面端工作流稳定性和可用性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.223"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "release-bulk-vercel-ai",
+      "title": "vercel/ai 批量发版 49 个子包",
+      "type": "release",
+      "category": "engineering",
+      "impact_score": 1,
+      "why_it_matters": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+      "sources": [
+        "https://github.com/vercel/ai/releases/tag/ai%405.0.257",
+        "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%402.0.257",
+        "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%403.0.257"
+      ],
+      "related_repos": [
+        "vercel/ai"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 79,
+    "pr_count": 28,
+    "commit_count": 47,
+    "release_count": 4,
+    "unique_repos": 20,
+    "total_prs_analyzed": 28,
+    "total_releases": 56,
+    "high_impact_signals": 10,
+    "total_commits_analyzed": 425,
+    "total_releases_analyzed": 56,
+    "total_breaking_changes": 0
+  },
+  "activity": {
+    "total_commits": 425,
+    "active_repos_count": 28,
+    "top_repos": [
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 100,
+        "top_contributors": [
+          "jordanecker-ant",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "vincentkoc",
+          "roboclaw-bot",
+          "obviyus",
+          "openclaw-mantis[bot]"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 38,
+        "top_contributors": [
+          "hyeonsang010716",
+          "tiammomo",
+          "AnnaSuSu",
+          "Amazingjun-j",
+          "ruirui6946"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 35,
+        "top_contributors": [
+          "etraut-openai",
+          "fcoury-oai",
+          "charliemarsh-oai",
+          "zm-oai",
+          "pakrym-oai"
+        ]
+      },
+      {
+        "repo": "openinterpreter/openinterpreter",
+        "commits": 20,
+        "top_contributors": [
+          "interpreterwork",
+          "cestercian"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 16,
+        "top_contributors": [
+          "mldangelo-oai",
+          "renovate[bot]",
+          "mldangelo",
+          "typpo"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 14,
+        "top_contributors": [
+          "poteat",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "gptme/gptme",
+        "commits": 13,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare",
+          "derryckf",
+          "Ricky-7-Yan"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 13,
+        "top_contributors": [
+          "steipete",
+          "roboclaw-bot"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 11,
+        "top_contributors": [
+          "dependabot[bot]",
+          "jbeckwith-oai",
+          "rioyu123",
+          "00200200"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 10,
+        "top_contributors": [
+          "steipete",
+          "gadzan",
+          "roboclaw-bot"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 8,
+        "top_contributors": [
+          "Anthony-Eid",
+          "maxbrunsfeld",
+          "FrantisekGazo",
+          "itsfuad",
+          "GautamBytes"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 7,
+        "top_contributors": [
+          "github-actions[bot]",
+          "vercel-gh-bot-2[bot]",
+          "DominikRusso",
+          "anthonyshew",
+          "vercel-gh-bot-5[bot]"
+        ]
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "commits": 6,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 5,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "fwang",
+          "R-Taneja",
+          "MrMushrooooom"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 4,
+        "top_contributors": [
+          "saoudrizwan"
+        ]
+      },
+      {
+        "repo": "OpenHands/OpenHands",
+        "commits": 4,
+        "top_contributors": [
+          "neubig",
+          "Tyagiquamar",
+          "Chocolatine75"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 4,
+        "top_contributors": [
+          "mdrxy",
+          "langchain-oss-automated-triage[bot]",
+          "nick-hollon-lc"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 3,
+        "top_contributors": [
+          "Bruce-Yii",
+          "CoralGarden52"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 3,
+        "top_contributors": [
+          "mikeldking",
+          "RogerHYang"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 2,
+        "top_contributors": [
+          "mrchatam"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 2,
+        "top_contributors": [
+          "github-actions[bot]",
+          "shaper"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 2,
+        "top_contributors": [
+          "next-js-bot[bot]",
+          "sokra"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 1,
+        "top_contributors": [
+          "langchain-oss-model-profiles[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 1,
+        "top_contributors": [
+          "natalie-aguinaldo"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Aider-AI/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Aperant",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "aaif-goose/goose",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 56,
+    "unique_repos_count": 7,
+    "releases": [
+      {
+        "repo": "cline/cline",
+        "version": "desktop-v0.0.27",
+        "author": "github-actions[bot]",
+        "date": "2026-09-13",
+        "summary": "\n- An expired Cline sign-in now produces one actionable error instead of two dead ends. A turn that fails before the runtime takes the prompt was reported twice — the hub's detail-less `run.failed` appended a bubble, then the send RPC resolved with the real error and overwrote the error banner underneath it — so you got a vague bubble stacked on a detailed banner. The failure now renders exactly once, upgrading in place when the detailed report arrives. Credential failures also carry a fix button: **Sign in to Cline** for the Cline provider (Settings → API Providers reads a stale token as \"Signed in via browser\", so there is nothing to fix there), **Open model settings** for others, and local-CLI providers keep pointing at their CLI. Sessions that fail to start over credentials get the same hint and action\n- The Account page now offers a sign-in prompt when your Cline refresh token is rejected, instead of an error card whose **Retry** failed the same way. A rejected refresh was falling back to the persisted access token, which is dead too, so the account request 401'd; a rejected refresh now reports as signed out. Transient refresh failures still fall back\n- Signing out of Cline and Cline Pass now sticks. Sign-out removes the provider entry, but the runtime re-imports missing providers from the classic extension's stored credentials on every command, so you appeared signed straight back in — the same root cause as the ChatGPT/Codex fix in 0.0.26, which only cleared Codex secrets. Cline Pass sign-out did nothing at all, because its credentials live under the Cline provider entry rather than its own\n- The settings sidebar's **Models** section is now **API Providers**, with an icon to match — it is where you configure providers and their credentials, not where you pick a model\n- A failed voice input now shows a \"Speech input failed\" toast in chat with the actual error, instead of dropping you into Settings → Voice. Any error that wasn't a browser exception was treated as a configuration problem, even though the microphone is already gated on a configured transcription model — so a connection or transcription failure interrupted the chat and hid the real reason. Your draft and the microphone button stay put so you can retry; microphone-permission guidance is unchanged\n- OpenCode Go models work again. Requests were missing the `x-opencode-session` header Go requires to route a conversation (\"Request is missing x-opencode-session and cannot be routed efficiently\"), and every model was sent to `/chat/completions` because catalog normalization discarded the per-model adapter declaration — so Muse Spark, GPT, and Grok models that expect `/responses`, and MiniMax/Qwen models that expect `/messages`, failed with internal server errors. Model-level protocol routing is now preserved end to end, retries reuse the same session identity, and Go Qwen entries that omit the declaration fall back to Messages\n- Added Crusoe as an OpenAI-compatible provider\n- Settings switches are lighter in light mode and are now a shared native control — real keyboard, label, and form behavior, a guaranteed 24px hit area, and support for reduced-motion and forced-colors\n- The welcome screen's eye color matches the dark theme, and its animation no longer triggers layout work each frame\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.26...desktop-v0.0.27\n",
+        "assets_count": 6,
+        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.27",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复登录过期时错误提示重复显示的问题，现在只会渲染一次真实错误，并附带相应的修复按钮",
+            "修复账户页面刷新令牌被拒绝时未正确报告已登出状态的问题",
+            "修复登出 Cline 和 Cline Pass 后会话未真正清除的问题",
+            "将设置侧边栏的「模型」部分重命名为「API Providers」并更新图标",
+            "修复 OpenCode Go 模型请求缺少路由头和协议路由声明的问题，空败语音输入现在会显示具体错误、新增 Crusoe 作为 OpenAI 兼容提供商"
+          ],
+          "summary_cn": "此版本主要修复了多项登录凭据相关的故障，包括错误提示重复显示、登出后会话未真正清除、刷新令牌被拒绝时的状态处理等。同时修复了 OpenCode Go 模型的协议路由和语音输入错误提示问题，将「模型」设置重命名为「API Providers」，并新增了 Crusoe 提供商支持。该版本以修复和体验改进为主，不涉及破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.270",
+        "author": "ashwin-ant",
+        "date": "2026-09-12",
+        "summary": "## What's changed\n\n- Fixed read-only git commands in Bash unexpectedly asking for permission after a session had been running for a while (regression in 2.1.269)\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.270",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复了 Bash 环境中只读 Git 命令在会话运行一段时间后意外触发权限询问的问题",
+            "该问题为 v2.1.269 版本引入的回归缺陷",
+            "恢复了只读 Git 命令无需权限提示即可正常执行的预期行为"
+          ],
+          "summary_cn": "本次发布修复了 v2.1.269 版本引入的一个回归问题：在 Bash 环境中，当会话运行一段时间后，只读的 Git 命令会意外要求权限确认。此修复恢复了只读 Git 操作无需额外权限提示的正常行为，提升了长时间会话下的使用体验。属于针对特定回归缺陷的修复性更新。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.270",
+        "author": "ashwin-ant",
+        "date": "2026-09-12",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.270\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.270\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.270\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.270\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.270\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.270",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "同步至 Claude Code v2.1.270 的最新功能与修复",
+            "SDK 版本更新至 v0.3.270，保持与 Claude Code 核心功能对齐"
+          ],
+          "summary_cn": "本次更新将 anthropics/claude-agent-sdk-typescript 同步至与 Claude Code v2.1.270 完全对齐的版本。主要目的是确保 SDK 与最新版本的 Claude Code 保持功能一致，为用户提供最新的特性和修复。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.223",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1.0.222...v1.0.223",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.223",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "本次发布为 v1.0.222 到 v1.0.223 的小版本更新",
+            "Release Notes 未提供具体的变更描述，仅有完整变更日志链接"
+          ],
+          "summary_cn": "该版本为 claude-code-action 的增量补丁更新（v1.0.222 → v1.0.223）。由于 Release Notes 未提供具体的变更说明，需查看完整变更日志以获取详细内容。建议访问变更日志链接了解具体改动。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "version": "v2026.9.3",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "## OpenClaw Windows Hub v2026.9.3\n\n### Downloads\n- **Installer (x64)**: `OpenClawCompanion-Setup-x64.exe` - Intel/AMD 64-bit\n- **Installer (ARM64)**: `OpenClawCompanion-Setup-arm64.exe` - Windows on ARM (Surface, etc.)\n- **Portable x64**: `OpenClawTray-2026.9.3-win-x64.zip`\n- **Portable ARM64**: `OpenClawTray-2026.9.3-win-arm64.zip`\n\n### Features\n- 🦞 System tray integration with gateway status\n- 🔄 Auto-updates from GitHub Releases\n- ✅ Code-signed with Azure Artifact Signing\n\n### Requirements\n- Windows 10 version 1903 or later\n- [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)\n- OpenClaw gateway running locally\n\n### Quick Start\n1. Run the installer for your architecture\n2. Launch from Start Menu or system tray\n3. Right-click tray icon → Settings to configure\n\n\n## What's Changed\n* refactor(tray): move Permissions into shared-state MVVM ownership by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1075\n* refactor(tray): extract Hub and tray presentation models by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1082\n* refactor(tray): extract App-owned surface lifetimes by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1085\n* refactor(tray): extract final App orchestration owners by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1088\n* refactor(gateway): extract protocol core owners by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1095\n* fix(mxc): tasklist no longer hangs past sandbox timeout by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1151\n* chore(deps): bump github/gh-aw-actions/setup-cli from 0.84.1 to 0.86.1 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1142\n* fix: bind SSH credential handoffs to owned listeners by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1126\n* refactor(connection): extract domain coordinators by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1101\n* refactor(chat): extract runtime state owners by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1096\n* refactor(chat): extract composer ownership by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1098\n* Bump Microsoft.ML.OnnxRuntime from 1.28.0 to 1.29.0 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1170\n* Bump Microsoft.WindowsAppSDK from 2.3.1 to 2.4.0 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1171\n* refactor(setup): split setup steps and own keepalive processes by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1093\n* fix(tray): restore icon after Explorer restart by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1179\n* feat(connection): enforce gateway protocol compatibility by @bkudiess in https://github.com/openclaw/openclaw-windows-node/pull/1127\n* feat(chat): render user and agent media in native chat by @calebeden in https://github.com/openclaw/openclaw-windows-node/pull/1119\n* fix(release): sign all first-party payload binaries by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1182\n* fix: MCP server accepts malformed IPv6 loopback hosts by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1180\n* refactor(chat): remove the retired FunctionalUI chat surface by @calebeden in https://github.com/openclaw/openclaw-windows-node/pull/1110\n* feat: add managed local AI with llama-server by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1178\n* fix(chat): preserve persisted tool activity details by @TheAngryPit in https://github.com/openclaw/openclaw-windows-node/pull/1111\n* fix(setup): require ownership before WSL cleanup by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1229\n* Make telemetry test collectors thread-safe by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1226\n* fix: gateway controls preserve Linux PATH in WSL by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1227\n* build(deps): bump github/gh-aw-actions/setup-cli from 0.86.1 to 0.87.2 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1209\n* fix(setup): avoid duplicate failure message by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1187\n* Stabilize accessibility navigation readiness by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1228\n* refactor(local-ai): clarify managed-model probe contract by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1210\n* fix(setup): bind cleanup to live WSL registration by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1230\n* fix: prevent .NET 10 COM wrapper memory leak in production by @jacobtomlinson in https://github.com/openclaw/openclaw-windows-node/pull/1215\n* fix: preserve .wslconfig encoding by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1224\n* fix: keepalive process inspection can hang after PowerShell exits by @SebTardif in https://github.com/openclaw/openclaw-windows-node/pull/1168\n* fix: preserve Core updates across restart timeouts by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1231\n* Add complete MiniMax TTS support by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1233\n* chore: use MXC SDK 0.8.0 by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1234\n* fix: Local AI fails to start after first setup by @TheAngryPit in https://github.com/openclaw/openclaw-windows-node/pull/1208\n* fix: render Windows notifications as plain text by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1223\n* fix(setup): block unsafe Local AI archive destinations by @vincentkoc in https://github.com/openclaw/openclaw-windows-node/pull/1238\n* fix(setup): stop WSL inspection flake from dead-ending onboarding by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1235\n* fix(local-ai): bound default llama generation by @jacobtomlinson in https://github.com/openclaw/openclaw-windows-node/pull/1241\n* chore(local-ai): bump llama.cpp runtime to b10655 by @larroy in https://github.com/openclaw/openclaw-windows-node/pull/1252\n* fix(local-ai): prevent routing to an unverified managed model by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1212\n* test(setup): prove archive link cleanup ordering by @vincentkoc in https://github.com/openclaw/openclaw-windows-node/pull/1225\n* fix(local-ai): model setup unavailable after install by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1254\n* fix(chat): restore default reasoning after off by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1255\n* fix(setup): recover uninitialized WSL automatically by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1202\n* fix(chat): prevent stale attachment metadata writes by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1259\n* Fix Start menu activation for running tray app by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1262\n* Fix onboarding wizard Back desynchronization by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1205\n* fix(setup): gate Local AI on WSL readiness by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1203\n* test(connection): stabilize listener output waits by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1264\n* fix(chat): render Markdown tables by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1260\n* chore: automate safe repository triage by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1261\n* fix(local-ai): clarify unavailable Local AI setup states (clean replacement for #1204) by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1263\n* test: define schedulable Windows proof pools by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1257\n* Support upstream stable correction release versions by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1266\n* build(deps): bump github/gh-aw-actions/setup-cli from 0.87.2 to 0.87.9 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1272\n* Add Ollama inference to the Windows node by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1269\n* docs: refresh Windows Crabbox guidance by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1283\n* Bump Microsoft.Windows.SDK.BuildTools from 10.0.28000.2526 to 10.0.28000.2705 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1273\n* Fix camera/screen capture consent hang for unattended MCP callers by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1300\n* fix(test): stabilize hardware and UI integration tests by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1302\n* fix(local-ai): bound GPU admission by dedicated device memory by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1253\n* fix(local-ai): recommend Qwen3.8 with measured context profiles by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1281\n* style(setup-ui): simplify Local AI onboarding copy by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1290\n* fix(release): decouple stable correction validation from upstream releases by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1303\n* fix(setup): prevent Local AI routing ambiguity after rerun by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1282\n* docs: add OpenClaw global triage skill by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1308\n* ci: reduce superseded PR work by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1310\n* ci: add fail-closed docs and skill fast path by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1313\n* ci: add code impact fast paths by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1315\n* Avoid duplicate advanced CodeQL scans by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1318\n* feat: add interactive global triage dashboard by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1319\n* improve(ci): reduce core NuGet cache payload by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1320\n* ci: publish daily alpha releases by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1309\n* fix(local-ai): surface llama-server root cause on inference failure by @larroy in https://github.com/openclaw/openclaw-windows-node/pull/1284\n* fix(audio): unify Piper extraction deadline by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1294\n* fix(setup): enforce one Tailscale probe deadline by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1296\n* fix(chat): keep flattened tool results with the correct tool by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1298\n* fix(pt-BR): repair Brazilian Portuguese localization (replaces #1265) by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1295\n* fix(chat): stop composer render feedback loop by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1326\n* fix(mxc): require safe BaseContainer for Windows node sandboxing by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1327\n* Make the winnode reference a discoverable agent skill by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1346\n* fix(setup): prompt to restart Windows after installing WSL by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1347\n* fix(setup): let uninstall recover from absent WSL distro by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1348\n* fix(setup): keep WSL diagnostics readable with deterministic UTF-8 by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1350\n* Bound WebSocket reconnect attempts by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1352\n* Avoid repeated WSL check before installation by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1356\n* fix(setup): securely bound CLI installer retries by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1297\n* Preserve normal setup command output drains by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1361\n* build(deps): bump github/gh-aw-actions/setup-cli from 0.87.9 to 0.88.4 by @dependabot[bot] in https://github.com/openclaw/openclaw-windows-node/pull/1351\n* fix(setup): advance managed Node runtime to 24.19.0 by @RomneyDa in https://github.com/openclaw/openclaw-windows-node/pull/1359\n* fix(build): Piper voice preview fails in local builds with \"native library could not be loaded\" by @Steven23456 in https://github.com/openclaw/openclaw-windows-node/pull/1354\n* docs: improve LocalAi module documentation and agent coding rules by @larroy in https://github.com/openclaw/openclaw-windows-node/pull/1329\n* build(deps): upgrade Microsoft.UI.Reactor to 0.1.0-preview.14 by @azchohfi in https://github.com/openclaw/openclaw-windows-node/pull/1376\n* improve(setup): install latest stable Gateway from npm by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1312\n* fix(setup): complete npm latest Gateway landing by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1381\n* fix(setup): verify gateway listener service ownership by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1382\n* docs: document safe uninstall and dev cleanup by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1383\n* feat(shared): add safe Hugging Face cache primitives by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1385\n* fix(chat): make snapshot delivery race-free by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1386\n* feat(local-ai): add verified legacy model cache migration by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1388\n* fix(local-ai): keep routing safe across endpoint restarts by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1390\n* feat(local-ai): safely use the standard Hugging Face hub cache by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1397\n* feat(voice): add English (GB) Northern English Male Piper voice by @Steven23456 in https://github.com/openclaw/openclaw-windows-node/pull/1353\n* fix(setup): allow Local AI setup on busy GPUs and current Gateway by @joelagnel in https://github.com/openclaw/openclaw-windows-node/pull/1399\n* fix(update): suppress verified ordinary extended-stable notices by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1392\n* fix(local-ai): add non-destructive recovery by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1384\n* fix(mxc): bound termination and output drain cleanup by @shanselman in https://github.com/openclaw/openclaw-windows-node/pull/1387\n* fix(chat): prevent bubble text truncation by @karkarl in https://github.com/openclaw/openclaw-windows-node/pull/1400\n\n## New Contributors\n* @joelagnel made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1180\n* @jacobtomlinson made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1215\n* @SebTardif made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1168\n* @larroy made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1252\n* @Steven23456 made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1354\n* @azchohfi made their first contribution in https://github.com/openclaw/openclaw-windows-node/pull/1376\n\n**Full Changelog**: https://github.com/openclaw/openclaw-windows-node/compare/v2026.7.1...v2026.9.3",
+        "assets_count": 4,
+        "url": "https://github.com/openclaw/openclaw-windows-node/releases/tag/v2026.9.3",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增系统托盘集成、自动更新及 Azure 代码签名支持，提供 ARM64 架构安装包",
+            "新增本地 AI 功能：集成 llama-server 和 Ollama 推理引擎，支持模型缓存迁移及安全下载",
+            "新增 MiniMax TTS 完整支持及英语（英国）北部男声 Piper 语音",
+            "多项修复：包括 WebSocket 重连限制、.NET 10 COM 包装器内存泄漏、WSL 配置保留、聊天渲染问题等",
+            "架构重构：大量解耦和抽取模块所有者（chat、gateway、tray、connection、setup），大量基础设施与 CI 改进"
+          ],
+          "summary_cn": "本版本是 OpenClaw Windows 节点的一个功能丰富的大版本更新，主要新增了系统托盘集成、自动更新、代码签名以及本地 AI 推理能力（集成 llama-server 和 Ollama）。同时进行了大规模架构重构，将 chat、gateway、connection 等模块抽取为独立的所有者，并修复了包含内存泄漏、WSL 配置丢失、聊天渲染异常在内的众多问题。此外还新增了 MiniMax TTS 支持和多种 Piper 语音选项，并将依赖多项升级（OnnxRuntime、WindowsAppSDK 等）。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v20.11.0",
+        "author": "mikeldking",
+        "date": "2026-09-12",
+        "summary": "## [20.11.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v20.10.0...arize-phoenix-v20.11.0) (2026-09-12)\n\n\n### Features\n\n* **annotations:** add GraphQL mutations for span, trace, and session notes ([#16053](https://github.com/Arize-ai/phoenix/issues/16053)) ([e374a4d](https://github.com/Arize-ai/phoenix/commit/e374a4d92afc7852da4479abffd6c42e1391230b))\n* **mcp:** serve the shared skills root on the /mcp mount ([#15726](https://github.com/Arize-ai/phoenix/issues/15726)) ([dd2e22d](https://github.com/Arize-ai/phoenix/commit/dd2e22dd0d9adb315c130150312b9163b98e48b5))\n* **skills:** add phoenix-error-analysis skill ([#15727](https://github.com/Arize-ai/phoenix/issues/15727)) ([df349f2](https://github.com/Arize-ai/phoenix/commit/df349f2bad089dfa5088c8947dee1f9b2d11a205))\n\n\n### Bug Fixes\n\n* **mcp:** carry lifespan state into in-process tool dispatch ([#16109](https://github.com/Arize-ai/phoenix/issues/16109)) ([a516ac3](https://github.com/Arize-ai/phoenix/commit/a516ac3cd136691d026e423e894c6e6529c0f6ef))\n\n\n### Documentation\n\n* restructure the Claude Code plugin docs as its own section ([400d187](https://github.com/Arize-ai/phoenix/commit/400d187aa28dd1c322ddea6696487f5f38bd8e7c))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.11.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 GraphQL 变更操作，支持对 Span、Trace 和 Session 添加/编辑标注笔记",
+            "MCP 服务新增在 /mcp 挂载点提供共享技能根（skills root）功能",
+            "新增 phoenix-error-analysis 技能，用于错误分析场景",
+            "修复 MCP 组件在进程内工具调度时未正确携带生命周期状态（lifespan state）的问题",
+            "重新整理了 Claude Code 插件相关文档，将其独立成章节"
+          ],
+          "summary_cn": "此版本主要聚焦于功能增强，为标注系统新增了 GraphQL 变更操作，使用户能够直接通过 API 管理 Span、Trace 和 Session 的备注笔记。同时扩展了 MCP 服务能力，新增共享技能挂载和 phoenix-error-analysis 错误分析技能，并修复了 MCP 在进程内工具调度中的生命周期状态传递问题。此外还优化了 Claude Code 插件文档结构。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-sqlean-v0.1.2",
+        "author": "mikeldking",
+        "date": "2026-09-12",
+        "summary": "## [0.1.2](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-sqlean-v0.1.1...arize-phoenix-sqlean-v0.1.2) (2026-09-12)\n\n\n### Bug Fixes\n\n* **phoenix-sqlean:** fix memory-safety and correctness bugs in the C driver ([#14546](https://github.com/Arize-ai/phoenix/issues/14546)) ([6f2d5e9](https://github.com/Arize-ai/phoenix/commit/6f2d5e9baa43fec74563f09e76b4f92603d73053))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-sqlean-v0.1.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复了 phoenix-sqlean C 驱动中的内存安全问题",
+            "修复了 C 驱动中的正确性缺陷",
+            "提升了驱动程序的稳定性和可靠性"
+          ],
+          "summary_cn": "本次发布针对 arize-phoenix-sqlean 的 C 驱动程序进行了缺陷修复，重点解决了内存安全和正确性方面的问题。这些修复有助于提升驱动的整体稳定性，降低潜在的内存泄漏和崩溃风险。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@5.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [0d4a425]\n  - @ai-sdk/gateway@2.0.151",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%405.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@2.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%402.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@3.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%403.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@1.0.259",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%401.0.259",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@2.0.260",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%402.0.260",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@1.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%401.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@1.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%401.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@2.0.151",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- 0d4a425: fix(gateway): forward server-returned warnings on language model doGenerate\n\n  `generateText(...).warnings` through the gateway provider was always an empty\n  array: `doGenerate` spread the gateway response body and then overwrote the\n  server's `warnings` with a locally constructed empty array. The warnings the\n  gateway relays from the upstream provider (and gateway-originated warnings)\n  are now forwarded, matching the streaming path and every other modality.",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%402.0.151",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@1.0.257",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@5.0.257",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%401.0.257",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@6.0.282",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [e4ff9e7]\n  - @ai-sdk/gateway@3.0.193",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%406.0.282",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@3.0.282",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%403.0.282",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@4.0.282",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%404.0.282",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@2.0.282",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%402.0.282",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@3.0.285",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%403.0.285",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@2.0.282",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%402.0.282",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@2.0.290",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%402.0.290",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@3.0.193",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- e4ff9e7: fix(gateway): forward server-returned warnings on language model doGenerate\n\n  `generateText(...).warnings` through the gateway provider was always an empty\n  array: `doGenerate` spread the gateway response body and then overwrote the\n  server's `warnings` with a locally constructed empty array. The warnings the\n  gateway relays from the upstream provider (and gateway-originated warnings)\n  are now forwarded, matching the streaming path and every other modality.",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%403.0.193",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@2.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- ai@6.0.282",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%402.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@7.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- 615ac89: feat(ai): use InvalidArgumentError for utility input validation\n- Updated dependencies [7f76d83]\n  - @ai-sdk/gateway@4.0.80",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%407.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow@2.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%402.0.30",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow-harness@1.0.109",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.109",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@4.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%404.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/tui@1.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tui%401.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@5.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%405.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-vercel@1.0.109",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-vercel%401.0.109",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-just-bash@1.0.109",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-just-bash%401.0.109",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@3.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%403.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@4.0.102",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%404.0.102",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/policy-opa@1.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/policy-opa%401.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/otel@1.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/otel%401.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@3.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%403.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@3.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%403.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness@1.0.109",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness%401.0.109",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-pi@1.0.111",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-pi%401.0.111",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-opencode@1.0.111",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-opencode%401.0.111",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-grok-build@1.0.46",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109\n- @ai-sdk/harness-acp@1.0.47",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-grok-build%401.0.46",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-github-copilot@1.0.4",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109\n- @ai-sdk/harness-acp@1.0.47",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-github-copilot%401.0.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-fx@1.0.22",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109\n- @ai-sdk/harness-acp@1.0.47",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-fx%401.0.22",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-deepagents@1.0.109",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-deepagents%401.0.109",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-cursor@1.0.22",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109\n- @ai-sdk/harness-acp@1.0.47",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-cursor%401.0.22",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-codex@1.0.111",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-codex%401.0.111",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-cline@1.0.36",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-cline%401.0.36",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-claude-code@1.0.113",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-claude-code%401.0.113",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-acp@1.0.47",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.109",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-acp%401.0.47",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google@4.0.69",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- f88c7dc: fix(vertex): download tool result file URLs",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google%404.0.69",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/google-vertex@5.0.81",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- f88c7dc: fix(vertex): download tool result file URLs\n- Updated dependencies [f88c7dc]\n  - @ai-sdk/google@4.0.69",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/google-vertex%405.0.81",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@4.0.80",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- 7f76d83: fix(gateway): forward server-returned warnings on language model doGenerate\n\n  `generateText(...).warnings` through the gateway provider was always an empty\n  array: `doGenerate` spread the gateway response body and then overwrote the\n  server's `warnings` with a locally constructed empty array. The warnings the\n  gateway relays from the upstream provider (and gateway-originated warnings)\n  are now forwarded, matching the streaming path and every other modality.",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%404.0.80",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/code-mode@1.0.56",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/code-mode%401.0.56",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@3.0.99",
+        "author": "github-actions[bot]",
+        "date": "2026-09-12",
+        "summary": "### Patch Changes\n\n- Updated dependencies [615ac89]\n  - ai@7.0.99",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%403.0.99",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "无法读取 bulk-changelogs.md，工作目录中未找到该文件，无法进行实质性分析"
+          ],
+          "summary_cn": "未能完成分析：指定的数据文件 bulk-changelogs.md 在工作目录中不存在，无法读取 vercel/ai 49 个子包的 changelog 内容，因此无法判断这批发版是纯版本同步还是包含实质变更，也无法给出 breaking changes 与影响级别。为避免臆造，未对未知变更做任何推断。",
+          "impact_level": 1
+        }
+      }
+    ]
+  },
+  "breaking_changes": null,
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "Aider-AI/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "gptme/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenHands/OpenHands",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/ruflo",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Aperant",
+    "anomalyco/opencode",
+    "openinterpreter/openinterpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "aaif-goose/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": "continuing",
+  "trend_delta": "相对 9/12（安全共识系统化沉淀 + 语音/屏幕级交互范式上移、OTLP 可观测性落地）：今日新增两大推进点——①Windows 从执行次要平台跃升为一等公民（Codex MXC 沙箱共享库 + OpenClaw Windows 节点本地推理/媒体渲染/ARCH 重构），将\"跨平台受控执行\"从概念推向生产落地；②子代理上下文保真的层级化编排（父上下文快照、子 agent 结果注入父提示、recap 续接）成为 deer-flow/gptme/openclaw/codex 多项目共性课题，把昨日\"长会话上下文\"主线由单体深化为父-子分层。安全供应链加固与 Token 成本精确核算为延续，非新增。",
+  "historical_basis_dates": [
+    "2026-03-18",
+    "2026-05-07",
+    "2026-05-20",
+    "2026-05-21",
+    "2026-09-12"
+  ],
+  "historical_comparison": "3/18 的 AI Agent 安全沙箱共识（Gemini/Claude 引入 gVisor/Seatbelt）今日在 Windows 端落成一等公民执行能力，为长期主线的具体化；5/21 的质量可靠性清算与 5/20 的自托管沙箱 SDK 标准化，被今日的供应链加固（OpenSSL/CodeQL/凭据修复）与 Token 计量精确化所继承；9/12 确立的\"语音+屏幕级交互范式上移\"与\"长会话上下文管理\"直接承接——今日无全新方向，是将既有主线下探到 Windows 平台与父-子层级编排两个新维度。",
+  "top_new_trends": [
+    "Windows 平台 Agent 安全沙箱执行能力集中落地：Codex 接入 MXC 沙箱并抽取共享库、OpenClaw Windows 节点发布 v2026.9.3 重大更新（本地推理/媒体渲染/架构重构），标志 Windows 从次要平台转向一等公民",
+    "子代理协作与上下文连续性的层级化编排合流：deer-flow 父上下文快照+笔记召回、gptme 子代理续接+伴生工具、openclaw 子 agent 结果注入父提示、codex subagent 续接，多项目同步解决层级编排中的上下文丢失与可恢复性",
+    "Token 成本核算与上下文预算精确化成为工程重点（Codex 按内容估算历史 token、lobster 修复重复计费、deer-flow 裁剪冗余载荷），成本控制从粗放转向精确"
+  ],
+  "top_continuing_trends": [
+    "Agent 安全供应链综合治理延续（OpenSSL 安全版编译、CodeQL 静态扫描、MCP 注入防护、凭据落盘修复），承接 3/18 沙箱共识与 5/21 质量清算以来的行业级安全防线",
+    "长会话上下文管理与可恢复性主线延续，Codex recap（32KiB）、deer-flow 上下文裁剪等继续推进 9/12 确立的上下文工程",
+    "多会话工作流与并行开发体验升级延续（Codex 会话列表/worktree、openclaw 按 CPU 扩展并行度），反映 Agent 使用持续从单任务转向多任务"
+  ],
+  "summary_confidence": 0.8,
+  "daily_summary_agent_run_metrics": {
+    "model": "deepseek-v4-flash-aistar",
+    "session_id": "98f6a7e7-c9e0-418a-8470-123014a3396b",
+    "num_turns": 14,
+    "duration_ms": 107047,
+    "duration_api_ms": 97844,
+    "total_cost_usd": 2.3149399999999996,
+    "usage": {
+      "input_tokens": 442507,
+      "output_tokens": 3903,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 446410,
+      "tool_uses": 0,
+      "duration_ms": 0
+    },
+    "raw_usage": {
+      "input_tokens": 442507,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 3903,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard"
+    }
+  },
+  "agent_metrics_summary": {
+    "run_count": 14,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 23,
+    "total_duration_ms": 344362,
+    "total_api_duration_ms": 338807,
+    "total_cost_usd": 3.7728,
+    "usage": {
+      "input_tokens": 719455,
+      "output_tokens": 20928,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 740383,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  },
+  "daily_llm_usage": {
+    "run_count": 13,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 9,
+    "total_duration_ms": 237315,
+    "total_api_duration_ms": 240963,
+    "total_cost_usd": 1.45786,
+    "usage": {
+      "input_tokens": 276948,
+      "output_tokens": 17025,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 293973,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  }
+}
