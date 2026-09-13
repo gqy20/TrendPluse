@@ -135,9 +135,10 @@ class TestSDKPRAnalyzer:
         seen_whitelists = []
         empty = PRSignalsResult(signals=[])
 
-        async def fake_query(prompt):
-            assert analyzer.query_engine.file_whitelist is not None
-            seen_whitelists.append(set(analyzer.query_engine.file_whitelist))
+        async def fake_query(prompt, *, file_whitelist=None):
+            # 白名单以调用参数传入（批间并行下不共享实例状态）
+            assert file_whitelist is not None
+            seen_whitelists.append(set(file_whitelist))
             return SimpleNamespace(output=empty, metrics=None)
 
         with patch.object(analyzer.query_engine, "query_async", new=fake_query):
@@ -145,7 +146,7 @@ class TestSDKPRAnalyzer:
 
         assert result == []
         assert len(seen_whitelists) == 3  # 5 materials → 3 批
-        assert analyzer.query_engine.file_whitelist is None  # 运行后还原
+        assert analyzer.query_engine.file_whitelist is None  # 实例状态全程不被改写
         # 各批白名单文件互不相同
         assert len({frozenset(w) for w in seen_whitelists}) == 3
 

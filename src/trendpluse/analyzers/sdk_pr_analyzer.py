@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import shutil
 import tempfile
 from pathlib import Path
@@ -229,24 +230,46 @@ class SDKPRAnalyzer:
         return await self._analyze_prs_shared(prs)
 
     async def _analyze_prs_shared(self, prs: list[dict[str, Any]]) -> list[Signal]:
-        """共享分批分析流程（材料/候选两个入口复用）。"""
+        """共享分批分析流程（材料/候选两个入口复用）。
+
+        批间并行（对齐 SDKCommitAnalyzer）：每批独立 agent run，
+        白名单随调用传递，单批失败不连坐、不阻塞其他批次。
+        """
         work_dir = tempfile.mkdtemp(prefix="pr_analyzer_")
 
         try:
             batches = self._split_batches(prs)
-            all_signals: list[Signal] = []
+            batch_files = [
+                self._write_prs_file(work_dir, batch, suffix=f"-batch-{index}")
+                for index, batch in enumerate(batches, 1)
+            ]
+            results = await asyncio.gather(
+                *(
+                    self._analyze_batch(
+                        batch,
+                        batch_file,
+                        batch_index=index,
+                        total_batches=len(batches),
+                    )
+                    for index, (batch, batch_file) in enumerate(
+                        zip(batches, batch_files), 1
+                    )
+                ),
+                return_exceptions=True,
+            )
 
-            for batch_index, batch in enumerate(batches, 1):
-                batch_file = self._write_prs_file(
-                    work_dir, batch, suffix=f"-batch-{batch_index}"
-                )
-                batch_signals = await self._analyze_batch(
-                    batch,
-                    batch_file,
-                    batch_index=batch_index,
-                    total_batches=len(batches),
-                )
-                all_signals.extend(batch_signals)
+            all_signals: list[Signal] = []
+            for index, result in enumerate(results, 1):
+                if isinstance(result, BaseException):
+                    logger.warning(
+                        "PR 批次并行分析失败 (batch %d/%d): %s: %s",
+                        index,
+                        len(batches),
+                        type(result).__name__,
+                        str(result)[:200],
+                    )
+                    continue
+                all_signals.extend(result)
 
             return all_signals
 
@@ -268,11 +291,10 @@ class SDKPRAnalyzer:
             batch_size=len(batch),
         )
 
-        original_whitelist = self.query_engine.file_whitelist
-        self.query_engine.file_whitelist = {str(Path(prs_file).resolve())}
+        # 本批白名单随调用传递（不再改写实例状态，批间并行安全）
         try:
             result: QueryResult[PRSignalsResult] = await self.query_engine.query_async(
-                prompt
+                prompt, file_whitelist={str(Path(prs_file).resolve())}
             )
         except Exception as e:
             logger.warning(
@@ -284,8 +306,6 @@ class SDKPRAnalyzer:
                 str(e)[:200],
             )
             return []
-        finally:
-            self.query_engine.file_whitelist = original_whitelist
 
         if result.metrics is not None:
             self._run_metrics.append(result.metrics)
