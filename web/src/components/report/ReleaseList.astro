@@ -66,7 +66,7 @@ const list: ReleaseInfo[] = Array.isArray(releases) ? releases : releases?.relea
             )}
             {r.ai_summary?.key_changes && r.ai_summary.key_changes.length > 0 && (
               <ul class="mt-1.5 space-y-0.5">
-                {r.ai_summary.key_changes.slice(0, 3).map((change) => (
+                {r.ai_summary.key_changes.slice(0, 3).map((change: string) => (
                   <li class="text-xs text-[var(--tp-muted)] leading-relaxed flex gap-1.5">
                     <span class="text-[var(--tp-border)] select-none">└</span>
                     <span>{change}</span>
