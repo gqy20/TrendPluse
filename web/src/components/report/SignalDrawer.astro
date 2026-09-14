@@ -52,6 +52,20 @@
     return { label: 'SOURCE', color: 'text-ink-3' };
   }
 
+  /** URL → 短标签:owner/repo @ 短SHA / owner/repo #编号 / owner/repo tag */
+  function shortLabel(url: string): string {
+    const path = url.replace('https://github.com/', '').split('?')[0].replace(/\/$/, '');
+    const pr = path.match(/^([\w.-]+\/[\w.-]+)\/pull\/(\d+)$/);
+    if (pr) return `${pr[1]} #${pr[2]}`;
+    const issue = path.match(/^([\w.-]+\/[\w.-]+)\/issues\/(\d+)$/);
+    if (issue) return `${issue[1]} #${issue[2]}`;
+    const release = path.match(/^([\w.-]+\/[\w.-]+)\/releases\/(?:tag\/)?(.+)$/);
+    if (release) return `${release[1]} ${release[2]}`;
+    const commit = path.match(/^([\w.-]+\/[\w.-]+)\/commit\/([0-9a-f]{7})/);
+    if (commit) return `${commit[1]} @ ${commit[2]}`;
+    return path;
+  }
+
   const drawer = document.getElementById('tp-drawer') as HTMLDialogElement;
   let trigger: HTMLElement | null = null;
   let originalOverflow = '';
@@ -76,10 +90,9 @@
   function render(s: Sig, map: Record<string, Sig>) {
     const sources = s.sources.filter(u => /^https?:\/\//i.test(u)).map((u) => {
       const k = sourceKind(u);
-      const short = u.replace('https://github.com/', '');
-      return `<a href="${esc(u)}" target="_blank" rel="noopener" class="tp-row border-b border-hairline flex items-baseline justify-between gap-4">
-        <span class="tp-mono ${k.color}">${k.label}</span>
-        <span class="tp-mono text-ink-2 line-clamp-1 text-right">${esc(short)}</span>
+      return `<a href="${esc(u)}" target="_blank" rel="noopener" title="${esc(u)}" class="tp-row border-b border-hairline flex items-baseline gap-4">
+        <span class="tp-mono ${k.color} w-15 shrink-0">${k.label}</span>
+        <span class="tp-mono text-ink-2 truncate">${esc(shortLabel(u))}</span>
       </a>`;
     });
 
