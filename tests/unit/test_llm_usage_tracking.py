@@ -217,6 +217,12 @@ class TestDailyLlmUsageAggregation:
                 get_llm_metrics_summary=MagicMock(return_value=None)
             ),
         )
+        pr_analyzer = MagicMock()
+        pr_analyzer.get_llm_metrics_summary.return_value = (
+            AgentMetricsSummary.from_runs(
+                [AgentRunMetrics(model="deepseek", total_cost_usd=0.25)]
+            )
+        )
         return DailyPipelineApp(
             settings=settings,
             activity_collector=MagicMock(),
@@ -231,7 +237,7 @@ class TestDailyLlmUsageAggregation:
             analyzer=analyzer,
             deduplicator=MagicMock(),
             daily_report_finalizer=MagicMock(),
-            pr_analyzer=MagicMock(),
+            pr_analyzer=pr_analyzer,
         )
 
     def test_collects_usage_from_all_components(self):
@@ -241,7 +247,8 @@ class TestDailyLlmUsageAggregation:
         report = DailyReport(date="2026-01-01", summary_brief="x")
         app._collect_daily_llm_usage(report)
         assert report.daily_llm_usage is not None
-        assert report.daily_llm_usage.run_count == 2
+        # analyzer 1 次 + commit_analyzer 1 次 + pr_analyzer 1 次
+        assert report.daily_llm_usage.run_count == 3
         assert report.daily_llm_usage.usage.total_tokens == 1200
 
     def test_budget_exceeded_warns(self, caplog):

@@ -346,6 +346,7 @@ class DailyPipelineApp:
         for component in (
             self.analyzer,
             self.commit_analyzer,
+            self.pr_analyzer,
             getattr(self.release_workflow, "release_summarizer", None),
             getattr(self.release_workflow, "release_analyzer", None),
             getattr(self.release_workflow, "breaking_changes_detector", None),
