@@ -269,3 +269,24 @@ def summarize_materials_arg(call) -> list:
     """从 summarize_materials_async 调用参数中提取 release 材料。"""
     materials: list = call.args[0] if call.args else call.kwargs.get("materials", [])
     return materials
+
+
+class TestBulkPromptContainsAbsoluteFile:
+    """回归：批量分析 prompt 必须携带数据文件绝对路径。
+
+    历史缺陷：prompt 让 agent 读「当前工作目录下」的 bulk-changelogs.md，
+    而 CLI 子进程 cwd 继承 Python 进程（非临时目录），agent 永远读不到文件，
+    把「文件不存在」当作分析结果写进报告。
+    """
+
+    def test_prompt_embeds_absolute_changelogs_path(self, tmp_path):
+        from trendpluse.analyzers.release_summarizer import ReleaseSummarizer
+
+        summarizer = ReleaseSummarizer(api_key="test-key")
+        group = [{"tag_name": "@pkg@1.0.0", "html_url": "https://x", "body": "b"}]
+        changelogs_file = str(tmp_path / "bulk-changelogs.md")
+
+        prompt = summarizer._build_bulk_prompt("vercel/ai", group, changelogs_file)
+
+        assert changelogs_file in prompt
+        assert "当前工作目录" not in prompt

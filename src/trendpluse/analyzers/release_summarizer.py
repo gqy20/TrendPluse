@@ -206,11 +206,14 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         file_path.write_text("\n".join(lines), encoding="utf-8")
         return str(file_path)
 
-    def _build_bulk_prompt(self, repo: str, group: list[dict[str, Any]]) -> str:
+    def _build_bulk_prompt(
+        self, repo: str, group: list[dict[str, Any]], changelogs_file: str
+    ) -> str:
         return render_prompt(
             "release_summarizer.bulk_group_analysis",
             repo=repo,
             package_count=len(group),
+            changelogs_file=changelogs_file,
         )
 
     def _analyze_bulk_via_sdk(
@@ -256,7 +259,7 @@ class ReleaseSummarizer(BaseLLMAnalyzer):
         engine = self._get_bulk_query_engine()
         try:
             changelogs_file = self._write_bulk_changelogs_file(work_dir, repo, group)
-            prompt = self._build_bulk_prompt(repo, group)
+            prompt = self._build_bulk_prompt(repo, group, changelogs_file)
 
             original_whitelist = engine.file_whitelist
             engine.file_whitelist = {str(Path(changelogs_file).resolve())}
