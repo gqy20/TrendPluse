@@ -1,0 +1,894 @@
+{
+  "week_id": "2026-W37",
+  "start_date": "2026-09-07",
+  "end_date": "2026-09-13",
+  "summary_brief": "本周核心趋势围绕 Agent 安全体系化加固与长会话稳定性工程化突破，同时 MCP 生态向浏览器和可观测性扩展，桌面端实时语音与本地推理能力走向成熟，预示 Agent 从功能竞速转向可靠性、安全性与互操作性的深层竞争。",
+  "core_trends": [
+    {
+      "title": "Agent 安全防护体系化：从 MCP 鉴权到提示注入与沙箱逃逸的全面加固",
+      "theme": "safety",
+      "description": "多个主流 Agent 框架（openai/codex、vercel/ai、openclaw、google-gemini/gemini-cli、bytedance/deer-flow）在同一周期内集中推进 MCP 鉴权（OAuth 2.1、企业级认证）、SSRF 防护、提示注入阻断、沙箱逃逸防护及供应链安全（CodeQL、GitHub App 认证）等安全措施，标志着 Agent 生态从功能快速迭代转向安全边界的系统化构建，是行业级安全共识形成的拐点。",
+      "signal_ids": [
+        "eng-0",
+        "eng-1",
+        "eng-2",
+        "res-0"
+      ],
+      "impact_level": 5
+    },
+    {
+      "title": "长会话与上下文管理成为 Agent 稳定性核心工程议题",
+      "theme": "architecture",
+      "description": "Codex、DeerFlow、DeepAgents 等框架同时发力长会话上下文快照、增量更新、压缩恢复、任务笔记召回和输入预算校验，解决长任务 Agent 的上下文一致性与资源消耗问题。这反映出 Agent 从单次交互向持续多轮任务演进时，上下文管理已成为决定可靠性的关键架构组件。",
+      "signal_ids": [
+        "eng-4",
+        "eng-7"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "AI 可观测性标准化：OpenTelemetry 与 MCP 技能化驱动全栈追踪",
+      "theme": "tooling",
+      "description": "cline、langchain、phoenix、vercel/ai 等工具链集体向 OpenTelemetry 标准收敛，支持 AI 应用追踪、成本可视化和错误分析；同时 Phoenix 新增 MCP 技能服务，将可观测性能力通过 MCP 协议暴露为 Agent 可调用的技能，标志着可观测性从被动监控转向主动、标准化的智能运维。",
+      "signal_ids": [
+        "eng-5",
+        "signal-1"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "MCP 协议扩展至浏览器端：页面与 AI 工具双向互操作成为新范式",
+      "theme": "architecture",
+      "description": "Playwright 通过 WebMCP 将页面工具注册为 MCP 服务，支持仅图像响应模式；同时 cline、codex 增强 MCP 服务器能力协商与可观测性。MCP 正从纯服务端调用扩展至浏览器页面与 AI 工具的双向通信，为 Agent 与 Web 内容交互开辟新路径，可能重塑浏览器自动化与 AI 集成方式。",
+      "signal_ids": [
+        "eng-6",
+        "eng-7"
+      ],
+      "impact_level": 4
+    },
+    {
+      "title": "Agent 桌面端与实时交互能力走向生产级：语音对话与本地推理成标配",
+      "theme": "capability",
+      "description": "Codex 实时语音对话转正并补充跨平台原生运行时；OpenClaw Windows 节点重大更新引入本地推理（llama-server、Ollama）与 TTS 能力。这些变化表明 Agent 桌面体验正从实验性走向稳定生产，实时语音与本地推理成为核心可交付能力，并推动 Agent 在个人设备上的实用化。",
+      "signal_ids": [
+        "eng-3",
+        "signal-0"
+      ],
+      "impact_level": 4
+    }
+  ],
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "Agent 安全全面加固：MCP 鉴权、提示注入与 SSRF 成为多项目协同防御焦点",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "当日跨 openai/codex、vercel/ai、openclaw、ruvnet/ruflo 等多个项目同时出现 MCP 安全加固，涵盖企业级可信认证（ema_auth）、OAuth 2.1 免凭据迁移、SSRF 防护、逐调用工具审批等，标志 Agent 生态从功能爆发转向安全边界系统化构建的关键拐点。",
+      "sources": [
+        "https://github.com/openai/codex/commit/654b0a77d0d2f81aa21f61caf7af4be88fe550bb",
+        "https://github.com/openai/codex/pull/44938",
+        "https://github.com/ruvnet/ruflo/commit/b329f0937cf99b736b8361b62347055c3bb748df",
+        "https://github.com/openai/codex/pull/44832",
+        "https://github.com/vercel/ai/commit/c43e4b71387cc4f10ec6ae973e6f441786f6c247",
+        "https://github.com/openclaw/openclaw/commit/7b374192653da4e57cb7487c67711c1a8b3d543b"
+      ],
+      "related_repos": [
+        "openclaw/openclaw",
+        "vercel/ai",
+        "openai/codex",
+        "modelcontextprotocol/mcp",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "pr-19",
+        "pr-22",
+        "commit-21",
+        "commit-58",
+        "commit-53",
+        "commit-23"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "阻断提示注入与沙箱逃逸成为 Agent 代码执行安全的下一条防线",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "google-gemini/gemini-cli 明确针对间接 prompt injection 与代码沙箱逃逸进行加固，DeerFlow 剔除被拦截写载荷，OpenClaw 阻断 Homebrew 环境变量注入，多个框架协同强化 LLM 代码执行环境边界，反映 Agent 供应链攻击面正受到行业级重视。",
+      "sources": [
+        "https://github.com/google-gemini/gemini-cli/commit/bfb71fd2b8ed9ed94b0e1d79275b4c911a97fa27",
+        "https://github.com/bytedance/deer-flow/commit/3f0b6ecc811190481897f1ed02c2ba0c1f69799e",
+        "https://github.com/openclaw/openclaw/commit/f2858f7e3c9133309647e1f7c84c2460cdb42017",
+        "https://github.com/google-gemini/gemini-cli/commit/9c1b0a610534d6f8120964cf2672c07807d8fc90"
+      ],
+      "related_repos": [
+        "openclaw/openclaw",
+        "bytedance/deer-flow",
+        "google-gemini/gemini-cli"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-1",
+        "commit-31",
+        "commit-45"
+      ]
+    },
+    {
+      "id": "signal-0",
+      "title": "OpenClaw Windows 节点重大更新",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "从 v2026.7.1 到 v2026.9.3 的跨版本更新，引入了本地 AI 推理（llama-server、Ollama）、MiniMax TTS、原生聊天媒体渲染等多项重量级新能力，并完成了大规模架构重构，是 Windows 平台 Agent 能力的一次重大跃升。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.270"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "openclaw/openclaw-windows-node"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "eng-2",
+      "title": "供应链安全左移：CodeQL 与 GitHub App 认证成为开源项目标配",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "openai/openai-agents-python 同时新增 CodeQL 安全扫描并配套 GitHub App 认证迁移，multiframework 集体将安全检测嵌入 CI 提交阶段并降低凭证泄露面，标志开源 Agent 生态供应链安全实践趋于成熟。",
+      "sources": [
+        "https://github.com/openai/openai-agents-python/pull/4974",
+        "https://github.com/openai/openai-agents-python/commit/fbd2dbcaaf74a2c447c6d3fa9d5645d83fd7e292",
+        "https://github.com/microsoft/semantic-kernel/commit/ca40aa7226531d28a721d0ca0e451d0aaf86dafc"
+      ],
+      "related_repos": [
+        "microsoft/semantic-kernel",
+        "openai/openai-agents-python"
+      ],
+      "source_signal_ids": [
+        "pr-32",
+        "commit-52",
+        "commit-8"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "Codex 桌面端实时语音对话转正并补齐跨平台发布链路",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 将 realtime_conversation 从实验性转正并默认启用，同时为 Windows/Linux 打包原生语音运行时（ALSA、原生音频库、签名校验），标志实时语音成为桌面 Agent 的稳定核心能力，跨平台语音发布链路走向生产级。",
+      "sources": [
+        "https://github.com/openai/codex/commit/3f59eb965a8bed447065dfcc1b5047f987a647bc",
+        "https://github.com/openai/codex/commit/ce7fbb373b14b37a5d163735c395e355e272d618",
+        "https://github.com/openai/codex/pull/44922",
+        "https://github.com/openai/codex/pull/44714",
+        "https://github.com/openai/codex/pull/44921"
+      ],
+      "related_repos": [
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-26",
+        "pr-17",
+        "pr-18",
+        "commit-19",
+        "commit-18"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "长会话上下文管理成为 Agent 框架集体攻坚方向",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 统一上下文快照渲染并引入工具增量与内容指纹，DeerFlow 新增子 Agent 父上下文快照与任务笔记召回，DeepAgents 实现压缩恢复与输入预算校验，multiple 框架从不同角度解决长会话上下文压缩、追溯与恢复问题，反映长任务 Agent 稳定性的工程化突破。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/commit/bb6d4316eb59b368b862e5517b888e5e70b1c3ae",
+        "https://github.com/openai/codex/pull/44932",
+        "https://github.com/openai/codex/pull/45090",
+        "https://github.com/bytedance/deer-flow/commit/6d5d7bb1d5e891ee07d7354cd4d8c29bf0ca2e39",
+        "https://github.com/openai/codex/commit/b04a2c264516ec2e6b3c91dd73ad18a21fd5a88f",
+        "https://github.com/bytedance/deer-flow/commit/1b76ab9060469af0d2229c72980bfffce523fc43"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "bytedance/deer-flow",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "pr-21",
+        "pr-10",
+        "commit-27",
+        "commit-26",
+        "commit-32",
+        "commit-14"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "可观测性向 OpenTelemetry 标准化：AI 应用追踪与成本可视化成共识",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "cline 接入采样式 AI SDK tracing 并经宿 OTLP exporter 导出，langchain 支持按网关实际返回值重写模型追踪元数据，phoenix 新增错误分析技能，vercel/ai 完善 embed/rerank 运行时上下文归因并保留错误 HTTP 状态码，AI 可观测性体系正快速向 OTel 生态收敛。",
+      "sources": [
+        "https://github.com/vercel/ai/commit/2dd0244bf55a9cc4f6acd29061df2c2359492fa8",
+        "https://github.com/langchain-ai/langchain/commit/e0e1557bd6ebae13915c59d942ef2824b51a10c6",
+        "https://github.com/openai/codex/commit/aee8a55ab6010f1d53e741edec74dbcffa07bcfe",
+        "https://github.com/cline/cline/commit/632fce5071b3f6f0040748ff9dc42aec73977b91",
+        "https://github.com/vercel/ai/commit/db59d78f8134ff9d231bbe34a91ca882013e1740",
+        "https://github.com/Arize-ai/phoenix/commit/df349f2bad089dfa5088c8947dee1f9b2d11a205"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "langchain-ai/langchain",
+        "vercel/ai",
+        "openai/codex",
+        "Arize-ai/phoenix"
+      ],
+      "source_signal_ids": [
+        "commit-2",
+        "commit-6",
+        "commit-47",
+        "commit-63",
+        "commit-65",
+        "commit-16"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "MCP 能力向浏览器扩展：Playwright/WebMCP 打通页面与 AI 工具互操作",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Playwright 通过 WebMCP 暴露页面注册工具并新增仅图像响应模式，同时 cline/codex 持续增强 MCP 服务器能力协商与可观测性，MCP 协议正从纯服务端调用向浏览器页面与 AI 工具双向互通演进。",
+      "sources": [
+        "https://github.com/microsoft/playwright/pull/42672",
+        "https://github.com/microsoft/playwright/commit/11ade07c8a2f45db00e0b99fc9a1329d1c53ebfa",
+        "https://github.com/openai/codex/pull/44826",
+        "https://github.com/microsoft/playwright/commit/1cee22292e43dd6abb22b2fb560d12a9db4669c4"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "microsoft/playwright",
+        "modelcontextprotocol/mcp"
+      ],
+      "source_signal_ids": [
+        "commit-62",
+        "pr-33",
+        "commit-69",
+        "pr-20"
+      ]
+    },
+    {
+      "id": "signal-1",
+      "title": "Phoenix 新增 MCP 技能服务",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "在 /mcp 挂载点提供共享技能根目录，并新增 phoenix-error-analysis 技能，标志着可观测性平台向 MCP 生态和 Agent 技能化方向演进，为 AI 应用的可观测性提供了新的标准化接口。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.270"
+      ],
+      "related_repos": [
+        "Arize-ai/phoenix",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "eng-7",
+      "title": "Agent 长驻服务资源治理：空闲会话自动回收与连接保活",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Playwright 让空闲 headless 浏览器会话一小时自动关闭并在 Playwright 驱动的 CLI/MCP 中自动回收，OpenClaw 修复托管工具调用断连并避免长期会话延迟，反映 Agent 从一次性任务向长驻基础设施演进时的资源成本优化。",
+      "sources": [
+        "https://github.com/microsoft/playwright/commit/3b346c8df5c72a13f76e5d3f2323ddc43c8dada5",
+        "https://github.com/microsoft/playwright/pull/42676",
+        "https://github.com/openclaw/openclaw/commit/3d926b2f7fbcc3a140a1fe48c2c4bb4ae2417fcb"
+      ],
+      "related_repos": [
+        "microsoft/playwright",
+        "microsoft/playwright-cli",
+        "openclaw/openclaw"
+      ],
+      "source_signal_ids": [
+        "pr-28",
+        "commit-68",
+        "commit-54"
+      ]
+    }
+  ],
+  "research_signals": [
+    {
+      "id": "res-0",
+      "title": "红队评测方法进化：基于应用证据驱动攻击计划，替代假设式测试",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "promptfoo 与 openai/codex 协同推进的 agent-skill 红队流程从应用入口、提示、工具、鉴权与状态推导攻击假定，使攻击计划扎根真实证据并缩小 39%，代表 Agent 安全评测从经验式向证据驱动式的方法论跃迁。",
+      "sources": [
+        "https://github.com/promptfoo/promptfoo/pull/10903",
+        "https://github.com/promptfoo/promptfoo/commit/3c5429b22e8124cdab5552b1b7bf7901b85a5f96"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-5",
+        "commit-49"
+      ]
+    },
+    {
+      "id": "res-1",
+      "title": "JS 值模型规范兼容性重构：test262 通过数一次性增加 291 个",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 5,
+      "why_it_matters": "anomalyco/opencode 将内置方法迁移到真实原型对象并统一原生函数属性查找，一次增加 291 个 test262 通过用例，为 AI 代码执行引擎的 JS 语义规范化奠定地基，是可复现评测驱动实现重构的典范。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/pull/48608"
+      ],
+      "related_repos": [
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": [
+        "pr-27"
+      ]
+    }
+  ],
+  "daily_reports_count": 2,
+  "total_prs_analyzed": 63,
+  "high_impact_signals": 11,
+  "total_commits": 1085,
+  "total_releases": 244,
+  "weekly_activity": {
+    "total_commits": 1085,
+    "active_repos_count": 80,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 200,
+        "top_contributors": [
+          "steipete",
+          "hannesrudolph",
+          "zachisfine"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 194,
+        "top_contributors": [
+          "jordanecker-ant",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 100,
+        "top_contributors": [
+          "bc-openai",
+          "fcoury-oai",
+          "etraut-openai"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 77,
+        "top_contributors": [
+          "hyeonsang010716",
+          "tiammomo",
+          "wutongyuonce"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 54,
+        "top_contributors": [
+          "actions-user",
+          "poteat"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 35,
+        "top_contributors": [
+          "mldangelo",
+          "renovate[bot]",
+          "mldangelo-oai"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 32,
+        "top_contributors": [
+          "claude",
+          "axiomofjoy",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 31,
+        "top_contributors": [
+          "FrantisekGazo",
+          "porada",
+          "GautamBytes"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 29,
+        "top_contributors": [
+          "ai-sdk-factory[bot]",
+          "aayush-kapoor",
+          "n1ckoates"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 26,
+        "top_contributors": [
+          "eavanvalkenburg",
+          "rogerbarreto",
+          "baywet"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 26,
+        "top_contributors": [
+          "lyzno1",
+          "CodingOnStar",
+          "CoralGarden52"
+        ]
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "commits": 24,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 20,
+        "top_contributors": [
+          "roboclaw-bot",
+          "steipete",
+          "gadzan"
+        ]
+      },
+      {
+        "repo": "openinterpreter/openinterpreter",
+        "commits": 20,
+        "top_contributors": [
+          "interpreterwork",
+          "cestercian"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 19,
+        "top_contributors": [
+          "next-js-bot[bot]",
+          "sokra",
+          "unstubbable"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 19,
+        "top_contributors": [
+          "haleyparkdesign",
+          "abeatrix",
+          "alex-lum"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 18,
+        "top_contributors": [
+          "roboclaw-bot",
+          "steipete",
+          "KrasimirKralev"
+        ]
+      },
+      {
+        "repo": "gptme/gptme",
+        "commits": 17,
+        "top_contributors": [
+          "ErikBjare",
+          "derryckf",
+          "TimeToBuildBob"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 15,
+        "top_contributors": [
+          "DominikRusso",
+          "vercel-gh-bot-2[bot]",
+          "vercel-gh-bot-5[bot]"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 15,
+        "top_contributors": [
+          "00200200",
+          "rioyu123",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "OpenHands/OpenHands",
+        "commits": 13,
+        "top_contributors": [
+          "Chocolatine75",
+          "simonrosenberg",
+          "neubig"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 13,
+        "top_contributors": [
+          "langchain-oss-automated-triage[bot]",
+          "nick-hollon-lc",
+          "jkennedyvz"
+        ]
+      },
+      {
+        "repo": "aaif-goose/goose",
+        "commits": 10,
+        "top_contributors": [
+          "filipkujawa",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 9,
+        "top_contributors": [
+          "CoralGarden52",
+          "DavdGao",
+          "Tsubaki-01"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 8,
+        "top_contributors": [
+          "yury-s",
+          "dgozman",
+          "pavelfeldman"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 8,
+        "top_contributors": [
+          "joelagnel",
+          "shanselman",
+          "Steven23456"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 8,
+        "top_contributors": [
+          "JacobNWolf",
+          "R-Taneja",
+          "heimoshuiyu"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 7,
+        "top_contributors": [
+          "Vidit-Ostwal"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 7,
+        "top_contributors": [
+          "Patrick-Erichsen"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 6,
+        "top_contributors": [
+          "Ghraven",
+          "ashpreetbedi",
+          "devansh173"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 4,
+        "top_contributors": [
+          "jacoblee93",
+          "langchain-oss-model-profiles[bot]",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 3,
+        "top_contributors": [
+          "z0gSh1u",
+          "su8su"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 2,
+        "top_contributors": [
+          "AshishKingdom",
+          "jerryjliu"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 2,
+        "top_contributors": [
+          "villahernandez-coder",
+          "diegogodinezr"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 1,
+        "top_contributors": [
+          "apcha-oai"
+        ]
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 1,
+        "top_contributors": [
+          "moonbox3"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 1,
+        "top_contributors": [
+          "harshgupta-mem0"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 1,
+        "top_contributors": [
+          "miguelg719"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 1,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Aider-AI/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Aperant",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  }
+}
