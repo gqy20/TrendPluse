@@ -111,12 +111,35 @@ const painPointSchema = z
   })
   .passthrough();
 
-// issue_insights 仅渲染这三个字段，其余 passthrough 保留
+// issue_insights 渲染字段（痛点 + 全局要点 + 采集质量脚注），其余 passthrough 保留
 const issueInsightsSchema = z
   .object({
     summary_brief: z.string().nullish(),
     global_highlights: z.array(z.string()).nullish(),
     top_pain_points: z.array(painPointSchema).nullish(),
+    quality_score: z.coerce.number().nullish(),
+    quality_status: z.string().nullish(),
+    expected_files: z.coerce.number().nullish(),
+    parsed_files: z.coerce.number().nullish(),
+    failed_files: z.coerce.number().nullish(),
+  })
+  .passthrough();
+
+// 与后端 agent 运行指标对齐（仅展示页脚聚合摘要所需的字段子集）
+const usageMetricsSchema = z
+  .object({
+    run_count: z.coerce.number().nullish(),
+    models: z.array(z.string()).default([]),
+    total_turns: z.coerce.number().nullish(),
+    total_duration_ms: z.coerce.number().nullish(),
+    total_api_duration_ms: z.coerce.number().nullish(),
+    total_cost_usd: z.coerce.number().nullish(),
+    usage: z
+      .object({
+        total_tokens: z.coerce.number().nullish(),
+      })
+      .passthrough()
+      .nullish(),
   })
   .passthrough();
 
@@ -146,6 +169,8 @@ const dailySchema = z
     historical_basis_dates: z.array(z.string()).default([]),
     summary_confidence: z.coerce.number().nullish(),
     trend_status: z.string().nullish(),
+    trend_delta: z.string().nullish(),
+    daily_llm_usage: usageMetricsSchema.nullish(),
   })
   .passthrough();
 
@@ -257,6 +282,7 @@ export type DailyReport = z.infer<typeof dailySchema>;
 export type WeeklyReport = z.infer<typeof weeklySchema>;
 export type DiscoveryReport = z.infer<typeof discoverySchema>;
 export type RepoActivity = z.infer<typeof repoActivitySchema>;
+export type UsageMetrics = z.infer<typeof usageMetricsSchema>;
 export type ReleaseSummaryInfo = z.infer<typeof releaseSummarySchema>;
 export type ReleaseInfo = z.infer<typeof releaseInfoSchema>;
 export type ReleasesData = z.infer<typeof releasesDataSchema>;

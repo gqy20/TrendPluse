@@ -1,0 +1,148 @@
+---
+/**
+ * Release 详情抽屉:AI 中文摘要 / 关键变更 / 原文 Release Notes。
+ * 数据来源:页面内嵌 <script type="application/json" id="tp-releases-data">(按数组下标索引),
+ * 触发:任意 [data-release-detail="<index>"] 元素。
+ * 与 SignalDrawer 同构(esc 关闭 / 点击遮罩关闭 / 焦点归还触发元素)。
+ * 渐进增强:无 JS 时卡片仍可外链 GitHub。
+ */
+---
+
+<dialog id="tp-release-drawer" aria-label="发布详情" class="signal-dialog">
+  <div id="tp-release-drawer-content"></div>
+</dialog>
+<style>
+  .signal-dialog { position:fixed; inset:0 0 0 auto; margin:0; width:min(100vw,560px); height:100dvh; max-width:100vw; max-height:100dvh; border:0; padding:0; background:var(--color-paper); color:var(--color-ink); overflow-y:auto; overscroll-behavior:contain; overflow-wrap:anywhere; }
+  .signal-dialog::backdrop { background:rgb(15 18 23 / .28); }
+  .signal-dialog :global(button) { cursor:pointer; min-height:40px; }
+  .signal-dialog :global(:focus-visible) { outline:2px solid var(--color-accent); outline-offset:3px; }
+  .signal-dialog :global(summary) { cursor:pointer; min-height:40px; }
+</style>
+
+<script>
+  import { renderRating } from '../../lib/ratings';
+  import { releaseChangeType } from '../../lib/format';
+
+  interface ReleaseSummary {
+    change_type?: string | null;
+    key_changes?: string[];
+    summary_cn?: string | null;
+    impact_level?: number | null;
+  }
+  interface Rel {
+    repo: string;
+    version: string;
+    author?: string;
+    date?: string;
+    summary?: string;
+    url?: string;
+    assets_count?: number | null;
+    ai_summary?: ReleaseSummary | null;
+  }
+
+  const drawer = document.getElementById('tp-release-drawer') as HTMLDialogElement;
+  let trigger: HTMLElement | null = null;
+  let originalOverflow = '';
+  const content = document.getElementById('tp-release-drawer-content')!;
+
+  function releasesList(): Rel[] {
+    const el = document.getElementById('tp-releases-data');
+    if (!el) return [];
+    try {
+      return JSON.parse(el.textContent || '[]') as Rel[];
+    } catch {
+      return [];
+    }
+  }
+
+  function esc(s: string): string {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function render(r: Rel) {
+    const ct = releaseChangeType(r.ai_summary?.change_type);
+    const keyChanges = r.ai_summary?.key_changes ?? [];
+    const meta = [
+      r.date ?? '',
+      r.author ?? '',
+      r.assets_count != null ? `${r.assets_count} assets` : '',
+    ].filter(Boolean).map(esc).join(' · ');
+
+    const changes = keyChanges.length
+      ? keyChanges
+          .map(
+            (c) => `<div class="tp-row border-b border-hairline flex gap-2 py-3">
+              <span class="text-ink-4 select-none shrink-0">└</span>
+              <span class="tp-meta text-ink leading-[1.7]">${esc(c)}</span>
+            </div>`
+          )
+          .join('')
+      : '';
+
+    content.innerHTML = `
+      <header class="sticky top-0 bg-paper border-b border-hairline px-7 py-5 flex items-start justify-between gap-4">
+        <span class="tp-tag" style="color:${ct.color}">${ct.label}</span>
+        <button id="tp-release-drawer-close" aria-label="关闭" class="tp-mono text-ink-3 hover:text-ink transition-colors">esc ✕</button>
+      </header>
+      <div class="px-7 py-6">
+        <a href="https://github.com/${esc(r.repo)}" target="_blank" rel="noopener" class="tp-mono text-[14px] text-ink-2 hover:text-accent transition-colors">${esc(r.repo)}</a>
+        <h2 class="tp-h2 text-[28px] mt-2 break-all">${esc(r.version)}</h2>
+        ${meta ? `<p class="tp-mono text-ink-3 mt-3 text-[12px]">${meta}</p>` : ''}
+        <div class="flex gap-5 mt-3">
+          <span class="flex items-center gap-3 tp-mono text-ink-2">影响 ${renderRating(r.ai_summary?.impact_level)}</span>
+        </div>
+
+        ${r.ai_summary?.summary_cn ? `<p class="tp-body text-ink-2 mt-5">${esc(r.ai_summary.summary_cn)}</p>` : ''}
+
+        ${changes ? `<h3 class="tp-mono text-ink mt-8 mb-1">关键变更 · ${keyChanges.length}</h3>${changes}` : ''}
+
+        ${
+          r.summary
+            ? `<details class="mt-8">
+                <summary class="tp-mono text-ink">原文 Release Notes</summary>
+                <p class="tp-meta text-ink-2 whitespace-pre-wrap mt-3 leading-[1.7]">${esc(r.summary)}</p>
+              </details>`
+            : ''
+        }
+
+        ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" class="tp-link inline-block mt-8 py-2">在 GitHub 查看 ↗</a>` : ''}
+      </div>`;
+
+    document.getElementById('tp-release-drawer-close')?.addEventListener('click', close);
+  }
+
+  function open(index: string, opener: HTMLElement) {
+    const list = releasesList();
+    const r = list[Number(index)];
+    if (!r) return;
+    if (!drawer.open) {
+      trigger = opener;
+      originalOverflow = document.body.style.overflow;
+    }
+    render(r);
+    if (!drawer.open) drawer.showModal();
+    document.body.style.overflow = 'hidden';
+    drawer.scrollTop = 0;
+    document.getElementById('tp-release-drawer-close')?.focus({ preventScroll:true });
+  }
+
+  function close() { drawer.close(); }
+
+  drawer.addEventListener('close', () => {
+    document.body.style.overflow = originalOverflow;
+    trigger?.focus({ preventScroll:true });
+  });
+  drawer.addEventListener('click', event => {
+    const rect = drawer.getBoundingClientRect();
+    if (event.target === drawer && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) close();
+  });
+  document.addEventListener('click', event => {
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-release-detail]');
+    if (!target || (event.target as HTMLElement).closest('a')) return;
+    event.preventDefault();
+    const opener = target instanceof HTMLButtonElement ? target : target.querySelector<HTMLButtonElement>('button[data-release-detail]') ?? target;
+    open(target.dataset.releaseDetail!, opener);
+  });
+</script>

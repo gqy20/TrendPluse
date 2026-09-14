@@ -1,41 +1,60 @@
 ---
+/**
+ * 生态活跃度表:本期有提交的仓库榜单(排名 + 仓库 + 贡献者 + 提交数)。
+ * 默认展示前 limit 行,其余折叠,点击展开——与 SignalTable 的渐进披露一致。
+ * 设计语言:tp-row 发丝线行 / tp-mono 仓库 / tp-num 大数字。
+ */
 import { repoUrl } from '../../lib/format';
 import type { RepoActivity } from '../../content.config';
 
 interface Props {
   repos?: RepoActivity[];
-  title?: string;
   limit?: number;
 }
-const { repos = [], title = '仓库活跃度', limit = 10 } = Astro.props;
-const top = repos.slice(0, limit);
-const maxCommits = Math.max(1, ...top.map((r) => r.commits || 0));
+const { repos = [], limit = 10 } = Astro.props;
+const sorted = [...repos].sort((a, b) => (b.commits ?? 0) - (a.commits ?? 0));
+const rest = sorted.slice(limit);
 ---
 
-{top.length > 0 && (
-  <section>
-    <h2 class="text-xl font-bold mb-3">📈 {title}</h2>
-    <div class="rounded-lg border border-[var(--tp-border)] bg-[var(--tp-surface)] overflow-hidden">
-      {top.map((r, i) => {
-        const pct = Math.round(((r.commits || 0) / maxCommits) * 100);
-        return (
-          <div class:list={['flex items-center gap-3 px-3 py-2', i > 0 && 'border-t border-[var(--tp-border)]']}>
-            <span class="text-xs text-[var(--tp-muted)] tabular-nums w-6 flex-shrink-0">{i + 1}.</span>
-            <a
-              href={repoUrl(r.repo)}
-              target="_blank"
-              rel="noopener"
-              class="font-mono text-sm hover:underline truncate flex-1 min-w-0"
-            >
-              {r.repo}
-            </a>
-            <div class="hidden sm:block w-32 h-1.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden flex-shrink-0">
-              <div class="h-full bg-brand-500 rounded-full" style={`width:${pct}%`}></div>
+{sorted.length > 0 && (
+  <div class="activity-table border-t border-hairline" data-activity-table>
+    {sorted.map((r, i) => {
+      const contributors = r.top_contributors ?? [];
+      const shown = contributors.slice(0, 3);
+      const more = contributors.length - shown.length;
+      return (
+        <div class="tp-row border-b border-hairline px-1 -mx-1" data-activity-row hidden={i >= limit}>
+          <div class="grid md:grid-cols-[40px_minmax(0,1fr)_110px] gap-x-5 gap-y-1 items-baseline">
+            <span class="tp-num text-[18px] text-ink-3">{String(i + 1).padStart(2, '0')}</span>
+            <div class="min-w-0">
+              <a href={repoUrl(r.repo)} target="_blank" rel="noopener" class="tp-mono text-ink hover:text-accent transition-colors truncate">{r.repo}</a>
+              {shown.length > 0 && (
+                <p class="tp-mono text-[12px] text-ink-3 mt-1 truncate">
+                  {shown.join(' · ')}{more > 0 && ` +${more}`}
+                </p>
+              )}
             </div>
-            <span class="text-sm font-semibold tabular-nums text-right w-16 flex-shrink-0">{r.commits ?? '—'}</span>
+            <span class="tp-num text-[22px] text-ink md:text-right">{r.commits ?? '—'}</span>
           </div>
-        );
-      })}
-    </div>
-  </section>
+        </div>
+      );
+    })}
+    {rest.length > 0 && (
+      <button type="button" data-activity-more class="tp-link block mt-4 py-2 cursor-pointer" aria-expanded="false">
+        展开其余 {rest.length} 个仓库 ↓
+      </button>
+    )}
+  </div>
 )}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-activity-table]').forEach(table => {
+    const rows = [...table.querySelectorAll<HTMLElement>('[data-activity-row]')];
+    const more = table.querySelector<HTMLButtonElement>('[data-activity-more]');
+    if (!more || rows.length === 0) return;
+    more.addEventListener('click', () => {
+      rows.forEach(row => { row.hidden = false; });
+      more.hidden = true;
+    });
+  });
+</script>

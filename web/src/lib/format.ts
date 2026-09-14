@@ -54,8 +54,24 @@ export function repoUrl(repo: string): string {
   return `https://github.com/${repo}`;
 }
 
-/** 数字千分位 */
-export function formatNumber(n?: number): string {
+/**
+ * Release change_type → 中文标签 + 语义色。
+ * ⚠ 与日报页 Release Radar 卡片/抽屉共用，改色请两处同改（此处为 source of truth）。
+ */
+export const RELEASE_CHANGE_TYPES: Record<string, { label: string; color: string }> = {
+  feature: { label: '新功能', color: '#1a57de' },
+  improvement: { label: '改进', color: '#409e6b' },
+  fix: { label: '修复', color: '#bf732e' },
+  breaking: { label: '不兼容', color: '#cc3b33' },
+  other: { label: '其他', color: '#636b78' },
+};
+
+export function releaseChangeType(type?: string | null): { label: string; color: string } {
+  return (type && RELEASE_CHANGE_TYPES[type]) || RELEASE_CHANGE_TYPES.other;
+}
+
+/** 数字千分位（报告数值字段多为 nullish，缺失显示 —） */
+export function formatNumber(n?: number | null): string {
   if (n == null) return '—';
   return n.toLocaleString('en-US');
 }

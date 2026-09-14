@@ -7,8 +7,11 @@ import Rating from '../../../components/report/Rating.astro';
 import SignalTable from '../../../components/report/SignalTable.astro';
 import SignalTypeBar from '../../../components/report/SignalTypeBar.astro';
 import SignalDrawer from '../../../components/report/SignalDrawer.astro';
+import ReleaseDrawer from '../../../components/report/ReleaseDrawer.astro';
+import ActivityTable from '../../../components/report/ActivityTable.astro';
 import HistoryContext from '../../../components/report/HistoryContext.astro';
 import { routes } from '../../../lib/path';
+import { formatNumber, releaseChangeType } from '../../../lib/format';
 import Banner from '../../../components/ui/Banner.astro';
 
 export async function getStaticPaths() {
@@ -43,16 +46,72 @@ const hasHistory = !!historicalComparison || historicalReports.length > 0;
 // Issue Radar:痛点卡片,severity 色按出现顺序 红/橙/蓝
 const painPoints = (d.issue_insights?.top_pain_points ?? []).slice(0, 3);
 const PAIN_COLORS = ['#cc3b33', '#bf732e', '#1a57de'];
+const globalHighlights = d.issue_insights?.global_highlights ?? [];
+const insightsQuality = d.issue_insights?.quality_score != null || d.issue_insights?.parsed_files != null;
 
-// Release Radar:类型色
-const REL_TYPE_COLOR: Record<string, string> = {
-  feature: '#1a57de',
-  improvement: '#409e6b',
-  fix: '#bf732e',
-  breaking: '#cc3b33',
-  other: '#636b78',
-};
-const releases = (d.releases?.releases ?? []).slice(0, 3);
+// 采集剖面(Hero 注脚) + 破坏性变更警示
+const commitsAnalyzed = d.stats.total_commits_analyzed ?? d.activity?.total_commits ?? 0;
+const releasesAnalyzed = d.stats.total_releases_analyzed ?? d.releases?.total_count ?? 0;
+const breakingCount = d.stats.total_breaking_changes ?? 0;
+
+// Release Radar:同仓库批量发版(如 monorepo 子包同步)聚合为单行,其余逐条进列表
+const allReleases = d.releases?.releases ?? [];
+const BATCH_THRESHOLD = 4;
+const indicesByRepo = new Map<string, number[]>();
+allReleases.forEach((r, i) => {
+  const list = indicesByRepo.get(r.repo) ?? [];
+  list.push(i);
+  indicesByRepo.set(r.repo, list);
+});
+const batchRepos = new Set(
+  [...indicesByRepo].filter(([, indices]) => indices.length > BATCH_THRESHOLD).map(([repo]) => repo)
+);
+const featured = allReleases
+  .filter(r => !batchRepos.has(r.repo))
+  .sort((a, b) =>
+    (b.ai_summary?.impact_level ?? 0) - (a.ai_summary?.impact_level ?? 0)
+    || (b.date ?? '').localeCompare(a.date ?? '')
+  )
+  .slice(0, 6);
+type ReleaseRow =
+  | { kind: 'batch'; repo: string; count: number; impact: number; date?: string }
+  | { kind: 'single'; repo: string; index: number; version: string; changeType: string; impact: number; date?: string };
+const releaseRows: ReleaseRow[] = [];
+for (const [repo, indices] of indicesByRepo) {
+  if (indices.length > BATCH_THRESHOLD) {
+    const group = indices.map(i => allReleases[i]);
+    releaseRows.push({
+      kind: 'batch',
+      repo,
+      count: indices.length,
+      impact: Math.max(0, ...group.map(g => g.ai_summary?.impact_level ?? 0)),
+      date: group.map(g => g.date).filter(Boolean).sort().at(-1),
+    });
+  } else {
+    indices.forEach(i => {
+      const r = allReleases[i];
+      releaseRows.push({
+        kind: 'single',
+        repo,
+        index: i,
+        version: r.version,
+        changeType: r.ai_summary?.change_type ?? 'other',
+        impact: r.ai_summary?.impact_level ?? 0,
+        date: r.date,
+      });
+    });
+  }
+}
+releaseRows.sort((a, b) => b.impact - a.impact || (b.date ?? '').localeCompare(a.date ?? ''));
+
+// 生态活跃度:只统计本期有提交的仓库,0 提交不渲染
+const activeRepos = (d.activity?.top_repos ?? []).filter(r => (r.commits ?? 0) > 0);
+const activeCount = d.activity?.active_repos_count ?? activeRepos.length;
+const totalCommits = d.activity?.total_commits ?? 0;
+
+// 页脚:报告生成信息(LLM 聚合指标)
+const usage = d.daily_llm_usage;
+const genModels = usage?.models?.join(' + ') ?? '';
 
 ---
 
@@ -64,7 +123,8 @@ const releases = (d.releases?.releases ?? []).slice(0, 3);
     { id: 'signals', label: '全部信号' },
     { id: 'history', label: '历史位置', show: hasHistory },
     { id: 'issues', label: 'Issues', show: painPoints.length > 0 },
-    { id: 'releases', label: 'Releases', show: releases.length > 0 },
+    { id: 'releases', label: 'Releases', show: releaseRows.length > 0 },
+    { id: 'activity', label: '活跃度', show: activeRepos.length > 0 },
   ]} />
   <article class="report-reading pt-8 pb-8">
     <div class="min-w-0">
@@ -83,12 +143,20 @@ const releases = (d.releases?.releases ?? []).slice(0, 3);
               ].map(stat => <div><span class="tp-num">{stat.value}</span><span>{stat.label}</span></div>)}
               <div><Rating kind="confidence" value={d.summary_confidence} large /><span>置信</span></div>
             </div>
-            <p class="report-source-note">本期已分析 {d.stats.total_prs_analyzed ?? 0} 个 PR · 来源：PR / Commits / Releases / Issues</p>
+            <p class="report-source-note">
+              本期分析 {formatNumber(d.stats.total_prs_analyzed)} 个 PR · {formatNumber(commitsAnalyzed)} 次提交 · {formatNumber(releasesAnalyzed)} 个发布{breakingCount > 0 && ` · ${breakingCount} 项破坏性变更`} · 来源：PR / Commits / Releases / Issues
+            </p>
           </div>
 
         </div>
         <SignalTypeBar signals={allSignals} period={d.date} heading="信号分类" targetId="signals" panel />
       </header>
+
+      {breakingCount > 0 && (
+        <Banner tone="warning" dot="danger" title={`本期检测到 ${breakingCount} 项破坏性变更。`}>
+          升级依赖前请优先核对 Release Radar 中的不兼容标记。
+        </Banner>
+      )}
 
       {total === 0 && (
         <Banner tone="warning" dot="warning" title="今日未捕捉到信号。">
@@ -172,7 +240,7 @@ const releases = (d.releases?.releases ?? []).slice(0, 3);
           : <p class="tp-mono text-ink-4">今日无信号。</p>}
       </section>
 
-      {hasHistory && <HistoryContext date={d.date} status={d.trend_status} comparison={historicalComparison} references={historicalReports} />}
+      {hasHistory && <HistoryContext date={d.date} status={d.trend_status} delta={d.trend_delta} comparison={historicalComparison} references={historicalReports} />}
 
       <!-- Issue Radar:色条卡片 -->
       {painPoints.length > 0 && (
@@ -181,6 +249,13 @@ const releases = (d.releases?.releases ?? []).slice(0, 3);
             <h2 class="tp-section">Issue Radar</h2>
             <span class="text-[13px] text-[#9ea3ad]">从用户 Issue 中提取跨仓库痛点,而不是只看代码提交。</span>
           </div>
+          {globalHighlights.length > 0 && (
+            <ul class="mb-8 max-w-[720px] space-y-1.5">
+              {globalHighlights.slice(0, 3).map(h => (
+                <li class="text-[14px] leading-[1.7] text-[#4f5763]">— {h}</li>
+              ))}
+            </ul>
+          )}
           <div class="grid md:grid-cols-3 gap-6">
             {painPoints.map((p, i) => (
               <div class="bg-[#f9f7f2] rounded-[8px] p-5 pl-6 relative min-h-[150px]">
@@ -192,37 +267,107 @@ const releases = (d.releases?.releases ?? []).slice(0, 3);
               </div>
             ))}
           </div>
+          {insightsQuality && (
+            <p class="tp-mono text-[12px] text-[#9ea3ad] mt-6">
+              解析 {d.issue_insights?.parsed_files ?? '—'}/{d.issue_insights?.expected_files ?? '—'} 个仓库
+              {d.issue_insights?.quality_score != null && ` · 质量分 ${d.issue_insights.quality_score.toFixed(2)}`}
+              {(d.issue_insights?.failed_files ?? 0) > 0 && ` · 失败 ${d.issue_insights?.failed_files}`}
+            </p>
+          )}
         </section>
       )}
 
-      <!-- Release Radar -->
-      {releases.length > 0 && (
+      <!-- Release Radar:精选卡片(AI 摘要) + 全部列表(批量发版聚合) -->
+      {releaseRows.length > 0 && (
         <section class="py-10 scroll-mt-6" id="releases">
-          <h2 class="tp-section mb-7">Release Radar</h2>
-          <div class="grid md:grid-cols-3 gap-6">
-            {releases.map((r) => {
-              const color = REL_TYPE_COLOR[r.ai_summary?.change_type ?? 'other'] ?? '#636b78';
-              return (
-                <a href={r.url} target="_blank" rel="noopener" class="block">
-                  <p class="tp-mono !text-[16px] font-medium text-ink">{r.repo.split('/')[1] ?? r.repo}</p>
-                  <div class="flex items-center gap-2.5 mt-2">
-                    <span class="tp-mono text-[#9ea3ad]">{r.version}</span>
-                    <span class="inline-block size-[8px] rounded-[4px]" style={`background:${color}`} />
-                  </div>
-                  <span class="inline-block mt-3"><Rating value={r.ai_summary?.impact_level} /></span>
-                </a>
-              );
-            })}
+          <div class="flex items-baseline gap-6 mb-7">
+            <h2 class="tp-section">Release Radar</h2>
+            <span class="text-[13px] text-[#9ea3ad]">本期 {formatNumber(d.releases?.total_count ?? allReleases.length)} 个发布 · 覆盖 {d.releases?.unique_repos_count ?? '—'} 个仓库。</span>
+          </div>
+
+          {featured.length > 0 && (
+            <div class="grid md:grid-cols-3 gap-6 gap-y-9 mb-10">
+              {featured.map((r) => {
+                const ct = releaseChangeType(r.ai_summary?.change_type);
+                return (
+                  <button type="button" data-release-detail={allReleases.indexOf(r)} class="text-left cursor-pointer">
+                    <p class="tp-mono !text-[16px] font-medium text-ink">{r.repo.split('/')[1] ?? r.repo}</p>
+                    <div class="flex items-baseline gap-2.5 mt-2 flex-wrap">
+                      <span class="tp-mono text-[#69707a] break-all">{r.version}</span>
+                      <span class="inline-block size-[8px] rounded-[4px] translate-y-[-1px]" style={`background:${ct.color}`} title={ct.label} />
+                      {r.date && <span class="tp-mono text-[12px] text-[#9ea3ad]">{r.date.slice(5)}</span>}
+                    </div>
+                    <span class="inline-block mt-3"><Rating value={r.ai_summary?.impact_level} /></span>
+                    {r.ai_summary?.summary_cn && <p class="text-[13px] leading-[1.65] text-[#636b78] mt-3 line-clamp-2">{r.ai_summary.summary_cn}</p>}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          <div class="border-t border-hairline">
+            {releaseRows.map((row) => row.kind === 'batch' ? (
+              <a href={`https://github.com/${row.repo}/releases`} target="_blank" rel="noopener" class="tp-row border-b border-hairline">
+                <div class="grid md:grid-cols-[minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
+                  <span class="tp-mono text-ink truncate">{row.repo}</span>
+                  <span class="tp-mono text-ink-2 truncate">× {row.count} 批量发版</span>
+                  <span class="tp-mono text-[#9ea3ad]">同步</span>
+                  <span class="tp-mono text-[#9ea3ad]">{row.date?.slice(5) ?? '—'}</span>
+                  <span class="md:text-right"><Rating value={row.impact} /></span>
+                </div>
+              </a>
+            ) : (
+              <button type="button" data-release-detail={row.index} class="tp-row border-b border-hairline w-full text-left cursor-pointer">
+                <div class="grid md:grid-cols-[minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
+                  <span class="tp-mono text-ink truncate">{row.repo}</span>
+                  <span class="tp-mono text-[#69707a] truncate" title={row.version}>{row.version}</span>
+                  <span class="tp-mono" style={`color:${releaseChangeType(row.changeType).color}`}>{releaseChangeType(row.changeType).label}</span>
+                  <span class="tp-mono text-[#9ea3ad]">{row.date?.slice(5) ?? '—'}</span>
+                  <span class="md:text-right"><Rating value={row.impact} /></span>
+                </div>
+              </button>
+            ))}
           </div>
         </section>
       )}
+
+      <!-- 生态活跃度:本期有提交的仓库榜单 -->
+      {activeRepos.length > 0 && (
+        <section class="py-10 scroll-mt-6" id="activity">
+          <div class="flex items-baseline gap-6 mb-7">
+            <h2 class="tp-section">生态活跃度</h2>
+            <span class="text-[13px] text-[#9ea3ad]">{activeCount} 个仓库产生提交 · 共 {formatNumber(totalCommits)} 次。</span>
+          </div>
+          <ActivityTable repos={activeRepos} limit={10} />
+        </section>
+      )}
+
+      <!-- 页脚:监控范围 + 报告生成信息 -->
+      <footer class="mt-4 pt-8 border-t border-hairline">
+        <p class="tp-mono text-[12px] text-[#9ea3ad]">
+          监控 {d.monitored_repos.length} 个仓库 · <a class="tp-link" href={routes.repos()}>查看监控清单 →</a>
+        </p>
+        {usage && (
+          <details class="mt-4">
+            <summary class="tp-mono text-[12px] text-[#9ea3ad] cursor-pointer select-none">报告生成信息</summary>
+            <p class="tp-mono text-[12px] text-[#9ea3ad] mt-3 leading-[1.8]">
+              {genModels || '—'} · {usage.run_count ?? '—'} 次运行 · {usage.total_turns ?? '—'} 轮
+              {usage.usage?.total_tokens != null && ` · ${(usage.usage.total_tokens / 1000).toFixed(1)}k tokens`}
+              {usage.total_cost_usd != null && ` · $${usage.total_cost_usd.toFixed(2)}`}
+              {usage.total_duration_ms != null && ` · ${(usage.total_duration_ms / 60000).toFixed(1)} min`}
+            </p>
+          </details>
+        )}
+      </footer>
     </div>
 
   </article>
   </div>
 
 
-  <!-- 信号数据岛 + 详情抽屉 -->
+  <!-- 信号 + 发布数据岛 + 详情抽屉 -->
   <script is:inline type="application/json" id="tp-signals-data" set:html={JSON.stringify(allSignals).replace(/</g, "\\u003c")} />
+  <script is:inline type="application/json" id="tp-releases-data" set:html={JSON.stringify(allReleases).replace(/</g, "\\u003c")} />
   <SignalDrawer />
+  <ReleaseDrawer />
 </BaseLayout>
