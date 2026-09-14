@@ -1,0 +1,2850 @@
+{
+  "date": "2026-09-14",
+  "summary_brief": "2026年9月14日是AI Agent生态的高信号推进日（131条信号、12条高影响，信号密度远超9/13的79条），无方向性转折，而是把9/12\"安全共识沉淀+语音/屏幕交互范式\"与9/13\"跨平台执行+层级子代理编排\"两条既有主线向\"生产级可靠性+规模化落地\"推进。延续主线：①安全加固成为全行业基座——opencode剥离__proto__防原型污染、内置操作上限防DoS与递归深度限制，codex新增可撤销网络策略控制器与Windows沙箱令牌边界校验，turborepo修复环境变量缓存中毒，ruflo强化MCP调用者身份校验与联邦事件签名验证，把9/12确立的完整攻击面防线逐一落地成具体补丁；②Agent状态持久化与跨进程断点恢复密集合流——gptme CostTracker与子代理注册表跨进程持久化、重启恢复，microsoft/agent-framework支持checkpoint恢复内置编排，opencode补齐上下文钩子，是对昨日\"层级编排中的上下文保真\"主线的工程化深化；③MCP生态现代化（SDK 2.0、OAuth合规、策略门控、事件循环隔离）；④多模态（AgentScope实时语音TUI、ClawX Computer Use/ASR、playwright媒体模拟）；⑤成本可观测性、向量/混合检索记忆延续5月以来治理主线。真正的推进点在于：高性价比推理模型（DeepSeek V4.1 Flash、Gemini 3.8 Flash等）竞相进入主流Agent框架标志成本下行与规模化渗透；金融垂直领域Agent技能生态开始落地（anthropics官方插件库新增BlackRock理财技能+Ac360 MCP）；Turborepo向通用多语言（Go/uv-Python）构建系统演进。相对3/18（沙箱共识确立）至今，生态已从\"安全隔离共识+能力积累\"演进到\"安全即基础设施、持久化即可靠性、垂直价值兑现\"的生产级阶段。",
+  "engineering_signals": [
+    {
+      "id": "eng-0",
+      "title": "Agent 安全加固成为全行业密集投入方向",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "当日多个项目几乎同步推进安全防护：opencode 剥离 __proto__ 防原型污染、内置操作分配上限防 DoS、递归深度限制；codex 新增可撤销网络策略控制器与 Windows 沙箱令牌边界校验；ruflo 强化 MCP 调用者身份校验与联邦事件签名验证；turborepo 修复环境变量缓存中毒。这标志 Agent 从'能用'向'可信'演进，安全成为基础设施级硬性要求。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/pull/48891",
+        "https://github.com/anomalyco/opencode/pull/49019",
+        "https://github.com/ruvnet/ruflo/commit/1bd734e272bda1d225b6a472231c9fb9fc009922",
+        "https://github.com/gptme/gptme/commit/93c337cb58cb8c5f0b835c66edf4e5fc53b04bd1",
+        "https://github.com/openai/codex/commit/e61f3819007ad283b79417b85f44ab19cf1dd781",
+        "https://github.com/vercel/turborepo/pull/14060",
+        "https://github.com/openai/codex/pull/45503",
+        "https://github.com/openai/codex/commit/973ec2942c33159a188ea056b1cb1b5ec3d31ed6",
+        "https://github.com/ruvnet/ruflo/pull/3322",
+        "https://github.com/openinterpreter/openinterpreter/commit/f110a7a85f43efc343f936f5bc504e01eb262550",
+        "https://github.com/ruvnet/ruflo/commit/e7fb8edc1927b1ab0adc9068dc5c00a3966179e1",
+        "https://github.com/anomalyco/opencode/pull/48926"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "anomalyco/opencode",
+        "openai/codex",
+        "openinterpret/interpreter",
+        "vercel/turborepo",
+        "openinterpreter/openinterpreter",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "pr-10",
+        "pr-21",
+        "pr-26",
+        "pr-29",
+        "pr-30",
+        "pr-7",
+        "commit-11",
+        "commit-14",
+        "commit-15",
+        "commit-21",
+        "commit-23",
+        "commit-46"
+      ]
+    },
+    {
+      "id": "eng-1",
+      "title": "Agent 状态持久化与跨进程断点恢复基础设施趋同",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "gptme 与微服务间成本追踪持久化、子代理注册表重启恢复；microsoft/agent-framework 支持 checkpoint 恢复内置编排类型与中间件参数修正；opencode 补齐上下文钩子提升缓存复用。多框架同步推进状态持久化，说明长周期、可恢复的 Agent 工作流正从实验走向生产核心需求。",
+      "sources": [
+        "https://github.com/gptme/gptme/commit/e4e0f6980ee0fa91f32dd3ce43b813445ecf022f",
+        "https://github.com/gptme/gptme/commit/085bd7bec068544213972d3410022a02bd901754",
+        "https://github.com/anomalyco/opencode/pull/48749",
+        "https://github.com/gptme/gptme/commit/3c43267785beed6ffc05cd0a9c54170e60220c02",
+        "https://github.com/gptme/gptme/pull/3833",
+        "https://github.com/microsoft/agent-framework/commit/3347c43ea886f2dba1b582ef68bdcd01c950c42c",
+        "https://github.com/gptme/gptme/pull/3834"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "anomalyco/opencode",
+        "microsoft/agent-framework"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "pr-3",
+        "commit-1",
+        "commit-2",
+        "commit-13",
+        "commit-51",
+        "pr-33"
+      ]
+    },
+    {
+      "id": "eng-2",
+      "title": "MCP 生态从协议升级到企业级治理与可观测性全面现代化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "opencode 将 MCP 客户端迁移至 SDK 2.0 并支持 2026-07-28 协议修订与 OAuth 合规修复；ruflo 引入 MCP 策略门控与调用者身份校验；deer-flow 隔离 MCP 会话事件循环池；codex 延迟构造 MCP 工具规格以优化内存。MCP 正同时向更严格的鉴权、更精细的治理策略与更高性能的运行时演进。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/commit/1bd734e272bda1d225b6a472231c9fb9fc009922",
+        "https://github.com/bytedance/deer-flow/commit/dfe9a520b96b1d84ace604ce5bcb6202e4c163ef",
+        "https://github.com/ruvnet/ruflo/commit/e7fb8edc1927b1ab0adc9068dc5c00a3966179e1"
+      ],
+      "related_repos": [
+        "bytedance/deer-flow",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": [
+        "commit-14",
+        "commit-15",
+        "commit-34"
+      ]
+    },
+    {
+      "id": "eng-3",
+      "title": "Turborepo 向通用多语言构建系统演进并伴随大规模性能优化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Turborepo 2.10.13 新增原生 Go 工作区与 uv/Python 虚拟环境支持，配合 turbo query 暴露紧凑任务规划、数十项性能优化与缓存清理，标志其从 JS/TS 专用工具向通用多语言 monorepo 构建系统的里程碑式架构演进，与 Next.js 的 Turbopack 打包优化形成协同。",
+      "sources": [
+        "https://github.com/vercel/turborepo/pull/14066",
+        "https://github.com/vercel/turborepo/commit/1e9336e0a6801f401ae72c44f63bc823e8c69fc7",
+        "https://github.com/vercel/turborepo/commit/2167e7410f7c2dde3d2b5df882beb3ac0ea5aaa1",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.224",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.271",
+        "https://github.com/vercel/turborepo/pull/14060",
+        "https://github.com/vercel/turborepo/pull/14068"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "anthropics/claude-agent-sdk-typescript",
+        "vercel/turborepo",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-16",
+        "pr-17",
+        "pr-21",
+        "release-1",
+        "release-2",
+        "commit-73",
+        "commit-72"
+      ]
+    },
+    {
+      "id": "eng-4",
+      "title": "Agent 多模态能力快速扩展：语音交互与图像处理并进",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "AgentScope 新增 realtime 语音会话 TUI 入口、ClawX 引入实验性 Computer Use 与语音 ASR、codex 将图像内容重构为共享 ImageReference 类型、playwright 新增媒体模拟，多框架同步向语音、视觉、多媒体方向扩展，标志 Agent 交互从纯文本走向真正多模态。",
+      "sources": [
+        "https://github.com/agentscope-ai/agentscope/commit/166c3314b3d0f5ac3a69fbee47ca922caa66ceb2",
+        "https://github.com/promptfoo/promptfoo/pull/10914",
+        "https://github.com/openai/codex/pull/45543",
+        "https://github.com/microsoft/playwright/commit/52a0e72005b4e8cef47b3174b6fb502636380023",
+        "https://github.com/openai/codex/commit/5a66d460d3cb597c72dfff1c425fc5bec1a9af14",
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code==0.1.69"
+      ],
+      "related_repos": [
+        "microsoft/playwright",
+        "google/vertex-ai",
+        "openai/codex",
+        "ValueCell-ai/ClawX",
+        "agentscope-ai/agentscope",
+        "langchain-ai/deepagents",
+        "promptfoo/promptfoo"
+      ],
+      "source_signal_ids": [
+        "commit-30",
+        "release-7",
+        "pr-8",
+        "commit-24",
+        "commit-74",
+        "pr-9"
+      ]
+    },
+    {
+      "id": "eng-5",
+      "title": "向量检索与混合检索成 RAG Agent 记忆基础设施主流方向",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "microsoft/agent-framework 新增 Azure DocumentDB 与 CosmosDB 向量存储连接器；ruflo 接入 HNSW 乘积量化与加权 RRF 混合检索融合；deer-flow 增加确定性近重复写入门控。多框架同步强化向量检索、混合召回与记忆去重，RAG 记忆正成为 Agent 长周期能力的核心竞争力。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/commit/2d6227005e379bf40b06bd61cbcc1b174075374a",
+        "https://github.com/ruvnet/ruflo/commit/fde5b3b88b2698e98f19bb9bb32470edad4fbd1f",
+        "https://github.com/microsoft/agent-framework/commit/7abe2ff92b2f418bbcb01e8a0ad21052f575dc98",
+        "https://github.com/microsoft/agent-framework/commit/ae2876262194935918c982c0efcb99c188c96272",
+        "https://github.com/bytedance/deer-flow/commit/5d86ce345c9d01dde39611f777c6507705008624"
+      ],
+      "related_repos": [
+        "ruvnet/ruflo",
+        "bytedance/deer-flow",
+        "microsoft/agent-framework"
+      ],
+      "source_signal_ids": [
+        "commit-48",
+        "commit-49",
+        "commit-17",
+        "commit-18",
+        "commit-33"
+      ]
+    },
+    {
+      "id": "eng-6",
+      "title": "成本可观测性成为多 Agent 平台的标配需求",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "gptme 将 CostTracker 跨进程持久化使终端/Web/REST 成本一致；deepagents 修复嵌套 agent 用量按自身模型计价；zed 引入 per-request 输出上限控制与成本治理；phoenix 更新内置模型 token 定价；deer-flow 为共享 RPM 引入准入队列节流。成本核算、限流与治理正从辅助功能升级为 Agent 平台的核心基础设施。",
+      "sources": [
+        "https://github.com/zed-industries/zed/commit/59d996d8dbae9b234ced00124b77ead9d3a8ef31",
+        "https://github.com/Arize-ai/phoenix/commit/25b95d7fd4d2dbeaf6faa3fe8b72fde255f60e47",
+        "https://github.com/langchain-ai/deepagents/commit/f413a40f7e74ada749b18491aa276ee1224c7368",
+        "https://github.com/gptme/gptme/commit/3c43267785beed6ffc05cd0a9c54170e60220c02",
+        "https://github.com/gptme/gptme/pull/3833",
+        "https://github.com/bytedance/deer-flow/commit/3dc895df4dba8b278b4479a34077cd274e131830"
+      ],
+      "related_repos": [
+        "gptme/gptme",
+        "zed-industries/zed",
+        "langchain-ai/deepagents",
+        "Arize-ai/phoenix",
+        "bytedance/deer-flow"
+      ],
+      "source_signal_ids": [
+        "pr-3",
+        "commit-13",
+        "commit-37",
+        "commit-43",
+        "commit-58",
+        "commit-32"
+      ]
+    },
+    {
+      "id": "eng-7",
+      "title": "高性价比推理模型（DeepSeek V4.1 Flash 等）加速进入主流 Agent 框架",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "deepagents 与 opencode 竞相将 DeepSeek V4.1 Flash 加入模型选择器，Open Interpreter 同步跟进 Gemini 3.8 Flash、GLM 等模型，同时 langchain 率先适配 GPT-6 请求约束。低成本的推理模型快速渗透 Agent 生态，推动 Agent 应用成本下行与规模化部署。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/releases/tag/v1.18.31",
+        "https://github.com/openinterpreter/openinterpreter/commit/6e7c4bb78bb1c349b82f584f7e21a529ec39a74f",
+        "https://github.com/langchain-ai/langchain/commit/41d357287c0470f70e45e232c711013258c0ac1a",
+        "https://github.com/anomalyco/opencode/commit/403627b031e1771e4df3d002c9d0df180f6a8cf4"
+      ],
+      "related_repos": [
+        "openinterpreter/openinterpreter",
+        "langchain-ai/deepagents",
+        "anomalyco/opencode",
+        "langchain-ai/langchain"
+      ],
+      "source_signal_ids": [
+        "commit-40",
+        "commit-31",
+        "commit-39",
+        "commit-45",
+        "release-9"
+      ]
+    },
+    {
+      "id": "eng-8",
+      "title": "Agent 评测向 Agent 型应用范式演进",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "promptfoo 新增 OpenAI Agents API provider 支持对 Agent 型应用的评测，同时修复 Google Provider 多模态评测边界；codex 统一 exec 生命周期追踪提升可观测性。评测工具正从单纯模型输出评估扩展到对多智能体、多模态、工具调用链路的全流程评测。",
+      "sources": [
+        "https://github.com/openai/codex/pull/45505",
+        "https://github.com/promptfoo/promptfoo/commit/ad3bee3299e3a9864ef6d47482298b2e7f1ceb37",
+        "https://github.com/promptfoo/promptfoo/pull/10914",
+        "https://github.com/promptfoo/promptfoo/commit/e04970224fcca500c6a86d3f7ddafe7d560ebab6"
+      ],
+      "related_repos": [
+        "google/vertex-ai",
+        "promptfoo/promptfoo",
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "commit-61",
+        "commit-62",
+        "pr-9",
+        "pr-15"
+      ]
+    },
+    {
+      "id": "eng-9",
+      "title": "Cline 桌面端全面发力：云会话、自愈连接与远程 Hub 优化",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline 发布桌面版，推出云会话 REST 客户端、sidecar 自愈重连、启动公告机制，并大幅优化远程 Hub 流式会话性能（序列化载荷从 203MB 降至 398KB、延迟从 2894ms 降至 3ms）。桌面端 Agent 正在成为远程与云场景下的关键入口。",
+      "sources": [
+        "https://github.com/cline/cline/commit/c2ac5feecbe05fbd4e19806502f70f7f7f95c3d7",
+        "https://github.com/cline/cline/pull/14120",
+        "https://github.com/cline/cline/commit/d896a0ac8437885445d8b4979400c3514b6c84e8",
+        "https://github.com/aaif-goose/goose/releases/tag/v1.50.1",
+        "https://github.com/cline/cline/pull/14123",
+        "https://github.com/cline/cline/commit/94980446c99f24040e9ed7a03e7726be4aea9198",
+        "https://github.com/cline/cline/releases/tag/desktop-v0.0.27",
+        "https://github.com/cline/cline/pull/14119"
+      ],
+      "related_repos": [
+        "aaif-goose/goose",
+        "anthropics/claude-code",
+        "cline/cline"
+      ],
+      "source_signal_ids": [
+        "pr-0",
+        "pr-1",
+        "pr-5",
+        "commit-4",
+        "commit-5",
+        "commit-7",
+        "release-3",
+        "release-13"
+      ]
+    },
+    {
+      "id": "eng-10",
+      "title": "金融垂直领域 Agent 技能生态开始规模化落地",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "anthropics 官方插件库新增 BlackRock Advisor Center 技能插件（6 个理财技能 + Ac360 MCP 连接器），对接真实金融服务。这是金融机构向 Agent 技能生态扩展的代表性信号，标志 Agent 在垂直行业的具体价值正在兑现。",
+      "sources": [
+        "https://github.com/anthropics/claude-plugins-official/pull/6094",
+        "https://github.com/anthropics/claude-plugins-official/commit/02bc302b0cd18575b00d750407859b915b378b63"
+      ],
+      "related_repos": [
+        "anthropics/claude-plugins-official",
+        "anthropics/knowledge-work-plugins"
+      ],
+      "source_signal_ids": [
+        "pr-6",
+        "commit-12"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code 远程会话与沙箱能力增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code 在远程会话中引入快速模式，并为 Bash 等工具增加按命令的域名白名单，显著提升了企业级远程开发的安全性和灵活性。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.271"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Turborepo 原生支持多语言工作区",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Turborepo 引入对 Python (uv) 和 Go 工作区的实验性原生支持，标志着其从 JS/TS 专用工具向通用多语言构建系统的重大架构演进。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.271"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "vercel/turborepo"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "Turborepo 大规模性能优化",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "通过数十项性能优化（如缓存、二进制搜索、避免序列化等），Turborepo 在大型 monorepo 场景下的构建和查询速度有望得到数量级提升。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.224"
+      ],
+      "related_repos": [
+        "anthropics/claude-code-action",
+        "vercel/turborepo"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Claude Code 安全策略与沙箱强化",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "修复了多个 Bash 权限检查绕过漏洞，并改进了组织策略的加载和刷新机制，对依赖 Claude Code 进行自动化操作的企业用户至关重要。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/desktop-v0.0.27"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "Claude Code 终端交互与性能改进",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "大量终端渲染性能优化和交互细节修复，提升了长会话和大型 diff 场景下的用户体验，使工具在复杂任务中更加流畅。",
+      "sources": [
+        "https://github.com/openai/openai-python/releases/tag/v3.14.0"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "anthropics/claude-code"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-5",
+      "title": "Claude Code 插件与子代理能力扩展",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增 omitClaudeMd 选项和插件安装的精确命令校验，为高级用户和插件开发者提供了更精细的控制能力。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/releases/tag/v3.41.4"
+      ],
+      "related_repos": [
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-6",
+      "title": "OpenAI Python SDK 流式错误处理规范化",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "对流式读取时的错误进行统一规范化，并修复多个边界情况，提升了 SDK 的健壮性和开发者体验。",
+      "sources": [
+        "https://github.com/ruvnet/ruflo/releases/tag/v3.41.3"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-7",
+      "title": "ClawX 桌面端新增语音与计算机视觉能力",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "ClawX 引入实验性的 Computer Use 功能和语音输入 (ASR)，使其从纯文本交互向多模态 AI 助手演进。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code==0.1.69"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "ValueCell-ai/ClawX"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-8",
+      "title": "ruflo 修复联邦身份验证与命令注入漏洞",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "修复了联邦事件中身份可被覆盖的严重安全漏洞，以及 Windows 平台上的命令注入风险，对依赖去中心化身份验证的系统至关重要。",
+      "sources": [
+        "https://github.com/langchain-ai/deepagents/releases/tag/deepagents==0.7.14"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "ruvnet/ruflo"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-9",
+      "title": "DeepAgents 增强模型支持与调试体验",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "新增对 DeepSeek V4.1 Flash 等模型的支持，并改进 Debug Console 功能，提升了开发者的使用体验。",
+      "sources": [
+        "https://github.com/anomalyco/opencode/releases/tag/v1.18.31"
+      ],
+      "related_repos": [
+        "langchain-ai/deepagents",
+        "anomalyco/opencode"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-10",
+      "title": "Phoenix 可观测性平台新增数据集拆分 API",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "新增 GET /datasets/{dataset_identifier}/splits API，为 LLM 应用的数据集管理和评估工作流提供了更细粒度的控制。",
+      "sources": [
+        "https://github.com/openinterpreter/openinterpreter/releases/tag/rust-v0.0.43"
+      ],
+      "related_repos": [
+        "openinterpreter/openinterpreter",
+        "Arize-ai/phoenix"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-11",
+      "title": "Vercel TypeScript SDK 引入破坏性变更",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "SDK 对部署和用户事件相关 API 进行了破坏性更新，开发者需要关注这些变更以适配新版本。",
+      "sources": [
+        "https://github.com/openclaw/lobster/releases/tag/v2026.9.13"
+      ],
+      "related_repos": [
+        "vercel/sdk",
+        "openclaw/lobster"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-12",
+      "title": "OpenCode 修复 ACP 会话恢复问题",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "修复了加载、恢复或分叉会话时 ACP 会话模型、努力程度、模式和推理边界丢失的问题，保证了跨会话工作流的连续性。",
+      "sources": [
+        "https://github.com/ValueCell-ai/ClawX/releases/tag/v0.5.7"
+      ],
+      "related_repos": [
+        "anomalyco/opencode",
+        "ValueCell-ai/ClawX"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-13",
+      "title": "Cline 桌面版修复认证与提供商问题",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "修复了登录过期、退出登录失败和 OpenCode Go 模型路由问题，提升了桌面客户端的稳定性和可用性。",
+      "sources": [
+        "https://github.com/aaif-goose/goose/releases/tag/v1.50.1"
+      ],
+      "related_repos": [
+        "aaif-goose/goose",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-14",
+      "title": "Lobster 修复成本限制误判与参数传递问题",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "修复了成本限制在结果复用时的误判，并保留了 CLI 管道中的空参数和引号，提升了工作流执行的准确性。",
+      "sources": [
+        "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.12.0"
+      ],
+      "related_repos": [
+        "Arize-ai/phoenix",
+        "openclaw/lobster"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "release-bulk-vercel-ai",
+      "title": "vercel/ai 批量发版 47 个子包（1 个值得注意）",
+      "type": "release",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+      "sources": [
+        "https://github.com/vercel/ai/releases/tag/ai%407.0.100",
+        "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%402.0.31",
+        "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.110"
+      ],
+      "related_repos": [
+        "vercel/ai"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "release-bulk-notable-vercel-ai-ai@7.0.100",
+      "title": "vercel/ai ai@7.0.100",
+      "type": "release",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "新增类型化 AI SDK 错误暴露能力（UI 传输与完成失败场景），是整批 47 个包中唯一的实质新功能，值得单独关注",
+      "sources": [
+        "https://github.com/vercel/ai/releases/tag/ai%407.0.100"
+      ],
+      "related_repos": [
+        "vercel/ai"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 131,
+    "pr_count": 37,
+    "commit_count": 77,
+    "release_count": 17,
+    "unique_repos": 29,
+    "total_prs_analyzed": 37,
+    "total_releases": 64,
+    "high_impact_signals": 12,
+    "total_commits_analyzed": 692,
+    "total_releases_analyzed": 64,
+    "total_breaking_changes": 8
+  },
+  "activity": {
+    "total_commits": 692,
+    "active_repos_count": 39,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "RomneyDa",
+          "vincentkoc",
+          "shakkernerd",
+          "roboclaw-bot"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 80,
+        "top_contributors": [
+          "jordanecker-ant",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 68,
+        "top_contributors": [
+          "zm-oai",
+          "jif-oai",
+          "etraut-openai",
+          "charliemarsh-oai",
+          "felixxia-oai"
+        ]
+      },
+      {
+        "repo": "OpenHands/OpenHands",
+        "commits": 56,
+        "top_contributors": [
+          "aivong-openhands",
+          "enyst",
+          "malhotra5",
+          "all-hands-bot",
+          "simonrosenberg"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 43,
+        "top_contributors": [
+          "hyeonsang010716",
+          "alanhuangyoo",
+          "ruirui6946",
+          "fszcd",
+          "haimingZZ"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 26,
+        "top_contributors": [
+          "poteat",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 23,
+        "top_contributors": [
+          "mdrxy",
+          "github-actions[bot]",
+          "linted",
+          "langchain-oss-automated-triage[bot]",
+          "aolsenjazz"
+        ]
+      },
+      {
+        "repo": "openinterpreter/openinterpreter",
+        "commits": 22,
+        "top_contributors": [
+          "interpreterwork",
+          "cestercian"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 20,
+        "top_contributors": [
+          "sokra",
+          "next-js-bot[bot]",
+          "devjiwonchoi",
+          "mischnic",
+          "lukesandberg"
+        ]
+      },
+      {
+        "repo": "gptme/gptme",
+        "commits": 18,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "ErikBjare",
+          "derryckf",
+          "Ricky-7-Yan"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 18,
+        "top_contributors": [
+          "eavanvalkenburg",
+          "moonbox3",
+          "mrchatam",
+          "cr-sbarbouche",
+          "YashvantHange"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 17,
+        "top_contributors": [
+          "renovate[bot]",
+          "mldangelo-oai",
+          "vishalchincholi1",
+          "he-yufeng"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 15,
+        "top_contributors": [
+          "saoudrizwan",
+          "johnwschoi",
+          "EtishaGarg"
+        ]
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "commits": 15,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 15,
+        "top_contributors": [
+          "steipete",
+          "roboclaw-bot"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 15,
+        "top_contributors": [
+          "dependabot[bot]",
+          "tiagovilasboas",
+          "JiangLLM",
+          "hyeonsang010716",
+          "Hughhhhcoder"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 15,
+        "top_contributors": [
+          "gr2m",
+          "ai-sdk-factory[bot]",
+          "n1ckoates",
+          "github-actions[bot]",
+          "L4XB"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 14,
+        "top_contributors": [
+          "benbrandt",
+          "Veykril",
+          "cole-miller",
+          "MartinYe1234",
+          "maxbrunsfeld"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 13,
+        "top_contributors": [
+          "DavdGao",
+          "Shxiao101",
+          "fszcd",
+          "liugy789",
+          "wangtaotaotao95"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 13,
+        "top_contributors": [
+          "opencode-agent[bot]",
+          "fwang",
+          "vaprdev",
+          "MatthewFeroz",
+          "R-Taneja"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 13,
+        "top_contributors": [
+          "mikeldking",
+          "axiomofjoy",
+          "sahildayal"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 11,
+        "top_contributors": [
+          "github-actions[bot]",
+          "anthonyshew",
+          "vercel-gh-bot-2[bot]",
+          "Pcmhacker-piro",
+          "DominikRusso"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 10,
+        "top_contributors": [
+          "dependabot[bot]",
+          "CoralGarden52",
+          "Jinsong-Zhou",
+          "usergod121",
+          "Mike-stone12"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 8,
+        "top_contributors": [
+          "yury-s",
+          "microsoft-playwright-automation[bot]",
+          "haddybhaiya",
+          "pavelfeldman",
+          "lazerg"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 7,
+        "top_contributors": [
+          "openai-sdks[bot]",
+          "yu2001-s",
+          "Sanjays2402",
+          "raashish1601",
+          "Rishirandhawa"
+        ]
+      },
+      {
+        "repo": "aaif-goose/goose",
+        "commits": 7,
+        "top_contributors": [
+          "filipkujawa",
+          "byte271",
+          "ccgauvin94",
+          "A1exZabr",
+          "jamadeo"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 6,
+        "top_contributors": [
+          "ashpreetbedi",
+          "Minouccc",
+          "sannya-singal",
+          "kausmeows"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 6,
+        "top_contributors": [
+          "joaomdmoura",
+          "Theater-ahyeon",
+          "ShivangiRay",
+          "modusensus",
+          "mhbuehler"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 4,
+        "top_contributors": [
+          "Patrick-Erichsen"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 3,
+        "top_contributors": [
+          "langchain-oss-model-profiles[bot]",
+          "ccurme"
+        ]
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 3,
+        "top_contributors": [
+          "su8su"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 1,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "lnhsingh"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 1,
+        "top_contributors": [
+          "steipete"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 1,
+        "top_contributors": [
+          "shanselman"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 1,
+        "top_contributors": [
+          "miguelg719"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 1,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Aider-AI/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Aperant",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 64,
+    "unique_repos_count": 16,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.271",
+        "author": "ashwin-ant",
+        "date": "2026-09-14",
+        "summary": "## What's changed\n\n- Added fast mode in Claude Code Remote sessions (cloud and self-hosted runners): the host's fast-mode setting or `/fast` typed in the session applies where your organization allows it\n- Added mouse support to the `/config` panel in fullscreen mode: the wheel scrolls the settings list, a click on a setting's value changes it, and the row under the pointer is highlighted\n- Added `claude self-hosted-runner --drain-marker-file <path>`: when that file exists at a SIGTERM drain, the runner reports its exit to the server as a host drain (telemetry only)\n- Added per-command `allowed_domains` to Bash, PowerShell and Monitor in auto mode with sandboxing: the hosts a command needs are reviewed with it and opened for it alone; other hosts are refused\n- Added `omitClaudeMd` to agent frontmatter and `--agents` JSON, letting custom and plugin subagents run without user, project and local CLAUDE.md files; managed policy files still load\n- Added `--accept-command <sha256>` to `claude plugin install` and `claude plugin update` to accept exactly the command a previous `--json` run displayed, instead of `-y`\n- Added support for a `multiplier` above 1, up to 10, in the `modelPricing` managed setting and the Claude apps gateway `pricing` block, for marked-up internal chargeback rates\n- Added a spinner tip pointing Bedrock, Vertex AI, Foundry and LLM gateway users to the Claude desktop app; the claude.ai desktop app tip now suggests `/desktop`, which offers to download the app\n- Fixed a cached organization policy being reused after switching accounts, organizations, or API keys, and the policy not refreshing until the hourly check when the credential changes mid-session\n- Fixed the tool and command lists not updating when the organization policy finishes loading after startup or changes mid-session\n- Fixed an enterprise `managed-mcp.json` that can't be read or parsed being ignored: it now keeps exclusive MCP control (user, project and plugin servers don't load) and warns at startup\n- Fixed org policy being fetched through, and rejected by, third-party local proxies set via `ANTHROPIC_UNIX_SOCKET`; they are again treated like other custom gateways, including for Remote Control\n- Fixed cloud sessions rejecting every subagent tool call (\"updatedInput … failed schema validation\") when a workflow or agent approval was applied after the session's worker restarted\n- Fixed `/fast off` answering \"Fast mode unavailable\" instead of turning fast mode off when the organization has fast mode disabled\n- Fixed sessions started with `CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK` re-sending fast requests every turn after the API rejected fast mode; the rejection now stands and its reason is shown\n- Fixed fast mode under `CLAUDE_CODE_RETRY_WATCHDOG` failing the turn on a usage-credits limit, or retrying an overload at fast speed, instead of falling back to standard speed\n- Fixed Bash permission checks missing the file that `fmt`, `column` and similar commands read when it follows an option the checker doesn't recognize\n- Fixed Bash permission checks skipping files a wildcard expands to when the wildcard sits in a command's pattern or option value (for example `grep -v dir/* file`)\n- Fixed Bash permission checks so that shell variable declaration flags cannot misrepresent the command being run\n- Fixed Bash commands with two directory changes, a subshell, or a `cd`+`git` chain skipping the prompt under `permissions.blockReadsOutsideWorkingDirectories` in bypass and auto mode\n- Fixed a stale `.git/config.lock` breaking `git checkout -b`, `git push -u` and `git config` for the rest of a session after a sandboxed command failed to start (Linux)\n- Fixed settings file changes made outside the session going unnoticed on macOS machines whose system file-event service is saturated; the watcher now falls back to polling\n- Fixed resumed `claude -p` sessions whose tools all come from MCP servers failing with \"At least one tool must have defer_loading=false\"\n- Fixed turns failing with \"API returned an empty or malformed response\" when an LLM gateway returns the non-streaming reply as `text/plain`\n- Fixed sustained high CPU usage and repeated tool-list requests when an MCP server sends `list_changed` notifications in a tight loop\n- Fixed MCP OAuth mishandling client registrations: denying consent forced a new one, one for another redirect URI was reused, and a concurrent write could delete a valid one or keep a mismatched one\n- Fixed tool search returning no match when Claude selects an MCP tool by its bare name instead of its full `mcp__server__tool` name\n- Fixed Ctrl+O cancelling pending MCP server reconnects, and `/mcp` sent from Remote Control failing while the transcript view is open\n- Fixed the Claude in Chrome prompt telling the model to load tools through ToolSearch when ToolSearch is unavailable\n- Fixed cross-session messages held by the receiving session's permission-mode policy leaving no trace: headless senders now get a delivery notice, and `SendMessage` results no longer imply it was read\n- Fixed Claude starting a second copy of a background command (such as a watch task or dev server) that was still running after the conversation was compacted\n- Fixed `/model` warning about losing the conversation cache when switching back to the model the conversation actually ran on\n- Fixed `/reload-skills` reporting a skill count that disagreed with the slash menu after `/cd`\n- Fixed `/resume` and `/continue` showing only 1-2 sessions in fullscreen mode on short terminals\n- Fixed `/resume` and `/teleport` keeping the previous conversation's file-read tracking, so Claude could edit files the resumed conversation had never read\n- Fixed `--resume` dropping the 1M context window (`[1m]`) when the resumed session's model family differs from the configured default model\n- Fixed artifacts attached with `/artifacts` disappearing from the session after `--resume`\n- Fixed background sessions (`claude --bg`, `claude agents`) not watching the artifacts they publish for republishes made elsewhere\n- Fixed custom agents, slash commands and output styles beyond the first not loading from a virtual drive that reports inode 0, such as an encrypted vault mounted as a Windows drive\n- Fixed self-hosted runner sessions silently losing all host config (settings, skills, plugins, MCP servers) when the host config directory exceeds 64 MiB; added `--host-config-snapshot disk|memory`\n- Fixed skills synced from claude.ai staying on disk indefinitely after signing out; copies not refreshed within `cleanupPeriodDays` now move to the recoverable trash at the next launch\n- Fixed spinner tips suggesting commands that aren't available for your account type or are disabled in your session\n- Fixed the `/add-dir` path input: the left and right arrow keys now move the cursor, and Enter adds only the typed path instead of also adding the highlighted completion\n- Fixed text fields outside the main prompt moving a leading `!` to the end of what you typed (`!foo` came out as `foo!`)\n- Fixed the interactive `/hooks` menu crashing when a hook matcher is named after an inherited object property such as `__proto__` or `constructor`\n- Fixed a fullscreen rendering glitch where text kept a stale background color after the box around it lost its background\n- Fixed Delete in st and Alt+arrow keys in rxvt-unicode not working in attached background sessions\n- Fixed the terminal's replies to capability queries (`^[[?1;2c`) appearing at the shell prompt or in an editor when Claude Code exits, is suspended, or opens an editor right after starting\n- Improved terminal rendering performance: large diffs and long transcripts render faster, with fewer slow frames\n- Improved startup time slightly by skipping a redundant validation of built-in model data on every launch\n- Improved hook feedback: while a SessionStart, UserPromptSubmit, PreToolUse or SessionEnd hook runs, the spinner says so with elapsed time, and Esc cancels a prompt waiting on a SessionStart hook\n- Improved the spinner status during long thinking: it now reads \"deep in thought\" after 45s, and shows \"picking the thought back up\" while recovering from the output-token limit\n- Improved dynamic workflows to pause when you hit your usage limit and continue automatically when it resets, instead of dropping the affected agents\n- Improved Remote Control to leave fewer empty sessions on claude.ai when setup fails on a flaky network\n- Improved the Claude in Chrome message in cloud sessions when the browser can't be reached: it now says the computer may be asleep before it suggests an install\n- Improved `claude mcp serve`: a running tool call now sends a progress update every 30 seconds, so clients show it is still running and idle timeouts don't abort a long command that prints nothing\n- Improved Foundry and Claude Platform on AWS sessions: an `alwaysLoad` MCP server that finishes connecting mid-conversation is usable on the next turn without a tool-search round trip\n- Improved Markdown files published as artifacts: they now render as styled document pages (title header, document typography, syntax-highlighted code)\n- Improved Artifact tool publish errors: a publish with no file now says to write the page to a file first, and an unsupported file type is reported before a missing favicon\n- Improved the Artifact tool's error when a page declares a capability its contract version lacks: it now lists every supported capability and notes when a newer contract version has it\n- Improved artifact watching: a session can now watch up to 10 published artifacts at once for republishes made elsewhere, up from 5\n- Improved PDF @-mentions to say \"page count unknown\" instead of a page count guessed from the file size when pdfinfo cannot count the pages\n- Improved `/mobile` to show a single QR code for claude.ai/mobile, which opens the right app store for your phone\n- Changed auto mode so that a skill's or slash command's inline `!` shell commands follow default-mode permission rules instead of the classifier; a command no rule decides runs as a reviewed tool call\n- Changed auto mode so a subagent reports back to its caller through a dedicated hand-back call that the safety classifier reviews, instead of its last message being reviewed after the fact\n- Changed Monitor watches to always have a deadline (at most 30 minutes; 10 in single-prompt `-p` runs) and notify Claude to re-arm, replacing the no-timeout `persistent` option\n- Changed the IDE selection indicator in the prompt to a `[⧉ …]` pill that wraps with the text instead of squeezing multi-line prompts; delete it with Backspace to leave the selection out\n- Changed the default dynamic workflow size to small on Pro plans and lowered the medium size guideline from 15 to 10 agents\n- Changed Claude apps gateway, Bedrock, Vertex AI, and Foundry sessions so that they no longer refresh a leftover claude.ai login that the session does not use\n- Updated the bundled `claude-api` skill to enable `eager_input_streaming` on streaming custom tools, and to start deliverable-shaped Managed Agents work with `user.define_outcome`\n- [VSCode] Added an Attach Open File setting that, when turned off, stops the open file from being added to messages; selected text is still attached\n- [VSCode] Fixed the Hooks and Permission rules dialogs reporting a save that landed as failed, and the Hooks dialog going blank under a plugin-only policy lock or showing color codes in save errors\n- [VSCode] Fixed Hooks dialog saves: no duplicate hook on replace, a header name retyped in other capitals keeps its secret, and settings.local.json is gitignored before the save returns\n- [VSCode] Fixed session history showing only the current session when the workspace is on a Windows mapped network drive or SUBST drive\n- [VSCode] Fixed the session list's Active filter hiding open idle sessions when Open is also checked in the filter menu\n- [VSCode] Fixed a new chat switching back to the previous chat when the session list refreshed\n- [VSCode] Fixed open tabs and the side bar keeping the old config folder until a window reload after `CLAUDE_CONFIG_DIR` changed in the `environmentVariables` setting\n- [VSCode] Fixed console windows flashing on Windows when the extension runs background commands such as git, ripgrep, and the sign-in status check\n- [VSCode] Fixed the prompt cache clock's hover text appearing only after a delay, and the auto-compact icon showing the browser's own tooltip beside its popup\n- [VSCode] Improved the Hooks dialog: a save refused because of the settings file itself now opens a popup with an \"Open settings file\" button and the reason behind \"Copy error\"\n- [VSCode] Changed the on state of toggle switches from Claude orange to the editor theme's button color\n- [Claude Code on the web] Fixed a cloud session sometimes taking about ten minutes to respond after its process exited while the session still looked live; sending a message now restarts it right away\n- [Claude Code on the web] Changed the Routines page on claude.ai/code to a new layout with Yours and Templates tabs and two-column routine cards that show run status, and removed its calendar view\n- [Claude Code on the web] Added a Custom network access option to the Cloud environments editor in admin settings, with the same allowed-domains list the environment dialog on claude.ai/code offers\n- [Claude Code on the web] Improved the Cloud environments admin page: it shows the default environment for Claude Tag and Claude Code, with a link to change it, and marks the recommended kind to create\n- [Claude Tag] Fixed Claude in a channel where it stays active losing its working context about once an hour when the conversation is mostly in threads; thread activity now keeps it from being reset\n- [Claude Tag] Fixed a thread that asked Claude to watch a pull request no longer hearing about CI failures, comments and reviews after Claude was restarted in that thread\n- [Claude Tag] Fixed deleting the first message of a thread Claude had already replied in not ending Claude's work there; it now stops, as it did when a message with no replies was deleted\n- [Claude Tag] Fixed Claude holding back a post because of an earlier instruction addressed to a different bot or assistant; only instructions addressed to Claude bind it, and it asks when unsure\n- [Claude Tag] Fixed the reply-mode card Claude posts on joining a busy channel saying it \"sees a lot of automated posts\" when the channel is only chatty or large; the card now names the real reason\n- [Claude Tag] Improved the Environment picker in Claude Tag admin settings: options are labeled Anthropic-hosted or self-hosted, with links to edit that environment or create one\n- [Code Review] Fixed a pull request in a repository reviewed once per PR sometimes getting no review when a commit arrived while its review was waiting to start; it now reviews the requested commit\n- [Code Review] Fixed Code Review occasionally posting the same findings two or three times when GitHub reported an error for a review it had in fact created\n- [Code Review] Fixed follow-up reviews re-posting a security finding a person had already resolved when a later push moved the lines it was anchored to\n- [Code Review] Fixed reopening a finished /ultrareview cloud session in the Claude app starting the whole review over again unprompted\n- Windows: Fixed PowerShell commands failing with \"Exit code 1\" and no output when the session's temp output path reaches 260 characters\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.271",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Claude Code 远程会话快速模式，支持云和自托管运行器",
+            "新增 per-command 允许域名（allowed_domains）的沙箱网络控制，用于 Bash、PowerShell 和 Monitor",
+            "新增 `--drain-marker-file` 参数用于自托管运行器的主机排空信号",
+            "新增 `--accept-command` 精确接受插件安装命令，替代 `-y` 简化安全确认",
+            "对 MCP 服务器、Bash 权限检查、自托管运行器和 VSCode 扩展进行了大量缺陷修复"
+          ],
+          "summary_cn": "本次发布为 v2.1.271 版本，以新增功能和大量修复为主。核心亮点包括：远程会话新增快速模式、沙箱环境下 per-command 级别的域名白名单控制、代理模式对 CLAUDE.md 的跳过支持、以及插件安装的精确命令接受机制。同时修复了组织策略缓存、Bash 权限检查遗漏、MCP OAuth 处理、自托管运行器配置丢失等数十个问题，并包含 VSCode 扩展和 Claude Tag 的多项改进。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.271",
+        "author": "ashwin-ant",
+        "date": "2026-09-14",
+        "summary": "## What's changed\n\n- Added optional `omitClaudeMd` to `AgentDefinition` in the `agents` option, so a subagent can run without user, project and local CLAUDE.md files; managed policy files still load\n- Fixed `listSessions`, `getSessionMessages` and `getSessionInfo` with `dir` on Windows not finding sessions for a directory on a mapped network drive or SUBST drive\n- Fixed `sessionStore` resume losing the global config when it is stored under the legacy `.config.json` name or an OAuth-suffixed file name\n- Removed `persistent` from the `MonitorInput` tool type\n- Updated to parity with Claude Code v2.1.271\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.271\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.271\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.271\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.271\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.271",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "在 AgentDefinition 的 agents 选项中新增可选的 omitClaudeMd 参数，允许子代理运行时跳过用户、项目和本地的 CLAUDE.md 文件，但托管策略文件仍会加载",
+            "修复 Windows 系统上使用映射网络驱动器或 SUBST 驱动器路径时，listSessions、getSessionMessages 和 getSessionInfo 无法找到会话的问题",
+            "修复 sessionStore 恢复时，当全局配置存储为旧版 .config.json 名称或 OAuth 后缀文件名时配置丢失的问题",
+            "从 MonitorInput 工具类型中移除了 persistent 字段",
+            "同步更新至与 Claude Code v2.1.271 功能对齐"
+          ],
+          "summary_cn": "此版本新增了子代理可选的 omitClaudeMd 配置项，允许子代理在运行时不加载 CLAUDE.md 上下文文件，同时保持托管策略文件的加载。此外修复了 Windows 上映射网络驱动的会话查找问题、sessionStore 恢复时旧配置丢失问题，并移除了 MonitorInput 中的 persistent 字段。整体功能与 Claude Code v2.1.271 保持一致。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.224",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1.0.223...v1.0.224",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.224",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "从 v1.0.223 升级到 v1.0.224，为补丁版本更新",
+            "具体变更内容未在 Release Notes 中详细列出，仅提供了完整的变更日志链接"
+          ],
+          "summary_cn": "该版本为 claude-code-action 的补丁版本更新（v1.0.223 → v1.0.224）。Release Notes 中未提供详细的变更说明，仅附带了完整的变更日志链接供查阅。建议通过变更日志链接查看具体改动内容。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/openai-python",
+        "version": "v3.14.0",
+        "author": "openai-sdks[bot]",
+        "date": "2026-09-14",
+        "summary": "## [3.14.0](https://github.com/openai/openai-python/compare/v3.13.0...v3.14.0) (2026-09-14)\n\n\n### Features\n\n* **streaming:** normalize errors raised while reading streams ([#3827](https://github.com/openai/openai-python/issues/3827)) ([d7c41ef](https://github.com/openai/openai-python/commit/d7c41efee1b0802b79f3f88a678ef2052b06e9ce))\n\n\n### Bug Fixes\n\n* bound vector store file polling ([#3401](https://github.com/openai/openai-python/issues/3401)) ([ae41bc4](https://github.com/openai/openai-python/commit/ae41bc46cdd53d17e948ac8a73e16bdbf34123a1))\n* **example:** refresh realtime push_to_talk_app session types ([#2926](https://github.com/openai/openai-python/issues/2926)) ([0b7ad38](https://github.com/openai/openai-python/commit/0b7ad38292ef862f1dd07f71543b2f60eade8999))\n* **files:** normalize PathLike upload tuples ([#3475](https://github.com/openai/openai-python/issues/3475)) ([90ac74c](https://github.com/openai/openai-python/commit/90ac74ccfe7a966787d1f204755d4cd4cc4d406a))\n* include completion in content filter errors ([#3094](https://github.com/openai/openai-python/issues/3094)) ([e57a1b1](https://github.com/openai/openai-python/commit/e57a1b19fbcc32306a691e63334fd2dc4b1a804c))\n* **logging:** support standard OPENAI_LOG levels ([#3734](https://github.com/openai/openai-python/issues/3734)) ([44000e0](https://github.com/openai/openai-python/commit/44000e0fc5e11692663045d6183568ff3ec32736))\n* normalize API error codes to strings ([#3532](https://github.com/openai/openai-python/issues/3532)) ([233d955](https://github.com/openai/openai-python/commit/233d9557be3e7ee186b5ac3f1ab634a257134ac1)), closes [#3531](https://github.com/openai/openai-python/issues/3531)\n* preserve response stream indexes after empty items ([#3126](https://github.com/openai/openai-python/issues/3126)) ([8f84fbd](https://github.com/openai/openai-python/commit/8f84fbd688bdd8a9cde17c09f79b34d5d5580f0f))\n* **responses:** handle null text in output_text ([#3019](https://github.com/openai/openai-python/issues/3019)) ([df6b72c](https://github.com/openai/openai-python/commit/df6b72ccc9122a83b8dd21971dcf4a508c04b83a))\n\n\n### Documentation\n\n* use the vision guide image in README example ([#3849](https://github.com/openai/openai-python/issues/3849)) ([1ed8902](https://github.com/openai/openai-python/commit/1ed8902e5629c1aae0c26eadceff02bd5cebb0e1))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v3.14.0",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "流式读取时统一错误处理，规范流式场景下的异常抛出",
+            "修复向量存储文件轮询的边界问题，避免无限等待",
+            "标准化 PathLike 上传元组处理，规范化 API 错误码为字符串",
+            "修复 responses 接口中 output_text 处理空文本的问题",
+            "日志系统支持标准 OPENAI_LOG 级别配置"
+          ],
+          "summary_cn": "本次版本主要围绕稳定性与兼容性进行修复，统一了流式读取和 API 错误码处理，修复了向量存储文件轮询、响应流索引、output_text 空值等多个边界问题。同时增强了对标准 OPENAI_LOG 日志级别的支持，并优化了示例代码和文档。整体为功能性修复版本，无破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "version": "v3.41.4",
+        "author": "ruvnet",
+        "date": "2026-09-14",
+        "summary": "## Fix\n\n- **`agentdb_pattern-store`/`agentdb_pattern-search` now surface `degraded: true`** whenever the response comes from anything other than a healthy `reasoningBank` controller (the `bridge-fallback` and `memory-store-fallback` paths alike), instead of only in a note string a caller has no structural reason to check. Fixes #3288.\n\nIncludes a follow-up correction (`b9ca64f80`) after review caught that the initial fix only handled the case where the controller registry is entirely absent, missing the more common case where the registry exists but ReasoningBank itself is unusable (`controller: 'bridge-fallback'`) — the degraded flag is now applied at the `result.controller === 'reasoningBank'` boundary in both handlers rather than per fallback-label, so it can't be reopened by a future fallback label. See #3323 for the full discussion.\n\nThis does not address why `vectorBackend`/`reasoningBank` fail to activate in a given deployment — that's tracked separately in #1228 (ADR-053) and #2296.\n",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.41.4",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 agentdb_pattern-store 和 agentdb_pattern-search 在降级路径下未正确标识 degraded 状态的问题",
+            "增强 degraded 标记逻辑：无论走 bridge-fallback 还是 memory-store-fallback 路径，只要响应非来自健康的 reasoningBank 控制器都会标记 degraded: true",
+            "修复了初始补丁仅处理控制器注册表完全缺失的边界情况，补充处理了注册表存在但 ReasoningBank 本身不可用（controller: 'bridge-fallback'）的常见场景",
+            "degraded 标记逻辑统一在 result.controller === 'reasoningBank' 边界处理，避免未来新增 fallback 标签时问题复发",
+            "明确指出 vectorBackend/reasoningBank 激活失败的根因问题单独追踪（#1228 ADR-053 和 #2296）"
+          ],
+          "summary_cn": "此版本修复了 agentdb_pattern-store 和 agentdb_pattern-search 两个操作在降级响应场景下未能正确标记 degraded 状态的问题。修复确保了无论响应来自哪种降级路径（bridge-fallback 或 memory-store-fallback），只要不是来自健康的 reasoningBank 控制器，都会在结构层面返回 degraded: true，而非仅在无结构化依据的备注字符串中提示。同时通过统一的控制器边界判断逻辑，防止未来新增 fallback 标签时该问题再次出现。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "version": "v3.41.3",
+        "author": "ruvnet",
+        "date": "2026-09-14",
+        "summary": "## Security fix\n\n- **Federation event identity**: `fetchRecent`/`fetchManyOn`/`fetchChannel` now apply the signature-verified `id`/`pubkey`/`created_at` *after* the publisher's own message content, instead of before — a publisher could otherwise put those keys in their own content and overwrite their verified identity downstream, which the swarm claims ledger (`reduceClaims`) trusts for release/handoff authorization. Same fix applied to `x_federation_channel_read` in `@claude-flow/cli`, which additionally now verifies event signatures at all (`reqEvents()` previously trusted unverified events). The live `ruflo-x-gateway` production service was redeployed with this fix ahead of this release.\n- **Windows hook argument escaping**: `ruflo-hook.cjs`'s Windows `shell:true` npm-shim invocation path now escapes every argument (cmd.exe metacharacter neutralization), so a hook-derived value can no longer be reinterpreted as a separate command or redirection.\n\nSee #3322 for the full technical writeup and test coverage.\n",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.41.3",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复联邦事件身份认证漏洞：fetchRecent/fetchManyOn/fetchChannel 现在在发布者自身消息内容之后应用签名验证的 id/pubkey/created_at，防止发布者通过自包含字段覆盖已验证身份",
+            "对 @claude-flow/cli 中的 x_federation_channel_read 应用相同修复，并新增事件签名验证（之前 reqEvents 信任未验证的事件）",
+            "修复 Windows hook 参数转义漏洞：ruflo-hook.cjs 在 Windows shell:true 路径下转义每个参数，防止 hook 派生的值被重新解释为命令或重定向",
+            "ruflo-x-gateway 生产服务已提前部署该修复"
+          ],
+          "summary_cn": "该版本包含两个安全修复。首先修复了联邦事件身份认证漏洞，确保签名验证的身份信息在发布者消息内容之后应用，防止攻击者覆盖自己的已验证身份，并同时对 CLI 添加了事件签名验证。其次修复了 Windows 平台下 hook 参数转义问题，防止恶意值被解释为系统命令或重定向。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents-code==0.1.69",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Features\n\n- Update `read_file` output formatting. ([#5648](https://github.com/langchain-ai/deepagents/pull/5648))\n- Surface DeepSeek V4.1 Flash in the model picker. ([#6254](https://github.com/langchain-ai/deepagents/pull/6254))\n- Surface locally tracked GitHub stacks in agent context. ([#6290](https://github.com/langchain-ai/deepagents/pull/6290))\n- Copy a model slug with Ctrl+click. ([#6243](https://github.com/langchain-ai/deepagents/pull/6243))\n- Show session length in the Debug Console. ([#6224](https://github.com/langchain-ai/deepagents/pull/6224))\n\n### Bug Fixes\n\n- Price nested usage with its own model and honor completions. ([#6251](https://github.com/langchain-ai/deepagents/pull/6251))\n- Drop stale Anthropic thinking blocks. ([#6300](https://github.com/langchain-ai/deepagents/pull/6300))\n- Isolate credentials used for user shell tracing. ([#6242](https://github.com/langchain-ai/deepagents/pull/6242))\n- Attribute dotenv configuration sources. ([#6222](https://github.com/langchain-ai/deepagents/pull/6222))\n- Expose unknown reasoning effort values. ([#6241](https://github.com/langchain-ai/deepagents/pull/6241))\n- Open the Debug Console at the bottom of the log. ([#6218](https://github.com/langchain-ai/deepagents/pull/6218))\n- Order Debug Console log filters. ([#6217](https://github.com/langchain-ai/deepagents/pull/6217))\n- Show the spinner during pre-stream turn setup. ([#6253](https://github.com/langchain-ai/deepagents/pull/6253))\n- Demote no-output hint suppression messages to debug logging. ([#6245](https://github.com/langchain-ai/deepagents/pull/6245))\n\n---\n\nInternal maintainers: @aolsenjazz, @eyurtsev, @mdrxy\n\nReleased by: @mdrxy\n\n<details>\n<summary>Git log since deepagents-code==0.1.68</summary>\n\nThis commit history includes changes to this package. Commits are listed newest first.\n\n- [`1d3232c`](https://github.com/langchain-ai/deepagents/commit/1d3232c0852c47af09119edea10eeec887e4f0da) release(deepagents-code): 0.1.69 (#6247)\n- [`fe01fac`](https://github.com/langchain-ai/deepagents/commit/fe01fac1fa3c4d30d9379a9e5f4273a622710049) fix(code): drop stale Anthropic thinking blocks (#6300)\n- [`f413a40`](https://github.com/langchain-ai/deepagents/commit/f413a40f7e74ada749b18491aa276ee1224c7368) fix(code): price nested usage with its own model and honor completions (#6251)\n- [`6f1ac85`](https://github.com/langchain-ai/deepagents/commit/6f1ac85c46604ef093a9d295fbcc52a8108aa8ed) fix(code): attribute dotenv config sources (#6222)\n- [`fa609c2`](https://github.com/langchain-ai/deepagents/commit/fa609c23ba883557d015529d431ae266847e388c) fix(code): show the spinner during pre-stream turn setup (#6253)\n- [`4bbad10`](https://github.com/langchain-ai/deepagents/commit/4bbad10385b22cb76dc40aaa4709d4726f20db02) fix(code): order debug console log filters (#6217)\n- [`312fc0b`](https://github.com/langchain-ai/deepagents/commit/312fc0beb74f2c93833302cd8ff0a089b14dab6a) chore(deps): bump `deepagents` pin in `deepagents-code` to 0.7.14 (#6301)\n- [`34f1b6b`](https://github.com/langchain-ai/deepagents/commit/34f1b6b037b24a1f2fe8b1d6112d9f8cdfe32bf2) fix(code): open debug console at log bottom (#6218)\n- [`05edbb1`](https://github.com/langchain-ai/deepagents/commit/05edbb14d0855303ce74d42a4bf368804856c43a) feat(code): show session length in Debug Console (#6224)\n- [`8a5c317`](https://github.com/langchain-ai/deepagents/commit/8a5c317e45edb0df4ad42ae79c1c5a6f8cff407f) feat(code): copy model slug with Ctrl+click (#6243)\n- [`ed715ee`](https://github.com/langchain-ai/deepagents/commit/ed715eeba608af47c9ed7943822c25d935a30b9e) fix(code): expose unknown reasoning effort (#6241)\n- [`35c21fa`](https://github.com/langchain-ai/deepagents/commit/35c21faafe329f4f6932c0941d163306e1aa06e5) fix(code): isolate user shell tracing credentials (#6242)\n- [`0a93587`](https://github.com/langchain-ai/deepagents/commit/0a9358749d7654cc0bd9273a9e007be89abf316d) feat(code): list DeepSeek V4.1 Flash in picker (#6254)\n- [`ded0f11`](https://github.com/langchain-ai/deepagents/commit/ded0f1187f6bf81e2f679ea7b16ead7760d775a6) release(deepagents): 0.7.14 (#6050)\n- [`c08cae6`](https://github.com/langchain-ai/deepagents/commit/c08cae693e0036fcd45d979a7dfa3a7e306a0515) feat(code): surface locally tracked GitHub stacks (#6290)\n- [`3b99e73`](https://github.com/langchain-ai/deepagents/commit/3b99e7333e501d1ccf84b5fbaaacc9de815ce4b7) chore(deps): raise dependency minimums for `all` (#6280)\n- [`a5378d7`](https://github.com/langchain-ai/deepagents/commit/a5378d7125ad5a96fe785afc4feb02af3a58612c) test(code): assert tool duration state instead of rendered strings (#6270)\n- [`9f6bd6a`](https://github.com/langchain-ai/deepagents/commit/9f6bd6ae200ff2e45e8c0246343b6c8936707447) chore(deps): raise dependency minimums for `all` (#6268)\n- [`276beca`](https://github.com/langchain-ai/deepagents/commit/276becae1bbaa38d6253aee90e99212e7bdf0606) feat(sdk,code): update `read_file` output formatting (#5648)\n- [`d93ab33`](https://github.com/langchain-ai/deepagents/commit/d93ab3351bbf4c3687212f665094ccad100f2c08) fix(code): demote no-output hint suppression to debug (#6245)\n- [`d889f40`](https://github.com/langchain-ai/deepagents/commit/d889f40ec72880ae2642300f62eceb9efe185757) chore(deps): raise dependency minimums for `all` (#6237)\n\n</details>",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents-code%3D%3D0.1.69",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "更新 read_file 工具的输出格式，改善文件读取展示效果",
+            "新增 DeepSeek V4.1 Flash 模型选择支持，扩充模型选项",
+            "将本地跟踪的 GitHub stacks 展示到 agent 上下文中",
+            "支持 Ctrl+点击复制模型 slug，提升操作便捷性",
+            "修复嵌套用量计费模型归属、日志过滤排序及调试控制台打开位置等问题"
+          ],
+          "summary_cn": "deepagents-code 0.1.69 版本主要带来了多项功能增强，包括更新 read_file 输出格式、新增 DeepSeek V4.1 Flash 模型选择、在 agent 上下文中展示本地 GitHub stacks、支持 Ctrl+点击复制模型 slug，以及调试控制台新增会话时长显示。同时修复了嵌套用量计费、Anthropic thinking blocks 清理、用户 shell 追踪凭据隔离、dotenv 配置源归属等多个问题，并优化了调试控制台的日志过滤排序和打开位置。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "version": "deepagents==0.7.14",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Features\n\n- Updated `read_file` output formatting. ([#5648](https://github.com/langchain-ai/deepagents/pull/5648))\n\n### Bug Fixes\n\n- Bounded compaction recovery and added validation for input budgets. ([#6267](https://github.com/langchain-ai/deepagents/pull/6267))\n- Fixed invalid partial tool-call patching and updated imputed `ToolMessage` content in `PatchToolCallsMiddleware`. ([#5430](https://github.com/langchain-ai/deepagents/pull/5430), [#6277](https://github.com/langchain-ai/deepagents/pull/6277))\n- Rejected empty `old_string` values in `edit_file` paths. ([#5747](https://github.com/langchain-ai/deepagents/pull/5747))\n- Fixed character counting in `ls` and `glob` output. ([#6204](https://github.com/langchain-ai/deepagents/pull/6204))\n- Improved `glob` tool results to suggest populating `path` when appropriate. ([#6199](https://github.com/langchain-ai/deepagents/pull/6199))\n- Prevented blank read windows from triggering the empty-file warning. ([#5050](https://github.com/langchain-ai/deepagents/pull/5050))\n\n---\n\nThanks to our community contributors: @SomSamantray, @rajarshidattapy\n\n**Special thanks** to everyone who reported the issues addressed in this release: @nickisaacs ([#5547](https://github.com/langchain-ai/deepagents/issues/5547)), @abrarsheikh ([#4662](https://github.com/langchain-ai/deepagents/issues/4662)), @bluefateludi ([#5589](https://github.com/langchain-ai/deepagents/issues/5589), [#5676](https://github.com/langchain-ai/deepagents/issues/5676)), @wawahaha ([#4882](https://github.com/langchain-ai/deepagents/issues/4882)), @rajarshidattapy ([#4955](https://github.com/langchain-ai/deepagents/issues/4955))\n\nInternal maintainers: @ccurme, @eyurtsev, @hntrl, @jkennedyvz, @mdrxy\n\nReleased by: @ccurme\n\n<details>\n<summary>Git log since deepagents==0.7.13</summary>\n\nThis commit history includes changes to this package. Commits are listed newest first.\n\n- [`ded0f11`](https://github.com/langchain-ai/deepagents/commit/ded0f1187f6bf81e2f679ea7b16ead7760d775a6) release(deepagents): 0.7.14 (#6050)\n- [`3b99e73`](https://github.com/langchain-ai/deepagents/commit/3b99e7333e501d1ccf84b5fbaaacc9de815ce4b7) chore(deps): raise dependency minimums for `all` (#6280)\n- [`178417d`](https://github.com/langchain-ai/deepagents/commit/178417d0dad063fea0300db68455f4574ef67db3) fix(sdk): update imputed `ToolMessage` content in `PatchToolCallsMiddleware` (#6277)\n- [`bb6d431`](https://github.com/langchain-ai/deepagents/commit/bb6d4316eb59b368b862e5517b888e5e70b1c3ae) fix(sdk): bound compaction recovery and validate input budgets (#6267)\n- [`9f6bd6a`](https://github.com/langchain-ai/deepagents/commit/9f6bd6ae200ff2e45e8c0246343b6c8936707447) chore(deps): raise dependency minimums for `all` (#6268)\n- [`276beca`](https://github.com/langchain-ai/deepagents/commit/276becae1bbaa38d6253aee90e99212e7bdf0606) feat(sdk,code): update `read_file` output formatting (#5648)\n- [`edc7c1c`](https://github.com/langchain-ai/deepagents/commit/edc7c1ca69831c1827c1f479696a5450ffd1df9d) fix(sdk): patch invalid partial tool calls (#5430)\n- [`d889f40`](https://github.com/langchain-ai/deepagents/commit/d889f40ec72880ae2642300f62eceb9efe185757) chore(deps): raise dependency minimums for `all` (#6237)\n- [`4ca678f`](https://github.com/langchain-ai/deepagents/commit/4ca678fe11fcb8f452b59b31923f37dabbc26d6a) fix(sdk): fix character counting in `ls` and `glob` output (#6204)\n- [`7c3cebe`](https://github.com/langchain-ai/deepagents/commit/7c3cebe1df407ac947c34d56a1a21945aaddae23) chore(deps): raise dependency minimums for `all` (#6212)\n- [`26954ea`](https://github.com/langchain-ai/deepagents/commit/26954eaafb581db641dd7ce3f9d4ba470a9af878) fix(sdk): suggest populating path in `glob` tool result where appropriate (#6199)\n- [`18106be`](https://github.com/langchain-ai/deepagents/commit/18106be837bcdd9005b2dd73280d871a0621bf99) chore(deps): raise dependency minimums for `all` (#6130)\n- [`07d2952`](https://github.com/langchain-ai/deepagents/commit/07d2952d346d81d06bd181db8c560a77f2b51bc8) chore(deps): raise dependency minimums for `all` (#6096)\n- [`1281b04`](https://github.com/langchain-ai/deepagents/commit/1281b04f7eafaf654982b99a3c93f72744208eda) fix(sdk): reject empty old_string in edit_file paths (#5747)\n- [`de999bb`](https://github.com/langchain-ai/deepagents/commit/de999bb182ae6c29d4efea7c3d82127420421275) test(sdk): remove change-detector tests (#5975)\n- [`bdccb82`](https://github.com/langchain-ai/deepagents/commit/bdccb82d21f998174354a25daa4624dc0d9da97b) chore(deps): raise dependency minimums for `all` (#6053)\n- [`a892a0e`](https://github.com/langchain-ai/deepagents/commit/a892a0ee26d045256b6d3b0c224b3de663c83eb5) fix(sdk): keep blank read windows out of the empty-file warning (#5050)\n- [`ac0fac4`](https://github.com/langchain-ai/deepagents/commit/ac0fac42f6ece4147c3636896358e1a9391cd94a) chore(deps): raise dependency minimums for `all` (#6046)\n\n</details>",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/deepagents/releases/tag/deepagents%3D%3D0.7.14",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "优化了 read_file 工具的输出格式化",
+            "修复了 PatchToolCallsMiddleware 中无效部分工具调用修补和 ToolMessage 内容更新问题",
+            "为压缩恢复添加边界限制，并增加了输入预算校验",
+            "修复了 ls 和 glob 输出中的字符计数问题，并优化了 glob 工具的路径提示",
+            "修复了 edit_file 工具接受空 old_string 值的问题"
+          ],
+          "summary_cn": "deepagents 0.7.14 是一个以 Bug 修复为主的版本，重点修复了多个工具（read_file、edit_file、ls、glob）的行为问题，包括输出格式化、字符计数、参数校验等。同时增强了 PatchToolCallsMiddleware 中部分 tool-call 修补逻辑的可靠性，并为压缩恢复和输入预算添加了边界限制与验证。该版本还包含多项依赖版本提升。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "version": "v1.18.31",
+        "author": "opencode-agent[bot]",
+        "date": "2026-09-14",
+        "summary": "## Core\n\n### Bugfixes\n\n- Restored ACP session model, effort, mode, and reasoning chunk boundaries when loading, resuming, or forking sessions. (@JacobNWolf)\n\n## TUI\n\n### Bugfixes\n\n- Show remote config authentication errors during startup and exit with a failure status.\n\n## Extensions\n\n### Improvements\n\n- Request summarized adaptive thinking for GitHub Copilot models.\n\n**Thank you to 4 community contributors:**\n- @heimoshuiyu:\n  - feat(console): add batch workspace block endpoints (#48491)\n- @JacobNWolf:\n  - fix(acp): restore session options and reasoning boundaries (#48225)\n- @R-Taneja:\n  - chore(deps): bump @ai-sdk/gateway to 3.0.191 (#48710)\n- @MatthewFeroz:\n  - fix(ui): add Merge Gateway logo (#42015)\n",
+        "assets_count": 37,
+        "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.31",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 ACP 会话模型、努力程度、模式及推理分块边界在加载、恢复或分叉会话时丢失的问题",
+            "TUI 界面在启动时展示远程配置认证错误，并以失败状态退出",
+            "为 GitHub Copilot 模型请求汇总的自适应思维总结",
+            "添加合并网关（Merge Gateway）标志",
+            "新增批处理工作区块端点"
+          ],
+          "summary_cn": "本版本主要包含多项修复和改进：核心层面修复了 ACP 会话在加载、恢复或分叉时，模型配置和推理分块边界丢失的问题；TUI 界面改进了远程配置认证错误的启动提示与退出处理。此外，还为 GitHub Copilot 模型增加了自适应思维总结请求，并包含若干社区贡献的 UI 与功能增强。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openinterpreter/openinterpreter",
+        "version": "rust-v0.0.43",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "Open Interpreter 0.0.43\n\nMaintenance release based on upstream Codex rust-v0.154.0. Adds easy choices for Gemini 3.8 Flash and 3.7 Flash, Z.AI ZCode and GLM support, and inherited GPT-6 Astra plus GPT-5.6 Sol, Terra, and Luna presets. Improves ACP harness selection, Chat Completions discovery and completions, Open Interpreter branding, reusable Ollama diagnostics, cross-platform packaging, and release validation. Release packaging now preserves signing when credentials are configured and otherwise publishes explicitly verified unsigned artifacts.\n\n",
+        "assets_count": 152,
+        "url": "https://github.com/openinterpreter/openinterpreter/releases/tag/rust-v0.0.43",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增易于选择和配置的 Gemini 3.8 Flash 和 3.7 Flash 模型预设",
+            "新增 Z.AI ZCode 和 GLM 模型支持",
+            "继承上游 Codex rust-v0.154.0 的 GPT-6 Astra 及 GPT-5.6 Sol、Terra、Luna 预设",
+            "改进 ACP 握手选择、Chat Completions 发现与完成功能，以及 Open Interpreter 品牌标识",
+            "改进跨平台打包、Ollama 诊断可复用性及发布验证；发布打包在配置凭证时保留签名，否则发布已验证的无签名工件"
+          ],
+          "summary_cn": "Open Interpreter 0.0.43 是基于上游 Codex rust-v0.154.0 的维护版本，核心亮点是新增多款 AI 模型预设选择，包括 Gemini 3.8/3.7 Flash、Z.AI ZCode、GLM，以及继承的 GPT-6 Astra 和 GPT-5.6 系列模型。此外还对各模块进行了多项改进，包括 ACP 选择、Chat Completions 发现、跨平台打包和发布签名验证等。整体以新增模型支持和功能改进为主，属于非破坏性更新。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "openclaw/lobster",
+        "version": "v2026.9.13",
+        "author": "steipete",
+        "date": "2026-09-14",
+        "summary": "**Highlights:** Cost limits no longer stop workflows falsely when later steps reuse LLM results, and CLI pipelines preserve empty and quoted arguments.\n\n- Count live LLM results only once when later workflow steps reuse them through JSON references, including rendered and projected outputs, preventing false cost-limit stops while preserving charges for new calls and untrusted JSON.\n- Preserve explicit empty command arguments in CLI pipelines and SDK exec, and preserve apostrophes, quotes, backslashes, and literal pipeline characters through both invocation shims.\n- Report invalid explicit workflow targets through the tool JSON error envelope (exit code 2), with concise human-mode errors instead of uncaught filesystem stacks.\n- Show graph-specific options for `lobster graph --help` and `-h`.\n- Test the supported Node.js 22 and 24 runtimes in CI, align Node types with the minimum supported major, make TypeScript 7 the explicit compiler, update pnpm to 12.4.1, and pin hydration/release actions while retaining the two-day dependency release-age policy.\n\nRelease commit: `5fc381c4d710787093b908630cd2eca5cbf69e60`.\n\nPublished to npm: [@clawdbot/lobster 2026.9.13](https://www.npmjs.com/package/@clawdbot/lobster/v/2026.9.13), with both beta and latest pointing to this version.\n\n[Registry tarball](https://registry.npmjs.org/@clawdbot/lobster/-/lobster-2026.9.13.tgz) — also attached here with SHA256SUMS.\n\nIntegrity: `sha512-sWbtxWkiN1UWVwhoUiMhrIus7ZjbavSQJc8zO3FUTh9p9AUECJrtR7eMyNZmkLP5zxSG8KhbQRjdlCIK2qkWKA==`.\n\nPublished at: 2026-09-14T05:06:03.992Z.\n\nnpm publication was performed locally from the CI-built preflight artifact because the automation token path now requires a one-time password. The same version was then promoted locally from beta to latest.\n\nVerification: [CI](https://github.com/openclaw/lobster/actions/runs/34799213270), [CodeQL](https://github.com/openclaw/lobster/actions/runs/34799213076), and [preflight](https://github.com/openclaw/lobster/actions/runs/34799356590) all succeeded. The registry tarball matches the preflight artifact byte for byte; SHA-256 and npm integrity were verified. A fresh exact-version npm install reports 2026.9.13 and passes the CLI doctor check. Independent release review passed.\n",
+        "assets_count": 2,
+        "url": "https://github.com/openclaw/lobster/releases/tag/v2026.9.13",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复成本限制误判问题：当后续工作流步骤通过 JSON 引用复用已计费的 LLM 结果（包括渲染和投影输出）时，不再重复计算导致错误的成本限制中断，同时保持对新调用和不可信 JSON 的正常计费",
+            "修复 CLI 管道和 SDK exec 中显式空参数被丢弃的问题，并保留撇号、引号、反斜杠及字面管道字符的传递",
+            "改进无效显式工作流目标的错误报告，通过工具 JSON 错误信封返回（退出码 2），提供简洁的人类可读错误信息",
+            "仅为 graph 命令的 --help 和 -h 显示图专用选项",
+            "CI 支持 Node.js 22 和 24 运行时，对齐 Node 类型版本，显式使用 TypeScript 7 编译器，更新 pnpm 至 12.4.1，加固 hydration/release 操作"
+          ],
+          "summary_cn": "v2026.9.13 主要修复了两个关键问题：一是工作流中复用 LLM 结果时不再因重复计费导致错误的成本限制中断，二是 CLI 管道和 SDK exec 能正确保留空参数及特殊字符。此外还改进了无效目标的错误报告、完善了 graph 命令的帮助信息，并将 CI 工具链升级至 Node.js 22/24 和 TypeScript 7。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "version": "v0.5.7",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "## 🚀 ClawX v0.5.7\n\nClawX - Graphical AI Assistant based on OpenClaw\n\n### 📦 Downloads\n\nPlease select the appropriate installer for your operating system and architecture:\n\n#### macOS\n- **Apple Silicon (M1/M2/M3/M4)**: `ClawX-*-mac-arm64.dmg`\n- **Intel (x64)**: `ClawX-*-mac-x64.dmg`\n\n#### Windows\n- **Installer (x64)**: `ClawX-*-win-x64.exe`\n- **Installer (ARM64)**: `ClawX-*-win-arm64.exe`\n\n#### Linux\n- **AppImage (x64)**: `ClawX-*-linux-x86_64.AppImage` (Universal format, recommended)\n- **AppImage (ARM64)**: `ClawX-*-linux-arm64.AppImage`\n- **Debian/Ubuntu (x64)**: `ClawX-*-linux-amd64.deb`\n- **Debian/Ubuntu (ARM64)**: `ClawX-*-linux-arm64.deb`\n- **RPM (x64)**: `ClawX-*-linux-x86_64.rpm`\n\n### 📝 Release Notes\n\nSee the auto-generated release notes below for detailed changes.\n\n### ⚠️ Installation Notes\n\n- **macOS**: On first launch, you may see \"cannot verify developer\". Go to System Preferences → Security & Privacy to allow the app to run\n- **Windows**: SmartScreen may block the app. Click \"More info\" → \"Run anyway\" to proceed\n- **Linux AppImage**: First run `chmod +x ClawX-*.AppImage` to add execute permission. On Ubuntu 22.04 you may also need `sudo apt install libfuse2`; on Ubuntu 24.04 use `sudo apt install libfuse2t64`\n- **Linux .deb (Ubuntu 24.04)**: If installation fails due to missing dependencies, use `sudo apt install libgtk-3-0t64 libnotify4t64 libxss1t64` before installing\n\n---\n\n💬 Found an issue? Please submit an [Issue](https://github.com/ValueCell-ai/ClawX/issues)\n\n\n## What's Changed\n* fix: stabilize macOS release signing by @vcfgv in https://github.com/ValueCell-ai/ClawX/pull/1284\n* fix: support Astra custom providers and clean up deleted provider state by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1286\n* chore: bump bundled channel plugins compatible with OpenClaw 2026.7.1-2 by @hazeone in https://github.com/ValueCell-ai/ClawX/pull/1287\n* fix: activate plugin channels after save and reject invalid Feishu credentials by @hazeone in https://github.com/ValueCell-ai/ClawX/pull/1288\n* refactor(settings): update developer mode description by @hazeone in https://github.com/ValueCell-ai/ClawX/pull/1278\n* feat: support token dance by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1289\n* feat: support speech-to-text (ASR) input and add model icons; fix ACP process management and refactor UI by @z0gSh1u in https://github.com/ValueCell-ai/ClawX/pull/1282\n* fix: allow issue report export without conversations by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1290\n* feat: supports Computer Use feature experimentally by @z0gSh1u in https://github.com/ValueCell-ai/ClawX/pull/1283\n* fix: support WeCom calendar queries in single-account desktop sessions by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1291\n* fix: recover OpenClaw-generated file by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1293\n* fix: render generated images inline from MEDIA paths by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1294\n* feat: gate voice input behind developer mode by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1296\n* release  0.5.7 by @su8su in https://github.com/ValueCell-ai/ClawX/pull/1297\n\n\n**Full Changelog**: https://github.com/ValueCell-ai/ClawX/compare/v0.5.6...v0.5.7",
+        "assets_count": 14,
+        "url": "https://github.com/ValueCell-ai/ClawX/releases/tag/v0.5.7",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增语音转文字（ASR）输入功能并增加模型图标，语音输入默认由开发者模式控制",
+            "实验性支持 Computer Use 功能（计算机自动化操作）",
+            "新增 token dance 功能，增强认证流程",
+            "支持 Astra 自定义提供方并清理已删除的提供方状态，同时支持企业微信日历查询和失败凭据校验",
+            "稳定 macOS 发布签名，修复 OpenClaw 生成文件恢复及 MEDIA 路径内嵌图片渲染等问题"
+          ],
+          "summary_cn": "ClawX v0.5.7 是一次功能增强型更新，新增了多项实用功能，包括语音转文字（ASR）输入、实验性的 Computer Use 功能以及 token dance 认证支持。同时修复了多个问题，如 macOS 签名稳定性、Astra 自定义提供方支持、企业微信日历查询和图片内嵌渲染等，并更新了与 OpenClaw 2026.7.1-2 兼容的渠道插件。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "aaif-goose/goose",
+        "version": "v1.50.1",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "## 🐛 **Bug Fixes**\n\n- Revert model updates for patch release\n- Roll back MCP default version selection update [#6d8152a](https://github.com/aaif-goose/goose/commit/6d8152a99adbd149783d9d0cc2b43ce2755cca95)",
+        "assets_count": 37,
+        "url": "https://github.com/aaif-goose/goose/releases/tag/v1.50.1",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "回滚了补丁版本中的模型更新",
+            "撤回了 MCP 默认版本选择的更新",
+            "确保补丁版本保持稳定，避免引入意外变更"
+          ],
+          "summary_cn": "此补丁版本（v1.50.1）回滚了两项更新：模型更新以及 MCP 默认版本选择逻辑的变更。目的是确保补丁版本保持稳定，不引入可能影响用户使用的意外改动。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v20.12.0",
+        "author": "mikeldking",
+        "date": "2026-09-14",
+        "summary": "## [20.12.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v20.11.0...arize-phoenix-v20.12.0) (2026-09-14)\n\n\n### Features\n\n* **api:** expose trace and session filter expressions ([#16077](https://github.com/Arize-ai/phoenix/issues/16077)) ([d613de7](https://github.com/Arize-ai/phoenix/commit/d613de73943972bef1dd966de4d5e36254235d06))\n* **server:** add GET /datasets/{dataset_identifier}/splits ([e60697f](https://github.com/Arize-ai/phoenix/commit/e60697fe1e24ca84909e602b207b62af42bb3860)), closes [#12090](https://github.com/Arize-ai/phoenix/issues/12090)\n\n\n### Bug Fixes\n\n* **cost:** update built-in model token prices ([25b95d7](https://github.com/Arize-ai/phoenix/commit/25b95d7fd4d2dbeaf6faa3fe8b72fde255f60e47))\n* **server:** address review findings for GET /datasets/{dataset_identifier}/splits ([655802b](https://github.com/Arize-ai/phoenix/commit/655802b21016aa74d42dec2d4e38ea6fdc5ea969))\n* **server:** scope listed dataset splits by example membership only ([eafa87c](https://github.com/Arize-ai/phoenix/commit/eafa87c45ee1b0d39676f21ddcee19a9a6140fb3))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.12.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Trace 和 Session 过滤器表达式 API，支持更灵活的查询筛选",
+            "新增 GET /datasets/{dataset_identifier}/splits 接口，用于查询数据集拆分信息",
+            "更新内置模型 Token 价格，确保成本计算准确",
+            "优化数据集拆分接口，仅按示例成员资格限定拆分范围"
+          ],
+          "summary_cn": "此版本主要引入了新的 API 能力，包括 Trace/Session 过滤器表达式以及数据集拆分查询接口，方便用户更灵活地查询与筛选数据。同时修复了内置模型 Token 价格及数据集拆分接口的相关问题，提升了成本计算的准确性和接口的健壮性。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@7.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- 6431635: feat(ai): expose typed AI SDK errors for UI transport and completion failures\n- Updated dependencies [23a0fff]\n  - @ai-sdk/gateway@4.0.81",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%407.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。 本包为值得单独关注的子包：ai@7.0.100",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow@2.0.31",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow%402.0.31",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/workflow-harness@1.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/workflow-harness%401.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@4.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%404.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/tui@1.0.101",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tui%401.0.101",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@5.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%405.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-vercel@1.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-vercel%401.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/sandbox-just-bash@1.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/sandbox-just-bash%401.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@3.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%403.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@4.0.103",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%404.0.103",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/policy-opa@1.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/policy-opa%401.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/otel@1.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/otel%401.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@3.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%403.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@3.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%403.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness@1.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness%401.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-pi@1.0.112",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-pi%401.0.112",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-opencode@1.0.112",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-opencode%401.0.112",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-grok-build@1.0.47",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110\n- @ai-sdk/harness-acp@1.0.48",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-grok-build%401.0.47",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-github-copilot@1.0.5",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110\n- @ai-sdk/harness-acp@1.0.48",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-github-copilot%401.0.5",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-fx@1.0.23",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110\n- @ai-sdk/harness-acp@1.0.48",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-fx%401.0.23",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-deepagents@1.0.110",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-deepagents%401.0.110",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-cursor@1.0.23",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110\n- @ai-sdk/harness-acp@1.0.48",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-cursor%401.0.23",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-codex@1.0.112",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-codex%401.0.112",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-cline@1.0.37",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-cline%401.0.37",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-claude-code@1.0.114",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-claude-code%401.0.114",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/harness-acp@1.0.48",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- @ai-sdk/harness@1.0.110",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/harness-acp%401.0.48",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@4.0.81",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- 23a0fff: chore(provider/gateway): update gateway model settings files",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%404.0.81",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/code-mode@1.0.57",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/code-mode%401.0.57",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@3.0.100",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [6431635]\n  - ai@7.0.100",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%403.0.100",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@6.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [dc9fa12]\n  - @ai-sdk/gateway@3.0.194",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%406.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@3.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%403.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@4.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%404.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@2.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%402.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@3.0.286",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%403.0.286",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@2.0.283",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%402.0.283",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@2.0.291",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%402.0.291",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@3.0.194",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- dc9fa12: Backport: chore(provider/gateway): update gateway model settings files",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%403.0.194",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@2.0.284",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@6.0.283",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%402.0.284",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "ai@5.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- Updated dependencies [4a75d2c]\n  - @ai-sdk/gateway@2.0.152",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/ai%405.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/vue@2.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%402.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/svelte@3.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/svelte%403.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/rsc@1.0.260",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/rsc%401.0.260",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/react@2.0.261",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/react%402.0.261",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/llamaindex@1.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/llamaindex%401.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/langchain@1.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/langchain%401.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/gateway@2.0.152",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- 4a75d2c: Backport: chore(provider/gateway): update gateway model settings files",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/gateway%402.0.152",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/angular@1.0.258",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "### Patch Changes\n\n- ai@5.0.258",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/angular%401.0.258",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "ai@7.0.100 新增：暴露 UI 传输与完成失败场景的类型化 AI SDK 错误（整批唯一实质功能变更）",
+            "ai@6.0.283 与 ai@5.0.258 两条主线仅同步 gateway 依赖 patch，自身无功能变更",
+            "gateway@4.0.81 为模型配置文件的 chore 更新，gateway@3.0.194 与 2.0.152 为同一改动的 backport",
+            "其余 40+ 个框架与工具包（react、svelte、vue、angular、harness 系列、langchain、llamaindex、rsc、tui 等）均为纯依赖 bump 的例行升级"
+          ],
+          "summary_cn": "vercel/ai SDK 共发布 47 个子包，覆盖 v5/v6/v7 三条 major 版本线的例行版本同步：其中 46 个均为纯 patch 级依赖升级（含 gateway 模型配置文件的 chore/backport），仅 ai@7.0.100 包含实质变更——新增类型化 AI SDK 错误暴露。整体无 major 跳跃与 breaking change，属于以依赖同步为主的例行发版。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "vercel/sdk",
+        "version": "v1.28.32",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "# Generated by Speakeasy CLI\n[@vercel/sdk 1.28.32](https://www.npmjs.com/package/@vercel/sdk/v/1.28.32)\n## Typescript SDK Changes:\n* `vercel.deployments.getDeployment()`:  `response.union(2).resourceConfig.buildMachine.selectionSource.enum(teamEntitlement)` **Added** (Breaking ⚠️)\n* `vercel.deployments.createDeployment()`:  `response.union(2).resourceConfig.buildMachine.selectionSource.enum(teamEntitlement)` **Added** (Breaking ⚠️)\n* `vercel.deployments.cancelDeployment()`:  `response.resourceConfig.buildMachine.selectionSource.enum(teamEntitlement)` **Added** (Breaking ⚠️)\n* `vercel.user.listUserEvents()`:  `response.events[]` **Changed** (Breaking ⚠️)\n* `vercel.user.listEventTypes()`:  `response.types[]` **Changed** (Breaking ⚠️)\n* `vercel.microfrontends.getMicrofrontendsInGroup()`:  `response.projects[].trustedSources.enableVercelCiSameRepository` **Added**\n* `vercel.projects.getProjects()`:  `response` **Changed**\n* `vercel.projects.createProject()`:  `response.trustedSources.enableVercelCiSameRepository` **Added**\n* `vercel.projects.getProject()`:  `response.trustedSources.enableVercelCiSameRepository` **Added**\n* `vercel.projects.updateProject()`: \n  *  `request.requestBody.trustedSources.enableVercelCiSameRepository` **Added**\n  *  `response.trustedSources.enableVercelCiSameRepository` **Added**\n* `vercel.projects.uploadProjectAvatar()`:  `response.trustedSources.enableVercelCiSameRepository` **Added**\n* `vercel.projects.updateMicrofrontends()`:  `response.trustedSources.enableVercelCiSameRepository` **Added**\n\nGenerated with [Speakeasy CLI 1.796.4](https://github.com/speakeasy-api/speakeasy/releases)\n\n\nPublishing Completed",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/sdk/releases/tag/v1.28.32",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "部署相关接口（getDeployment、createDeployment、cancelDeployment）响应类型新增 buildMachine 构建机器选择来源的 teamEntitlement 枚举，属于破坏性变更",
+            "用户事件相关接口（listUserEvents、listEventTypes）的响应数据结构发生破坏性变更",
+            "多个项目相关接口新增 trustedSources.enableVercelCiSameRepository 字段，支持配置 Vercel CI 同一仓库的信任源",
+            "微前端分组接口（getMicrofrontendsInGroup）新增 trustedSources 相关配置字段"
+          ],
+          "summary_cn": "本次 v1.28.32 版本包含多项破坏性变更，主要涉及部署接口的响应类型新增构建机器选择来源枚举，以及用户事件列表相关接口的数据结构调整。同时，多个项目相关接口新增了 trustedSources.enableVercelCiSameRepository 字段，支持配置 Vercel CI 同仓库信任源。由于存在多项 Breaking Changes，升级需谨慎评估现有代码兼容性。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "vercel/turborepo",
+        "version": "v2.10.13",
+        "author": "github-actions[bot]",
+        "date": "2026-09-14",
+        "summary": "<!-- Release notes generated using configuration in .github/release.yml at v2.10.13 -->\n\n## What's Changed\n### Changelog\n* chore: Release Turborepo 2.10.12 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13844\n* fix: Remove unsupported remote cache environment variable by @anthonyshew in https://github.com/vercel/turborepo/pull/13845\n* fix: Copy TUI selections locally over SSH by @anthonyshew in https://github.com/vercel/turborepo/pull/13847\n* feat: Use uv workspace metadata by @anthonyshew in https://github.com/vercel/turborepo/pull/13848\n* feat: Support Python virtual environments by @anthonyshew in https://github.com/vercel/turborepo/pull/13849\n* fix: Scope uv lockfile affectedness by @anthonyshew in https://github.com/vercel/turborepo/pull/13850\n* test: Isolate uv prune configuration by @anthonyshew in https://github.com/vercel/turborepo/pull/13851\n* fix: Explain disabled uv task caching by @anthonyshew in https://github.com/vercel/turborepo/pull/13852\n* fix: Explain uv identity probe failures by @anthonyshew in https://github.com/vercel/turborepo/pull/13853\n* fix: Explain uncached Cargo library builds by @anthonyshew in https://github.com/vercel/turborepo/pull/13855\n* fix: Explain disabled Cargo task caching by @anthonyshew in https://github.com/vercel/turborepo/pull/13854\n* fix: Keep Cargo tasks runnable without compiler identity by @anthonyshew in https://github.com/vercel/turborepo/pull/13857\n* chore: Release Turborepo 2.10.13-canary.1 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13858\n* feat: Support Cargo root packages by @anthonyshew in https://github.com/vercel/turborepo/pull/13856\n* feat(repository): Expose flat lockfile package list for metrics by @anthonyshew in https://github.com/vercel/turborepo/pull/13859\n* chore: Release Turbo repository packages 0.0.1-canary.25 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13860\n* docs: Upgrade Geistdocs to 1.25.1 by @molebox in https://github.com/vercel/turborepo/pull/13861\n* feat: Expand repository lockfile package metadata by @anthonyshew in https://github.com/vercel/turborepo/pull/13862\n* chore: Release Turbo repository packages 0.0.1-canary.26 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13863\n* fix: Restrict Factory to review comments by @anthonyshew in https://github.com/vercel/turborepo/pull/13864\n* fix: Pluralize package count in run prelude by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13865\n* chore: Update with-vite example by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13866\n* chore: Add searchable workspace model picker by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13870\n* fix: Restore docs client navigation by @molebox in https://github.com/vercel/turborepo/pull/13872\n* chore: Improve Factory workspace statuses by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13869\n* chore: Clarify Factory pull request descriptions by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13871\n* fix: Refresh Factory workspaces from main by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13873\n* perf: Speed up plain package listings by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13868\n* fix: Detect package-level turbo.jsonc by @cuishuang in https://github.com/vercel/turborepo/pull/13875\n* fix: Format Slack pull request notifications by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13877\n* feat: Link workspaces to pull requests by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13878\n* chore: Upgrade repository to pnpm 12 by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13879\n* chore: Update with-vite-react example by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13880\n* chore: Improve Factory chat streaming by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13881\n* fix: Show workspace failure details by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13884\n* chore: Add selectable Factory coding harnesses by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13887\n* fix: Gracefully handle native lockfile failures by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13886\n* chore: Update merged PR Slack messages by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13888\n* fix: Show native tasks in task listings by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13889\n* docs: Clarify turbo ls stability in Agent Skill by @Divyansh151005 in https://github.com/vercel/turborepo/pull/13892\n* chore: Resume workspace chat on refocus by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/13894\n* chore: Preserve HarnessAgent bridge assets by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13896\n* fix: Deduplicate multi-language watch hashes by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13897\n* fix: Normalize multi-language cache environment inputs by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13898\n* chore: Add workspace diff view by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13900\n* refactor: Migrate CLI parser to usage-rs by @anthonyshew in https://github.com/vercel/turborepo/pull/13890\n* fix: Update --filter help links to canonical docs URL by @Divyansh151005 in https://github.com/vercel/turborepo/pull/13891\n* chore: Update with-vue-nuxt example by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13901\n* docs: Document missing reference flags and fix query typo by @Divyansh151005 in https://github.com/vercel/turborepo/pull/13902\n* docs: Align CONTRIBUTING Node and pnpm versions by @Divyansh151005 in https://github.com/vercel/turborepo/pull/13883\n* perf: Skip Cargo resolution for workspace-only queries by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13903\n* fix: Bound memory usage for streamed task output by @anthonyshew in https://github.com/vercel/turborepo/pull/13908\n* fix: Clarify generator action reporting by @anthonyshew in https://github.com/vercel/turborepo/pull/13910\n* fix: Bump tar to 7.5.22 in @turbo/releaser (CVE-2026-73566) by @anthonyshew in https://github.com/vercel/turborepo/pull/13911\n* fix: Correct devtools --port default in CLI help by @Divyansh151005 in https://github.com/vercel/turborepo/pull/13905\n* fix: Resolve lint errors by @anthonyshew in https://github.com/vercel/turborepo/pull/13912\n* fix: Stabilize Rust builds on macOS by @anthonyshew in https://github.com/vercel/turborepo/pull/13913\n* docs: Clean up Rust docs by @anthonyshew in https://github.com/vercel/turborepo/pull/13914\n* fix: Preserve task metadata for command overrides by @anthonyshew in https://github.com/vercel/turborepo/pull/13915\n* perf: Resolve Git SCM state in one process by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/13882\n* fix: Only treat files literally named .gitignore as ignore files in the untracked walk by @Nixxx19 in https://github.com/vercel/turborepo/pull/13916\n* fix: Pass merge_base and allow_unknown_objects in signature order for task-level filter ranges by @Nixxx19 in https://github.com/vercel/turborepo/pull/13917\n* fix: Hash deferred inputs after dependencies by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13919\n* test: Make Cargo hash fixtures hermetic by @anthonyshew in https://github.com/vercel/turborepo/pull/13920\n* fix: Allow release versioning with pending changes by @anthonyshew in https://github.com/vercel/turborepo/pull/13921\n* chore: Update to Rust 1.98.0 by @ognevny in https://github.com/vercel/turborepo/pull/13821\n* chore: Upgrade Factory to Fable 5.1 by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13924\n* docs: Align Python guide with Rust guide by @anthonyshew in https://github.com/vercel/turborepo/pull/13927\n* fix: Give the package changes watcher the future flags so root inputs reach the task filter by @Nixxx19 in https://github.com/vercel/turborepo/pull/13926\n* fix: Support pnpm 6 single-package lockfiles by @anthonyshew in https://github.com/vercel/turborepo/pull/13928\n* feat: Add skipPackageGraph option to @turbo/repository Workspace.find by @anthonyshew in https://github.com/vercel/turborepo/pull/13929\n* fix: Use pnpm 12 in library release containers by @anthonyshew in https://github.com/vercel/turborepo/pull/13930\n* fix: Upgrade repository N-API build tooling by @anthonyshew in https://github.com/vercel/turborepo/pull/13931\n* fix: Use Node 20 for musl library builds by @anthonyshew in https://github.com/vercel/turborepo/pull/13933\n* fix: Bootstrap musl builds with sh by @anthonyshew in https://github.com/vercel/turborepo/pull/13934\n* fix: Use static library bootstrap shell by @anthonyshew in https://github.com/vercel/turborepo/pull/13935\n* fix: Allow unclean tree in bump-version by @anthonyshew in https://github.com/vercel/turborepo/pull/13936\n* fix: Skip git commit in bump-version by @anthonyshew in https://github.com/vercel/turborepo/pull/13937\n* fix: Expect napi 3 artifact paths by @anthonyshew in https://github.com/vercel/turborepo/pull/13938\n* chore: Release Turbo repository packages 0.0.1-canary.27 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/13939\n* perf: Batch package detail queries by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/13923\n* docs: Touch-ups for Python and Rust docs by @anthonyshew in https://github.com/vercel/turborepo/pull/13940\n* chore: Update basic example by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13922\n* fix: Avoid oxlint false positive on Workspace.find options by @anthonyshew in https://github.com/vercel/turborepo/pull/13941\n* chore: Update kitchen-sink example by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13945\n* fix: Hash native workspace task inputs by @anthonyshew in https://github.com/vercel/turborepo/pull/13947\n* chore: Update with-angular example by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/13951\n* fix: Recompute eager hashing flag after prepending global inputs by @Nixxx19 in https://github.com/vercel/turborepo/pull/13949\n* refactor: Generalize daemon repository discovery by @cuishuang in https://github.com/vercel/turborepo/pull/13946\n* feat: Make daemon discovery toolchain generic by @anthonyshew in https://github.com/vercel/turborepo/pull/13952\n* feat: Add experimental Go workspace graph foundation by @anthonyshew in https://github.com/vercel/turborepo/pull/13953\n* feat: Add native Go task tables by @anthonyshew in https://github.com/vercel/turborepo/pull/13954\n* feat: Add Go task input and output contracts by @anthonyshew in https://github.com/vercel/turborepo/pull/13955\n* test: Cover native Go execution end to end by @anthonyshew in https://github.com/vercel/turborepo/pull/13956\n* feat: Add Go external resolution fingerprints by @anthonyshew in https://github.com/vercel/turborepo/pull/13957\n* feat: Fingerprint Go toolchain environment by @anthonyshew in https://github.com/vercel/turborepo/pull/13958\n* feat: Add Go change observations by @anthonyshew in https://github.com/vercel/turborepo/pull/13959\n* test: Cover Go query and summary surfaces by @anthonyshew in https://github.com/vercel/turborepo/pull/13960\n* feat: Add Go-aware prune planning by @anthonyshew in https://github.com/vercel/turborepo/pull/13961\n* test: Add end-to-end Go prune and cache coverage by @anthonyshew in https://github.com/vercel/turborepo/pull/13962\n* docs: Document experimental native Go workspaces by @anthonyshew in https://github.com/vercel/turborepo/pull/13963\n* fix: Harden Go workspace diagnostics by @anthonyshew in https://github.com/vercel/turborepo/pull/13964\n* fix: Correct Go workspace resolution and task caching by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/13966\n* chore: Add Factory thinking controls and message queue by @vercel-gh-bot-3[bot] in https://github.com/vercel/turborepo/pull/13967\n* chore: Remove ARCHITECTURE.md docs by @anthonyshew in https://github.com/vercel/turborepo/pull/13969\n* fix: Add slug to OPTIONS request by @y-lakhdar in https://github.com/vercel/turborepo/pull/13943\n* perf: Parse CLI exits before starting worker pools by @anthonyshew in https://github.com/vercel/turborepo/pull/13971\n* perf: Reuse compiled workspace matchers by @anthonyshew in https://github.com/vercel/turborepo/pull/13970\n* chore: Revert bundled startup optimizations by @anthonyshew in https://github.com/vercel/turborepo/pull/13982\n* perf: Fast-path numeric package manager versions by @anthonyshew in https://github.com/vercel/turborepo/pull/13973\n* perf: Stop inference after selecting a workspace root by @anthonyshew in https://github.com/vercel/turborepo/pull/13980\n* perf: Reuse compiled workspace matchers by @anthonyshew in https://github.com/vercel/turborepo/pull/13984\n* perf: Skip unnecessary glob normalization by @anthonyshew in https://github.com/vercel/turborepo/pull/13979\n* perf: Cache workspace configuration lookups by @anthonyshew in https://github.com/vercel/turborepo/pull/13975\n* perf: Avoid regexes for simple environment matching by @anthonyshew in https://github.com/vercel/turborepo/pull/13974\n* perf: Reuse canonical paths during repository discovery by @anthonyshew in https://github.com/vercel/turborepo/pull/13976\n* perf: Skip work for disabled telemetry by @anthonyshew in https://github.com/vercel/turborepo/pull/13972\n* perf: Defer filesystem checks for absent configs by @anthonyshew in https://github.com/vercel/turborepo/pull/13977\n* perf: Compile workspace glob combinators directly by @anthonyshew in https://github.com/vercel/turborepo/pull/13978\n* docs(skills): fix the dependencies-only filter caret position by @timsnadden in https://github.com/vercel/turborepo/pull/13965\n* chore: Update with-biome example by @vercel-gh-bot-4[bot] in https://github.com/vercel/turborepo/pull/13983\n* fix: Normalize bare directory outputs when filtering dependencyOutputs hashes by @Nixxx19 in https://github.com/vercel/turborepo/pull/13932\n* chore: Scope panic lint allows in hash crates to tests and generated code by @BABTUNA in https://github.com/vercel/turborepo/pull/13810\n* perf: Use binary search for resolution states by @anthonyshew in https://github.com/vercel/turborepo/pull/13986\n* perf: Use dense membership for task graph pruning by @anthonyshew in https://github.com/vercel/turborepo/pull/13987\n* perf: Throttle TUI tick cadence by @anthonyshew in https://github.com/vercel/turborepo/pull/13988\n* perf: Fast-path package-only filter selectors with --only by @anthonyshew in https://github.com/vercel/turborepo/pull/13990\n* perf: Avoid materializing npm's legacy dependency tree by @anthonyshew in https://github.com/vercel/turborepo/pull/13993\n* perf: Stream custom repository downloads to disk by @anthonyshew in https://github.com/vercel/turborepo/pull/13994\n* perf: Copy shared file dependencies once per destination during prune by @anthonyshew in https://github.com/vercel/turborepo/pull/13995\n* perf: Index npm workspace links during subgraph extraction by @anthonyshew in https://github.com/vercel/turborepo/pull/13997\n* perf: Cache Turbo config reads across ESLint rule invocations by @anthonyshew in https://github.com/vercel/turborepo/pull/13998\n* perf: Scope untracked-file discovery to filtered runs by @anthonyshew in https://github.com/vercel/turborepo/pull/13991\n* perf: Limit turbo.json preloading to required task scope by @anthonyshew in https://github.com/vercel/turborepo/pull/13992\n* ci: Restrict release signing to main by @anthonyshew in https://github.com/vercel/turborepo/pull/13985\n* perf: Coalesce glob-watcher invalidation snapshots by @anthonyshew in https://github.com/vercel/turborepo/pull/13996\n* perf: Reuse resolver inference during file tracing by @anthonyshew in https://github.com/vercel/turborepo/pull/13999\n* chore: Release Turborepo 2.10.13-canary.2 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14000\n* chore: Exclude turbo and @turbo/* from minimum release age by @anthonyshew in https://github.com/vercel/turborepo/pull/14005\n* perf: Binary search boundaries comments before each import by @anthonyshew in https://github.com/vercel/turborepo/pull/14003\n* perf: Fetch only npm dist tags in the binary version endpoint by @anthonyshew in https://github.com/vercel/turborepo/pull/14007\n* perf: Compute Devtools graph depths without rescanning every edge by @anthonyshew in https://github.com/vercel/turborepo/pull/14001\n* perf: Reuse package manager detection during create startup by @anthonyshew in https://github.com/vercel/turborepo/pull/14006\n* perf: Borrow workspace entries during dependency lookup by @anthonyshew in https://github.com/vercel/turborepo/pull/14002\n* perf: Cache LSP task index and dedupe identities in constant time by @anthonyshew in https://github.com/vercel/turborepo/pull/14008\n* perf: Deduplicate recursive glob prefixes before walking by @anthonyshew in https://github.com/vercel/turborepo/pull/14004\n* perf: Batch boundaries progress updates by @anthonyshew in https://github.com/vercel/turborepo/pull/14009\n* perf: Reuse archive anchor during cache creation by @anthonyshew in https://github.com/vercel/turborepo/pull/14010\n* perf: Bound remote-cache transfer memory instead of retaining whole artifacts by @anthonyshew in https://github.com/vercel/turborepo/pull/14011\n* perf: Build cache archives once for local and remote writes by @anthonyshew in https://github.com/vercel/turborepo/pull/14012\n* perf: Make VS Code binary discovery and LSP probes nonblocking by @anthonyshew in https://github.com/vercel/turborepo/pull/14015\n* perf: Avoid serializing ASTs for path-only file dependency queries by @anthonyshew in https://github.com/vercel/turborepo/pull/14016\n* perf: Share source text across boundaries diagnostics instead of copying it per error by @anthonyshew in https://github.com/vercel/turborepo/pull/14014\n* perf: Parse the lockfile once when opening a native Workspace with its graph by @anthonyshew in https://github.com/vercel/turborepo/pull/14017\n* docs: Document a focused Cargo build for CLI-only development by @anthonyshew in https://github.com/vercel/turborepo/pull/14018\n* perf: Run the docs MDX generator once per quality task graph by @anthonyshew in https://github.com/vercel/turborepo/pull/14019\n* perf: Keep package bundling inside a cacheable build boundary by @anthonyshew in https://github.com/vercel/turborepo/pull/14020\n* perf: Skip speculative content hashing for size-changed unnormalized tracked files by @anthonyshew in https://github.com/vercel/turborepo/pull/14021\n* perf: Move synchronous cache archiving off Tokio runtime workers by @anthonyshew in https://github.com/vercel/turborepo/pull/14013\n* perf: Index package directories for changed-file ownership lookups by @anthonyshew in https://github.com/vercel/turborepo/pull/14022\n* perf: Bound TUI raw-output retention independently of scrollback by @anthonyshew in https://github.com/vercel/turborepo/pull/14024\n* perf: Coalesce package rediscovery while a scan is already running by @anthonyshew in https://github.com/vercel/turborepo/pull/14023\n* perf: Replace repeated deferred-hash scans with dependency-driven readiness by @anthonyshew in https://github.com/vercel/turborepo/pull/14025\n* perf: Read child output in bounded chunks instead of per-line by @anthonyshew in https://github.com/vercel/turborepo/pull/14026\n* perf: Share one repo index across same-package spec rehashes in watch mode by @anthonyshew in https://github.com/vercel/turborepo/pull/14027\n* test: Deflake rediscovery_coalesces_during_in_flight_scan by @anthonyshew in https://github.com/vercel/turborepo/pull/14029\n* perf: Reuse the package graph across partial watch reruns by @anthonyshew in https://github.com/vercel/turborepo/pull/14028\n* test: Deflake Go watch CI by @anthonyshew in https://github.com/vercel/turborepo/pull/14031\n* chore: Release Turborepo 2.10.13-canary.3 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14032\n* docs: Group experimental languages and link the Go RFC by @anthonyshew in https://github.com/vercel/turborepo/pull/14034\n* chore: Update with-docker example by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14035\n* perf: Avoid cloning package list in turbo ls by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/14036\n* fix: Restore leading flags for implicit run commands by @anthonyshew in https://github.com/vercel/turborepo/pull/14037\n* fix: Include experimentalCI in task hashes by @anthonyshew in https://github.com/vercel/turborepo/pull/14038\n* chore: Release Turborepo 2.10.13-canary.4 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14039\n* docs: Explain circular package dependencies in boundaries by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14042\n* docs: Document circular dependencies in boundaries by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14041\n* fix: Preserve Yarn resolution declaration order by @anthonyshew in https://github.com/vercel/turborepo/pull/14045\n* fix: Avoid duplicate interrupts during task shutdown by @anthonyshew in https://github.com/vercel/turborepo/pull/14046\n* fix: Preserve nested Bun package keys by @vercel-gh-bot-5[bot] in https://github.com/vercel/turborepo/pull/14050\n* chore: Update with-mcp-servers example by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14049\n* chore: Release Turborepo 2.10.13-canary.5 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14051\n* fix: Preserve native task dependencies across entrypoints by @anthonyshew in https://github.com/vercel/turborepo/pull/14047\n* fix: Pass through LOCALAPPDATA by default by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14056\n* chore: Release Turborepo 2.10.13-canary.6 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14057\n* docs: Fix some typos by @DominikRusso in https://github.com/vercel/turborepo/pull/14058\n* feat: Add Remix inference and `NUXT_ENV_*` wildcard by @Pcmhacker-piro in https://github.com/vercel/turborepo/pull/14060\n* fix: Return resolved package names for aliases by @vercel-gh-bot-2[bot] in https://github.com/vercel/turborepo/pull/14061\n* chore: Release Turbo repository packages 0.0.1-canary.28 by @github-actions[bot] in https://github.com/vercel/turborepo/pull/14062\n* feat: Add NEXT_DEPLOYMENT_ID to Next.js framework inference by @anthonyshew in https://github.com/vercel/turborepo/pull/14065\n\n## New Contributors\n* @cuishuang made their first contribution in https://github.com/vercel/turborepo/pull/13875\n* @Divyansh151005 made their first contribution in https://github.com/vercel/turborepo/pull/13892\n* @Nixxx19 made their first contribution in https://github.com/vercel/turborepo/pull/13916\n* @y-lakhdar made their first contribution in https://github.com/vercel/turborepo/pull/13943\n* @timsnadden made their first contribution in https://github.com/vercel/turborepo/pull/13965\n* @BABTUNA made their first contribution in https://github.com/vercel/turborepo/pull/13810\n* @DominikRusso made their first contribution in https://github.com/vercel/turborepo/pull/14058\n* @Pcmhacker-piro made their first contribution in https://github.com/vercel/turborepo/pull/14060\n\n**Full Changelog**: https://github.com/vercel/turborepo/compare/v2.10.12...v2.10.13",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/turborepo/releases/tag/v2.10.13",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增对 Python 虚拟环境和 uv 工作区元数据的支持，改进 Python 生态集成",
+            "新增实验性原生 Go 工作区支持，包括任务表、输入输出合约、外部依赖指纹、修剪规划和缓存",
+            "新增 Remix 框架推断支持和 NUXT_ENV_* 通配符环境变量",
+            "大规模性能优化：包括全局匹配器复用、锁文件单次解析、远程缓存内存边界控制、流式任务输出等大量提速改进",
+            "大量修复：包括多语言缓存归一化、Yarn/Bun/pnpm 锁文件兼容性、Cargo 任务缓存、远程缓存环境变量等"
+          ],
+          "summary_cn": "Turborepo 2.10.13 是一个功能丰富的版本，核心亮点包括新增 Python 虚拟环境与 uv 工作区支持、实验性原生 Go 工作区支持、以及 Remix 框架推断。同时该版本包含大量性能优化，涵盖工作区匹配器复用、锁文件解析、缓存归档、远程缓存内存控制等方面。此外还修复了多语言缓存、各类包管理器锁文件兼容性、任务哈希等多项问题，并添加了多项文档改进。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "desktop-v0.0.27",
+        "author": "github-actions[bot]",
+        "date": "2026-09-13",
+        "summary": "\n- An expired Cline sign-in now produces one actionable error instead of two dead ends. A turn that fails before the runtime takes the prompt was reported twice — the hub's detail-less `run.failed` appended a bubble, then the send RPC resolved with the real error and overwrote the error banner underneath it — so you got a vague bubble stacked on a detailed banner. The failure now renders exactly once, upgrading in place when the detailed report arrives. Credential failures also carry a fix button: **Sign in to Cline** for the Cline provider (Settings → API Providers reads a stale token as \"Signed in via browser\", so there is nothing to fix there), **Open model settings** for others, and local-CLI providers keep pointing at their CLI. Sessions that fail to start over credentials get the same hint and action\n- The Account page now offers a sign-in prompt when your Cline refresh token is rejected, instead of an error card whose **Retry** failed the same way. A rejected refresh was falling back to the persisted access token, which is dead too, so the account request 401'd; a rejected refresh now reports as signed out. Transient refresh failures still fall back\n- Signing out of Cline and Cline Pass now sticks. Sign-out removes the provider entry, but the runtime re-imports missing providers from the classic extension's stored credentials on every command, so you appeared signed straight back in — the same root cause as the ChatGPT/Codex fix in 0.0.26, which only cleared Codex secrets. Cline Pass sign-out did nothing at all, because its credentials live under the Cline provider entry rather than its own\n- The settings sidebar's **Models** section is now **API Providers**, with an icon to match — it is where you configure providers and their credentials, not where you pick a model\n- A failed voice input now shows a \"Speech input failed\" toast in chat with the actual error, instead of dropping you into Settings → Voice. Any error that wasn't a browser exception was treated as a configuration problem, even though the microphone is already gated on a configured transcription model — so a connection or transcription failure interrupted the chat and hid the real reason. Your draft and the microphone button stay put so you can retry; microphone-permission guidance is unchanged\n- OpenCode Go models work again. Requests were missing the `x-opencode-session` header Go requires to route a conversation (\"Request is missing x-opencode-session and cannot be routed efficiently\"), and every model was sent to `/chat/completions` because catalog normalization discarded the per-model adapter declaration — so Muse Spark, GPT, and Grok models that expect `/responses`, and MiniMax/Qwen models that expect `/messages`, failed with internal server errors. Model-level protocol routing is now preserved end to end, retries reuse the same session identity, and Go Qwen entries that omit the declaration fall back to Messages\n- Added Crusoe as an OpenAI-compatible provider\n- Settings switches are lighter in light mode and are now a shared native control — real keyboard, label, and form behavior, a guaranteed 24px hit area, and support for reduced-motion and forced-colors\n- The welcome screen's eye color matches the dark theme, and its animation no longer triggers layout work each frame\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.26...desktop-v0.0.27\n",
+        "assets_count": 6,
+        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.27",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Cline 登录过期时出现重复错误提示的问题，改为单次渲染且支持一键重新登录/打开模型设置",
+            "修复账号页刷新令牌被拒时无法通过重试重新登录的问题，被拒时改为显示已登出状态",
+            "修复登出 Cline 和 Cline Pass 后自动重新登录的 Bug，登出操作现在真正生效",
+            "设置侧边栏的 Models 部分更名为 API Providers 并更新图标",
+            "修复语音输入失败时错误跳转到设置页的问题，改为在聊天中直接显示错误提示",
+            "修复 OpenCode Go 模型缺失 x-opencode-session 请求头及路由协议丢失导致请求失败的问题",
+            "新增 Crusoe 作为 OpenAI 兼容提供商，优化设置开关的可用性与无障碍支持"
+          ],
+          "summary_cn": "该版本主要修复了多项登录、登出和错误处理相关的缺陷。具体包括：登录过期时的重复错误提示问题、登出后自动重新登录的问题、账号刷新令牌被拒的问题，以及 OpenCode Go 模型请求路由失败和语音输入错误处理不当等问题。此外还新增了 Crusoe 提供商支持、优化了设置的 UI 和可访问性，并将 Models 设置改名为 API Providers。",
+          "impact_level": 3
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code",
+      "tag_name": "v2.1.271",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Monitor 监视的 persistent 选项被移除，现在始终有截止时间（最多30分钟，单提示符运行10分钟）",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "auto 模式下，技能或斜杠命令的内联 ! shell 命令现在遵循默认模式权限规则而非分类器规则",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "auto 模式下，子代理通过专用的交回调用向调用者报告，该调用由安全分类器审查，而非事后审查最后一条消息",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "Pro 计划的默认动态工作流大小改为 small，medium 大小指南从15个代理降至10个",
+          "impact": "low",
+          "category": "Behavior"
+        },
+        {
+          "description": "自托管运行器新增 --host-config-snapshot disk|memory 选项，用于修复主机配置目录超过64 MiB时配置丢失的问题",
+          "impact": "low",
+          "category": "Config"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-agent-sdk-typescript",
+      "tag_name": "v0.3.271",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "MonitorInput 工具类型中的 persistent 属性被移除",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "vercel/sdk",
+      "tag_name": "v1.28.32",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "getDeployment() 响应中 resourceConfig.buildMachine.selectionSource 枚举新增 teamEntitlement 值",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "createDeployment() 响应中 resourceConfig.buildMachine.selectionSource 枚举新增 teamEntitlement 值",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "cancelDeployment() 响应中 resourceConfig.buildMachine.selectionSource 枚举新增 teamEntitlement 值",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "listUserEvents() 响应中 events[] 类型发生变更",
+          "impact": "high",
+          "category": "API"
+        },
+        {
+          "description": "listEventTypes() 响应中 types[] 类型发生变更",
+          "impact": "high",
+          "category": "API"
+        },
+        {
+          "description": "getProjects() 响应结构发生变更",
+          "impact": "high",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "tag_name": "v3.41.3",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "fetchRecent/fetchManyOn/fetchChannel 现在在发布者自身消息内容之后应用签名验证的 id/pubkey/created_at，防止发布者覆盖已验证身份",
+          "impact": "high",
+          "category": "Behavior"
+        },
+        {
+          "description": "x_federation_channel_read 现在验证事件签名，此前信任未验证事件",
+          "impact": "high",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "tag_name": "v3.41.4",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "agentdb_pattern-store/agentdb_pattern-search 现在在响应来自非健康 reasoningBank 控制器时返回 degraded: true，而非仅在注释字符串中说明",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "cline/cline",
+      "tag_name": "desktop-v0.0.27",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "设置侧边栏的 Models 部分更名为 API Providers，并更新了图标",
+          "impact": "low",
+          "category": "UI"
+        },
+        {
+          "description": "语音输入失败现在在聊天中显示错误提示，而非跳转到设置页面",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "langchain-ai/deepagents",
+      "tag_name": "deepagents==0.7.14",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "read_file 输出格式已更新",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "edit_file 路径中拒绝空的 old_string 值",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "langchain-ai/deepagents",
+      "tag_name": "deepagents-code==0.1.69",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "read_file 输出格式已更新",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "Aider-AI/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "gptme/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenHands/OpenHands",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/ruflo",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Aperant",
+    "anomalyco/opencode",
+    "openinterpreter/openinterpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "aaif-goose/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": "mixed",
+  "trend_delta": "延续：安全加固/状态持久化/子代理编排/MCP/多模态/成本治理的密集推进日。新增：高性价比推理模型竞相入场、金融垂直技能生态落地、Turborepo通用多语言化。整体从\"安全共识+对标范式\"迈进\"生产级可靠性+规模化落地\"。",
+  "historical_basis_dates": [
+    "2026-03-18",
+    "2026-09-12",
+    "2026-09-13"
+  ],
+  "historical_comparison": "今日相对前两日（9/12安全共识沉淀+交互范式上移、9/13跨平台执行+层级编排）无方向性转折，而是把安全、持久化、MCP、成本、多模态五条既有主线逐一落成具体补丁与发布；真正的新增量集中在\"性价比模型渗透\"\"垂直行业价值兑现\"\"Turborepo多语言化\"三个点上。",
+  "top_new_trends": [
+    "高性价比推理模型（DeepSeek V4.1 Flash等）加速进入主流Agent框架，推动成本下行与规模化渗透",
+    "金融垂直领域Agent技能生态规模化落地（BlackRock理财技能+Ac360 MCP连接器）",
+    "Turborepo向通用多语言（Go/uv-Python）构建系统里程碑式演进"
+  ],
+  "top_continuing_trends": [
+    "Agent安全加固成为全行业基座（原型污染/DoS/沙箱网络隔离/MCP鉴权/缓存中毒防御）",
+    "Agent状态持久化与跨进程断点恢复基础设施趋同，深化层级子代理编排",
+    "MCP生态从协议升级到企业级治理与可观测性现代化",
+    "Agent多模态能力扩展（语音交互、图像处理、媒体模拟）",
+    "成本可观测性与Token核算精确化成为多Agent平台标配",
+    "向量检索与混合检索成RAG Agent记忆基础设施主流方向"
+  ],
+  "summary_confidence": 0.85,
+  "daily_summary_agent_run_metrics": {
+    "model": "deepseek-v4-flash-aistar",
+    "session_id": "526d8988-40a3-4fcf-8806-8d34cd6b9017",
+    "num_turns": 22,
+    "duration_ms": 199498,
+    "duration_api_ms": 186768,
+    "total_cost_usd": 3.64515,
+    "usage": {
+      "input_tokens": 691104,
+      "output_tokens": 7387,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 698491,
+      "tool_uses": 0,
+      "duration_ms": 0
+    },
+    "raw_usage": {
+      "input_tokens": 691104,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 7387,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard"
+    }
+  },
+  "agent_metrics_summary": {
+    "run_count": 31,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 69,
+    "total_duration_ms": 1250332,
+    "total_api_duration_ms": 1253898,
+    "total_cost_usd": 12.521165,
+    "usage": {
+      "input_tokens": 2364944,
+      "output_tokens": 62893,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 2427837,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  },
+  "daily_llm_usage": {
+    "run_count": 30,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 47,
+    "total_duration_ms": 1050834,
+    "total_api_duration_ms": 1067130,
+    "total_cost_usd": 8.876015,
+    "usage": {
+      "input_tokens": 1673840,
+      "output_tokens": 55506,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 1729346,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  }
+}
