@@ -33,9 +33,11 @@ interface Props {
 const { entry, daily } = Astro.props;
 const w = entry.data;
 
-const allSignals = [...w.engineering_signals, ...w.research_signals].sort(
-  (a, b) => (b.impact_score || 0) - (a.impact_score || 0)
-);
+// 合并时补上分组标签(signal_class),与日报页保持一致
+const allSignals = [
+  ...w.engineering_signals.map(s => ({ ...s, signal_class: 'engineering' })),
+  ...w.research_signals.map(s => ({ ...s, signal_class: 'research' })),
+].sort((a, b) => (b.impact_score || 0) - (a.impact_score || 0));
 
 const weekDays = daily
   .filter(e => e.data.date >= w.start_date && e.data.date <= w.end_date)

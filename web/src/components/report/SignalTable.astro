@@ -1,8 +1,10 @@
 ---
 import Rating from './Rating.astro';
 import type { Signal } from '../../content.config';
-import { signalLabel } from '../../lib/format';
-interface Props { signals: Signal[]; start?: number; time?: string; limit?: number; clickable?: boolean; filterable?: boolean }
+import { signalLabel, signalClass } from '../../lib/format';
+/** 合并渲染的信号带分组标签(signal_class),单类渲染时为普通 Signal */
+interface ClassifiedSignal extends Signal { signal_class?: string }
+interface Props { signals: ClassifiedSignal[]; start?: number; time?: string; limit?: number; clickable?: boolean; filterable?: boolean }
 const { signals, start = 1, time, limit = 12, clickable = false, filterable = false } = Astro.props;
 const types = [...new Set(signals.map(s => s.type))];
 /** 将来源链接压缩为可快速浏览的仓库与变更标识。 */
@@ -27,17 +29,20 @@ function shortSource(url: string): string {
   <table class="signal-table">
     <thead><tr><th scope="col" class="signal-number">#</th><th scope="col">标题</th><th scope="col" class="signal-category">分类</th><th scope="col" class="signal-source">来源</th><th scope="col" class="signal-time">时间</th><th scope="col" class="signal-impact">影响</th></tr></thead>
     <tbody>
-      {signals.map((s, i) => <tr class:list={['signal-entry', clickable && 'signal-clickable']} data-signal-detail={clickable ? s.id : undefined} data-type={s.type} data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'} data-search={`${s.title} ${s.related_repos.join(' ')}`.toLowerCase()}>
+      {signals.map((s, i) => { const cls = signalClass(s.signal_class); return <tr class:list={['signal-entry', clickable && 'signal-clickable']} data-signal-detail={clickable ? s.id : undefined} data-type={s.type} data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'} data-search={`${s.title} ${s.related_repos.join(' ')} ${s.signal_class ?? ''}`.toLowerCase()}>
         <td class="signal-number">{String(start + i).padStart(2, '0')}</td>
         <td>
           {clickable ? <button type="button" class="signal-title" data-signal-detail={s.id} aria-haspopup="dialog">{s.title}</button> : <span class="signal-title">{s.title}</span>}
           {s.related_repos[0] && <span class="signal-repo">{s.related_repos[0]}</span>}
         </td>
-        <td class="signal-category">{signalLabel(s.type)}</td>
+        <td class="signal-category">
+          {signalLabel(s.type)}
+          {cls && <span class="signal-class" style={`color:${cls.color}`}>{cls.label}</span>}
+        </td>
         <td class="signal-source">{s.sources[0] && /^https?:\/\//i.test(s.sources[0]) ? <a href={s.sources[0]} target="_blank" rel="noopener" title={s.sources[0]}>{shortSource(s.sources[0])} ↗</a> : '—'}</td>
         <td class="signal-time">{time ?? '—'}</td>
         <td class="signal-impact"><Rating value={s.impact_score} /></td>
-      </tr>)}
+      </tr>; })}
     </tbody>
   </table>
   <p data-signal-empty hidden>没有匹配的信号，请调整筛选条件。</p>
@@ -62,6 +67,7 @@ function shortSource(url: string): string {
   td { padding:14px 12px; vertical-align:top; border-bottom:1px solid var(--color-hairline); font-size:12px; color:var(--color-ink-2); overflow-wrap:anywhere; }
   .signal-number { width:48px; font-family:var(--font-mono); }
   .signal-category { width:84px; }
+  .signal-class { display:block; margin-top:4px; font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
   .signal-source { width:24%; }
   .signal-time { width:82px; font-family:var(--font-mono); }
   .signal-impact { width:88px; }

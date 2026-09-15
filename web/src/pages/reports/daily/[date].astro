@@ -11,7 +11,7 @@ import ReleaseDrawer from '../../../components/report/ReleaseDrawer.astro';
 import ActivityTable from '../../../components/report/ActivityTable.astro';
 import HistoryContext from '../../../components/report/HistoryContext.astro';
 import { routes } from '../../../lib/path';
-import { formatNumber, releaseChangeType } from '../../../lib/format';
+import { formatNumber, releaseChangeType, signalClass } from '../../../lib/format';
 import Banner from '../../../components/ui/Banner.astro';
 
 export async function getStaticPaths() {
@@ -31,11 +31,14 @@ interface Props {
 const { entry, historicalReports } = Astro.props;
 const d = entry.data;
 
+// 合并时补上分组标签(signal_class),否则 release/commit 信号与工程信号不可区分
+const classify = (list: typeof d.engineering_signals, signal_class: string) =>
+  list.map(s => ({ ...s, signal_class }));
 const allSignals = [
-  ...d.engineering_signals,
-  ...d.research_signals,
-  ...d.commit_signals,
-  ...d.release_signals,
+  ...classify(d.engineering_signals, 'engineering'),
+  ...classify(d.research_signals, 'research'),
+  ...classify(d.commit_signals, 'commit'),
+  ...classify(d.release_signals, 'release'),
 ].sort((a, b) => (b.impact_score ?? 0) - (a.impact_score ?? 0));
 const total = allSignals.length;
 const focus = allSignals.slice(0, 4);
@@ -173,6 +176,9 @@ const genModels = usage?.models?.join(' + ') ?? '';
 
             </div>
             <div>
+              {signalClass(focus[0].signal_class) && (
+                <span class="tp-tag block mb-3" style={`color:${signalClass(focus[0].signal_class)!.color}`}>{signalClass(focus[0].signal_class)!.label}信号</span>
+              )}
               <h2 class="tp-h1 !text-[clamp(23px,2.1vw,32px)] !leading-[1.18] !font-normal max-w-[760px]">{focus[0].title}</h2>
               <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[720px] line-clamp-2">{focus[0].why_it_matters}</p>
               <button type="button" data-signal-detail={focus[0].id} class="tp-link inline-block mt-4 py-2 cursor-pointer">查看分析与证据 →</button>
@@ -188,6 +194,9 @@ const genModels = usage?.models?.join(' + ') ?? '';
             focus.slice(1).map((s, i) => (
               <div id={`signal-${i + 1}`} class:list={['px-0 md:px-7', i === 0 && 'md:pl-0']}>
                 <span class="tp-num text-[30px] text-[#13171f]">0{i + 2}</span>
+                {signalClass(s.signal_class) && (
+                  <span class="tp-tag block mt-1" style={`color:${signalClass(s.signal_class)!.color}`}>{signalClass(s.signal_class)!.label}信号</span>
+                )}
                 <h3 class="text-[17px] leading-[1.6] mt-2">{s.title}</h3>
                 <button type="button" data-signal-detail={s.id} class="tp-link mt-3 py-2 cursor-pointer">查看分析与证据 →</button>
               </div>

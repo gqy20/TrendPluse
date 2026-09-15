@@ -20,11 +20,13 @@
 
 <script>
   import { renderRating } from '../../lib/ratings';
+  import { signalClass } from '../../lib/format';
   interface Sig {
     id: string;
     title: string;
     type: string;
     category: string;
+    signal_class?: string;
     impact_score?: number | null;
     why_it_matters: string;
     sources: string[];
@@ -115,9 +117,14 @@
       ? `<p class="tp-meta text-ink-3 mt-6 mb-1">此判断聚合了 ${children.length} 条原始信号:</p>${children.join('')}`
       : '';
 
+    const classInfo = signalClass(s.signal_class);
+    const classLabel = classInfo
+      ? `<span style="color:${classInfo.color}">${classInfo.label}</span>`
+      : s.category === 'research' ? '研究' : '工程';
+
     content.innerHTML = `
       <header class="sticky top-0 bg-paper border-b border-hairline px-7 py-5 flex items-start justify-between gap-4">
-        <span class="tp-tag">${TYPE_LABEL[s.type] ?? '信号'} · ${s.category === 'research' ? '研究' : '工程'}</span>
+        <span class="tp-tag">${TYPE_LABEL[s.type] ?? '信号'} · ${classLabel}</span>
         <button id="tp-drawer-close" aria-label="关闭" class="tp-mono text-ink-3 hover:text-ink transition-colors">esc ✕</button>
       </header>
       <div class="px-7 py-6">

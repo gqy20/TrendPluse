@@ -35,6 +35,22 @@ export function signalLabel(type?: string): string {
   return (type && SIGNAL_TYPE_LABEL[type]) || type || '其他';
 }
 
+/**
+ * 信号分组(数据来源)→ 标签 + 语义色。
+ * 报告 JSON 中四类信号数组合并渲染时丢失了分组信息,前端补打标签以便辨识
+ * (尤其 release 信号的 type 分散在 capability/abstraction 等,与工程信号不可区分)。
+ */
+const SIGNAL_CLASSES: Record<string, { label: string; color: string }> = {
+  engineering: { label: '工程', color: '#6e7682' },
+  research: { label: '研究', color: '#a684d6' },
+  commit: { label: 'Commit', color: '#8e96a3' },
+  release: { label: 'Release', color: '#d97aa6' },
+};
+
+export function signalClass(cls?: string): { label: string; color: string } | undefined {
+  return cls ? SIGNAL_CLASSES[cls] : undefined;
+}
+
 /** 影响星标字符串（1-5） */
 export function impactStars(score?: number | null): string {
   if (!score || score < 1) return '';
