@@ -6,7 +6,8 @@ import { signalLabel, signalClass } from '../../lib/format';
 interface ClassifiedSignal extends Signal { signal_class?: string }
 interface Props { signals: ClassifiedSignal[]; start?: number; time?: string; limit?: number; clickable?: boolean; filterable?: boolean }
 const { signals, start = 1, time, limit = 12, clickable = false, filterable = false } = Astro.props;
-const types = [...new Set(signals.map(s => s.type))];
+/** 筛选维度用 signal_class(数据来源,值域稳定且是主检索场景);type 只做列展示 */
+const classes = [...new Set(signals.map(s => s.signal_class).filter((c): c is string => !!c))];
 /** 将来源链接压缩为可快速浏览的仓库与变更标识。 */
 function shortSource(url: string): string {
   const value = url.replace(/^https?:\/\/(www\.)?github\.com\//, '');
@@ -15,9 +16,9 @@ function shortSource(url: string): string {
 ---
 <div data-signal-table data-page-size={limit > 0 ? limit : 12}>
   {filterable && <div class="signal-controls">
-    <div class="signal-type-tags" role="group" aria-label="筛选信号分类">
+    <div class="signal-type-tags" role="group" aria-label="筛选信号来源">
       <button type="button" data-type-filter="all" aria-pressed="true">全部</button>
-      {types.map(t => <button type="button" data-type-filter={t} aria-pressed="false">{signalLabel(t)}</button>)}
+      {classes.map(c => <button type="button" data-type-filter={c} aria-pressed="false">{signalClass(c)?.label ?? c}</button>)}
     </div>
     <div class="signal-impact-tags" role="group" aria-label="筛选影响程度">
       <button type="button" data-impact-filter="all" aria-pressed="true">全部影响</button>
@@ -29,7 +30,7 @@ function shortSource(url: string): string {
   <table class="signal-table">
     <thead><tr><th scope="col" class="signal-number">#</th><th scope="col">标题</th><th scope="col" class="signal-category">分类</th><th scope="col" class="signal-source">来源</th><th scope="col" class="signal-time">时间</th><th scope="col" class="signal-impact">影响</th></tr></thead>
     <tbody>
-      {signals.map((s, i) => { const cls = signalClass(s.signal_class); return <tr class:list={['signal-entry', clickable && 'signal-clickable']} data-signal-detail={clickable ? s.id : undefined} data-type={s.type} data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'} data-search={`${s.title} ${s.related_repos.join(' ')} ${s.signal_class ?? ''}`.toLowerCase()}>
+      {signals.map((s, i) => { const cls = signalClass(s.signal_class); return <tr class:list={['signal-entry', clickable && 'signal-clickable']} data-signal-detail={clickable ? s.id : undefined} data-type={s.signal_class ?? 'other'} data-impact={(s.impact_score ?? 0) >= 4 ? 'high' : 'all'} data-search={`${s.title} ${s.related_repos.join(' ')} ${s.signal_class ?? ''}`.toLowerCase()}>
         <td class="signal-number">{String(start + i).padStart(2, '0')}</td>
         <td>
           {clickable ? <button type="button" class="signal-title" data-signal-detail={s.id} aria-haspopup="dialog">{s.title}</button> : <span class="signal-title">{s.title}</span>}

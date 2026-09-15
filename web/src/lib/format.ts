@@ -15,7 +15,7 @@ const SIGNAL_TYPE_EMOJI: Record<string, string> = {
   release: '🎯',
 };
 
-/** 信号类型 → 中文标签 */
+/** 信号类型 → 中文标签(type=release 是批量发版信号,改名与来源标签 Release 区分) */
 const SIGNAL_TYPE_LABEL: Record<string, string> = {
   capability: '新能力',
   abstraction: '抽象层',
@@ -24,7 +24,7 @@ const SIGNAL_TYPE_LABEL: Record<string, string> = {
   safety: '安全',
   performance: '性能',
   commit: '提交',
-  release: '发布',
+  release: '批量发版',
 };
 
 export function signalEmoji(type?: string): string {
