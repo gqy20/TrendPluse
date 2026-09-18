@@ -62,7 +62,7 @@ jobs:
           ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'glm-4.7' }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_ISSUE_AGENT_ANALYSIS: "false"
+          ENABLE_ISSUE_AGENT_ANALYSIS: "true"
           ISSUE_AGENT_MODEL: ${{ secrets.ISSUE_AGENT_MODEL || '' }}
           # 2026-09-12 smoke 验证（run 34701235348）：40 仓库 20 并发
           # 零限流零失败，采集耗时线性下降，见 docs/ROADMAP.md P1-4

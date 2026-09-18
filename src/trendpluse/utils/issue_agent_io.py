@@ -110,7 +110,12 @@ def load_issue_agent_report(
         return IssueAgentReport()
 
     snapshot_dir = Path(base_dir) / snapshot_date
-    input_files = sorted(snapshot_dir.glob("*.jsonl"))
+    # expected 以原始 dump({repo}.jsonl)计,排除轻量索引文件(__index.jsonl)
+    input_files = sorted(
+        path
+        for path in snapshot_dir.glob("*.jsonl")
+        if not path.name.endswith("__index.jsonl")
+    )
     expected_files = len(input_files)
 
     analysis_dir = snapshot_dir / "analysis"

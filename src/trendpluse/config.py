@@ -148,10 +148,10 @@ class Settings(BaseSettings):
         description="并行采集的最大线程数（1-32，默认8）",
     )
     max_issues_per_repo: int = Field(
-        default=20,
+        default=150,
         ge=1,
         le=200,
-        description="每个仓库最多抓取的 Issue 数量（默认20）",
+        description="每仓库进入 agent 分析的 issue 预算(评分排序后取前 N,默认150)",
     )
 
     # 成本控制

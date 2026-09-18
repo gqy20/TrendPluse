@@ -38,6 +38,19 @@ DEFAULT_TOTAL_TIMEOUT_SECONDS = 900.0  # 单文件总超时 15 分钟
 DEFAULT_STDERR_TAIL_LINES = 20
 
 
+def _full_counterpart(index_path: Path) -> Path:
+    """由索引文件路径派生全量文件路径({repo}__index.jsonl → {repo}__full.md)。"""
+    name = index_path.name
+    if name.endswith("__index.jsonl"):
+        return index_path.with_name(name[: -len("__index.jsonl")] + "__full.md")
+    return index_path.with_name(index_path.stem + "__full.md")
+
+
+def _repo_stem(index_path: Path) -> str:
+    """从索引文件名提取仓库文件名基干({repo}__index.jsonl → {repo})。"""
+    return index_path.stem.removesuffix("__index")
+
+
 class IssueAgentRunner:
     """使用 Claude Agent SDK 分析 Issue 文件。
 
@@ -69,9 +82,15 @@ class IssueAgentRunner:
         self.max_budget_usd = max(0.1, max_budget_usd)
 
     async def analyze_file(self, input_path: Path, output_path: Path) -> str:
-        """分析单个 JSONL 文件并写入 JSON 结果。"""
+        """分析单个索引文件并写入 JSON 结果。
+
+        input_path 为 {repo}__index.jsonl,全量文件按命名约定派生。
+        """
         input_path = input_path.resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        full_path = _full_counterpart(input_path)
+        if not full_path.exists():
+            raise FileNotFoundError(f"索引文件缺少对应全量文件: {full_path}")
 
         last_exc: Exception | None = None
         for attempt in range(1, self.retry_max_attempts + 1):
@@ -154,11 +173,16 @@ class IssueAgentRunner:
         return report
 
     def _build_analysis_prompt(self, input_path: Path) -> str:
-        """构建单轮分析提示词，合并三轮逻辑。
+        """构建双文件两阶段分析提示词。
 
-        将候选抽取、归一化合并、证据审核整合为一步完成。
+        input_path 为索引文件,全量文件由命名约定派生({repo}__full.md)。
         """
-        return render_prompt("issue_agent_runner.analysis", input_path=input_path)
+        full_path = _full_counterpart(input_path)
+        return render_prompt(
+            "issue_agent_runner.analysis",
+            index_path=str(input_path),
+            full_path=str(full_path),
+        )
 
     def _build_report_from_reviewed_points(
         self, reviewed_points: list[Any]
@@ -268,8 +292,8 @@ class IssueAgentRunner:
     async def analyze_directory(
         self, input_dir: Path, output_dir: Path
     ) -> IssueAgentBatchResult:
-        """分析目录下所有 JSONL 文件。"""
-        files = sorted(input_dir.glob("*.jsonl"))
+        """分析目录下所有索引文件({repo}__index.jsonl)。"""
+        files = sorted(input_dir.glob("*__index.jsonl"))
         if not files:
             return IssueAgentBatchResult(
                 expected_files=0,
@@ -284,7 +308,8 @@ class IssueAgentRunner:
         async def _analyze_single(
             input_path: Path,
         ) -> tuple[Path, Exception | None]:
-            output_path = output_dir / f"{input_path.stem}.analysis.json"
+            # 输出沿用 {repo}.analysis.json 命名,与 load_issue_agent_report 约定一致
+            output_path = output_dir / f"{_repo_stem(input_path)}.analysis.json"
             async with semaphore:
                 try:
                     await self.analyze_file(input_path, output_path)
@@ -527,7 +552,7 @@ class IssueAgentRunner:
         signals = [
             item.model_copy(
                 update={
-                    "id": item.id or f"{input_path.stem}-{index}",
+                    "id": item.id or f"{_repo_stem(input_path)}-{index}",
                     "repo": item.repo or repo,
                     "summary": item.summary or item.review_reason or item.topic,
                     "source_issues": item.source_issues
@@ -564,7 +589,10 @@ class IssueAgentRunner:
         return report.model_dump()
 
     def _infer_repo_from_jsonl(self, input_path: Path) -> str:
-        """从 JSONL 首行读取 repo，失败时回退到文件名。"""
+        """从文件首行读取 repo，失败时回退到文件名。
+
+        索引文件行内无 repo 字段,回退路径需先剥掉 __index 后缀。
+        """
         try:
             with input_path.open("r", encoding="utf-8") as handle:
                 for line in handle:
@@ -578,7 +606,8 @@ class IssueAgentRunner:
                     break
         except Exception:
             pass
-        return input_path.stem.replace("__", "/")
+        stem = input_path.stem.removesuffix("__index")
+        return stem.replace("__", "/")
 
     def _count_jsonl_lines(self, input_path: Path) -> int:
         """统计 JSONL 非空行数。"""

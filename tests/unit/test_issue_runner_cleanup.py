@@ -16,9 +16,10 @@ async def test_issue_runner_no_longer_accepts_top_pain_points_round3(tmp_path) -
             return '{"top_pain_points":[]}'
 
     runner = _LegacyRound3Runner(model=None, retry_max_attempts=1, retry_wait_seconds=0)
-    input_path = tmp_path / "x.jsonl"
+    input_path = tmp_path / "x__index.jsonl"
     output_path = tmp_path / "x.analysis.json"
     input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    (tmp_path / "x__full.md").write_text("# a/b Full\n", encoding="utf-8")
 
     with pytest.raises(RuntimeError, match="validation_error"):
         await runner.analyze_file(input_path, output_path)

@@ -13,6 +13,15 @@ from trendpluse.analyzers.issue_agent_runner import IssueAgentRunner
 from trendpluse.models.issue_agent import IssueAgentReport
 
 
+def _write_agent_inputs(base: Path, stem: str = "x") -> Path:
+    """写入索引+全量双文件,返回索引路径(analyze_file 的输入)。"""
+    index_path = base / f"{stem}__index.jsonl"
+    full_path = base / f"{stem}__full.md"
+    index_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    full_path.write_text("# a/b Issue Full Content\n", encoding="utf-8")
+    return index_path
+
+
 class DummyText:
     def __init__(self, text: str) -> None:
         self.text = text
@@ -119,9 +128,8 @@ async def test_analyze_file_persists_agent_run_metrics(tmp_path) -> None:
             },
         )
 
-    input_path = tmp_path / "a__b.jsonl"
+    input_path = _write_agent_inputs(tmp_path, "a__b")
     output_path = tmp_path / "a__b.analysis.json"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
 
     with patch("claude_agent_sdk.query", fake_query):
         await runner.analyze_file(input_path, output_path)
@@ -165,8 +173,7 @@ async def test_analyze_file_raises_timeout_error(tmp_path) -> None:
         total_timeout_seconds=0.01,
     )
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
 
     with pytest.raises(RuntimeError, match="kind=timeout"):
         await runner.analyze_file(input_path, output_path)
@@ -192,8 +199,7 @@ async def test_analyze_file_retries_on_invalid_then_success(tmp_path) -> None:
 
     runner = _RetryRunner()
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
     text = await runner.analyze_file(input_path, output_path)
     assert runner.calls == 2
     assert '"signals"' in text
@@ -211,8 +217,7 @@ async def test_analyze_file_raises_after_retry_exhausted(tmp_path) -> None:
 
     runner = _FailRunner()
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
     with pytest.raises(RuntimeError, match="kind=validation_error"):
         await runner.analyze_file(input_path, output_path)
 
@@ -264,8 +269,7 @@ async def test_analyze_file_three_round_review_filters_low_confidence(tmp_path) 
 
     runner = _ThreeRoundRunner()
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
     text = await runner.analyze_file(input_path, output_path)
 
     assert len(runner.prompts) == 1
@@ -343,8 +347,7 @@ async def test_analyze_file_requires_category_in_output(tmp_path) -> None:
 
     runner = _MissingCategoryRunner()
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
 
     with pytest.raises(RuntimeError, match="kind=validation_error"):
         await runner.analyze_file(input_path, output_path)
@@ -368,8 +371,7 @@ async def test_analyze_file_rejects_unknown_category(tmp_path) -> None:
 
     runner = _UnknownCategoryRunner()
     output_path = tmp_path / "x.analysis.json"
-    input_path = tmp_path / "x.jsonl"
-    input_path.write_text('{"repo":"a/b","issue_id":1}\n', encoding="utf-8")
+    input_path = _write_agent_inputs(tmp_path)
 
     with pytest.raises(RuntimeError, match="kind=validation_error"):
         await runner.analyze_file(input_path, output_path)
@@ -379,7 +381,7 @@ async def test_analyze_file_rejects_unknown_category(tmp_path) -> None:
 async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> None:
     class _PartialFailRunner(IssueAgentRunner):
         async def analyze_file(self, input_path, output_path):
-            if input_path.name == "bad.jsonl":
+            if input_path.name == "bad__index.jsonl":
                 raise RuntimeError("boom")
             output_path.write_text('{"signals":[]}', encoding="utf-8")
             return '{"signals":[]}'
@@ -388,24 +390,22 @@ async def test_analyze_directory_continues_when_single_file_fails(tmp_path) -> N
     input_dir = tmp_path / "in"
     output_dir = tmp_path / "out"
     input_dir.mkdir()
-    (input_dir / "a.jsonl").write_text(
-        '{"repo":"a/b","issue_id":1}\n',
-        encoding="utf-8",
-    )
-    (input_dir / "bad.jsonl").write_text(
-        '{"repo":"a/b","issue_id":2}\n', encoding="utf-8"
-    )
-    (input_dir / "c.jsonl").write_text(
-        '{"repo":"a/b","issue_id":3}\n',
-        encoding="utf-8",
-    )
+    for name in ["a", "bad", "c"]:
+        (input_dir / f"{name}__index.jsonl").write_text(
+            '{"repo":"a/b","issue_id":1}\n',
+            encoding="utf-8",
+        )
+        (input_dir / f"{name}__full.md").write_text(
+            "# a/b Full\n",
+            encoding="utf-8",
+        )
 
     result = await runner.analyze_directory(input_dir, output_dir)
 
     assert result.expected_files == 3
     assert result.succeeded_files == 2
     assert result.failed_files == 1
-    assert "bad.jsonl" in result.failed_samples
+    assert "bad__index.jsonl" in result.failed_samples
     assert (output_dir / "a.analysis.json").exists()
     assert (output_dir / "c.analysis.json").exists()
 
@@ -431,8 +431,12 @@ async def test_analyze_directory_respects_max_concurrency(tmp_path) -> None:
     output_dir = tmp_path / "out"
     input_dir.mkdir()
     for name in ["a", "b", "c", "d"]:
-        (input_dir / f"{name}.jsonl").write_text(
+        (input_dir / f"{name}__index.jsonl").write_text(
             '{"repo":"a/b","issue_id":1}\n',
+            encoding="utf-8",
+        )
+        (input_dir / f"{name}__full.md").write_text(
+            "# a/b Full\n",
             encoding="utf-8",
         )
 

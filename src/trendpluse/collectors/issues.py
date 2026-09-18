@@ -1,6 +1,7 @@
 """Issue 采集器
 
 从 GitHub API 采集 Issues，支持快照去重和时间窗口过滤。
+窗口内候选按痛点信号评分排序后取预算条数(替代旧的 created-desc 先到先得)。
 """
 
 from datetime import UTC, datetime, timedelta
@@ -8,6 +9,7 @@ from datetime import UTC, datetime, timedelta
 from github import GithubException
 
 from trendpluse.collectors.base import BaseGitHubCollector
+from trendpluse.collectors.issue_ranker import rank_issues
 from trendpluse.collectors.issue_snapshot import IssueSnapshot
 from trendpluse.collectors.parallel import parallel_execute
 from trendpluse.logger import get_logger
@@ -35,7 +37,7 @@ class IssueCollector(BaseGitHubCollector):
         """
         super().__init__(token)
         self.snapshot = IssueSnapshot(snapshot_dir)
-        self.max_issues_per_repo = 20
+        self.max_issues_per_repo = 150
 
     def fetch_issues(
         self,
@@ -128,13 +130,15 @@ class IssueCollector(BaseGitHubCollector):
                 # 转换为 IssueInfo
                 issue_info = self._convert_to_issue_info(issue, repo_name, now)
                 issues.append(issue_info)
-                if len(issues) >= self.max_issues_per_repo:
-                    break
 
         except GithubException as e:
             logger.error(f"获取仓库 {repo_name} Issues 失败: {e}")
 
-        return issues
+        # 评分排序后按预算截断:大仓库(claude-code 日均 250+ 条)的
+        # created-desc 先到先得等于只看最新两小时;评分选优让预算
+        # 花在疑似痛点上,漏掉的持续活跃 issue 会留在窗口内明天复检。
+        ranked = rank_issues(issues, now)
+        return ranked[: self.max_issues_per_repo]
 
     def _should_analyze(self, issue, now: datetime) -> bool:
         """判断 Issue 是否需要分析

@@ -252,7 +252,7 @@ class TestIssueAgentRunnerGoldens:
         runner = IssueAgentRunner()
         _assert_golden(
             "issue_agent_runner.analysis",
-            runner._build_analysis_prompt(Path("/tmp/golden/issues.jsonl")),
+            runner._build_analysis_prompt(Path("/tmp/golden/issues__index.jsonl")),
         )
 
 
