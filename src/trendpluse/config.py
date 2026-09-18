@@ -234,10 +234,10 @@ class Settings(BaseSettings):
         description="Issue Agent 单次分析最大轮数（默认50）",
     )
     issue_agent_max_budget_usd: float = Field(
-        default=10.0,
+        default=3.0,
         ge=0.1,
         le=100.0,
-        description="Issue Agent 单文件最大预算（美元，默认10）",
+        description="Issue Agent 单文件最大预算（美元，默认3,正常150条约1.2）",
     )
     commit_agent_max_budget_usd: float = Field(
         default=10.0,

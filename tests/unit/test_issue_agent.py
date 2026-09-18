@@ -304,6 +304,47 @@ def test_build_report_from_reviewed_points_preserves_category() -> None:
     assert report.top_pain_points[0].category == "startup_crash"
 
 
+def test_build_report_anchors_count_to_source_issues() -> None:
+    """count 声称值超过 source 数时锚定为真实 source 数。
+
+    实测模型会把 issue 编号误报为 count(如 count=9994 而 source 仅 1 条)。
+    """
+    runner = IssueAgentRunner(model=None)
+
+    report = runner._build_report_from_reviewed_points(
+        [
+            {
+                "topic": "启动崩溃",
+                "summary": "升级后启动即崩溃",
+                "category": "startup_crash",
+                "count": 9994,
+                "affected_repos": ["a/b"],
+                "sample_urls": [],
+                "source_issues": [
+                    {
+                        "repo": "a/b",
+                        "issue_number": 9994,
+                        "title": "crash on startup",
+                        "url": "https://example.com/9994",
+                    },
+                    {
+                        "repo": "a/b",
+                        "issue_number": 10001,
+                        "title": "crash again",
+                        "url": "https://example.com/10001",
+                    },
+                ],
+                "confidence": 0.95,
+                "priority": "P0",
+                "keep": True,
+                "review_reason": "主流程阻断",
+            }
+        ]
+    )
+
+    assert report.top_pain_points[0].count == 2
+
+
 def test_build_report_from_reviewed_points_accepts_other_category() -> None:
     """other 应作为合法兜底分类保留。"""
     runner = IssueAgentRunner(model=None)

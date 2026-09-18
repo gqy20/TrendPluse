@@ -67,7 +67,7 @@ class IssueAgentRunner:
         stderr_tail_lines: int = DEFAULT_STDERR_TAIL_LINES,
         max_concurrency: int = 4,
         max_turns: int = 50,
-        max_budget_usd: float = 10.0,
+        max_budget_usd: float = 3.0,
     ) -> None:
         self.model = model
         self.retry_max_attempts = max(1, retry_max_attempts)
@@ -250,6 +250,18 @@ class IssueAgentRunner:
                 fallback_repo=repos[0] if repos else "",
                 fallback_urls=urls,
             )
+
+            # count 锚定校验:模型可能把 issue 编号等数字误报为 count
+            # (实测出现 count=9994 而 source 仅 1 条),以真实 source 数兜底
+            if source_issues and count > len(source_issues):
+                logger.warning(
+                    "Issue Agent count 与 source 数不符,已锚定: topic=%s, "
+                    "claimed=%d, sources=%d",
+                    topic,
+                    count,
+                    len(source_issues),
+                )
+                count = len(source_issues)
 
             aliases_raw = raw.get("aliases")
             aliases = (
