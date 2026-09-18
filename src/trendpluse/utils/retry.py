@@ -82,6 +82,10 @@ def create_anthropic_retry_decorator(
     可重试的错误类型:
         - anthropic.APITimeoutError: API 超时
         - anthropic.RateLimitError: 速率限制
+        - anthropic.InternalServerError: 服务端 5xx
+        - anthropic.APIConnectionError: 连接失败
+        - anthropic.UnprocessableEntityError: 网关把上游抖动包装成 422
+          (bad_response_status_code) 时是瞬态错误,值得重试
         - ValidationError: Pydantic 验证错误（如 LLM 返回格式不正确）
 
     重试策略:
@@ -92,6 +96,9 @@ def create_anthropic_retry_decorator(
     _retryable_errors: tuple[type, ...] = (
         anthropic.APITimeoutError,
         anthropic.RateLimitError,
+        anthropic.InternalServerError,
+        anthropic.APIConnectionError,
+        anthropic.UnprocessableEntityError,
     )
 
     # 添加 Pydantic 验证错误（LLM 返回格式不正确时的重试）

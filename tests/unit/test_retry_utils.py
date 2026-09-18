@@ -76,6 +76,34 @@ class TestCreateAnthropicRetryDecorator:
         assert result == "success"
         assert call_count == 2
 
+    def test_retries_on_unprocessable_entity_error(self):
+        """应该重试网关包装的 422 bad_response_status_code"""
+        decorator = create_anthropic_retry_decorator(max_attempts=2)
+
+        call_count = 0
+
+        class MockRequest:
+            pass
+
+        class MockResponse:
+            status_code = 422
+            request = MockRequest()
+            headers = {}
+
+        @decorator
+        def failing_func():
+            nonlocal call_count
+            call_count += 1
+            if call_count < 2:
+                raise anthropic.UnprocessableEntityError(
+                    "bad response status code 422", response=MockResponse(), body={}
+                )
+            return "success"
+
+        result = failing_func()
+        assert result == "success"
+        assert call_count == 2
+
     def test_reraises_after_max_attempts(self):
         """超过最大重试次数后应该重新抛出异常"""
         decorator = create_anthropic_retry_decorator(max_attempts=2)

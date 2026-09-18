@@ -159,11 +159,18 @@ class BaseLLMAnalyzer(ABC):
         支持重试的错误类型：
         - APITimeoutError: API 超时
         - RateLimitError: 速率限制
+        - InternalServerError: 服务端 5xx
+        - APIConnectionError: 连接失败
+        - UnprocessableEntityError: 网关把上游抖动包装成 422
+          (bad_response_status_code) 时是瞬态错误，值得重试
         - ValidationError: Pydantic 验证错误（如 LLM 返回格式不正确）
         """
         retryable_errors = (
             anthropic.APITimeoutError,
             anthropic.RateLimitError,
+            anthropic.InternalServerError,
+            anthropic.APIConnectionError,
+            anthropic.UnprocessableEntityError,
             ValidationError,
         )
         attempts = self.retry_max_attempts
