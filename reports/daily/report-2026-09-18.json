@@ -1,0 +1,2016 @@
+{
+  "date": "2026-09-18",
+  "summary_brief": "今日（9/18，间隔9/17）是AI编程助手生态的延续推进日，无方向性转折，三个核心主题均在既有主线上深化并出现多项目同日合流：①远程/云端开发成为集体收敛点——Cline、Claude Code、Codex 同日在 SSH 远程连接、云端 Hub 会话、远程运行环境上发力，把9/15\"从本地IDE向远程/云原生执行环境扩展\"这一主线推向分布式多端协作；②多模态实时交互延续——Codex /voice 实时语音、Goose 桌面 Live、Unicode 数学公式渲染同期落地，在9/15-9/16语音主线基础上新增视觉/渲染维度；③安全加固继续作为全行业基座——Codex 单日十余项沙箱/权限审批加固（Guardian 原子审批、EnvironmentAccess 抽象、文件读写按权限路由），Cline 修复 Windowss 恶意可执行文件优先执行高危漏洞。真正的相对历史的推进点集中在四个新增维度：一是 OAuth 凭据集中脱敏成模型网关多供应商接入的核心基建（PKCE 登录、token 缓存刷新、诊断全链路脱敏），是此前安全主线未细化的新细分；二是 Agent 技能/包生态分发与资产化（Dify 外部 URL 导入 .ifpkg、roster 包导出），标志 Agent 能力从单体走向可移植资产；三是 Agent 框架中间件抽象兴起（LangChain 推出 langchain-typesafe 实验包、deepagents 整体迁移 FastMCP、acpx 引入共享会话抽象），从单体实现走向可插拔标准化层；四是 AI 工具评测标准化加速（Phoenix Harbor 基准、Stagehand 102 项 HardBench），评测从模型能力转向真实工具链；叠加 Gemini 3.8、audio-mini 等模型能力持续适配。相对3/18沙箱共识确立至今，生态稳定处于\"安全即基础设施、能力即资产化资产、评测即标准化\"的生产级阶段，今日是各主线向云原生协作、凭据安全、可移植能力资产与可插拔框架的多点收口。",
+  "engineering_signals": [
+    {
+      "id": "eng-remote-cloud-dev",
+      "title": "AI 编程助手全面向远程与云端开发演进",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Cline、Claude Code、Codex 等多个头部 Agent 项目同日推出 SSH 远程连接、云端 Hub 会话和远程运行环境，标志着 AI 编程从本地单机向分布式、多端同步的云原生协作模式集体转型。",
+      "sources": [
+        "https://github.com/cline/cline/commit/a9ca528141e0c0dcab3e4225d32f521c701f454c",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.275",
+        "https://github.com/openai/codex/pull/46281",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.276",
+        "https://github.com/cline/cline/commit/419829e9d09e6d573a74f51e8fac55f61786f8b6",
+        "https://github.com/cline/cline/commit/a776ce57e411be9a61259ceb7781dfe181489e93"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-agent-sdk-python",
+        "anthropics/claude-code",
+        "cline/cline",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": [
+        "commit-0",
+        "commit-1",
+        "commit-2",
+        "release-0",
+        "release-1",
+        "pr-13"
+      ]
+    },
+    {
+      "id": "eng-multimodal-voice",
+      "title": "AI 编程助手向多模态实时交互演进（语音与视觉）",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 的 /voice 实时语音对话、Goose 桌面 Live 语音、可配置 F8 语音快捷键、以及 Unicode 数学公式渲染等能力同期落地，显示多家 Agent 产品正积极打破纯文本交互边界，探索更自然的语音与视觉交互形态。",
+      "sources": [
+        "https://github.com/aaif-goose/goose/commit/d213a3b13545b4e85524a572ac695b2181728e3b",
+        "https://github.com/openai/codex/pull/46071",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.155",
+        "https://github.com/openai/codex/pull/46266",
+        "https://github.com/openai/codex/commit/608825d51179388d9ee7e22ce6aeccce57f38693"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "aaif-goose/goose",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "pr-14",
+        "pr-27",
+        "commit-43",
+        "release-4",
+        "commit-39"
+      ]
+    },
+    {
+      "id": "eng-agent-sandbox-security",
+      "title": "Agent 沙箱与权限安全模型全面加固",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "openai/codex 单日发起十余项安全加固（Guardian 原子审批、EnvironmentAccess 抽象、文件读写按权限路由、socket 隔离修复、cwd 消失保留策略），配合 Cline 的 Windows 恶意程序执行漏洞修复，反映出 Agent 安全审批正确性与沙箱隔离已成为行业共识的防御重点。",
+      "sources": [
+        "https://github.com/openai/codex/pull/46179",
+        "https://github.com/openai/codex/pull/46122",
+        "https://github.com/openai/codex/pull/46293",
+        "https://github.com/cline/cline/commit/173837314b7e02f4179c95b60fb6ca08c6d6f3bf",
+        "https://github.com/openai/codex/pull/46125",
+        "https://github.com/openai/codex/pull/46112",
+        "https://github.com/openai/codex/pull/46268",
+        "https://github.com/openai/codex/pull/46245",
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.156"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": [
+        "pr-18",
+        "pr-19",
+        "pr-20",
+        "pr-22",
+        "pr-23",
+        "pr-16",
+        "pr-12",
+        "commit-6",
+        "release-3"
+      ]
+    },
+    {
+      "id": "eng-oauth-credential-security",
+      "title": "OAuth 凭据管理成模型网关接入核心基建",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 同日推出网关 OAuth 凭据管理（PKCE 登录、token 缓存与刷新）与集中脱敏模块，覆盖登录、刷新、诊断全链路凭据保护，体现了多供应商模型接入时代对认证安全与诊断安全性的双重追求。",
+      "sources": [
+        "https://github.com/openai/codex/pull/46318",
+        "https://github.com/openai/codex/commit/8f73cdee456b6c46b791780d40cadf9d556d22a4",
+        "https://github.com/openai/codex/pull/46300",
+        "https://github.com/openai/codex/commit/a129392ebb87946cf435613d1c43af906193ca87"
+      ],
+      "related_repos": [
+        "openai/codex"
+      ],
+      "source_signal_ids": [
+        "pr-3",
+        "pr-4",
+        "commit-27",
+        "commit-28"
+      ]
+    },
+    {
+      "id": "eng-agent-tool-eval-standard",
+      "title": "AI 工具与浏览器代理评测标准化加速",
+      "type": "eval",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Phoenix 推出 Harbor 基准评测 MCP/CLI 工具的真实项目能力，Stagehand 引入 102 个 HardBench 浏览器代理任务，promptfoo 同步支持多模型语音，显示 LLM 工具代理评测正从模型能力评测走向真实任务与工具链标准化。",
+      "sources": [
+        "https://github.com/promptfoo/promptfoo/commit/1417f22b60f1268bb4bf8ead4df271853be6c512",
+        "https://github.com/Arize-ai/phoenix/commit/7f7d3826a7a40985fd9a0933310d0abe8d347bba",
+        "https://github.com/browserbase/stagehand/commit/d3024550811c073a32c7717e4de60919562efe74",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.227"
+      ],
+      "related_repos": [
+        "Arize-ai/phoenix",
+        "browserbase/stagehand",
+        "promptfoo/promptfoo",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": [
+        "commit-44",
+        "commit-45",
+        "commit-46",
+        "release-11"
+      ]
+    },
+    {
+      "id": "eng-agent-package-ecosystem",
+      "title": "Agent 技能/包生态分发与标准化（外部导入与导出）",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Dify 支持从外部 URL 导入 .ifpkg Agent 包并新增 roster 包导出能力，Codex 优化插件缓存跨刷新保留，多项目同时推进 Agent 技能与包的便携化、分发与生态标准化，反映 Agent 能力资产化趋势。",
+      "sources": [
+        "https://github.com/langgenius/dify/commit/223039128f1bb58aaa23234d53c5456ac84db7d5",
+        "https://github.com/langgenius/dify/pull/42425",
+        "https://github.com/langgenius/dify/commit/bfd7ac015fa1b0e019f347f2e9284c09bfdb7fde",
+        "https://github.com/openai/codex/pull/46309",
+        "https://github.com/langgenius/dify/commit/93895fa7fb4ab3547532734ba54d4461e9971ae6"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langgenius/dify"
+      ],
+      "source_signal_ids": [
+        "pr-2",
+        "commit-17",
+        "commit-18",
+        "commit-19",
+        "pr-10"
+      ]
+    },
+    {
+      "id": "eng-cache-symlink-security",
+      "title": "构建缓存安全与性能的双轨优化（符号链接防逃逸与锚点缓存）",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Turborepo/Next.js 同时修复缓存归档恢复的并发符号链接逃逸安全漏洞，并通过缓存 Windows 锚点提效 31%，在以 lz4_flex 替代 C 依赖的同时实现安全与性能双赢，体现企业级构建链路的深度工程投入。",
+      "sources": [
+        "https://github.com/vercel/turborepo/commit/0c3bc4262b24f353719ec3fa38337c0cf74672af",
+        "https://github.com/vercel/turborepo/commit/7e7ab4471c3d4b5d9643ebe114e82e6fbb8dffb9",
+        "https://github.com/vercel/next.js/pull/98799",
+        "https://github.com/vercel/turborepo/pull/14093",
+        "https://github.com/vercel/turborepo/pull/14095"
+      ],
+      "related_repos": [
+        "vercel/next.js",
+        "vercel/turborepo"
+      ],
+      "source_signal_ids": [
+        "pr-28",
+        "pr-29",
+        "commit-56",
+        "commit-57",
+        "pr-38"
+      ]
+    },
+    {
+      "id": "eng-agent-middleware-abstraction",
+      "title": "Agent 框架中间件与类型安全抽象兴起",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "LangChain 发布 langchain-typesafe 实验包（TypeSafeClassifier、ModelRouterMiddleware、AutoModeMiddleware），deepagents 将 MCP 整体迁移到 FastMCP 官方生态，acpx 引入共享会话抽象，代表 Agent 框架从单体实现走向可插拔中间件与标准化抽象层。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.275",
+        "https://github.com/langchain-ai/langchain/commit/d1fee60ef2ae62e7c5ca751a88bec12eb7997c78",
+        "https://github.com/langchain-ai/langchain/commit/31e83ba867ccaca85f9947b77e18f88beda39992",
+        "https://github.com/langchain-ai/langchain/commit/2bd50abc154a54b94442d7ea3b267d1b32c240d6",
+        "https://github.com/langchain-ai/deepagents/commit/0692ef1550568a585afe48705d54a4aa07002697",
+        "https://github.com/openai/codex/pull/46293",
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.228"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "langchain-ai/langchain",
+        "openclaw/acpx",
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-code-action",
+        "langchain-ai/deepagents"
+      ],
+      "source_signal_ids": [
+        "commit-13",
+        "commit-14",
+        "commit-15",
+        "commit-26",
+        "release-7",
+        "pr-12",
+        "release-10"
+      ]
+    },
+    {
+      "id": "eng-model-capability-expansion",
+      "title": "新一代模型能力持续落地（Gemini 3.8 与音频模型）",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "CrewAI 注册 Gemini 3.8 Flash 超长上下文、promptfoo 适配 Gemini 3.8 与 Vertex Live、OpenAI 新增 audio-mini 音频模型，多家 Agent 与评测框架同步跟进，显示底层模型能力面正快速扩张并推动上层框架适配。",
+      "sources": [
+        "https://github.com/promptfoo/promptfoo/commit/1417f22b60f1268bb4bf8ead4df271853be6c512",
+        "https://github.com/openai/openai-python/commit/a6eeb3f5a468ec576d2c911c19ce59c56ac46e43",
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.276",
+        "https://github.com/crewAIInc/crewAI/commit/b9629cfb8ff9845d8c4ab992eb213a83c6113240"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "crewAIInc/crewAI",
+        "anthropics/claude-agent-sdk-typescript",
+        "openai/openai-python"
+      ],
+      "source_signal_ids": [
+        "commit-25",
+        "commit-46",
+        "release-6",
+        "commit-12"
+      ]
+    }
+  ],
+  "research_signals": [],
+  "commit_signals": [],
+  "release_signals": [
+    {
+      "id": "signal-0",
+      "title": "Claude Code 网关与账户同步",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Claude Code 2.1.275 引入了 Claude apps 网关登录、claude.ai 账户技能/插件同步、发送即中断等关键工作流改进，并修复了大量稳定性问题，是近期功能密度最高的版本之一。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.276"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "anthropics/claude-agent-sdk-typescript",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-1",
+      "title": "Cline 桌面端远程 SSH 开发",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline 桌面版 v0.0.31 支持通过 SSH 连接远程机器进行开发，将本地 IDE 体验与远程执行环境解耦，显著扩展了 AI 编程助手的适用场景。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.275"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-2",
+      "title": "Cline 并行子代理执行",
+      "type": "performance",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Cline v4.1.19 和桌面版 v0.0.31 支持同一 step 内并行运行多个子代理，将独立任务的耗时从串行总和降为最慢单个任务，大幅提升多任务处理效率。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.274"
+      ],
+      "related_repos": [
+        "anthropics/claude-code",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-3",
+      "title": "Cline 修复关键安全漏洞",
+      "type": "safety",
+      "category": "engineering",
+      "impact_score": 5,
+      "why_it_matters": "Cline 修复了 Windows 上工作区中恶意可执行文件（如 rg.exe、git.exe）被优先执行的高危漏洞，以及凭据泄露风险，对用户系统安全至关重要。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.156"
+      ],
+      "related_repos": [
+        "cline/cline",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-4",
+      "title": "OpenAI Codex 语音对话与安全增强",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Codex 0.155.0 引入实验性 /voice 实时语音对话、Touch ID 验证 MCP 请求、以及多项沙箱安全加固，标志着 AI 编程助手向多模态交互和更严格安全模型演进。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.155"
+      ],
+      "related_repos": [
+        "openai/codex",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-5",
+      "title": "OpenAI Python SDK 新增多项 API",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "openai-python v3.15.0 新增 agent session 模型设置、audio-mini 模型、compaction 进度事件、托管 WebSocket 会话和 prompt-cache 预热等 API，为开发者提供更丰富的构建模块。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.154"
+      ],
+      "related_repos": [
+        "openai/openai-python",
+        "anthropics/claude-agent-sdk-python"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-6",
+      "title": "Promptfoo 支持多模型语音与 Agent API",
+      "type": "capability",
+      "category": "engineering",
+      "impact_score": 4,
+      "why_it_matters": "Promptfoo 0.123.1 新增对 Gemini 3.8、GPT-Live 语音会话、OpenAI Agents API 等新模型和接口的支持，并引入可移植的 HTTP/MCP 配置模式，巩固其作为 LLM 评测基础设施的地位。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.276"
+      ],
+      "related_repos": [
+        "promptfoo/promptfoo",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-7",
+      "title": "LangChain 发布 TypeSafe 实验包",
+      "type": "abstraction",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "LangChain 推出 langchain-typesafe 实验包，包含 TypeSafeClassifier、ModelRouterMiddleware 等组件，探索在 LangChain 生态中引入类型安全的分类和路由抽象。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.275"
+      ],
+      "related_repos": [
+        "langchain-ai/langchain",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-8",
+      "title": "OpenHands 增强 Agent 配置与自动化",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "OpenHands v1.20.0 支持为 agent profile 选择可用 secrets，并在自动化任务中选用已保存的 agent profile，提升了配置的灵活性和自动化流程的定制能力。",
+      "sources": [
+        "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.274"
+      ],
+      "related_repos": [
+        "OpenHands/OpenHands",
+        "anthropics/claude-agent-sdk-typescript"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-9",
+      "title": "Zed 编辑器修复支付与扩展问题",
+      "type": "workflow",
+      "category": "engineering",
+      "impact_score": 2,
+      "why_it_matters": "Zed v1.20.2 修复了非 Zed 模型提供商的支付错误提示和同语言 snippet 扩展冲突问题，改善了用户体验。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.229"
+      ],
+      "related_repos": [
+        "zed-industries/zed",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-10",
+      "title": "acpx 引入共享会话与观看功能",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "acpx v0.17.0 新增 createSharedAcpRuntime() 和 watchSession()，允许应用和 CLI 进程共享会话并支持光标回放，为 ACP 协议交互提供了更强大的抽象。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.228"
+      ],
+      "related_repos": [
+        "openclaw/acpx",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-11",
+      "title": "Phoenix 新增 Harbor 基准测试",
+      "type": "eval",
+      "category": "research",
+      "impact_score": 3,
+      "why_it_matters": "Arize Phoenix v20.14.0 为其 MCP 和 CLI 工具引入 Harbor 基准测试，为评估 AI 工具性能提供了新的标准。",
+      "sources": [
+        "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.227"
+      ],
+      "related_repos": [
+        "Arize-ai/phoenix",
+        "anthropics/claude-code-action"
+      ],
+      "source_signal_ids": []
+    },
+    {
+      "id": "signal-12",
+      "title": "Vercel SDK 多项破坏性变更",
+      "type": "abstraction",
+      "category": "engineering",
+      "impact_score": 3,
+      "why_it_matters": "Vercel TypeScript SDK v1.28.35 移除 KMS 签发者 edDsa 算法枚举，并调整用户事件和项目权限等 API 结构，开发者需关注迁移。",
+      "sources": [
+        "https://github.com/cline/cline/releases/tag/desktop-v0.0.32"
+      ],
+      "related_repos": [
+        "vercel/sdk",
+        "cline/cline"
+      ],
+      "source_signal_ids": []
+    }
+  ],
+  "stats": {
+    "total_signals": 119,
+    "pr_count": 42,
+    "commit_count": 64,
+    "release_count": 13,
+    "unique_repos": 24,
+    "total_prs_analyzed": 42,
+    "total_releases": 32,
+    "high_impact_signals": 16,
+    "total_commits_analyzed": 619,
+    "total_releases_analyzed": 32,
+    "total_breaking_changes": 8
+  },
+  "activity": {
+    "total_commits": 619,
+    "active_repos_count": 40,
+    "top_repos": [
+      {
+        "repo": "openclaw/openclaw",
+        "commits": 100,
+        "top_contributors": [
+          "steipete",
+          "shakkernerd",
+          "jalehman",
+          "roboclaw-bot",
+          "RomneyDa"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "commits": 64,
+        "top_contributors": [
+          "etraut-openai",
+          "anp-oai",
+          "felixxia-oai",
+          "sayan-oai",
+          "seanh-oai"
+        ]
+      },
+      {
+        "repo": "langgenius/dify",
+        "commits": 52,
+        "top_contributors": [
+          "lyzno1",
+          "hyoban",
+          "iamjoel",
+          "fatelei",
+          "ColinHouse"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-plugins-official",
+        "commits": 48,
+        "top_contributors": [
+          "github-actions[bot]",
+          "jordanecker-ant"
+        ]
+      },
+      {
+        "repo": "bytedance/deer-flow",
+        "commits": 33,
+        "top_contributors": [
+          "poijygfdyy",
+          "hyeonsang010716",
+          "hata33",
+          "tiammomo",
+          "BlueX888"
+        ]
+      },
+      {
+        "repo": "microsoft/agent-framework",
+        "commits": 33,
+        "top_contributors": [
+          "dependabot[bot]",
+          "eavanvalkenburg",
+          "baywet",
+          "SergeyMenshykh",
+          "westey-m"
+        ]
+      },
+      {
+        "repo": "vercel/ai",
+        "commits": 30,
+        "top_contributors": [
+          "ai-sdk-factory[bot]",
+          "n1ckoates",
+          "github-actions[bot]",
+          "R-Taneja"
+        ]
+      },
+      {
+        "repo": "langchain-ai/deepagents",
+        "commits": 23,
+        "top_contributors": [
+          "mdrxy",
+          "jkennedyvz",
+          "langchain-oss-automated-triage[bot]",
+          "akyourowngames",
+          "sydney-runkle"
+        ]
+      },
+      {
+        "repo": "cline/cline",
+        "commits": 22,
+        "top_contributors": [
+          "saoudrizwan",
+          "abeatrix",
+          "johnwschoi",
+          "BarreiroT",
+          "haleyparkdesign"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "commits": 22,
+        "top_contributors": [
+          "dependabot[bot]",
+          "hntrl",
+          "ccurme",
+          "langchain-oss-model-profiles[bot]"
+        ]
+      },
+      {
+        "repo": "vercel/next.js",
+        "commits": 22,
+        "top_contributors": [
+          "devjiwonchoi",
+          "lukesandberg",
+          "sokra",
+          "unstubbable",
+          "mischnic"
+        ]
+      },
+      {
+        "repo": "zed-industries/zed",
+        "commits": 19,
+        "top_contributors": [
+          "MrSubidubi",
+          "zed-zippy[bot]",
+          "tidely",
+          "hyeondg",
+          "porada"
+        ]
+      },
+      {
+        "repo": "gptme/gptme",
+        "commits": 13,
+        "top_contributors": [
+          "TimeToBuildBob",
+          "simpleqt",
+          "gargsajal9"
+        ]
+      },
+      {
+        "repo": "browserbase/stagehand",
+        "commits": 13,
+        "top_contributors": [
+          "miguelg719",
+          "shrey150",
+          "seanmcguire12",
+          "charlypoly"
+        ]
+      },
+      {
+        "repo": "microsoft/playwright",
+        "commits": 12,
+        "top_contributors": [
+          "pavelfeldman",
+          "microsoft-playwright-automation[bot]",
+          "SebTardif",
+          "yury-s",
+          "avgon"
+        ]
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "commits": 11,
+        "top_contributors": [
+          "mldangelo-oai",
+          "jameshiester-oai",
+          "mldangelo",
+          "promptfoobot[bot]",
+          "renovate[bot]"
+        ]
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "commits": 10,
+        "top_contributors": [
+          "simpleqt",
+          "mikeldking",
+          "ehutt",
+          "RogerHYang"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "commits": 9,
+        "top_contributors": [
+          "github-actions[bot]",
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "openai/openai-python",
+        "commits": 9,
+        "top_contributors": [
+          "jbeckwith-oai",
+          "markstuart-oai",
+          "openai-sdks[bot]"
+        ]
+      },
+      {
+        "repo": "OpenHands/OpenHands",
+        "commits": 9,
+        "top_contributors": [
+          "neubig",
+          "malhotra5",
+          "VascoSch92",
+          "Harsh23Kashyap",
+          "adbcodes"
+        ]
+      },
+      {
+        "repo": "crewAIInc/crewAI",
+        "commits": 6,
+        "top_contributors": [
+          "joaomdmoura",
+          "Vidit-Ostwal",
+          "gaoanze888",
+          "Mairaarshad19",
+          "SharoonSharif"
+        ]
+      },
+      {
+        "repo": "google-gemini/gemini-cli",
+        "commits": 5,
+        "top_contributors": [
+          "gemini-cli-robot",
+          "jesussamuel-byte",
+          "DavidAPierce",
+          "diegogodinezr",
+          "villahernandez-coder"
+        ]
+      },
+      {
+        "repo": "agentscope-ai/agentscope",
+        "commits": 5,
+        "top_contributors": [
+          "L4XB",
+          "wuwenbo0626",
+          "Osier-Yi",
+          "wangtaotaotao95"
+        ]
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "commits": 5,
+        "top_contributors": [
+          "seratch",
+          "simpleqt"
+        ]
+      },
+      {
+        "repo": "vercel/turborepo",
+        "commits": 5,
+        "top_contributors": [
+          "anthonyshew",
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "run-llama/llama_index",
+        "commits": 4,
+        "top_contributors": [
+          "norareidy",
+          "lmkerbey-mdb",
+          "lindseymoore"
+        ]
+      },
+      {
+        "repo": "openclaw/openclaw-windows-node",
+        "commits": 4,
+        "top_contributors": [
+          "yjw0817",
+          "natalie-aguinaldo",
+          "bkudiess",
+          "dependabot[bot]"
+        ]
+      },
+      {
+        "repo": "aaif-goose/goose",
+        "commits": 4,
+        "top_contributors": [
+          "thesteve0",
+          "jamadeo",
+          "lifeizhou-ap",
+          "DOsinga"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "commits": 3,
+        "top_contributors": [
+          "actions-user"
+        ]
+      },
+      {
+        "repo": "agno-agi/agno",
+        "commits": 3,
+        "top_contributors": [
+          "simpleqt",
+          "kausmeows"
+        ]
+      },
+      {
+        "repo": "mem0ai/mem0",
+        "commits": 3,
+        "top_contributors": [
+          "kartik-mem0",
+          "mintlify[bot]",
+          "aniruddhaadak80"
+        ]
+      },
+      {
+        "repo": "openclaw/acpx",
+        "commits": 3,
+        "top_contributors": [
+          "steipete",
+          "vincentkoc",
+          "obviyus"
+        ]
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "commits": 2,
+        "top_contributors": [
+          "ruvnet"
+        ]
+      },
+      {
+        "repo": "anomalyco/opencode",
+        "commits": 2,
+        "top_contributors": [
+          "opencode-agent[bot]"
+        ]
+      },
+      {
+        "repo": "openclaw/clawhub",
+        "commits": 2,
+        "top_contributors": [
+          "vincentkoc"
+        ]
+      },
+      {
+        "repo": "anthropics/claude-quickstarts",
+        "commits": 1,
+        "top_contributors": [
+          "cj-ant"
+        ]
+      },
+      {
+        "repo": "langchain-ai/langgraph",
+        "commits": 1,
+        "top_contributors": [
+          "eliornl"
+        ]
+      },
+      {
+        "repo": "vercel/sdk",
+        "commits": 1,
+        "top_contributors": [
+          "github-actions[bot]"
+        ]
+      },
+      {
+        "repo": "anthropics/skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-cookbooks",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/courses",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/prompt-eng-interactive-tutorial",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-demos",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-typescript",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-go",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/anthropic-sdk-java",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/claude-code-security-review",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/devcontainer-features",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/evals",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/political-neutrality-eval",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "anthropics/hh-rlhf",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Aider-AI/aider",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "continuedev/continue",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/openai-quickstart-python",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "danielmiessler/fabric",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TransformerOptimus/SuperAGI",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/autogen",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "microsoft/semantic-kernel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openai/swarm",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "huggingface/smolagents",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "AndyMik90/Aperant",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openinterpreter/openinterpreter",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TabbyML/tabby",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "openclaw/lobster",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "cloudflare/moltworker",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "ValueCell-ai/ClawX",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "TianyiDataScience/openclaw-control-center",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "BytePioneer-AI/openclaw-china",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/chatbot",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel/vercel",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-browser",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/coding-agent-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/agent-skills",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/oss-data-analyst",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "vercel-labs/workflow-builder-template",
+        "commits": 0,
+        "top_contributors": []
+      },
+      {
+        "repo": "karpathy/autoresearch",
+        "commits": 0,
+        "top_contributors": []
+      }
+    ]
+  },
+  "releases": {
+    "total_count": 32,
+    "unique_repos_count": 17,
+    "releases": [
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.276",
+        "author": "ashwin-ant",
+        "date": "2026-09-18",
+        "summary": "## What's changed\n\n- Fixed every request failing with `400 … Input tag 'advisor_20260301'` when `ANTHROPIC_BASE_URL` points at a proxy or gateway (2.1.275 regression)\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.276",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复当 ANTHROPIC_BASE_URL 指向代理或网关时，所有请求失败并返回 400 错误的问题",
+            "解决 2.1.275 版本引入的回归缺陷，恢复通过代理/网关正常调用 API 的功能"
+          ],
+          "summary_cn": "该版本修复了 2.1.275 版本引入的回归问题，即当 ANTHROPIC_BASE_URL 环境变量指向代理或网关时，所有请求都会因 Input tag 'advisor_20260301' 校验失败而返回 400 错误。此修复确保通过代理或网关使用 Claude Code 时可以正常发送请求，不再中断工作流。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.156",
+        "author": "github-actions[bot]",
+        "date": "2026-09-18",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.276\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.156/\n\n```bash\npip install claude-agent-sdk==0.2.156\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.156",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "将打包的 Claude CLI 更新至版本 2.1.276",
+            "属于内部依赖升级，不涉及 API 变更"
+          ],
+          "summary_cn": "此版本为内部维护性更新，将捆绑的 Claude CLI 从旧版本升级至 2.1.276。该变更不涉及 SDK 的公共 API 接口变化，也未引入新的功能或修复，属于纯内部组件的版本同步。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.276",
+        "author": "ashwin-ant",
+        "date": "2026-09-18",
+        "summary": "## What's changed\n\n- Updated to parity with Claude Code v2.1.276\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.276\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.276\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.276\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.276\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.276",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "与 Claude Code v2.1.276 版本同步对齐",
+            "SDK 版本更新至 v0.3.276",
+            "提供 npm、yarn、pnpm、bun 多种安装方式"
+          ],
+          "summary_cn": "本次发布将 claude-agent-sdk-typescript 更新至 v0.3.276，与 Claude Code v2.1.276 保持功能对齐。这是一个常规的版本同步更新，未包含明确的重大功能变更或破坏性修改。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.229",
+        "author": "github-actions[bot]",
+        "date": "2026-09-18",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1.0.228...v1.0.229",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.229",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "版本从 v1.0.228 更新到 v1.0.229，属于补丁级更新",
+            "未提供详细的变更说明，仅有完整的版本对比链接"
+          ],
+          "summary_cn": "本次为补丁级版本更新（v1.0.228 → v1.0.229），属于常规维护性发布。由于 Release Notes 中未提供具体的变更描述，需要查看完整的变更日志对比才能了解具体改动内容。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "desktop-v0.0.32",
+        "author": "github-actions[bot]",
+        "date": "2026-09-18",
+        "summary": "\n- Cline starts again after updating. In 0.0.31 the app could fail at launch with \"desktop backend exited before publishing its endpoint\" and never reach the workspace picker. Cline runs its own copy of the Cline Hub in the background, and the two halves had been built from different copies of the same code — so the Hub announced one build identity while the app expected another, the app shut down the very Hub it had just started, and startup timed out reporting \"No compatible hub runtime is available\". Both halves now load the same copy of that code, and the real compiled backend is now booted end-to-end in CI on every change so the two cannot drift apart again\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.31...desktop-v0.0.32\n",
+        "assets_count": 6,
+        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.32",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "cline/cline desktop-v0.0.32 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/openai-python",
+        "version": "v3.15.0",
+        "author": "openai-sdks[bot]",
+        "date": "2026-09-18",
+        "summary": "## [3.15.0](https://github.com/openai/openai-python/compare/v3.14.1...v3.15.0) (2026-09-18)\n\n\n### Features\n\n* **api:** add agent session model settings ([#3882](https://github.com/openai/openai-python/issues/3882)) ([4b15817](https://github.com/openai/openai-python/commit/4b1581771ea97c870187f6ddfc3dbc87ff4fa443))\n* **api:** add audio-mini model choices ([#3886](https://github.com/openai/openai-python/issues/3886)) ([a6eeb3f](https://github.com/openai/openai-python/commit/a6eeb3f5a468ec576d2c911c19ce59c56ac46e43))\n* **api:** add compaction progress events ([#3866](https://github.com/openai/openai-python/issues/3866)) ([98e1d24](https://github.com/openai/openai-python/commit/98e1d24f4902ab58830adf0e2b6a729a5d5429b1))\n* **api:** add managed Responses WebSocket sessions ([#3887](https://github.com/openai/openai-python/issues/3887)) ([3b865af](https://github.com/openai/openai-python/commit/3b865af92e8dc65e14ab6d565304fe778bac1eef))\n* **api:** add prompt-cache prewarming ([#3888](https://github.com/openai/openai-python/issues/3888)) ([8f7cdb8](https://github.com/openai/openai-python/commit/8f7cdb80410434d29daed90895112a39936eb4fe))\n\n\n### Bug Fixes\n\n* preserve chat stream moderation results ([#3864](https://github.com/openai/openai-python/issues/3864)) ([b77076d](https://github.com/openai/openai-python/commit/b77076d23b6f3e34453b0fadd8cd2a001627e365))\n\n\n### Chores\n\n* **api:** clarify incoming SIP call ID usage ([#3885](https://github.com/openai/openai-python/issues/3885)) ([f0457ab](https://github.com/openai/openai-python/commit/f0457aba3403f83e91a369ab55e0e55d5f012372))\n* **api:** update image request examples ([#3889](https://github.com/openai/openai-python/issues/3889)) ([bb79676](https://github.com/openai/openai-python/commit/bb796764118004f8c9b0b0a46e07e5e55cfe34e4))\n\n\n### Documentation\n\n* **realtime:** remove nonexistent type imports ([#3869](https://github.com/openai/openai-python/issues/3869)) ([2971aaf](https://github.com/openai/openai-python/commit/2971aafce5c1966fc56efd00918b16314063284e))",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-python/releases/tag/v3.15.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/openai-python v3.15.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "Arize-ai/phoenix",
+        "version": "arize-phoenix-v20.14.0",
+        "author": "mikeldking",
+        "date": "2026-09-18",
+        "summary": "## [20.14.0](https://github.com/Arize-ai/phoenix/compare/arize-phoenix-v20.13.0...arize-phoenix-v20.14.0) (2026-09-18)\n\n\n### Features\n\n* **evals:** Harbor benchmark for Phoenix MCP and CLI tools ([#16192](https://github.com/Arize-ai/phoenix/issues/16192)) ([7f7d382](https://github.com/Arize-ai/phoenix/commit/7f7d3826a7a40985fd9a0933310d0abe8d347bba))\n\n\n### Bug Fixes\n\n* **cost:** update built-in model token prices ([#16199](https://github.com/Arize-ai/phoenix/issues/16199)) ([f4c3bae](https://github.com/Arize-ai/phoenix/commit/f4c3bae197687b2597cd8e2034aa902c5a79aa4e))\n* **pxi:** link references from their owning skill ([#16142](https://github.com/Arize-ai/phoenix/issues/16142)) ([4de212c](https://github.com/Arize-ai/phoenix/commit/4de212c10e4da220739db1bfca73b5cb6322e9e9))\n\n\n### Documentation\n\n* **server:** align create_graphql_router's docstring with its signature ([#16269](https://github.com/Arize-ai/phoenix/issues/16269)) ([81c8e25](https://github.com/Arize-ai/phoenix/commit/81c8e2549400e63ec6be707ae9df4ea3a2ae7799))\n\n\n### Miscellaneous Chores\n\n* release arize-phoenix 20.14.0 ([#16258](https://github.com/Arize-ai/phoenix/issues/16258)) ([829f116](https://github.com/Arize-ai/phoenix/commit/829f1163fd898d6711fd97d7cc6b5c78fafca87c))\n* release arize-phoenix-client 3.6.0 and repair the manifest ([#16255](https://github.com/Arize-ai/phoenix/issues/16255)) ([a6834ea](https://github.com/Arize-ai/phoenix/commit/a6834ea260517a40e3bb23ba7350d31d74878673))",
+        "assets_count": 0,
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.14.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 Harbor 基准测试，用于评估 Phoenix MCP 和 CLI 工具性能",
+            "更新内置模型 token 价格，使成本计算更准确",
+            "修复 pxi 中引用链接的归属问题，使引用从所属技能中正确链接",
+            "对齐 create_graphql_router 的文档字符串与函数签名",
+            "同步发布 arize-phoenix-client 3.6.0 并修复清单文件"
+          ],
+          "summary_cn": "本次版本主要引入了 Harbor 基准测试功能，用于评估 Phoenix 的 MCP 和 CLI 工具性能，属于新功能特性。同时修复了内置模型 token 价格过时、pxi 引用链接归属异常等问题，并同步了相关文档和客户端版本发布。整体变更以新功能和修复为主，影响范围有限。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "promptfoo/promptfoo",
+        "version": "0.123.1",
+        "author": "promptfoobot[bot]",
+        "date": "2026-09-18",
+        "summary": "## [0.123.1](https://github.com/promptfoo/promptfoo/compare/0.123.0...0.123.1) (2026-09-18)\n\n\n### Features\n\n* **bedrock:** refresh auth across HTTP adapters ([#10123](https://github.com/promptfoo/promptfoo/issues/10123)) ([9d3f063](https://github.com/promptfoo/promptfoo/commit/9d3f063815568afc77786966e1096aec01e53177))\n* **providers:** add Gemini 3.8 and Vertex Live ([#10956](https://github.com/promptfoo/promptfoo/issues/10956)) ([1417f22](https://github.com/promptfoo/promptfoo/commit/1417f22b60f1268bb4bf8ead4df271853be6c512))\n* **providers:** add GPT-Live voice sessions ([#10891](https://github.com/promptfoo/promptfoo/issues/10891)) ([316a334](https://github.com/promptfoo/promptfoo/commit/316a3341fe69c59c55bc835964ab588d27b844a3))\n* **providers:** add OpenAI Agents API ([#10892](https://github.com/promptfoo/promptfoo/issues/10892)) ([ad3bee3](https://github.com/promptfoo/promptfoo/commit/ad3bee3299e3a9864ef6d47482298b2e7f1ceb37))\n* **providers:** add portable HTTP config schemas ([#10968](https://github.com/promptfoo/promptfoo/issues/10968)) ([fcd0604](https://github.com/promptfoo/promptfoo/commit/fcd06045caab8ea338d6eab4655d07e656ff883f))\n* **providers:** add portable MCP config schemas ([#10965](https://github.com/promptfoo/promptfoo/issues/10965)) ([f5ccb3c](https://github.com/promptfoo/promptfoo/commit/f5ccb3c8e8bb14a254bc95073b174739485ac054))\n* **providers:** support Ollama 0.34 features and refresh model docs ([#10964](https://github.com/promptfoo/promptfoo/issues/10964)) ([ac01a4f](https://github.com/promptfoo/promptfoo/commit/ac01a4fe9f8cb265ff8dcaebefcb3854bb5fa065))\n* **providers:** surface Ollama thinking output and finish reason ([#10954](https://github.com/promptfoo/promptfoo/issues/10954)) ([27d4c22](https://github.com/promptfoo/promptfoo/commit/27d4c22834272e278fa5cbcf3a9bf638d82f7622))\n* **providers:** update Gemini tools and media support ([#10172](https://github.com/promptfoo/promptfoo/issues/10172)) ([627bdd0](https://github.com/promptfoo/promptfoo/commit/627bdd0cb70081be0c6c6583448dbf39127a0c70))\n\n\n### Bug Fixes\n\n* **assertions:** bound embedded tool call parsing ([#10877](https://github.com/promptfoo/promptfoo/issues/10877)) ([78202a3](https://github.com/promptfoo/promptfoo/commit/78202a3a785655ef639658b0c0318daf628da2e5))\n* **assertions:** bound tool-call parser state ([#10887](https://github.com/promptfoo/promptfoo/issues/10887)) ([15290b4](https://github.com/promptfoo/promptfoo/commit/15290b4cd14392fbb6b12eb39c73c6663734cc4d))\n* **assertions:** default RAG assertion thresholds to 0.5 ([#10202](https://github.com/promptfoo/promptfoo/issues/10202)) ([4831b60](https://github.com/promptfoo/promptfoo/commit/4831b602d0cfdd67aef716df0fa66feb95b6a3da)), closes [#9910](https://github.com/promptfoo/promptfoo/issues/9910) [#9848](https://github.com/promptfoo/promptfoo/issues/9848)\n* **assertions:** invert score along with pass for search-rubric ([#10103](https://github.com/promptfoo/promptfoo/issues/10103)) ([26e8f2f](https://github.com/promptfoo/promptfoo/commit/26e8f2f788a1e3725f7e86ba7ceab5b279ad2cb5))\n* **assertions:** never invert grader failures on not-classifier and not-search-rubric ([#10904](https://github.com/promptfoo/promptfoo/issues/10904)) ([e049702](https://github.com/promptfoo/promptfoo/commit/e04970224fcca500c6a86d3f7ddafe7d560ebab6))\n* **assertions:** reject malformed webhook results ([#10955](https://github.com/promptfoo/promptfoo/issues/10955)) ([fc57736](https://github.com/promptfoo/promptfoo/commit/fc57736863f0a73860ebae67eab5dcc587cfb341))\n* **assertions:** reject non-string search rubrics ([#10934](https://github.com/promptfoo/promptfoo/issues/10934)) ([7bbb79e](https://github.com/promptfoo/promptfoo/commit/7bbb79e5806e39af37915578b1145f371d52ac30))\n* **auth:** harden custom header requests ([#10524](https://github.com/promptfoo/promptfoo/issues/10524)) ([5325084](https://github.com/promptfoo/promptfoo/commit/5325084139f826160dbeda5a6867d919c3c8746a))\n* **cli:** handle large values during result export ([#10884](https://github.com/promptfoo/promptfoo/issues/10884)) ([be798f4](https://github.com/promptfoo/promptfoo/commit/be798f4d30fc04c82c2e59ee1ff4eb6e9c0df1a3))\n* **cli:** preserve in-memory results for extensions ([#10885](https://github.com/promptfoo/promptfoo/issues/10885)) ([60483d9](https://github.com/promptfoo/promptfoo/commit/60483d94592c6fd58f5f91f7b9eaa19938e40ee6))\n* **code-scan:** extractValidLineRanges off-by-one on trailing newline ([#10107](https://github.com/promptfoo/promptfoo/issues/10107)) ([2cbabdb](https://github.com/promptfoo/promptfoo/commit/2cbabdbeeb7d3f2223878ae21bf7bddd685f204d))\n* **config:** preserve discovery in paths containing quotes ([#10549](https://github.com/promptfoo/promptfoo/issues/10549)) ([d9b3927](https://github.com/promptfoo/promptfoo/commit/d9b392750592e1506a2beb4552af9011437aae05))\n* **db:** preserve shared blobs after persistence errors ([#10897](https://github.com/promptfoo/promptfoo/issues/10897)) ([3b353fb](https://github.com/promptfoo/promptfoo/commit/3b353fb8a66eba917fea723ca239e50f7d57358b))\n* **deps:** update dependency @anthropic-ai/sdk to v0.123.0 ([#10901](https://github.com/promptfoo/promptfoo/issues/10901)) ([14f7c06](https://github.com/promptfoo/promptfoo/commit/14f7c06ccceef47eb4f7e160dcf65ba97ebee8ae))\n* **deps:** update dependency @anthropic-ai/sdk to v0.124.0 ([#10940](https://github.com/promptfoo/promptfoo/issues/10940)) ([29a15d1](https://github.com/promptfoo/promptfoo/commit/29a15d1edb256c789d0035ce3f36ad7cf91db6bb))\n* **deps:** update engine.io to v6.6.10 ([#10915](https://github.com/promptfoo/promptfoo/issues/10915)) ([e54a968](https://github.com/promptfoo/promptfoo/commit/e54a9686ab2e592b7c07105a2c3f93d33d9c9c6b))\n* **deps:** update opentelemetry ([#10886](https://github.com/promptfoo/promptfoo/issues/10886)) ([280bc5e](https://github.com/promptfoo/promptfoo/commit/280bc5ef72c0e79aa6ed160bd7699a74bd0f035d))\n* **deps:** update type definitions ([#10924](https://github.com/promptfoo/promptfoo/issues/10924)) ([01c6397](https://github.com/promptfoo/promptfoo/commit/01c6397974fc106ddc4e8592bb36f64680c4b7fb))\n* drain database writes and preserve provider options ([#10911](https://github.com/promptfoo/promptfoo/issues/10911)) ([32bfa9e](https://github.com/promptfoo/promptfoo/commit/32bfa9edae56d36f526ab13b6637db8dfb82c73e))\n* **eval:** keep concurrent derived metrics consistent ([#10873](https://github.com/promptfoo/promptfoo/issues/10873)) ([2a3a3bd](https://github.com/promptfoo/promptfoo/commit/2a3a3bd973f293ae0f7ccc75257672eecf6067be))\n* **eval:** preserve audio grading results and order ([#10822](https://github.com/promptfoo/promptfoo/issues/10822)) ([395d21e](https://github.com/promptfoo/promptfoo/commit/395d21e0a0cc203acd83a2ad7a774cf75b31f40b))\n* **eval:** preserve cloud UUID config semantics ([#7732](https://github.com/promptfoo/promptfoo/issues/7732)) ([8544fed](https://github.com/promptfoo/promptfoo/commit/8544feda8b15a04a6b27f401227f461f552a389a))\n* **fetch:** decode URL credentials and match Authorization case-insensitively ([#10909](https://github.com/promptfoo/promptfoo/issues/10909)) ([b8aa6ff](https://github.com/promptfoo/promptfoo/commit/b8aa6ff8270720dbfc4ce1ebaf33fe4bffeac801))\n* **fetch:** treat credit_balance_exhausted as a hard quota error ([#10881](https://github.com/promptfoo/promptfoo/issues/10881)) ([7f21bb2](https://github.com/promptfoo/promptfoo/commit/7f21bb253bfc901c64b769361f65482552362f6e))\n* honor SDK options and load AVIF/TIFF images ([#10902](https://github.com/promptfoo/promptfoo/issues/10902)) ([15bba21](https://github.com/promptfoo/promptfoo/commit/15bba219d294e434d2aeb01dd9ea69c108f8b077))\n* **integrations:** honor --env-file and config env for Helicone key and Langfuse base URL ([#10942](https://github.com/promptfoo/promptfoo/issues/10942)) ([8bd9f37](https://github.com/promptfoo/promptfoo/commit/8bd9f3796592c99ef6810b50b1ba092851ed4564))\n* **integrations:** read Langfuse env at fetch time ([#10937](https://github.com/promptfoo/promptfoo/issues/10937)) ([033080c](https://github.com/promptfoo/promptfoo/commit/033080c64e42c1a5927a35be12dc5b98424fe25d))\n* **integrations:** share Langfuse prompt fetches and surface real SDK load errors ([#10943](https://github.com/promptfoo/promptfoo/issues/10943)) ([379ecd0](https://github.com/promptfoo/promptfoo/commit/379ecd060ba43371d16106a8f0b9b6f473ec34c5))\n* **matchers:** tag context-faithfulness grader failures ([#9907](https://github.com/promptfoo/promptfoo/issues/9907)) ([77bc3ba](https://github.com/promptfoo/promptfoo/commit/77bc3badf21138c6faf126ace243461b5b872307))\n* **matchers:** tag RAG grader failures so inverse assertions cannot pass ([#10494](https://github.com/promptfoo/promptfoo/issues/10494)) ([b3d21d2](https://github.com/promptfoo/promptfoo/commit/b3d21d200363434a8f0a1a5627f529ee11d95dc9))\n* **mcp:** accept fine-tuned model identifiers ([#10847](https://github.com/promptfoo/promptfoo/issues/10847)) ([9442129](https://github.com/promptfoo/promptfoo/commit/94421294af108de3d1d45b06de28579028e035f4))\n* **opencode:** capture skill calls from full session history ([#10011](https://github.com/promptfoo/promptfoo/issues/10011)) ([290973d](https://github.com/promptfoo/promptfoo/commit/290973d2f75d0b55561aa1e21345011c54a8265d))\n* **prompts:** CSV rows collapse to duplicate labels/IDs when basePrompt.label is set ([#10102](https://github.com/promptfoo/promptfoo/issues/10102)) ([25963c3](https://github.com/promptfoo/promptfoo/commit/25963c3d4e9e45916c74288a979b102e6b6cda22))\n* **providers:** align ElevenLabs requests and audio inputs ([#10736](https://github.com/promptfoo/promptfoo/issues/10736)) ([de12341](https://github.com/promptfoo/promptfoo/commit/de123419c769d35ecb304b3a14e498b46d2e082e))\n* **providers:** apply normalized Envoy base URL after user config spread ([#10642](https://github.com/promptfoo/promptfoo/issues/10642)) ([1b6e793](https://github.com/promptfoo/promptfoo/commit/1b6e793b07de366c2faeef3d85fa682f5c4d30c3))\n* **providers:** clear ElevenLabs request and stream timers ([#10919](https://github.com/promptfoo/promptfoo/issues/10919)) ([23d245b](https://github.com/promptfoo/promptfoo/commit/23d245b0cc8380078d2014b19171a9a18e734eb2))\n* **providers:** forward Snowflake provider configuration ([#10878](https://github.com/promptfoo/promptfoo/issues/10878)) ([7d0bacd](https://github.com/promptfoo/promptfoo/commit/7d0bacde37051ff78ae78a2d7a6d27a5c66850f1))\n* **providers:** handle billing quotas and retryable throttles ([#10866](https://github.com/promptfoo/promptfoo/issues/10866)) ([16fdeb6](https://github.com/promptfoo/promptfoo/commit/16fdeb6bd626004e58fa2d1d685481cb480ac782))\n* **providers:** honor Foundry overrides and bound fetch reads ([#10948](https://github.com/promptfoo/promptfoo/issues/10948)) ([6b153ad](https://github.com/promptfoo/promptfoo/commit/6b153adcbb800ddb0bddc01db2c4d7487628cfeb))\n* **providers:** honor Nova Sonic inference configuration ([#10310](https://github.com/promptfoo/promptfoo/issues/10310)) ([aa2abb3](https://github.com/promptfoo/promptfoo/commit/aa2abb340161805bb5413c07d029fd8b773883e7))\n* **providers:** honor prompt Gemini tool policy over passthrough ([#10890](https://github.com/promptfoo/promptfoo/issues/10890)) ([2fd7add](https://github.com/promptfoo/promptfoo/commit/2fd7addd8ab3c27464293a83061f0c16cadf0835))\n* **providers:** isolate Agents endpoint credentials ([#10951](https://github.com/promptfoo/promptfoo/issues/10951)) ([f385d96](https://github.com/promptfoo/promptfoo/commit/f385d964daf383dcb96ebd095894641acf02d8bb))\n* **providers:** migrate Ollama embeddings to /api/embed and honor config ([#10958](https://github.com/promptfoo/promptfoo/issues/10958)) ([6c33d1f](https://github.com/promptfoo/promptfoo/commit/6c33d1f7518daa784602493663c17553e919bffd))\n* **providers:** preserve default MCP enablement ([#10661](https://github.com/promptfoo/promptfoo/issues/10661)) ([8a8a08b](https://github.com/promptfoo/promptfoo/commit/8a8a08b32a8cc3532a983cb12f84bc54ff20115d))\n* **providers:** preserve HTTP transform errors ([#10454](https://github.com/promptfoo/promptfoo/issues/10454)) ([a7e4ffc](https://github.com/promptfoo/promptfoo/commit/a7e4ffcdbb5352c0e573f4c04134bb75e11acc23))\n* **providers:** preserve patterned OpenCode skill history ([#10971](https://github.com/promptfoo/promptfoo/issues/10971)) ([ba0eeb4](https://github.com/promptfoo/promptfoo/commit/ba0eeb4d55b11d9428b2d20594ff15aa30b4b2d4))\n* **providers:** preserve streamed Ollama tool calls ([#10946](https://github.com/promptfoo/promptfoo/issues/10946)) ([7867eb2](https://github.com/promptfoo/promptfoo/commit/7867eb24b2635e259e1dc05999e50f775ba7a5e2))\n* **providers:** route OpenClaw default agent ([#9046](https://github.com/promptfoo/promptfoo/issues/9046)) ([139267a](https://github.com/promptfoo/promptfoo/commit/139267a1f45b886417bd59a62f25a5729df2421f))\n* **providers:** stop clobbering resolved TogetherAI model params ([#10846](https://github.com/promptfoo/promptfoo/issues/10846)) ([783d71f](https://github.com/promptfoo/promptfoo/commit/783d71ff922d16c70d6b3cfadcd61c6fadae8d3f))\n* **providers:** stop leaking local config into request bodies ([#10845](https://github.com/promptfoo/promptfoo/issues/10845)) ([329b748](https://github.com/promptfoo/promptfoo/commit/329b748113d64d3b1bf88651de91a1dc036fe1ad))\n* **providers:** surface Ollama HTTP errors instead of empty output ([#10953](https://github.com/promptfoo/promptfoo/issues/10953)) ([c66b468](https://github.com/promptfoo/promptfoo/commit/c66b46874ee89c04efa7404a3b8ac45e65f520ab))\n* **redteam:** align redteam-ollama example with its README ([#10959](https://github.com/promptfoo/promptfoo/issues/10959)) ([ccb4b5a](https://github.com/promptfoo/promptfoo/commit/ccb4b5a19ea5519ba6e334af39e7ee3fe268ddf3))\n* **redteam:** align tool discovery generation and grading ([#10621](https://github.com/promptfoo/promptfoo/issues/10621)) ([d672144](https://github.com/promptfoo/promptfoo/commit/d672144df62d6b031596ef469155a0451438b58f))\n* **redteam:** ground agent skill plans in application evidence ([#10903](https://github.com/promptfoo/promptfoo/issues/10903)) ([3c5429b](https://github.com/promptfoo/promptfoo/commit/3c5429b22e8124cdab5552b1b7bf7901b85a5f96))\n* **redteam:** keep vulnerabilities when scoring fails ([#10931](https://github.com/promptfoo/promptfoo/issues/10931)) ([37608b6](https://github.com/promptfoo/promptfoo/commit/37608b614c87bba1cf858e4be0bb08693519e661))\n* **redteam:** preserve strategy grading context ([#10969](https://github.com/promptfoo/promptfoo/issues/10969)) ([08e91da](https://github.com/promptfoo/promptfoo/commit/08e91da010e102ebbebe47126fb450d34c4008d6))\n* **validators:** default session source to client when provider.config is undefined ([#10086](https://github.com/promptfoo/promptfoo/issues/10086)) ([62dbbc0](https://github.com/promptfoo/promptfoo/commit/62dbbc0932fc044a0845817d2fd73ee33807d2ab))\n* **webui:** handle malformed login redirects ([#10460](https://github.com/promptfoo/promptfoo/issues/10460)) ([ebb1a6d](https://github.com/promptfoo/promptfoo/commit/ebb1a6d00005cc181ed8a3323f4bdf5b8c499c02))",
+        "assets_count": 0,
+        "url": "https://github.com/promptfoo/promptfoo/releases/tag/0.123.1",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增多个 AI Provider 支持：Gemini 3.8、Vertex Live、GPT-Live 语音会话、OpenAI Agents API、Ollama 0.34 新特性",
+            "为 HTTP 和 MCP 配置新增可移植的配置模式（portable config schemas），提升配置复用性",
+            "改善 Ollama 提供商：支持 thinking 输出、finish reason 展示、迁移 embeddings 至 /api/embed 接口，并保留流式工具调用",
+            "修复大量断言、CLI、数据库、集成（Langfuse/Helicone）及多个 Provider 相关的 Bug",
+            "安全加固：强化自定义 header 请求、隔离 Agents 端点凭证、拒绝畸形 webhook 结果"
+          ],
+          "summary_cn": "promptfoo 0.123.1 是一个功能丰富的版本，重点新增了对 Gemini 3.8、Vertex Live、GPT-Live 语音会话、OpenAI Agents API 及 Ollama 0.34 等新模型和 Provider 的支持，同时引入了可移植的 HTTP 和 MCP 配置模式。此外，该版本还进行了大量的 Bug 修复，涉及断言逻辑、CLI 导出、数据库持久化、Langfuse/Helicone 集成以及多个 Provider 的配置处理，并强化了身份认证和请求安全。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.275",
+        "author": "ashwin-ant",
+        "date": "2026-09-17",
+        "summary": "## What's changed\n\n- Added the signed-in account to Claude apps gateway sign-in: when the gateway names it, you confirm it before the credential is saved, and `/status` shows it\n- Added a send-now key (ctrl+enter, or ctrl+x ctrl+s) that interrupts the current turn and sends all queued messages at once; sent and queued messages show in gray until the model receives them\n- Added a startup warning when a configured `otelHeadersHelper` fails, so sessions that silently export no telemetry are noticed\n- Added syncing of the skills and plugins enabled on your claude.ai account to terminal sessions signed in with it; opt out with `syncClaudeAiSkills: false` or `syncClaudeAiPlugins: false`\n- Added `/plugin install <plugin> --marketplace <source>`, which offers to add the marketplace before installing the plugin\n- Fixed a restored memory file's age note changing between requests after a compaction or resume, which caused prompt cache misses\n- Fixed `--forward-subagent-text` stream-json and SDK output dropping the messages of subagents spawned by a `context: fork` skill, and of forked skills invoked by a subagent or another forked skill\n- Fixed @-mention file suggestions being buried below MCP resources when using a custom `fileSuggestion` command or typing `@.`/`@./`\n- Fixed fullscreen mode placing background-task completion notices beneath a long turn's collapsed tool row instead of where they arrived; each notice now closes the open row\n- Fixed `claude plugin marketplace update` deleting a GitHub marketplace's local copy when the fetch failed and the marketplace was named after its repository\n- Fixed plugin and marketplace messages, logs and `claude plugin marketplace list` showing a password or token stored in a git, ssh or marketplace URL\n- Fixed a resumed cloud session leaving an unanswered question open in the transcript after a queued message superseded it\n- Fixed vim mode placing the cursor one character right after a dot-repeated \"!\" or a fast-typed \"i!\" switched a non-empty prompt into shell mode\n- Fixed fullscreen mode freezing or blanking for several seconds when scrolling up past a large file diff\n- Fixed a stray `</ccmemory>`-style closing tag occasionally appearing in responses\n- Fixed plugin messages, logs and the VS Code plugin dialog showing the wrong server for some git addresses\n- Fixed a terminal `API Error: 400` on every turn for users behind a network gateway that rewrites API error responses when a beta request header is rejected\n- Fixed sandboxed Bash commands on Linux reporting exit code 0 for failed commands when the shell is zsh\n- Fixed the Read tool hanging instead of reporting an error when part of a large file could not be decoded under memory pressure\n- Fixed `--resume`, the resume picker preview, resumed background agents and the transcript view failing on a session whose saved history contains a malformed task-reminder or @-file attachment entry\n- Fixed a crash when resuming a conversation whose transcript contains a malformed message entry, and a fullscreen crash when such a conversation received new messages while scrolled up\n- Fixed sessions failing to resume or start when their saved transcript contains a malformed message content block\n- Fixed Grep, Glob and @-file suggestions hanging or running out of memory on searches over the 20MB output cap, and system ripgrep reporting \"no matches\" instead of an error after a flood of warnings\n- Fixed `/rewind` in a forked or background session restoring a zero-filled or truncated file when the session's file-history backups could not be fully copied\n- Fixed fullscreen sessions sometimes exiting with \"Claude Code exited after an unrecoverable interface error\" when typing fast or holding a key with the slash-command dropdown open\n- Fixed background sessions crashing and restarting their worker when a command fed through stdin ran on a machine that had run out of file descriptors\n- Fixed a crash at launch when `~/.claude.json` holds a malformed `mcpNeedsAuthNoticed` value\n- Fixed `--resume` and `--continue` dropping a conversation's earlier thinking when a built-in tool it started with has since been switched off by a server-side flag\n- Fixed text selected with the mouse in the fullscreen `claude --resume` session picker never reaching the clipboard\n- Fixed plugin reload previews replacing a running session's extracted plugin files when the plugin was loaded from a `--plugin-dir` or `--plugin-url` archive\n- Fixed self-hosted runners with `--drain-wait-sec` losing the final result of a turn that finished during a SIGTERM drain; the runner now waits briefly for the turn to be reported\n- Fixed `SubagentStop` hooks with a specific `matcher` firing for every stopping subagent whose agent type was empty\n- Fixed sandboxed Bash commands being unable to write to project directories named `hooks/` or `config/`\n- Fixed Artifact updates failing with \"File not found\" after a session resumes on another machine or its scratchpad is cleared: the page's last published version is restored\n- Fixed `/update-config` writing `Write(path)` permission rules, which file permission checks don't match, instead of `Edit(path)` rules\n- Fixed four dead documentation URLs (Pricing, Computer Use, Skills, CLI) in the bundled claude-api skill's live-sources table\n- Improved prompt caching for a `--system-prompt` that contains a `__SYSTEM_PROMPT_DYNAMIC_BOUNDARY__` line: the text above it is now cached globally, as the SDK's array form already is\n- Improved the `/desktop` error when Claude Desktop does not open: it now says why and what to do next\n- Improved the Artifact tool's publish and read results: they now say who can open the page and what the owner's Share menu offers\n- Improved artifact publish results: they name the tab icon sent, warn when the page contains a NUL byte, and retry a flaky fetch of the newer page to merge after a stale publish\n- Improved pasted and attached images: they are now saved where Claude can open them as files without a permission prompt, including in Desktop and VS Code\n- Improved the Artifact tool's guidance so Claude updates a shared artifact in place when you were given edit access to it, instead of publishing a separate copy\n- Improved plan-usage reads: editor windows and non-interactive sessions on one machine now share a read made in the last minute instead of each calling the usage endpoint\n- Improved the `ListPlugins` tool description so Claude knows it lists plugins enabled on your claude.ai account, not plugins installed locally with `/plugin`\n- Improved responsiveness when the terminal is slow or paused: output no longer falls further behind while the terminal catches up\n- Improved Write and Edit results for files in the synced account-skills folder: they now say the change is not saved to your account and how to save it\n- Updated `/logout` for Claude apps gateway sign-ins to also end the session on gateways that advertise token revocation\n- Changed hosted sessions to keep an unanswered permission prompt up after a container restart, instead of asking again\n- Changed the Artifact tool to ask for a one-word tab icon on a first publish instead of an emoji favicon\n- Changed Claude in Chrome in auto mode to skip the extension's per-site check for classifier-approved calls, as bypass mode does, fixing `browser_batch` \"Permission denied\" after a redirect\n- Changed plugins installed from an npm source to be fetched with `npm pack --ignore-scripts` and integrity-verified, so a package's install scripts no longer run\n- Changed scheduled and Run now routine runs to save data to, and republish the page of, an artifact you can edit without asking; public artifacts, first publishes and deletes still ask\n- Removed the startup notice that told you a one-off scheduled routine had run since your last session\n- [VSCode] Added viewing, editing and deleting a saved memory inside the Memory dialog\n- [VSCode] Added sending an attached image without typing any text\n- [VSCode] Added a Retry link to the MCP servers dialog when the server list fails to load\n- [VSCode] Added accept and reject buttons under each change in the proposed-change diff tab, so an edit can be reviewed change by change\n- [VSCode] Fixed the transcript creeping toward the bottom in small steps while a permission card waits and content keeps arriving\n- [VSCode] Fixed rewound and forked conversations not keeping the permission mode you had picked for the original conversation\n- [VSCode] Fixed an empty `CLAUDE_CONFIG_DIR` entry in the `environmentVariables` setting making Claude Code keep its files in the workspace\n- [VSCode] Fixed plugin install links opening the Manage plugins dialog for plugin names and marketplace addresses that can't be used in a link\n- [VSCode] Fixed Remote Control staying shown as connected after a turn-off that Claude Code reported as failed; it now shows as off\n- [VSCode] Fixed the scroll to the bottom on send stopping short of the reply when the reply starts arriving during the scroll\n- [VSCode] Fixed the agent map showing agents a crash left unfinished as stopped instead of failed once the session is reopened\n- [VSCode] Fixed the \"Continuing the step\" notice not appearing, and the continue limit resetting, after a reload that follows a crash with background tasks still running\n- [VSCode] Fixed the session list showing when a session was last reopened, such as after a window reload, instead of when its last message was sent\n- [VSCode] Fixed \"Fork conversation from here\" failing on the message right after one sent while Claude was working\n- [VSCode] Fixed the prompt cache clock showing too few minutes after reopening a session with a message sent while Claude was working\n- [VSCode] Fixed a background agent that finished while Claude was running a tool losing its completion notice, and its result on the agent map, after a window reload\n- [VSCode] Fixed a rare case where text selected in a git-ignored file could be sent to Claude after the extension was unresponsive for several seconds\n- [VSCode] Fixed renaming a running session reverting to the generated name (regression in 2.1.269)\n- [VSCode] Fixed some claude.ai/code sessions opening in VS Code as an empty conversation with no messages\n- [VSCode] Fixed slash commands typed while Claude is responding being sent to the model as text instead of running once the response finishes\n- [VSCode] Fixed unreadable code in the plan preview and the Hooks and Permission rules dialogs with the High Contrast Light theme\n- [VSCode] Fixed `/remote-control` being ignored while Remote Control is still connecting: running it again now turns Remote Control off immediately\n- [VSCode] Fixed the conversation pulling you back to the bottom while a reply streams after you scroll up, and added a `claudeCode.scrollToBottomOnSend` setting to turn off the jump on send\n- [VSCode] Fixed the Manage plugins dialog showing a password or token that was typed into a marketplace URL\n- [VSCode] Improved the agent map: the pill counts running agents and turns red after a failure, the main agent stays in view while the map scrolls, and agents sort by state then end time\n- [VSCode] Changed New session in a Claude editor tab to open in the sidebar when Preferred Location is set to Sidebar, instead of always opening another tab\n- [VSCode] Changed a message sent while Claude is working to wait at the bottom of the conversation until Claude starts on it\n- [Claude Code on the web] Added a \"New routine\" button to the page shown when a routine link no longer resolves, next to the link back to your routines list\n- [Claude Code on the web] Fixed routine \"paused\" and \"on hold\" notifications being cut off mid-sentence; the paused-subscription notice now says to turn the routine back on yourself\n- [Claude Code on the web] Fixed cloud environments with a very long allowed-domains list saving fine and then failing every session start; saving now fails up front and says how much to trim\n- [Claude Code on the web] Fixed Claude's guidance when a cloud session on a personal account is denied GitHub access: it now links to claude.ai/connect-github instead of an admin settings page\n- [Claude Code on the web] Improved what Claude tells you when asked to edit, delete or run a routine it didn't create: it now links to the routine's page so you can do it yourself\n- [Claude Tag] Added attach conditions for access bundles in Claude Tag settings: an Owner can let a bundle also apply in channels with guests or Slack Connect channels, not just member-only\n- [Claude Tag] Added Amazon CloudWatch, CloudWatch Logs, Amazon SNS, Google Cloud Monitoring and Cloud Logging presets to an access bundle's Credentials tab in Claude Tag admin settings\n- [Claude Tag] Added Datadog presets for the US3, AP1, AP2 and US1-FED sites; new Datadog connections are now limited to Datadog's read and query API routes\n- [Claude Tag] Fixed S3 uploads from recent AWS CLI and SDK versions failing with a 502 error when sent through an AWS connection\n- [Claude Tag] Fixed Claude treating a channel as inactive, and skipping untagged messages there, while it was still posting in that channel from a routine or a thread\n- [Claude Tag] Fixed a thread's \"Claude [task]\" display name reverting to plain \"Claude\" after the session behind that thread was refreshed or restarted\n- [Claude Tag] Fixed the model you switched to in a Slack thread silently reverting to the channel's default after that thread's session was restarted or refreshed\n- [Claude Tag] Fixed Claude sometimes replying twice when another app or bot @mentioned it in a top-level channel message\n- [Claude Tag] Improved Claude's notices in Enterprise Grid channels shared across workspaces: they now say when no workspace is set up yet, or why only organization defaults apply\n- [Code Review] Fixed reviews occasionally dropping part of their analysis when one of the reviewing agents returned its findings in an unexpected format\n- [Code Review] Fixed pull requests with more than 100 Claude reviews getting a full re-review on every clean merge from the base branch instead of the lighter merge-focused review\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.275",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 send-now 快捷键（ctrl+enter 或 ctrl+x ctrl+s），可中断当前回合并立即发送所有排队消息",
+            "新增从 claude.ai 账户同步启用的 skills 和 plugins 到终端会话，可通过配置选择退出",
+            "新增 /plugin install 命令支持指定 marketplace 来源安装插件",
+            "npm 来源的插件改为使用 npm pack --ignore-scripts 并做完整性校验，防止安装脚本执行",
+            "修复了大量会话恢复、全屏模式、vim 模式、沙箱命令等场景的 bug"
+          ],
+          "summary_cn": "本次 v2.1.275 版本包含多项新功能：支持即时发送消息的新快捷键、从 claude.ai 账户同步 skills 和 plugins、改进插件安装流程并增强安全性（npm 插件不再执行安装脚本）。同时修复了大量问题，涵盖会话恢复、全屏模式崩溃、子代理消息丢失、沙箱命令错误等多个方面，并包含多项 VS Code 扩展和 Claude Tag 的改进与修复。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anthropics/claude-code",
+        "version": "v2.1.274",
+        "author": "ashwin-ant",
+        "date": "2026-09-17",
+        "summary": "## What's changed\n\n- Added a visible warning when memory usage is critical, with steps to free memory or restart safely\n- Added `CLAUDE_CODE_MCP_STARTUP_WAIT_MS` to bound how long the first non-interactive turn waits for connecting MCP servers (`0` = don't wait)\n- Added `effort` attribute to the `claude_code.llm_request` OpenTelemetry trace span, matching the `api_request` event\n- Added `claude_code.managed_settings_resolved` OTel event: managed-settings sources and policy helper state; redacted settings and digests with `OTEL_LOG_MANAGED_SETTINGS=1`\n- Added `store.connect_timeout_seconds` to the Claude apps gateway config to lengthen the Postgres connect timeout (default 5 seconds), and improved the boot error when the database is unreachable to point to `store.postgres_url` and the configured timeout\n- Added `enduser.sub`, the IdP subject, to the telemetry Claude Desktop and Cowork send through a Claude apps gateway\n- Added a Claude apps gateway warning when a replica has more requests open than the 256 it sends upstream at once, and a startup log line showing that limit\n- Added click-to-expand for collapsed teammate and agent messages in fullscreen mode\n- Fixed sessions getting stuck endlessly retrying \"unexpected tool_use_id\" 400 errors: corrupted transcripts now self-heal where possible, and otherwise a clear error (with a `/rewind` hint) ends the loop\n- Fixed MCP servers configured as `http` that only speak legacy HTTP+SSE failing to connect when they answer the first request with 422 or another 4xx error\n- Fixed Streamable HTTP MCP tool calls timing out after about 5 minutes even when a longer per-server `timeout` was set\n- Fixed MCP prompts and resources not refreshing when a server sends list-changed notifications without declaring `listChanged`\n- Fixed MCP tool calls refused with 403 insufficient_scope being reported as an expired sign-in: the error now names the missing permissions and points to `/mcp` re-authentication\n- Fixed hook-driven sessions (such as an active `/goal`) ending with \"Prompt is too long\" instead of compacting when the context overflowed again after a reactive compaction\n- Fixed an active `/goal` being lost when resuming (`--continue` / `--resume`) a session that had compacted\n- Fixed `claude agents` losing `--model`, `--effort`, `--permission-mode`, `--allow-dangerously-skip-permissions` and `--agent` after an auto-update relaunch\n- Fixed a per-turn slowdown when a language server publishes project-wide diagnostics for thousands of files\n- Fixed subagents with `model: \"opus\"` on Bedrock, Vertex or Foundry leaving the session's model when its id has no recognizable model family (unless `ANTHROPIC_DEFAULT_OPUS_MODEL` is set)\n- Fixed self-hosted runner sessions failing every turn with a 401 after a few failed token refreshes, until the next scheduled refresh; the runner now keeps retrying, and fetches a new token after a 401\n- Fixed clickable links to local file paths doing nothing in VS Code and other terminals that require a `file://` URI\n- Fixed the transcript renumbering ordered lists in your own messages (typing \"3. 2. 1.\" displayed \"3. 4. 5.\"); numbers and \"N)\" markers now show as typed\n- Fixed AskUserQuestion preview notes being attached to a previously chosen option instead of the highlighted one\n- Fixed AskUserQuestion preview mode dropping the highlighted option when submitting a note with Enter\n- Fixed a resumed background agent keeping half of an interrupted tool batch when one of its calls was approved with a message\n- Fixed a local `claude -p --resume` started with `CLAUDE_CODE_RESUME_INTERRUPTED_TURN` not reporting background tasks the previous process left unfinished\n- Fixed the first turn of a cloud session sometimes starting without the tools of an SDK-hosted MCP server that was still connecting\n- Fixed background agent notifications claiming the agent had no live background work when it was still waiting on its own background task and would resume\n- Fixed error hints in Claude Desktop sessions to suggest slash commands like `/usage-credits` instead of CLI flags that cannot be used there\n- Fixed `/schedule` saving a routine's prompt without its message role when Claude writes the routine in the shape that listing routines returns\n- Fixed `/status` not showing the `apiKeyHelper` failure that its own error banner told you to check\n- Fixed `/fast on` in non-interactive sessions reporting on and then turning off under an organization's managed fast mode policy; it now says the organization has disabled it\n- Fixed the Artifact tool asking you to approve an update to an artifact that it then refused because the session had not read the latest version\n- Fixed Cowork and claude.ai cloud sessions with network access on treating reads of a teammate's artifact as if network access were off\n- Fixed a plugin or marketplace directory with no git repository of its own taking its version from an enclosing git repository, such as a git-managed `~/.claude`\n- Fixed `--strict-mcp-config` with an empty `--mcp-config` holding the first non-interactive turn for up to `MCP_TIMEOUT` on incidental MCP servers\n- Fixed Stop prompt hooks re-sending their whole prompt on every block in a conversation; repeat blocks now name the condition with a 500-character label\n- Fixed extra empty editor windows opening at startup on Linux under Wayland when running inside the Cursor or VS Code terminal\n- Fixed an unhandled promise rejection in the Claude apps gateway when Postgres drops a connection during a spend check\n- Fixed Claude apps gateway cutting every open stream on SIGTERM: it now lets in-flight requests finish for up to 25 seconds before exiting (`CLAUDE_GATEWAY_DRAIN_TIMEOUT_MS`)\n- Fixed `installed_plugins.json` being rewritten on nearly every start-up when plugin policy comes from remote managed settings, which made Claude Desktop reload every open session's plugins\n- Fixed headless and SDK sessions making a separate model call for every background task that finished; completions already queued are now answered by one call\n- Fixed the Bash tool re-sourcing the shell profile (a multi-second stall on the next command) after every plugin reload; it now does so only when the plugins' `bin/` directories changed\n- Fixed plugins with a top-level `$schema` in `hooks/hooks.json` showing an \"unknown key\" notice\n- Fixed MCP connection errors and the MCP login tool's description showing secrets resolved from `${VAR}` placeholders in MCP configs\n- Fixed Bash permission checks for commands that loop over or assign certain special shell variables; these commands now ask for permission\n- Fixed worktree-isolated sessions accepting Bash commands with certain nested shell expansions; these are now refused\n- Fixed the Edit permission prompt preview sometimes showing a different location than the approved edit in files with multi-byte characters\n- Fixed background commands being stopped after 30 idle minutes on machines under mild memory pressure; they're now stopped only when memory is critically low, and the debug log says why\n- Fixed a message a subagent sends to the main session disappearing from the Claude Desktop transcript after a relaunch\n- Fixed a plugin loaded from a `.zip` being served from a stale extraction after several overlapping reloads\n- Fixed a sub-agent's progress summary being replaced by a runaway multi-paragraph reply\n- Improved startup in `--input-format stream-json` sessions: the first turn no longer waits up to 2s for still-connecting MCP servers whose tools tool search defers; they arrive on a later turn\n- Improved Monitor tool notifications: a script's final output and its exit now arrive as one notification instead of two, saving a model turn\n- Improved Artifact tool errors: when you are not signed in to claude.ai the terminal now says so on the first attempt, and Claude is told to stop retrying a rejected call sooner\n- Improved artifact publishing: a publish built on an older version is stopped before it is sent, with the newer page to merge\n- Improved safety checks before removing an agent worktree that contains submodule checkouts\n- Improved `OTEL_LOG_RAW_API_BODIES=file:<dir>` output: a new `index.jsonl` and `request_body_id` / `message.id` event attributes link each response to its request file and transcript message\n- Improved Claude apps gateway boot: it now tries the first Postgres connection up to three times before exiting, so a database that is reachable a few seconds late no longer fails the boot\n- Improved the Claude apps gateway's spend-limit check under load: it now takes one database round trip instead of four, so fewer checks time out on a busy gateway\n- Improved Claude apps gateway sign-in rate limit errors: `/login` now explains the refusal, and the gateway log says which limit was hit and which setting to change\n- Changed Bedrock, Vertex, Foundry and telemetry-disabled installs to use the v2 MCP client and MCP 2026-07-28 negotiation with direct HTTP servers by default, as other installs already do (opt out: `MCP_SDK_GENERATION=v1` or `MCP_PROTOCOL_NEGOTIATION=legacy`)\n- Changed `/code-review` to use leaner inline review prompts for every model that has no tuned settings of its own, instead of spawning many review subagents\n- Changed `\"type\": \"sdk\"` MCP entries in `.mcp.json`, settings, plugins and agent files to be skipped with a warning: only an SDK host application can register in-process servers\n- Changed artifact watching in local sessions: a new version published elsewhere no longer starts a turn; Claude learns of it from a later Artifact tool result\n- Changed plugin and marketplace clones to leave Git LFS files as pointers instead of downloading them; `git lfs pull` in the checkout fetches them\n- Changed self-hosted runners to skip a read-only repository the git host refuses at the access check instead of failing the session start\n- Changed the `/status` GitHub line to read \"Cloud sessions\", and `/web-setup`, `/ultrareview`, and teleport messages to say \"cloud session\" instead of \"Claude Code on the web\"\n- [VSCode] Added continuation of the step a window reload interrupted, labeled in the chat, with a Claude Code: Continue After Reload setting to turn it off\n- [VSCode] Added Memory and Instructions entries to the Customize menu: Memory shows the auto-memory toggles, the saved memories and the memory folders, and Instructions edits the CLAUDE.md files\n- [VSCode] Added a `claudeCode.lockEditorGroups` setting to stop Claude from locking the editor groups it opens in\n- [VSCode] Fixed a `/btw` side question asked in a new conversation's first seconds occasionally showing another session's side-question history\n- [VSCode] Fixed a brief freeze when the extension first looks up your global gitignore file\n- [VSCode] Fixed a message sent while Claude was running a tool disappearing from the conversation after a window reload\n- [VSCode] Fixed the Manage Plugins enable toggle and MCP servers dialog rows being unreachable from the keyboard\n- [VSCode] Fixed sign-ins and sign-outs made in a terminal not showing until a reload after `CLAUDE_CONFIG_DIR` changed in the Environment Variables setting\n- [VSCode] Fixed Edit diffs in the chat being cut off at the bottom at some panel widths and for long wrapped lines; diff boxes now fit the rows shown\n- [VSCode] Fixed overlapping settings writes from the extension leaving `~/.claude/settings.json` unparseable or dropping a setting\n- [VSCode] Fixed Open in New Tab (Ctrl/Cmd+Shift+Esc) sometimes leaving the new tab's message box unfocused, so typing went nowhere until you clicked it\n- [VSCode] Fixed reopening a closed Claude tab splitting the editor layout when its locked group still holds another Claude tab and a file\n- [VSCode] Fixed New session opening another locked editor group whenever a file tab shared the group with your Claude tab\n- [VSCode] Fixed session names shifting sideways in the session picker while typing a search query\n- [VSCode] Fixed the plan review card cutting off its Send feedback button and reason field when a plan has several comments; the comment list now scrolls\n- [VSCode] Fixed inline code and code blocks in chat replies being unreadable under the High Contrast themes\n- [VSCode] Improved screen reader navigation of the conversation: each message is announced as \"You\" or \"Claude\", with the tool name for tool steps\n- [VSCode] Changed the default global gitignore file to `$XDG_CONFIG_HOME/git/ignore` when `XDG_CONFIG_HOME` is an absolute path\n- [Claude Code on the web] Added a \"Compare against\" branch picker to a cloud session's diff view, so you can diff its changes against any branch instead of only the base branch\n- [Claude Code on the web] Fixed git operations in cloud sessions failing with \"service unavailable\" when GitHub's token renewal briefly errors\n- [Claude Code on the web] Fixed editing a routine occasionally making it fire twice or re-enabling a routine that had just been paused\n- [Claude Code on the web] Fixed commits in cloud sessions occasionally failing with a signing error for a few minutes after the session's credentials refreshed\n- [Claude Code on the web] Fixed the toast after saving a routine whose GitHub trigger couldn't be linked to show the reason, such as a per-repository trigger limit, instead of only \"edit to retry\"\n- [Claude Code on the web] Fixed sessions sometimes flipping back to unread right after you mark them read\n- [Claude Code on the web] Changed routines to skip a run and retry for up to 72 hours when the owner's GitHub connection is missing, instead of switching the routine off at the first failed check\n- [Claude Code on the web] Changed a routine's on-hold notice: when your subscription is paused it now tells you to turn the routine back on yourself instead of promising an automatic resume\n- [Claude Tag] Added a Guests setting to the Add channel and Add workspace forms in Claude Tag admin settings, so owners can pick Inherit, Allow, Channel only or Restrict up front\n- [Claude Tag] Fixed Claude not answering when another Slack app or bot @mentions it; the tag now gets a reply and wakes Claude in a channel it had stopped following after days of inactivity\n- [Claude Tag] Fixed Claude missing another app's message that tagged @Claude right after a new Slack channel was created; it's now delivered once Claude has joined\n- [Claude Tag] Fixed Claude folding a follow-up sent minutes after its last Slack message into it as a silent edit; late updates such as blockers now post as a new reply that notifies\n- [Claude Tag] Fixed Claude's Slack search failing with an error whenever it searched within a single channel; it now returns that channel's matching messages\n- [Claude Tag] Fixed a safety-filter stop silently resetting a Slack thread's context when nobody was waiting; Claude now always says so and no longer cancels background work still running\n- [Claude Tag] Fixed email addresses in Claude's Slack replies rendering with a visible `mailto:` prefix; they now show as the plain, clickable address\n- [Claude Tag] Fixed Claude refusing to watch an Enterprise Grid channel shared with the whole organization when asked from another workspace in the grid\n- [Claude Tag] Fixed the Environment picker in Claude Tag admin settings showing a raw environment ID instead of the environment's name for archived or app-created environments\n- [Claude Tag] Improved Claude's live progress checklist in Slack: capped at 2,000 characters, reposted at most every 15 minutes in busy threads, with older \"Latest task list\" links updated\n- [Claude Tag] Removed the repeated guest-attribution note Claude appended to a Slack canvas each time it edited one in a channel using the \"Channel only\" guest setting\n- [Code Review] Fixed re-reviews occasionally leaving a fixed finding's thread open when the new review also filed a lower-severity note under it\n- [Code Review] Fixed rare reviews ending with \"Code review encountered an error\" when GitHub or an internal service failed transiently at launch; they now wait and retry\n- [Code Review] Improved how Code Review words each posted finding: short plain sentences that say who is affected, where the code goes wrong, and the fix up front\n- [Code Review] Improved the check-run card and PR comment when a review is skipped because of an organization limit: each cause now links the admin page that fixes it\n",
+        "assets_count": 10,
+        "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.274",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "新增内存使用关键告警，以及 MCP 启动等待时间、OpenTelemetry trace 等新配置项",
+            "修复大量 MCP 相关缺陷：HTTP 连接、超时、凭据重认证、流式HTTP超时等问题",
+            "新增 VSCode 扩展的多项功能：内存/指令管理菜单、窗口重载继续、编辑组锁定设置等",
+            "修复诸多会话类问题：工具调用 ID 错误的自愈、hook 会话压缩、后台任务恢复、transcript 编号等",
+            "优化 Claude apps 网关的数据库连接、限流检查、启动恢复等性能与稳定性"
+          ],
+          "summary_cn": "本次 v2.1.274 版本以大量修复为主，重点覆盖了 MCP 服务器的连接、超时和认证问题，以及多个会话稳定性缺陷（如工具调用 ID 错误导致的死循环、会话压缩后 /goal 丢失、后台任务中断恢复等）。同时新增了内存告警、若干 MCP 和 OpenTelemetry 配置项，并为 VSCode 扩展增加了内存/指令管理、窗口重载继续等功能。Claude apps 网关在数据库连接、限流检查和优雅关闭方面也获得了多项稳定性改进。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.155",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.275\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.155/\n\n```bash\npip install claude-agent-sdk==0.2.155\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.155",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "将内置的 Claude CLI 更新至版本 2.1.275",
+            "无其他代码或功能层面的变更"
+          ],
+          "summary_cn": "该版本仅更新了捆绑的 Claude CLI 工具，从旧版本升级至 2.1.275。这是一次内部维护性更新，不涉及任何新的功能、修复或破坏性变更，对现有用户的使用方式没有影响。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-python",
+        "version": "v0.2.154",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "\n### Internal/Other Changes\n\n- Updated bundled Claude CLI to version 2.1.274\n\n\n---\n\n**PyPI:** https://pypi.org/project/claude-agent-sdk/0.2.154/\n\n```bash\npip install claude-agent-sdk==0.2.154\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.154",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "将内置的 Claude CLI 版本升级至 2.1.274",
+            "属于内部依赖更新，不涉及 SDK API 或用户可见的功能变更"
+          ],
+          "summary_cn": "本次版本更新仅将捆绑的 Claude CLI 工具从旧版本升级到 2.1.274。这是一次内部依赖更新，不涉及 SDK 的公共 API、功能行为或用户接口的任何变更，属于常规的维护性发布。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.275",
+        "author": "ashwin-ant",
+        "date": "2026-09-17",
+        "summary": "## What's changed\n\n- Fixed a deferred tool call's result being emitted with internal keys such as `toolUseResult` instead of `tool_use_result` when the tool re-runs at the start of a resumed turn\n- Fixed `getSessionMessages()` and `forkSession()` sometimes missing a turn's assistant message when called right after the turn's `result` message\n- Fixed `forkSession({ upToMessageId })` rejecting a client-supplied `SDKUserMessage.uuid` that is not in UUID format\n- Fixed `forkSession` rejecting the id that `getSessionMessages` returns for a message sent while Claude was working, and a fork showing a re-run prompt twice\n- Fixed `getSessionMessages()` omitting a task notification or other queued message that Claude read while running a tool; it now comes back where Claude read it\n- Updated to parity with Claude Code v2.1.275\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.275\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.275\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.275\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.275\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.275",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复了延迟工具调用重新运行时，结果被内部键（如 `toolUseResult`）而非 `tool_use_result` 输出的问题",
+            "修复了 `getSessionMessages()` 和 `forkSession()` 在会话回合的 `result` 消息后立即调用时可能遗漏助手消息的问题",
+            "修复了 `forkSession({ upToMessageId })` 拒绝不符合 UUID 格式的客户端提供的 `SDKUserMessage.uuid` 的问题",
+            "修复了 `forkSession` 拒绝 `getSessionMessages` 返回的、在 Claude 工作期间发送的消息 ID，以及分叉后重复显示重新运行提示的问题",
+            "修复了 `getSessionMessages()` 遗漏 Claude 运行工具期间读取的任务通知等排队消息的问题；现在这些消息会按其读取位置返回",
+            "与 Claude Code v2.1.275 保持版本同步"
+          ],
+          "summary_cn": "此版本主要修复了多个与会话管理和消息检索相关的问题，包括延迟工具调用的结果输出键名不一致、`getSessionMessages()` 和 `forkSession()` 可能遗漏或拒绝消息的问题。同时该版本与 Claude Code v2.1.275 保持版本对齐，整体以修复为主，不涉及破坏性变更。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-agent-sdk-typescript",
+        "version": "v0.3.274",
+        "author": "ashwin-ant",
+        "date": "2026-09-17",
+        "summary": "## What's changed\n\n- Added `startup_failure_reason` to the error result a stream-json run writes before exiting on a known startup failure\n- Added `mcpServer: {name, source}` to `canUseTool` options, `mcp_server` to tool hook inputs, and `source` to MCP server status rows, so hosts can key trust on `source === \"sdk\"`\n- Added `CLAUDE_CODE_MCP_STARTUP_WAIT_MS` (pass via `env`) to bound or disable (`0`) the first-turn wait for connecting MCP servers\n- Added `CLAUDE_CODE_EMIT_STARTUP_TIMING=1` for stream-json hosts: the session's first `system/init` then carries the per-phase `startup_timing` breakdown that cloud sessions already emit\n- Fixed `getSessionMessages()` omitting a message the user sent while Claude was running a tool; it now comes back as a user message where Claude read it\n- Fixed missing `origin: {kind: 'task-notification'}` on the replayed user message when a background task finishes during a running turn (`--replay-user-messages`)\n- Improved startup: the first turn no longer waits up to 2s for connecting MCP servers from settings files or plugins whose tools tool search defers; `options.mcpServers` servers are still awaited\n- Changed queued background-task completions to share one model call: each still gets its own `result`, all but the last empty with `num_turns: 0`\n- Updated to parity with Claude Code v2.1.274\n\n## Update\n\n```sh\nnpm install @anthropic-ai/claude-agent-sdk@0.3.274\n# or\nyarn add @anthropic-ai/claude-agent-sdk@0.3.274\n# or\npnpm add @anthropic-ai/claude-agent-sdk@0.3.274\n# or\nbun add @anthropic-ai/claude-agent-sdk@0.3.274\n```\n",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.274",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增启动失败原因（startup_failure_reason）写入 stream-json 运行结果的错误信息中",
+            "为 canUseTool 选项、工具钩子输入和 MCP 服务器状态增加 mcpServer/source 字段，便于主机基于 source===sdk 建立信任",
+            "新增 CLAUDE_CODE_MCP_STARTUP_WAIT_MS 环境变量，可限制或禁用（设为0）首轮等待 MCP 服务器连接",
+            "修复 getSessionMessages() 遗漏用户在 Claude 运行工具期间发送消息的问题",
+            "优化启动流程：首轮不再等待设置文件或插件中 MCP 服务器的连接（最长等待2秒），仅等待 options.mcpServers 配置的服务器"
+          ],
+          "summary_cn": "此版本为 SDK 引入了多项新功能和优化：新增启动失败原因报告、MCP 服务器来源追踪字段，使主机可以基于 source 字段建立信任；新增环境变量来控制 MCP 服务器连接的等待时间。同时修复了消息获取遗漏问题，并优化了启动流程，减少了首轮调用的不必要等待。整体与 Claude Code v2.1.274 保持同步。",
+          "impact_level": 3
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.228",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1.0.227...v1.0.228",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.228",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "该版本由 v1.0.227 递增至 v1.0.228，属于常规迭代版本",
+            "版本变更内容未在 Release Notes 中详细说明",
+            "变更详情可通过 GitHub Changelog 链接对比查看"
+          ],
+          "summary_cn": "该版本（v1.0.228）是 Claude Code Action 的常规补丁迭代版本，但没有提供详细的变更说明。具体变更内容需要通过 GitHub Commit 对比链接查看完整 Changelog。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "anthropics/claude-code-action",
+        "version": "v1.0.227",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "**Full Changelog**: https://github.com/anthropics/claude-code-action/compare/v1.0.226...v1.0.227",
+        "assets_count": 0,
+        "url": "https://github.com/anthropics/claude-code-action/releases/tag/v1.0.227",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [
+            "版本更新 v1.0.226 → v1.0.227",
+            "完整变更日志可通过 compare 链接查看"
+          ],
+          "summary_cn": "这是 claude-code-action 仓库 v1.0.927 的例行版本更新，从 v1.0.226 升级至 v1.0.227。由于 Release Notes 中未提供具体的变更细节，仅提供了完整变更日志的对比链接，无法确定具体的功能改动或修复内容。",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "desktop-v0.0.31",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "\n- Cline can now work on a remote machine over SSH, with the app itself staying local. Add and test a host under **Settings → Remote**, then pick it from the environment selector beside the workspace picker on the welcome screen — saving or testing a profile does not activate it. The connection opens at the remote user's home directory; **Add project…** in the workspace picker browses that machine for a project, and **Local** disconnects. Agent tools, workspace discovery, Git metadata, and session persistence all run on the host while approvals and live session events return to the desktop, because only the authenticated Cline Hub protocol is forwarded through the tunnel. SSH config aliases work: leave **Port** blank to use the alias's own configuration, or enter one to override it. Recent and last-used workspaces are remembered separately per host. Host metadata lives at `~/.cline/data/settings/remote-environments.json` (mode `0600`) and records an identity-file path, never private-key contents; the host key must already be trusted by your SSH client, and unknown or changed keys are rejected. On first connect Cline uploads a self-contained helper to `~/.cline/remote/` — no `apt`, `npm`, root access, global CLI install, or public port — and caches it for faster reconnects, leaving any existing Cline CLI hub on that account running. Linux x64 and arm64 hosts are supported (32-bit Raspberry Pi operating systems are not; macOS hosts need a locally built helper via `CLINE_REMOTE_HELPER_BINARY`). File attachments and opening a remote file in a local editor are not available in remote sessions yet — text, images, file mentions and search, Git branch operations, session history, and remote agent tools are\n- Sub-agents spawned in the same step now run at the same time instead of one after another, so delegating three independent pieces of work takes as long as the slowest one rather than the sum of all three. Tools that must run in order still do, and only back-to-back parallel calls overlap\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.30...desktop-v0.0.31\n",
+        "assets_count": 6,
+        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.31",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增 SSH 远程工作能力：Cline 可连接远程机器，应用本体保持在本地运行，通过远程环境选择器切换主机",
+            "同一步骤内生成的子代理现在可以并行执行，而不是串行执行，大幅缩短多任务委派时间",
+            "远程连接基于 Cline Hub 协议隧道转发，支持 SSH 配置别名、按主机分别记忆最近使用工作区、凭据安全存储（不保存私钥内容）",
+            "首次连接时自动上传自包含远程助手到 ~/.cline/remote/，无需 apt/npm/root 权限，支持 Linux x64 和 arm64 架构",
+            "远程会话暂不支持文件附件和本地编辑器打开远程文件的功能"
+          ],
+          "summary_cn": "此版本为 Cline 桌面端带来了重大的远程工作能力，用户可以通过 SSH 连接远程主机开展开发工作，应用界面保持在本地运行，所有代理工具、工作区发现、Git 元数据和会话持久化都在远程主机上执行，同时通过安全的 Cline Hub 协议隧道将审批和实时会话事件回传至桌面端。此外，同一步骤中的子代理改为并行运行，显著提升了多任务委派效率。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "v4.1.19",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "\n### Added\n\n- Images attached to a model that cannot read them are now flagged instead of silently discarded. Thumbnails get a warning badge and the composer explains that the images will be ignored, with a button to switch to an image-capable model. Previously the thumbnail looked normal and the image was replaced with a text placeholder just before the request, so there was no way to tell it had been dropped. Model info and the attachment picker also report image support accurately for models that declare text-only input without listing capabilities.\n\n### Changed\n\n- Cline's logo and icons have been refreshed throughout the extension, including the activity bar and panel icons.\n- The W&B Inference provider is now listed as CoreWeave, with its sign-up and API-key links updated to match CoreWeave's current documentation.\n\n### Fixed\n\n- Long tasks now compact when they actually need to rather than running out of room. The trigger compared a character-based estimate of the conversation (~3 characters per token) against the model's context limit, so content that tokenizes far denser than that — disassembly, image dumps, minified sources — could fill the real context window while the estimate stayed under the threshold and compaction never fired; the turn was then squeezed down to a handful of output tokens. The trigger now also uses the token count the provider itself reports, and how much history is kept is scaled by how far off the estimate turned out to be. The summarizer's output budget also doubled, so a model that reasons before answering can no longer spend the whole budget thinking and return no summary at all.\n- On Windows, opening a repository that contains a file named `rg.exe`, `git.exe`, or `powershell.exe` no longer runs that file in place of the real program. Bare program names were resolved through the workspace directory before PATH, so a planted executable ran with your privileges as soon as the workspace was indexed. Cline now sets Windows' `NoDefaultCurrentDirectoryInExePath` opt-out at startup, in both the VS Code extension and the JetBrains core. Processes Cline launches inherit it, so inside a Command Prompt shell a program in the current directory now needs `.\\` as it already does in PowerShell.\n- A model turn that fails mid-stream with a transient provider error is now retried up to three times with backoff instead of ending the task. A single rate-limit response forwarded by a gateway previously surfaced as a failed task. A turn that has already streamed output is never retried, so nothing is duplicated.\n- Terminal commands that succeed without printing anything (`git add -A` on a clean tree, for example) are now reported as empty output. They were treated as a shell-integration failure, which fed the model a snapshot of unrelated terminal scrollback prefixed with a warning that the output could not be captured, so silent commands intermittently looked like failures.\n- Checkpoints no longer re-hash every untracked file on each message. In workspaces holding large untracked directories this delayed every message by seconds to minutes; a persistent per-task index now lets git skip files it has already seen.\n- `run_commands` no longer hangs until its timeout after a command that backgrounds a child process. The command had finished, but the backgrounded process held the output pipes open.\n- `apply_patch` no longer silently overwrites an existing file when the model uses \"Add File\" on a path that already exists. The file's contents were replaced with no error and no record of what was lost.\n- PowerShell commands the model wrapped in another `powershell -Command \"...\"` are no longer parsed twice. The outer shell consumed `$_` before the inner command ran, so pipelines using it emitted an error for every item processed while still reporting success.\n- Opening your home directory as a workspace no longer drives the extension host to exhaustion. Typing an `@` mention indexed every file beneath it and re-ranked the whole index on each keystroke.\n- The \"Supports Images\" checkbox in OpenAI Compatible model settings now stays where you put it. The checkbox rendered the last committed value, and the re-sync that arrived during the save round-trip was re-emitted as a change event that wrote the old value back over your edit.\n- The error shown to the model when an `editor` call omits the text to replace now names the file and explains how to recover. The previous message was terse enough that some models re-sent the identical call until the task stopped.\n- Credentials are now stripped of invisible characters when saved, not only when pasted, and the cleanup covers AWS, GCP, and SAP fields and custom header values in addition to API keys.\n- Cline Pass now defaults to a model from your subscription rather than a free one. Its model list contains both tiers and the default was whichever model was published most recently, so a subscriber who never picked a model could be left on the free tier.\n- Cline Pass and free models now show no cost rather than the underlying market price, which is not what you are billed for.\n- Model pickers now fall back to the full Recommended, Free, and Subscribed lists when the models endpoint cannot be reached. The offline fallback was a short hardcoded list with no subscription tier at all.\n- Model lists for providers sharing the built-in catalog now refresh from the live catalog, so newly published models appear without an extension update, with timeouts so an unresponsive provider endpoint cannot stall the list.\n- Claude Code and OpenCode no longer ask for an API key they never read. Both authenticate from their own local CLI's credentials, but they were treated as key-based providers; the workaround was storing a dummy key. A missing CLI on `PATH` now warns rather than blocking, since a configured path or bundled binary also works.\n- The OpenAI Codex (ChatGPT subscription) model list no longer offers models the backend rejects, and Codex context limits are applied to every Codex model instead of being inherited from the OpenAI API catalog, which inflated both the context budget and the usage figures derived from it.\n- Models served by OpenCode Go are now sent over the wire protocol each one actually speaks. Every model was sent over the OpenAI chat-completions adapter, so models on that endpoint speaking other protocols failed or misbehaved.\n- Task history no longer goes blank when a task spawns many subagents. Subagent rows crowded out the tasks that created them, hiding the parent task and everything older.\n- Langfuse tracing, when configured, is now limited to the Cline and Cline Pass providers. The provider was ignored, so prompts and responses sent to third-party and bring-your-own-key providers were exported too.\n\n### Changed\n\n- Web search is now enabled by default on models that support it, outside YOLO mode. It can still be turned off in settings, and a settings file that cannot be read leaves it disabled rather than silently on.\n- The `run_commands` tool description now names the PowerShell edition in use — `Windows PowerShell (powershell.exe)` versus `PowerShell (pwsh.exe)` — quotes its guidance against that executable, and tells the model to run commands directly rather than wrapping them in another shell invocation. It also no longer describes the environment as Windows when `pwsh` is the configured shell on macOS or Linux.\n- Refreshed the built-in model catalog. Adds four providers (Infer by Flow7, Melious, NaN, and Wallaby) and takes the catalog from 5,788 to 6,079 models. This is a wide refresh: the resolved default model changes for 44 providers, most of them landing on DeepSeek V4.1 Flash — among them Hugging Face, Fireworks, Requesty, Nebius, Cortecs, CrossModel, DigitalOcean, Eden AI, and OpenCode Go. Gemini and Vertex now resolve to Gemini 3.8 Flash, GitHub Copilot and Vivgrid to GPT-6 Astra, and NVIDIA to GLM 5.3 Flash. If you use a provider without pinning a model, expect a different default.\n\n**Full Changelog**: https://github.com/cline/cline/compare/v4.1.18...v4.1.19\n",
+        "assets_count": 1,
+        "url": "https://github.com/cline/cline/releases/tag/v4.1.19",
+        "ai_summary": {
+          "change_type": "improvement",
+          "key_changes": [
+            "修复长任务压缩机制：改用提供商报告的 token 数触发压缩，避免高密度内容（如反汇编、图片转储）撑爆上下文窗口，同时将摘要输出预算翻倍",
+            "修复 Windows 安全漏洞：阻止工作区中恶意命名的文件（rg.exe、git.exe 等）替代真实程序执行，启动时设置 NoDefaultCurrentDirectoryInExePath",
+            "模型目录全面刷新：从 5,788 增至 6,079 个模型，新增 4 家提供商，44 个提供商的默认模型发生变更（多数切换到 DeepSeek V4.1 Flash）",
+            "新增图像支持标记：为不支持图像读取的模型标记附件，界面显示警告并提供切换到支持图像的模型的按钮",
+            "多项可靠性修复：流式错误自动重试、应用补丁不再静默覆盖已有文件、工作区索引和检查点性能优化、凭据清理扩展到更多字段"
+          ],
+          "summary_cn": "本版本主要聚焦于可靠性与安全性的全面修复，包括修复长任务压缩触发不准确、Windows 下恶意可执行文件替代真实程序的严重安全问题，以及多项命令执行、补丁应用和模型配置的 bug 修复。同时新增了对不支持图像模型附件的标记提示功能，并大幅刷新了内置模型目录（新增 879 个模型，44 家提供商默认模型变更）。整体以修复和稳定性提升为主，同时包含部分功能增强。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "cline/cline",
+        "version": "desktop-v0.0.30",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "\n- Windows updates no longer fail with \"Error opening file for writing\". The installer hook meant to stop the running backend never terminated anything: Tauri ships a 32-bit NSIS installer, so its PowerShell ran under WOW64, where `Get-Process` reports an empty path for every 64-bit process — the filter matched no sidecar on any x64 machine. The installer then wrote over an executable the detached Hub daemon still held open, which is why updating from 0.0.25 through 0.0.28 failed exactly as 0.0.24 did. The installer now asks the Windows Restart Manager which processes hold this install's files and shuts those down; that is bitness-independent, covers the connector processes the Hub spawns, and leaves a side-by-side Cline Beta alone. If Restart Manager itself fails you get a Retry/Cancel prompt rather than a half-replaced install\n- On Windows, Cline no longer runs a program out of your workspace when it means to run the system one. Windows resolves a bare program name through the child process's working directory before it searches PATH, and Cline runs `rg`, `git`, and `powershell` with your workspace as that directory — so a repository that happened to contain its own `rg.exe` would have that copy executed as soon as the workspace was indexed. Cline now opts out of current-directory executable search at startup, and every process it spawns inherits the setting\n- Long sessions now compact when they actually need to rather than running out of room. The trigger compared a character-based estimate of the transcript (~3 characters per token) against the model's context limit, so content that tokenizes far denser than that — disassembly, image dumps, minified sources — could fill the real context window while the estimate stayed under the threshold and compaction never fired; the turn was then squeezed down to a handful of output tokens. The trigger now also uses the token count the provider itself reports, and how much history is kept is scaled by how far off the estimate turned out to be. The summarizer's output budget also doubled, so a model that reasons before answering can no longer spend the whole budget thinking and return no summary at all\n- A tool that streams its output no longer keeps spinning after it has finished. When a tool streamed everything as it went, its completion event carried no final output, which chat read as \"still running\" — so the tool kept its running presentation, spinner included, for the rest of the turn\n- Refreshed Cline's logo and app icons throughout the app, the Dock and taskbar, and the installer\n- The CoreWeave provider's branding and setup links now match CoreWeave's current documentation, and Weights & Biases gained a direct link to its API key page from provider setup\n\n**Full Changelog**: https://github.com/cline/cline/compare/desktop-v0.0.29...desktop-v0.0.30\n",
+        "assets_count": 6,
+        "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.30",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 Windows 更新失败问题：安装程序现在使用 Windows Restart Manager 关闭占用安装文件的进程，解决了从 0.0.25 到 0.0.28 版本的更新失败",
+            "修复 Windows 上 Cline 从工作区意外执行同名程序的安全问题：通过退出当前目录可执行文件搜索机制，防止工作区中的恶意程序被当作系统工具执行",
+            "改进长会话的压缩触发机制：现在结合 tokenizer 实际报告和更精确的 token 估算来触发压缩，避免上下文窗口被高密度内容填满",
+            "修复流式输出工具完成后仍显示加载动画的问题",
+            "更新了 Cline 的 Logo 和应用图标；更新了 CoreWeave 和 Weights & Biases 的提供商设置链接和品牌界面"
+          ],
+          "summary_cn": "此版本主要是一个修复版本，核心解决了 Windows 上更新失败的问题（通过 Restart Manager 正确处理被占用文件）、防止从工作区执行同名程序的潜在安全风险，以及修复长会话压缩触发不准和流式输出工具加载动画不消失等问题。同时更新了 Logo 图标和部分提供商的品牌链接。",
+          "impact_level": 4
+        }
+      },
+      {
+        "repo": "OpenHands/OpenHands",
+        "version": "v1.20.0",
+        "author": "openhands-release-bot[bot]",
+        "date": "2026-09-17",
+        "summary": "## 1.20.0 (2026-09-17)\n\n<!-- Release notes generated using configuration in .github/release.yml at main -->\n\n## What's Changed\n### Features\n* feat(agent-profiles): select secrets available to a profile by @simonrosenberg in https://github.com/OpenHands/OpenHands/pull/17237\n* feat: forward Docker conversation runtime settings by @neubig in https://github.com/OpenHands/OpenHands/pull/17462\n* feat(automations): select saved agent profiles by @neubig in https://github.com/OpenHands/OpenHands/pull/17396\n### Maintenance\n* test: isolate Mock-LLM profiles from ambient secrets by @neubig in https://github.com/OpenHands/OpenHands/pull/17482\n* chore: bump released agent runtime dependencies by @neubig in https://github.com/OpenHands/OpenHands/pull/17489\n\n\n**Full Changelog**: https://github.com/OpenHands/OpenHands/compare/v1.19.0...v1.20.0\n\n---\nThis PR was generated with [Release Please](https://github.com/googleapis/release-please). See [documentation](https://github.com/googleapis/release-please#release-please).\n<!-- AGENT_CANVAS_DOCKER_START -->",
+        "assets_count": 4,
+        "url": "https://github.com/OpenHands/OpenHands/releases/tag/v1.20.0",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "新增代理配置（agent-profiles）功能，支持为特定配置选择可用的密钥（secrets）",
+            "新增 Docker 对话运行时设置的前向转发功能",
+            "新增自动化（automations）功能中支持选择已保存的代理配置",
+            "重构了 Mock-LLM 测试配置，使其与环境密钥隔离，提升测试安全性",
+            "升级了已发布的代理运行时依赖"
+          ],
+          "summary_cn": "OpenHands v1.20.0 是一次功能增强版本，主要引入了代理配置（agent-profiles）相关能力，包括可为配置选择可用的密钥、在自动化流程中复用已保存的代理配置，以及支持 Docker 对话运行时设置的转发。此外还进行了维护性改进，包括隔离测试环境中的密钥和升级代理运行时依赖。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-typesafe==0.0.1a2",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "Initial release\n\nrelease(typesafe): bump to 0.0.1a2 (#40576)\nfeat(typesafe): experimental `AutoModeMiddleware` (#40545)\nfeat(typesafe): experimental `ModelRouterMiddleware` (#40543)\nfix(typesafe): trace usage metadata (#40570)\nfeat(typesafe): `TypeSafeClassifier` (#40542)",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-typesafe%3D%3D0.0.1a2",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "初始发布 langchain-typesafe 包（0.0.1a2 预发布版本）",
+            "新增实验性 `AutoModeMiddleware` 中间件，支持自动模式选择",
+            "新增实验性 `ModelRouterMiddleware` 中间件，支持模型路由功能",
+            "新增 `TypeSafeClassifier` 类型安全分类器",
+            "修复使用元数据的追踪问题（trace usage metadata）"
+          ],
+          "summary_cn": "这是 langchain-typesafe 包的初始发布版本（0.0.1a2 预发布）。本次发布引入了多个核心功能，包括实验性的 AutoModeMiddleware（自动模式切换）和 ModelRouterMiddleware（模型路由）中间件，以及 TypeSafeClassifier（类型安全分类器），同时修复了使用元数据的追踪问题。作为预发布版本，所有功能标记为实验性，为后续稳定版本奠定基础。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "langchain-ai/langchain",
+        "version": "langchain-typesafe==0.0.1a1",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "Initial release\n\nfeat(typesafe): `TypeSafeClassifier` (#40542)",
+        "assets_count": 2,
+        "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-typesafe%3D%3D0.0.1a1",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "langchain-ai/langchain langchain-typesafe==0.0.1a1 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "openai/codex",
+        "version": "rust-v0.155.0",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "## New Features\n\n- Added experimental `/voice` conversations with live transcripts and microphone controls on supported builds, enabled through `/experimental`. (#43581, #43651, #44331)\n- The TUI now shows live reasoning summaries in the status row and completion timestamps after successful turns. (#43558, #43921)\n- Added task hiding, archiving, and deletion in the agents overview, plus worktree ownership details and confirmed deletion of clean managed worktrees. (#43942, #44424, #44433)\n- Added Touch ID verification for MCP requests in local TUI sessions on supported Macs. (#43624, #43712, #43715)\n- Added configurable daemon update schedules and `codex app-server daemon update`; saved threads and active goals can recover after daemon restarts. (#43542, #43562, #44314)\n- Amazon Bedrock can now obtain AWS credentials from configured commands, with caching, expiration-based refresh, and authentication recovery. (#44028)\n\n## Bug Fixes\n\n- Accepted prompts are now saved even when compaction fails before a turn starts. (#44487)\n- Fixed missed tmux resizes, transcript viewport restoration, and stale history appearing after switching threads. (#43603, #43889, #43994)\n- MCP servers now report expired OAuth credentials accurately and provide reconnect guidance when token refresh fails. (#43947, #44359)\n- Automatic approval reviews now preserve complete actions and authorization evidence more reliably, retry transient failures, and distinguish review failures from unsafe-action findings. (#44482, #44569, #44570)\n- Switching accounts now invalidates remote-control sessions, cached WebSocket state, and model catalogs belonging to the previous identity. (#43906, #44341, #44489)\n- Blocked Windows-process escapes from restricted WSL sandboxes and hardened brokered shell snapshots against credential exposure. (#44286, #43909, #44040)\n\n## Chores\n\n- Aligned Python SDK and runtime publishing with stable CLI releases, using matching versions and verifying runtime assets before SDK publication. (#44067)\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.154.0...rust-v0.155.0\n\n- #43521 Preserve standalone release pins during daemon updates @copyberry\n- #43524 Restrict MCP user verification and add workspace-scoped identity @copyberry\n- #43527 Discount an approval's own code-mode wrapper from Guardian score lag @copyberry\n- #43529 Ensure the standalone updater runs on managed daemon starts @copyberry\n- #43533 Fix jemalloc tools and compiler flags for Bazel musl builds @copyberry\n- #43534 Preserve Guardian context sections and share planned-action rendering @copyberry\n- #43538 Move Guardian permission context into the shared section registry @copyberry\n- #43540 Preserve the multi-agent version when forking at a turn cutoff @copyberry\n- #43542 Make app-server daemon automatic updates configurable @copyberry\n- #43545 Preserve fork runtime versions without loading full model context @copyberry\n- #43547 Add user-verification provider abstractions and RPC adapters @copyberry\n- #43552 Record the launched app-server executable identity in PID files @copyberry\n- #43558 Show completion timestamps after successful TUI turns @copyberry\n- #43562 Add an explicit app-server daemon update command @copyberry\n- #43568 Wire app-server user verification RPCs to the native provider @copyberry\n- #43570 Manage synchronous Guardian reviewers through the thread manager @copyberry\n- #43572 Make the managed app-server shutdown grace period configurable @copyberry\n- #43576 Group adjacent computer actions in the TUI @copyberry\n- #43581 Add live WebRTC voice conversations to the TUI @copyberry\n- #43584 Remove a stale transcript field assignment from the TUI @copyberry\n- #43595 Centralize bounded Guardian review evidence in guardian-context @copyberry\n- #43597 Move trusted tool metadata into shared Guardian context @copyberry\n- #43599 Move trusted skill evidence into the Guardian context registry @copyberry\n- #43601 Move Guardian image selection into shared context sections @copyberry\n- #43602 Move Guardian REPL evidence rendering into the shared context registry @copyberry\n- #43603 Recover missed tmux resize notifications in the TUI @copyberry\n- #43604 Exclude base instructions from the bundled model catalog @copyberry\n- #43619 Add a stable TUI/app-server version comparison helper @copyberry\n- #43621 Add worktree classification to thread telemetry @copyberry\n- #43622 Warn when the connected Codex service is older than the CLI @copyberry\n- #43624 Add macOS user verification with Secure Enclave signing @copyberry\n- #43645 Expand TUI regression coverage for realtime voice conversations @copyberry\n- #43651 Add voice mute shortcut and recording activity indicators @copyberry\n- #43656 Animate live voice transcripts with split-flap tiles @copyberry\n- #43676 Style spoken prompts and link workspace files in voice transcripts @copyberry\n- #43683 Move voice controls into a dedicated composer strip @copyberry\n- #43690 Make the voice mute shortcut configurable in the TUI @copyberry\n- #43695 Stabilize realtime voice meter sampling across redraws @copyberry\n- #43698 Make older app-server notices configurable in the TUI @copyberry\n- #43699 Preserve split-flap animation state when voice transcripts scroll @copyberry\n- #43702 Add a TUI user verification prompt component @copyberry\n- #43704 Disable clock synchronization in the voice audio sink @copyberry\n- #43708 Add TUI request bookkeeping for user verification @copyberry\n- #43712 Enable MCP user verification in the TUI @copyberry\n- #43715 Enable user verification for the bundled TUI on supported devices @copyberry\n- #43790 Limit app-server storage metrics to session directories @copyberry\n- #43795 Pin request reasoning effort while configuration overrides are active @copyberry\n- #43796 Preserve reasoning effort through compaction and reset it on success @copyberry\n- #43797 Add configurable memory versions with isolated storage @copyberry\n- #43798 Batch non-user history eviction to preserve Guardian transcript deltas @copyberry\n- #43799 Prioritize human evidence in memory v2 extraction @copyberry\n- #43800 Add summary-only extraction for memory v2 @copyberry\n- #43805 Centralize Guardian context composition @copyberry\n- #43806 Centralize Guardian transcript policy in context profiles @copyberry\n- #43808 Move v2 extraction chunking into the memory writer @copyberry\n- #43813 Add dedicated memory v2 consolidation and read prompts @copyberry\n- #43827 Add memory dual writing and v2 readiness reporting @copyberry\n- #43842 Wait for parent idle before rollback in guardian fork tests @copyberry\n- #43844 Add staged enterprise OIDC login and coordinated logout @copyberry\n- #43846 Include completed commentary in the `/copy` picker @copyberry\n- #43848 Preserve runtime workspace roots across thread resume @copyberry\n- #43853 Add canonical permission translation for MXC execution requests @copyberry\n- #43870 Close MCP stderr readers on client teardown @copyberry\n- #43873 Handle undefined values before JSON serialization in code mode @copyberry\n- #43876 Detach Unix hook commands from the controlling terminal @copyberry\n- #43884 Close active network proxy connections on teardown @copyberry\n- #43889 Fix transcript viewer restoration and half-page scrolling @copyberry\n- #43894 Preserve thread identity in code-mode tool dispatch traces @copyberry\n- #43895 Preserve `__oailb` routing cookies in ChatGPT HTTP clients @copyberry\n- #43897 Persist provider and auth identity with model catalog caches @copyberry\n- #43900 Propagate Apps tool refreshes to existing threads @copyberry\n- #43903 Extract Windows deny-read glob scan planning into protocol @copyberry\n- #43906 Scope model catalog caches to the current provider and auth identity @copyberry\n- #43907 Preserve complete shell snapshot exports through filtering and replay @copyberry\n- #43909 Protect shell snapshots when credential brokerage is enabled @copyberry\n- #43912 Keep Guardian reviewers on summary-based compaction @copyberry\n- #43913 Add tracing for project instructions and filesystem sandbox operations @copyberry\n- #43915 Remove the repository devcontainer configurations @copyberry\n- #43918 Expose the queued event count on `CodexThread` @copyberry\n- #43921 Show streaming reasoning summaries in the TUI status row @copyberry\n- #43925 Add cancellation for native user-verification RPCs @copyberry\n- #43927 Rename thread artifacts to attachments in the state database @copyberry\n- #43930 Avoid Windows sandbox setup for irrelevant proxy port changes @copyberry\n- #43934 Track voice session lifecycle metrics in the TUI @copyberry\n- #43936 Stabilize subagent and unified exec test fixtures @copyberry\n- #43937 Tag TUI startup metrics with terminal and multiplexer categories @copyberry\n- #43939 Add executor-context filesystem permission helpers @copyberry\n- #43942 Show worktree owner details and add confirmed deletion @copyberry\n- #43943 Gate new turn submissions on host shutdown admission @copyberry\n- #43947 Surface MCP reconnect signals when expired OAuth tokens cannot refresh @copyberry\n- #43948 Show configured app-server updater settings in doctor @copyberry\n- #43949 Add transactional thread attachment mutations to the state runtime @copyberry\n- #43950 Keep app-server thread RPCs active until delegated work completes @copyberry\n- #43953 Preserve per-image generation IDs in image generation analytics @copyberry\n- #43954 Cache protected shell snapshots and harden capture cleanup @copyberry\n- #43956 Increase the TUI thread capability test stack to 12 MiB @copyberry\n- #43959 Gate new app-server work during graceful shutdown @copyberry\n- #43961 Use curly apostrophes in protocol error messages @copyberry\n- #43966 Heap-allocate the resume future in the legacy history test @copyberry\n- #43983 Bundle signed voice resources in macOS releases @copyberry\n- #43994 Clear stale transcript history when switching threads @copyberry\n- #44002 Encapsulate executed tool call metadata recording @copyberry\n- #44025 Refresh workspace lockfile before building macOS voice releases @copyberry\n- #44027 Support image attachments in agents overview background tasks @copyberry\n- #44028 Add AWS credential export commands for Amazon Bedrock @copyberry\n- #44032 Generate Python SDK types from repository app-server schemas @copyberry\n- #44038 Handle copied credentials in the broker and shell snapshots @copyberry\n- #44040 Harden credential handling in shell snapshots and replay @copyberry\n- #44043 Use `StartThreadOptions` across thread fork APIs @copyberry\n- #44049 Extract credential broker environment and registry helpers @copyberry\n- #44053 Test Python SDK against the built CLI and installed runtime @copyberry\n- #44055 Gate Python SDK publishing on runtime availability and verify PyPI files @copyberry\n- #44056 Add configurable credential providers to the network proxy @copyberry\n- #44060 Raise Guardian's action review limit to 200,000 bytes @copyberry\n- #44061 Build Python SDK artifacts before publishing the runtime @copyberry\n- #44062 Fix voice runtime release builds and packaging @copyberry\n- #44066 Extend configured credential brokerage to embedded aliases @copyberry\n- #44067 Publish Python packages after stable CLI releases @copyberry\n- #44068 Preserve credential broker destinations across environment filtering @copyberry\n- #44070 Reject empty audio payloads in data URLs @copyberry\n- #44072 Support configured credential providers across shell snapshots @copyberry\n- #44077 Refactor credential-broker tunnel protocol detection @copyberry\n- #44080 Make staged macOS voice runtimes writable before packaging @copyberry\n- #44084 Expose Python SDK history selection and per-turn options @copyberry\n- #44086 Add untrusted external messages to the Python SDK @copyberry\n- #44089 Support credential brokering in plaintext HTTP tunnels @copyberry\n- #44101 Handle empty voice arguments in macOS release packaging @copyberry\n- #44121 Reuse MCP bindings while cached servers remain dormant @copyberry\n- #44138 Coordinate rollout compression with active thread writers @copyberry\n- #44164 Add Guardian context cost and request token telemetry @copyberry\n- #44166 Add aggregate budget enforcement for Guardian context @copyberry\n- #44175 Attach compressed rollouts to diagnostic reports as JSONL @copyberry\n- #44176 Reduce TUI stack usage during session transitions @copyberry\n- #44181 Use explicit histogram buckets for Guardian context metrics @copyberry\n- #44183 Release persistent writers when session startup is cancelled @copyberry\n- #44198 Preserve voice indicator styles during composer sparkle effects @copyberry\n- #44200 Use captured step settings when building model context @copyberry\n- #44202 Use captured step model settings for extension context @copyberry\n- #44207 Measure total exec-server request duration including queueing @copyberry\n- #44226 Continue rollout searches when a compressed rollout cannot be searched @copyberry\n- #44227 Extract Guardian review policy into a dedicated crate @copyberry\n- #44238 Fix MCP elicitation cancellation and reset state on reconnect @copyberry\n- #44241 Handle credential provider source remapping across config layers @copyberry\n- #44242 Use captured step settings for tool planning and execution @copyberry\n- #44243 Use the originating model when recording conversation history @copyberry\n- #44248 Preserve tool output truncation budgets across resume and fork @copyberry\n- #44249 Normalize image detail for the receiving model @copyberry\n- #44250 Remove retired model entries while preserving migration prompts @copyberry\n- #44252 Move synchronous Guardian orchestration into the reviewer extension @copyberry\n- #44255 Always use streamed remote compaction for supported providers @copyberry\n- #44259 Remove the Windows `/sandbox-add-read-dir` slash command @copyberry\n- #44273 Remove the unused legacy remote compaction implementation @copyberry\n- #44276 Avoid duplicate reasoning effort updates during turn recovery @copyberry\n- #44277 Surface environment startup failure reasons to the model @copyberry\n- #44281 Enforce complete request budgets for Guardian reviews @copyberry\n- #44283 Persist loaded threads before managed daemon shutdown @copyberry\n- #44284 Add telemetry for the Windows system config namespace @copyberry\n- #44285 Preserve prewarmed reasoning effort across replay and early rollback @copyberry\n- #44286 Block WSL interop escapes from restricted filesystem sandboxes @copyberry\n- #44288 Prevent command hooks from hanging on blocked stdin @copyberry\n- #44289 Expand MXC volume grants and resolve deny globs @copyberry\n- #44290 Allow user-requested goal pauses through `update_goal` @copyberry\n- #44293 Enforce the async Guardian classifier's complete input budget @copyberry\n- #44297 Isolate the hook pipe I/O timeout test from shell startup files @copyberry\n- #44298 Set turn triggers for guardian and memory requests @copyberry\n- #44299 Record thread recovery candidates on managed daemon shutdown @copyberry\n- #44307 Add opt-in provisioned macOS CLI release candidates @copyberry\n- #44311 Honor shared Retry-After deadlines for remote control @copyberry\n- #44314 Restore saved threads when the managed daemon restarts @copyberry\n- #44318 Give hosted Codex Apps an independent MCP protocol opt-in @copyberry\n- #44320 Block goals after three empty automatic continuation turns @copyberry\n- #44325 Return the prompt hash in upload responses @copyberry\n- #44327 Prevent filesystem-root read denies in the Windows sandbox @copyberry\n- #44328 Clear pending TUI questions when accepting a new prompt @copyberry\n- #44330 Add paginated thread attachment listing to the state runtime @copyberry\n- #44331 Expose voice conversations in experimental features @copyberry\n- #44332 Persist disabled plugin IDs in thread settings @copyberry\n- #44336 Add bounded tool-result metadata support to executed tool calls @copyberry\n- #44337 Return to the agent command center after archiving on shared servers @copyberry\n- #44341 Bind remote-control sessions to their authentication owner @copyberry\n- #44344 Open tasks with Right from the agents overview @copyberry\n- #44346 Support native verification in MCP tool continuations @copyberry\n- #44349 Distinguish forked sessions in session-start hooks @copyberry\n- #44350 Add thread attachment operations with coordinated deletion @copyberry\n- #44352 Remove path-bearing fields from Guardian review analytics @copyberry\n- #44354 Extract shared footer hint wrapping in the TUI @copyberry\n- #44359 Report OAuth authentication failures in MCP status snapshots @copyberry\n- #44360 Return focus to the agents overview composer on Escape @copyberry\n- #44377 Update the forked-thread hook test to use `StartThreadOptions` @copyberry\n- #44392 Add opt-in model discovery for OpenAI API keys @copyberry\n- #44400 Start Python SDK turn subscriptions at their attachment point @copyberry\n- #44424 Add a hide shortcut to the agents overview @copyberry\n- #44433 Add archive and delete actions to the agents overview @copyberry\n- #44472 Harden Code Mode tool-call completeness tracking @copyberry\n- #44482 Improve Guardian retries and review failure reporting @copyberry\n- #44487 Preserve incoming prompts when pre-turn compaction fails @copyberry\n- #44489 Reset cached WebSocket state when auth ownership changes @copyberry\n- #44492 Distinguish HTTP quota errors from rate limits @copyberry\n- #44493 Bound MCP descriptions separately from Guardian action JSON @copyberry\n- #44521 Decouple session isolation from subagent attribution @copyberry\n- #44523 Bound app-server stdio shutdown and handle Unix SIGTERM gracefully @copyberry\n- #44536 Move Guardian reviewer settings and execution into the reviewer crate @copyberry\n- #44544 Move Guardian reporting and denial accounting into the extension @copyberry\n- #44548 Add MIME-filtered resource listing for Codex Apps @copyberry\n- #44564 Add app-server APIs for stored thread attachments @copyberry\n- #44569 Preserve complete actions in Guardian approval reviews @copyberry\n- #44570 Preserve Guardian authorization evidence until request budgeting @copyberry\n- #44571 Allow extensions to select MCP protocol mode per HTTP server @copyberry\n- #44574 Use captured action settings for Guardian reviews @copyberry\n- #44575 Tie network approval reviews to their originating execution @copyberry\n- #44580 Support symbolic `:root` filesystem policies in MXC @copyberry\n- #44586 Remove `repo_url` from skill invocation analytics events @copyberry\n\n\n",
+        "assets_count": 167,
+        "url": "https://github.com/openai/codex/releases/tag/rust-v0.155.0",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "openai/codex rust-v0.155.0 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "ruvnet/ruflo",
+        "version": "v3.42.4",
+        "author": "ruvnet",
+        "date": "2026-09-17",
+        "summary": "## What changed\n\nFixes Finding B of #3327: `memory_search({ smart: true })` was reporting SmartRetrieval's internal RRF fusion score in the `similarity` field instead of the underlying retrieval relevance score — e.g. a raw retrieval relevance of `0.8` was showing up as `0.03252247488101534`.\n\n- `similarity` now carries the raw retrieval relevance (matches `smart: false` behavior)\n- the fused SmartRetrieval ranking score is now exposed separately as `rankingScore`\n- `threshold` behavior is unchanged (still applied pre-RRF/MMR/recency)\n- 14 new regression tests across the SmartRetrieval package and MCP handler\n\nFixed in #3340 (thanks @takagibit18).\n\nFinding A of #3327 (reasoningBank/vectorBackend reporting `enabled:true` but routing through `bridge-fallback`) remains open and unclaimed.\n\n## Note on version history\n\n3.42.1–3.42.3 were published to npm without matching version-bump commits on `main`. Verified their tags (`v3.42.0`, `v3.42.1`, `v3.42.3`) are all ancestors of this release, so 3.42.4 is a strict superset of everything previously shipped.\n\nCo-Authored-By: RuFlo <ruv@ruv.net>",
+        "assets_count": 0,
+        "url": "https://github.com/ruvnet/ruflo/releases/tag/v3.42.4",
+        "ai_summary": {
+          "change_type": "other",
+          "key_changes": [],
+          "summary_cn": "ruvnet/ruflo v3.42.4 发布",
+          "impact_level": 1
+        }
+      },
+      {
+        "repo": "zed-industries/zed",
+        "version": "v1.20.2",
+        "author": "zed-zippy[bot]",
+        "date": "2026-09-17",
+        "summary": "- Fixed payment errors from non-Zed model providers incorrectly prompting users to upgrade to Zed Pro instead of displaying the original provider error message. ([#64354](https://github.com/zed-industries/zed/pull/64354))\r\n- Fixed different snippet extensions for the same language cancel each other ([#64314](https://github.com/zed-industries/zed/pull/64314))\r\n\r\n",
+        "assets_count": 14,
+        "url": "https://github.com/zed-industries/zed/releases/tag/v1.20.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复非 Zed 模型提供商的支付错误提示问题，不再错误引导用户升级到 Zed Pro，而是正确显示原始提供商错误信息",
+            "修复同一语言的不同代码片段扩展相互冲突取消的问题"
+          ],
+          "summary_cn": "本次版本主要包含两项修复：一是修复了使用非 Zed 模型提供商时，支付错误会错误地提示用户升级到 Zed Pro 的问题，现在会正常显示原始提供商错误信息；二是修复了同一语言下不同代码片段扩展互相干扰的问题，确保多个片段扩展可以共存。整体为补丁性质的修复版本，影响范围有限。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "openclaw/acpx",
+        "version": "v0.17.0",
+        "author": "vincentkoc",
+        "date": "2026-09-17",
+        "summary": "**Highlights:** Applications and CLI processes can share sessions through one local queue owner and watch session activity with cursor replay. Embedding hosts can guard session controls with optional authority checks. Direct session-journal consumers must distinguish local records from ACP messages.\n\n### Changes\n\n- Runtime/shared sessions: add `createSharedAcpRuntime()` so applications and CLI processes share one local queue owner, with targeted turn cancellation and explicit submission uncertainty. Thanks @mavam.\n- Sessions/watching: add passive `sessions watch` and shared-runtime `watchSession()` with cursor replay, request IDs, and settled turn outcomes. Thanks @mavam.\n\n### Breaking\n\n- Session journals: `.stream.ndjson` now includes local lifecycle and segment records alongside ACP messages; direct consumers must distinguish entries with `jsonrpc: \"2.0\"`. Built-in readers and portable ACP archives filter local records.\n\n### Fixes\n\n- Runtime/session controls: check optional host authority before sending mode, model, and configuration changes, including reconnect replay; preserve accepted replies and saved selections when authority is later revoked.\n\n### Verification\n\n- [npm acpx 0.17.0](https://www.npmjs.com/package/acpx/v/0.17.0), [successful Release workflow](https://github.com/openclaw/acpx/actions/runs/35202284284), [main CI](https://github.com/openclaw/acpx/actions/runs/35201829544), and [CodeQL](https://github.com/openclaw/acpx/actions/runs/35201349360).\n- Clean npm-installed CLI/runtime smoke passed: shared runtime and external CLI turns, owner continuity, watch replay, cursor resume, settled results, and peer cleanup.\n- Package integrity and provenance match the released source. `npm audit signatures` verified registry signatures for 41 packages and attestations for 18 packages.\n\n[Release PR](https://github.com/openclaw/acpx/pull/617) · [Full changelog](https://github.com/openclaw/acpx/compare/v0.16.0...v0.17.0)\n",
+        "assets_count": 0,
+        "url": "https://github.com/openclaw/acpx/releases/tag/v0.17.0",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "新增共享运行时（createSharedAcpRuntime）使应用和 CLI 进程可共享同一会话队列所有者，支持定向取消和明确的提交不确定性",
+            "新增被动式 sessions watch 和共享运行时 watchSession()，支持游标回放、请求 ID 和已结算回合结果",
+            "会话日志格式变更：.stream.ndjson 现在包含本地生命周期和分段记录，直接消费者需区分 jsonrpc: \"2.0\" 条目",
+            "运行时/会话控制增加可选的主机权限检查，防止未经授权发送模式、模型和配置更改"
+          ],
+          "summary_cn": "v0.17.0 引入了共享会话运行时和会话观看功能，使应用与 CLI 进程能够共享会话状态并实时查看会话活动。同时，这是一个破坏性变更：会话日志格式发生了变化，.stream.ndjson 文件现在包含本地记录，直接消费者必须通过 jsonrpc 字段区分本地记录与 ACP 消息。此外还加强了会话控制的安全性，增加了可选的主机权限检查机制。",
+          "impact_level": 5
+        }
+      },
+      {
+        "repo": "openai/openai-agents-python",
+        "version": "v0.22.3",
+        "author": "seratch",
+        "date": "2026-09-17",
+        "summary": "## What's Changed\r\n\r\n* fix(core): align conditional approvals with validated tool arguments by @seratch in https://github.com/openai/openai-agents-python/pull/5066\r\n* fix(core): deliver tool-not-found output on server-managed resume by @hyeonsang010716 in https://github.com/openai/openai-agents-python/pull/4947\r\n* fix(sandbox): keep command paths POSIX on a Windows host by @hyeonsang010716 in https://github.com/openai/openai-agents-python/pull/4958\r\n* fix(sessions): handle concurrent async SQLite startup by @00200200 in https://github.com/openai/openai-agents-python/pull/4987\r\n* fix(sessions): do not forward session limit as Conversations page size by @tiagovilasboas in https://github.com/openai/openai-agents-python/pull/4961\r\n* fix(tracing): do not cache a missing OPENAI_API_KEY by @hyeonsang010716 in https://github.com/openai/openai-agents-python/pull/5017\r\n* fix(extensions): include shell and apply_patch calls in AdvancedSQLiteSession's tool usage by @rioyu123 in https://github.com/openai/openai-agents-python/pull/4982\r\n* fix(extensions): reap subprocesses on early stream close by @Hughhhhcoder in https://github.com/openai/openai-agents-python/pull/4804\r\n* fix(extensions): preserve exact IDs in AdvancedSQLiteSession.delete_branch by @JiangLLM in https://github.com/openai/openai-agents-python/pull/4980\r\n\r\n### Documentation & Other Changes\r\n\r\n* docs: align repository security and contributor guidance by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/4962\r\n* docs: clarify Unix-local execution boundaries by @seratch in https://github.com/openai/openai-agents-python/pull/5064\r\n* docs: update translated pages by @seratch in https://github.com/openai/openai-agents-python/pull/5065\r\n* docs(examples): drop the duplicated word in the Temporal trace name by @simpleqt in https://github.com/openai/openai-agents-python/pull/5079\r\n* chore: enable Python Dependabot coverage with release-age cooldowns by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/4964\r\n* chore: add code ownership and required release review guidance by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/4965\r\n* fix(deps): update vulnerable dependencies without changing SDK APIs by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/4963\r\n* chore(deps): update fastapi requirement from >=0.120.0 to >=0.141.1 in /examples/realtime/twilio_sip by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4966\r\n* chore(deps): update uvicorn requirement from >=0.38.0 to >=0.52.4 in /examples/realtime/twilio_sip by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4968\r\n* chore(deps): update openai requirement from <4,>=3.0.0 to >=3.8.0,<4 in /examples/realtime/twilio_sip by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4969\r\n* chore(deps): bump typing-extensions from 4.14.1 to 4.16.0 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4970\r\n* chore(deps-dev): bump grpcio from 1.76.0 to 1.83.1 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4971\r\n* chore(deps): bump sqlalchemy from 2.0.43 to 2.0.52 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4973\r\n* chore(deps-dev): bump cryptography from 45.0.7 to 50.0.0 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4975\r\n* ci: add Python and Actions CodeQL security scanning by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/4974\r\n* fix(ci): deploy docs after dependency and workflow updates by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/4976\r\n* fix(deps): update python-multipart requirement from >=0.0.31 to >=0.0.32 in /examples/realtime/twilio by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5030\r\n* fix(deps): update python-dotenv requirement from >=1.2.2 to >=1.2.3 in /examples/realtime/twilio by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5031\r\n* fix(deps): update starlette requirement from >=1.3.1 to >=1.6.0 in /examples/realtime/twilio_sip by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5033\r\n* fix(deps): update python-dotenv requirement from >=1.2.2 to >=1.2.3 in /examples/realtime/twilio_sip by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5034\r\n* fix(deps-dev): bump pymdown-extensions from 11.0.1 to 11.0.2 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5036\r\n* fix(deps): bump runloop-api-client from 1.16.0 to 1.31.0 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5037\r\n* fix(deps): bump starlette from 1.3.1 to 1.6.0 by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5038\r\n* fix(deps): update starlette requirement from >=1.3.1 to >=1.6.0 in /examples/realtime/twilio by @dependabot[bot] in https://github.com/openai/openai-agents-python/pull/5032\r\n* Add SDKs team as repository code owner by @jbeckwith-oai in https://github.com/openai/openai-agents-python/pull/5058\r\n* release: 0.22.3 by @seratch in https://github.com/openai/openai-agents-python/pull/5077\r\n\r\n## New Contributors\r\n* @hyeonsang010716 made their first contribution in https://github.com/openai/openai-agents-python/pull/4947\r\n* @jbeckwith-oai made their first contribution in https://github.com/openai/openai-agents-python/pull/4962\r\n* @00200200 made their first contribution in https://github.com/openai/openai-agents-python/pull/4987\r\n* @JiangLLM made their first contribution in https://github.com/openai/openai-agents-python/pull/4980\r\n* @tiagovilasboas made their first contribution in https://github.com/openai/openai-agents-python/pull/4961\r\n\r\n**Full Changelog**: https://github.com/openai/openai-agents-python/compare/v0.22.2...v0.22.3",
+        "assets_count": 0,
+        "url": "https://github.com/openai/openai-agents-python/releases/tag/v0.22.3",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复核心逻辑：条件审批与验证后的工具参数对齐，以及服务端管理恢复时工具未找到的错误输出问题",
+            "修复多个稳定性问题：Windows 主机上的沙箱命令路径保持 POSIX、SQLite 并发启动处理、不缓存缺失的 OPENAI_API_KEY",
+            "修复扩展功能：AdvancedSQLiteSession 的工具使用统计与 delete_branch 保留精确 ID、流提前关闭时正确回收子进程",
+            "修复依赖漏洞并更新多个依赖项（fastapi、uvicorn、openai、sqlalchemy 等），同时更新相关文档",
+            "新增代码安全扫描（CodeQL）、依赖自动更新策略及代码所有者配置等 CI/工程改进"
+          ],
+          "summary_cn": "此版本为 v0.22.3 补丁发布，集中在修复各类缺陷与提升稳定性。核心修复包括：条件审批与工具参数的一致性、服务端管理恢复时工具未找到输出的处理、Windows 主机上的沙箱路径兼容性、SQLite 并发启动问题，以及不缓存缺失的 OPENAI_API_KEY 等。此外还修复了 AdvancedSQLiteSession 的多个扩展问题，并更新了不少依赖项、增强了 CI 安全扫描与文档。整体为稳定性与兼容性改进，无 Breaking Changes。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/alibaba@0.0.28",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "### Patch Changes\n\n- b6cae9b: feat(alibaba): preserve reasoning in multi-turn requests by default on supported models",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/alibaba%400.0.28",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "在阿里云（Alibaba）多轮对话请求中默认保留推理过程（reasoning）内容",
+            "该功能仅适用于支持推理过程的模型，自动启用无需额外配置"
+          ],
+          "summary_cn": "本次更新为 @ai-sdk/alibaba 增加了新功能：在受支持模型的多轮对话请求中，默认保留推理过程（reasoning）内容。这意味着开发者无需额外配置即可在多轮交互中获得更完整的推理信息，提升了模型对话的上下文连贯性和可解释性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/typesafe-ai@3.0.2",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "### Patch Changes\n\n- 7fb07aa: fix(typesafe-ai): surface the error_type code instead of a generic failure message",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/typesafe-ai%403.0.2",
+        "ai_summary": {
+          "change_type": "fix",
+          "key_changes": [
+            "修复 typesafe-ai 模块中错误类型代码的显示问题",
+            "不再返回通用的失败消息，而是展示具体的 error_type 代码",
+            "提升了错误消息的准确性和可诊断性"
+          ],
+          "summary_cn": "本次补丁修复了 typesafe-ai 模块中错误处理的问题，确保在发生错误时能够显示具体的 error_type 代码，而不是给出通用的失败消息。这一变更使得开发者在调试时能够更准确地识别错误原因。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/alibaba@2.0.49",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "### Patch Changes\n\n- 7f803af: feat(alibaba): preserve reasoning in multi-turn requests by default on supported models",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/alibaba%402.0.49",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "在支持推理的多轮请求中，默认保留推理内容（reasoning）",
+            "针对支持的模型启用推理信息保留功能",
+            "改进了多轮对话中推理链的连续性"
+          ],
+          "summary_cn": "此版本为 @ai-sdk/alibaba 新增了一项功能，在支持的模型上进行多轮请求时，默认保留推理（reasoning）内容。这意味着在多轮对话中，模型的推理过程信息将被持续保留，提升了对话上下文的完整性和连贯性。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "vercel/ai",
+        "version": "@ai-sdk/alibaba@1.0.55",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "### Patch Changes\n\n- def3cdf: feat(alibaba): preserve reasoning in multi-turn requests by default on supported models",
+        "assets_count": 1,
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/alibaba%401.0.55",
+        "ai_summary": {
+          "change_type": "feature",
+          "key_changes": [
+            "在阿里云AI模型的多轮对话请求中，默认保留推理过程（reasoning）信息",
+            "该功能支持启用推理能力的模型，在默认情况下生效",
+            "提升多轮对话中推理上下文的连续性和一致性"
+          ],
+          "summary_cn": "本次更新为 @ai-sdk/alibaba 增加了新功能，在受支持的模型上默认在多轮对话请求中保留推理过程（reasoning）信息。这使得启用推理能力的模型在进行多轮对话时，能够保持推理上下文的连续性，从而提升对话质量和一致性。该变更属于功能增强，对现有使用方式影响较小。",
+          "impact_level": 2
+        }
+      },
+      {
+        "repo": "vercel/sdk",
+        "version": "v1.28.35",
+        "author": "github-actions[bot]",
+        "date": "2026-09-17",
+        "summary": "# Generated by Speakeasy CLI\n[@vercel/sdk 1.28.35](https://www.npmjs.com/package/@vercel/sdk/v/1.28.35)\n## Typescript SDK Changes:\n* `vercel.kms.createKmsIssuer()`:  `response.algorithm.enum(edDsa)` **Removed** (Breaking ⚠️)\n* `vercel.kms.listKmsIssuers()`:  `response.issuers[].algorithm.enum(edDsa)` **Removed** (Breaking ⚠️)\n* `vercel.checksV2.listDeploymentCheckRuns()`:  `response.runs[].union(1).source.union(5)` **Added** (Breaking ⚠️)\n* `vercel.checksV2.createDeploymentCheckRun()`:  `response.union(1).source.union(5)` **Added** (Breaking ⚠️)\n* `vercel.checksV2.getDeploymentCheckRun()`:  `response.union(1).source.union(5)` **Added** (Breaking ⚠️)\n* `vercel.checksV2.updateDeploymentCheckRun()`:  `response.union(1).source.union(5)` **Added** (Breaking ⚠️)\n* `vercel.kms.updateKmsIssuer()`:  `response.algorithm.enum(edDsa)` **Removed** (Breaking ⚠️)\n* `vercel.user.listUserEvents()`:  `response.events[]` **Changed** (Breaking ⚠️)\n* `vercel.user.listEventTypes()`:  `response.types[]` **Changed** (Breaking ⚠️)\n* `vercel.kms.getKmsIssuer()`:  `response.algorithm.enum(edDsa)` **Removed** (Breaking ⚠️)\n* `vercel.checksV2.listCheckRuns()`:  `response.runs[].union(1).source.union(5)` **Added** (Breaking ⚠️)\n* `vercel.kms.revokeKmsSigningKey()`:  `response.algorithm.enum(edDsa)` **Removed** (Breaking ⚠️)\n* `vercel.deployments.createDeployment()`: \n  *  `request.requestBody.buildMachine` **Added**\n* `vercel.checksV2.updateProjectCheck()`: \n  *  `request.requestBody.requires.enum(none)` **Added**\n* `vercel.microfrontends.getMicrofrontendsInGroup()`:  `response.projects[].permissions` **Changed**\n* `vercel.projects.getProjects()`:  `response.union(3).projects[].permissions` **Changed**\n* `vercel.projects.createProject()`:  `response.permissions` **Changed**\n* `vercel.projects.getProject()`:  `response.permissions` **Changed**\n* `vercel.projects.updateProject()`:  `response.permissions` **Changed**\n* `vercel.projects.uploadProjectAvatar()`:  `response.permissions` **Changed**\n* `vercel.projects.updateMicrofrontends()`:  `response.permissions` **Changed**\n* `vercel.sandboxes.getNamedSandbox()`:  `error.status[502]` **Added**\n\nGenerated with [Speakeasy CLI 1.797.0](https://github.com/speakeasy-api/speakeasy/releases)\n\n\nPublishing Completed",
+        "assets_count": 0,
+        "url": "https://github.com/vercel/sdk/releases/tag/v1.28.35",
+        "ai_summary": {
+          "change_type": "breaking",
+          "key_changes": [
+            "KMS 相关接口（createKmsIssuer、listKmsIssuers、updateKmsIssuer、getKmsIssuer、revokeKmsSigningKey）移除了 `edDsa` 算法枚举值，属于破坏性变更",
+            "checksV2 相关接口（listDeploymentCheckRuns、createDeploymentCheckRun、getDeploymentCheckRun、updateDeploymentCheckRun、listCheckRuns）新增了 `source.union(5)` 枚举值，属于破坏性变更",
+            "user 模块的 listUserEvents 和 listEventTypes 接口的响应数据模型发生变更，属于破坏性变更",
+            "多个 projects 相关接口（getProjects、createProject、getProject、updateProject 等）的 `permissions` 字段结构发生变化",
+            "deployments.createDeployment 接口新增了 `buildMachine` 请求参数，checksV2.updateProjectCheck 新增了 `requires.enum(none)` 选项"
+          ],
+          "summary_cn": "此版本包含多项破坏性变更，主要集中在 KMS 接口移除了 edDsa 算法枚举值，以及 checksV2 接口新增了 source.union(5) 枚举值。此外，user 模块的事件接口响应模型和 projects 相关接口的 permissions 字段也发生了结构性调整。同时新增了 deployment 的 buildMachine 参数和 updateProjectCheck 的 requires(none) 选项，并新增了 getNamedSandbox 的 502 错误状态。",
+          "impact_level": 5
+        }
+      }
+    ]
+  },
+  "breaking_changes": [
+    {
+      "repo": "anthropics/claude-code",
+      "tag_name": "v2.1.274",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Bedrock、Vertex、Foundry 和禁用遥测的安装默认使用 v2 MCP 客户端和 MCP 2026-07-28 协议协商，可通过 MCP_SDK_GENERATION=v1 或 MCP_PROTOCOL_NEGOTIATION=legacy 退出",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": ".mcp.json、设置、插件和代理文件中 type 为 sdk 的 MCP 条目将被跳过并发出警告，只有 SDK 宿主应用程序可以注册进程内服务器",
+          "impact": "medium",
+          "category": "Config"
+        },
+        {
+          "description": "本地会话中的 artifact 监视行为改变：在其他地方发布的新版本不再触发新一轮对话",
+          "impact": "low",
+          "category": "Behavior"
+        },
+        {
+          "description": "插件和 marketplace 克隆不再下载 Git LFS 文件，而是保留为指针，需要手动执行 git lfs pull",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-agent-sdk-typescript",
+      "tag_name": "v0.3.274",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "排队的后台任务完成现在共享一次模型调用：每个任务仍获得自己的 result，但除最后一个外其余 result 为空且 num_turns 为 0",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "cline/cline",
+      "tag_name": "v4.1.19",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "内置模型目录刷新，44 个提供商的默认模型发生改变（多数改为 DeepSeek V4.1 Flash），未固定模型的用户将获得不同的默认模型",
+          "impact": "medium",
+          "category": "Behavior"
+        },
+        {
+          "description": "Web 搜索在支持该功能的模型上默认启用（YOLO 模式外），可通过设置关闭",
+          "impact": "low",
+          "category": "Behavior"
+        },
+        {
+          "description": "Langfuse 追踪现在仅限于 Cline 和 Cline Pass 提供商，第三方和自带密钥提供商不再被导出",
+          "impact": "low",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "cline/cline",
+      "tag_name": "desktop-v0.0.30",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "Windows 上不再从工作区目录解析裸程序名（rg、git、powershell），防止执行工作区中的恶意文件，程序现在需要 .\\ 前缀",
+          "impact": "medium",
+          "category": "Behavior"
+        }
+      ]
+    },
+    {
+      "repo": "openai/codex",
+      "tag_name": "rust-v0.155.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "移除了 Windows 的 /sandbox-add-read-dir 斜杠命令",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "tag_name": "v3.42.4",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "memory_search({ smart: true }) 的 similarity 字段现在返回原始检索相关性分数（与 smart: false 一致），融合的 SmartRetrieval 排名分数改为通过新的 rankingScore 字段单独暴露",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "openclaw/acpx",
+      "tag_name": "v0.17.0",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "会话日志 .stream.ndjson 现在包含本地生命周期和分段记录以及 ACP 消息，直接消费者必须通过 jsonrpc: \"2.0\" 区分条目",
+          "impact": "high",
+          "category": "API"
+        }
+      ]
+    },
+    {
+      "repo": "vercel/sdk",
+      "tag_name": "v1.28.35",
+      "has_breaking": true,
+      "changes": [
+        {
+          "description": "KMS 相关 API（createKmsIssuer、listKmsIssuers、updateKmsIssuer、getKmsIssuer、revokeKmsSigningKey）的响应中移除了 algorithm 枚举值 edDsa",
+          "impact": "high",
+          "category": "API"
+        },
+        {
+          "description": "checksV2 相关 API（listDeploymentCheckRuns、createDeploymentCheckRun、getDeploymentCheckRun、updateDeploymentCheckRun、listCheckRuns）的响应中新增了 source 联合类型 union(5)",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "user.listUserEvents 的 response.events[] 和 user.listEventTypes 的 response.types[] 类型发生改变",
+          "impact": "medium",
+          "category": "API"
+        },
+        {
+          "description": "多个项目相关 API（getProjects、createProject、getProject、updateProject、uploadProjectAvatar、updateMicrofrontends）的 response.permissions 类型发生改变",
+          "impact": "medium",
+          "category": "API"
+        }
+      ]
+    }
+  ],
+  "monitored_repos": [
+    "anthropics/claude-code",
+    "anthropics/skills",
+    "anthropics/claude-cookbooks",
+    "anthropics/claude-quickstarts",
+    "anthropics/courses",
+    "anthropics/prompt-eng-interactive-tutorial",
+    "anthropics/claude-agent-sdk-python",
+    "anthropics/claude-agent-sdk-typescript",
+    "anthropics/claude-agent-sdk-demos",
+    "anthropics/anthropic-sdk-python",
+    "anthropics/anthropic-sdk-typescript",
+    "anthropics/anthropic-sdk-go",
+    "anthropics/anthropic-sdk-java",
+    "anthropics/claude-code-action",
+    "anthropics/claude-code-security-review",
+    "anthropics/claude-plugins-official",
+    "anthropics/devcontainer-features",
+    "anthropics/evals",
+    "anthropics/political-neutrality-eval",
+    "anthropics/hh-rlhf",
+    "cline/cline",
+    "Aider-AI/aider",
+    "continuedev/continue",
+    "openai/openai-python",
+    "openai/openai-quickstart-python",
+    "danielmiessler/fabric",
+    "gptme/gptme",
+    "TransformerOptimus/SuperAGI",
+    "Significant-Gravitas/AutoGPT",
+    "OpenHands/OpenHands",
+    "langchain-ai/langchain",
+    "langchain-ai/langgraph",
+    "langgenius/dify",
+    "run-llama/llama_index",
+    "microsoft/autogen",
+    "microsoft/semantic-kernel",
+    "google-gemini/gemini-cli",
+    "agentscope-ai/agentscope",
+    "agno-agi/agno",
+    "mem0ai/mem0",
+    "openai/swarm",
+    "openai/codex",
+    "crewAIInc/crewAI",
+    "huggingface/smolagents",
+    "ruvnet/ruflo",
+    "bytedance/deer-flow",
+    "langchain-ai/deepagents",
+    "AndyMik90/Aperant",
+    "anomalyco/opencode",
+    "openinterpreter/openinterpreter",
+    "TabbyML/tabby",
+    "zed-industries/zed",
+    "openclaw/openclaw",
+    "openclaw/clawhub",
+    "openclaw/acpx",
+    "openclaw/lobster",
+    "openclaw/openclaw-windows-node",
+    "cloudflare/moltworker",
+    "ValueCell-ai/ClawX",
+    "TianyiDataScience/openclaw-control-center",
+    "BytePioneer-AI/openclaw-china",
+    "openai/openai-agents-python",
+    "microsoft/agent-framework",
+    "aaif-goose/goose",
+    "browserbase/stagehand",
+    "Arize-ai/phoenix",
+    "promptfoo/promptfoo",
+    "vercel/ai",
+    "vercel/chatbot",
+    "vercel/next.js",
+    "vercel/vercel",
+    "vercel/sdk",
+    "vercel/turborepo",
+    "vercel-labs/agent-browser",
+    "vercel-labs/coding-agent-template",
+    "vercel-labs/agent-skills",
+    "vercel-labs/oss-data-analyst",
+    "vercel-labs/workflow-builder-template",
+    "microsoft/playwright",
+    "karpathy/autoresearch"
+  ],
+  "issue_insights": {
+    "summary_brief": "Issue Agent 已分析 0 个仓库，未识别出跨仓库共性问题。",
+    "global_highlights": [],
+    "top_pain_points": [],
+    "repo_reports": [],
+    "expected_files": 0,
+    "generated_files": 0,
+    "parsed_files": 0,
+    "failed_files": 0,
+    "failed_samples": [],
+    "quality_score": 1.0,
+    "quality_status": "no_data",
+    "cross_repo_item_count": 0,
+    "other_category_count": 0,
+    "category_coverage": 0.0,
+    "agent_metrics_summary": null
+  },
+  "trend_status": "continuing",
+  "trend_delta": "今日相对最近几天（9/15语音拉力、9/16 compaction/工具安全）的新增推进点：①OAuth凭据集中脱敏首次成为单独成线的安全细分——体现多供应商模型网关时代对认证与诊断链路安全的双重关注；②Agent能力资产化（.ifpkg包导入导出、roster分发）为前述\"安全协作\"主线新增了生态分发维度；③框架层从单体实现转向可插拔中间件（langchain-typesafe、FastMCP迁移）与评测标准化（Harbor/HardBench）是两个全新的推进方向；④缓存符号链接逃逸与锚点缓存提效则是企业级构建链路的深度工程落地。其余（远程云端化、实时语音、通用安全加固、模型能力适配）均为既有主线的延续。\"",
+  "historical_basis_dates": [
+    "2026-09-12",
+    "2026-09-13",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16"
+  ],
+  "historical_comparison": "相对历史主线（9/12语音+屏幕范式 → 9/13跨平台/层级编排 → 9/14生产级可靠性/高性价比模型 → 9/15实时语音/远程化 → 9/16 compaction/工具安全），今日不存在方向性转折，而是把既有的\"远程云端化、多模态交互、安全加固\"三条主线推向多项目同日合流的具体工程实现。相对历史的增量在于安全维度从泛化的沙箱隔离细化为\"OAuth 凭据集中脱敏/网关认证\"这一此前未单独成线的细分，并新增能力资产化（Agent 包分发）、框架中间件抽象、评测标标准化三个具体推进方向，体现的是成熟阶段的体系化收口而非新范式确立。",
+  "top_new_trends": [
+    "OAuth 凭据集中脱敏成模型网关接入核心基建（PKCE 登录、token 缓存刷新、登录/刷新/诊断全链路脱敏），安全主线细化为多供应商认证安全新细分",
+    "Agent 技能/包生态分发与资产化（Dify 外部 URL 导入 .ifpkg、roster 包导出、Codex 插件缓存跨刷新保留），Agent 能力向可移植、可分发资产演进",
+    "Agent 框架中间件与类型安全抽象兴起（LangChain langchain-typesafe 实验包、deepagents 整体迁移 FastMCP、acpx 共享会话抽象），从单体实现走向可插拔标准化层",
+    "AI 工具与浏览器代理评测标准化加速（Phoenix Harbor 基准、Stagehand 102 项 HardBench 任务、promptfoo 多模型语音评测），评测从模型能力转向真实工具链",
+    "构建缓存安全与性能双轨优化（Turborepo/Next.js 修复缓存归档并发符号链接逃逸漏洞、以 lz4_flex 替代 C 依赖、Windows 锚点缓存提效31%）"
+  ],
+  "top_continuing_trends": [
+    "远程/云端开发：Cline、Claude Code、Codex 同日落地 SSH 远程连接、云端 Hub 会话、远程运行环境，延续9/15-9/16'从本地IDE向远程/云原生执行'主线并走向多端同步协作",
+    "多模态实时交互：Codex /voice 实时语音、Goose 桌面 Live、可配置 F8 语音快捷键续延语音主线，并新增 Unicode 数学渲染迈入视觉/渲染维度",
+    "Agent 沙箱与权限安全加固：Codex 单日十余项安全加固、Cline 修复 Windows 恶意可执行文件优先执行高危漏洞，延续9/12以来'安全即基础设施'的行业共识"
+  ],
+  "summary_confidence": 0.72,
+  "daily_summary_agent_run_metrics": {
+    "model": "deepseek-v4-flash-aistar",
+    "session_id": "3892dd44-27d4-455b-875f-9388e4e76cba",
+    "num_turns": 12,
+    "duration_ms": 131135,
+    "duration_api_ms": 120529,
+    "total_cost_usd": 1.6806250000000003,
+    "usage": {
+      "input_tokens": 315179,
+      "output_tokens": 3992,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 319171,
+      "tool_uses": 0,
+      "duration_ms": 0
+    },
+    "raw_usage": {
+      "input_tokens": 315179,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 3992,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard"
+    }
+  },
+  "agent_metrics_summary": {
+    "run_count": 40,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 40,
+    "total_duration_ms": 2123510,
+    "total_api_duration_ms": 2397362,
+    "total_cost_usd": 5.87819,
+    "usage": {
+      "input_tokens": 1029983,
+      "output_tokens": 42012,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 1071995,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  },
+  "daily_llm_usage": {
+    "run_count": 39,
+    "models": [
+      "deepseek-v4-flash-aistar",
+      "ds-v4-flash"
+    ],
+    "total_turns": 28,
+    "total_duration_ms": 1992375,
+    "total_api_duration_ms": 2276833,
+    "total_cost_usd": 4.197565,
+    "usage": {
+      "input_tokens": 714804,
+      "output_tokens": 38020,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "total_tokens": 752824,
+      "tool_uses": 0,
+      "duration_ms": 0
+    }
+  }
+}
