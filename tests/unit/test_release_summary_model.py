@@ -78,19 +78,20 @@ class TestReleaseSummary:
             )
             assert summary.impact_level == level
 
-    def test_impact_level_out_of_range_raises_error(self):
-        """测试：超出范围的 impact_level 应该抛出错误
+    def test_impact_level_out_of_range_clamped(self):
+        """测试：超出范围的 impact_level 钳制到边界而非抛错误
 
-        验证 Pydantic 的验证机制。
+        单字段越界只降级+记日志，不杀死整条管道产出。
         """
         # Arrange & Act & Assert
-        with pytest.raises(ValueError):  # Pydantic ValidationError
-            ReleaseSummary(
-                change_type="feature",
-                key_changes=["test"],
-                summary_cn="test",
-                impact_level=6,  # 超出范围
-            )
+        summary = ReleaseSummary(
+            change_type="feature",
+            key_changes=["test"],
+            summary_cn="test",
+            impact_level=6,  # 超出范围
+        )
+
+        assert summary.impact_level == 5
 
     def test_get_change_type_emoji(self):
         """测试：获取变更类型的表情

@@ -68,7 +68,7 @@ class TestSignalValidation:
         assert signal is None
 
     def test_validate_and_create_signal_with_invalid_type(self):
-        """测试：type 字段值无效时返回 None"""
+        """测试：type 字段值无效时降级为兜底枚举并保留信号(不丢弃、不抛异常)"""
         analyzer = BaseLLMAnalyzer(
             api_key="test-key",
             model="glm-4.7",
@@ -91,10 +91,11 @@ class TestSignalValidation:
             related_repos=["test/repo"],
         )
 
-        assert signal is None
+        assert signal is not None
+        assert signal.type == "capability"
 
     def test_validate_and_create_signal_with_invalid_impact_score_range(self):
-        """测试：impact_score 超出范围时返回 None"""
+        """测试：impact_score 超出范围时钳制到边界并保留信号"""
         analyzer = BaseLLMAnalyzer(
             api_key="test-key",
             model="glm-4.7",
@@ -117,10 +118,11 @@ class TestSignalValidation:
             related_repos=["test/repo"],
         )
 
-        assert signal is None
+        assert signal is not None
+        assert signal.impact_score == 5
 
     def test_validate_and_create_signal_with_wrong_field_type(self):
-        """测试：字段类型错误时返回 None"""
+        """测试：字段类型错误时降级为默认值并保留信号"""
         analyzer = BaseLLMAnalyzer(
             api_key="test-key",
             model="glm-4.7",
@@ -143,7 +145,8 @@ class TestSignalValidation:
             related_repos=["test/repo"],
         )
 
-        assert signal is None
+        assert signal is not None
+        assert signal.impact_score == 3
 
     def test_validate_and_create_signal_merges_related_repos(self):
         """测试：正确合并 related_repos"""

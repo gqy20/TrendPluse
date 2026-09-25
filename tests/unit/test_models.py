@@ -1,8 +1,5 @@
 """数据模型单元测试"""
 
-import pytest
-from pydantic import ValidationError
-
 from trendpluse.models.signal import DailyReport, Signal
 
 
@@ -31,72 +28,67 @@ class TestSignal:
         assert signal.impact_score == 5
 
     def test_signal_invalid_impact_score_too_low(self):
-        """测试：impact_score < 1 应该失败"""
-        # Arrange & Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            Signal(
-                id="test",
-                title="Test",
-                type="capability",
-                category="engineering",
-                impact_score=0,  # 无效
-                why_it_matters="Test",
-                sources=["https://github.com/test/repo/pull/1"],
-                related_repos=["test/repo"],
-            )
+        """测试：impact_score < 1 钳制到下界而非抛异常(单字段越界不杀死管道)"""
+        signal = Signal(
+            id="test",
+            title="Test",
+            type="capability",
+            category="engineering",
+            impact_score=0,  # 越界
+            why_it_matters="Test",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
 
-        assert "impact_score" in str(exc_info.value)
+        assert signal.impact_score == 1
 
     def test_signal_invalid_impact_score_too_high(self):
-        """测试：impact_score > 5 应该失败"""
-        # Arrange & Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            Signal(
-                id="test",
-                title="Test",
-                type="capability",
-                category="engineering",
-                impact_score=6,  # 无效
-                why_it_matters="Test",
-                sources=["https://github.com/test/repo/pull/1"],
-                related_repos=["test/repo"],
-            )
+        """测试：impact_score > 5 钳制到上界而非抛异常
 
-        assert "impact_score" in str(exc_info.value)
+        9/24 事故回归：单条 934 越界值不得杀死整期日报。
+        """
+        signal = Signal(
+            id="test",
+            title="Test",
+            type="capability",
+            category="engineering",
+            impact_score=934,  # 越界
+            why_it_matters="Test",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
+
+        assert signal.impact_score == 5
 
     def test_signal_invalid_type(self):
-        """测试：无效的 type 应该失败"""
-        # Arrange & Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            Signal(
-                id="test",
-                title="Test",
-                type="invalid_type",  # 无效
-                category="engineering",
-                impact_score=3,
-                why_it_matters="Test",
-                sources=["https://github.com/test/repo/pull/1"],
-                related_repos=["test/repo"],
-            )
+        """测试：无效的 type 降级为兜底枚举而非抛异常"""
+        signal = Signal(
+            id="test",
+            title="Test",
+            type="invalid_type",  # 无效
+            category="engineering",
+            impact_score=3,
+            why_it_matters="Test",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
 
-        assert "type" in str(exc_info.value)
+        assert signal.type == "capability"
 
     def test_signal_invalid_category(self):
-        """测试：无效的 category 应该失败"""
-        # Arrange & Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            Signal(
-                id="test",
-                title="Test",
-                type="capability",
-                category="invalid_category",  # 无效
-                impact_score=3,
-                why_it_matters="Test",
-                sources=["https://github.com/test/repo/pull/1"],
-                related_repos=["test/repo"],
-            )
+        """测试：无效的 category 降级为兜底枚举而非抛异常"""
+        signal = Signal(
+            id="test",
+            title="Test",
+            type="capability",
+            category="invalid_category",  # 无效
+            impact_score=3,
+            why_it_matters="Test",
+            sources=["https://github.com/test/repo/pull/1"],
+            related_repos=["test/repo"],
+        )
 
-        assert "category" in str(exc_info.value)
+        assert signal.category == "engineering"
 
 
 class TestDailyReport:

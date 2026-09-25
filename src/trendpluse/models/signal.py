@@ -6,9 +6,24 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from trendpluse.models.agent_usage import AgentMetricsSummary, AgentRunMetrics
+from trendpluse.utils.llm_bounds import clamp_int, normalize_literal
+
+# LLM 结构化输出的允许枚举(与下方 Literal 定义同步),供校验降级使用
+SIGNAL_TYPES = (
+    "capability",
+    "abstraction",
+    "workflow",
+    "eval",
+    "safety",
+    "performance",
+    "commit",
+    "release",
+)
+SIGNAL_CATEGORIES = ("engineering", "research")
+RELEASE_CHANGE_TYPES = ("feature", "fix", "improvement", "breaking", "other")
 
 
 class CoreTrend(BaseModel):
@@ -24,6 +39,11 @@ class CoreTrend(BaseModel):
         description="组成此趋势的信号 ID 列表", default_factory=list
     )
     impact_level: int = Field(description="影响级别 1-5", ge=1, le=5, default=3)
+
+    @field_validator("impact_level", mode="before")
+    @classmethod
+    def _clamp_impact_level(cls, value: object) -> int:
+        return clamp_int(value, 1, 5, 3, "CoreTrend.impact_level")
 
 
 # 信号类型到 Emoji 的映射常量
@@ -60,6 +80,18 @@ class NotablePackage(BaseModel):
     )
     impact_level: int = Field(default=3, ge=1, le=5, description="影响级别 1-5")
 
+    @field_validator("impact_level", mode="before")
+    @classmethod
+    def _clamp_impact_level(cls, value: object) -> int:
+        return clamp_int(value, 1, 5, 3, "NotablePackage.impact_level")
+
+    @field_validator("change_type", mode="before")
+    @classmethod
+    def _norm_change_type(cls, value: object) -> str:
+        return normalize_literal(
+            value, RELEASE_CHANGE_TYPES, "other", "NotablePackage.change_type"
+        )
+
 
 class BulkReleaseAnalysis(BaseModel):
     """monorepo 批量发版的整批 AI 分析结果。
@@ -81,6 +113,11 @@ class BulkReleaseAnalysis(BaseModel):
     )
     impact_level: int = Field(default=3, ge=1, le=5, description="整批影响级别 1-5")
 
+    @field_validator("impact_level", mode="before")
+    @classmethod
+    def _clamp_impact_level(cls, value: object) -> int:
+        return clamp_int(value, 1, 5, 3, "BulkReleaseAnalysis.impact_level")
+
 
 class ReleaseSummary(BaseModel):
     """Release 总结（AI 生成）
@@ -94,6 +131,18 @@ class ReleaseSummary(BaseModel):
     key_changes: list[str] = Field(description="关键变更点列表（简洁的中文描述）")
     summary_cn: str = Field(description="中文总结（2-3 句话）")
     impact_level: int = Field(ge=1, le=5, description="影响级别 1-5")
+
+    @field_validator("impact_level", mode="before")
+    @classmethod
+    def _clamp_impact_level(cls, value: object) -> int:
+        return clamp_int(value, 1, 5, 3, "ReleaseSummary.impact_level")
+
+    @field_validator("change_type", mode="before")
+    @classmethod
+    def _norm_change_type(cls, value: object) -> str:
+        return normalize_literal(
+            value, RELEASE_CHANGE_TYPES, "other", "ReleaseSummary.change_type"
+        )
 
     @classmethod
     def get_change_type_emoji(cls, change_type: str) -> str:
@@ -140,6 +189,23 @@ class Signal(BaseModel):
         default_factory=list,
         description=("支持此聚合信号的原始信号 ID 列表 (仅用于聚合信号，由 LLM 填充)"),
     )
+
+    @field_validator("impact_score", mode="before")
+    @classmethod
+    def _clamp_impact_score(cls, value: object) -> int:
+        return clamp_int(value, 1, 5, 3, "Signal.impact_score")
+
+    @field_validator("type", mode="before")
+    @classmethod
+    def _norm_type(cls, value: object) -> str:
+        return normalize_literal(value, SIGNAL_TYPES, "capability", "Signal.type")
+
+    @field_validator("category", mode="before")
+    @classmethod
+    def _norm_category(cls, value: object) -> str:
+        return normalize_literal(
+            value, SIGNAL_CATEGORIES, "engineering", "Signal.category"
+        )
 
     @classmethod
     def get_type_emoji(cls, signal_type: str) -> str:

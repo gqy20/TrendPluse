@@ -129,22 +129,26 @@ https://github.com/anomalyco/opencode/compare/v1.1.12...v1.1.13
         assert len(summary.key_changes) == 2
         assert summary.impact_level == 3
 
-        # 测试影响级别边界
-        with pytest.raises(ValueError):
+        # 测试影响级别边界:越界钳制而非抛异常(单字段越界不杀死管道)
+        assert (
             ReleaseSummary(
                 change_type="feature",
                 key_changes=[],
                 summary_cn="测试",
                 impact_level=0,  # 低于最小值
-            )
+            ).impact_level
+            == 1
+        )
 
-        with pytest.raises(ValueError):
+        assert (
             ReleaseSummary(
                 change_type="feature",
                 key_changes=[],
                 summary_cn="测试",
                 impact_level=6,  # 高于最大值
-            )
+            ).impact_level
+            == 5
+        )
 
     @pytest.mark.asyncio
     async def test_summarize_materials_batch(self, summarizer):

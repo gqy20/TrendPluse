@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+from trendpluse.utils.llm_bounds import clamp_unit_float, normalize_literal
+
+TREND_STATUSES = ("new", "continuing", "resurfacing", "weakening", "mixed")
 
 
 class DailyHistoryEntry(BaseModel):
@@ -57,3 +61,13 @@ class DailySummaryResult(BaseModel):
     top_new_trends: list[str] = Field(default_factory=list)
     top_continuing_trends: list[str] = Field(default_factory=list)
     confidence: float | None = Field(default=None, ge=0.0, le=1.0)
+
+    @field_validator("trend_status", mode="before")
+    @classmethod
+    def _norm_trend_status(cls, value: object) -> str:
+        return normalize_literal(value, TREND_STATUSES, "mixed", "trend_status")
+
+    @field_validator("confidence", mode="before")
+    @classmethod
+    def _clamp_confidence(cls, value: object) -> float | None:
+        return clamp_unit_float(value, "confidence")
