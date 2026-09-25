@@ -123,16 +123,14 @@
       : s.category === 'research' ? '研究' : '工程';
 
     content.innerHTML = `
-      <header class="sticky top-0 bg-paper border-b border-hairline px-7 py-5 flex items-start justify-between gap-4">
+      <header class="sticky top-0 bg-paper px-7 py-4 flex items-center justify-between gap-4">
         <span class="tp-tag">${TYPE_LABEL[s.type] ?? '信号'} · ${classLabel}</span>
         <button id="tp-drawer-close" aria-label="关闭" class="tp-mono text-ink-3 hover:text-ink transition-colors">esc ✕</button>
       </header>
       <div class="px-7 py-6">
         <!-- 第一层:判断 -->
         <h2 class="tp-h2 text-[28px]">${esc(s.title)}</h2>
-        <div class="flex gap-5 mt-3">
-          <span class="flex items-center gap-3 tp-mono text-ink-2">影响 ${renderRating(s.impact_score)}</span>
-        </div>
+        <p class="tp-mono text-ink-2 mt-3">影响 ${renderRating(s.impact_score)}</p>
         <p class="tp-body text-ink-2 mt-5">${esc(s.why_it_matters)}</p>
 
         <!-- 第二层:原始信号 -->

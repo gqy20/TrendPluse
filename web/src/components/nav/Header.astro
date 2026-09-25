@@ -32,8 +32,10 @@ const iconUrl = (p: string) => `${import.meta.env.BASE_URL}assets/${p}`;
             item.active ? 'text-accent font-bold' : 'text-[#13171f] hover:text-accent',
           ]}
         >
-          {item.label}
-          {item.active && <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-[2px] bg-accent" />}
+          <span class="relative">
+            {item.label}
+            {item.active && <span class="absolute top-full mt-1 left-1/2 -translate-x-1/2 w-10 h-[2px] bg-accent" />}
+          </span>
         </a>
       ))}
     </nav>
@@ -63,7 +65,7 @@ const iconUrl = (p: string) => `${import.meta.env.BASE_URL}assets/${p}`;
 </header>
 
 <style>
-  .site-header { position:sticky; top:0; z-index:50; background:var(--color-paper); box-shadow:0 1px 0 var(--color-hairline); }
+  .site-header { position:sticky; top:0; z-index:50; background:var(--color-paper); }
   .site-header-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; height:76px; }
   .site-main-nav { height:100%; }
   .site-main-nav > a { display:flex; align-items:center; height:100%; }

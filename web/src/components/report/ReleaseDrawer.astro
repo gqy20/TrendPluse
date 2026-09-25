@@ -67,7 +67,7 @@
     const meta = [
       r.date ?? '',
       r.author ?? '',
-      r.assets_count != null ? `${r.assets_count} assets` : '',
+      r.assets_count ? `${r.assets_count} assets` : '',
     ].filter(Boolean).map(esc).join(' · ');
 
     const changes = keyChanges.length
@@ -82,17 +82,13 @@
       : '';
 
     content.innerHTML = `
-      <header class="sticky top-0 bg-paper border-b border-hairline px-7 py-5 flex items-start justify-between gap-4">
-        <span class="tp-tag" style="color:${ct.color}">${ct.label}</span>
+      <header class="sticky top-0 bg-paper px-7 py-4 flex items-center justify-between gap-4">
+        <a href="https://github.com/${esc(r.repo)}" target="_blank" rel="noopener" class="tp-mono text-[13px] text-ink-2 hover:text-accent transition-colors truncate">${esc(r.repo)}</a>
         <button id="tp-release-drawer-close" aria-label="关闭" class="tp-mono text-ink-3 hover:text-ink transition-colors">esc ✕</button>
       </header>
       <div class="px-7 py-6">
-        <a href="https://github.com/${esc(r.repo)}" target="_blank" rel="noopener" class="tp-mono text-[14px] text-ink-2 hover:text-accent transition-colors">${esc(r.repo)}</a>
-        <h2 class="tp-h2 text-[28px] mt-2 break-all">${esc(r.version)}</h2>
+        <h2 class="tp-h2 text-[28px] break-all">${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" class="hover:text-accent hover:underline underline-offset-4 transition-colors">${esc(r.version)}</a>` : esc(r.version)}<span class="tp-tag" style="color:${ct.color};margin-left:12px;">${ct.label}</span><span class="tp-mono text-ink-3 text-[12px] font-normal inline-flex items-end gap-2" style="margin-left:14px;">影响 ${renderRating(r.ai_summary?.impact_level)}</span></h2>
         ${meta ? `<p class="tp-mono text-ink-3 mt-3 text-[12px]">${meta}</p>` : ''}
-        <div class="flex gap-5 mt-3">
-          <span class="flex items-center gap-3 tp-mono text-ink-2">影响 ${renderRating(r.ai_summary?.impact_level)}</span>
-        </div>
 
         ${r.ai_summary?.summary_cn ? `<p class="tp-body text-ink-2 mt-5">${esc(r.ai_summary.summary_cn)}</p>` : ''}
 
@@ -107,7 +103,6 @@
             : ''
         }
 
-        ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" class="tp-link inline-block mt-8 py-2">在 GitHub 查看 ↗</a>` : ''}
       </div>`;
 
     document.getElementById('tp-release-drawer-close')?.addEventListener('click', close);

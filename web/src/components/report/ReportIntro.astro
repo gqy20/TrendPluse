@@ -3,9 +3,20 @@ interface Props { summary: string; fallback: string; date?: string }
 const { summary, fallback, date } = Astro.props;
 const clean = date ? summary.replace(new RegExp(`^${date}[，,\\s]*`), '') : summary;
 const first = clean.split('。')[0];
-const useHeadline = first && first.length <= 60;
-const headline = useHeadline ? first : fallback;
-const body = useHeadline ? clean.slice(first.length).replace(/^。/, '') : clean;
+let headline = fallback;
+let body = clean;
+if (first && first.length <= 60) {
+  headline = first;
+  body = clean.slice(first.length).replace(/^。/, '');
+} else {
+  // 首句过长(近期日报普遍 60~500 字)时,按标点切出第一个短子句做标题;
+  // 正文从子句之后开始,避免与标题逐字重复
+  const clause = first.split(/[,，;；]/)[0]?.trim() ?? '';
+  if (clause.length >= 6 && clause.length <= 40) {
+    headline = clause;
+    body = clean.slice(clause.length).replace(/^[,，;；\s]+/, '');
+  }
+}
 ---
 <div class="report-intro">
   <h1>{headline}</h1>

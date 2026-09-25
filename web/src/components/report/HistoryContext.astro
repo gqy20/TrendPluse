@@ -7,6 +7,14 @@ interface Props {
   references: { date:string; href?:string }[];
 }
 const { date, status, delta, comparison, references } = Astro.props;
+// Δ 段落:① 之前的引导句独立成段,①②… 切分为论点列表;切不出两条以上回落段落(兼容旧报告/无编号输出)
+const deltaText = delta ?? '';
+const firstMark = deltaText.search(/[①-⑳]/);
+const deltaLead = firstMark > 0 ? deltaText.slice(0, firstMark).trim() : '';
+const deltaPoints = firstMark >= 0
+  ? deltaText.slice(firstMark).split(/(?=[①-⑳])/).map(s => s.trim()).filter(Boolean)
+  : [];
+const deltaAsList = deltaPoints.length >= 2;
 const labels: Record<string,string> = {
   new:'新趋势出现', continuing:'延续演进', resurfacing:'重新受到关注', weakening:'趋势减弱', mixed:'多种趋势并存',
 };
@@ -15,42 +23,81 @@ const dates = [...new Map(references.filter(item => /^\d{4}-\d{2}-\d{2}$/.test(i
 const displayDate = (value:string) => value.slice(0,4) === date.slice(0,4) ? value.slice(5).replace('-', '.') : value.replaceAll('-', '.');
 ---
 <section class="history-context py-10" id="history">
-  <header class="history-heading">
-    <h2 class="tp-section">历史位置</h2>
-    <span class="history-status">{label}</span>
-  </header>
-  {delta && <p class="history-delta"><span class="tp-mono" aria-hidden="true">Δ</span>{delta}</p>}
-  {comparison ? <p class="history-comparison">{comparison}</p> : <p class="history-empty">本期未提供详细历史对比结论{dates.length > 0 ? '，可从下方参考日期回看变化。' : '。'}</p>}
-  {dates.length > 0 && <div class="history-evidence">
-    <div class="history-evidence-heading"><h3>对比依据</h3><span>参考 {dates.length} 个历史日期 · 按时间排序</span></div>
-    <ul class="history-dates" aria-label="历史参考报告，按时间排序">
-      {dates.map(item => <li>
-        {item.href ? <a href={item.href} aria-label={`阅读 ${item.date} 日报`}><time datetime={item.date}>{displayDate(item.date)}</time><span aria-hidden="true">↗</span></a> : <span class="history-unavailable" title={`${item.date} 被本期报告引用，但站内暂无对应归档`}><time datetime={item.date}>{displayDate(item.date)}</time><small>未归档</small></span>}
-      </li>)}
-      <li class="history-current" aria-current="date"><time datetime={date}>{displayDate(date)}</time><span>本期</span></li>
-    </ul>
-  </div>}
+  <div class="history-grid">
+    <header class="history-heading">
+      <h2 class="tp-section">历史位置</h2>
+      <span class="history-status">{label}</span>
+    </header>
+    <div class="history-body">
+      {delta && (deltaAsList ? (
+        <>
+          {deltaLead && <p class="history-delta-lead">{deltaLead}</p>}
+          <ul class="history-delta-list">
+            {deltaPoints.map(pt => <li>{pt}</li>)}
+          </ul>
+        </>
+      ) : (
+        <p class="history-delta"><span class="tp-mono" aria-hidden="true">Δ</span>{delta}</p>
+      ))}
+      {comparison ? <p class="history-comparison">{comparison}</p> : <p class="history-empty">本期未提供详细历史对比结论{dates.length > 0 ? '，可从右侧参考日期回看变化。' : '。'}</p>}
+    </div>
+    {dates.length > 0 && (
+      <aside class="history-aside">
+        <div class="history-evidence-heading"><h3>对比依据</h3><span>参考 {dates.length} 个日期</span></div>
+        <ol class="history-dates" aria-label="历史参考报告，按时间排序">
+          {dates.map(item => <li>
+            {item.href ? <a href={item.href} aria-label={`阅读 ${item.date} 日报`}><time datetime={item.date}>{displayDate(item.date)}</time><span aria-hidden="true">→</span></a> : <span class="history-unavailable" title={`${item.date} 被本期报告引用，但站内暂无对应归档`}><time datetime={item.date}>{displayDate(item.date)}</time><small>未归档</small></span>}
+          </li>)}
+          <li class="history-current" aria-current="date"><time datetime={date}>{displayDate(date)}</time><span>本期</span></li>
+        </ol>
+      </aside>
+    )}
+  </div>
 </section>
 <style>
-  .history-heading { display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px; }
+  .history-heading { display:flex; align-items:center; flex-wrap:wrap; gap:16px; }
   .history-status { display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--color-accent); }
   .history-status::before { content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
+  /* 主文 + 侧栏:正文保留行长限制,右侧时间线侧栏承接宽屏空白 */
+  .history-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; }
   .history-delta { display:flex; align-items:baseline; gap:10px; max-width:60em; margin-bottom:16px; padding-left:14px; border-left:2px solid var(--color-accent); font-size:15px; line-height:1.85; color:var(--color-ink-2); text-wrap:pretty; }
+  /* Δ 引导句(① 之前的总起):无蓝线,与论点列表区分 */
+  .history-delta-lead { max-width:60em; margin:0 0 10px; font-size:15px; line-height:1.85; color:var(--color-ink-2); text-wrap:pretty; }
+  /* Δ 论点列表:保留左蓝线引用感,每条论点独立成行 */
+  .history-delta-list { max-width:60em; margin:0 0 16px; padding:0 0 0 14px; border-left:2px solid var(--color-accent); list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .history-delta-list li { font-size:15px; line-height:1.85; color:var(--color-ink-2); text-wrap:pretty; }
   .history-delta .tp-mono { flex-shrink:0; font-size:13px; color:var(--color-accent); }
   .history-comparison { max-width:60em; font-size:16px; line-height:1.9; color:var(--color-ink-2); text-wrap:pretty; }
   .history-empty { font-size:14px; color:var(--color-ink-2); }
-  .history-evidence { margin-top:28px; }
-  .history-evidence-heading { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px; margin-bottom:12px; }
+  /* 侧栏:窄屏在正文下方(顶部分隔线),宽屏在右侧(左分隔线) */
+  .history-aside { border-top:1px solid var(--color-hairline); padding-top:18px; }
+  .history-evidence-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:10px; }
   .history-evidence-heading h3 { font-size:13px; font-weight:500; }
   .history-evidence-heading > span { font-size:12px; color:var(--color-ink-2); }
-  .history-dates { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:0; margin:0; list-style:none; }
-  .history-dates a,.history-unavailable,.history-current { display:flex; align-items:center; gap:8px; padding:10px 12px; min-height:44px; border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums; }
-  .history-dates a { color:var(--color-ink); background:var(--color-paper-deep); }
+  /* 竖排时间线:左侧连接线 + 节点圆点,日期居左、标记居右 */
+  .history-dates { display:flex; flex-direction:column; padding:0; margin:0; list-style:none; }
+  .history-dates li { position:relative; padding:9px 0 9px 20px; border-left:2px solid var(--color-hairline); }
+  .history-dates li::before { content:''; position:absolute; left:-5px; top:15px; width:8px; height:8px; border-radius:50%; background:var(--color-ink-3); }
+  .history-dates a,.history-unavailable,.history-current { display:flex; align-items:baseline; justify-content:space-between; gap:8px; width:100%; font-size:13px; font-variant-numeric:tabular-nums; }
+  .history-dates a { color:var(--color-ink); }
   .history-dates a:hover { color:var(--color-accent); }
   .history-dates a > span { color:var(--color-ink-2); font-size:11px; }
   .history-unavailable { color:var(--color-ink-2); }
   .history-unavailable small { font-size:11px; }
-  .history-current { color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 7%,transparent); }
+  .history-current { color:var(--color-accent); }
+  .history-current::before { background:var(--color-accent); }
   .history-current > span { font-size:11px; }
-  @media(max-width:700px) { .history-comparison { font-size:15px; line-height:1.85; } .history-heading { margin-bottom:16px; } .history-evidence { margin-top:22px; } }
+  @media(min-width:960px) {
+    /* 侧栏跨标题行+正文行,顶端与区块标题同行起笔 */
+    .history-grid { grid-template-columns:minmax(0,1fr) 280px; column-gap:56px; row-gap:20px; align-items:start; }
+    .history-heading { grid-column:1; grid-row:1; }
+    .history-body { grid-column:1; grid-row:2; }
+    .history-aside { grid-column:2; grid-row:1 / 3; border-top:0; padding-top:0; border-left:1px solid var(--color-hairline); padding-left:28px; }
+    /* 13px 侧栏标题向 24px 区块标题基线靠拢 */
+    .history-evidence-heading { padding-top:9px; }
+  }
+  @media(max-width:700px) {
+    .history-comparison { font-size:15px; line-height:1.85; }
+    .history-heading { margin-bottom:16px; }
+  }
 </style>

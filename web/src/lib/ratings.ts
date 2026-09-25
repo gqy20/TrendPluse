@@ -11,5 +11,8 @@ export function renderRating(value: number | null | undefined, kind: RatingKind 
     : kind === 'impact' ? '未提供影响评分' : '未提供置信度';
   const tone = kind === 'confidence' ? 'accent' : valid && value >= 4 ? 'high' : valid && value >= 3 ? 'medium' : 'low';
   const marks = Array.from({ length:steps }, (_, i) => `<span class="rating-mark${i < filled ? ' is-filled' : ''}" style="--mark-height:${6 + i * 3}px" aria-hidden="true"></span>`).join('');
-  return `<span class="rating rating-${kind}${large ? ' rating-large' : ''}" data-tone="${tone}" data-state="${valid ? 'known' : 'unknown'}" role="img" aria-label="${label}" title="${label}">${marks}</span>`;
+  // 数值可视化:柱图旁附小字(4/5、85%),不依赖 hover tooltip;aria-hidden 避免与 aria-label 重复朗读
+  const valueText = valid ? (kind === 'impact' ? `${value}/5` : `${Math.round(value * 100)}%`) : '';
+  const valueMark = valueText ? `<span class="rating-value" aria-hidden="true">${valueText}</span>` : '';
+  return `<span class="rating rating-${kind}${large ? ' rating-large' : ''}" data-tone="${tone}" data-state="${valid ? 'known' : 'unknown'}" role="img" aria-label="${label}" title="${label}">${marks}${valueMark}</span>`;
 }

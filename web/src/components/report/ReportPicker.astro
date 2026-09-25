@@ -18,12 +18,12 @@ const index = currentEntries.indexOf(current!);
     <a href={`${routes.reports()}?mode=${mode}&date=${date ?? current?.date ?? ''}`}>日期归档</a>
     <span class="rp-period-label">{current?.label}</span>
     <div class="rp-neighbors">
-      {index > 0 ? <a href={currentEntries[index - 1].url}>← 上一期</a> : <span aria-disabled="true">← 上一期</span>}
-      {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期 →</a> : <span aria-disabled="true">下一期 →</span>}
+      {index > 0 ? <a href={currentEntries[index - 1].url}><span class="rp-chevron rp-chevron-left" aria-hidden="true"></span>上一期</a> : <span aria-disabled="true"><span class="rp-chevron rp-chevron-left" aria-hidden="true"></span>上一期</span>}
+      {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期<span class="rp-chevron rp-chevron-right" aria-hidden="true"></span></a> : <span aria-disabled="true">下一期<span class="rp-chevron rp-chevron-right" aria-hidden="true"></span></span>}
     </div>
   </nav>}
   <details class="rp-disclosure" open={!compact}>
-    <summary title={sidebar ? `选择日期：${current?.label ?? ''}` : undefined}>{sidebar ? (mode === 'daily' ? current?.date : `${current?.date.slice(5)} 至 ${current?.end.slice(5)}`) : '选择其他日期'} <span aria-hidden="true">⌄</span></summary>
+    <summary title={sidebar ? `选择日期：${current?.label ?? ''}` : undefined}>{sidebar ? (mode === 'daily' ? current?.date : `${current?.date.slice(5)} 至 ${current?.end.slice(5)}`) : '选择其他日期'} <span class="rp-chevron rp-toggle" aria-hidden="true"></span></summary>
     <div class="rp-browser">
       <div class="rp-calendar">
         <div class="rp-toolbar">
@@ -31,15 +31,15 @@ const index = currentEntries.indexOf(current!);
             <button type="button" data-kind="daily" aria-pressed={mode === 'daily'}>日报</button>
             <button type="button" data-kind="weekly" aria-pressed={mode === 'weekly'}>周报</button>
           </div>
-          <button type="button" class="rp-latest">最新一期 ↗</button>
+          <button type="button" class="rp-latest">最新一期</button>
         </div>
         <div class="rp-month-nav">
-          <button type="button" data-month-step="-1" aria-label="上个月">‹</button>
+          <button type="button" data-month-step="-1" aria-label="上个月"><span class="rp-chevron rp-chevron-left rp-chevron-lg" aria-hidden="true"></span></button>
           <div class="rp-month-selects" role="group" aria-label="选择年月">
             <label class="rp-select-field"><select class="rp-year" aria-label="选择年份"></select></label>
             <label class="rp-select-field"><select class="rp-month" aria-label="选择月份"></select></label>
           </div>
-          <button type="button" data-month-step="1" aria-label="下个月">›</button>
+          <button type="button" data-month-step="1" aria-label="下个月"><span class="rp-chevron rp-chevron-right rp-chevron-lg" aria-hidden="true"></span></button>
         </div>
         <div class="rp-weekdays" aria-hidden="true">{['一', '二', '三', '四', '五', '六', '日'].map(d => <span>{d}</span>)}</div>
         <div class="rp-days" aria-label="选择报告日期"></div>
@@ -54,8 +54,8 @@ const index = currentEntries.indexOf(current!);
     </div>
   </details>
   {sidebar && <div class="rp-sidebar-neighbors">
-    {index > 0 ? <a href={currentEntries[index - 1].url}>← 上一期</a> : <span aria-disabled="true">← 上一期</span>}
-    {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期 →</a> : <span aria-disabled="true">下一期 →</span>}
+    {index > 0 ? <a href={currentEntries[index - 1].url}><span class="rp-chevron rp-chevron-left" aria-hidden="true"></span>上一期</a> : <span aria-disabled="true"><span class="rp-chevron rp-chevron-left" aria-hidden="true"></span>上一期</span>}
+    {index >= 0 && index < currentEntries.length - 1 ? <a href={currentEntries[index + 1].url}>下一期<span class="rp-chevron rp-chevron-right" aria-hidden="true"></span></a> : <span aria-disabled="true">下一期<span class="rp-chevron rp-chevron-right" aria-hidden="true"></span></span>}
   </div>}
   <noscript><p>日期选择需要 JavaScript。可直接阅读上方报告，或使用详情页的上一期、下一期链接。</p></noscript>
   <script is:inline type="application/json" class="rp-data" set:html={JSON.stringify(entries).replace(/</g, '\\u003c')} />
@@ -223,8 +223,14 @@ const index = currentEntries.indexOf(current!);
   .rp-modes button[aria-pressed=true] { background:var(--color-paper); color:var(--color-accent); font-weight:700; }
   .rp-latest,.rp-period-nav a { color:var(--color-accent); font-size:14px; }
   .rp-month-nav { margin:16px 0 8px; }
-  .rp-month-nav>button { width:44px; height:44px; border-radius:8px; font-size:26px; line-height:1; color:var(--color-ink-2); flex-shrink:0; }
+  .rp-month-nav>button { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:8px; color:var(--color-ink-2); flex-shrink:0; }
   .rp-month-nav>button:not(:disabled):hover { background:var(--color-paper-deep); color:var(--color-accent); }
+  /* 统一方向符号:CSS 细线箭头(与 select 箭头同族),替代 ⌄ ← →  › 等文本符号 */
+  .rp-chevron { display:inline-block; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); flex-shrink:0; }
+  .rp-chevron-left { transform:rotate(135deg); }
+  .rp-chevron-right { transform:rotate(-45deg); }
+  .rp-chevron-lg { width:10px; height:10px; border-right-width:1.75px; border-bottom-width:1.75px; }
+  .rp-neighbors a,.rp-neighbors [aria-disabled],.rp-sidebar-neighbors a,.rp-sidebar-neighbors [aria-disabled] { display:inline-flex; align-items:center; gap:6px; }
   .rp-month-selects { display:flex; align-items:center; gap:4px; padding:4px; background:var(--color-paper-deep); border-radius:10px; }
   .rp-select-field { position:relative; display:block; border-radius:6px; }
   .rp-select-field::after { content:''; position:absolute; right:13px; top:18px; width:6px; height:6px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); pointer-events:none; color:var(--color-ink-2); }
@@ -277,6 +283,8 @@ const index = currentEntries.indexOf(current!);
 <style is:global>
   report-picker[data-sidebar=true][data-compact=true] { position:relative; margin:0; }
   report-picker[data-sidebar=true] .rp-disclosure > summary { display:flex; justify-content:space-between; align-items:center; gap:6px; list-style:none; padding:10px 12px; border-radius:6px; background:var(--color-paper-deep); color:var(--color-ink); font-size:13px; font-variant-numeric:tabular-nums; cursor:pointer; }
+  report-picker[data-sidebar=true] .rp-disclosure > summary .rp-toggle { color:var(--color-ink-2); transition:transform .15s ease; }
+  report-picker[data-sidebar=true] .rp-disclosure[open] > summary .rp-toggle { transform:rotate(-135deg); }
   report-picker[data-sidebar=true] summary::-webkit-details-marker { display:none; }
   report-picker[data-sidebar=true] .rp-browser { position:fixed; z-index:40; width:min(360px,calc(100vw - 24px)); max-height:calc(100dvh - 24px); overflow-y:auto; display:block; padding:16px; border:1px solid var(--color-hairline); border-radius:8px; background:var(--color-paper); }
   report-picker[data-sidebar=true] .rp-preview, report-picker[data-sidebar=true] .rp-modes { display:none; }
@@ -284,6 +292,13 @@ const index = currentEntries.indexOf(current!);
   report-picker[data-sidebar=true] .rp-month-nav { gap:4px; margin-top:8px; }
   report-picker[data-sidebar=true] .rp-day { height:40px; font-size:15px; }
   report-picker[data-sidebar=true] .rp-hint { font-size:11px; }
+  /* 侧栏态:“最新一期”落到提示行右侧(右下角),不再独占顶部一行 */
+  report-picker[data-sidebar=true] .rp-calendar { display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:12px; }
+  report-picker[data-sidebar=true] .rp-month-nav { grid-column:1 / -1; grid-row:1; }
+  report-picker[data-sidebar=true] .rp-weekdays { grid-column:1 / -1; grid-row:2; }
+  report-picker[data-sidebar=true] .rp-days { grid-column:1 / -1; grid-row:3; }
+  report-picker[data-sidebar=true] .rp-hint { grid-column:1; grid-row:4; align-self:center; }
+  report-picker[data-sidebar=true] .rp-toolbar { grid-column:2; grid-row:4; align-self:center; margin-top:16px; }
   .rp-sidebar-neighbors { display:flex; justify-content:space-between; gap:8px; margin-top:10px; font-size:11px; }
   .rp-sidebar-neighbors a { color:var(--color-accent); }
   .rp-sidebar-neighbors [aria-disabled] { color:var(--color-ink-3); }

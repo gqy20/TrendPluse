@@ -132,27 +132,24 @@ const genModels = usage?.models?.join(' + ') ?? '';
   <article class="report-reading pt-8 pb-8">
     <div class="min-w-0">
 
-      <!-- Hero:50px 衬线 + 统计行(含置信度小柱) + v3 视觉 -->
-      <header id="overview" class="hero-data pb-8">
-        <div>
-          <ReportIntro summary={d.summary_brief} fallback="每日趋势" date={d.date} />
+      <!-- Hero:标题 + 摘要 + 数据带(统计行接来源分布条) -->
+      <header id="overview" class="pb-8">
+        <ReportIntro summary={d.summary_brief} fallback="每日趋势" date={d.date} />
 
-          <div class="report-metrics-block">
-            <div class="report-metrics">
-              {[
-                { value: total, label: '信号' },
-                { value: d.stats.high_impact_signals ?? 0, label: '重点' },
-                { value: d.stats.unique_repos ?? 0, label: '资料' },
-              ].map(stat => <div><span class="tp-num">{stat.value}</span><span>{stat.label}</span></div>)}
-              <div><Rating kind="confidence" value={d.summary_confidence} large /><span>置信</span></div>
-            </div>
-            <p class="report-source-note">
-              本期分析 {formatNumber(d.stats.total_prs_analyzed)} 个 PR · {formatNumber(commitsAnalyzed)} 次提交 · {formatNumber(releasesAnalyzed)} 个发布{breakingCount > 0 && ` · ${breakingCount} 项破坏性变更`} · 来源：PR / Commits / Releases / Issues
-            </p>
+        <div class="report-metrics-block">
+          <div class="report-metrics">
+            {[
+              { value: total, label: '信号' },
+              { value: d.stats.high_impact_signals ?? 0, label: '高影响' },
+              { value: d.stats.unique_repos ?? 0, label: '仓库' },
+            ].map(stat => <div><span class="tp-num">{stat.value}</span><span>{stat.label}</span></div>)}
+            <div><Rating kind="confidence" value={d.summary_confidence} large /><span>置信</span></div>
           </div>
-
+          <SignalTypeBar signals={allSignals} targetId="signals" typeLegend={false} legendHint="图例可筛选" />
+          <p class="report-source-note">
+            本期分析 {formatNumber(d.stats.total_prs_analyzed)} 个 PR · {formatNumber(commitsAnalyzed)} 次提交 · {formatNumber(releasesAnalyzed)} 个发布 · 来源：PR / Commits / Releases / Issues · 统计窗口：生成时刻回溯 24 小时
+          </p>
         </div>
-        <SignalTypeBar signals={allSignals} period={d.date} heading="信号来源" targetId="signals" panel />
       </header>
 
       {breakingCount > 0 && (
@@ -167,38 +164,31 @@ const genModels = usage?.models?.join(' + ') ?? '';
         </Banner>
       )}
 
-      <!-- 焦点信号:mono 78px 编号 + 衬线 44px 标题(详情进抽屉) -->
+      <!-- 焦点信号:标题即链接(hover 变色,点击进抽屉),分类标签钉在首行右侧 -->
       {focus[0] && (
         <section class="pt-10 pb-8 scroll-mt-6" id="focus">
-          <div class="grid md:grid-cols-[64px_minmax(0,1fr)] gap-6">
-            <div>
-              <span class="tp-num text-[36px] text-[#13171f] leading-[0.92]">01</span>
-
-            </div>
-            <div>
-              {signalClass(focus[0].signal_class) && (
-                <span class="tp-tag block mb-3" style={`color:${signalClass(focus[0].signal_class)!.color}`}>{signalClass(focus[0].signal_class)!.label}信号</span>
-              )}
-              <h2 class="tp-h1 !text-[clamp(23px,2.1vw,32px)] !leading-[1.18] !font-normal max-w-[760px]">{focus[0].title}</h2>
-              <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[720px] line-clamp-2">{focus[0].why_it_matters}</p>
-              <button type="button" data-signal-detail={focus[0].id} class="tp-link inline-block mt-4 py-2 cursor-pointer">查看分析与证据 →</button>
-            </div>
-          </div>
+          <h2 class="focus-row tp-h1 !text-[clamp(23px,2.1vw,32px)] !leading-[1.18] !font-normal">
+            <button type="button" data-signal-detail={focus[0].id} aria-haspopup="dialog" class="focus-headline">{focus[0].title}</button>
+            {signalClass(focus[0].signal_class) && (
+              <span class="focus-kicker" style={`color:${signalClass(focus[0].signal_class)!.color}`}>{signalClass(focus[0].signal_class)!.label}</span>
+            )}
+          </h2>
+          <p class="text-[16px] leading-[1.7] text-[#4f5763] mt-5 max-w-[820px] line-clamp-2">{focus[0].why_it_matters}</p>
         </section>
       )}
 
-      <!-- 次级信号 02-04:mono 30px 编号 + 竖分隔线 -->
+      <!-- 次级信号 02-04:三列,分类标签钉在首行右侧,标题即链接 -->
       {focus.length > 1 && (
         <section class="grid md:grid-cols-3 py-8">
           {
             focus.slice(1).map((s, i) => (
               <div id={`signal-${i + 1}`} class:list={['px-0 md:px-7', i === 0 && 'md:pl-0']}>
-                <span class="tp-num text-[30px] text-[#13171f]">0{i + 2}</span>
-                {signalClass(s.signal_class) && (
-                  <span class="tp-tag block mt-1" style={`color:${signalClass(s.signal_class)!.color}`}>{signalClass(s.signal_class)!.label}信号</span>
-                )}
-                <h3 class="text-[17px] leading-[1.6] mt-2">{s.title}</h3>
-                <button type="button" data-signal-detail={s.id} class="tp-link mt-3 py-2 cursor-pointer">查看分析与证据 →</button>
+                <h3 class="focus-row text-[17px] leading-[1.6]">
+                  <button type="button" data-signal-detail={s.id} aria-haspopup="dialog" class="focus-headline">{s.title}</button>
+                  {signalClass(s.signal_class) && (
+                    <span class="focus-kicker" style={`color:${signalClass(s.signal_class)!.color}`}>{signalClass(s.signal_class)!.label}</span>
+                  )}
+                </h3>
               </div>
             ))
           }
@@ -211,28 +201,24 @@ const genModels = usage?.models?.join(' + ') ?? '';
           <h2 class="tp-section">趋势脉络</h2>
           <span class="text-[13px] text-[#69707a] opacity-65">从信号中看见正在形成的结构。</span>
         </div>
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid md:grid-cols-2 gap-6 max-w-[1100px]">
           {[
             { title: '新出现', items: d.top_new_trends.slice(0, 3) },
             { title: '持续升温', items: d.top_continuing_trends.slice(0, 3) },
-          ].filter(col => col.items.length > 0).map((col, ci) => (
-            <div class:list={['px-0 md:px-7', ci === 0 && 'md:pl-0']}>
+          ].filter(col => col.items.length > 0).map((col) => (
+            <div class="trend-card">
               <div class="flex items-baseline gap-3">
                 <h3 class="text-[15px] text-accent">{col.title}</h3>
                 <span class="tp-mono text-[#69707a]">({col.items.length})</span>
               </div>
-              {col.items.length > 0 ? (
-                <ol class="mt-4 space-y-3">
-                  {col.items.map((t, i) => (
-                    <li class="flex gap-4">
-                      <span class="tp-mono text-[#69707a]">0{i + 1}</span>
-                      <span class="text-[13px] leading-[1.5]">{t}</span>
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <p class="tp-mono text-ink-4 mt-4">—</p>
-              )}
+              <ol class="mt-4 space-y-3">
+                {col.items.map((t, i) => (
+                  <li class="flex gap-4">
+                    <span class="tp-mono text-[#69707a] shrink-0 whitespace-nowrap">0{i + 1}</span>
+                    <span class="text-[14px] leading-[1.6]">{t}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
           ))}
         </div>
@@ -240,9 +226,10 @@ const genModels = usage?.models?.join(' + ') ?? '';
 
       <!-- 全部信号:主交互区(类型/影响筛选 + 行点开抽屉) -->
       <section class="py-10 scroll-mt-6" id="signals">
-        <div class="flex items-baseline gap-4 mb-5">
+        <div class="flex items-baseline gap-4 mb-5 flex-wrap">
           <h2 class="tp-section">全部信号</h2>
           <span class="tp-mono text-[#9ea3ad]">{total}</span>
+          <span class="text-[13px] text-[#9ea3ad]">含工程 / 研究 / Commit / Release 四类来源，按影响排序。</span>
         </div>
         {total > 0
           ? <SignalTable signals={allSignals} time={d.date.slice(5)} limit={12} clickable filterable />
@@ -254,44 +241,54 @@ const genModels = usage?.models?.join(' + ') ?? '';
       <!-- Issue Radar:色条卡片 -->
       {painPoints.length > 0 && (
         <section class="py-10 scroll-mt-6" id="issues">
-          <div class="flex items-baseline gap-6 mb-7">
+          <div class="flex items-baseline gap-6 mb-7 flex-wrap">
             <h2 class="tp-section">Issue Radar</h2>
             <span class="text-[13px] text-[#9ea3ad]">从用户 Issue 中提取跨仓库痛点,而不是只看代码提交。</span>
+            {insightsQuality && (
+              <span class="tp-mono text-[12px] text-[#9ea3ad] ml-auto">
+                解析 {d.issue_insights?.parsed_files ?? '—'}/{d.issue_insights?.expected_files ?? '—'} 个仓库
+                {d.issue_insights?.quality_score != null && ` · 质量分 ${d.issue_insights.quality_score.toFixed(2)}`}
+                {(d.issue_insights?.failed_files ?? 0) > 0 && ` · 失败 ${d.issue_insights?.failed_files}`}
+              </span>
+            )}
           </div>
           {globalHighlights.length > 0 && (
-            <ul class="mb-8 max-w-[720px] space-y-1.5">
-              {globalHighlights.slice(0, 3).map(h => (
-                <li class="text-[14px] leading-[1.7] text-[#4f5763]">— {h}</li>
-              ))}
-            </ul>
+            <div class="mb-12">
+              <div class="flex items-baseline justify-between gap-3 mb-4">
+                <h3 class="text-[17px] font-medium">全局观察</h3>
+                <span class="text-[12px] text-[#9ea3ad]">{Math.min(globalHighlights.length, 3)} 条跨仓库结论</span>
+              </div>
+              <ul class="grid gap-6 gap-y-4 md:grid-cols-3">
+                {globalHighlights.slice(0, 3).map(h => (
+                  <li class="text-[14px] leading-[1.7] text-[#4f5763]">{h}</li>
+                ))}
+              </ul>
+            </div>
           )}
+          <div class="flex items-baseline justify-between gap-3 mb-4">
+            <h3 class="text-[17px] font-medium">痛点排行</h3>
+            <span class="text-[12px] text-[#9ea3ad]">按出现次数取前三</span>
+          </div>
           <div class="grid md:grid-cols-3 gap-6">
             {painPoints.map((p, i) => (
-              <div class="bg-[#f9f7f2] rounded-[8px] p-5 pl-6 relative min-h-[150px]">
+              <button type="button" data-pain-toggle aria-expanded="false" class="bg-[#f9f7f2] hover:bg-[#f3f1ea] transition-colors rounded-[8px] p-5 pl-6 relative min-h-[150px] text-left w-full cursor-pointer">
                 <div class="flex items-baseline justify-between gap-3">
-                  <h3 class="text-[18px] font-medium">{p.topic}</h3>
-                  <span class="tp-num text-[18px]" style={`color:${PAIN_COLORS[i] ?? '#636b78'}`}>{p.count ?? '—'}</span>
+                  <span class="text-[16px] font-medium">{p.topic}</span>
+                  <span class="tp-num text-[18px] shrink-0 whitespace-nowrap" style={`color:${PAIN_COLORS[i] ?? '#636b78'}`}>{p.count ?? '—'}</span>
                 </div>
-                {p.summary && <p class="text-[14px] text-[#636b78] leading-[1.65] mt-3 line-clamp-3">{p.summary}</p>}
-              </div>
+                {p.summary && <p data-pain-summary class="text-[14px] text-[#636b78] leading-[1.65] mt-3 line-clamp-3">{p.summary}</p>}
+              </button>
             ))}
           </div>
-          {insightsQuality && (
-            <p class="tp-mono text-[12px] text-[#9ea3ad] mt-6">
-              解析 {d.issue_insights?.parsed_files ?? '—'}/{d.issue_insights?.expected_files ?? '—'} 个仓库
-              {d.issue_insights?.quality_score != null && ` · 质量分 ${d.issue_insights.quality_score.toFixed(2)}`}
-              {(d.issue_insights?.failed_files ?? 0) > 0 && ` · 失败 ${d.issue_insights?.failed_files}`}
-            </p>
-          )}
         </section>
       )}
 
       <!-- Release Radar:精选卡片(AI 摘要) + 全部列表(批量发版聚合) -->
       {releaseRows.length > 0 && (
         <section class="py-10 scroll-mt-6" id="releases">
-          <div class="flex items-baseline gap-6 mb-7">
+          <div class="flex items-baseline gap-6 mb-7 flex-wrap">
             <h2 class="tp-section">Release Radar</h2>
-            <span class="text-[13px] text-[#9ea3ad]">本期 {formatNumber(d.releases?.total_count ?? allReleases.length)} 个发布 · 覆盖 {d.releases?.unique_repos_count ?? '—'} 个仓库。</span>
+            <span class="text-[13px] text-[#9ea3ad] ml-auto">本期 {formatNumber(d.releases?.total_count ?? allReleases.length)} 个发布 · 覆盖 {d.releases?.unique_repos_count ?? '—'} 个仓库</span>
           </div>
 
           {featured.length > 0 && (
@@ -299,14 +296,19 @@ const genModels = usage?.models?.join(' + ') ?? '';
               {featured.map((r) => {
                 const ct = releaseChangeType(r.ai_summary?.change_type);
                 return (
-                  <button type="button" data-release-detail={allReleases.indexOf(r)} class="text-left cursor-pointer">
-                    <p class="tp-mono !text-[16px] font-medium text-ink">{r.repo.split('/')[1] ?? r.repo}</p>
+                  <button type="button" data-release-detail={allReleases.indexOf(r)} class="text-left cursor-pointer hover:bg-[#f3f1ea] transition-colors rounded-[8px] p-3 -m-3">
+                    <div class="flex items-center justify-between gap-3">
+                      <p class="tp-mono !text-[16px] font-medium text-ink">{r.repo.split('/')[1] ?? r.repo}</p>
+                      <Rating value={r.ai_summary?.impact_level} />
+                    </div>
                     <div class="flex items-baseline gap-2.5 mt-2 flex-wrap">
                       <span class="tp-mono text-[#69707a] break-all">{r.version}</span>
-                      <span class="inline-block size-[8px] rounded-[4px] translate-y-[-1px]" style={`background:${ct.color}`} title={ct.label} />
+                      <span class="inline-flex items-center gap-1.5 translate-y-[-1px]">
+                        <span class="inline-block size-[8px] rounded-[4px]" style={`background:${ct.color}`} />
+                        <span class="text-[11px]" style={`color:${ct.color}`}>{ct.label}</span>
+                      </span>
                       {r.date && <span class="tp-mono text-[12px] text-[#9ea3ad]">{r.date.slice(5)}</span>}
                     </div>
-                    <span class="inline-block mt-3"><Rating value={r.ai_summary?.impact_level} /></span>
                     {r.ai_summary?.summary_cn && <p class="text-[13px] leading-[1.65] text-[#636b78] mt-3 line-clamp-2">{r.ai_summary.summary_cn}</p>}
                   </button>
                 );
@@ -317,8 +319,9 @@ const genModels = usage?.models?.join(' + ') ?? '';
           <div class="border-t border-hairline">
             {releaseRows.map((row) => row.kind === 'batch' ? (
               <a href={`https://github.com/${row.repo}/releases`} target="_blank" rel="noopener" class="tp-row border-b border-hairline">
-                <div class="grid md:grid-cols-[minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
+                <div class="grid md:grid-cols-[minmax(0,300px)_minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
                   <span class="tp-mono text-ink truncate">{row.repo}</span>
+                  <span class="hidden md:block"></span>
                   <span class="tp-mono text-ink-2 truncate">× {row.count} 批量发版</span>
                   <span class="tp-mono text-[#9ea3ad]">同步</span>
                   <span class="tp-mono text-[#9ea3ad]">{row.date?.slice(5) ?? '—'}</span>
@@ -327,8 +330,9 @@ const genModels = usage?.models?.join(' + ') ?? '';
               </a>
             ) : (
               <button type="button" data-release-detail={row.index} class="tp-row border-b border-hairline w-full text-left cursor-pointer">
-                <div class="grid md:grid-cols-[minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
+                <div class="grid md:grid-cols-[minmax(0,300px)_minmax(0,1fr)_140px_66px_66px_96px] gap-x-5 items-baseline">
                   <span class="tp-mono text-ink truncate">{row.repo}</span>
+                  <span class="hidden md:block text-[13px] text-[#636b78] truncate" title={allReleases[row.index].ai_summary?.summary_cn}>{allReleases[row.index].ai_summary?.summary_cn}</span>
                   <span class="tp-mono text-[#69707a] truncate" title={row.version}>{row.version}</span>
                   <span class="tp-mono" style={`color:${releaseChangeType(row.changeType).color}`}>{releaseChangeType(row.changeType).label}</span>
                   <span class="tp-mono text-[#9ea3ad]">{row.date?.slice(5) ?? '—'}</span>
@@ -343,9 +347,9 @@ const genModels = usage?.models?.join(' + ') ?? '';
       <!-- 生态活跃度:本期有提交的仓库榜单 -->
       {activeRepos.length > 0 && (
         <section class="py-10 scroll-mt-6" id="activity">
-          <div class="flex items-baseline gap-6 mb-7">
+          <div class="flex items-baseline gap-6 mb-7 flex-wrap">
             <h2 class="tp-section">生态活跃度</h2>
-            <span class="text-[13px] text-[#9ea3ad]">{activeCount} 个仓库产生提交 · 共 {formatNumber(totalCommits)} 次。</span>
+            <span class="text-[13px] text-[#9ea3ad] ml-auto">{activeCount} 个仓库产生提交 · 共 {formatNumber(totalCommits)} 次</span>
           </div>
           <ActivityTable repos={activeRepos} limit={10} />
         </section>
@@ -356,6 +360,17 @@ const genModels = usage?.models?.join(' + ') ?? '';
         <p class="tp-mono text-[12px] text-[#9ea3ad]">
           监控 {d.monitored_repos.length} 个仓库 · <a class="tp-link" href={routes.repos()}>查看监控清单 →</a>
         </p>
+        <details class="mt-4">
+          <summary class="tp-mono text-[12px] text-[#9ea3ad] cursor-pointer select-none">术语与口径</summary>
+          <dl class="mt-3 grid md:grid-cols-2 gap-x-10 gap-y-2 text-[12px] leading-[1.7] text-[#636b78]">
+            <div><dt class="inline font-medium text-ink">信号</dt><dd class="inline">：从 PR、提交、发布或 Issue 中采集并经去重聚合的单条变更事件。</dd></div>
+            <div><dt class="inline font-medium text-ink">来源</dt><dd class="inline">：信号的采集通道——工程(PR 与代码变更)、研究(论文/基准等研究活动)、Commit(SDK 提交分析)、Release(版本发布事件)。</dd></div>
+            <div><dt class="inline font-medium text-ink">影响</dt><dd class="inline">：分析模型对信号生态影响的 1-5 打分，≥4 记为高影响。</dd></div>
+            <div><dt class="inline font-medium text-ink">置信</dt><dd class="inline">：总结模型对当日趋势结论可靠性的自评(0-100%)。</dd></div>
+            <div><dt class="inline font-medium text-ink">破坏性变更</dt><dd class="inline">：发布说明中声明的不兼容接口/行为变更。</dd></div>
+            <div><dt class="inline font-medium text-ink">痛点计数</dt><dd class="inline">：本期命中同一痛点主题的跨仓库 Issue 条数。</dd></div>
+          </dl>
+        </details>
         {usage && (
           <details class="mt-4">
             <summary class="tp-mono text-[12px] text-[#9ea3ad] cursor-pointer select-none">报告生成信息</summary>
@@ -379,4 +394,58 @@ const genModels = usage?.models?.join(' + ') ?? '';
   <script is:inline type="application/json" id="tp-releases-data" set:html={JSON.stringify(allReleases).replace(/</g, "\\u003c")} />
   <SignalDrawer />
   <ReleaseDrawer />
+
+  <script>
+    // 痛点卡片:默认三行截断(截断即"还有内容"的暗示),点击展开/收起
+    document.querySelectorAll<HTMLButtonElement>('[data-pain-toggle]').forEach(card => {
+      card.addEventListener('click', () => {
+        const expanded = card.getAttribute('aria-expanded') === 'true';
+        card.setAttribute('aria-expanded', String(!expanded));
+        card.querySelector('[data-pain-summary]')?.classList.toggle('line-clamp-3', expanded);
+      });
+    });
+  </script>
+
+  <style>
+    /* 趋势脉络卡片:浅色底承载结构层,宽度收敛不铺全宽 */
+    .trend-card { background: #f2f0e9; border-radius: 8px; padding: 20px 22px; }
+    /* 焦点信号一行:标题(可折行) + 行尾分类标签,baseline 对齐 */
+    .focus-row { display: flex; align-items: baseline; gap: 10px; }
+    /* 焦点信号标题即链接:继承标题排版,hover 变蓝加下划线 */
+    .focus-headline {
+      flex: 1 1 auto;
+      min-width: 0;
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 6px;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+    .focus-headline:hover { color: var(--color-accent); text-decoration-color: currentColor; }
+    /* 分类色点标签:固定在标题首行右侧,不随折行掉行 */
+    .focus-kicker {
+      flex: 0 0 auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .focus-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      background: currentColor;
+      margin-right: 6px;
+      vertical-align: 1px;
+    }
+  </style>
 </BaseLayout>
